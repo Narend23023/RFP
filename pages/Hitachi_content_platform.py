@@ -265,6 +265,10 @@ def get_modified_prompt(user_prompt):
         modified question as output. You dont have to reframe or paraphrase the question. \n
         While replacing keep it short and simple, you dont have to add complex words. \n
         While replacing you should cover all aspects of the question and Dont add extra and irrelevant information while generating output. \n
+        ----------------------------------------------- \n
+        Example: \n
+        Query - Provide a detailed description of the proposed solution?
+        Response - Provide a detailed description of Hitachi Content Platform.
         """
     ),
     HumanMessage(
