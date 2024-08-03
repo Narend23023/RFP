@@ -37,7 +37,7 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from PIL import Image
 
 st.set_page_config(layout="wide")
-st.title("HCP RFP")
+st.title("NETAPP RFP")
 #################################APIKeY################################################
 with st.sidebar:
     GEMINI_API_KEY = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
