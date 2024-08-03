@@ -220,7 +220,7 @@ User-provided question:
     return [HumanMessage(content=messages)]
 
 
-def multi_modal_rag_chain(retriever):
+def multi_modal_rag_chain(retriever,GEMINI_API_KEY):
     """
     Multi-modal RAG chain
     """
