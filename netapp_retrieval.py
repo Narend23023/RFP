@@ -51,11 +51,11 @@ import chromadb
 # from google.colab import userdata
 # OPENAI_API_KEY=userdata.get('OPENAI_API_KEY')
 # GEMINI_API_KEY=userdata.get('GEMINI_API_KEY')
-embedding_func = OpenAIEmbeddings(api_key=st.secrets['OPENAI_API_KEY'])
+embedding_function = OpenAIEmbeddings(api_key=st.secrets['OPENAI_API_KEY'])
 
 
 ################################# Loading Vector Database #############################
-db3 = Chroma(persist_directory="/mount/src/RFP/vectors_netapp/", collection_name="netapp_embeddings",embedding_function=embedding_func)
+db3 = Chroma(persist_directory="/mount/src/RFP/vectors_netapp/", collection_name="netapp_embeddings",embedding_function=embedding_function)
 embeddings = db3.get(include=['documents','metadatas','embeddings'])
 
 retriever1=db3.as_retriever()
