@@ -56,7 +56,7 @@ import chromadb
 
 
 ################################# Loading Vector Database #############################
-db3 = Chroma(persist_directory="/mount/src/Netapp/vectors_netapp/", collection_name="netapp_embeddings",embedding_function=embedding_func)
+db3 = Chroma(persist_directory="/mount/src/RFP/vectors_netapp/", collection_name="netapp_embeddings",embedding_function=embedding_func)
 embeddings = db3.get(include=['documents','metadatas','embeddings'])
 
 retriever1=db3.as_retriever()
@@ -80,7 +80,7 @@ for message in st.session_state.messages:
 
 
 ################################ Initialize the storage layer##########################
-store_netapp  = LocalFileStore(root_path="/mount/src/Netapp/PARENT_DOCUMENTS_NETAPP/")
+store_netapp  = LocalFileStore(root_path="/mount/src/RFP/PARENT_DOCUMENTS_NETAPP/")
 id_key = "doc_id"
 
 # Create the multi-vector retriever
