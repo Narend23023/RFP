@@ -1,11 +1,12 @@
 import streamlit as st
+st.set_page_config(
+  page_title = 'Home Page'
+)
 
 # Set the title of the Streamlit app
 st.title("Request for Proposal (RFP)")
 
-st.set_page_config(
-  page_title = 'Home Page'
-)
+
 
 # Add some introductory text
 st.write("""
