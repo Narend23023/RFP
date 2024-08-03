@@ -51,7 +51,6 @@ import chromadb
 # from google.colab import userdata
 # OPENAI_API_KEY=userdata.get('OPENAI_API_KEY')
 # GEMINI_API_KEY=userdata.get('GEMINI_API_KEY')
-
 embedding_func = OpenAIEmbeddings(api_key=st.secrets['OPENAI_API_KEY'])
 
 
