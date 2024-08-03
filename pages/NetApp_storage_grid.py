@@ -195,6 +195,7 @@ def img_prompt_func(data_dict):
               2. Provide detailed answers based on the information. Your only source of information required to answer will be in the context provided.
               3. Use bullet points where necessary.
               4. If there is zero information available, state: "There is not enough information to provide a complete answer to your question."
+              5. Your Answers has to be elaborated yet accurate.
 
 
 Context:
