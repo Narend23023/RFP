@@ -1,0 +1,111 @@
+Required headers
+
+The list below describes the headers you can use in a request to list the contents of a bucket. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header.
+
+Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+592/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+tenant-name.hcp-domain-name For a bucket, use this format: bucket-name.tenant-name.hcp-domain-name
+
+Optional headers
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response headers
+
+The list below describes the headers returned in response to a successful request to list the contents of a bucket.
+
+Connection
+
+Specifies if the connection to the server is open or closed.
+
+Content-Length
+
+The size, in bytes, of the response body if HCP can determine the size before formulating the response. If the response does not include a response body, the value of the Content-Length header is 0 (zero). Content-Type
+
+Specifies the Internet media type of the response body. For a request to list the contents of a bucket, the value of this header is always application/xml;charset=UTF-8.
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Server
+
+The version of the HCP system that responded to the request. The value of this header is always HCP followed by the HCP version number (for example, HCP V9.0.0.2).
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. Response body
+
+The list below describes the XML elements in the response body that is returned in response to a request to list the contents of a bucket. The elements are listed in alphabetical order.
+
+CommonPrefixes
+
+Child of the ListBucketResult element and container for the Prefix element. The response body contains one CommonPrefixes element for each common prefix in the bucket listing. Contents
+
+Child of the ListBucketResult element and container for the elements that describe a current item in the bucket. The response body contains one Contents element for each item that satisfies the request criteria.
+
+ContinuationToken

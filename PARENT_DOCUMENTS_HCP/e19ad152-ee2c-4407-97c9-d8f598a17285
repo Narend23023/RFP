@@ -1,0 +1,45 @@
+4. On the Mount Points panel, in the table row that contains the NFS mount point that corresponds to the NFS volume you want to remount, click the remount control ( ).
+
+HCP attempts to remount the NFS volume. If the remount fails, contact your authorized HCP service provider for help. To see which node the NFS volume is associated with, hover your cursor over the status icon for the mount point on the Mount Points panel.
+
+Considerations for using NFS volumes (cont.)
+
+You cannot move an NFS volume from one NFS storage pool to another. You cannot control which NFS volume HCP writes data to within an NFS storage pool.
+
+When HCP creates a mount point for a specific NFS volume, HCP stores a file named .__hcp_uuid__ in the shared directory on the device that’s represented by the NFS storage component associated with that mount point. This file uniquely associates the NFS shared directory with the NFS volume. As a result:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+54/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP creates only one NFS storage volume for any given exported share. If you delete an NFS mount point from an NFS storage component, the associated exported share cannot be reused as is. This means that any data remaining in the NFS volume associated with the mount point becomes permanently inaccessible to HCP.
+
+To reuse an exported share after the associated NFS mount point is deleted from HCP, you first need to delete any remaining files from the shared directory, including the .__hcp_uuid__ file.
+
+If you inadvertently delete the .__hcp_uuid__ file from an NFS shared directory that contains other HCP data, HCP can no longer use the exported share. Contact your authorized HCP service provider for help in recreating the file. When you back up an NFS shared directory that’s associated with an NFS volume, you need to ensure that the .__hcp_uuid__ file is included in the backup
+
+operation. This ensures that the file still exists in the directory after a restore operation.
+
+Reusing the exported share A situation can occur in which HCP can access an exported share but cannot mount the associated NFS volume. In this case, if the .__hcp_uuid__ file is the only file in the shared directory on the extended storage device on which the data in the NFS volume is stored, you can reuse the exported share.
+
+1. Delete the mount point that’s associated with the NFS volume from the NFS storage component that represents the device on which the NFS volume is stored. 2. Delete the .__hcp_uuid__ file from the shared directory. 3. Create a new NFS mount point for the share on the same NFS storage component from which you deleted the mount point in step 1.
+
+Manually remounting the NFS volume
+
+If an NFS volume becomes inaccessible due to a disk failure on the extended storage device on which the data in the NFS volume is stored, you need to replace the disk, restore
+
+the data from backup, and then export the NFS share again. In this case, the NFS volume needs to be remounted. If HCP doesn’t remount the volume automatically, you can try to manually remount the NFS volume.
+
+1. On the left side of the Storage page, click Components.
+
+2. In the components list, click the name of the NFS storage component that’s associated with the NFS volume that you want to remount. 3. At the top of the panel that opens, click the Mount Points tab.
+
+4. On the Mount Points panel, in the table row that contains the NFS mount point that corresponds to the NFS volume you want to remount, click the remount control ( ).
+
+If the manual remount fails, try restarting the node with which the NFS volume is associated. To see which node the NFS volume is associated with, hover over the status icon for the mount point on the Mount Points panel.
+
+Considerations for using NFS volumes (last part) You can restore an NFS shared directory to a different location from where it was originally. If you do this, you need to modify the configuration of the associated NFS mount point to point to the new location.

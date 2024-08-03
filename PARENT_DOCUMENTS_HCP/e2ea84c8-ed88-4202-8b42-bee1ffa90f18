@@ -1,0 +1,53 @@
+Describes the available diagnostics and explains how to run them
+
+Contains instructions for marking and downloading the HCP internal logs
+
+Running diagnostics
+
+You can run selected diagnostics on the nodes in an HCP system to help analyze and resolve issues related to interactions between the nodes and other components in the HCP environment. The available diagnostics let you:
+
+Ping a specified device (ping) Display the network path being used for communications between the node and a specified device (traceroute) Query the DNS for the records that match a specified IP address or domain name (dig) Display the routing table for the node (route)
+
+Display the NFS exports table for a specified device (showmount) On HCP with SAN-attached storage systems, display information about the logical volumes that are mapped to the node on the Fibre Channel SAN arrays (fchbainfo) Display the ethtool command output command for both front-end interfaces (ethtool) You run diagnostics from the system console for a node. To use the system console, you need a keyboard and monitor.
+
+To run diagnostics, you use the Appliance Diagnostics menu. To display this menu in the system console, press Alt+F8.
+
+Appliance Diagnostics ======================================
+
+[1] ping - Check Network Connectivity [2] traceroute – Check Routing [3] dig - Check DNS Resolution [4] route - List the Kernel Routing Table [5] showmount - Show Exports from NFS Servers [6] fchbainfo - List Fibre Channel HBA and LUN Mapping Information [c] clear - Clear the Screen and Redisplay the Menu
+
+Enter a selection:
+
+To run diagnostics from the Appliance Diagnostics menu:
+
+To execute a diagnostic command, enter the option number for that command. If the command requires an argument, HCP prompts you to enter a valid value for that argument. HCP then executes the command and displays the results on the screen. To cancel a command before it finishes, press Ctrl+C.
+
+If the information displayed in response to a command is longer than the space available on the screen, use Shift+PgUp and Shift+PgDn to scroll the display up or down, respectively. To return to the Appliance Diagnostics menu after viewing the information displayed by a command, press Enter. To clear the screen and redisplay the Appliance Diagnostics menu at the top, use option c from the menu. To return to the console login prompt from the Appliance Diagnostics menu, press Alt+F1. In addition to being displayed on screen, the results of each diagnostic command that you execute are sent to the syslog servers that you specify on the Syslog page in the HCP System Management Console.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+190/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For more information about the diagnostic commands that you can execute from the Appliance Diagnostics menu, see the man pages for the commands on a Linux system.
+
+ping
+
+The ping command pings a device that you identify by IP address or fully qualified domain name (FQDN). You might run this diagnostic, for example, to determine whether the node you’re on can communicate with a specific DNS server, external time server, or external storage device. The ping command pings the specified device 10 times, displaying the result of the ping each time. However, if the device is unreachable, the command displays only the summary of the ping attempts after the 10 tries.
+
+To execute the ping command:
+
+1. From the Appliance Diagnostics menu, enter 1. A prompt for an IP address or FQDN appears.
+
+This command tries to ping (count=10) an address or FQDN. Please enter the address or FQDN:
+
+2. Enter the target device IP address or FQDN.
+
+The results of the ping command are displayed on the screen.
+
+3. After viewing the display, press Enter to return to the Appliance Diagnostics menu.
+
+The following is a sample response to the ping command:

@@ -1,0 +1,59 @@
+The tenant is on the link. The link is not in the topology. One or both of the systems involved in the link are in the topology.
+
+When you remove a tenant from an erasure coding topology, the tenant remains on all the links in the underlying replication topology, but the tenant's namespaces that allow erasure coding change from using erasure-coded protection to using whole-object protection. The effect of this change is the same as the effect of retiring an erasure coding topology. You cannot remove a tenant from a retiring erasure coding topology if any objects in any of the tenant's namespaces still contain objects that were erasure coded according to that topology. You can add and remove tenants in an erasure coding topology while one or more systems in the topology are unreachable from other systems in the topology. If conflicting changes are made during this period (for example, the same tenant is added on two different systems and then removed on one of those systems), the most recent change is the one that takes effect when communication between the systems is restored. While a system in an erasure coding topology is being upgraded, you cannot use that system to add or remove tenants in that topology.
+
+Specifying the tenants for an erasure coding topology You use the Tenants panel for an erasure coding topology to specify the tenants for the topology. This panel contains two sections:
+
+Tenants in This Erasure Coding Topology
+
+Lists the tenants that are currently included in the erasure coding topology. The tenants are listed in alphanumeric order by name. Tenant Candidates
+
+Lists the tenants from which you can choose tenants to be added to the erasure coding topology. The tenants are listed in alphanumeric order by name.
+
+Each listed tenant with a name conflict or link conflict is accompanied by this icon:
+
+. The hover text for the icon identifies the issue.
+
+Adding and removing tenants
+
+1. In the top-level menu of the HCP System Management Console, select Services > Geo-distributed EC. 2. On the EC Topologies page, click the topology for which you want to specify the tenants. 3. On the erasure coding topology details page, click Tenants. 4. Take either or both of these actions: To add tenants to the erasure coding topology:
+
+a. (Optional) In the Tenant Candidates section, filter the list of tenants that are eligible to be included in the topology. b. In the tenant candidate list, select the tenants you want to add to the topology. To select all the tenants in the list, click Select All above the list. To deselect all the selected tenants, click Clear above the list.
+
+c. Click Add Selected Tenants.
+
+To remove tenants from the erasure coding topology:
+
+a. (Optional) In the Tenants in This Erasure Coding Topology section, filter the list of tenants that are currently included in the topology. b. In the list of tenants in the topology, select the tenants you want to remove from the topology.
+
+To select all the tenants in the list, click Select All above the list.
+
+To deselect all the selected tenants, click Clear above the list. c. Click Remove Selected Tenants.
+
+Filtering the tenant lists
+
+By default, each tenant list in the Tenants panel contains all the applicable tenants. You can filter the list in either section to display a subset of the applicable tenants. A filtered list contains only those items with a name that begins with or is the same as a specified text string.
+
+You cannot filter a list while any of the tenants in it are selected. Filtering
+
+You can filter the tenant list by tenant name or tag. The filtered list includes only those tenants with a name or tag, as applicable, that begins with or is the same as a specified text string.
+
+1. In the field above the Name column, select Name to filter by name or Tag to filter by tag. 2. In the next field, type the text string you want to use as a filter.
+
+This string can be up to 64 characters long, can contain any valid UTF-8 characters except commas (,), and is not case sensitive. White space is allowed.
+
+3. Click the find control (
+
+).
+
+To redisplay the entire list of tenants after filtering it, click the clear filter control (
+
+).
+
+Considerations for modifying an erasure coding topology
+
+These considerations apply to modifying an erasure coding topology:
+
+You can modify these properties of an active erasure coding topology:
+
+Name Description Distribution method

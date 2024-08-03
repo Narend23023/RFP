@@ -1,0 +1,85 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> The table below describes HTTP status codes that can be returned in response to a request to copy an object.<br>
+                       <b>Bounding box:</b> x1=185, y1=173, x2=1516, y2=1577
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>OK</td>
+      <td>HCP successfully copied the object.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>Possible reasons include that an ACL grant header specifies an invalid grantee.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>Possible reasons include:\nThe credentials provided with the request are invalid.\nYou do not have permission to store objects in the target bucket.\nAn object with the specified target object name already exists in the specified target bucket, and\nversioning is enabled for that bucket, but the existing object is under retention or on hold.\nThe S3 compatible API is currently disabled for the source or target bucket.\nThe source object exists, but the HCP system does not have the source object data. Retry the\nrequest, targeting a different system in the replication topology.\nThe source object is in the process of being deleted.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>One of these:\nThe specified source object version ID identifies a delete marker or a delete record.\nThe specified source bucket does not exist.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>409</td>
+      <td>Conflict</td>
+      <td>One of these:\nAn object with the specified target object name already exists in the target bucket, versioning is\ndisabled for that bucket, and the copy request does not include an x-amz-metadata-directive\nheader with a value of REPLACE.\nA folder with the specified target object name already exists in the target bucket.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>412</td>
+      <td>Precondition Failed</td>
+      <td>One of these:\nThe request included an header, and the ETag for the specified x-amz-copy-source-if-match\nsource object or object version does not match any of the values specified by the header.\nThe request included an header, and the ETag for the x-amz-copy-source-if-none-match\nspecified source object or object version matched a value specified by the header.\nThe request included an header, and the specified x-amz-copy-source-if-modified-since\nsource object or object version was not modified after the date and time specified by the header.\nThe request included an header, and the specified x-amz-copy-source-if-unmodified-since\nsource object or object version was modified after the date and time specified by the header.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>413</td>
+      <td>Request Entity Too Large</td>
+      <td>The source object you are trying to copy is too big for the amount of space left in the target bucket.</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>500</td>
+      <td>Internal Server Error</td>
+      <td>An internal error occurred.\nIf this error persists, contact your tenant administrator.</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>501</td>
+      <td>Not Implemented</td>
+      <td>The request includes the header with an invalid value. x-amz-acl</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>503</td>
+      <td>Service Unavailable</td>
+      <td>Possible reasons include:\nHCP is temporarily unable to handle the request, probably due to system overload, maintenance,\nor upgrade. Try the request again, gradually increasing the delay between each successive\nattempt.\nIf this error persists, contact your tenant administrator.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

@@ -1,0 +1,59 @@
+Tenant administrators can take the same actions on a bucket as the bucket owner can. Additionally, tenant administrators can change a bucket to have no owner. The maximum number of buckets you can own is limited by a tenant-level configuration setting.
+
+Object owners
+
+Like buckets, objects can have owners that correspond to HCP or AD user accounts. By default, if you’re an authenticated user, you own the objects you create in a bucket, regardless of whether you own the bucket. As the owner of the object, you have read, read ACL, write, write ACL, and delete permissions for that object.
+
+If you’re not an authenticated user, the objects you create have no owner.
+
+If you have write ACL and change owner permissions for a bucket, you can use the S3 compatible API to change the owner of any object in that bucket to a different user. To change the owner of an object, you use an ACL.
+
+Users with the change owner data access permission for a bucket can use the REST API to change the owner of any object in the bucket to a different user. They can also change any object in the bucket to have no owner. Access control lists
+
+HCP supports access control lists (ACLs) for both buckets and objects. An ACL grants specified users or groups of users permissions to perform specific operations. An ACL can also be used to change the owner of a bucket or object.
+
+A bucket ACL grants permissions to perform operations on a bucket and on all objects in the bucket. For example, an ACL for a bucket could give all users read permission for that bucket. All users in that group would then be able to retrieve all the objects in that bucket.
+
+An object ACL grants permissions to perform operations on an individual object. For example, an ACL for an object could give a specified user write ACL permission for that object. That user would then be able to change the ACL for that object regardless of whether the user had write ACL permission for the bucket that contained the object. You can add an ACL to a bucket when you create the bucket or in a separate operation. You can add an ACL to an object when you create or copy the object or in a separate operation. When you add an ACL to an existing bucket or object that already has an ACL, the new ACL replaces the old one in its in entirety.
+
+ACLs can be added to buckets and objects through other HCP interfaces. However, regardless of how they are added, they apply to all HCP interfaces that provide access to objects.
+
+An ACL added through the S3 compatible API can include at most one hundred permission grants. ACLs added through other HCP interfaces can include more than that. If you retrieve an ACL with more than one hundred grants, HCP returns only the first hundred. Whether objects in a bucket can have ACLs and whether those ACLs are enforced depend on bucket settings. When you use the S3 compatible API to create a bucket, the use of ACLs is automatically enabled. This setting cannot be disabled through any HCP interface.
+
+Also when you use the S3 compatible API to create a bucket, ACLs are automatically set to be enforced. When enforcing ACLs, HCP honors the permission grants in object ACLs.
+
+When ACLs are not enforced, HCP ignores those grants. HCP always honors permission grants in bucket ACLs.
+
+You cannot use the S3 compatible API to change the ACL enforcement setting. However, tenant administrators can use other HCP interfaces to change this setting. ACL permissions
+
+Granting a permission in an ACL for a bucket gives the grantee certain data access permissions for that bucket. Granting a permission in an ACL for an individual object gives the user certain data access permissions just for that object.
+
+The list below lists the permissions you can grant in an ACL and shows the data access permissions that correspond to each ACL permission. Read
+
+Browse and read
+
+Read ACP
+
+Read ACL
+
+Write
+
+Write and delete
+
+Write ACP
+
+Write ACL
+
+Full control
+
+Browse, read, read ACL, write, write ACL, and delete
+
+By default, a bucket or object owner that corresponds to an HCP user account or an object owner that corresponds to an AD user account has full control over the applicable bucket or object. For a bucket owner that corresponds to an AD user account, the permissions depend on the tenant configuration.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+552/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

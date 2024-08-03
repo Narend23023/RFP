@@ -1,0 +1,139 @@
+HCP with internal storage system architecture https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+5/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The following figure shows the architecture of an HCP system that uses internal storage. This system has four storage nodes, two back-end switches (on the left), and two front-end
+
+switches (on the right).
+
+The table below describes the cables in this figure. Cable
+
+Connects from
+
+Connects to
+
+Red and blue Ethernet
+
+Back-end NICs in each node
+
+Back-end switches
+
+Green and yellow Ethernet
+
+Front-end NICs in each node
+
+Front-end switches
+
+Purple Ethernet
+
+Back-end switches
+
+Each other
+
+Black power
+
+Each node
+
+Two PDUs
+
+Each back-end switch
+
+One PDU
+
+HCP with SAN-attached storage system architecture
+
+The following figure shows the architecture of an HCP system that uses a Fibre Channel SAN storage system. This system has four storage nodes, two modular storage trays, two
+
+back-end switches (on the left), and two front-end switches (on the right). Each node has multipathed access to the shared SAN storage.
+
+The table below describes the cables in this figure. Cable
+
+Connects from
+
+Connects to
+
+Red and blue Ethernet
+
+Back-end NICs in each node
+
+Back-end switches
+
+Green and yellow Ethernet
+
+Front-end NICs in each node
+
+Front-end switches
+
+Purple Ethernet
+
+Back-end switches
+
+Each other
+
+Orange Fibre Channel
+
+Each node
+
+SAN array
+
+Black power
+
+Each node
+
+Two PDUs Each back-end switch
+
+One PDU
+
+Each storage tray
+
+Two PDUs
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+6/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note:
+
+Nodes in HCP with SAN-attached storage systems are either individual servers or individual blades in blade servers. The figure above shows individual servers. Some HCP with
+
+SAN-attached storage systems include Fibre Channel switches between the nodes and the SAN arrays. VM system architecture
+
+The physical environment for an HCP VM system has the same architecture as an HCP with SAN-attached storage system. That is, the servers that host the virtual machines on which HCP runs have multipathed access to shared SAN storage. The physical switch and port configurations are the same as for HCP with SAN-attached storage systems.
+
+Depending on the number of physical servers and the capabilities of those servers, a VM system can have one or more HCP nodes running on a host on each server. The following figure shows the physical environment for a VM system with four HCP nodes, each running in its own physical server. For information about the hardware configuration in this figure, see "HCP with SAN-attached storage system architecture" above. Repository management
+
+Repository management requires:
+
+Maintaining the integrity and security of stored data.
+
+Ensuring the continuous availability of that data. Keeping the data in compliance with local regulations.
+
+Optimizing the use of storage and network bandwidth.
+
+HCP supports these requirements through:
+
+The hardware and network configuration of the system Software configuration options (both installation and runtime)
+
+Automated processes Individual namespace and object settings Object storage and retrieval options
+
+Data integrity and security
+
+HCP includes many features specifically designed to protect the integrity and ensure the security of stored data:
+
+Write-once, read-many (WORM) storage
+
+After the data for an object is stored in the repository, HCP, by default, prevents that data from being modified or overwritten. Node login prevention
+
+HCP does not allow system-console logins on its nodes. This provides a basic level of protection not only for the stored data but also for the system software.
+
+Secure Sockets Layer (SSL)
+
+HCP can use SSL to ensure the privacy of HTTP and WebDAV access to namespaces. It always uses SSL to secure the Management and Search Consoles. Additionally,

@@ -1,0 +1,31 @@
+curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("create-ect.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+PUT /mapi/services/erasureCoding/ecTopologies HTTP/1.1 Host: admin.hcp-us.example.com:9090 Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97 Content-Type: application/xml Content-Length: 775
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Retrieving a list of eligible tenants
+
+Here's a sample GET request that retrieves a list of all the local and remote tenants that are eligible to be included in the erasure coding topology named ex-corp-4. The request writes the list of tenants to a file named eligible-tenants.xml. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ ecTopologies/ex-corp-4/tenantCandidates?verbose=true&prettyprint" > eligible-tenants.xml
+
+Request in Python using PycURL import pycurl
+
+filehandle = open("eligible-tenants.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Accept: application/xml", "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97"]) curl.setopt(pycurl.URL, "https://admin.hcp-us.example.com:9090/mapi/services/" + "erasureCoding/ecTopologies/ex-corp-4/tenantCandidates" + "?verbose=true&prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+397/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help GET /mapi/services/erasureCoding/ecTopologies/ex-corp-4/tenantCandidates ?verbose=true&prettyprint HTTP/1.1 Host: admin.hcp-us.example.com:9090 Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97 Accept: application/xml
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 976 Response body in XML

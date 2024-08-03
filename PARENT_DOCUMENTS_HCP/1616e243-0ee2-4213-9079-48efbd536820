@@ -1,0 +1,143 @@
+The name of the domain associated with the data access network for the tenant to which the set of aggregated statistics in the line applies The name of the domain associated with the [hcp_system] network for the HCP system to which the set of aggregated statistics in the line applies target
+
+The storage component, storage pool, or service plan to which the set of statistics in the line applies.
+
+tenantName
+
+Either:
+
+The name of the tenant that owns the namespace to which the set of statistics in the line applies The name of the tenant to which the set of statistics in the line applies
+
+In lines that contain systemwide statistics, this field has no value. valid
+
+The status of the set of statistics in the line. Possible values are:
+
+true — HCP successfully collected all statistics in the set. false — The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to one or more nodes being unavailable during that time, to a network failure, or to other hardware issues. writes
+
+For a storage component or storage pool, the number of successful write operations that targeted storage represented by the component or pool during the reporting interval, where the data was written to the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of successful write operations that targeted HCP S Series and extended storage due to the service plan during the reporting
+
+interval, where the data was written to the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+Each write of a part of a multipart object counts as a separate write operation. For HCP S Series storage:
+
+This number includes write operations both with the targeted storage included in the ingest tier and with the targeted storage included in a non-ingest
+
+tier.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+73/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Identifier
+
+Value
+
+Each write of a part of a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Sample storage report
+
+Here's an example of a daily storage report for the Amazon-Comp-1 component, where the report period is March 5, 2018, through March 6, 2018, and the report was requested at
+
+11:55 a.m. on March 6th. The report shows statistics for the canada and europe tenants. Because system-level users have administrative access to the europe tenant, the report also shows statistics for the individual namespaces owned by the europe tenant. The report is shown as it would appear in a spreadsheet. systemName
+
+tenantName namespaceName target
+
+startTime
+
+endTime
+
+bytesWritten bytesRead writes reads deletes deleted valid
+
+hcp.example.com canada
+
+Amazon-Comp- 1
+
+3/5/2018 0:00:00
+
+3/5/2018 23:59:59
+
+206315331
+
+247634
+
+15
+
+6
+
+0
+
+FALSE TRUE
+
+hcp.example.com canada
+
+Amazon-Comp- 1
+
+3/6/2018 0:00:00
+
+3/6/2018 11:55:59
+
+91476093
+
+64387
+
+27
+
+2
+
+0 FALSE TRUE
+
+hcp.example.com europe
+
+finance
+
+Amazon-Comp- 1
+
+3/5/2018 0:00:00
+
+3/5/2018 23:59:59
+
+123986263
+
+87561
+
+10
+
+1
+
+0
+
+FALSE TRUE
+
+hcp.example.com europe
+
+finance
+
+Amazon-Comp- 1
+
+3/6/2018 0:00:00
+
+3/6/2018 11:55:59
+
+52253026
+
+0
+
+12
+
+0
+
+0
+
+FALSE TRUE
+
+hcp.example.com europe
+
+hr
+
+Amazon-Comp- 1
+
+3/5/2018 0:00:00

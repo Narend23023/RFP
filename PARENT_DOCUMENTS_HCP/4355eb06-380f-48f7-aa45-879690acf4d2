@@ -1,0 +1,57 @@
+HTTP/1.1 200 OK Date: Fri, 26 June 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2020-06-12T17:19:26.062Z</LastModified> <ETag>"76216527ff2f6219f7c29251a619c8db"</ETag> </CopyObjectResult>
+
+Conditionally copying an object
+
+You can use the x-amz-copy-source-if-match, x-amz-copy-source-if-none-match, x-amz-copy-source-if-modified-since, and x-amz-copy-source-if-unmodified-s ince request headers to make copy requests conditional:
+
+The x-amz-copy-source-if-match and x-amz-copy-source-if-none-match headers compare the ETag of the source object or object version to one or more values that you specify. Typically, each value is the ETag for an object or object version of interest. The x-amz-copy-source-if-modified-since and x-amz-copy-source-if-unmodified-since headers compare the date and time the source object or object version was last modified to a date and time that you specify. If the source object or object version:
+
+Meets all the conditions specified by the conditional headers included in the request, HCP performs the copy operation. Does not meet all the conditions specified by the conditional headers included in the request, HCP returns a 412 (Precondition Failed) status code and does not copy the object.
+
+If a request includes multiple different conditional headers, HCP processes any x-amz-copy-source-if-match and x-amz-copy-source-if-none-match headers before any x-a mz-copy-source-if-modified-since or x-amz-copy-source-if-unmodified-since headers. If a request includes more than one of any given header, HCP processes only the first one of those headers and ignores the others.
+
+Note: The x-amz-copy-source-if-modified-since and x-amz-copy-source-if-unmodified-since request headers are not compatible with s3curl.
+
+Retrieving an object You use the HTTP GET method to retrieve an object from a bucket. Retrieving an object means retrieving the object data. To retrieve an object, you need read permission for the bucket containing the object or for the object itself.
+
+Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to retrieve an object has either of these formats:
+
+With the bucket name included in the hostname: GET /object-name[?versionId=version-id] HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name/object-name/object-name[?versionId=version-id] HTTP/1.1
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+625/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Required headers
+
+The next list describes the headers you can use in a request to retrieve an object. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM

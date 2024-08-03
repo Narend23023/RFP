@@ -1,0 +1,55 @@
+A service plan name must be up to 64 characters long, can contain only alphanumeric characters, hyphens (-), and underscores (_), and is not case sensitive.
+
+A service plan description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+4. On the Import page, you can import an existing service plan configuration and create a new service plan with it. If you want to import an existing service plan configuration
+
+into the new service plan you’re creating, check the box next the existing service plan you want to import and then click Next. When you import an existing service plan configuration, the storage tiers that are configured for that plan are automatically defined in the new plan. You can use the imported service plan configuration as a starting point to configure each of the tiers you want to define in the service plan.
+
+If you want to import the configuration for an existing service plan into the new service plan you’re creating, check the box next the existing service plan you want to import.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+62/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+5. Click Next.
+
+On the Encrypt Cloud Pools page, you can select the method for encrypting the data. You can use either local key or a key management server (KM Server). a. To not to use encryption, select None. b. To encrypt all the cloud pools, select All and then select the KM Server from the Encryption drop down. To manage keys locally, select Use local key management.
+
+c. To use imported service plan settings, select Selected and then select the KM server from the drop down. Click Next.
+
+6. On the Review page, review the information. 7. Take one of these actions:
+
+If the information you entered is correct, click Finish.
+
+If the information is incorrect, use the Previous and Next buttons to navigate through the pages of the wizard and change any settings that are not correct. When you
+
+are satisfied with the configuration settings you’ve entered, click Finish.
+
+When you click Finish, the wizard exits, and the Storage page displays the Tiers panel on the service plan configuration page for the service plan that you just created. You can use the Tiers panel to add one or more new tiers to the service plan configuration. If you chose to import the configuration from another service plan into the new
+
+plan you created, you can delete or modify any of the existing tiers that were imported from that plan.
+
+8. If you’re satisfied with the storage tiers that are configured for the new service plan, you can click the Tenants tab at the top of the page and use the Tenants panel to assign the service plan to one or more tenants.
+
+Assign the service plan to one or more tenants in the Tenants tab.
+
+Modifying a service plan
+
+You can use the Service Plans panel on the Storage page to view and modify the configuration of any existing service plan. At any time, you can modify any service plan to:
+
+Change the service plan name or description. If you change the name, the original name remains associated with any applicable tenants and namespaces. The result is that
+
+these tenants and namespaces are associated with an undefined service plan, and HCP uses the Default service plan for them. If you subsequently create a new service plan with the original name, the plan then applies to those tenants and namespaces.
+
+Change the ingest tier. Add one or more new storage tiers to the storage tiering strategy defined in the service plan. Delete one or more existing storage tiers from the plan.
+
+Change any configuration settings used for any storage tier defined in the service plan. If you change the storage tiering strategy or the data protection strategy defined in a service plan, objects that complied with the original service plan requirements might not
+
+be in compliance with the new ones. The next time the Storage Tiering service processes such an object, the service moves, copies, deletes, or changes the object as needed to comply with the new storage tiering strategy and/or the new data protection plan.
+
+Change the encryption settings to either use local encryption or a specific KM Server for encryption. Assign the service plan to one or more tenants.

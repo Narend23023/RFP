@@ -1,0 +1,25 @@
+If the service plan for a given namespace defines multiple storage tiers, the Storage Tiering service works to ensure that each object in that namespace is stored on the correct tier and the correct number of copies of the object are stored on each tier. For each object in that namespace, the Storage Tiering service:
+
+Moves copies of the object data among the storage tiers that are defined for the namespace to satisfy the transition criteria that are defined for each storage tier Upon moving all existing copies of the data for an object from one tier to another:
+
+If the new tier has a different DPL from the previous tier, creates or deletes copies of the object data as required to satisfy the DPL setting for the new tier If the new tier has a different primary running storage metadata protection level (MPL) from the previous tier, creates or deletes copies of object metadata as required to satisfy the MPL setting for the new tier
+
+Upon moving a replicated object to a metadata-only tier, deletes all copies of the object data from the previous tier, and if the previous tier is not the ingest tier, deletes any copies of the object data that exist on the ingest tier (primary running storage or HCP S Series storage) Checks to see whether the object data has been read from a data storage tier for which rehydration is enabled, and if so, creates an extra copy of the object data on the ingest tier
+
+After moving a replicated object to a metadata-only tier for which rehydration is enabled and making that object metadata-only, checks to see whether that object has been read from a remote system, and if so, restores the data to each copy of the object that’s stored on the ingest tier (primary running storage or HCP S Series storage) Metadata-only storage tiers
+
+When the Storage Tiering service moves an object off the ingest tier and onto another storage tier, the service removes all copies of the object data from ingest tier and stores the specified number of copies of the object data on the new storage tier. However, at least one copy of the object metadata must always remain on primary running storage. For each
+
+storage tier that’s defined for a given namespace, the service plan specifies the number of copies of object data that must be stored on the tier and the number of copies of object metadata that must be stored on primary running storage.
+
+A service plan can include a metadata-only storage tier. For each object that’s stored on a metadata-only tier, the service plan specifies the number of copies of the object metadata that must be stored on primary running storage, but the service plan also specifies that no copies of the data for that object can be stored on any storage tier, including the ingest tier. Each service plan can be configured to define only one metadata-only storage tier. Additionally, that tier must be the last storage tier that’s defined by the service plan. After objects in a namespace are moved to the metadata-only tier that’s defined for that namespace, the data for those objects is removed from all storage tiers defined for the namespace.
+
+The Storage Tiering service makes an object metadata-only only when all of these conditions are true:
+
+The service plan for the namespace that contains the object defines a metadata-only storage tier. The object is on the storage tier that immediately precedes the metadata-only tier defined in the namespace service plan, and the object meets the transition criteria specified
+
+for the metadata-only storage tier. A copy of the data for the object exists on at least one other HCP system in the replication topology in which the current system participates. (This is possible because service plans with the same name can have different definitions on different systems.)
+
+When all these conditions are true, the Storage Tiering service deletes all copies of the data for the object from the preceding storage tier. If the preceding storage tier is not the
+
+ingest tier, the Storage Tiering service also deletes any copies of the object data that exist on the ingest tier. After deleting all copies of the data for the object, the Storage Tiering service creates or deletes copies of the object metadata on primary running storage, as necessary, to satisfy the primary running storage MPL that’s specified for the metadata-only storage tier.

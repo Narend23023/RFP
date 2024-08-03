@@ -1,0 +1,111 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name. file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value acl.
+
+Response headers
+
+This operation does not return any request-specific headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+201 Created
+
+HCP successfully stored the ACL.
+
+400
+
+Bad Request One of:
+
+The request is trying to store an ACL in a namespace for which ACLs are not enabled.
+
+The ACL is not well-formed XML or JSON. The ACL includes an invalid entry or an invalid value for an entry.
+
+The ACL does not include a required entry. The ACL specifies a user, group, or domain that doesn’t exist. The ACL specifies an AD user or group but doesn’t include the domain entry. The ACL specifies an AD user or group, but the namespace does not support Active Directory
+
+authentication. Multiple name entries include the same user or group. A user or group can be specified in only one name entry in an ACL. The permissions you have specified in the ACL exceed your user permissions.
+
+The request is trying to store an ACL that contains more than one thousand access control entries. HCP cannot store ACLs that contain more than one thousand access control entries. The request has a Content-Encoding header that specifies gzip, but the ACL is not in gzip- compressed format. The URL in the request is not well-formed.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter. The request contains an If-Match, If-None-Match, If-Modified-Since, or If-Unmodified-si nce header.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. You don’t have write or write ACL permission. The namespace does not exist.
+
+The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find the object for which you’re trying to store an ACL.
+
+The URL contains a symbolic link to a directory anywhere other than in the last component.
+
+415
+
+Unsupported Media Type
+
+One of:
+
+The request has a Content-Encoding header with a value other than gzip. The request has a Content-Type header with a value other than application/xml or applicati on/json. The request has a Content-Type header with a value that doesn’t correspond to the content type of the ACL body.
+
+Example: Storing an ACL for an object
+
+Here’s a sample HTTP PUT request that stores the ACL defined in the
+
+Q1_2012.acl.xml file for an existing object named Q1_2012.ppt. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -iT Q1_2012.acl.xml -H "Content-Type: application/xml"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/ Q1_2012.ppt?type=acl"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+776/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL
+
+import pycurl
+
+import os filehandle = open("Q1_2012.acl.xml", 'rb') curl = pycurl.Curl()

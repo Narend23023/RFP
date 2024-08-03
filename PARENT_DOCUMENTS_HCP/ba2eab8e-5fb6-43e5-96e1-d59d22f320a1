@@ -1,0 +1,99 @@
+If it isn’t, be sure to change it before performing step 2.
+
+2. Take one of these actions: If the object has any POSIX write permissions for the owner, owning group, or other, use CIFS or NFS to remove them. If the object has no POSIX write permissions for the owner, owning group, or other, use CIFS or NFS to add at least one and then remove all you added.
+
+Changing permissions through WebDAV does not trigger atime synchronization.
+
+Read and execute permissions have no effect on this process.
+
+Triggering atime synchronization for an object creates an association between its atime value and retention setting. Subsequent changes to POSIX permissions do not remove this association.
+
+Removing the association
+
+The association between the atime value and retention setting for an object remains in effect until one of these happens: The retention period for the object expires.
+
+You assign the object to a retention class. The tenant administrator disables atime synchronization for the namespace. Any changes to atime attributes or retention settings made after synchronization is disabled are independent of each other. If the tenant administrator subsequently reenables atime synchronization for the namespace, these properties remain independent until you trigger synchronization again for the individual object. How atime synchronization works
+
+atime values and retention settings have these general correspondences:
+
+atime values in the future correspond to specific retention settings in the future. atime values more than 24 hours in the past correspond to retention settings that prevent deletion. atime values 24 hours or less in the past correspond to retention settings that permit immediate deletion.
+
+The table below shows the effects of valid atime changes on retention settings for an object with atime synchronization in effect.
+
+Changing the atime value to
+
+When the current retention setting is Changes the retention setting to
+
+A time later than the current date and time
+
+Initial Unspecified (-2) or Deletion Allowed (0)
+
+The new time of the atime attribute
+
+A time later than the current retention setting
+
+A specific date and time
+
+The new time of the atime attribute
+
+A time more than 24 hours before the current date and time* Initial Unspecified (-2), Deletion Allowed (0), or
+
+Deletion Prohibited
+
+a specific date and time
+
+A time 24 hours or less before the current date and time*
+
+Initial Unspecified (-2) or Deletion Allowed (0)
+
+The new time of the atime attribute, which immediately makes the object expired and deletable
+
+Twenty-four hours is the default setting for this threshold. If you want it changed, please contact your tenant administrator.
+
+The table below shows the effects of valid changes to retention settings on atime values for an object with atime synchronization in effect.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+699/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Changing the retention setting to
+
+When the current retention setting is
+
+Changes the atime value to
+
+A time later than the current date and time
+
+Initial Unspecified (-2) or Deletion Allowed (0)
+
+The same time as the new retention setting A time later than the current retention setting
+
+A specific date and time
+
+The same time as the new retention setting
+
+A time before the current date and time
+
+Initial Unspecified (-2) or Deletion Allowed (0)
+
+The same time as the new retention setting
+
+Deletion Allowed
+
+Initial Unspecified (-2)
+
+January 1, 1970 00:00:00 GMT Deletion Prohibited
+
+Initial Unspecified (-2), Deletion Allowed (0), or
+
+The current date and time minus the threshold beyond which atime sets retention to Deletion Prohibited*
+
+a specific date and time
+
+Twenty-four hours is the default setting for this threshold. If you want it changed, please contact your tenant administrator.
+
+If atime synchronization has already been triggered for an object and the object is under retention, you cannot use atime to change its retention setting while HCP is configured to disallow permission changes for objects under retention. However, you can modify the setting in retention.txt, and, when you do so, the atime value is synchronized with the new retention setting. atime synchronization example

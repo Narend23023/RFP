@@ -1,0 +1,97 @@
+The request contains an unsupported query parameter or an invalid value for a query parameter.
+
+If more information about the error is available, the response headers include the HCP product-specific X-HCP-ErrorMessage header.
+
+403 Forbidden
+
+The requested operation is not allowed. Possible reasons include:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user does not have read permission.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP product-specific X-HCP-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find an object, version, or directory at the specified URL. The specified object or version does not exist, or the request specified the current version of an object that has been
+
+deleted. When retrieving object or version data and an annotation together, the requested object does not
+
+have an annotation with the specified name.
+
+406 Not Acceptable
+
+The request has an Accept-Encoding header that does not include gzip or *.
+
+410
+
+Gone
+
+Possible reasons include:
+
+The object exists, but the HCP system does not have the object data. Retry the request, targeting a different system in the replication topology.
+
+The object is in the process of being deleted.
+
+412 Precondition Failed
+
+One of:
+
+The request specified an If-Match header, and the ETag of the requested object or version does not match the value in the header. The request specified an If-Unmodified-Since header, and the object change time is after the time specified in the header.
+
+416
+
+Requested Range Not Satisfiable One of:
+
+The specified start position is greater than the size of the requested data.
+
+The size of the specified range is zero.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+736/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+503
+
+Service Unavailable
+
+Possible reasons include:
+
+The request contains the nowait query parameter, and HCP determined that the request would have taken a significant amount of time to return the object.
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade.
+
+Try the request again, gradually increasing the delay between each successive attempt. If the error
+
+persists, contact your tenant administrator.
+
+Example: Retrieving all object data
+
+Here’s a sample HTTP GET request that retrieves an object named Q1_2012.ppt in the quarterly_rpts directory. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt" > Q1_2012.ppt
+
+Tip: If a GET request unexpectedly returns a zero-length file, use the -i parameter with curl to return the response headers in the target file. These headers may provide helpful information for diagnosing the problem.
+
+Request in Python using PycURL import pycurl filehandle = open("Q1_2012.ppt", 'wb')
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write)

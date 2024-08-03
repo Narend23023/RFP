@@ -1,0 +1,99 @@
+Privileged delete is an HCP feature that enables you to delete objects even if they are under retention. This feature is available only for namespaces in enterprise mode. If a namespace is in compliance mode, you cannot delete objects that are under retention.
+
+Privileged delete supports government regulations that require the destruction of certain types of data in response to changing circumstances. For example, companies may be required to destroy particular information about employees who leave. If that data is under retention, it cannot be deleted through normal delete operations.
+
+If the namespace supports versioning, you can turn a privileged delete operation into a privileged purge operation. This deletes all versions of the target object.
+
+When using privileged delete, you need to specify a reason for the deletion. The tenant log records all privileged delete operations, including the specified reasons, thereby creating an audit trail. Using privileged delete, you can also delete objects that are not under retention. You would do this, for example, if you wanted to record the reason for an object deletion.
+
+You cannot use privileged delete to delete objects that are on hold, regardless of their retention settings.
+
+To perform a privileged delete operation through the Tenant Management Console, you need the compliance role. Object specification
+
+With privileged delete, you can delete only one object at a time. To specify the object, you need to include the full path to it in its namespace (starting after rest or data). The path must begin with a forward slash (/).
+
+For example, to delete the Lee_Green_1254 object from the Corporate/Employees directory, you would specify: /Corporate/Employees/Lee_Green_1254
+
+Directory and object names are case sensitive. The separator is the forward slash (/).
+
+Non-UTF-8 characters in directory and object names must be percent encoded. To avoid ambiguity, you should also percent-encode the characters listed in the table below.
+
+Character Percent-encoded value
+
+Space
+
+%20
+
+Tab
+
+%09
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+306/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Character
+
+Percent-encoded value
+
+New line
+
+%0A Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+%5C
+
+Percent-encoded values are not case sensitive.
+
+Performing a privileged delete
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Compliance. 4. On the left side of the Compliance panel, click Privileged Delete.
+
+Note: This option is present only if the namespace is configured to use HCP retention, enterprise mode and your user account includes the compliance role.
+
+5. In the Privileged Delete panel:
+
+a. In the Object to Delete field, type the path to and name of the object you want to delete. b. (Optional) Select Purge all versions of this object to change the delete operation to a purge operation.
+
+This option appears only if versioning is enabled for the namespace.
+
+c. In the Reason for Deletion field, type the reason why you’re deleting the object. This text must be from one through 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+6. Click Delete This Object. 7. In response to the confirming message, click Delete Object.
+
+Tenant Management Console alerts
+
+The Tenant Management Console uses icons to report tenant and namespace status on the tenant Overview, Namespaces, and Search pages and on the namespace Overview panel. The Console also uses icons to report conflicting user accounts on the Users page. These icons, called alerts, are accompanied by text on the tenant Overview page and namespace Overview panel. On all pages on which they appear, alerts have text that’s displayed when you hover over them.
+
+This appendix describes the alerts that can appear on the Console pages and shows the hover text for each alert. Where applicable, the appendix also tells you how to respond to the alerts.
+
+The alerts in each table in this appendix are listed alphabetically by their hover text. Tenant Overview page alerts
+
+Conflicting user accounts

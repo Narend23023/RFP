@@ -1,0 +1,57 @@
+be configured to use multiple storage pools. To store objects on a given extended storage tier, HCP uses all of the storage that’s accessed using the extended storage component access points contained in the storage pools that are configured for that tier.
+
+Considerations for tiering objects from primary storage to HCP S Series or extended storage
+
+When moving an object to a storage tier that includes only HCP S Series or extended storage pools, the Storage Tiering service moves only the object data onto the HCP S Series
+
+or extended storage that is used for the new tier.
+
+Note: For the purpose of storage tiering, HCP treats parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects. HCP keeps all metadata, including custom metadata, for an object on primary running storage. The system metadata for an object points to each specific NFS volume and each
+
+specific S Series or extended storage bucket or container that is used to store the data for that object. Primary storage keeps metadata even if S Series storage is used as an ingest
+
+tier alternative to running storage instead of as a storage tier.
+
+All objects added to a namespace are first written to the ingest tier defined in their namespace service plan. However, HCP can read the data for an object directly from any storage
+
+component the object may later be tiered to.
+
+The service plan for a given namespace defines one or more storage tiers for that namespace and specifies a separate DPL setting for each tier, including the ingest tier. When an object is moved from one storage tier to another, all copies of the object data are removed from the previous tier, and the object is then stored only on the new tier. The DPL for the
+
+new tier is the total number of copies of the object data that must be stored on that tier. The DPL is also the total number of copies of the object data that must be stored in the HCP
+
+repository. (For a metadata-only tier, the DPL is zero.)
+
+When the Storage Tiering service moves an object in a given namespace from a storage tier that includes only ingest tier storage pools to a tier that includes only extended storage
+
+pools, the Storage Tiering service removes all existing copies of the data for that object from the ingest tier storage and stores the specified number of copies of the object data only
+
+on the extended storage that is represented by the pools that are configured for the new storage tier. The Storage Tiering service moves all copies of the data for an object to HCP S Series or extended storage only if all of these are true:
+
+The cryptographic hash algorithm for the object has been stored in both the primary and secondary metadata for the object
+
+The object is not still open for write.
+
+The object is not a part of an in-progress multipart upload.
+
+If the namespace containing the object is being replicated and the target tier is extended storage, the object has already been replicated. The Storage Tiering service can
+
+move objects to HCP S Series storage before the objects are replicated. The namespace containing the object has a service plan that defines a storage tier that includes only HCP S Series or extended storage pools, and the object meets the
+
+criteria for being moved to that tier.
+
+An HCP system can have a full copy of the data for an object that is subject to erasure coding but that has not yet been erasure coded. The Storage Tiering service can tier the data for such an object to HCP S Series or spindown storage but not to extended storage.
+
+While the data for an object is stored only on HCP S Series or extended storage:
+
+If the object is deleted, the data that is on HCP S Series or extended storage is also deleted If the object is an old version that is pruned, the version data that is stored on HCP S Series or extended storage is also deleted
+
+If the object is shredded, the data that is stored on HCP S Series or extended storage is not shredded Encryption and compression of objects in storage pools
+
+The configuration of an HCP S Series or extended storage pool specifies whether the object data should be encrypted and/or compressed when it is stored on the storage that is
+
+used for that pool. Encryption can be enabled only if it was enabled when HCP was first installed. If encryption was not enabled during installation, the System Management Console
+
+does not have an option to encrypt data.
+
+If the encryption option is selected for an HCP S Series or extended storage pool, the Storage Tiering service encrypts object data before writing it to the storage that is used for that

@@ -1,0 +1,51 @@
+Here’s a scenario that shows how a content class collision can cause the Replication service to pause replication of a tenant. In this scenario: System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems.
+
+These events occur in the order shown:
+
+1. On system A, you create a content class named CC1 for T1.
+
+2. Before CC1 is replicated to system B, you create a content class named CC1 for T1 on system B. 3. The Replication service tries to replicate CC1 to system B. The replication is unsuccessful because a different content class named CC1 already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. User account collisions
+
+Each user account you create in an HCP system has an internal ID that uniquely identifies that user account. As a result, two user accounts created on different systems are
+
+different from each other, even if they have the same username and are defined for the same HCP tenant.
+
+A user account collision occurs when the Replication service tries to replicate a user account from one system to another system that already has a different user account with the same username, where both user accounts are defined for the same tenant.
+
+To recover from a user account collision, take one of these actions:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+368/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Change the username for the user account on either of the systems involved in the link.
+
+Delete the user account on either of the systems involved in the link. Here’s a scenario that shows how a user account collision can cause the Replication service to pause replication of a tenant. In this scenario:
+
+System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems.
+
+These events occur in the order shown:
+
+1. On system A, you create a user account with username U1 for T1. 2. Before U1 is replicated to system B, you create a user account with username U1 for T1 on system B. 3. The Replication service tries to replicate U1 to system B. The replication is unsuccessful because a different user account with username U1 already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. Group account collisions
+
+Each HCP group account you create in an HCP system has an internal ID that uniquely identifies that group account. As a result, two group accounts created on different systems are different from each other, even if they are created from the same Active Directory group and are defined for the same HCP tenant. (An HCP group account always has the same name as the AD group it’s created from, so group accounts created from the same AD group on two different systems have the same name as each other.)
+
+A group account collision occurs when the Replication service tries to replicate a group account from one system to another system that already has a different group account
+
+created from the same AD group, where both group accounts are defined for the same tenant.
+
+To recover from a group account collision, delete the group account on either of the systems involved in the link. Here’s a scenario that shows how a group account collision can cause the Replication service to pause replication of a tenant. In this scenario:
+
+System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems.
+
+These events occur in the order shown:
+
+1. On system A, you create an HCP group account for T1 from the AD group named AD1. The name of the group account you create is AD1. 2. Before AD1 is replicated to system B, you create an HCP group account for T1 from the AD group named AD1 on system B. The name of the group account you create is AD1.
+
+3. The Replication service tries to replicate the HCP group account named AD1 to system B. The replication is unsuccessful because a different group account named AD1
+
+already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. Tenant conflicts

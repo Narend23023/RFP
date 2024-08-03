@@ -1,0 +1,123 @@
+Namespaces share the same underlying physical storage. This, together with the multitenancy feature described under "Tenants" below, enables HCP to provide support for cloud storage services.
+
+HCP and default namespaces
+
+An HCP system can have a maximum of 10,000 locally defined namespaces, including one special namespace called the default namespace. Applications are typically written
+
+against namespaces other than the default; these namespaces are called HCP namespaces. The default namespace is most often used with applications that existed before release 3.0 of HCP.
+
+Note: Replication can cause an HCP system to have more than 10,000 namespaces.
+
+The table below outlines the major differences between HCP namespaces and the default namespace.
+
+Feature
+
+HCP namespaces
+
+Default namespaces
+
+Storage usage quotas
+
+✓
+
+Object ownership (not related to POSIX UID)
+
+✓ Access control lists (ACLs) for objects
+
+✓
+
+Object versioning
+
+✓
+
+Multiple custom metadata annotations
+
+✓
+
+Namespace ownership by users
+
+✓
+
+RESTful HTTP/HTTPS API for data access
+
+✓
+
+Non-RESTful HTTP/HTTPS protocol for data access
+
+✓
+
+Data access authentication with HTTP/HTTPS
+
+✓
+
+Hitachi API for Amazon S3, a RESTful, HTTP-based S3 compatible API for data access
+
+✓ NDMP for backup and restore
+
+✓
+
+Tenants
+
+Namespaces are owned and managed by administrative entities called tenants. A tenant typically corresponds to an organization, such as a company or a division or department
+
+within a company.
+
+HCP supports two types of tenants:
+
+HCP tenants
+
+Own HCP namespaces. An HCP system can have multiple HCP tenants, each of which can own multiple namespaces. You can limit the number of namespaces each HCP
+
+tenant can own. In addition to being owned by a tenant, each HCP namespace can have an owner that corresponds to an individual HCP user. The owner of a namespace
+
+automatically has permission to perform certain operations on that namespace. default tenant
+
+Owns the default namespace and only that namespace. An HCP system can have only one default tenant.
+
+An HCP system can have a maximum of 1,000 locally defined tenants, including the default tenant.
+
+Note: Replication can cause an HCP system to have more than 1,000 tenants.
+
+An HCP system has both system-level and tenant-level administrators: System-level administrators
+
+Concerned with monitoring the HCP system hardware and software, monitoring overall repository usage, configuring features that apply across the HCP system, and
+
+managing system-level users.
+
+Tenant-level administrators
+
+Concerned with monitoring namespace usage at the tenant and namespace level, configuring individual tenants and namespaces, managing tenant-level users, and
+
+controlling access to namespaces.
+
+System-level administrators create tenants. Tenant-level administrators create HCP namespaces. The default namespace is created automatically when the default tenant is
+
+created.
+
+You can create the default tenant and namespace only if allowed to do so by the system configuration. Data access methods
+
+HCP supports access to namespace content through namespace access protocols, the HCP Namespace Browser, the HCP metadata query API, and the HCP Search Console.
+
+Namespace access protocols
+
+HCP supports access to namespace content through several industry-standard protocols:
+
+For HCP namespaces only:
+
+REST API, which is a RESTful, HTTP-based API.
+
+Hitachi API for Amazon S3, which is a RESTful, HTTP-based S3 compatible API. With the S3-compatible API, namespaces are called buckets. For the default namespace only, a non-RESTful implementation of HTTP.
+
+For all namespaces:
+
+WebDAV
+
+CIFS NFS
+
+These protocols support various operations: storing data, creating directories, viewing object data and metadata, viewing directories, modifying certain metadata, and deleting objects. You can use these protocols to access data with a web browser, third-party applications, Windows® Explorer, and other native Windows and Unix tools.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+3/907
+
+6/25/24, 11:33 AM

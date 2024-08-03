@@ -1,0 +1,55 @@
+The metadata query engine indexes the value as true or false. Values that start with 1, t, or T are treated as true. Any other values are treated as false.
+
+Integer
+
+The metadata query engine indexes the value as an integer. Users can base queries on comparative numeric values. The metadata query engine indexes values for a content property with a data type of integer only if the values conform to the format for the property. Float
+
+The metadata query engine indexes the value as a decimal number with or without an exponent, depending on the value. Users can base queries on comparative numeric values. The metadata query engine indexes values for a content property with a data type of float only if the values conform to the format for the property. Datetime
+
+The metadata query engine indexes the value as a date and time. Users can base queries on comparative datetime values. The metadata query engine indexes values for a content property with a data type of date only if the values conform to the format for the property.
+
+Format for the integer and float data types
+
+For a content property with the integer or float data type, you can specify a format that values needs to match in order to be indexed. The following sections include basic information about these formats. You can find more information at: http://docs.oracle.com/javase/6/docs/api/java/text/DecimalFormat.html
+
+Integer data type formats
+
+The basic format for a content property with the integer data type is:
+
+optional-prefixnumber-patternoptional-suffix
+
+A number pattern for the integer data type consists of any number of number signs (#), followed by any number of zeroes. Both number signs and zeroes represent any number of digits, including none. The metadata query engine does not consider the length of the number pattern when matching values.
+
+A number pattern can include a thousands separator. With the integer data type, the metadata query engine recognizes either commas (,) or periods (,) as the thousands separator. For example, a value of 1234 matches any of these number patterns:
+
+0 000 ## ###0000 0,0 ##,000
+
+If a content property value contains a thousands separator, the value matches only number patterns that contain the same thousands separator. For example, the value 1,234 matches the last two patterns above, but not the first four. It also does not match 0.0 or ##.000.
+
+The prefix or suffix in the format for the integer data type can be any character string, with a few exceptions. For example, a prefix or suffix cannot include a period (.) or percent sign (%). The format must include white space between the integer pattern and the suffix, if used.
+
+For example, for the metadata query engine to index the value $1234 as an integer, the format for the content property must have a dollar sign ($) in front of the integer pattern, with no space between them.
+
+Here are some examples of integer formats with examples of values that match them: Format Example $ 0,0 $ 1,234 ###0 AD 2012 AD ~# mph ~55 mph
+
+If you don’t specify a format for a content property with the integer data type, the metadata query engine indexes only sequences of digits with no special characters.
+
+Float data type formats
+
+For the format for a content property with the float data type, you can use any of the formats for the integer data type. However, with the float data type, the thousands separator, if used, must be a comma (,).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+297/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can include a period as a decimal separator in the number pattern for the float data type, although this is not required. If you do include it, any number signs (#) must come after any zeroes in the part following separator. For example, a value of 1234.5 matches any of these number patterns:
+
+0 00.0 .0 #0.0# ##,000
+
+0,0 #,0.0#
+
+You can also include an exponent character (E) followed by one or more zeroes in the number pattern for the float data type. However, values with an exponent character also match patterns that don’t include the exponent character, and values without an exponent character also match patterns with an exponent character. For example, a value of 1234E5 matches any of these number patterns:

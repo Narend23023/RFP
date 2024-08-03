@@ -1,0 +1,87 @@
+The listed chained links are identified by link name.
+
+In XML, the element that identifies each chained link is name. In JSON, the
+
+name in the name/value pair that lists the chained links is name. tenants
+
+List
+
+Lists the HCP tenants that are candidates for or included in the
+
+replication link, as applicable.
+
+The listed tenants are identified by tenant name.
+
+In XML, the element that identifies each tenant is name. In JSON, the name in the name/value pair that lists the tenants is name.
+
+Example
+
+Here’s an XML example of the content data type:
+
+<content> <defaultNamespaceDirectories> <name>brochures_2017</name> </defaultNamespaceDirectories> <chainedLinks/> <tenants> <name>Finance</name> <name>HR</name> <name>Sales-Mktg</name> </tenants> </content> contentClass
+
+The contentClass data type describes the contentClasses resource for tenants.
+
+Properties
+
+The table below describes the properties included in the contentClass data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+contentProperties
+
+content
+
+Specifies the set of content properties in the content class.
+
+This property is optional on a PUT request. Properties
+
+The set of content properties specified in the request body replaces the set of content properties currently in the content class. To remove all content properties, specify an empty set.
+
+name
+
+String
+
+Specifies the name of the content class. Content class names must be from one through 64 characters long, can contain any valid UTF-8 characters, including white space, and are not case sensitive.
+
+This property is required on a PUT request. namespaces
+
+List
+
+Associates zero, one, or more namespaces with the content class. Valid values are the names of existing search- enabled namespaces.
+
+This property is optional on a PUT request.
+
+The set of namespaces specified in the request body replaces the set of namespaces currently associated with the content class. To dissociate all namespaces from the content class, specify an empty set.
+
+In XML, element that identifies each namespace is name. In JSON, the name in
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+456/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+the name/value pair that lists the namespaces is name. Example
+
+Here’s an XML example of the contentClass data type:
+
+<contentClass> <name>DICOM</name> <contentProperties>
+
+<contentProperty> <name>Doctor_Name</name> <expression>/dicom_image/doctor/name</expression> <type>STRING</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Doctor_Specialty</name> <expression>/dicom_image/doctor/specialties/specialty</expression> <type>STRING</type> <multivalued>true</multivalued> <format></format> </contentProperty> <contentProperty> <name>Followup_Needed</name> <expression>/dicom_image/followup_needed</expression> <type>BOOLEAN</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Image_Date</name> <expression>/dicom_image/image/date</expression> <type>DATE</type> <multivalued>false</multivalued> <format>MM/dd/yyyy</format> </contentProperty> <contentProperty> <name>Image_Type</name> <expression>/dicom_image/image/@type</expression> <type>STRING</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty>

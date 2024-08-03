@@ -1,0 +1,139 @@
+Request headers
+
+DELETE /rest/quarterly_rpts/obsolete HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334829227
+
+Content-Length: 00
+
+Working with system metadata
+
+When converting legacy applications to use the RESTful HTTP interface to access an HCP namespace, be aware that the values used to specify certain metadata settings differ
+
+from those used for metadata settings in the default namespace and HCAP 2.x archives.
+
+Specifying metadata on object creation
+
+You use the HTTP PUT method to store an object in the namespace and override the default values for its metadata. Access permission
+
+To specify metadata in a request to store an object, you need write permission. Additionally, to specify the hold parameter, you also need privileged permission.
+
+Request header
+
+PUT /rest/directory/file?retention=retention HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+acl
+
+No
+
+Stores a predefined ACL for the object. One of:
+
+all_read
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+762/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+Grants read permission for the object to all users
+
+auth_read
+
+Grants read permission for the object to all authenticated users Content-Type
+
+No
+
+Specifies the media type of the resource. This header sends a string along with the file to specify its
+
+format.
+
+Example
+
+"Content-Type:text/plain"
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+hold
+
+No
+
+Places an object on hold or specifies that it is not on hold. Either true or false. index
+
+No
+
+Specifies whether the object should be indexed for search. Either true or false.
+
+label_hold
+
+No
+
+Specifies whether to place an object on labeled hold and if true, specifies a JSON format array containing pairs of one or more unique labeled hold IDs and an associated hold value.
+
+id
+
+Unique identifier string for the labeled hold. The maximum ID size is 64 characters. hold
+
+Specifies whether the object is on labeled hold using this id. Either true or false.
+
+Example
+
+label_hold=[{"id":"MY-HOLD-ID1","hold":true}, {"id":"MY-HOLD-ID2","hold":true}]
+
+retention
+
+No
+
+Specifies the retention setting for the object. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you
+
+add it to the namespace or when its retention setting is -2. The value -0 is equivalent to 0 (zero).
+
+1 or Deletion Prohibited
+
+Prevents the object from being deleted and its retention setting from being changed. You can
+
+assign this value to an object that is not in a retention class at any time. If an object is assigned to a retention class and that class is then deleted, the retention setting for
+
+that object changes to -1.
+
+2 or Initial Unspecified
+
+Specifies that the object does not yet have a retention setting. You can assign this value to an object when you add the object to the namespace. You can also directly change the retention setting for an object from 0 to ‑2. You can change ‑2 to any other retention setting. datetime
+
+Prevents the object from being deleted until the specified date and time. You can assign this value
+
+to an object that is not in a retention class if the specified date and time is later than the current retention setting for the object. You cannot assign it to an object for which the current retention
+
+setting is -1. offset
+
+Specifies a period for which to retain the object. You can assign this value to an object that is not in

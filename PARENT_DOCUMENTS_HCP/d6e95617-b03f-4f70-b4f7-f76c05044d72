@@ -1,0 +1,115 @@
+The question mark and asterisk characters do not function as wildcards when specified within double quotation marks (") or in an exact query.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+881/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Wildcards between text that the metadata query engine considers to be separate search terms are not valid. For example, the search string below does not match the path test1.txt
+
+because the wildcard is between an alphabetic character and a numeric character:
+
+tes*1 Boolean criteria
+
+You can create any and all searches that are more complex by using Boolean operations in the search criteria. To specify these operations, you use the plus and minus signs:
+
+A plus sign (+) prefixed to a search term means returned objects must contain that term. A minus sign (-) prefixed to a search term means returned objects cannot contain that term.
+
+You can use plus signs and minus signs on multiple terms, with or without wildcards, and in any order. When used with a quoted term, the symbol comes before the opening quotation mark.
+
+Boolean criteria in any searches
+
+The table below describes how Boolean criteria work in any searches.
+
+Symbol
+
+Description
+
+Examples
+
+Plus sign (+)
+
+Works like a logical AND. All returned objects must include the term
+
+with the plus sign.
+
+Search terms: +chief +executiveSearch results: Objects that contain both chief AND executive
+
+This is equivalent to an all search using the same terms without plus signs.
+
+Search terms: +chief +executive officerSearch results: Objects that contain both chief AND executive, regardless of whether they contain
+
+officer.
+
+Minus sign (-)
+
+Works like a logical NOT. Returned objects cannot include the term
+
+Search term: -officerSearch results: Objects that do NOT contain with the minus sign.
+
+officer
+
+Search terms: +chief +executive -officerSearch results: Objects that
+
+contain both chief AND executive and do NOT contain officer
+
+Search terms: chief executive -officer Search results: Objects that contain chief or executive and do NOT contain officer
+
+Boolean criteria in all searches
+
+The table below describes how Boolean criteria work in all searches. Symbol
+
+Description
+
+Examples
+
+Plus sign (+)
+
+Works like a logical AND. Returned objects must include the term with the plus sign.
+
+Search terms: +chief +executiveSearch results: Objects that contain
+
+both chief AND executive
+
+This is equivalent to an all search with the same terms without plus
+
+signs.
+
+Search terms: +chief +executive officer Search results: Objects that contain chief AND executive AND officer
+
+Minus sign (-)
+
+Works like a logical NOT. Returned objects cannot include the term
+
+Search term: -officer Search results: Objects that do NOT contain
+
+with the minus sign.
+
+officer
+
+Search terms: +chief +executive -officer Search results: Objects that
+
+contain both chief AND executive and do NOT contain officer
+
+Search terms: chief executive -officer Search results: Objects that contain both chief AND executive and do NOT contain officer Examples of simple searches
+
+Example: Search for any of four terms
+
+To search for any of the terms Europe, accounting, report, 2011, select Any of these words as the comparison type and enter this in the text field:
+
+Europe accounting report 2011
+
+Example: Search for any of two wildcarded terms
+
+To search for any terms beginning with prod or doc, select Any of these words as the comparison type and enter this in the text field: prod* doc*
+
+Each term is wildcarded in order to find objects in which it occurs either as a whole word or as the beginning of a word, such as in product, produces, documents, or documentation.
+
+Example: Search for all of three terms — one wildcarded, two not
+
+To search for both of the terms development and slides and also terms beginning with present, select All of these words as the comparison type and enter this in the text field: development present* slides
+
+The second term is wildcarded in order to find objects in which it occurs either as a whole word or as the beginning of a word, such as in presentation or presenter.

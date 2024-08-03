@@ -1,0 +1,41 @@
+capacity and Node 2 reaches 23% used capacity, the service will stop.
+
+The following figure shows a best-practice configuration where Pools A and B each have their own set of S Series Nodes. There is no node sharing between the pools.
+
+For Pool A, because there is a greater than 10% disparity in the used capacity between Nodes 1 and 2 (Note 1 = 36% used, Node 2 = 18% used), the S Series Balancing service will have work to do when it runs. For Pool B, because there is a less than 10% disparity in the used capacity between Nodes 3 and 4 (Node 3 = 36% used, Node 4 = 32% used), the HCP S Series Balancing service will not have any work to perform.
+
+Poor practices
+
+There are some configuration scenarios that can prevent the HCP S Series Balancing service from moving data, or can lead to less-than-optimal performance. When pools share some, but not all, of the same S Series Nodes, an object imbalance results across nodes. Data from any pool cannot be placed on any node, which prevents the HCP S Series
+
+Balancing service algorithm from using all available capacity. In some instances, capacity on one S Series Node in a pool should be moved to another node in the pool, but there is insufficient data to move to balance the nodes.
+
+The following figure shows a configuration where Pools A and B share Node 1 but not Node 2. Because there is a greater than 10% disparity in the used capacity between Nodes 1 and 2 (Node 1= 41% used, Node 2 = 9% used), the HCP S Series Balancing service has work to do for Pool B. When the service runs, data will be moved from Node 1 to Node 2. Data movement will occur each time the HCP S Series Balancing service is scheduled to run, or when the service is initiated manually from the Overview page of the System Management Console.
+
+However, only the data available to Pool B (in Bucket 2) will be moved. As mentioned earlier, the HCP S Series Balancing service completes when there is a less than 10% disparity in the used capacity between the nodes that are participating in balancing. In this scenario, even after the 5 TB in Bucket 2 is moved from Node 1 to Node 2, there will still be a greater than 10% balance disparity. The HCP S Series Balancing service will continue to report that it has work to do, but it will be unable to address the disparity. To correct this poorly performing configuration, you could create another bucket on Node 2, and add the bucket to Pool A.
+
+HCP S Series Balancing service monitoring
+
+The HCP System Management Console provides several ways to monitor various aspects of HCP S Series Balancing service processing.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+123/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The System Events page in the Console displays HCP S Series Balancing service event status and metrics about each event. Metrics include the number of objects examined, the number of bytes examined, the number of objects moved to another S Series Node, and the number of bytes moved. The S Series Balancing page in the Console displays balancing status and metrics for each pool configured to use the service. Metrics include the pool balancing status (balanced, balancing, paused, unscheduled, or unavailable) and the percent balanced. Note: The HCP S Series Balancing service reports that a pool is balanced when the S Series Node in the pool have a percent-used disparity of less than 10%. The Overview, Services, and Monitoring System Events pages in the Console show HCP S Series Balancing service status.
+
+Scavenging service
+
+The Scavenging service ensures that objects in the repository have valid metadata. When the service runs, it verifies that both the primary metadata for each object and the
+
+secondary metadata are complete, valid, and in sync with each other.
+
+For the purpose of scavenging, HCP treats these as individual objects:
+
+Parts of multipart objects Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+To correct violations it detects, the Scavenging service tries to rebuild or repair the problem metadata:

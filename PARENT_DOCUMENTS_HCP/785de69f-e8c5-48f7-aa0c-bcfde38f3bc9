@@ -1,0 +1,109 @@
+Here’s a sample URL that identifies an object:
+
+https://finance.europe.hcp.example.com/webdav/data/Corporate/Employees/2193_John_Doe
+
+You cannot tell from a URL whether it represents an object, directory, or symbolic link. URLs for metafiles and metadirectories
+
+To access a metafile or metadirectory, you use a URL that includes the metadata directory. The format for this is:
+
+https://namespace-name.tenant-name.hcp-domain-name/webdav/
+
+metadata/metadirectory-path[/metafile-name]
+
+Here’s a sample URL that identifies a metadirectory: https://finance.europe.hcp.example.com/webdav/metadata/Corporate/Employees/2193_John_Doe
+
+Here’s a sample URL that identifies a metafile:
+
+https://finance.europe.hcp.example.com/webdav/metadata/Corporate/Employees/2193_John_Doe/shred.txt
+
+URL considerations
+
+The following considerations apply to specifying URLs in WebDAV requests against a namespace. URL length
+
+The portion of a URL after data or metadata, excluding any appended query parameters, is limited to 4,095 bytes. If a WebDAV request includes a URL that violates that limit, HCP
+
+returns an HTTP 414 (Request URI Too Large) error code.
+
+URL character case
+
+All elements of a URL except http[s] and the hostname are case sensitive. Object names with non-ASCII, nonprintable characters
+
+When you store an object or directory with non-ASCII, nonprintable characters in its name, those characters are percent-encoded in the name displayed back to you. In the core- metadata.xml file for an object, those characters are also percent encoded, but the percent signs (%) are not displayed.
+
+Regardless of how the name is displayed, the object or directory is stored with its original name, and you can access it either by its original name or by the name with the percent-
+
+encoded characters.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+790/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Percent-encoding for special characters
+
+Some characters have special meaning when used in a URL and may be interpreted incorrectly when used for other purposes. To avoid ambiguity, percent-encode the special
+
+characters listed in the table below. Percent-encoded values are not case sensitive.
+
+Character
+
+Percent-encoded values
+
+Space
+
+%20
+
+Tab
+
+%09
+
+New line
+
+%0A
+
+Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C
+
+Quotation marks with URLs in command lines
+
+When using the HCP management API, you work in a Windows, Unix, or Mac OS X shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters may indicate that a process should be put in the background.
+
+To avoid the possibility of the Windows, Unix, or Mac OS X shell misinterpreting special characters in a URL, always enclose the entire URL in double quotation marks. WebDAV properties
+
+WebDAV properties are name/value pairs that provide information about items in a namespace. To store and retrieve property values, you use the PROPPATCH and PROPFIND
+
+methods, respectively.
+
+Properties exist in XML namespaces. To fully identify a property, you need to specify the namespace it’s in as well as the property name.
+
+All the properties defined in the WebDAV specification are in the DAV: namespace. So, for example, the standard WebDAV property named creationdate is in the DAV: namespace.
+
+For information about the standard WebDAV properties, see RFC 2518 or 4918. Live and dead properties

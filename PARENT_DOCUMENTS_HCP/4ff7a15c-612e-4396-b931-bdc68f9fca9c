@@ -1,0 +1,145 @@
+The smtpProtocol data type describes the smtp resource for HCPnamespaces.
+
+Properties
+
+The table below describes the properties included in the smtpProtocol data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+emailFormat
+
+String
+
+Specifies the format for email objects added through the SMTP protocol. Valid values are: .eml .mbox
+
+The default is .eml.
+
+emailLocation
+
+String
+
+If the specified directory does not exist, HCP creates it.
+
+Specifies the path for the directory in which to store email objects added through the SMTP protocol. This is the path relative to the root of the namespace (that is, rest, data, or fcfs_data). Start and end the path with a forward slash (/), like this:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+514/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+/email/company_all/
+
+The default is /email/.
+
+Directory names are case sensitive.
+
+enabled Boolean
+
+Specifies whether the SMTP protocol is enabled for the namespace. Valid values are:
+
+true
+
+SMTP is enabled.
+
+false
+
+SMTP is disabled.
+
+The default is false.
+
+ipSettings
+
+ipSettings
+
+Specifies which IP addresses can and cannot access the namespace through the SMTP protocol.
+
+separateAttachments Boolean
+
+Specifies whether HCP should store attachments separately from the email they accompany. Valid values are:
+
+true
+
+Store attachments separately.
+
+false
+
+Do not store attachments separately.
+
+The default is false. Example
+
+Here’s an XML example of the smtpProtocol data type:
+
+<smtpProtocol> <emailFormat>.eml</emailFormat> <emailLocation>/finance/email/<emailLocation> <enabled>true</enabled> <ipSettings> <allowAddresses> <ipAddress>192.168.45.213</ipAddress> </allowAddresses> <denyAddresses/> </ipSettings> <separateAttachments>false</separateAttachments> </smtpProtocol>
+
+Specifying retention values
+
+These properties require you to specify a retention value:
+
+The retentionDefault property of the complianceSettings data type. The value of this property can be a special value, offset, retention class, or fixed date. The minimumRetentionAfterInitialUnspecified property of the complianceSettings data type. The value of this property can be an offset. The value property of the retentionClass data type. The value of this property can be a special value or an offset.
+
+Specifying a special value
+
+To specify a special value as a retention value, use one of these: 0 Deletion Allowed
+
+Allows the object to be deleted at any time.
+
+1 Deletion Prohibited
+
+Prevents the object from ever being deleted by means of a normal delete operation. If the namespace is in enterprise mode, however, the object can be deleted by means of a privileged delete operation.
+
+2 Initial Unspecified
+
+Prevents the object from being deleted but allows its retention setting to be changed.
+
+These values are not case sensitive.
+
+Specifying an offset
+
+To specify an offset as a retention value, use a standard expression that conforms to this syntax:
+
+^A([+-]\d+y)?([+-]\d+M)?([+-]\d+w)?([+-]\d+d)?([+-]\d+h)?([+-]\d+m)?([+-]\d+s)?$
+
+The list below explains this syntax.
+
+^
+
+Start of the expression
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+515/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+$
+
+End of the expression
+
+( )
+
+Sequence of terms treated as a single term
+
+? Indicator that the preceding term is optional
+
+[ ]
+
+Group of alternatives, exactly one of which must be used

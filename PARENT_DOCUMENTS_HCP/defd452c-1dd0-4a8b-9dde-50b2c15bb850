@@ -1,0 +1,81 @@
+NFS
+
+This section of the Help contains information on using the NFS namespace access protocol.
+
+Using NFS
+
+NFS is one of the industry-standard protocols HCP supports for namespace access. To access a namespace through NFS, you can write applications that use any standard NFS
+
+client library, or you can use the command line in an NFS client to access the namespace directly.
+
+Using the NFS protocol, you can store, view, retrieve, and delete objects. You can also change certain system metadata for existing objects.
+
+For you to access a namespace through NFS, this protocol must be enabled in the namespace configuration. If you cannot use NFS to access the namespace, contact your tenant administrator.
+
+This chapter explains how to use NFS for namespace access.
+
+Namespace access with NFS
+
+You access the namespace through NFS by mounting a namespace directory on an NFS client. You can mount the namespace as a whole, either root directory (data or metadata), or any specific data directory or metadirectory. Additionally, you can have multiple directories mounted at the same time.
+
+Once mounted, the namespace appears to be part of the local file system, and you can perform any of the operations HCP supports for NFS.
+
+When mounting a namespace, you can use either the domain name of the HCP system or the IP address of a node in the system. Here’s the format for each method: mount-otcp,vers=3,timeo=600,hard,intr -t nfsnfs.hcp-domain-name:/fs/tenant-name/namespace-name
+
+[/(data|metadata)[/directory-path]] mount-point-path
+
+mount-otcp,vers=3,timeo=600,hard,intr -t nfsnode-ip-address:/fs/tenant-name/namespace-name
+
+[/(data|metadata)[/directory-path]] mount-point-path
+
+The parameters shown are recommended but not required.
+
+All parts of the path following the domain name or IP address are case sensitive. Examples:
+
+mount -o tcp,vers=3,timeo=600,hard,intr -t nfs nfs.hcp.example.com:/fs/europe/finance HCP-finance
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+799/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+mount -o tcp,vers=3,timeo=600,hard,intr -t nfs
+
+nfs.hcp.example.com:/fs/europe/finance/data datamount mount -o tcp,vers=3,timeo=600,hard,intr -t nfs 192.168.210.16:/fs/europe/finance/data/presentations/images HCP-images
+
+mount -o tcp,vers=3,timeo=600,hard,intr -t nfs nfs.hcp.example.com:/fs/europe/finance/metadata metadatamount
+
+Note: When mounting the namespace, do not specify the rsize and wsize options. Omitting these options allows HCP to use the optimal values based on system configuration. NFS return codes
+
+The list below describes the possible return codes for NFS requests against a namespace.
+
+EACCES
+
+The requested operation is not allowed. Reasons for this return code include attempts to:
+
+Rename an object Rename a directory that contains one or more objects
+
+Overwrite an object Modify the content of an object
+
+Add a file (other than a file containing custom metadata), directory, or symbolic link anywhere in the metadata structure Delete a metafile or metadirectory EAGAIN
+
+HCP tried to read the requested object from another system in the replication topology, and the data either could not be read or was not yet available.
+
+EIO
+
+The requested operation is not allowed. This code is returned in response to attempts to:
+
+Shorten the retention period of an object
+
+Create a hard link ENOTEMPTY
+
+For an rm request to delete a directory, the specified directory cannot be deleted because it is not empty.
+
+EROFS
+
+For an rm request to delete an object, the specified object cannot be deleted because it is under retention.
+
+NFS examples

@@ -1,0 +1,25 @@
+Query parameter for restarting indexing While search is enabled for a namespace, you can restart metadata query engine indexing of the namespace from the time the namespace was created or from a specified date. To do this, you use this query parameter:
+
+resetMQECheckpoint=(mm/dd/yyyy|0)
+
+The value 0 (zero) restarts indexing from the time the namespace was created.
+
+You use the resetMQECheckpoint query parameter with a POST request against the namespace resource.
+
+Here’s a sample POST request that restarts metadata query engine indexing of the accounts-receivable namespace from the time the namespace was created:
+
+curl -k -i -d "<namespace/>" -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable?resetMQECheckpoint=0” Example
+
+Here’s an XML example of the namespace data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<namespace> <aclsUsage>ENFORCED</aclsUsage> <authUsersAlwaysGrantedAllPermissions>true </authUsersAlwaysGrantedAllPermissions> <allowPermissionAndOwnershipChanges>true </allowPermissionAndOwnershipChanges> <appendEnabled>false</appendEnabled> <atimeSynchronizationEnabled>false</atimeSynchronizationEnabled> <authMinimumPermissions> <permission>BROWSE</permission> <permission>READ</permission> <permission>WRITE</permission> </authMinimumPermissions> <creationTime>2017-02-09T15:42:36-0500</creationTime> <customMetadataIndexingEnabled>true</customMetadataIndexingEnabled> <customMetadataValidationEnabled>true</customMetadataValidationEnabled> <description>Created for the Finance department at Example Company by Lee Green on 2/9/2017.</description> <dpl>Dynamic</dpl> <enterpriseMode>true</enterpriseMode> <allowErasureCoding>true</allowErasureCoding> <fullyQualifiedName>Accounts-Receivable.Finance.hcp.example.com </fullyQualifiedName> <hardQuota>50 GB</hardQuota> <hashScheme>SHA-256</hashScheme> <indexingDefault>true</indexingDefault> <indexingEnabled>true</indexingEnabled> <isDplDynamic>true</isDplDynamic> <mqeIndexingTimestamp>2017-02-26T18:11:13-0400</mqeIndexingTimestamp>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+485/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <multipartUploadAutoAbortDays>30</multipartUploadAutoAbortDays> <name>Accounts-Receivable</name> <optimizedFor>CLOUD</optimizedFor> <owner>pblack</owner> <ownerType>LOCAL</ownerType> <readFromReplica>true</readFromReplica> <replicationEnabled>true</replicationEnabled> <replicationTimestamp>2017-02-27T06:45:52-0500</replicationTimestamp> <searchEnabled>true</searchEnabled> <servicePlan>Short-Term-Activity</servicePlan> <serviceRemoteSystemRequests>true</serviceRemoteSystemRequests> <softQuota>75</softQuota> <s3UnversionedOverwrite>false</s3UnversionedOverwrite> <tags>
+
+<tag>Billing</tag> <tag>lgreen</tag> </tags> <id>0e774b8d-8936-4df4-a352-b68766b5c287</id> <authAndAnonymousMinimumPermissions> <permission>BROWSE</permission> <permission>READ</permission> </authAndAnonymousMinimumPermissions> </namespace> namespaceDefaults

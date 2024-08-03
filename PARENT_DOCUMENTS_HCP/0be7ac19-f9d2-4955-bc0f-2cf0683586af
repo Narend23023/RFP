@@ -1,0 +1,59 @@
+extended storage component access point, HCP uses the storage that’s associated with different access points to store any duplicate copies of object data that are stored on the tier that contains the storage pool.
+
+When HCP stores a single copy for each object on a given HCP S Series or extended storage tier, HCP still distributes the object data storage evenly across all of the storage component access points contained in all storage pools configured for a given HCP S Series or extended storage tier. This ensures that data that’s stored on a given tier is protected as much as possible and the storage that’s used for a given tier is allocated as efficiently as possible.
+
+Service plans and read requests
+
+When creating service plans, you should keep in mind how HCP handles read requests.
+
+In response to a read request, HCP tries to retrieve the data for an object from these sources, in the order specified below:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+61/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+1. Primary running storage
+
+2. HCP S Series storage 3. Primary spindown storage
+
+4. NFS storage 5. Cloud storage
+
+6. Primary storage on a remote system to which the object has been replicated
+
+In response to a read request, HCP tries to retrieve the metadata for an object from these sources, in the order specified below:
+
+1. Primary running storage 2. Primary spindown storage 3. Primary running storage on a remote system to which the object has been replicated
+
+Service plans for tenants and namespaces
+
+When you create an HCP tenant, you have the option of associating a service plan with it. This plan then applies to each of the tenants namespaces. Alternatively, you can allow HCP tenant administrators to associate service plans with their individual namespaces. In this case, the tenant administrator can choose from any of the service plans that are
+
+defined at the system level (including Default).
+
+When you create the default tenant and namespace, you associate a service plan with the default namespace. The default tenant administrator can choose a different service plan for the default namespace at any time.
+
+You can change the service plan that’s associated with an HCP tenant at any time. However, if you switch to allowing the tenant to associate service plans with individual
+
+namespaces, you can no longer associate a service plan with the tenant.
+
+When allowed to choose service plans for individual namespaces, tenant administrators see only the service plan names and descriptions, and not service plan rules. The names and descriptions can indicate the namespace usage patterns and properties with which the service plans are intended to work. Thus, tenant administrators do not need to be aware
+
+of the HCP system storage in order to associate service plans with namespaces. Service plans and replication
+
+HCP replicates the associations between service plan names and tenants or namespace but does not replicate the service plans themselves. If you change the associations between service plan names and tenants on namespaces on a replica HCP system, the change is replicated to the rest of the HCP systems in the replication topology, ensuring that the service plan name associated with a tenant or namespace remains the same.
+
+HCP does not replicate service plans. This means that replicated tenants or namespaces can be associated with the same service plan name on the two systems involved in a replication link, but the service plan configuration settings on the two systems can be entirely different. For example, a service plan named External Storage can tier to Amazon
+
+storage from system A and to HCP S Series storage on system B. You need to configure the service plans on each system in the replication topology. If you do not configure the service plans, the replicated namespaces and tenants use the Default service plan settings.
+
+Working with service plans
+
+Each namespace has a service plan that defines both a storage tiering strategy and a data protection strategy for the objects in that namespace. At any point in the lifecycle of an object, its storage tiering strategy specifies the types of storage on which copies of that object must be stored, and its data protection strategy specifies the number of object copies
+
+that must be stored on each type of storage.
+
+A service plan is a named specification of HCP service behavior that determines how HCP manages the storage of the data and metadata for objects in a given namespace. For

@@ -1,0 +1,89 @@
+D
+
+The total number of read operations performed in the given namespace, in all the namespaces owned by the given tenant, or in all the HCP namespaces in the HCP system during the reporting interval.
+
+A read of a multipart object counts as a single read operation.
+
+startTime
+
+N/A
+
+The start time of the reporting interval for the set of statistics in the line, in this format: yyyy-MM-ddhh:mm:ss
+
+hh is hours on a 24-hour clock.
+
+For example: 2017-10-07 14:32:47
+
+P
+
+storageCapacity
+
+Used
+
+The total number of bytes of primary running storage occupied by stored data for the given namespace, for all the namespaces owned by the given tenant, or for all the HCP namespaces in the HCP system. This includes object data, system and custom metadata, and any redundant data required to satisfy the applicable service plan.
+
+Used storage capacity also includes storage occupied by the parts of in-progress multipart uploads that have already been written to HCP. Used storage capacity does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads. systemName
+
+N/A
+
+One of:
+
+The name of the domain associated with the data access network for the tenant that owns the namespace to which the set of statistics in the line applies The name of the domain associated with the data access network for the tenant to which the set of aggregated statistics in the line applies The name of the domain associated with the [hcp_system] network for the HCP system to which the set of aggregated statistics in the line applies tenantName
+
+N/A
+
+Either:
+
+The name of the tenant that owns the namespace to which the set of statistics in the line applies The name of the tenant to which the set of statistics in the line applies
+
+In lines that contain systemwide statistics, this field has no value.
+
+tieredBytes P
+
+Total number of bytes of object data currently stored on primary spindown storage (if the system includes spin down storage), on HCP S Series, or on
+
+extended storage for the given namespace, for all the namespaces owned by the given tenant, or for all the HCP namespaces in the HCP system.
+
+On HCP S Series only, the total number of bytes includes parts of in-progress multipart uploads regardless of whether the upload of the part has finished. This number does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+184/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Identifier
+
+Type Value
+
+multipart uploads. tieredObjects
+
+P
+
+The total number of objects with data currently stored on primary spindown storage (if the system includes spindown storage), on HCP S Series, or on
+
+extended storage for the given namespace, for all the namespaces owned by the given tenant, or for all the HCP namespaces in the HCP system.
+
+Each part of a multipart object counts as a separate object and, on HCP S Series only, each part of an in-progress multipart upload counts as a separate object.
+
+valid
+
+N/A
+
+The status of the set of statistics in the line. Possible values are:
+
+true
+
+HCP successfully collected all statistics in the set.
+
+false
+
+The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to one or more nodes being unavailable during that time, to a network failure, or to other hardware issues. writes
+
+D
+
+The total number of write operations successfully performed in the given namespace, in all the namespaces owned by the given tenant, or in all the HCP namespaces in the HCP system during the reporting interval.
+
+Each upload of a part for a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Sample chargeback report

@@ -1,0 +1,75 @@
+3. Click Add RADIUS Server.
+
+Tip: After adding a RADIUS server, test the connection to it.
+
+Testing the connection to a RADIUS server
+
+You test the connection to a RADIUS server by sending the server a username and password it knows about. HCP indicates that the test was successful if all of these conditions apply:
+
+The connection information is correct. The RADIUS server is running. The specified user name and password are known to the RADIUS server. If any of these conditions don’t apply, HCP indicates that the test failed.
+
+Note: A successful test does not log the user in.
+
+Testing the connection to a RADIUS server
+
+To add, view, test, and manage connections to RADIUS servers, you need the security role.
+
+You can test the connection to a RADIUS server.
+
+1. On the RADIUS page in the System Management Console, click the test control ( 2. In the Test RADIUS Server window, in the Username field, type the user name to use for the test. 3. In the Password field, type the password that goes with the specified user name. 4. Click Test RADIUS Server.
+
+If the test is successful, the panel displays this message:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+137/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Connected to RADIUS server and user was authenticated successfully.
+
+5. When you’re done testing the connection, click Cancel. Modifying a RADIUS server
+
+To add, view, test, and manage connections to RADIUS servers, you need the security role.
+
+1. On the RADIUS page in the System Management Console, click the edit control (
+
+) for the server you want to modify.
+
+2. In the Edit RADIUS Server window, make the changes you want.
+
+If you leave the Shared Secret field empty, the previously set shared secret remains in effect.
+
+3. Click Update RADIUS Server. 4. Click Close. Reordering RADIUS servers
+
+When checking a login with remote authentication, HCP contacts the RADIUS servers in the order in which they’re listed on the RADIUS page until one authenticates the user. If none of the servers authenticates the user, the user cannot log in.
+
+You can change the order in which HCP contacts multiple RADIUS servers. If you configured separate RADIUS server list entries for multiple IP addresses assigned to the same server, you can change the order in which HCP uses those IP addresses to connect to the RADIUS server. You can use the RADIUS page in the System Management Console to:
+
+Move a RADIUS server host name or IP address up in the list, click the move up control ( ) for that entry in the RADIUS server list.
+
+Move a RADIUS server host name or IP address down in the list, click the move down control (
+
+) for that entry in the RADIUS server list.
+
+Deleting a RADIUS server
+
+To add, view, test, and manage connections to RADIUS servers, you need the security role.
+
+1. On the RADIUS page in the System Management Console, click the delete control ( 2. In response to the confirm message, click Delete.
+
+) for the RADIUS server IP address or host name you want to delete.
+
+Configuring a key management server Key management server
+
+A key management server (KM server) is used to administer the full life cycle of HCP cryptographic keys. The KM server controls the generation, usage, storage, archival, and deletion of encryption keys. HCP authenticates with your KM server by using certificates that you install or generate to create a connection with KM server.
+
+HCP supports using one or more KM servers to manage encryption keys. Best practices recommend that you use multiple KM servers for key management because it allows the servers to work together to provide failover and increased availability.
+
+Observe the following guidelines when using KM servers:
+
+Make sure each namespace that uses encryption has access to the network where you configured the KM server.
+
+Make sure your network firewall settings allow the clusters to communicate through the port used for KMIP communications. The default is port number is 5696.

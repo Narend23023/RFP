@@ -1,0 +1,43 @@
+4. On system B, create outbound link BC, including link AB as an inbound link. If T2 still exists on B, also include T2 in the link. 5. On system C, accept the new link. T1 and D1 are read-only on B and C. If T2 is on link BC, T2 is read-write on B and read-only on C. Replication restarts on link BC. Failover and failback in an active/passive one-to-many topology
+
+In an active/passive one-to many replication topology, one HCP system replicates to two or more other systems.
+
+If one of the replicas fails, you follow the normal pattern for recovering from a replica failure. If more than one replica fails, you follow the normal recovery pattern for each replication link individually. The order in which you perform the recovery procedures doesn’t matter.
+
+Throughout these failure scenarios, the HCP tenants and namespaces and default-namespace directories on each link remain read-write on the primary system and read-only on the replicas. Therefore, even if the links include the same items, no conflicts can occur.
+
+However, if two or more links include the same HCP tenants and namespaces and default-namespace directories and the primary system fails, these items can be read-write on multiple systems at the same time. This can lead to conflicts during data recovery. For example, assume a replication topology in which, when all three systems are healthy:
+
+System A replicates to system B on link AB. Link AB includes HCP tenant T1. System A replicates to system C on link AC. Link AC also includes HCP tenant T1.
+
+1. On system B, fail link AB over to B.
+
+T1 becomes read-write on B and read-only on A and remains read-only on C.
+
+2. On system C, fail link AC over to C.
+
+T1 becomes read-write on C and remains read-only on A and read-write on B. T1 is now read-write on two systems. Tip: To prevent recovery conflicts, ensure that clients write to only system B or only system C while both systems are read-write.
+
+3. When system A becomes available again, on system B, restore link AB.
+
+You could restore link AC first. The order in which you restore the links doesn’t matter.
+
+4. On system A, accept the restored link. 5. On system B, begin and complete data recovery on link AB. When data recovery is complete, T1 remains read-only on A because link AC is stilled failed over to C. It becomes read-only on B and remains read-write on C. Replication resumes on link AB.
+
+6. When data recovery on link AB is complete, on system C, restore link AC. 7. On system A, accept the restored link. 8. On system C, begin and complete data recovery on link AC.
+
+T1 becomes read-write on A and read-only on C and remains read-only on B. Replication resumes on link AC.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+378/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Failover and failback in an active/passive many-to-one topology with disaster recovery support
+
+When HCP systems fail in an active/passive many-to-one topology with disaster recovery support, you need to combine the failback patterns for the many-to-one and chained topologies. For example, assume a replication topology in which, when all five systems are healthy:
+
+System A replicates to system D on link AD. Link AD includes HCP tenant T1, which was originally created on system A. System B replicates to system D on link BD. Link BD includes HCP tenant T2, which was originally created on system B.

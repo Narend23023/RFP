@@ -1,0 +1,63 @@
+then could not be deleted for 21 years after they were created. Retention mode
+
+A namespace can be created in either of two modes: enterprise or compliance. The retention mode determines which operations are allowed on objects that are under
+
+retention:
+
+In enterprise mode, users and applications can delete objects under retention if they have explicit permission to do so. This is called privileged delete (see below).
+
+Also, in enterprise mode, authorized administrative users can delete retention classes and shorten retention class durations.
+
+In compliance mode, objects that are under retention cannot be deleted through any mechanism. Additionally, retention classes (see above) cannot be deleted, and
+
+retention class durations cannot be shortened. Privileged delete
+
+Some localities require that certain data be destroyed in response to changing circumstances. For example, companies may be required to destroy particular information
+
+about employees who leave.
+
+Privileged delete is an HCP feature that enables authorized users to delete objects even if they are under retention. This feature is available only in namespaces that are in enterprise mode. In compliance mode, objects can never be deleted while they are under retention.
+
+When performing a privileged delete operation, the user is required to specify a reason for the deletion. HCP logs each privileged delete operation along with its specified reason, thereby creating an audit trail. Retention hold
+
+To support legal discovery, users and applications can place a hold on selected objects. While an object is on hold, it cannot be deleted through any mechanism, regardless of its retention setting.
+
+Storage usage optimization
+
+HCP uses a number of features to reclaim and balance storage capacity. Compression/Encryption service
+
+The Compression/Encryption service makes more efficient use of HCP storage by compressing object data, thereby freeing space for storing more objects.
+
+Duplicate Elimination service
+
+A repository can contain multiple objects that have identical data but different metadata. When the Duplicate Elimination service finds such objects, it merges their data to free storage space occupied by all but one of the objects. Disposition service
+
+The Disposition service automatically deletes objects with expired retention periods. To be eligible for disposition, an object must have a retention setting that is either a date
+
+in the past or a retention class with automatic deletion enabled and a calculated expiration date in the past.
+
+Version pruning
+
+An HCP namespace can be configured to allow storage of multiple versions of objects. Version pruning is the automatic deletion of previous versions of an object that are older than a specified amount of time. Garbage Collection service
+
+The Garbage Collection service reclaims storage space both by completing logical delete operations and by deleting objects left behind by incomplete transactions.
+
+Capacity Balancing service
+
+The Capacity Balancing service ensures that the percentage of space used is roughly equivalent across all the storage nodes in the system. Balancing storage usage across the nodes helps HCP balance the processing load. Service plans
+
+Specifies the types of storage on which copies of that object must be stored and specifies the number of object copies that must be stored on each type of storage.
+
+By default, throughout the lifecycle of an object, HCP stores that object only on primary running storage, which is storage that is managed by the nodes in the HCP system and consists of continuously spinning disks. However, you can configure HCP to use other types of storage for tiering purposes.
+
+Every service plan defines primary running storage as the initial storage tier, called the ingest tier. The default storage tiering strategy specifies only that tier.
+
+Primary running storage is designed to provide both high data availability and high performance for object data storage and retrieval operations. To optimize data storage
+
+price/performance for the objects in a namespace, you can configure the service plan for that namespace to define a storage tiering strategy that specifies multiple storage tiers. Storage Tiering service
+
+HCP uses the Storage Tiering service to maintain the correct number of copies of each object in a namespace on the storage tiers that are defined by the storage tiering strategy for that namespace. When the number of object copies on a storage tier goes below the number of object copies specified for that tier in the applicable service plan,
+
+the Storage Tiering service automatically creates a new copy of that object on that tier. When the number of copies of an object on a storage tier goes above the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service automatically deletes all unnecessary copies of that object from that tier. Primary spindown storage
+
+On a HCP with SAN-attached storage system, HCP can be configured to use primary spindown storage, which is primary storage that consists of disks that can be spun

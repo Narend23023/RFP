@@ -1,0 +1,25 @@
+Chargeback reports cover only HCP tenants and their namespaces. They do not include the default tenant or its namespace. About chargeback reports
+
+A chargeback report contains aggregated namespace statistics for each HCP tenant that’s defined on the HCP system. For any given tenant, the total number of reads shown for a specific reporting interval is the total number of read operations that occurred during that interval in all the namespaces owned by that tenant.
+
+Chargeback reports also contain aggregated HCP-tenant statistics for the HCP system as a whole. For example, the total number of reads for an HCP system shown for a specific reporting interval is the total number of successful read operations that occurred during that interval in each namespace that’s owned by each HCP tenant that’s defined on the HCP system. System statistics shown in chargeback reports do not include usage data for the default tenant and namespace.
+
+For any HCP tenant that has granted system-level administrative access to itself, chargeback reports also contain statistics for the individual namespaces owned by that tenant. When generated from the System Management Console, chargeback reports are in CSV format. Each line in a report contains the values for one namespace, for one tenant, or for the entire HCP system during a specific reporting interval (that is, during a specific hour, during a specific day, or during the entire report period).
+
+If a chargeback report includes the namespaces that are owned by a tenant, the lines for those namespaces are ordered alphabetically below the lines for that tenant. The lines for the HCP system are at the end of the report. Multiple lines for a tenant, a namespace, or the HCP system are ordered in ascending chronological order.
+
+Generating a chargeback report
+
+When generating a chargeback report, you need to specify the report period and the reporting interval.
+
+To specify the report period, you select start and end dates. The report period starts at 12:00:00 a.m. on the start date (shown as 00:00:00) and ends at 11:59:59 p.m. on the end date. The earliest start date you can specify is either 30 days earlier than the current date or the date when the HCP system was installed (if the system was installed less than 30 days ago). The latest end date you can specify is the current date.
+
+You can use the same date as the start date and the end date for a report period. In this case, the report period starts at 12:00:00 a.m. on the specified date and ends at 11:59:59 p.m. on that date.
+
+The reporting interval you select determines whether the report contains hourly, daily, or total statistics:
+
+An hourly report contains one set of statistics for each hour in the report period for which statistics are available.
+
+If the report period starts on the day when the HCP system was installed, the first set of statistics in the report covers the time the system first came online through the end of the last minute in that hour. For example, if the system came online at 2:30:20 p.m. on July 25th and the report period starts on July 25th, the first set of statistics in the report covers 2:30:20 p.m. through 2:59:59 p.m. on July 25th. If the report period ends on the current day, the last set of statistics in the report covers the time from the start of the current hour to the time when you requested the report. For example, if you request an hourly report at 2:30:15 p.m., the last set of statistics in the report covers 2:00:00 p.m. through 2:30:15 p.m. on the current day.
+
+A daily report contains one set of statistics for each day in the report period, where a day is defined as the period from 12:00:00 a.m. through 11:59:59 p.m. on any given date.

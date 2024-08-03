@@ -1,0 +1,41 @@
+The metadata query engine index resides on the Hitachi Content Platform (HCP) storage nodes. The engine builds and maintains this index by reading objects in the search-enabled namespaces that also have indexing enabled. The engine indexes system metadata, custom metadata (optional), and ACLs. In HCP namespaces that support versioning, it indexes only the most recent version of each object.
+
+The System Management Console shows how current the metadata query engine index is by displaying the date and time before the objects that are guaranteed to be indexed. Index protection level
+
+HCP can store one or two copies of the metadata query engine index. The number of copies stored is called the index protection level.
+
+Storing one copy of the index uses less storage than storing two copies. However, storing two copies helps to ensure the availability of the index in the case of node unavailability. With an index protection level of one, if one or more nodes in a HCP with internal storage or VM system are unavailable, the index is unavailable.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+100/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+In HCP with SAN-attached storage systems without an all-SSD configuration that have an index protection level of one, single-node unavailability does not cause the index to be unavailable because of zero-copy failover. However, if multiple nodes are unavailable, the index might be unavailable depending on which nodes are involved. In contrast, in HCP G10 and G11 all-SSD HCP with SAN-attached storage systems with an index protection level of one, if a node is unavailable, the index is unavailable because it is stored on an internal volume. For this reason, in HCP G10 and G11 all-SSD HCP with SAN-attached storage systems, it is a best practice to set an index protection level of two.
+
+While the metadata query engine index is unavailable:
+
+The metadata query engine does not update the index. The metadata query API does not support object-based queries. If the metadata query engine is selected for the Search Console, searches in the Console return an error.
+
+Enabling and disabling indexing
+
+You can enable and disable metadata query engine indexing. While indexing is enabled, the engine continuously processes objects in order based on the time of their last metadata changes. For new objects, this is the time they were added to the repository. If indexing is disabled after being enabled, the metadata query engine stops all indexing activity. However, it does not delete the existing index, and that index remains available.
+
+When indexing is reenabled after being disabled, the engine updates the index with all the object additions and metadata changes that occurred while indexing was disabled.
+
+When the HCP system is installed or is upgraded from an earlier release, metadata query engine indexing is disabled by default.
+
+Custom metadata indexing
+
+You can choose whether to allow the metadata query engine to index custom metadata. If you allow this, tenant administrators can choose whether to index custom metadata in each of their namespaces. If you disallow custom metadata indexing, custom metadata cannot be indexed in any namespaces. By default, when custom metadata indexing is enabled for a namespace, the metadata query engine indexes the content properties for that namespace and not the full text of custom metadata. If the namespace doesn’t have any associated content properties, no custom metadata is indexed.
+
+Tenant administrators can choose to have the metadata query engine index the full text of custom metadata. If they enable this option, the metadata query engine indexes both content properties, if any exist, and the full text of custom metadata.
+
+Custom metadata can take up a significant amount of the space in the metadata query engine index. Disallowing custom metadata indexing can save space but also means that searches based on custom metadata do not find any objects.
+
+If you disable custom metadata indexing after it has been enabled, the custom metadata that has already been indexed is not removed from the index. Index size
+
+HCP stores the metadata query engine index on predetermined logical volumes on storage nodes. Depending on the type of system (HCP with internal storage, HCP with SAN- attached storage, or VM) and volume configuration, the index shares or does not share the space on these volumes with object data:

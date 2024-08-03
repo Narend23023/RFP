@@ -1,0 +1,45 @@
+The Hitachi API for Amazon S3 is a RESTful, HTTP-based API that is compatible with Amazon S3.
+
+To use the S3 compatible API to perform the operations listed above, you can write applications that use any standard HTTP client library. The S3 compatible API is also compatible with many third-party tools that support Amazon S3. Other bucket access methods
+
+HCP allows access to bucket (namespace) content through several namespace access protocols, HCP Namespace Browser, HCP metadata query API, and Search Console. Namespace access protocols
+
+Along with the S3 compatible API, HCP supports access to namespace content through these industry-standard protocols: a RESTful, HTTP-based API called REST, WebDAV, CIFS, and NFS. HCP also supports access to namespace content through an Swift-compatible API called.
+
+Using the supported protocols, you can access namespaces programmatically with applications, interactively with a command-line tool, or through a GUI. You can use these protocols to perform actions such as storing objects in a namespace, viewing and retrieving objects, changing object metadata, and deleting objects.
+
+HCP allows special-purpose access to namespaces through the SMTP protocol. This protocol is used only for storing email.
+
+The namespace access protocols are configured separately for each namespace and are enabled or disabled independently of each other. When you use the S3 compatible API to create a namespace (bucket), both the S3 compatible API and the REST API are automatically enabled for that namespace. Additionally, both the HTTP and HTTPS ports are open for both protocols (that is, the namespace can be accessed with or without SSL security).
+
+Tenant administrators can enable and disable namespace access protocols for any namespace. This includes enabling the S3 compatible API for namespaces created through other HCP interfaces and disabling the S3 compatible API for namespaces created using the S3 compatible API.
+
+Tip: You can ask your tenant administrator to close the HTTP port for the namespaces you create, thereby allowing only secure access to those namespaces.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+542/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Objects added to a namespace through any protocol, including the S3 compatible API, are immediately accessible through any other protocol that’s enabled for the namespace.
+
+HCP Namespace Browser
+
+The Namespace Browser lets you manage content in and view information about HCP namespaces. With the Namespace Browser, you can:
+
+Store objects List, view, retrieve, and delete objects, including old versions of objects View custom metadata and ACLs for objects, including old versions of objects Create empty directories Display namespace information
+
+HCP metadata query API
+
+The HCP metadata query API lets you search HCP for objects that meet specified criteria. The API supports two types of queries:
+
+Object-based queries
+
+Search for objects based on object metadata. This includes both system metadata and the content of custom metadata and ACLs. The query criteria can also include the object location (that is, the namespace and/or directory that contains the object). These queries use a robust query language that lets you combine search criteria in multiple ways. Object-based queries search only for objects that currently exist in the repository. For objects with multiple versions, object-based queries return only the current version. Operation-based queries
+
+Search not only for objects currently in the repository but also for information about objects that have been deleted. For namespaces that support versioning, operation- based queries can return both current and old versions of objects. Criteria for operation-based queries can include object status (for example, created or deleted), change time, index setting, and location.
+
+The metadata query API returns object metadata only, not object data. The metadata is returned either in XML format, with each object represented by a separate element, or in JSON format, with each object represented by a separate name/value pair. For queries that return large numbers of objects, you can use paged requests. HCP Search Console
+
+The HCP Search Console is an easy-to-use web application that lets you search for and manage objects based on specified criteria. For example, you can search for objects that were stored before a certain date or that are larger than a specified size. You can then delete the objects listed in the search results or prevent those objects from being deleted. Similar to the metadata query API, the Search Console returns only object metadata, not object data.

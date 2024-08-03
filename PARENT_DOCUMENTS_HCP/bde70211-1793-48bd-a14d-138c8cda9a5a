@@ -1,0 +1,55 @@
+HCP includes a RESTful HTTP interface to a subset of its administrative functions. Using this interface, called the management API, you can modify your tenant and create, modify, and delete namespaces, user and group accounts, and content classes for the tenant. Additionally, you can create, modify, and delete retention classes for the tenant's namespaces.
+
+You use the Tenant Management Console to enable the management API at the tenant level. For the API to be available, however, it must also be enabled at the system level.
+
+To use the management API, you need a user account that includes the applicable permissions for the actions you want to take. If the tenant is configured to support Active Directory authentication, applications can also use recognized AD user accounts to access HCP through the management API. To do this, however, an application must use the SPNEGO protocol or the AD authentication header to negotiate the AD user authentication itself. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559. To provide credentials using the Active Directory authorization header, you use this format: Authorization: ADAD-username:AD-password
+
+Tenant Management Console URL
+
+The URL for the Tenant Management Console has this format:
+
+https://tenant-url-name.hcp-domain-name:8000
+
+For example, to access the Tenant Management Console for the tenant named Finance in the HCP system with the domain name hcp‑ma.example.com, you would use this URL:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+247/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+https://finance.hcp-ma.example.com:8000
+
+Using a hosts file
+
+Typically, the HCP system uses DNS for system addressing. If this is not the case, you need to provide a mapping of the tenant hostname to an IP address for the HCP system.
+
+You specify hostname mappings in the hosts file on the client. The location of this file depends on the client operating system:
+
+On Windows, by default: c:\windows\system32\drivers\etc\hosts On Unix: /etc/hosts On Mac OS® X: /private/etc/host Hostname mappings
+
+Each entry in a hosts file maps one or more fully qualified hostnames to a single IP address. For example, if one of the IP addresses for the HCP system is 192.168.210.16, you
+
+would add this line to the hosts file on the client to enable access to the Tenant Management Console for the Finance tenant: 192.168.210.16 finance.hcp-ma.example.com
+
+The following considerations apply to hosts file entries:
+
+Each entry must appear on a separate line. Multiple hostnames in a single line must be separated by white space. With some versions of Windows, these must be single spaces. Each hostname can map to multiple IP addresses.
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+For the IP addresses for the HCP system, contact your HCP system administrator. Hostname mapping considerations
+
+An HCP system has multiple IP addresses. You can map the tenant hostname to more than one of these IP addresses in the hosts file. The way multiple mappings are used depends on the client platform. For information about how your client handles multiple mappings in a hosts file, see your client documentation.
+
+If any of the IP addresses listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the Tenant Management Console.
+
+Logging in
+
+Depending on the tenant configuration, you can log into the Tenant Management Console with a tenant-level user account or a recognized AD user account.
+
+1. Open a web browser. 2. In the address field, enter the URL for your Tenant Management Console.
+
+Note: If you inadvertently use http instead of https in the URL, the browser returns an error. Enter the URL again, this time using https. One of these happens: If all of these are true, you are automatically logged in to the Tenant Management Console, and the tenant Overview page appears:

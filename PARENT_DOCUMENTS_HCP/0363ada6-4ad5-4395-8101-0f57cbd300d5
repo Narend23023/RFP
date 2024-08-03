@@ -1,0 +1,57 @@
+Before you set up single sign-on, you need to configure Windows Internet Explorer. The following instructions apply with Windows Internet Explorer 11.
+
+1. Open Internet Explorer. 2. On the Tools menu, click Internet Options. 3. In the Internet Options window, click the Security tab. 4. On the Security page, select Local intranet. 5. Click Sites. 6. In the Local intranet window, ensure that all the options are selected. 7. Click Advanced. 8. In the Add this website to the zone field, take either of these actions: http://*.hcp-name.domain-name For example:
+
+http://*.hcp.example.com
+
+To enable single sign-on with HTTPS, type:
+
+https://*.hcp-name.domain-name
+
+For example:
+
+https://*.hcp.example.com
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+315/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+9. Click Add. 10. Click Close. 11. In the Local intranet window, click OK.
+
+12. In the Internet Options window, click the Advanced tab. 13. In the Settings list, under Security, select Enable Integrated Windows Authentication. 14. Click OK. 15. Close Internet Explorer. Configuring Mozilla Firefox for single sign-on
+
+1. Open Firefox.
+
+2. In the address field in the Firefox window, enter:
+
+about:config
+
+3. In response to the warning message, click I’ll be careful, I promise!. 4. In the Preference Name list, double-click network.negotiate-auth.delegation-uris. 5. In the Enter string value window, type: http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com,https://*.hcp.example.com
+
+6. Click OK. 7. In the Preference Name list, double-click network.negotiate-auth.trusted-uris. 8. In the Enter string value window, type:
+
+http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+9. Click OK.
+
+10. Close Firefox.
+
+Replicating tenants and namespaces
+
+Geographically distributed data protection
+
+An individual Hitachi Content Platform (HCP) system maintains a repository of objects in one or more namespaces. To ensure data availability and protect against data corruption, namespaces can be configured (using service plans) to store multiple copies of each object. However, storing multiple copies of objects on only one system does not provide protection against the unavailability or loss of that system. You can create a configuration in which selected tenants and namespaces are maintained on two or more HCP systems and the objects in those namespaces are managed across those systems. This cross-system management helps ensure that data is well-protected against the unavailability or catastrophic failure of a system. Depending on the number of systems and how you configure the relationships between them, data could even be protected against the concurrent unavailability or loss of more than one system.
+
+Typically, the systems involved in cross-system data management are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection). You have multiple options for implementing geo-protection, each with its own benefits and drawbacks.
+
+This section of the Help provides an overview of how geo-protection works and how it supports business continuity and disaster recovery. About geo-protection
+
+Geo-protection is implemented by the HCP Replication service. The Replication service is responsible for keeping tenants and namespaces on two or more HCP systems in sync with each other. Replication entails sending information from the system where the service is running to one or more other systems. The information sent includes tenant and namespace configuration information, metadata and data for newly created objects, metadata changes for existing objects, and instructions to perform delete operations.

@@ -1,0 +1,67 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> HCP supports Prometheus, an open-source monitoring and alerting framework that collects, organizes, and stores performance metrics. When Prometheus is used with a
+visualization tool like Grafana, data collected by Prometheus provides operational visibility into the performance of your HCP instance.
+The Prometheus server runs on two storage nodes in the cluster: the node with highest IP address and the node with the second lowest IP address. By default, Prometheus retains
+all the collected metrics in a time series database for 15 days.
+For a list of the HCP metrics collected by Prometheus, see HCP performance metrics collected by Prometheus
+Enabling and configuring Prometheus
+Enabling Prometheus allows you to collect various HCP performance metrics. HCP exposes Prometheus metrics on TCP port 9094. Use this unauthenticated port to monitor system
+performance without exposing sensitive data. To prevent user access, block the port on user data networks. HCP system blocks all POST requests to the unauthenticated port. You
+can only send GET requests.
+To enable Prometheus on HCP nodes, you need an administrator or security role.
+1. From the System Management Console main menu, select Monitoring > Prometheus > Configuration .
+2. To enable Prometheus, select the Enable Prometheus option.
+3. In the Prometheus Settings pane, enter the configuration information. The following table describes the values that you can specify.<br>
+                       <b>Bounding box:</b> x1=241, y1=1039, x2=1516, y2=1764
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Field</td>
+      <td>Description</td>
+      <td>Values</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Scrape\ninterval</td>
+      <td>The frequency at which Prometheus retrieves metrics from endpoints on\neach HCP node.</td>
+      <td>Default value: 60 seconds.\nValid value: 10 seconds or greater.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Scrape\ntimeout</td>
+      <td>Duration of time Prometheus will wait for a response from an endpoint\nbefore it determines that the target is down.</td>
+      <td>Default value: 60 seconds.\nValid value: 1 second or greater.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Evaluation\ninterval</td>
+      <td>The frequency at which Prometheus evaluates alert rules to see if a rule\nhas been triggered.</td>
+      <td>Default value: 60 seconds.\nValid value: 10 seconds or greater.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>TSDB\nretention time</td>
+      <td>Duration of time Prometheus keeps the data in the time-series database.\nWhen the specified retention time limit is reached, Prometheus begins\ndiscarding data starting with the oldest first.</td>
+      <td>Default value: 15 days.\nValid value: Greater than or equal to 1 day; and lesser than or equal to 365\ndays.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TSDB\nretention size</td>
+      <td>Specifies the maximum number of storage blocks (in GB) to retain on disk.\nWhen the specified retention size limit is reached, Prometheus begins\ndiscarding data starting with the oldest first.\nImportant: If you specify both TSDB retention time and TSDB retention\nsize, whichever limit is reached first will take effect.</td>
+      <td>Default value: 100 GB.\nValid value: Greater than or equal to 1 GB; and lesser than or equal to 1000\nGB.\nImportant: Prometheus accepts the data setting in gigabytes (GB), but reports\nit back in gibibytes (GiB). GB is a metric measurement, while GiB is a binary\nmeasurement. One GB equals 0.93 GiB.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

@@ -1,0 +1,163 @@
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+email Notification
+
+GET
+
+Retrieve the email notification configuration for a tenant
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user
+
+account with the with the monitor or administrator role POST
+
+Modify the email notification configuration for a tenant
+
+For an HCP tenant, tenant-level user account with the administrator role For the default tenant, system-level user account with the administrator role
+
+.../tenants/tenant-name/namespaceDefaults
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+namespace Defaults GET
+
+Retrieve the default settings for namespace creation for a tenant
+
+Tenant-level user account with the monitor or administrator role
+
+Not valid for the default tenant.
+
+POST
+
+Modify the default settings for namespace creation for a tenant
+
+Tenant-level user account with the administrator role
+
+.../tenants/tenant-name/permissions Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve the list of
+
+permissions in the data access permission mask for a tenant
+
+For an HCP tenant, tenant-level user account with the monitor, administrator, or compliance role For the default tenant, system-level user account with the monitor, administrator, or compliance role List
+
+POST
+
+Modify the list of permissions in the data access permission mask for a tenant
+
+For an HCP tenant, tenant-level user account with the administrator role
+
+For the default tenant, system-level user account with the administrator role
+
+Valid values for permissions are:
+
+DELETE PRIVILEGED PURGE
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+434/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes READ SEARCH WRITE
+
+These values are case sensitive.
+
+The set of permissions specified in the request body replaces the set of permissions currently included in the data access permission mask for the tenant. To remove all permissions, specify an empty list.
+
+If the set of permissions includes PURGE, delete
+
+permission is enabled automatically. If the set of permissions includes SEARCH, read permission is enabled automatically. .../tenants/tenant-name/searchSecurity
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+searchSecurity
+
+GET
+
+Retrieve the Search
+
+Tenant-level user account with the security role
+
+Not valid for the default tenant.
+
+Console configuration for a tenant
+
+searchSecurity
+
+POST
+
+Modify the Search Console configuration for a tenant Tenant-level user account with the security role
+
+Not valid for the default tenant.
+
+.../tenants/tenant-name/statistics
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+statistics
+
+GET
+
+Retrieve statistics about the content of the namespaces owned by a tenant
+
+For an HCP tenant, tenant-level user account with the monitor or administrator
+
+role For the default tenant, system-level user account with the monitor or administrator role Example: Creating an HCP tenant
+
+Here’s a sample PUT request that creates a tenant named Finance in the HCP system named hcp.example.com. The tenant definition is in an XML file named FinanceTenant.xml. The initial user account for the tenant has a username of lgreen and a password of start123. These are specified by query parameters. The request is made using a system-level user account that includes the administrator role.
+
+This example assumes the existence of a service plan named Short-Term-Activity. Request body in XML

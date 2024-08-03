@@ -1,0 +1,77 @@
+When changing the password for a user account, you can reuse the current password. You cannot do this when changing your own password on the Change Password
+
+page.
+
+If you leave the Password field empty, the previously set password remains in effect.
+
+3. Click Update Settings.
+
+If you are modifying the user account you used to log into the Console and:
+
+You changed the roles associated with the user account, a message appears indicating that the page will be reloaded. Click Close in the message window to reload the page.
+
+You selected Force change on next login, the Console displays the Change Password page. You need to change your password on this page in order to continue
+
+working in the Console.
+
+Deleting a user account
+
+You can delete a user account at any time. If you delete an account while the user is currently logged in, the user is immediately prevented from taking any further action. After you delete the account, the user can no longer log in.
+
+Tip: For a RADIUS-authenticated user, if the user account becomes invalid on the RADIUS server while the user is logged in, the user may still be able to take action in the current
+
+Console session for as long as ten minutes. To ensure that the user is immediately prevented from taking further action, delete the user in HCP before deleting the remote account.
+
+You cannot recreate a deleted account. However, you can reuse the user name from the deleted account to create a new account. The new account will have different user ID from the deleted account.
+
+You cannot delete the account you used to log into the current System Management Console session. Additionally, if no existing AD group has the security role, you cannot delete the last locally authenticated user account with the security role.
+
+To view user accounts, you need the monitor, administrator, or security role. To create and manage user accounts, you need the security role.
+
+1. In the list of user accounts on the Users page, click the delete control (
+
+) for the account you want to delete.
+
+2. In response to the confirming message, click Delete.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+22/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Generating a user authorization token
+
+User authorization tokens convert the HCP user account user name and password into a token that can be used by RESTful APIs to authenticate with HCP. A user authorization token is the HCP user account user name encoded in base64 and HCP user account password encoded in an md5 hash. The token does not expire unless the HCP user account user name or password changes.
+
+To view user accounts, you need the monitor, administrator, or security role. To create and manage user accounts, you need the security role.
+
+1. Click Generate Authorization Token. 2. In the Generate Authorization Token window that opens, type the user name in the Username field.
+
+3. In the Generate Authorization Token window that opens, type the password in the Password field.
+
+4. Click Generate Authorization Token.
+
+Working with group accounts
+
+To view, create, and manage HCP group accounts, you use the Groups page in the HCP System Management Console. This page is available only while support for AD is enabled.
+
+If you disable HCP support for AD, HCP does not delete existing group accounts. If you subsequently reenable AD support, the group accounts become accessible again. To display the Groups page, in the top-level menu, select Security > Groups.
+
+Note:
+
+To view group accounts, you need the monitor, administrator, or security role. To create and manage group accounts, you need the security role.
+
+Groups page
+
+The Groups page lets you create, modify, and delete HCP group accounts. It also lists the existing group accounts.
+
+By default, the group account list includes all existing group accounts. The accounts are listed 20 at a time in ascending order by group name.
+
+You can page through, sort, and filter the list of group accounts. The Groups page indicates which accounts are shown out of the total number of accounts in the current list.
+
+To view additional information about an individual group account, click the group name. Paging
+
+You can change the number of group accounts shown at a time on the Groups page. To do this, in the Items per page field, select the number of group accounts you want. The

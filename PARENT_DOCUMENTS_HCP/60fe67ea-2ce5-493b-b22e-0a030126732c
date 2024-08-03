@@ -1,0 +1,133 @@
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.HEADER, 1) curl.setopt(pycurl.NOBODY, 1)
+
+curl.setopt(pycurl.WRITEFUNCTION, cin.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) print cin.getvalue()
+
+curl.close()
+
+Request headers
+
+HEAD /rest/quarterly_rpts/Q2_2020.ppt?version=80232998058817-80232998058819 HTTP/1.1 Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 18 Sep 2020 18:21:14 GMT
+
+X-HCP-ServicedBySystem: finance.europe.hcp.example.com X-HCP-Time: 1434997274 X-HCP-SoftwareVersion: 9.2.16 X-HCP-LastVersionId: 80232998058819
+
+Content-Length: 678400
+
+Listing object versions
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+728/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+While versioning is enabled, you use the HTTP GET method to list the versions of an object. By default, the response body contains an XML listing that includes the current version and old versions that haven’t been pruned. It does not include versions that have been deleted. However, you can choose to include delete records in the list.
+
+If versioning is disabled, even if it was enabled in the past, HCP returns an HTTP 400 (Bad Request) error code in response to a request to list object versions. However, if versioning is then reenabled, HCP returns information about all old versions that have not been pruned. Access permission
+
+To list object versions, you need browse permission.
+
+Request header
+
+GET /rest/directory/file?version=list&deleted=true HTTP/1.1
+
+The GET request to list object versions has these elements:
+
+If you’re accessing the namespace as an authenticated user, an Authorization header.
+
+The URL of the object. A version=list URL query parameter.
+
+If you specify a condition, the HCP returns a version list only if all versions of the object meet the specified condition. Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+version
+
+Yes
+
+Use the value list.
+
+deleted
+
+No
+
+By default, the GET request to retrieve object versions does not include delete records. To retrieve a listing that
+
+includes delete records, specify this URL query parameter: deleted=true
+
+You can also specify deleted=false, which results in the default behavior.
+
+Response header
+
+The table below describes the request-specific response header for this operation.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. Response body
+
+The body of the HTTP response to a GET request to list object versions contains an XML document listing the versions, in this format:
+
+Element
+
+Attribute
+
+Description
+
+versions
+
+path
+
+Path to the object.
+
+versions
+
+utf8path
+
+UTF-8 compatible path to the object.
+
+versions
+
+parentDir
+
+Parent directory of the object. versions
+
+utf8parentDir
+
+UTF-8 compatible path to the parent directory of the object.
+
+versions
+
+deleted
+
+Boolean value. Indicates whether the object is currently deleted.
+
+versions
+
+showDeleted
+
+Boolean value. Indicates whether the list includes delete records.
+
+versions

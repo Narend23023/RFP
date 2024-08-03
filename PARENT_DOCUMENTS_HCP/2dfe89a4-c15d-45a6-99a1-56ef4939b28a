@@ -1,0 +1,67 @@
+The list below shows the valid values for byte-range.
+
+start-position–end-position
+
+Bytes in start-position through end-position, inclusive. If end-position is greater than the size of the object data, HCP returns the bytes in start-position through the end of the data. Valid values for start-position and end-position are integers greater than or equal to zero. For the specified range to be valid, end-position must be greater than or equal to start-position. start-position–
+
+Bytes in start-position through the end of the object data.
+
+Valid values for start-position are integers greater than or equal to zero.
+
+–offset-from-end
+
+Bytes in the offset-from-end position, counted back from the last position in the object data, through the end of the object data. If offset-from-end is greater than the size of the object data, HCP returns the complete object data. Valid values for offset-from-end are integers greater than or equal to zero.
+
+These considerations apply to Range header values: If you specify a valid range in which the start position is less than the size of the object data, HCP returns the requested range of data with a 206 (Partial Content) status code. If you specify a valid range in which the start position is greater than or equal to the size of the object data, HCP returns a 416 (Requested Range Not Satisfiable) status code and does not return any data. If you specify an offset of zero, HCP returns a 416 (Requested Range Not Satisfiable) status code and does not return any data. If you specify an invalid value (for example, a value in which the start position is greater than the end position, HCP ignores the Range header and returns the complete object data with a status code of 200 (OK). A GET request to retrieve a range of bytes in a multipart object is most efficient when the start and end bytes for the range are aligned with the start and end bytes for one or more of the parts uploaded to create the object. You cannot retrieve a part of an in-progress multipart upload.
+
+Response headers
+
+The next list describes the headers returned in response to a successful request to retrieve an object. Accept-Ranges
+
+Indicates that HCP can accept requests for part of the object data, specified as a range of bytes. The value of this header is always bytes.
+
+Content-Length
+
+Specifies the size, in bytes, of the returned data.
+
+Content-Range
+
+Specifies the range of bytes retrieved out of the total size of the object data. This header is returned only if the request headers include Range. Content-Type
+
+Specifies the Internet media type of the object or object version. This is one of, in order of precedence:
+
+The Internet media type specified by the response-content-type request parameter. The Internet media type specified in the Content-Type header when the object was stored. An Internet media type determined by HCP based on the object name. application/octet-stream if HCP cannot determine the Internet media type. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an
+
+object, copying an object, and retrieving an object. Last-Modified
+
+Specifies the date and time when the object or object version was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format:
+
+DDD, dd MMM yyyy HH:mm:ss GMT For example:
+
+Tue, 17 Feb 2017 19:46:03 GMT
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+x-amz-meta-
+
+For objects and object versions only, specifies a custom metadata property/value pair. The response headers include one x-amz-meta- header for each applicable pair.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+627/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

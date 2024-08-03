@@ -1,0 +1,69 @@
+Within a content class, content properties with the same name must have the same data type.
+
+Reserved words
+
+The following words are reserved and cannot be used as content property names: accessTime
+
+accessTimeString acl changeTimeMilliseconds changeTimeString customMetadata customMetadataAnnotation dpl gid hash hashScheme
+
+hold index ingestTime
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+295/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+ingestTimeString namespace objectPath operation owner
+
+permission replicated retention retentionClass retentionString shred size type uid urlName updateTime updateTimeString utf8Name version
+
+Content property expressions
+
+For each content property you create, you specify an XPath expression. An XPath expression is an instruction for navigating an XML document to find an element or attribute value.
+
+XPath expressions use the XPath language. HCP supports the full syntax of this language. The examples in this section illustrate only a small part of the XPath syntax.
+
+XPath expressions that find element values
+
+Here’s a simple XPath expression that finds the value of the followup_needed element: /dicom_image/followup_needed
+
+The forward slash (/) at the beginning of the expression means that the first element is the root element in the XML. The element after the second forward slash is a child of the root element.
+
+Here’s another simple XPath expression:
+
+//name
+
+This expression is probably not very useful. The double slash at the beginning means find the value of any name element, regardless of whether that element is a child of the doctor element or the patient element.
+
+A more useful XPath expression specifies a path to the name element: /dicom_image/doctor/name
+
+This expression means start at the root element, find the doctor element that’s the child of the root element, and then find the name element that’s the child of the doctor element. A content property with this expression finds only the name of the doctor, not the name of the patient.
+
+A different content property with this Xpath expression finds only the patient’s name: /dicom_image/patient/name
+
+The element path in an XPath expression can go deeper than the three levels shown above. Here’s an XPath expression that’s four levels deep and finds the city in which the doctor’s office is located:
+
+/dicom_image/doctor/address/city
+
+XPath expressions that find attribute values
+
+To find the value of an attribute, you include an at sign (@) followed by the attribute name at the end of the XPath expression. For example, here’s an XPath expression that finds the value of the type attribute of the image element:
+
+/dicom_image/image@type
+
+Complex XPath expressions
+
+XPath expressions can be much more complex than the ones shown so far. For example, an XPath expression can navigate XML based on the values of elements and attributes. Here’s an expression that finds the name of a doctor whose primary specialty is oncology: /dicom_image/doctor/specialties/specialty[@primary='true' and text()='Oncology']/ ancestor::doctor/name
+
+This expression navigates down from the doctor element to the specialty elements and finds the one that has both a value of Oncology and a primary attribute with a value of true. The expression then navigates back up to the same doctor element and from there down to the name element that’s the child of the doctor element. Annotation-specific content properties
+
+You can associate content properties with annotation names. When a content property is associated with an annotation name, the metadata query engine indexes the value of that property only when the value occurs in an annotation with the specified name.
+
+To associate a content property with an annotation name, you specify the case-sensitive annotation name in front of the XPath expression for the property, in this format: @annotation-name:xpath-expression
+
+For example, suppose:
+
+The objects in a namespace can have either of two annotations — one named dicom, the other named appointment Both of these annotations have a date element

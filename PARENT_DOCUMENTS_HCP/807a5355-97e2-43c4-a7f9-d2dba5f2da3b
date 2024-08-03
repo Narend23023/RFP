@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <updatePasswordRequest> <newPassword>End321!</newPassword> </updatePasswordRequest>
+
+Request with cURL command line
+
+curl -k -i -d @Password.xml -H "Content-Type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/userAccounts/lgreen /changePassword" Request headers
+
+POST /mapi/userAccounts/lgreen/changePassword HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Content-Type: application/xml Content-Length: 2
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0 Tenant resources
+
+Tenant resources let you create, retrieve information about, modify, and delete tenants. The tables below provides information about these resources.
+
+.../tenants/tenant-name
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+432/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+tenant
+
+GET
+
+Retrieve information about a tenant
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role
+
+N/A
+
+HEAD
+
+Check for the existence
+
+of a tenant
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role
+
+tenant
+
+POST
+
+Modify a tenant
+
+For an HCP tenant tenant-level user account with the administrator role For the default tenant, system-level user account with the administrator role
+
+.../tenants/tenant-name/availableServicePlans
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the service plans that are available for the tenant to assign to its namespaces
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role
+
+Valid only if the tenant is configured to allow service plan selection.
+
+The listed service plans are identified by service plan name.
+
+In XML, each listed service plan is the value of an element named name. In JSON, the name in the name/value pair that lists the service plans is nam e. .../tenants/tenant-name/availableServicePlans/service-plan-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+available ServicePlan
+
+GET
+
+Retrieve information about a service plan that’s available for the tenant to assign to its namespaces
+
+For an HCP tenant, tenant-level user account with the monitor or administrator
+
+role For the default tenant, system-level user account with the monitor or administrator role
+
+Valid only if the tenant is configured to allow service plan selection. .../tenants/tenant-name/chargebackReport
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+chargeback Report
+
+GET
+
+Generate a chargeback report for a tenant
+
+Tenant-level user account with the monitor or administrator role
+
+Not valid for the default tenant.
+
+Supported output formats are XML, JSON, and CSV.
+
+.../tenants/tenant-name/consoleSecurity Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+consoleSecurity
+
+GET
+
+Retrieve the Tenant Management Console configuration for a tenant
+
+Tenant-level user account with the security role
+
+Not valid for the default tenant.
+
+POST
+
+Modify the Tenant Management Console configuration for a tenant

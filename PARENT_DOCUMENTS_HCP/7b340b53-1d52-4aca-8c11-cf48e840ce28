@@ -1,0 +1,77 @@
+<D:propertyupdate xmlns:D="DAV:"> <D:set>
+
+<D:prop> <presentedBy xmlns="http://webdav.org/cadaver/custom-properties/">
+
+Lee.Green </presentedBy>
+
+</D:prop> </D:set> </D:propertyupdate>
+
+Response XML body
+
+<?xml version="1.0" encoding="utf-8" ?>
+
+<D:multistatus xmlns:D="DAV:" xmlns:HCAP="http://www.hitachivantara.com/hcap/webdav/">
+
+<D:response>
+
+<D:href>https://finance.europe.hcp.example.com/webdav/data/ presentations/Q1_2012.ppt
+
+</D:href> <D:propstat>
+
+<D:prop> <presentedBy xmlns="http://webdav.org/cadaver/custom-properties/"/> </D:prop>
+
+<D:status>HTTP/1.1 200 OK</D:status> </D:propstat>
+
+</D:response> </D:multistatus>
+
+WebDAV usage considerations Basic authentication with WebDAV
+
+A namespace can be configured to require basic authentication for WebDAV access. If basic authentication is enabled, you’re prompted for a username and password when you
+
+access the namespace through WebDAV. For the username and password to use, contact your tenant administrator.
+
+Even when basic authentication is enabled for a namespace, WebDAV users always access the namespace anonymously.
+
+WebDAV object locking
+
+To accommodate WebDAV clients that require locking functionality, HCP supports the LOCK and UNLOCK methods. However, a LOCK request locks the specified object only on the target node. As a result, locking an object does not prevent other nodes from modifying it.
+
+Failed WebDAV write operations
+
+A WebDAV write operation is considered to have failed if either of these is true: The target node failed while the object was open for write. The TCP connection broke (for example, due to a front-end network failure or the abnormal termination of the client application) while the object was open for write.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+795/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Also, in some circumstances, a write operation is considered to have failed if another node or other hardware failed while the object was open for write.
+
+If a write fails, HCP does not create a new object.
+
+Tip: If a write operations fails, retry the request.
+
+Storing zero-sized files with WebDAV
+
+When you store a zero-sized file with WebDAV, the resulting object has no data. Because WebDAV causes a flush and a close even when no data is present, this object is WORM and is treated like any other object in the namespace. WebDAV client timeouts with long-running requests
+
+Some WebDAV operations, such as a GET request on a very large directory, can take a long time to complete.
+
+During such an operation, HCP does not communicate back to the client. As a result, the connection may time out on the client.
+
+If an operation may take a long time, you should adjust the connection timeout setting on the client before making the request. Persistent connections with WebDAV
+
+HCP supports persistent connections with WebDAV. Following a request for an operation, HCP keeps the connection open for 60 seconds, so a subsequent request can use the same connection.
+
+Persistent connections enhance performance because they avoid the overhead of opening and closing multiple connections. In conjunction with persistent connections, using
+
+multiple threads so that operations can run concurrently provides still better performance.
+
+If the persistent connection timeout period is too short, ask your tenant administrator about having it changed.
+
+Note: With persistent connections, if a single node has more than 254 concurrent open connections, those above the first 254 may have to wait as long as ten minutes to be
+
+serviced. This includes connections where the HCP domain name resolved to the target node. To avoid this issue, either don’t use persistent connections or ensure that no more than 254 threads are working against a single node at any given time.

@@ -1,0 +1,43 @@
+If the new name is already in use, HCP changes the object name to object-name.1.collision or object-name.version-id.1.collision, as applicable. If that name is already in use, HCP successively increments the middle integer by one until a unique name is formed.
+
+Objects that have been relocated or renamed due to content collisions are flagged as replication collisions in their system metadata. Clients can use the metadata query API to search for objects that are flagged as replication collisions. If an object that has been flagged as a replication collision changes (for example, if its retention period is extended), its collision flag is removed. If a client creates a copy of a flagged object with a new name, the collision flag is not set on the copy.
+
+Namespaces can be configured to have the DIsposition service automatically delete objects that are flagged as replication collisions. When selecting this option for a namespace, the tenant administrator specifies the number of days the DIsposition service should wait before deleting such an object. The days are counted from the time the collision flag is set. If the collision flag is removed from an object, the object is no longer eligible for deletion by the DIsposition service.
+
+System metadata collisions
+
+A system metadata collision occurs when these events occur in the order shown: 1. Different changes are made to the system metadata for a given object on each of two systems in a replication topology. 2. The changed system metadata on one of the systems is replicated to the other system.
+
+For example, suppose a user on one system changes the shred setting for an object while a user on the other system changes the index setting for the same object. When the object on either system is replicated to the other system, a system metadata collision occurs.
+
+If a collision occurs when changed system metadata for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+For changed system metadata other than the retention setting and hold status: If the last change made on system A is more recent than the last change made on system B, HCP changes the system metadata on system B to match the system metadata on system A. If the last change on system B is more recent than the last change on system A, HCP does not change the system metadata on system B. For a changed retention setting:
+
+If the retention setting on system A specifies a longer retention period than does the retention setting on system B, HCP changes the retention setting on system B to match the retention setting on system A. If the retention setting on system B specifies a longer retention period than does the retention setting on system A, HCP does not change the retention setting on system B. For a changed hold status:
+
+If the object is on hold on system A but not on system B, HCP places the object on hold on system B. If the object is on hold on system B but not on system A, HCP leaves the object on hold on system B.
+
+Here are some examples of how HCP handles collisions when changed system metadata for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology. Example 1
+
+The object starts out on both system A and system B with these system metadata settings:
+
+Shred: false Index: false
+
+The list below shows a sequence of events in which the system metadata for the object is changed and the changes are then replicated.
+
+1. On system A, a client changes the shred setting to true. 2. On system B, a client changes the index setting to true. 3. The changes on system A are replicated to system B. The resulting settings for the object on system B are: Shred: false Index: true
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+335/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Example 2
+
+The object starts out on both system A and system B with these system metadata settings: Retention: Initial Unspecified Shred: false Index: false
+
+The list below shows a sequence of events in which the system metadata for the object is changed and the changes are then replicated.

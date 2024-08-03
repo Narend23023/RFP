@@ -1,0 +1,45 @@
+Here’s a sample URL that identifies a directory: https://finance.europe.hcp.example.com/rest/Corporate/Employees
+
+Here’s a sample URL that identifies an object:
+
+https://finance.europe.hcp.example.com/rest/Corporate/Employees/23_John_Doe.xls
+
+The names of objects, directories, and symbolic links are case sensitive. You cannot tell from a URL whether it identifies an object, directory, or symbolic link. URLs for namespace information
+
+You may have access to multiple namespaces owned by a given tenant. To retrieve information about these namespaces, use this format for the URL: https://namespace-name.tenant-name.hcp-domain-name/proc
+
+In the URL, proc must be all-lowercase.
+
+A URL used to retrieve information about multiple namespaces owned by a tenant must start with the name of one of the namespaces.
+
+Using an IP address in a URL
+
+Because you need to provide a hostname that includes the tenant and namespace names in all REST API requests, using the hostname is the simplest way to access a namespace. In some applications, however, using IP addresses may be more efficient than using the hostname.
+
+If you use an IP address in the URL, you provide the hostname in an HTTP Host header.
+
+In curl commands, you use the -H option and specify a Host header with the namespace name, tenant name, and domain name of the HCP system, in this format:
+
+H"Host:namespace-name.tenant-name.hcp-domain-name"
+
+This example shows a complete curl command that uses an IP address: curl -iT Q1_2012.ppt -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d” -H "Host: finance.europe.hcp.example.com" "https://192.168.130.14/rest/quarterly_rpts/Q1_2012.ppt"
+
+In Python with PycURL, you specify an HTTPHEADER option, in this format: curl.setopt(pycurl.HTTPHEADER, ["Host: namespace-name. tenant-name.hcp-domain-name"])
+
+In the preceding syntax, the left and right brackets ([]) and parentheses (()) are part of the command and do not indicate optional or required components.
+
+This example shows a Python script that uses an IP address:
+
+import pycurl import os filehandle = open("Q1_2012.ppt", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.URL, "https://192.168.125.125/rest/quarterly_rpts/Q1_2012.ppt") curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Host: finance.europe.hcp.example.com"]) curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2012.ppt")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() URL considerations
+
+The following considerations apply to specifying URLs in REST API requests against a namespace. URL length
+
+For all HTTP methods except POST, the portion of a URL after rest, excluding any appended parameters, is limited to 4,095 bytes. If a REST API request includes a URL that violates that limit, HCP returns an HTTP 414 (Request URI Too Large) error code.
+
+URL character case
+
+All elements of a URL except http, https, and the hostname are case sensitive.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3

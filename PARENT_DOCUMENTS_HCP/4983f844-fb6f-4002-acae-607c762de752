@@ -1,0 +1,139 @@
+Specifies whether the cloud optimized namespace is configured for balanced directory mode or unbalanced directory mode. Valid values are:
+
+Balanced
+
+The directory usage is configured for balanced mode. A well distributed directory structure is required to avoid hot spotting and ensure optimal performance. Unbalanced
+
+The directory usage is configured for unbalanced mode. Optimal performance is not dependent upon a directory structure.
+
+The default is specified by the namespace defaults for the tenant. These values are not case sensitive.
+
+dpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan
+
+function.
+
+This property is ignored on a PUT or POST request. In response to a GET request, the value of this property is always Dynamic. enterpriseMode
+
+Boolean
+
+Specifies the namespace retention mode. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+The namespace is in enterprise mode.
+
+You can set the value of this property to false only if the owning tenant is allowed to set the retention mode for its namespaces. false
+
+The namespace is in compliance mode.
+
+The default is the retention mode specified by the
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode,
+
+namespace defaults for the tenant.
+
+these activities are not allowed.
+
+The value of this property can be changed from true to false but not from false to true. fullyQualifiedName
+
+String
+
+Specifies the fully qualified hostname of the namespace. This property is not valid on a PUT or POST request. It is
+
+returned only by a verbose GET request.
+
+hardQuota
+
+String
+
+For an HCP namespace, specifies the total amount of space allocated to the namespace. This is the space available for storing objects, including object data, metadata, and the redundant data required to satisfy the namespace service plan.
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace.
+
+Valid values are decimal numbers with up to two places after the period, followed by a space, followed by MB, GB, or TB (for example, 1.25 TB). The minimum value is 1 (one) for GB and .01 for TB. The maximum value is the amount of space the tenant has available to allocate to its namespaces. The default is the hard quota specified by the namespace defaults for the tenant. hashScheme
+
+String
+
+Specifies the cryptographic hash algorithm for the namespace. Valid values are:
+
+This property is optional on a PUT request. It is not valid on a POST request and is returned only by a verbose GET request.
+
+MD5 SHA-1 SHA-256 SHA-384 SHA-512 RIPEMD-160
+
+These values are case sensitive.
+
+The default is the cryptographic hash algorithm specified by the namespace defaults for the tenant. id
+
+String
+
+Specifies the system-supplied unique ID for the namespace. HCP generates this ID automatically when you create a namespace.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+indexingDefault
+
+Boolean
+
+For an HCP namespace, specifies the default index setting for objects added to the namespaces. Valid
+
+This property is optional on a PUT request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+481/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+values are:
+
+This property is not valid for the default namespace. true
+
+New objects are marked for indexing.
+
+false
+
+New objects are not marked for indexing.
+
+The default is true.
+
+indexingEnabled
+
+Boolean
+
+Specifies whether indexing is enabled for the namespace. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+You can set this property to true only while search is enabled for the namespace.
+
+Indexing is enabled. false
+
+Indexing is disabled.
+
+Disabling indexing for the namespace automatically disables custom metadata indexing.
+
+On a PUT request, the default is true if the searchEnabled property is set to true in the same request; otherwise, the default is false.
+
+isDplDynamic
+
+Boolean

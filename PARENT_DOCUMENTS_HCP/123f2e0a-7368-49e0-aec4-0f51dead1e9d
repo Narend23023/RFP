@@ -1,0 +1,27 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+383/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+"id" : "0e774b8d-8936-4df4-a352-b68766b5c287", "authAndAnonymousMinimumPermissions" : { "permission" : [ "BROWSE", "READ" ] } } CSV
+
+In a CSV response body (only for a GET of a chargebackReport resource), the name of each reported property for the resource is a field in the first line. Property values are fields in the subsequent lines.
+
+Here’s a request for the chargebackReport resource for the Accounts-Receivable namespace to be returned in CSV format:
+
+curl -k -i -H "Accept: text/csv" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable/chargebackReport?start=2017-02-18T13:00:00-0500 &end=2017-02-18T13:59:59-0500&granularity=hour"
+
+Here’s the CSV response body: ystemName,tenantName,namespaceName,startTime,endTime,objectCount, ingestedVolume,storageCapacityUsed,bytesIn,bytesOut,reads,writes,deletes, multipartObjects,multipartObjectParts,multipartObjectBytes,multipartUploads, multipartUploadParts,multipartUploadBytes,deleted,valid hcp.example.com,Finance,Accounts-Receivable,2017-02-18T13:00:00-0500,1240, 2017-02-18T13:59:59-0500,6,134243721,134270976,134243721,87561,1,11,0,2, 7,93213889,0,0,0,false,true WADL
+
+The response body for an OPTIONS request is always returned as WADL. The HTTP response headers include Allow, which lists the supported methods for the resource.
+
+Here’s a request for the methods you can use with the user accounts resource:
+
+curl -k -iX OPTIONS -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/tenants/finance/userAccounts ?prettyprint"
+
+Here are the response headers: HTTP/1.1 200 OK Content-Type: application/vnd.sun.wadl+xml Allow: OPTIONS,HEAD,POST,GET,PUT X-HCP-SoftwareVersion: 6.0.1.64 Content-Length: 3575
+
+Here’s the WADL response body:

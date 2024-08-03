@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?> <DeleteResult> <Deleted> <Key>quarterly_rpts/Q2_2019.ppt</Key> <VersionId>97302435810137</VersionId> <DeleteMarker>true</DeleteMarker> <DeleteMarkerVersionId>Not Implemented</DeleteMarkerVersionId> </Deleted> <Error> <Key>quarterly_rpts/Q3_2019.ppt</Key> <Code>AccessDenied</Code> <Message>Access Denied</Message> </Error> </DeleteResult>
+
+Working with multipart uploads
+
+With the Hitachi API for Amazon S3, you can perform operations to create an individual object by uploading the object data in multiple parts. This process is called multipart upload.
+
+This section of the Help provides general information about working with multipart uploads.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+636/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+About multipart uploads Multipart upload is the process of creating an object by breaking the object data into parts and uploading the parts to HCP individually. The result of a multipart upload is a single object that behaves the same as objects for which the data was stored by means of a single PUT object request. An object created by means of a multipart upload is called a multipart object.
+
+Multipart uploads facilitate storing large objects. With a multipart upload: You can upload multiple parts of the object data to HCP concurrently, thereby speeding up the time it takes to store the whole object. You don't need to know the full size of the object data before you start uploading the data to HCP. Thus, multipart uploads support storing streaming data in real time. You can store an object over time. By spacing the uploads of the individual parts over time, you can reduce the use of bandwidth when other high-bandwidth operations are in progress. You can avoid the need to repeat a large upload operation when the connection is lost while the upload is in progress. Because each part you upload can be small, the time required to repeat the upload of a part can be short.
+
+Creating an object by multipart upload
+
+1. Initiate the multipart upload. 2. Upload the object data parts.
+
+To upload a part, you use either of these operations:
+
+Upload the part using data from outside HCP. Upload the part using data copied from another object already stored in HCP 3. Complete the multipart upload.
+
+You can also perform these operations related to multipart uploads:
+
+Abort a multipart upload List the parts of an in-progress multipart upload For any given bucket, list the multipart uploads that are currently in progress in that bucket
+
+Considerations for working with multipart uploads
+
+The following considerations apply to working with multipart uploads. Support for multipart uploads
+
+Whether a bucket supports multipart uploads depends on a bucket configuration setting. The tenant administrator determines the default for this setting for new buckets. This setting is not visible through the S3 compatible API.
+
+If a bucket is empty, the tenant administrator can change it from supporting multipart upload to not supporting multipart upload. Whether the tenant administrator can change a
+
+bucket from not supporting multipart upload to supporting multipart upload depends on which other access protocols are enabled for the bucket.
+
+To learn whether the bucket you're working with supports multipart upload, contact your tenant administrator. Part size and count
+
+The parts you upload for a multipart upload can be any size up to and including five gigabytes. However, the minimum size for the parts you include in a complete multipart upload
+
+request, except the last part, is one megabyte. The last part can be smaller than one megabyte.
+
+A multipart upload can have at most ten thousand parts. Therefore, the maximum size for the object resulting from a multipart upload is five terabytes (ten thousand times five gigabytes). Automatic abort of multipart uploads

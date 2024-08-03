@@ -1,0 +1,69 @@
+Deletion Allowed
+
+The object can be deleted at any time.
+
+Deletion Prohibited
+
+The object can never be deleted by means of a normal delete operation. If the namespace is in enterprise mode, however, the object can be deleted by means of a privileged delete operation. Initial Unspecified
+
+The retention period for the object is unspecified. The object cannot be deleted by means of a normal delete operation while it has this retention setting. If the namespace is in enterprise mode, however, the object can be deleted by means of a privileged delete operation.
+
+A fixed future date that the object will be deleted.
+
+The retention period for an object assigned to a retention class is calculated from the value of that class. So, for example, if an object stored on October 8, 2011, is assigned to a
+
+retention class with an offset value of seven years, the retention period for that object expires on October 8, 2018.
+
+You can choose to have HCP automatically delete the objects assigned to a retention class when they expire. This applies only to retention classes with a value that’s an offset. It does not apply to retention classes with special values.
+
+Automatic deletion of expired objects in retention classes occurs only if disposition is enabled. Display the Retention Classes panel
+
+To view, create, and manage retention classes for a namespace, you use the Retention Classes panel for that namespace.
+
+To view retention classes, you need the monitor, administrator, or compliance role. To create, modify, and delete retention classes, you need the compliance role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Compliance. 4. On the left side of the Compliance panel, click Retention Classes.
+
+Understanding the retention class list
+
+The Retention Classes panel lists the retention classes defined for a namespace. For each class, the list shows:
+
+The retention class name. Whether the retention class value is an offset, special value, or fixed date. The retention class value.
+
+A value that’s an offset has this format: A+ny+nm+nd
+
+In this format, y is the number of years, m is the number of months, and d is the number of days. Only the measurement units with nonzero values are shown. For example, an offset of two years and 5 days looks like this:
+
+A+2y+5d
+
+Whether expired objects in the retention class are automatically deleted (Allow Disposition).
+
+To view the description of a listed retention class, click the class name.
+
+Creating a retention class
+
+1. In the Retention Classes panel, click Create Retention Class. 2. In the Retention Class Name field, type a name for the retention class.
+
+Retention class names must be from one through 64 characters long, can contain only alphanumeric characters, hyphens (-), and underscores (_), and are not case sensitive.
+
+3. Take one of these actions: To make the retention class value an offset, in the Retention Method field, select Offset. In the Years field, type a number of years. In the Months field, type a number of months. In the Days field, type a number of days.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+305/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Valid values are integers in the range zero through 9,999. To make the retention class value a special value, in the Retention Method field, select Special Value. In the Special Value field, select the special value you want. To make the retention class a fixed date, in the Retention Method field, select Fixed Date. In the Fixed Date field, type the date you want. The date format is mm/dd/yyyy.
+
+4. (Optional) In the Description field, type a description of the retention class.
+
+The description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space. 5. (Optional) Select Allow Disposition service to delete objects when expired to have HCP automatically delete expired objects in the retention class.
+
+This option is present only when the retention method is offset.
+
+6. Click Create Retention Class.
+
+Modifying a retention class

@@ -1,0 +1,49 @@
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp-ca.example.com:9090/mapi/tenants/finance/" + "userAccounts?resetPasswords=start123") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() Request headers
+
+POST /mapi/tenants/finance/userAccounts?resetPasswords=start123 HTTP/1.1
+
+Host: admin.hcp.example.com:9090 Accept: */* Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: application/json Content-Length: 2
+
+Response headers
+
+HTTP/1.1 200 OKContent-Type: application/xmlX-HCP-SoftwareVersion: 9.0.0.2Content-Length: 0 Data types
+
+Many of the data types that describe HCP management API resources and properties are named, unordered sets of properties. When you create a resource, some properties for the applicable data type are required and some are optional. You need to specify a value for each required property. If you omit an optional property, HCP supplies a default value for it.
+
+When you modify a resource, all properties for the applicable data type are optional. If you omit a property, the current value of the property remains unchanged.
+
+When you create or modify a resource, HCP returns an error if the request body includes:
+
+Properties that are not valid for the resource Properties that are not valid for the request type Properties whose values cannot be set with the user account used for the request Note: If a tenant has granted system-level users administrative access to itself, actions that can be performed with a tenant-level user account can also be performed with a system- level user account that includes the applicable roles.
+
+Some resources also have required or optional query parameters. Common property values
+
+These types of values, among others, are common to multiple HCP management API resources or properties. Passwords
+
+User accounts have a password property. When creating or modifying a user account, the password is specified by the password query parameter.
+
+When you create a tenant, you have the option of creating an initial user account for that tenant. In this case, you use query parameters, including the password parameter, to define that account.
+
+To reset the passwords for all locally authenticated user accounts with the security role, you specify the new password in the resetPasswords query parameter.
+
+When you enable WebDAV basic authentication, you need to specify a username and password. In this case, you use the webdavBasicAuthPassword property of the httpProtoco l data type to specify the password.
+
+Passwords can be up to 64 characters long, are case sensitive, and can contain any valid UTF-8 characters, including white space. To be valid, a password must include at least one character from two of these three groups: alphabetic, numeric, and other. The minimum password length is configurable. To set the minimum password length, you use the minimumPasswordLength property of the consoleSecurity data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+444/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Descriptions
+
+Namespaces, namespace defaults, retention classes, user accounts, replication links, and erasure coding topologies all have a description property. Tenants have two properties for descriptions — systemVisibleDescription and tenantVisibleDescription.
+
+All descriptions can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.

@@ -1,0 +1,55 @@
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("network.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 413/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers
+
+POST /mapi/network?downstreamDNSMode=ADVANCED HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda Content-Type: application/xml Content-Length: 141
+
+Response headers HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Checking the advanced DNS configuration
+
+Here’s a sample GET request that lists whether the advanced DNS configuration mode is enabled or disabled. The request is made using a system-level user account that has the administrator role. Request with cURL command line
+
+curl -k -H "Content-Type: application/xml" -H "Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda" "https://admin.hcp.example.com:9090/mapi/network”
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("network.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", / "Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/network" curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "GET") curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("network.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+GET /mapi/network HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda Content-Type: application/xml Content-Length: 152
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <networkSettings>
+
+<downstreamDNSMode>BASIC</downstreamDNSMode> </networkSettings>
+
+Node statistics resource
+
+The node statistics resource lets you retrieve the statistical information of nodes in your HCP system.
+
+Note: A best practice is to limit your HTTP GET requests for retrieving statistics and metrics to once per hour. Polling the system more frequently can lead to system instability. .../nodes/statistics
+
+Data type
+
+Method
+
+Use
+
+Access
+
+nodeStatistics
+
+GET
+
+Retrieve the statistics of nodes in the HCP system

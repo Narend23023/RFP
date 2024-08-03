@@ -1,0 +1,71 @@
+For example:
+
+https://admin.hcp.example.com/query
+
+To use this format, you need a system-level user account that ‘s configured to allow use of the metadata query API.
+
+For this URL format, you need to use HTTP with SSL security (HTTPS). If the query specifies HTTP instead of HTTPS in the URL, HCP returns a 403 (Forbidden) error. Considerations
+
+The following considerations apply to these URLs:
+
+The URL must specify query, in all lowercase, as the first element following the hostname in the URL. If the URL specifies HTTPS and the HCP system uses a self-signed SSL server certificate, the request must include an instruction not to perform SSL certificate verification. With cURL, you do this by including the -k option in the request command line. In Python with PycURL, you do this by setting the SSL_VERIFYPEER option to false.
+
+Connecting using an IP address
+
+The core hardware for an HCP system consists of servers, called nodes, that are networked together. When you access an HCP system, your point of access is an individual node. Typically, you let HCP choose the node on which to process a metadata query API request. You can, however, use an IP address in the URL to access the system on a specific
+
+node. To do this, you replace the fully qualified hostname in the URL with the IP address of the node you want: https://node-ip-address/query
+
+With this URL format, you can provide an HTTP Host header that specifies a fully qualified hostname for a tenant or the entire repository. The hostname format you use depends on
+
+the namespaces you want to query:
+
+To query namespaces owned by an HCP tenant, use this format: hcp-tenant-name.hcp-domain-name
+
+To query only the default namespace, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+834/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+default.hcp-domain-name To query the entire repository, use this format: admin.hcp-domain-name
+
+If you omit the Host header, the request queries the entire repository.
+
+Note: The Host header is required when you are performing an operation-based query and the request body specifies a namespace.
+
+With cURL, you use the -H option to provide the Host header. For example:
+
+H "Host: finance.hcp.example.com"
+
+In Python with PycURL, you do this with the HTTPHEADER option. For example: curl.setopt(pycurl.HTTPHEADER, [“HOST: default.hcp.example.com”])
+
+When using an IP address in a URL, you need to use HTTP with SSL security.
+
+Note: If you don’t know the IP addresses for the HCP system, contact your HCP system administrator.
+
+Connecting using a hosts file
+
+All operating systems have a hosts file that contains mappings from hostnames to IP addresses. If the HCP system does not support DNS, you can use this file to enable access to tenants by hostname.
+
+The location of the hosts file depends on the client operating system:
+
+On Windows®, by default: c:\windows\system32\drivers\etc\hosts On Unix: /etc/hosts On Mac OS® X: /private/etc/host Hostname mappings
+
+Each entry in a hosts file maps one or more fully qualified hostnames to a single IP address. For example, the entry below maps the hostname of the europe tenant in the HCP
+
+system named hcp.example.com to the IP address 192.168.210.16:
+
+192.168.210.16 europe.hcp.example.com
+
+The following considerations apply to hosts file entries:
+
+Each entry must appear on a separate line.
+
+Multiple hostnames in a single line must be separated by white space. With some versions of Windows, these must be single spaces. At the system-level, the fully qualified hostname includes admin. Each hostname can map to multiple IP addresses.
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.

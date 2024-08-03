@@ -1,0 +1,129 @@
+Deleting an object or object versions and using privileged delete
+
+You use the HTTP DELETE method to delete an object. If versioning is enabled for a bucket, you can delete old versions of objects.
+
+To delete a specific version of an object, you use a version ID or timestamp. To delete a range of versions of an object, you specify starting and ending version IDs or timestamps.
+
+The result of an object or version deletion is a delete marker or delete record. A delete marker is an indicator that a version of an object has been deleted. A delete marker has a version ID but does not have any data or metadata.
+
+Similar to purging an object, you can use a version ID or timestamp range to delete all versions of an object. However, purging an object does not result in delete markers. If an object is under retention or on hold, you can delete it only if the namespace is configured to allow privileged operations and you have the necessary permissions. Privileged operations require you to provide a reason for the deletion.
+
+Tip: If an object is not under retention, you can use a privileged delete operation to specify a reason for the deletion. Although the object is not under retention, the namespace must
+
+still support privileged operations, and you need privileged permission.
+
+Using the DELETE method with a symbolic link deletes the link, not the target object. Access permission
+
+To delete an object, you need delete permission.
+
+To perform a privileged delete, even if the object is not under retention, you also need privileged permission.
+
+Request header
+
+DELETE /rest/directory/file HTTP/1.1
+
+The DELETE request to delete an object has these elements:
+
+If you’re accessing the namespace as an authenticated user, an Authorization header The URL of the object or symbolic link
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+version
+
+No
+
+One of:
+
+Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object.
+
+If you specify a valid range, HCP returns the requested amount of data with a status code of
+
+200. privileged
+
+No
+
+To perform a privileged delete, the request must specify both privileged and reason URL query parameters
+
+For example:
+
+?privileged=true&reason=reason-text
+
+reason
+
+Yes, if privileged is used
+
+Use percent-encode characters in the reason parameter that have special meanings in URLs.
+
+Request body
+
+To perform a privileged delete, the request body can include form-encoded data (application/x-www-form-urlencoded content type) in the request. For example, in cURL, you can use the -d option to specify form-encoded data in a DELETE request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+745/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If you use form-encoded data, you need to percent-encode only ampersands (&) in the reason parameter. This prevents HCP from interpreting these characters as starting a new
+
+URL query parameter.
+
+You cannot combine query parameters and form-encoded data in a single request. Response header
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+Simply deleting an object has no request body.
+
+Deleting a specific version of an object will get the contents of the requested version of the object.
+
+Deleting a range of objects or multiple objects will include the following elements in the response body. Element
+
+Child element
+
+Description
+
+SuccessResult
+
+VersionId
+
+Version ID of the object that was successfully deleted.
+
+ErrorResult
+
+VersionId

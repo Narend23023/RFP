@@ -1,0 +1,69 @@
+x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid. x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid.
+
+x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid. x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response status line
+
+The status line returned in response to an S3 compatible request specifies the version of HTTP on which the S3 compatible API is based and an HTTP status code that indicates the outcome of the request. HTTP status codes in the 2xx range indicate that the requested operation was successful. HTTP status codes in the 3xx, 4xx, and 5xx ranges, typically indicate that an error occurred and HCP did not perform the requested operation.
+
+Here’s an example of a response status line that indicates that the requested operation was successful:
+
+HTTP/1.1 200 OK
+
+Here’s an example of a response status line for an unsuccessful operation: HTTP/1.1 409 Conflict
+
+Common response headers
+
+Some response headers are common to all S3 compatible API requests, while some are specific to certain requests. The table below describes some of the common response headers.
+
+Content-Length
+
+The size, in bytes, of the response body if HCP can determine the size before formulating the response. If the response does not include a response body, the value of the Content-Length header is 0 (zero). Content-Type
+
+The Internet media type of the response body if HCP can determine the Internet media type. If HCP cannot determine the Internet media type, the value of this header is app lication/octet-stream. Because HCP returns error information in a response body, the response to any request can include a Content-Type header. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+563/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Transfer-Encoding
+
+Always chunked. This header is returned if the response includes a response body but HCP cannot determine the size of the response body before formulating the response. Because HCP returns error information in a response body, the response to any request can include a Transfer-Encoding header.
+
+Some common response headers address browser security concerns. These headers have fixed values. The table below describes these headers. Cache-Control
+
+Specifies directives that must be obeyed by all caching mechanisms along the request/response chain Values: no-cache, no-store, must-revalidate
+
+Content-Security-Policy
+
+Restricts the content that the browser can load to the sources specified by the header value Values: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; frame-ancestors 'self'; Expires
+
+Causes the response to become stale immediately after it is sent Value: Thu, 01 Jan 1970 00:00:00 GMT
+
+Pragma

@@ -1,0 +1,63 @@
+The total amount of storage space allowed for the index across all shared volumes in the system. This includes both used and unused space. The total amount of storage space on all index-only volumes in the system. This includes both used and unused space. The amount of space currently occupied by the index on all index-enabled volumes (that is, both index-only volumes and shared volumes).
+
+The total amount of space currently occupied by other data on all shared volumes. The total amount of space currently available for storing more of the index across all index-only and shared volumes in the system.
+
+Objects that cannot be indexed
+
+HCP reports objects that the metadata query engine cannot index in the applicable tenant-level log. The short description of the logged event is
+
+Object indexing failed. Metadata query engine management From the HCP System Management Console, you can:
+
+Enable or disable the ability to use the metadata query API. Disabling the use of the metadata query API has no effect on the use of the metadata query engine with the Search Console. Enable or disable the indexing of new objects and metadata changes across all namespaces. Enable or disable indexing of custom metadata.
+
+Change the maximum size of the metadata query engine index. Change the index protection level. To change the index protection level, you first need to disable indexing. Display information about storage usage on index-enabled logical volumes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+101/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Delete the metadata query engine index. You might delete the index, for example, to save space in a system in which no namespaces have clients using the metadata query
+
+API or Search Console. To delete the index, you first need to disable indexing and then wait for indexing to completely stop.
+
+Configuring the metadata query engine
+
+On the left side of the Search Facility Settings section on the Search page, click MQE. In the MQE panel:
+
+To enable or disable use of the metadata query API, select or deselect, respectively, Enable metadata query API. To enable or disable metadata query engine indexing, select or deselect, respectively, Enable indexing. To enable or disable indexing of custom metadata, select or deselect, respectively, Enable indexing of custom metadata. You can enable this option only while metadata
+
+query engine indexing is enabled. To change the maximum amount of space allowed for the metadata query engine index on shared volumes, in the Maximum Allowed Size on Shared Volumes field, type the maximum percent of shared storage that can be used for the index. Valid values are integers in the range one through 100. Tip: Before changing the maximum index size, click Index storage details to view information about storage usage on the index-enabled logical volumes. To change the number of copies of the metadata query engine index, in the Index Protection Level field, select 1 or 2. You can change the index protection level only while indexing is disabled.
+
+Click Update MQE Settings. If you changed the index protection level, a confirming message appears.
+
+In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. Then click Update Settings.
+
+Deleting the metadata query engine index
+
+You can delete the metadata query engine index at any time while indexing is disabled and completely stopped. To rebuild the index after deleting it, you need to reenable indexing.
+
+Note: To check the status of indexing, refresh the Search page. To view the Search page, you need the monitor or administrator role. To configure search, you need the administrator role. 1. On the left side of the Search Facility Settings section on the Search page, click MQE. 2. In the MQE panel, click Delete Index. A confirming message appears.
+
+3. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 4. Click Delete Index. Search facility status
+
+The Search page in the HCP System Management Console displays the current availability of each search facility and displays the current indexing status of the metadata query engine. To refresh this information without reloading the page, click Refresh Now below the Indexing Status column in the data table. Search facility availability
+
+The following table describes the possible values for search facility availability.
+
+Search facility
+
+Value
+
+Description
+
+Metadata query engine
+
+Available
+
+The metadata query engine is running on all HCP storage nodes.
+
+Partial

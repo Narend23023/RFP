@@ -1,0 +1,45 @@
+If two or more clients try to store an object with the same name at the same time, what happens depends on whether versioning is enabled for the target bucket:
+
+If versioning is enabled, HCP creates one version of the object for each PUT request. The versions are numbered in the order in which HCP received the requests, regardless of the order in which HCP finished processing the requests. If versioning is disabled and the bucket doesn’t already contain an object with the specified name, HCP creates the object for the first PUT request. In response to each subsequent PUT request, HCP returns a 409 (Conflict) status code and does not create an object. This happens regardless of whether HCP has finished processing the first request.
+
+Failed PUT requests to store objects
+
+A PUT request to store an object fails if either of these happens: The target node fails while the object is open for write. The TCP connection breaks while the object is open for write (for example, due to a network failure or the abnormal termination of the client application).
+
+Also, in some circumstances, a PUT request fails if HCP system hardware fails while HCP is processing the request.
+
+When a PUT request fails, HCP does not create a new object or object version.
+
+Tip: If a PUT request fails, try the request again. Empty objects
+
+When you use a PUT request to write a zero-sized file to HCP, the result is an empty object (that is, an object that has no data). Empty objects are WORM and are treated like any other object.
+
+Deleting objects under repair
+
+HCP regularly checks the health of the objects stored in the repository. If an object is found to be unhealthy, HCP tries to repair it.
+
+If you try to delete an object while it is under repair, HCP returns a 409 (Conflict) status code and does not delete the object. In response to such an error, you should wait a few minutes and then try the request again.
+
+Multithreading
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+669/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+HCP lets multiple threads access a bucket concurrently. Using multiple threads can enhance performance, especially when accessing many small objects across multiple folders. Here are some guidelines for the effective use of multithreading:
+
+Concurrent threads, both reads and writes, should be directed against different folders. If that’s not possible, multiple threads working against a single folder is still better than
+
+a single thread. To the extent possible, concurrent threads should work against different IP addresses. If that’s not possible, multiple threads working against a single IP address is still better than a single thread. Only one client can write to a given object at one time. Similarly, a multithreaded client cannot have multiple threads writing to the same object at the same time. However, a multithreaded client can write to multiple objects at the same time. Multiple clients can read the same object concurrently. Similarly, a multithreaded client can use multiple threads to read a single object. However, because the reads can occur out of order, you generally get better performance by using one thread per object. The S3 compatible API shares a connection pool with the REST, and WebDAV APIs. HCP has a limit of 255 concurrent connections from this pool, with another 20 queued.
+
+Tip: For better performance, consider limiting the number of concurrent read threads per node to 200 and concurrent write threads per node to 50 for small objects. For large objects, consider using fewer threads. Persistent connections
+
+HCP supports persistent connections. Following a request for an operation, HCP keeps the connection open for 60 seconds, so a subsequent request can use the same connection.
+
+Persistent connections enhance performance because they avoid the overhead of opening and closing multiple connections. In conjunction with persistent connections, using multiple threads so that operations can run concurrently provides still better performance.
+
+If the persistent connection timeout period is too short, tell your tenant administrator.

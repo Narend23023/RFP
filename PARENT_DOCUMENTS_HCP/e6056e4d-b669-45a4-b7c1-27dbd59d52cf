@@ -1,0 +1,75 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+72/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Identifier
+
+Value
+
+Bytes written for all parts of multipart uploads regardless of whether the upload of the part has finished, the part was subsequently replaced, the
+
+multipart upload was aborted, or the part was not used in the completed multipart upload.
+
+deleted
+
+One of the following:
+
+true — The namespace or tenant was deleted after the statistics in the set were collected.
+
+false — The namespace or tenant currently exists. included — For a tenant or the HCP system, the statistics in the set include values for one or more namespaces that were subsequently deleted. deletes
+
+For a storage component or storage pool, the number of successful delete operations that targeted storage represented by the component or pool during the reporting interval, where the deleted object was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of successful delete operations that targeted HCP S Series and extended storage because of the service plan during the
+
+reporting interval, where the deleted object was on that storage due to the service plan and was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+A delete of a multipart object counts as a single delete operation. endTime
+
+The end time of the reporting interval for the set of statistics in the line, in the same format as is used for the startTime value.
+
+namespaceName
+
+The name of the namespace to which the set of statistics in the line applies.
+
+In lines that contain tenant or systemwide statistics, this field has no value. reads
+
+For a storage component or storage pool, the number of read operations that targeted storage represented by the component or pool during the reporting interval, where the requested object was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of read operations that successfully retrieved data from HCP S Series or extended storage during the reporting interval, where the requested object was on that storage due to the service plan and was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+Each read of a part of a multipart object counts as a separate read operation.
+
+startTime
+
+The start time of the reporting interval for the set of statistics in the line, in this format:
+
+yyyy-MM-dd hh:mm:ss
+
+hh is hours on a 24-hour clock.
+
+For example: 2017-10-07 14:32:47 systemName
+
+One of the following:
+
+The name of the domain associated with the data access network for the tenant that owns the namespace to which the set of statistics in the line applies
+
+The name of the domain associated with the data access network for the tenant to which the set of aggregated statistics in the line applies The name of the domain associated with the [hcp_system] network for the HCP system to which the set of aggregated statistics in the line applies target
+
+The storage component, storage pool, or service plan to which the set of statistics in the line applies.
+
+tenantName
+
+Either:
+
+The name of the tenant that owns the namespace to which the set of statistics in the line applies The name of the tenant to which the set of statistics in the line applies
+
+In lines that contain systemwide statistics, this field has no value. valid
+
+The status of the set of statistics in the line. Possible values are:
+
+true — HCP successfully collected all statistics in the set. false — The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to one or more nodes being unavailable during that time, to a network failure, or to other hardware issues. writes
+
+For a storage component or storage pool, the number of successful write operations that targeted storage represented by the component or pool during the reporting interval, where the data was written to the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.

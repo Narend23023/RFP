@@ -1,0 +1,73 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> With the REST API, you can perform operations on individual objects. If the namespace you are using is configured to allow versioning, you can also store multiple versions of an
+object. You can use this technique, for example, to preserve multiple states of a file that changes over time.
+Storing an object or version of an object
+You use the HTTP PUT method to store an object or new version of an existing object in a namespace. You can optionally use this method to store the object or version data and
+custom metadata in a single operation.
+To store versions, the namespace must be configured to allow versioning. When versioning is enabled, storing an object with the same name as an existing object creates a new
+version of the object.
+You can store new versions of any object, including multipart objects created by using the multipart upload feature of the S3-compatible API, as long as the object is not under
+retention or on hold. You cannot store new versions of an object that is under retention or on hold.
+By default, a new object inherits several metadata values from namespace configuration settings. A new version of an object inherits the metadata values of the previous version of
+the object. In either case, you can override this default metadata when you store the object or version.
+Tip: To store very large objects, use the S3-compatible API. With the S3 compatible API, you can break up the data for an object into multiple parts and upload the parts to HCP
+individually. The process of creating an object by uploading the data in parts is called multipart upload. The result of a multipart upload is a single object that behaves in the same
+way as objects for which all the data was stored by means of a single PUT object request.
+Access permission
+To store an object in a namespace, you need write permission for the namespace.
+To store a version of an object in a namespace, you need write permission for the object or namespace.
+Request header
+PUT /rest/directory/file?type=whole-object&annotaton=annotation_location HTTP/1.1
+The PUT request to store an object or version has these elements:
+If you are accessing the namespace as an authenticated user, an header Authorization
+A URL specifying the location in which to store the object
+A body containing the fixed-content data to be stored in the namespace
+You can use a single request to store object data and a single annotation. To do this, the request body must contain the fixed-content data to be stored, followed by the annotation
+content, with no delimiter between them. Additionally, specify the request elements in the next table.<br>
+                       <b>Bounding box:</b> x1=185, y1=1449, x2=1516, y2=1662
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>type</td>
+      <td>No</td>
+      <td>Use the value to retrieve a single object or version data. whole-object</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>annotation</td>
+      <td>No</td>
+      <td>Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in\nconjunction with the parameter. type</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

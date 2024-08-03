@@ -1,0 +1,77 @@
+exist), and a bucket. A user account is also created. The user account is granted permission to manage buckets and storage pools. Bucket creation
+
+The bucket that HCP creates when you add an S Series Node is available only to that HCP system. The name of this bucket is:
+
+hcpsrv-hcp-system-name
+
+If a bucket with that name already exists, which can happen if the S Series Node is added to the HCP system a second time, HCP creates a new bucket named: hcpsrv-hcp-system-name0
+
+Subsequently, each time HCP automatically creates a new bucket on the S Series Node, HCP either increments the numeric suffix on the bucket name by one or reuses an earlier
+
+name from a deleted HCP software-created bucket.
+
+User account creation
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+40/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The user account that HCP creates when you add an S Series Node is:
+
+hcpsrv-hcp-system-name
+
+If a user account with that username already exists, HCP creates a new user account: hcpsrv-hcp-system-name0
+
+Subsequently, each time HCP creates a new user account on the S Series Node, HCP either increments the numeric suffix on the user name by one or reuses an earlier user name
+
+from a deleted HCP software-created account. Creating an HCP S Series storage component
+
+To create an HCP S Series storage component, you need to add an S Series Node to the HCP system.
+
+You must have the HCP administrator role to create an S Series Node storage component.
+
+Note: Adding an S Series Node using a virtual IP address affects the ability of HCP to load balance traffic across Server Modules of the S Series Node.
+
+Distributing the HCP load across the two Server Modules in the S Series Node requires the following:
+
+A properly set up DNS with a link to the detail setup instructions.
+
+Use the virtual IP addresses in the DNS configuration for the S Series Node FQDN. Use the correct FQDN for the S Series Node specified in the DNS.
+
+Note: Using a virtual IP address instead of a static IP address is critical for high availability in case one of the Server Modules in the S Series Node becomes temporary unavailable.
+
+1. On the Hardware > Nodes page, click Add Node.
+
+The Add Node wizard is displayed. 2. In the Username field, type a user name for an S Series Node user account with the administrator and security roles. 3. In the Password field, type the password for the userrname that you specified in step 2.
+
+4. In the Domain Name field, type the fully qualified domain or virtual IP address of the S Series Node.
+
+If you receive an invalid connection information error message and you are connecting to the S Series Node through an IP address, disable HTTPS in step 7.
+
+5. Optional: If Virtual network management is enabled and the Storage Network field is displayed, select the network that you want HCP to use to communicate with the S Series Node.
+
+If Virtual network management is not enabled, the field does not exist.
+
+6. Optional: To use HTTP with SSL security for S Series Node management requests, select Use HTTPS for Management.
+
+7. Optional: To display additional configuration options, click Advanced.
+
+a. To use HTTP with SSL security for data access requests, select Use HTTPS.
+
+b. In the HTTPS Port field, type the port you want to use to connect to the end point. Default value: 443.
+
+c. In the HTTP Port field, type the port you want to use to connect to the S Series Node. Default value: 80.
+
+d. Optional: To connect to the endpoint, select Use proxy . e. In the Proxy Host field, type the hostname or IP address of the proxy server.
+
+f. In the Proxy Port number field, type the number of the proxy server. Default value: 0.
+
+g. In the Proxy Username field, type the user name of the proxy server.
+
+h. In the Proxy Password field, type the password of the proxy server. i. In the Proxy Domain field, type the AD domain of the proxy server.
+
+8. Click Next.

@@ -1,0 +1,55 @@
+For example, suppose you have a network alias named t1-mng that points to a network named tenant-1. If you select t1-mng as the management network for a given tenant, HCP
+
+uses the tenant-1 network as the management network for that tenant.
+
+Network aliases are useful in the context of replication, particularly in situations where the network topologies differ between the two systems involved in a given replication link. The two systems, for example:
+
+May not have the same number of nodes
+
+May not both have a VLAN-capable networking environment
+
+Because network topologies can differ, HCP doesn’t replicate the definitions of networks and network aliases from one system to another. However, when replicating a tenant, HCP does replicate the names of the networks or aliases associated with that tenant. For the tenant and its namespaces to be accessible on the target system, networks or aliases with
+
+those names must be defined on that system.
+
+Here are two replication scenarios that illustrate the use of network aliases:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+77/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+One of the HCP systems involved in a given replication link makes extensive use of virtual networking, with each tenant having its own networks for management and data access purposes. None of these networks is [hcp_system]. The other system involved in the link is in a networking environment that is not VLAN capable. As a result, the only front-end network defined on that system is [hcp_system].
+
+To support replication of the tenants on the first system to the second system, for each network used by a tenant on the first system, you create a network alias with the same name on the second system. You define each of these aliases to point to the [hcp_system] network.
+
+One of the HCP systems involved in a given replication link has networks named t1-mng, t1-data, t2-mng, t2-data, and so forth selected as the management and data access
+
+networks for Tenant-1, Tenant-2, and so forth. The other system involved in the link is used exclusively for data access. Therefore, on that system, the segregation of tenant management networks is not important. On the second system, you want to have a single network for the management of all tenants and a separate network for data access for each tenant. To do this and still support replication of all the tenants from the first system to the second system, on the second system:
+
+For tenant management, you create a single network named tenant-mng. You also create network aliases named t1-mng, t2-mng, and so forth that all point to the tenant-mng network. For data access, you create networks named t1-data, t2‑data, and so forth.
+
+HCP does not require that the networks and network aliases defined on one system in a replication pair directly correspond to networks and network aliases on the other system. That is, the name of a network on one system can be the name of an alias on the other system.
+
+These considerations apply to network aliases: The target network for a network alias can be a user-defined network or the [hcp_system] network. A network alias cannot point to another network alias. A network alias can point to only one network. However, multiple aliases can point to the same network.
+
+Network states
+
+To be used most effectively, a network should have IP addresses defined for each node in the HCP system. This enables HCP to spread the processing load across all nodes for
+
+clients using that network.
+
+If a node doesn’t have IP addresses for a given network, that node does not receive communications that come into the system on that network. However, a network is usable as long as at least one available node is assigned IP addresses for the IPv4 and IPv6 subnets defined for that network.
+
+Depending on the number of nodes that have IP addresses for a network, the network can be in any of these states:
+
+Fully defined
+
+A network is fully defined if all nodes in the system have IP addresses defined for the network. Partial
+
+A network is partial if at least two nodes have IP addresses defined for the network and at least one node does not have any IP addresses defined for the network.
+
+Degraded

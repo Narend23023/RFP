@@ -1,0 +1,57 @@
+A labeled hold can be placed on a new object at ingest time, or on an existing object in the namespace, provided the client application has write and privileged data access permissions. Similarly, the application can modify a labeled hold on an existing object.
+
+To place a labeled hold on an object at ingest time, use the Hitachi API for Amazon S3 or REST API with the HTTP PUT object method and the X-HCP-LabelRetentionHold header. To add or remove a labeled hold on an existing object, use the S3 compatible API with the HTTP PUT object copy method and the X-HCP-LabelRetentionHold header, or the REST API HTTP PUT method with the query parameter method to add or remove system metadata.
+
+Retention holds and labeled retention holds on the same object
+
+An object can have both a single hold and one or more labeled holds at the same time. These hold settings are independent of one another. All holds must be released on the object before it can be deleted or have its metadata modified, regardless of the retention setting.
+
+Prerequisite to set privileged data access and write permissions
+
+Before an application can place a labeled hold on an object, the application must have write and privileged data access permissions for the associated namespace. Privileged permission can be set either programmatically by using the HCP Management API to update the dataAccessPermissions.xml file, or through the Tenant Management Console on the Users page of the Security menu.
+
+Label limits
+
+The following limits apply to the labeled hold feature:
+
+Maximum label size 64 characters
+
+Maximum number of labeled holds per object
+
+100
+
+Retention classes
+
+A retention class is a named retention value that, when used as the retention setting for an object, specifies how long the object must remain in the repository. This value can be:
+
+A duration after object creation. For example, a retention class named HlthReg-107 could have a duration of 21 years. All objects that have that class as their retention setting could not be deleted for 21 years after they’re created. One of these special values: Deletion Allowed (0) Deletion Prohibited (-1) Initial Unspecified (-2)
+
+Retention class duration values use this format: A+yearsy+monthsM+daysd
+
+In this format, A represents the time at which the object was created. For example, this value specifies a retention period of one year, two months, and three days:
+
+A+1y+2M+3d
+
+The duration specification can omit portions with zero values. For example, this value specifies a six-month retention period: A+6M
+
+You can use retention classes to consistently manage data that must conform to a specific retention rule. For example, if local law requires that medical records be kept for a specific number of years, you can use a retention class to enforce that requirement.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+695/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Tenant administrators create retention classes for namespaces. When creating a class, the administrator specifies the class name, the retention setting, and whether HCP can automatically delete objects in the class when the retention period expires.
+
+Note: Automatic deletion must be enabled for the namespace for objects under retention to be automatically deleted.
+
+Each namespace has its own set of retention classes. You cannot apply a retention class defined in one namespace to an object in a different namespace. A namespace can be configured to allow administrative users to increase or decrease class retention times and delete classes. Otherwise, the retention time for a class can only be increased, and classes cannot be deleted. In all cases, any change to a retention class affects the retention period of all objects in that class.
+
+If a retention class is deleted, the objects assigned to that class have a retention setting of Deletion Prohibited (-1) and cannot be deleted.
+
+If a new retention class is created with the same name as a deleted retention class, existing objects in the deleted class get the retention setting of the new class.
+
+You can assign a retention class to an existing object using any namespace access protocol. With the REST API, you can assign a retention class to an object when you store the object in the namespace, thereby overriding the default retention setting.

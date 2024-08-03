@@ -1,0 +1,145 @@
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes READ, browse permission is enabled automatically.
+
+The default is no permissions.
+
+This property is not valid for the default namespace.
+
+These values are not case sensitive.
+
+authUsersAlwaysGranted AllPermissions Boolean
+
+Specifies whether users have the minimum data access permissions specified by the authAndAnonymous-Minim umPermissions property in addition to the minimum data access permissions specified by the authMinimumP ermissions property when using a protocol that requires authentication. Valid values are:
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace. true
+
+Users have the minimum data access permissions specified by both properties when using a protocol that requires authentication.
+
+false
+
+Users have only the minimum data access permissions specified by the authMinimum-Perm issions property when using a protocol that requires authentication.
+
+The default is true. creationTime
+
+String
+
+Specifies the date and time at which the namespace was created, in this ISO 8601 format:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+yyyy-MM-ddThh:mm:ssZ
+
+Z represents the offset from UTC, in this format:
+
+(+|-)hhmm
+
+For example:
+
+2017-02-09T19:44:03-0500
+
+customMetadata IndexingEnabled Boolean
+
+Specifies whether custom metadata indexing is enabled for the namespace. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+You can set this property to true only while indexing is enabled for the namespace.
+
+Custom metadata indexing is enabled.
+
+false
+
+Custom metadata indexing is disabled.
+
+Disabling custom metadata indexing for the namespace automatically disables full custom metadata indexing.
+
+The default is false.
+
+customMetadata ValidationEnabled Boolean
+
+Specifies whether custom metadata XML checking is enabled for the namespace. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+When custom metadata is added to an object in the namespace, HCP checks whether the custom metadata is well-formed XML.
+
+false
+
+When custom metadata is added to an object in the namespace, HCP does not check whether the custom metadata is well-formed XML.
+
+The default is false. description
+
+String
+
+This property is optional on a PUT request.
+
+Specifies a description of the namespace. This description is optional. The default is the description
+
+specified by the namespace defaults for the tenant.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+480/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+To remove a description from an existing namespace, specify the description property with no value. directoryUsage
+
+String
+
+Specifies whether the cloud optimized namespace is configured for balanced directory mode or unbalanced directory mode. Valid values are:
+
+Balanced
+
+The directory usage is configured for balanced mode. A well distributed directory structure is required to avoid hot spotting and ensure optimal performance. Unbalanced
+
+The directory usage is configured for unbalanced mode. Optimal performance is not dependent upon a directory structure.
+
+The default is specified by the namespace defaults for the tenant. These values are not case sensitive.
+
+dpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan
+
+function.
+
+This property is ignored on a PUT or POST request. In response to a GET request, the value of this property is always Dynamic. enterpriseMode
+
+Boolean
+
+Specifies the namespace retention mode. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+The namespace is in enterprise mode.
+
+You can set the value of this property to false only if the owning tenant is allowed to set the retention mode for its namespaces. false
+
+The namespace is in compliance mode.
+
+The default is the retention mode specified by the
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode,
+
+namespace defaults for the tenant.
+
+these activities are not allowed.

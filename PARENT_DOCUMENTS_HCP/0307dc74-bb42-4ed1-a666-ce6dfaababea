@@ -1,0 +1,57 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Retrieving an object or multiple versions of an object
+You use the HTTP GET method to retrieve an object, a version of an object, or a range of versions of an object from a namespace. When retrieving an single object or version, you
+can request all the object data or part of the data. When retrieving multiple versions of an object, you can only request all the object data.
+You can use a GET request to retrieve all the object data of a single object or version and an annotation together. You cannot retrieve part of the object data together with an
+annotation in a single request. You can also use a GET request to retrieve the timestamp range of an object, which you can use to find a version of that object.
+Using GET with a symbolic link returns the current version of the object that is the target of the link.
+Note: Attempts to retrieve the current version of a deleted object result in an HTTP 404 (Not Found) error code. However, if versioning is enabled, you can retrieve the version you
+deleted by specifying its version ID.
+Access permission
+To retrieve an object or version, you need read permission.
+Request header
+GET /rest/directory/file?version=@version&deleted=true HTTP/1.1
+The GET request to retrieve an object has these elements:
+If you are accessing the namespace as an authenticated user, an header Authorization
+The URL of the object or symbolic link<br>
+                       <b>Bounding box:</b> x1=185, y1=1614, x2=1516, y2=2123
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>version</td>
+      <td>No</td>
+      <td>One of:\nSpecific version number of the file. For example:\n?version=80232998058817\nRange of version IDs, separated by a dash. For\nexample:\n?version=91728994618369-91728994618372\nRange of create timestamps, separated by a dash.\nFor example:\n?version=@1493911519817-@1493911519817\nwhich provides all versions of an object. 0-,</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

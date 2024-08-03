@@ -1,0 +1,39 @@
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Both the DNS and the unavailable system are configured to support DNS failover. (This condition is not a requirement if you’re using a load balancer that can target the requests to a remote system.)
+
+If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. If an enterprise has several satellite offices, an HCP system at a central facility can consolidate data from the HCP systems at those outlying locations. Protection types
+
+HCP supports two types of geo-protection: whole-object protection and erasure-coded protection.
+
+Whole-object protection
+
+With whole-object protection, all the data for each object in a replicated namespace is maintained on each HCP system in a replication topology, except on systems where the object is on a metadata-only storage tier. In response to a client request for an object on a metadata-only storage tier on the target HCP system, HCP retrieves the object data from another system in the replication topology.
+
+In case of system unavailability or loss, whole-object protection ensures continued data availability when at least one of the systems with the object data remains available. If an object is metadata-only on all the available systems, the object data is inaccessible.
+
+The service plan associated with a namespace determines whether and when objects in that namespace move to a metadata-only storage tier. Erasure-coded protection
+
+With erasure-coded protection, the data for each object in a replicated namespace is subject to erasure coding. With erasure coding, the data is encoded and broken into multiple chunks that are then stored across multiple HCP systems. All but one chunk contains object data. The other chunk contains parity for the object data.
+
+For the purpose of erasure coding, parts of multipart objects are each treated as an individual object.
+
+To implement erasure-coded protection, you create an erasure coding topology. An erasure coding topology is a named replication topology in which object data is protected by erasure coding. The total number of chunks for an erasure-coded object is equal to the number of systems in the erasure coding topology, where each system stores one chunk. An erasure-coded object can be read from any system in the erasure coding topology. In response to a client read request, HCP reconstructs the object data on the fly by retrieving the chunks stored on the other systems. If any one system in an erasure coding topology is unavailable, the data for an erasure-coded object can be completely reconstructed from the chunks on the remaining systems.
+
+If more than one system in an erasure coding topology is unavailable, HCP cannot reconstruct the erasure-coded objects. In this case, HCP marks the erasure-coded objects as unavailable or irreparable, depending on the reasons why they cannot be reconstructed.
+
+An erasure coding topology does not necessarily include all the HCP tenants that are replicated in the underlying replication topology. You need to explicitly select the tenants to be included. You cannot include the default tenant in an erasure coding topology. An erasure coding topology has properties that control which objects are erasure coded and when those objects are erasure coded.
+
+Protection types for namespaces
+
+Protection types apply to individual namespaces. Only cloud-optimized namespaces support erasure-coded protection.
+
+When you create a replication-enabled tenant, you choose between:
+
+Allowing erasure-coded protection for all cloud-optimized namespaces owned by the tenant. Allowing the tenant administrator to allow erasure-coded protection for selected cloud-optimized namespaces.
+
+If the tenant administrator has granted system-level users access to the tenant, you also can allow erasure-coded protection for selected namespaces.
+
+Objects in a replicated namespace that allows erasure-coded protection are erasure coded only if the tenant that owns the namespace is included in an erasure coding topology. If the tenant is not in an erasure coding topology, the namespace uses whole-object protection. Objects in a replicated namespace that does not allow erasure-coded protection use whole-object protection, even if the tenant that owns the namespace is included in an erasure coding topology.
+
+Note: Regardless of protection type, namespaces obey the DPL specified by their associated service plans. That is, on any given system:

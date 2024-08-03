@@ -1,0 +1,83 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+865/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
++ " <DNS-Namespace> <Username> <Password>\n"); System.out.println(" where ");
+
+System.out.println(" <DNS-Namespace> is the fully qualified domain name" + " of the HCP Namespace.");
+
+System.out.println(" For example: \"ns1.ten1.myhcp.example.com\""); System.out.println(" <Username> and <Password> are the credentials of the" + " HCP user with data access permissions for the namespace"); System.out.println();
+
+System.exit(-1);
+
+}
+
+try {
+
+// Initialize the class with the input parameters myClass.initialize(args[0], args[1], args[2]);
+
+// Issue the query and process the results
+
+myClass.runQuery();
+
+// Clean up before object destruction myClass.shutdown(); } catch (Exception e) {
+
+e.printStackTrace(); }
+
+} }
+
+Example Using a faceted query to retrieve object information
+
+Here is a sample metadata query API request that retrieves metadata for all objects added to namespaces owned by the europe tenant between March 1, 2020, and March 31, 2020, inclusive. The verbose entry specifies true to request all metadata for each object in the result set. This request also retrieves namespace facet information for objects in the result set. The query uses an XML request body and requests results in XML format.
+
+Request body in the XML file named March.xml
+
+<queryRequest> <object>
+
+<query>ingestTime:[1330560000 TO 1333238399]</query> <facets>namespace</facets>
+
+<verbose>true</verbose> </object> </queryRequest>
+
+Request with cURL command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H "Content-Type: application/xml" -H "Accept: application/xml"
+
+d @March.xml "https://europe.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL
+
+import pycurl
+
+import os curl = pycurl.Curl() # Set the URL, command, and headers
+
+curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" + "query?prettyprint")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER,
+
+["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file filehandle = open("March.xml", 'rb') curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST")
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("March.xml"))
+
+curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+866/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers

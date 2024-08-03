@@ -1,0 +1,35 @@
+Protection service
+
+The Protection service ensures the stability of the repository by maintaining a specified level of data redundancy, called the data protection level (DPL), for each object in the
+
+repository throughout the entire object lifecycle. The DPL for an object is the number of copies of the object data that HCP must maintain.
+
+For the purpose of data protection, HCP treats these as individual objects:
+
+Parts of multipart objects Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+Each namespace has a service plan that defines both a storage tiering strategy and a data protection strategy for the objects in that namespace. For all objects in a given namespace, the storage tiering strategy defines one or more types of storage as tiers. The data protection strategy specifies the DPL that’s applied to the objects that are stored on
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+119/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+each tier.
+
+At any given point in the lifecycle of an object, the data protection strategy specifies the number of copies of the object that must exist in the HCP repository and the storage tier on which each copy must be stored. HCP initially stores all object data in either primary running storage or HCP S Series storage and all metadata on primary running storage. Therefore, the service plan for a namespace must always define either primary running storage or HCP S Series storage as the initial storage tier, called the ingest tier, and must specify both the data protection level and the metadata protection level (MPL) for the that tier.
+
+For each object in a given namespace, the ingest tier DPL is the number of copies of the object data that HCP must maintain on primary running storage or HCP S Series storage, as applicable, from the time the object is first stored in the repository until the time the object data is moved to another storage tier. The ingest tier MPL is the number of copies of the object metadata that HCP must maintain on primary running storage for as long as the object exists in the repository. On HCP with SAN-attached storage and VM systems, by default, the ingest tier DPL and MPL are both set to one. On HCP with internal storage systems, by default, the ingest tier DPL and MPL are both set to two. At any time, you can modify the service plan for a namespace to set the ingest tier DPL and MPL for that namespace.
+
+For any given namespace, you can assign a service plan that will give the namespace a DPL setting of one (supported on HCP with SAN-attached storage and VM systems only), two, three, or four. You can also set the ingest tier MPL to one, two, three, or four. However, the ingest tier MPL for a namespace must be equal to the ingest tier DPL for that namespace. HCP uses the Protection service to maintain the correct number of copies of each object in the HCP repository. When the number of existing copies of an object goes below the number of object copies specified in the applicable service plan (for example, because of a logical volume failure), the Protection service automatically creates a new copy of that
+
+object in another location. When the number of existing copies of an object goes above the number of object copies specified in the applicable service plan, the Protection service automatically deletes all unnecessary copies of that object.
+
+The Protection service runs according to the active service schedule and in response to certain events. Ingest tier data protection level
+
+Each namespace has a service plan that defines one or more storage tiers for that namespace and specifies the data protection level (DPL) that’s applied to the objects that are stored on each tier.
+
+Note: For the purpose of DPL, HCP treats parts of multipart objects, parts of multipart uploads, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects.

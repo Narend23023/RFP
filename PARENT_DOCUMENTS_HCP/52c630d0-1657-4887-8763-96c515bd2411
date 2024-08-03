@@ -1,0 +1,85 @@
+563/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Transfer-Encoding
+
+Always chunked. This header is returned if the response includes a response body but HCP cannot determine the size of the response body before formulating the response. Because HCP returns error information in a response body, the response to any request can include a Transfer-Encoding header.
+
+Some common response headers address browser security concerns. These headers have fixed values. The table below describes these headers. Cache-Control
+
+Specifies directives that must be obeyed by all caching mechanisms along the request/response chain Values: no-cache, no-store, must-revalidate
+
+Content-Security-Policy
+
+Restricts the content that the browser can load to the sources specified by the header value Values: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; frame-ancestors 'self'; Expires
+
+Causes the response to become stale immediately after it is sent Value: Thu, 01 Jan 1970 00:00:00 GMT
+
+Pragma
+
+Prevents the response from being used for subsequent requests for the same resource without the browser first checking whether the resource has changed Value: no-cache X-Content-Type-Options
+
+Prevents the browser from examining the returned content to determine the content MIME type Value: nosniff
+
+X-DNS-Prefetch-Control
+
+Prevents the browser from performing domain name resolution on URLs embedded in returned content before the URLs are requested Value: off
+
+X-Download-Options
+
+Prevents the browser from opening resources that are downloaded through links in the returned content Value: noopen X-Frame-Options
+
+Prevents the browser from rendering the returned content in a frame on a page containing content not returned by the HCP system
+
+X-XSS-Protection
+
+Stops the browser from loading the returned content if the browser detects reflected cross-site scripting (XSS) in the response Values: 1; mode=block
+
+For information about request-specific response headers, see the "Response header" topic for each type of operation you can perform with the S3 compatible API. Note:
+
+HCP can also return several standard HTTP response headers that are not described in this book. Among others, these include Connection, Content-Disposition, Conte nt-Encoding, and Content-Language. For more information about HTTP response headers, see the HTTP/1.1 standards (RFCs 7230 through 7237). The Cache-Control and Expires headers are not returned with error responses. Error response body
+
+When an S3 compatible request results in an error, HCP returns information about the error in an error request body. An error request body contains XML in this format:
+
+<?xml version="1.0" encoding="UTF-8"?> <Error> <Code>error-code</Code> <Message>error-message</Message> <RequestId>request-id</RequestId> <HostId>host-id</HostId> <BucketName>specified-bucket-name</BucketName> <Key>object-name</Key> </Error>
+
+The list below describes XML elements in an error response body.
+
+Error
+
+Root element.
+
+Code
+
+The error code.
+
+Message
+
+Text that provides more information about the error.
+
+RequestId
+
+The HCP-internal ID assigned to the request. HostId
+
+The HCP-internal ID of the host responding to the request.
+
+BucketName
+
+The specified bucket name. This element is included in the response body only when the error code is NoSuchBucket.
+
+Key
+
+The specified object name. This element is included in the response body only when the error code is NoSuchKey. Error codes
+
+Every error response body contains an error code and a message that provides more information about the error. Error codes are returned in addition to HTTP status codes. A single HTTP status code can correspond to multiple error codes.
+
+The table below describes the error codes that can be returned in response to S3 compatible API requests.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+564/907

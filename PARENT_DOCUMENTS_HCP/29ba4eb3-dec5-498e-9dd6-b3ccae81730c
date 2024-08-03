@@ -1,0 +1,53 @@
+6. When data recovery on link AB is complete, on system C, restore link AC. 7. On system A, accept the restored link. 8. On system C, begin and complete data recovery on link AC.
+
+T1 becomes read-write on A and read-only on C and remains read-only on B. Replication resumes on link AC.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+378/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Failover and failback in an active/passive many-to-one topology with disaster recovery support
+
+When HCP systems fail in an active/passive many-to-one topology with disaster recovery support, you need to combine the failback patterns for the many-to-one and chained topologies. For example, assume a replication topology in which, when all five systems are healthy:
+
+System A replicates to system D on link AD. Link AD includes HCP tenant T1, which was originally created on system A. System B replicates to system D on link BD. Link BD includes HCP tenant T2, which was originally created on system B.
+
+System C replicates to system D on link CD. Link CD includes HCP tenant T3, which was originally created on system C. System D replicates to system E on link DE. Link DE includes links AD, BD, and CD and tenant T4, which was originally created on system D. T1, T2, and T3 are read-write on systems A, B, and C, respectively, and read-only on systems D and E. T4 is read-write on system D and read-only on system E.
+
+The figure below shows this topology.
+
+To return to normal operation after systems A, B, and D fail:
+
+1. On system E, fail link DE over to E.
+
+T1, T2, and T3 are read-only on E. T4 becomes read-write on E. T3 remains read-write on C. 2. When system D becomes available again, on system E, restore link DE. 3. On system D, accept the restored link. 4. On system E, begin and complete data recovery on link DE.
+
+When data recovery is complete, T1, T2, and T3 are read-only on D and E. T4 becomes read-write on D and read-only on E, and replication resumes on link DE.
+
+5. On system C, restore link CD. 6. On system D, accept the restored link.
+
+T3 is read-write on C and read-only on D, and replication restarts on link CD.
+
+7. When system A becomes available again, on system D, update the configuration of the automatically recreated link AD. 8. On system D, restore link AD. 9. On system A, accept the restored link.
+
+10. On system D, begin and complete data recovery on link AD.
+
+When data recovery is complete, T1 becomes read-write on A and remains read-only on D. Replication resumes on link AD. 11. When system B becomes available again and data recovery on link AD is complete, on system D, update the configuration of the automatically recreated link BD. 12. On system D, restore link BD. 13. On system B, accept the restored link. 14. On system D, begin and complete data recovery on link BD.
+
+When data recovery is complete, T2 becomes read-write on B and remains read-only on D. Replication resumes on link BD.
+
+Reenabling user accounts disabled on the replica
+
+For HCP tenants on an active/passive link, tenant-level user accounts are replicated and are available for use on the replica. If an account becomes disabled on the replica due to consecutive failed login attempts, it cannot be reenabled on the replica because the tenant is read-only.
+
+1. In the top-level menu of the Tenant Management Console for the applicable HCP tenant on the primary system, select Security > Users. 2. In the list of user accounts on the Users page, click the user account you want to modify. 3. Click Update Settings. 4. Wait for the updated account to be replicated.
+
+When the account is replicated, it becomes enabled on the replica.
+
+Setting advanced replication options
+
+To perform the activities listed, you need the service role.

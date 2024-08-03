@@ -1,0 +1,119 @@
+private int mHeaderPos = 0; // Keeps track of how much of the
+
+// header has already been read.
+
+/*
+
+GZIP trailer structure and positional indicator. *
+
+Trailer consists of 2 integers: CRC32 value and original file * size.
+
+/ private final static int TRAILER_SIZE = 8; private byte mTrailer[] = null; private int mTrailerPos = 0;
+
+/***
+
+Overridden functions against the DeflatorInputStream. */
+
+/*
+
+Function to indicate whether there is any content available to * read. It is overridden because there are the GZIP header and
+
+trailer to think about. */
+
+public int available() throws IOException { return (mReachedEOF ? 0 : 1); }
+
+/*
+
+This read function is the meat of the class. It handles passing * back the GZIP header, GZIP content, and GZIP trailer in that
+
+order to the caller. */
+
+public int read(byte[] outBuffer, int offset, int maxLength) throws IOException, IndexOutOfBoundsException {
+
+int retval = 0; // Contains the number of bytes read into
+
+// outBuffer and will be the return value of // the function.
+
+int bIndex = offset; // Used as current index into outBuffer. int dataBytesCount = 0; // Used to indicate how many data bytes
+
+// are in the outBuffer array.
+
+// Make sure we have a buffer.
+
+if (null == outBuffer) { throw new NullPointerException("Null buffer for read");
+
+}
+
+// Make sure offset is valid. if (0 > offset || offset >= outBuffer.length)
+
+{ throw new IndexOutOfBoundsException(
+
+"Invalid offset parameter value passed into function"); }
+
+// Make sure the maxLength is valid. if (0 > maxLength || outBuffer.length - offset < maxLength) throw new IndexOutOfBoundsException(
+
+"Invalid maxLength parameter value passed into function");
+
+// Asked for nothing; you get nothing.
+
+if (0 == maxLength) return retval;
+
+/**
+
+Put any GZIP header in the buffer if we haven't already returned * it from previous calls. */ if (mHeaderPos < mHeader.length)
+
+{
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+827/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+// Get how much will fit. retval = Math.min(mHeader.length - mHeaderPos, maxLength);
+
+// Put it there.
+
+for (int i = retval; i > 0; i--) {
+
+outBuffer[bIndex++] = mHeader[mHeaderPos++]; }
+
+// Return the number of bytes copied if we exhausted the
+
+// maxLength specified. // NOTE: Should never be >, but... if (retval >= maxLength) { return retval;
+
+} }
+
+/** * At this point, the header has all been read or put into the
+
+buffer. *
+
+Time to add some GZIP compressed data, if there is still some * left.
+
+/ if (0 != super.available()) {
+
+// Get some data bytes from the DeflaterInputStream.
+
+dataBytesCount = super.read(outBuffer, offset+retval, maxLength-retval);
+
+// As long as we didn't get EOF (-1), update the buffer index and // retval. if (0 <= dataBytesCount) {
+
+bIndex += dataBytesCount; retval += dataBytesCount;
+
+}
+
+// Return the number of bytes copied during this call if we
+
+// exhausted the maxLength requested. // NOTE: Should never be >, but...
+
+if (retval == maxLength) { return retval;
+
+}
+
+// If we got here, we should have read all that can be read from // the input stream, so make sure the input stream is at EOF just
+
+// in case someone tries to read it outside this class. byte[] junk = new byte[1];
+
+if (-1 != super.read(junk, 0, junk.length)) { // Should never happen, but...

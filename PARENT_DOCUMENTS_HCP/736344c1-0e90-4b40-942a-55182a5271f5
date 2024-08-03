@@ -1,0 +1,125 @@
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+25 Reference Number
+
+HCP-37778
+
+HCP-37754
+
+HCP-37753
+
+HCP-37696
+
+HCP-37426
+
+HCP-37381
+
+HCP-37342
+
+HCP-37335
+
+Known issues
+
+SR Number Description
+
+—
+
+After upgrade of an HCP system is completed, the System Management Console Hardware page may display Initializing status for some of the logical volumes. This is the result of the device SMART error log containing records of error. Please contact Hitachi Vantara technical support to identify the error condition and the corrective action to resolve the symptom.
+
+—
+
+HCP installed in an ESXi environment may display the following FSTRIM error message on the System Management Console: Failure encountered attempting to trim volumes on nodes:, and an error with Event ID 2818 is listed in the error log under Major Events.
+
+Please contact Hitachi Vantara customer support if you encounter this error message.
+
+—
+
+HCP system goes in read-only state because of node rolls due to metadata manager not starting up. The system might even appear to be unstable..
+
+Workaround: Reboot the system.
+
+01612339 MQE shard / solr core balancing doesn’t function as desired for IPL=2 and causes incomplete query results.
+
+—
+
+Attempting to perform DELETE and PUTCOPY simultaneously on an object results in "Non- replicating Irreparable objects detected" error message in SMC of HCP.
+
+—
+
+AWS S3 protocol in race condition allowed both directory and file objects created with same pathname. Unlike AWS, HCP has a concept of directories. So the upper level directory cannot be also a file.
+
+—
+
+An unexpected duplicate row in the per-object metadata table will cause node outages until the duplicate row is removed.
+
+02509892
+
+HCP product installation procedure may fail with the following error message if there is a USB drive or external DVD drive connected to the system when running the installation wizard:
+
+umount: /dev/sr0: umount failed: Invalid argument.
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+26 Reference Number
+
+HCP-36798
+
+HCP-36744
+
+HCP-36632
+
+HCP-36001
+
+HCP-35089
+
+HCP-34982
+
+Known issues
+
+SR Number
+
+Description
+
+This may occur in both VM and appliance configurations. Please disconnect all unnecessary USB drive and external DVD drives from the system, and retry the installation procedure,
+
+01709881
+
+SNMP returns the incorrect replication link name
+
+Workaround: Use the HCP Management API to return the correct replication link name.
+
+— In rare circumstances, when HCP G11 operating system is installed on a node, the installation process may hang during making filesystems. This has typically been observed in SAN-attached configurations. This symptom occurs when HCP G11 detects that there appears to already be a filesystem on the volume, and the filesystem creation command is waiting for user input, but the prompt output by that command is not displayed on the console. If you are certain that the filesystem formatting procedure can continue (i.e., the volumes are mapped correctly, and all data on the volume can be destroyed), you can type in yes and press Enter, which should allow the procedure to continue.
+
+01547564
+
+Multipart upload fails in the FileOpenForWriteIndex.suspendAndSwap function and returns an Attempt to suspend and swap a multipart upload file handle error.
+
+01410508
+
+Node recovery during an online upgrade procedure targets a healthy node.
+
+01426836 Zero-copy failover failback might leave behind stall mount points.
+
+—
+
+In the HCP Search Console UI, the login ID changes to null and a subsequent search returns 500 Error: Internal server error.
+
+When you open the Tenant Management Console from the System Management Console, initiate a search by logging in to the Search Console with your system-level credentials, and either refresh the page or click the search button, the following events occur:
+
+■ You are returned to the login page.
+
+■ The login ID changes to null.
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+27 Reference Number
+
+HCP-34764
+
+HCP-34516

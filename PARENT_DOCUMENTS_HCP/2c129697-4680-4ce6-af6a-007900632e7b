@@ -1,0 +1,55 @@
+After creating a service schedule, you can modify or delete it. You can modify a schedule regardless of whether it is active. You can delete a schedule only while it is inactive.
+
+Note: Although you can modify or delete the HCP Spindown Schedule, doing this is not recommended because once the schedule is modified or deleted, you cannot restore it.
+
+Instead, create a new schedule based on the HCP Spindown Schedule and then modify the new one. How scheduled services work
+
+The Compression/Encryption, Content Verification, Disposition, Duplicate Elimination, Garbage Collection, Geo-distributed Erasure Coding, Protection, HCP S Series Balancing, Scavenging, and Storage Tiering services each examine objects one at a time, determine whether any action needs to be taken with the object, and if so, take the applicable action. These services, except Scavenging, start with the primary metadata and use that to find the object data. The Scavenging service starts with the secondary metadata, which is stored with the object data.
+
+If the HCP system does not include any spindown storage, the services look at the object data for each object regardless of where the data is stored.
+
+If the HCP system does include spindown storage, on most days, all scheduled services, except Duplicate Elimination, look at the object data on only a subset of the system nodes. Each day, these scheduled services look at the data on a different set of nodes. This prevents spindown volumes that are spun down from being spun up frequently or for long periods of time. Periodically, however, to address cases where the data for an object spans nodes in different sets, the services do not restrict the nodes they look at on a given day. The Duplicate Elimination service always looks at object data regardless of which node the data is stored on because the service needs to correlate data from all locations. This can result in all spindown volumes being spun up at the same time. You should keep this in mind when scheduling the Duplicate Elimination service.
+
+The length of time required for a service to examine every object in the repository depends on several factors, including the number of objects in the repository, how much time the service is scheduled to run each week, and the performance level at which the service runs.
+
+If the HCP system includes spindown storage, services scheduled to run on only one day a week take a minimum of three-to-five weeks to examine all objects, depending on the number of system nodes. You can shorten this time by scheduling the services to run on more than one day a week. Note: Services may examine some objects twice during a run. Rarely, this can result in the reported number of objects examined being larger than the number of objects in the repository. If an irreparable object is examined twice by the Protection or Content Verification service, that object is counted twice in the reported number of violations found. About the Services Schedule page
+
+You use the Services Schedule page in the HCP System Management Console to create, view, modify, activate, and delete service schedules, as well as view log messages about service activity.
+
+The Service Schedule page has a service legend, a schedule grid, and a list of service events. On the schedule grid, each time period in which at least one service is scheduled to
+
+run is represented by a rectangle. These rectangles are numbered in the upper-left corner for ease of reference.
+
+Note: To view service schedules and log messages about service activity, you need the monitor or administrator role. To create, modify, activate, and delete service schedules, you need the administrator role.
+
+Services legend
+
+The top part of the Services page has a legend that associates each service with an icon. These icons are used to identify services in the schedule grid.
+
+The icons are:
+
+Compression/Encryption service
+
+Content Verification service
+
+Disposition service
+
+Duplicate Elimination service
+
+Garbage collection service
+
+Geo-distributed erasure coding service
+
+Protection service
+
+Scavenging service
+
+Storage Tiering service HCP S Series Balancing service
+
+When you hover over a time period in the schedule grid:
+
+The legend heading shows the period reference number and the start and end times for the period The services scheduled in the time period are highlighted in the legend
+
+Schedule grid
+
+The schedule grid on the Schedule page shows the weekdays from Sunday through Saturday with each day each broken out into 24 hours. The time periods for a schedule are laid out on this grid.

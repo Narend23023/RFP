@@ -1,0 +1,135 @@
+To hold or release: privileged
+
+To add an ACL: write or write ACL Elements
+
+For all operations:
+
+Authorization header Object or directory URL
+
+For all operations except directory creation:
+
+A body containing the data To send Gzip compressed data, a Content-Encoding request header with a value of gzip and a chunked transfer encoding
+
+To copy an object, this header: X-HCP-CopySource:source-namespace-name.source-tenant-name/object-path
+
+To add or change a labeled retention hold, this query parameter:
+
+label_hold = [{"id":"UniqueLabelHold-1","hold":true|false}, {"id":"UniqueLabelHold-2","hold":true|false}]
+
+Optionally, to control whether custom metadata is copied with object data, this header: X-HCP-MetadataDirective:ALL|NONE
+
+Default is NONE.
+
+To copy a specific version of an object, this URL query parameter:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+817/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+version=version-number
+
+To conditionally store or copy an object, these headers: If-Match: etag-list If-None-Match: etag-list
+
+If-Modified-Since: datetime If-None-Modified-Since: datetime
+
+To conditionally copy an object, these headers:
+
+X-HCP-CopySource-If-Match: etag-list X-HCP-CopySource-If-None-Match: etag-list
+
+X-HCP-CopySource-If-Modified-Since: datetime X-HCP-CopySource-If-None-Modified-Since: datetime
+
+For copy operations, to force HCP to generate an ETag if the source object does not yet have one: forceEtag=true
+
+To create a directory, this URL query parameter:
+
+type=directory
+
+To store an annotation, these as URL query parameters:
+
+type=custom-metadata annotation=annotation-name
+
+The annotation name is optional for the default annotation.
+
+To store object or version data and an annotation together: This URL query parameter:
+
+type=whole-object
+
+An X-HCP-Size request header with the size of the object, in bytes
+
+To add an ACL to an existing object, this URL query parameter:
+
+type=acl
+
+Optionally, to specify the ACL format, a Content-Type header with one of these values:
+
+application/json
+
+application/xml (default value)
+
+To add a predefined ACL when storing an object or version, one of these URL query parameters: acl=all_read acl=auth_read
+
+To set hold, index, retention, or shred metadata when storing an object or version, see the query parameters described for the POST method.
+
+Response headers
+
+General
+
+X-HCP-Time
+
+X-HCP-ServicedBySystem X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Storing or copying objects and versions: ETag X-HCP-Hash
+
+X-HCP-VersionID
+
+Storing or copying object or version data and an annotation together:
+
+ETag
+
+X-HCP-CustomMetadataHash X-HCP-Hash
+
+X-HCP-VersionID
+
+Storing annotations:
+
+X-HCP-Hash
+
+Status codes
+
+Success: 201, 204
+
+Error: 304, 400, 403, 404, 409, 412, 413, 414, 415, 500, 503
+
+HTTP status codes with the REST API
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+818/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+200
+
+OK
+
+DELETE
+
+HCP successfully processed a request that does any of: GET
+
+Retrieve an object, system metadata, an annotation, information about annotations, an ACL, or a directory

@@ -1,0 +1,57 @@
+In a replication chain with the configuration A > B > C, if you add an HCP tenant to the link from system A to system B and a different tenant with the same name already exists on system C, replication of that tenant from system B to system C is automatically paused. To recover from this situation:
+
+1. Either rename the tenant on system C, delete the tenant on system C, or remove the tenant from the link from system A to system B.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+342/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+2. Resume replication of the tenant on the link from system B to system C. In a replication chain with the configuration A > B > C, if you add a default-namespace directory to the link from system A to system B and a default-namespace directory with the same name already exists on system C, replication of the default tenant from system B to system C is automatically paused. To recover from this situation:
+
+1. Either rename the directory on system C, delete the directory on system C, or remove the directory from the link from system A to system B. The first two options are
+
+possible only if the directory is empty on system C.
+
+2. Resume replication of the default tenant on the link from system B to system C.
+
+In a replication chain with the configuration A > B > C, if you add a default-namespace directory to the link from system A to system B and either of these is true, replication of the default tenant from system B to system C is automatically paused:
+
+The default namespace doesn’t exist on system C. To recover from this situation: 1. Create the default namespace on system C with the same retention mode and cryptographic hash algorithm as the default namespaces on systems A and B
+
+have.
+
+2. Resume replication of the default tenant on the link from system B to system C.
+
+The default namespace exists on system C but has a different retention mode or cryptographic hash algorithm from the default namespaces on systems A and B. To recover from this situation:
+
+1. Delete the default-namespace directory from the link from system A to system B. 2. Resume replication of the default tenant on the link from system B to system C.
+
+On the Replication page in the System Management Console, each panel in which you can add and remove items of a specific type to and from a replication link includes a list of the items of the applicable type that are already included on the link. In those lists, rows containing items that have been deleted from HCP are highlighted in red and
+
+have a trash can icon ( ) on the right.
+
+HCP automatically removes each deleted namespace from a link after the deletion has been replicated. You need to remove deleted tenants and directories yourself.
+
+Important: Do not remove a deleted item from a replication link until after the deletion has been replicated. If you deselect a namespace from replication, any further action on that namespace, including deletion of the namespace, is not replicated. This enables a situation in which the owning tenant can end up with more namespaces than are allowed by its namespace quota and/or using more storage than is allowed by its hard quota.
+
+For example, consider the following scenario for a tenant has reached its namespace quota of five:
+
+1. The tenant is selected for replication on an active/passive link, along with all five of its namespaces.
+
+The tenant now has five namespaces on both the primary system and the replica.
+
+2. One of the namespaces is removed from the replication link. 3. On the primary system, the tenant empties and deletes the removed namespace.
+
+The tenant now has four namespaces on the primary system and five namespaces on the replica.
+
+4. On the primary system, the tenant creates a new namespace.
+
+The tenant now has five namespaces on the primary system and five namespaces on the replica, but the namespaces on the two systems are not the same ones.
+
+5. The new namespace is added to the replication link.
+
+The tenant now has five namespaces on the primary system and six namespaces on the replica.

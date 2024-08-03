@@ -1,0 +1,119 @@
+Checking the existence of an object or multiple versions of an object
+
+You use the HTTP HEAD method to check whether an object, a version of an object, or a range of versions of an object exists in a namespace. These requests also retrieve the
+
+metadata for the object without retrieving the object data. The metadata is returned in HTTP response headers.
+
+An HTTP 200 (OK) status code indicates that the requested object or object versions exist. An HTTP 404 (Not Found) status code indicates that the specified URL does not identify the object or its versions. Even if versioning is currently disabled, the method returns a 200 code and metadata if the requested version exists.
+
+Using HEAD with a symbolic link verifies the existence of the object that is the target of the link. Access permission
+
+To verify the existence of an object or multiple object versions, you need browse permission.
+
+Request header
+
+HEAD /rest/directory/file?version=@version_num HTTP/1.1
+
+The HEAD request to verify the existence of an object or multiple versions has these elements:
+
+If you are accessing the namespace as an authenticated user, an Authorization header The URL of the object or symbolic link Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+version
+
+No
+
+One of:
+
+Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+723/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object.
+
+If you specify a valid range, HCP returns the requested amount of data with a status code of
+
+200.
+
+deleted No
+
+By default, the GET request to retrieve object versions
+
+does not include delete records. To retrieve a listing that includes delete records, specify this URL query
+
+parameter:
+
+deleted=true
+
+You can also specify deleted=false, which results in the default behavior.
+
+Response headers
+
+The following list describes request-specific response headers returned for this operation.
+
+ChangeTimeString The change time for the object in this format:
+
+DDD, ddmmmyyyyhh:mm:ss GMT
+
+For example, Fri, 18 Sep 2020 21:02:13 GMT. This header contains the same datetime value as the X-HCP-ChangeTimeMilliseconds and X-HCP-ChangeTimeString headers, but in a format that can be used directly in If-Modified-Since and If-Unmodified-Since request headers. ETag
+
+The ETag of the object or version enclosed in double quotation marks ("). This header is returned only if the object has an ETag.
+
+X-HCP-ACL
+
+A true or false value indicating whether the object has an ACL.
+
+X-HCP-ChangeTimeMilliseconds
+
+The change time for the object, in milliseconds since January 1, 1970, at 00:00:00 UTC, followed by an integer that is unique for the change time. For example: 1336483100178.00. X-HCP-ChangeTimeString
+
+The change time for the object in this format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2020-09-18T09:18:20-0400 represents the start of the 20th second into 9:18 AM, September 18, 2020, EDT. X-HCP-CurrentStorageNode

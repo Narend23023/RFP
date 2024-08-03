@@ -1,0 +1,71 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+96/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Element
+
+Description
+
+Type: Enum (GET, PUT, HEAD, POST, DELETE) Ancestor: CORSRule AllowedOrigin
+
+Origins that you want to allow cross-origin requests from. Each CORSRule must identify at least one origin and one method.
+
+The origin value can include at most one wildcard character "*", for example, http://*.example.com. Alternatively, you can specify the wildcard character by itself to enable all origins to send cross-origin requests. Type: String Ancestor: CORSRule
+
+AllowedHeader
+
+Optional. List of headers that are allowed in a preflight OPTIONS request through the Access-Control-Request-Headers header. This element can contain at
+
+most one wildcard character "*". Each header name in the Access-Control-Request-Headers header must have a corresponding entry in the CORSRule. The server will send only the allowed headers that were requested in a response. Type: String
+
+Ancestor: CORSRule
+
+MaxAgeSeconds
+
+Optional. Maximum time, in seconds, that the browser can cache a preflight OPTIONS response for a specified resource. By caching the response, the browser does not have to send preflight requests to the server within the MaxAgeSeconds time window if repeated requests (same origin, HTTP method, and resource) are issued.
+
+A CORSRule can have at most one MaxAgeSeconds element. Type: Integer (seconds) Ancestor: CORSRule
+
+ExposeHeader
+
+Optional. One or more response headers that customers can access from their applications, for example, from a JavaScript XMLHttpRequest object.
+
+You add one ExposeHeader element in the rule for each header. This element restricts the response headers that are accessible by the client. Type: String Ancestor: CORSRule
+
+CORS configuration template
+
+Here is a sample XML template for setting a CORS rules configuration.
+
+CORS rules configuration template
+
+<CORSConfiguration>
+
+<CORSRule> <Id>Optional: Unique string value that identifies the rule</Id> <AllowedOrigin>Origin that you want to allow cross-origin requests from</AllowedOrigin> <AllowedOrigin>A single wildcard is allowed</AllowedOrigin>
+
+<AllowedMethod>HTTP method</AllowedMethod> <AllowedMethod>HTTP method</AllowedMethod> <MaxAgeSeconds>Optional: Time, in seconds, the browser can cache the preflight OPTIONS response for a resource</MaxAgeSeconds> <AllowedHeader>Optional: Header that you want the browser to send. A single wildcard is allowed.</AllowedHeader> <AllowedHeader>...</AllowedHeader> <!-- Optional -->
+
+<ExposeHeader>Optional: Response header that you want accessible from the browser </ExposeHeader> <ExposeHeader>...</ExposeHeader> <!-- Optional --> </CORSRule> <CORSRule> ... </CORSRule> <CORSRule> ... </CORSRule>
+
+</CORSConfiguration>
+
+Configuring CORS rules at the tenant-level
+
+You can use the System Management Console to configure the default CORS settings for all namespaces owned by a tenant.
+
+To view a tenant, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants. 2. On the Tenants page, in the Name column, click the right arrow next to the tenant for which you want to configure CORS settings. The tenant Overview panel is displayed.
+
+3. Click the Security tab.
+
+The Security panel opens to the CORS tab on the left.
+
+4. In the CORS Configuration field, enter the default CORS settings to use for all namespaces that are owned by the tenant. 5. Click Update Settings. You are returned to the Overview panel for the tenant. A message is displayed at the top of the page indicating whether the update was successful. If a success message is displayed, your configuration is saved and persists in HCP.
+
+6. To view, update, or delete the saved configuration, click Security to display the Security panel.
+
+CORS configuration

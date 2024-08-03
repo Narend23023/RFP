@@ -1,0 +1,69 @@
+curl -X POST -k -i -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs?cancel"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/logs?cancel") curl.setopt(pycurl.SSL_VERIFYPEER, False) curl.setopt(pycurl.SSL_VERIFYHOST, False) curl.perform() curl.close() Request headers
+
+POST /mapi/logs?cancel HTTP/1.1
+
+Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+406/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+HTTP/1.1 200 OK
+
+X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Marking the download log
+
+Here’s a sample POST request that marks the system logs with the message Mark the log. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -X POST -k -i -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs?mark=Mark+the+log"
+
+Request in Python using PycURL
+
+import pycurl markMessage = "Mark+the+log" curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, ("https://admin.hcp.example.com:9090/mapi/logs/?" + "mark="Mark+the+log")) curl.setopt(pycurl.SSL_VERIFYPEER, False) curl.setopt(pycurl.SSL_VERIFYHOST, False) curl.perform() curl.close() Request headers
+
+POST /mapi/logs?mark=Mark+the+log HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Namespace resources
+
+Namespace resources let you create, retrieve information about, modify, and delete namespaces. The table below provides information about these resources. .../tenants/tenant-name/namespaces
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+namespace
+
+PUT
+
+Create an HCP namespace
+
+Tenant-level user account with the administrator role or allow namespace management property
+
+Not valid for the default namespace.
+
+List
+
+GET

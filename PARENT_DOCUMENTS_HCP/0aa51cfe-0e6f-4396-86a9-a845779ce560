@@ -1,0 +1,27 @@
+Viewing the schedule for an individual service
+
+By default, the schedule grid shows all scheduled services in the time periods for the displayed schedule. You can choose to show only a selected service in the scheduled time periods. To do this, select the service you want in the field on the right above the schedule grid.
+
+To show all services again, select All services in the same field. Service log messages
+
+HCP writes messages about service activity to the system log. These messages are displayed in the Service Events section on the Schedule page as well as in other displays of the log.
+
+The messages displayed depend on the selection in the field on the right above the schedule grid. If All services is selected, the list of messages includes all service-related messages. If a specific service is selected, the list includes only the messages related to that service. Service schedule considerations
+
+Before creating or modifying a service schedule, it is important to understand service schedule behavior.
+
+These considerations apply to service schedules:
+
+You cannot modify or delete the service schedule named HCP Default Schedule. You cannot activate a service schedule that does not include the Garbage Collection service. Likewise, you cannot completely remove the Garbage Collection service from the currently active service schedule. If the HCP system includes spindown storage but the currently active service schedule does not include the Storage Tiering service, the Overview page in the System
+
+Management Console displays an alert indicating that this situation exists. If the HCP system is in an erasure coding topology but the currently active service schedule does not include the Geo-distributed Erasure Coding service, the Overview page in the System Management Console displays an alert indicating that this situation exists. While the Geo-distributed Erasure Coding service is not running, full copies of the data for objects that are subject to erasure coding are not reduced to chunks. These copies continue to occupy the full amount of storage required for the object data. How fast the amount of used storage on the system increases depends on:
+
+The object ingest rate The size of the objects being ingested The Replication service schedule Whether the erasure coding topology is configured for full-copy or chunk distribution.
+
+The minimum amount of time for a time period is two hours.
+
+Time periods can overlap. For example, on a given day, you can have a five-hour time period that starts at 1:00 a.m., a six-hour time period that starts at 1:00 a.m., and a three-hour time period that starts at 3:00 a.m. Overlapping time periods cannot include the same service. A service that is scheduled in contiguous time periods stops at the end of the first time period and restarts at the beginning of the next one. Time periods cannot span days. That is, you cannot create a single time period that starts before midnight on one day and continues after midnight on the next day. However, you can schedule the same service to run in one time period that ends at midnight and another that starts at the beginning of the next day. The recommended maximum number of services to schedule in a time period is half the number of hours in the time period, rounded down. The more services you schedule to run at the same time, the more the services compete for system resources. Each time a service runs, it picks up from where it left off the last time it ran. After a service completes a full run (that is, after it has examined every object in the repository), it does not start again for at least 24 hours regardless of the service schedule. When a service requires spindown volumes to be spun up, it waits while the volumes spin up. This uses up a small amount of time in the time period in which the service is running. When a service in one time period preempts a service in another time period, the preempted service stops. If the preempting service stops before the end of the time period containing the preempted service, the preempted service restarts only if at least ten minutes remain in the time period after HCP recognizes that the preempting service has stopped. HCP can take up to five minutes to recognize the stop. When you modify the active schedule, any service that is currently running stops. The service restarts only if the current time is in a time period in which the service is scheduled to run and only if at least ten minutes remain in that time period.
+
+Creating a service schedule
+
+You can create new service schedules from existing schedules. In this case, the new schedule is initially the same as the schedule from which you created it. After creating the schedule, you can modify it in any way you want.

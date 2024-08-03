@@ -1,0 +1,89 @@
+An object with the same name already exists at the target location. The source object is under retention.
+
+DELETE
+
+Use this method to delete an object, directory, symbolic link, or default annotation from the namespace. LOCK
+
+Use this method to lock an object on a single node.
+
+UNLOCK
+
+Use this method to unlock an object on a single node.
+
+OPTIONS
+
+Use this method to see which WebDAV methods are supported for the specified object, directory, or symbolic link.
+
+Unsupported methods
+
+POST TRACE
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+789/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+URLs for WebDAV access to a namespace
+
+Depending on the method you’re using and what you want to do, the URL you specify can identify any of: The namespace as a whole A directory
+
+An object A symbolic link
+
+A metadirectory A metafile for an object
+
+Note: To access a namespace through WebDAV directly from a Windows client, add the namespace as a network share, using any of the URL formats described in URL formats.
+
+When you share the namespace in this way, it appears to be part of the local file system in Windows Explorer in the same way it does with CIFS access. URL formats
+
+The following sections show the URL formats you can use to access a namespace. These formats all use a domain name to identify the HCP system. If the HCP system does not
+
+support DNS, you can use the client hosts file to enable access to a namespace by hostname.
+
+Note:
+
+You need to use the domain name of the HCP system to access an HCP namespace through WebDAV. If you specify the IP address of a node in a URL, you access the
+
+default namespace. The URL formats and examples that follow show https. Your tenant administrator can configure the namespace to not allow SSL security for the HTTP protocol. In this case, you need to specify http instead of https in your URLs. URL for the namespace as a whole
+
+The URL that identifies a namespace as a whole has this format:
+
+https://namespace-name.tenant-name.hcp-domain-name/webdav
+
+For example:
+
+https://finance.europe.hcp.example.com/webdav
+
+URLs for objects, directories, and symbolic links
+
+To access an object, directory, or symbolic link in a namespace, you use a URL that includes the data directory. The format for this is: https://namespace-name.tenant-name.hcp-domain-name/webdav/data
+
+[/directory-path[/object-name|symbolic-link-name]]
+
+Here’s a sample URL that identifies a directory:
+
+https://finance.europe.hcp.example.com/webdav/data/Corporate/Employees
+
+Here’s a sample URL that identifies an object:
+
+https://finance.europe.hcp.example.com/webdav/data/Corporate/Employees/2193_John_Doe
+
+You cannot tell from a URL whether it represents an object, directory, or symbolic link. URLs for metafiles and metadirectories
+
+To access a metafile or metadirectory, you use a URL that includes the metadata directory. The format for this is:
+
+https://namespace-name.tenant-name.hcp-domain-name/webdav/
+
+metadata/metadirectory-path[/metafile-name]
+
+Here’s a sample URL that identifies a metadirectory: https://finance.europe.hcp.example.com/webdav/metadata/Corporate/Employees/2193_John_Doe
+
+Here’s a sample URL that identifies a metafile:
+
+https://finance.europe.hcp.example.com/webdav/metadata/Corporate/Employees/2193_John_Doe/shred.txt
+
+URL considerations
+
+The following considerations apply to specifying URLs in WebDAV requests against a namespace. URL length

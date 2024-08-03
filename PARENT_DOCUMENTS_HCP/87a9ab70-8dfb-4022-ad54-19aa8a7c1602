@@ -1,0 +1,97 @@
+If the effective permission mask for the namespace prohibits deletions, HCP does not automatically prune object versions. Custom metadata XML checking policy
+
+The custom metadata XML checking policy determines whether HCP allows custom metadata to be added to a namespace if it is not well-formed XML. This policy is set at the
+
+namespace level.
+
+The XML checking policy can have a setting of enabled or disabled:
+
+Enabled
+
+When custom metadata is added to or replaced in a namespace, HCP checks whether it’s well-formed XML. If the XML is not well-formed, HCP rejects it. Disabled
+
+HCP accepts any data submitted as custom metadata.
+
+XML checking applies only when custom metadata is added to or replaced in a namespace. It does not apply to custom metadata already in the namespace.
+
+HCP services
+
+HCP services are responsible for optimizing the use of system resources and maintaining the integrity and availability of the stored data.
+
+Each HCP service performs a specific function that contributes to the overall health and viability of the system. Services generally run without user intervention either according to a schedule or in response to certain events.
+
+Using the HCP System Management Console, you can set the service schedule and control certain aspects of some services. You can also monitor the progress of certain services
+
+and review the use of primary spindown storage and extended storage. Additionally, you can configure and manage data migrations and replication. About services
+
+A service is a background process that performs a specific function that contributes to the continuous tuning of the HCP system. Services work across all namespaces in the repository.
+
+In general, services run only while they are enabled. An exception is the Protection service, which runs in response to certain triggers even while it is disabled. Typically, services are disabled only by authorized HCP service providers during problem resolution.
+
+The Overview page of the System Management Console shows the status of most services. HCP records information about service runs and irreparable violations in the system log. Service types
+
+A number of services contribute to the continuous tuning of the HCP system.
+
+HCP implements the following services:
+
+Capacity Balancing service
+
+Ensures that the percentage of space used remains roughly equivalent across the storage nodes in the HCP system.
+
+Compression/Encryption service
+
+Compresses object data to make more efficient use of HCP storage. Content Verification service
+
+Ensures that object data is not corrupted.
+
+Disposition service
+
+Automatically deletes expired objects.
+
+Duplicate Elimination service
+
+Merges duplicate data to free space in the HCP storage. You can monitor the activity of this service.
+
+Fast Object Recovery service
+
+Ensures that unavailable objects have their status changed to available once they are recovered. Garbage Collection service
+
+Deletes data and metadata left in the repository by incomplete operations, thereby freeing space for the storage of additional objects.
+
+Geo-distributed Erasure Coding service
+
+Erasure codes full copies of object data in replicated namespaces that allow erasure coding.
+
+Migration service
+
+Migrates data off selected nodes in an HCP with internal storage system or selected storage arrays in an HCP with SAN-attached storage system in preparation for retiring those devices. Network Per Storage Component service
+
+Increases tiering performance from the HCP system to HCP S Series Nodes or external storage devices by isolating their communication to an individual forward-facing HCP network. Each HCP S Series Node or external device can use its own network to communicate with HCP.
+
+Protection service
+
+Ensures that damaged or lost objects can be recovered.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+104/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Replication service
+
+Maintains selected tenants and namespaces on two or more HCP systems and manages the objects in the selected namespaces across those systems to ensure data availability and enable disaster recovery. You can configure, monitor, and control the activity of this service. Replication Verification service
+
+Replicates objects that the Replication service missed replicating or was unable to replicate.
+
+HCP S Series Balancing service
+
+Ensures that the percent of space used across S Series Nodes in a pool remains roughly equivalent.
+
+Scavenging service
+
+Ensures that the metadata for each object exists and is not corrupted.
+
+Shredding service

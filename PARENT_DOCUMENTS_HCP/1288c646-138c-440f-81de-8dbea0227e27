@@ -1,0 +1,29 @@
+Note: If you enable the management network, you cannot access your front-end network through DNS unless you create secondary zones for the management network. To enable access to HCP by domain name on any given network, you need to configure the HCP domain for that network in your DNS. To do this, you can use either secondary zones or stub zones.
+
+This chapter contains:
+
+A discussion of the advantages of using DNS A description of zones, secondary zones, and stub zones Windows and Unix instructions for configuring HCP domains in the DNS Instructions for verifying the HCP domain definitions DNS considerations for implementing HCP service by remote systems Note:
+
+HCP does not require DNS. When communicating with a DNS server, HCP may send packets that are larger than 512 bytes. You must make sure these packets can pass through your corporate firewall.
+
+DNS advantages
+
+Using DNS provides several advantages over using IP addresses for access to the HCP system. For example:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+213/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+When you use a domain name for namespace access, the HCP DNS manager, which runs on all storage nodes, is responsible for distributing client requests among those nodes. If you use IP addresses, you are responsible for ensuring that the processing load is balanced across the HCP nodes. If an application uses a domain name for access to the HCP system and you change the IP addresses of the HCP nodes, you don’t need to change the application. If the application uses IP addresses and you change the node IP addresses, you must update the application to specify the new IP addresses. If both IPv4 and IPv6 addresses are defined for a front-end network, applications can use the domain name associated with that network to access the HCP system from client computers that have IPv4 addresses and from client computers that have IPv6 addresses. If an application uses IP addresses to access the HCP system over a front- end network with multiple IP addresses defined for each node, you need to configure the application to access the HCP system using only the IP addresses that are routable from the client computer on which the application is running. If you use a domain name to identify the other system when you create a replication link and the IP addresses for that domain are changed on that system, replication continues without interruption. If you use IP addresses to identify the system and the IP addresses for the system change, replication stops until you change the IP addresses in the definition of the replication link. If you use domain names to identify the systems in a replication topology and you enable DNS failover on those systems, client requests can be automatically redirected to other systems in the topology if the target system fails. If you use IP addresses to identify a system in a replication topology and that system fails, client requests that target that system cannot be automatically redirected to other systems. Zones
+
+The domain names resolved by DNS are divided into zones, where each zone is defined by a set of related hostnames. A corporate domain, for example, is associated with a zone.
+
+Each domain you define in HCP is a subdomain of a higher-level domain. In the DNS, you need an HCP domain definition for each combination of network and domain you define in HCP. The IP addresses for each HCP domain in the DNS make up a zone within the zone for the applicable higher-level domain.
+
+For example, suppose that you configure HCP to define two domains, hcpma.example.com and hcp-ca.example.com. Suppose also that you configure HCP to define three user- defined networks, net1, net2, and net3,and you configure these three networks to associate net1 and net2 with domain hcp-ma.example.com and associate net3 with domain hcpca.example.com. In this case, you need to add three zones to the DNS, one for each of these domain and network combinations: Domain name: hcp-ma.example.com Node IP addresses defined for network net1 Domain name: hcp-ma.example.com Node IP addresses defined for network net2
+
+Domain name: hcp-ca.example.com Node IP addresses defined for nodes in network net3 Secondary zones and stub zones

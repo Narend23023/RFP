@@ -1,0 +1,85 @@
+Certificates are commonly used for both encryption and identification of the parties. The HCP system and KM server uses certificates for authentication. The exchange of certificates verifies access to the encryption keys that are stored on the KM server. The authentication of the HCP system ensures that the KM server provides access to keys only to a trusted source. The authentication of the KM server ensures that the HCP system can trust the server to access and store keys. Root certificate is a self-signed certificate defined by IETF RFC 5280 and issued by a root CA. The SSL ecosystem is based on a trust relationship called the chain of trust. When HCP validates a certificate, it compares the certificate issuer with the list of trusted CAs. Client certificate is a digital certificate used by client systems to prove their identity and make authenticated requests to a remote server. The KM server can validate the digital signature by using the client's public key (in the client certificate).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+138/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Creating a CSR
+
+You can create a CSR for key management.
+
+To view existing certificates, you need an administrator role. To create and delete certificates, you need the administrator role. 1. Open the HCP System Management Console. 2. From the top-level menu, select Security > Key Management. The Servers page opens.
+
+3. On the left side of the Key Management page, click the CSRs tab.
+
+4. Select Generate CSR.
+
+The Generate CSR section opens.
+
+5. Fill in the field values that needs to generate a certificate. Common Name (CN) field
+
+Required. Type the common name for the certificate. This value can range from 1-255 characters long and can contain any Latin-1 characters, including white space.
+
+Organizational Unit (OU) field
+
+Type the name of the organizational unit that will use the certificate, for example, the name of a division or the name under which your company does business. This
+
+field accepts only alphanumeric characters. Do not include a comma (,), plus (+), or equals (=) sign. Organization (O) field
+
+Type the full legal name of your company. This field accepts only alphanumeric characters. Do not include a comma (,), plus (+), or equals (=) sign.
+
+Location (L) field
+
+Type the name of the city where your company headquarters are located.
+
+State/Province (ST) field
+
+Type the full name of the state or province where your company headquarters are located. Country (C) field
+
+Type the name of the country where your company is located.
+
+6. Select Generate CSR.
+
+Deleting a CSR
+
+You can delete a CSR by using the HCP System Management Console.
+
+To view, create and delete certificates, you need the administrator role.
+
+1. Open the HCP System Management Console.
+
+2. From the top-level menu, select Security > Key Management.
+
+The Servers page opens.
+
+3. On the left side of the Key Management page, click the CSRs tab.
+
+The CSRs page opens.
+
+4. In the list of CSRs, click the delete control ( ). Downloading a CSR
+
+You can download a CSR by using the HCP System Management Console.
+
+To view, create and delete certificates, you need the administrator role.
+
+1. Open the HCP System Management Console. 2. From the top-level menu, select Security > Key Management. The Servers page opens.
+
+3. On the left side of the Key Management page, click the CSRs tab.
+
+The CSRs page opens.
+
+4. In the list of CSRs, click the download control for it ( ). Key management
+
+Encryption
+
+Storing and encrypting data with HCP requires using a central cryptographic key management service with multiple layers of keys for the encrypted data. An example of multiple
+
+layer of keys is envelope encryption, which is the process of encrypting a key with another key.
+
+Data encryption keys: The key used to encrypt data itself is called a data encryption key (DEK)
+
+HCP observes the following best practices for managing DEKs:

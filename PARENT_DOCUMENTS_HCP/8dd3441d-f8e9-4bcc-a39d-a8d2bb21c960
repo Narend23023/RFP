@@ -1,0 +1,55 @@
+HCP also accepts AD authentication provided through the SPNEGO protocol or through the AD authentication header. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.
+
+If you specify a username in a REST API request, that username must identify a user account that has the permissions needed to perform the requested operation.
+
+Regardless of whether the namespace requires client authentication, if you provide credentials in a REST API request, they must be valid. If you provide invalid credentials, HCP responds with an HTTP 403 (Forbidden) error code.
+
+To provide credentials in a REST API request, you specify an authentication token in an HTTP Authorization request header.
+
+HCP also accepts credentials provided in an hcp-ns-auth cookie. However, this method of providing credentials is being deprecated and should not be used in new applications. If you use both an Authorization header and an hcp-ns-auth cookie, HCP uses the header for authentication and ignores the cookie. HCP authentication through the REST API
+
+To authenticate with HCP through the REST API, construct an authentication token from a system-level user account or a tenant-level user account, and then submit it using a request header with all requests. Successful authentication requires encoding your account information. Authentication token
+
+An authentication token consists of a username in Base64-encoded format and a password that’s hashed using the MD5 hash algorithm, separated by a colon, like this:
+
+base64-encoded-user-name:md5-hashed-password
+
+For example, here’s the token for the Base64-encoded user name lgreen and the MD5-hashed password p4ssw0rd: bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20
+
+The GNU Core Utilities include the base64 and md5sum commands necessary to encode your account information. These commands convert text to Base64-encoded and MD5-
+
+hashed values, respectively. For more information about the GNU Core Utilities, see http://www.gnu.org/software/coreutils/.
+
+Other tools that generate Base64-encoded and MD5-hashed values are available for download on the web. For security reasons, do not use interactive public web-based tools to generate these values.
+
+The GNU Core Utilities include the base64 and md5sum commands, which convert text to Base64-encoded and MD5-hashed values, respectively. With these commands, a line such as this creates the required token:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+713/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+echo `echo -n username | base64`:`echo -n password | md5sum` | awk '{print $1}'
+
+The character before echo, before and after the colon, and following md5sum is a backtick (or grave accent). The -n option in the echo command prevents the command from
+
+appending a new line to the output. This is required to ensure correct Base64 and MD5 values. Authorization header
+
+You use the HTTP Authorization request header to provide the authentication token for an HCP management API request. The value of this header is HCP followed by the authentication token, in this format:
+
+Authorization: HCP authentication-token
+
+For example, here’s the Authorization header for a user named lgreen and password p4ssw0rd: Authorization: HCP bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20
+
+Specifying the Authorization header with cURL
+
+With cURL, you use the -H option to specify a header. So, for example, a request to list the tenants for the HCP system named hcp.example.com might look like this:
+
+curl -k -i -H "Authorization: HCP bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20"
+
+H "Accept: application/xml" "https://admin.hcp.example.com:9090/mapi/tenants"
+
+Specifying the authentication header in Python with PycURL

@@ -1,0 +1,33 @@
+<optimizedFor>CLOUD</optimizedFor> <versioningSettings> <enabled>true</enabled> <prune>true</prune> <pruneDays>10</pruneDays> <useDeleteMarkers>true</useDeleteMarkers> </versioningSettings> <multipartUploadAutoAbortDays>10</multipartUploadAutoAbortDays> <searchEnabled>true</searchEnabled> <indexingEnabled>true</indexingEnabled>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+410/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <customMetadataIndexingEnabled>true</customMetadataIndexingEnabled> <customMetadataValidationEnabled>true</customMetadataValidationEnabled> <replicationEnabled>true</replicationEnabled> <allowErasureCoding>true</allowErasureCoding> <readFromReplica>true</readFromReplica> <serviceRemoteSystemRequests>true</serviceRemoteSystemRequests> <tags> <tag>Billing</tag> <tag>lgreen</tag> </tags> </namespace> Request with cURL command line
+
+curl -k -iT AccountsRecNS.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("AccountsRecNS.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://finance.hcp.example.com:9090/mapi/tenants/finance/" + "namespaces") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("AccountsRecNS.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+PUT /mapi/tenants/finance/namespaces HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 1197
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example Changing the compliance settings for an HCP namespace
+
+Here’s a sample POST request that changes the compliance settings for the Accounts-Receivable namespace. The new settings are in an XML file named AR-compliance.xml. The request is made using a tenant-level user account that includes the compliance role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <complianceSettings> <retentionDefault>A+7y</retentionDefault> <minimumRetentionAfterInitialUnspecified>19y+0M+7d</minimumRetentionAfterInitialUnspecified> <shreddingDefault>false</shreddingDefault> <customMetadataChanges>all</customMetadataChanges> <dispositionEnabled>true</dispositionEnabled> </complianceSettings>
+
+Request with cURL command line

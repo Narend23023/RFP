@@ -1,0 +1,75 @@
+Specify syslog settings:
+
+Select Enable syslog To include log messages about compliance events, select Send compliance events.
+
+To include log messages about security events, select Send security events. In the Send log messages at this level or higher field, select the severity level of messages to be sent to the specified syslog servers: OFF
+
+tells HCP not to send any log messages.
+
+NOTICE
+
+sends messages with a severity level of Notice, Warning, or Error.
+
+WARNING
+
+sends messages with a severity level of Warning or Error. ERROR
+
+sends only messages with a severity level of Error.
+
+In the HTTP access Facility field, select the syslog local facility to which to direct log messages. The options are local0 through local7. To include log messages about HTTP-based data access events, select Send log messages for HTTP-based data access requests. When you enable this option, HCP sends information to the syslog regarding data access requests that use the HTTP namespace access protocol. In the MAPI access Facility field, select the syslog local facility to which to direct log messages. The options are local0 through local7.
+
+To include log messages about management API request events, select Send log messages for management API requests. When you enable this option, HCP sends information to the syslog regarding request events that use the HCP management API. Then click Update Settings.
+
+Tip: Before you submit your changes, you can test the connections to the specified syslog servers.
+
+Specify one or more syslog server IP addresses. For each syslog server that you want to use with HCP, specify the IPv4 or IPv6 address that you want HCP to use to connect to that server.
+
+You specify each syslog server IP address as a separate entry in the syslog server list.
+
+Adding an IP address to the syslog server list
+
+You can add an IP address to the syslog server list.
+
+To view the Syslog page, you need the monitor, administrator, security, or compliance role. To configure syslog logging and test the connections to syslog servers, you need the administrator or security role.
+
+1. In the Syslog Server IP Addresses field, type the IP address, optionally followed by a colon and a port number.
+
+If you omit the port number, HCP uses port number 514.
+
+Each entry in this list must be a single IP address. IP address ranges and comma-separated lists are not valid.
+
+2. Click Add.
+
+The specified IP address moves into the list below the field.
+
+To remove an IP address from the syslog server list, click the delete control (
+
+) for that IP address. To remove all the IP addresses from the list, click Delete All. Testing syslog connections
+
+At any time, you can test the connections to the syslog servers whose IP addresses appear on the Syslog page. Testing the connections causes HCP to send a message to the target IP addresses. To verify that the connections are working, you need to use your syslog tools to check that the message arrived.
+
+The message HCP sends to the syslog servers has a severity level of Notice. Therefore, for the message to be sent successfully, the severity level of messages to be sent must be set to NOTICE.
+
+To view the Syslog page, you need the monitor, administrator, security, or compliance role. To configure syslog logging and test the connections to syslog servers, you need the administrator or security role.
+
+1. On the Syslog page, click Test.
+
+HCP sends this message to the syslog servers:
+
+User username sent system log test message.
+
+2. Check each syslog server to ensure that the message arrived.
+
+If a syslog server doesn’t receive the message:
+
+Check that you’ve correctly specified the target IP address.
+
+Check that you can successfully ping the target IP address. If you’re unable to determine the cause of the problem, contact your authorized HCP service provider for help. HCP system log messages
+
+HCP maintains a log that records messages about system events. The following table lists each possible event, provides an explanation of the event and a recommended action plan, and categorizes the event severity. The events are listed in ascending order by ID.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+145/907
+
+6/25/24, 11:33 AM

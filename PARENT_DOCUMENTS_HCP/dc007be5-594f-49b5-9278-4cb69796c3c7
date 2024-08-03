@@ -1,0 +1,55 @@
+You can also reduce the size of the metadata query engine index by excluding selected custom metadata annotations from being indexed.
+
+Content properties and annotation exclusions affect only metadata query engine indexing.
+
+When indexing custom metadata, the HCP search facility indexes only annotations named default. Disabling search
+
+You can disable and reenable search for a namespace at any time. When you disable search, indexing is automatically disabled for all three search facilities.
+
+Disabling search also removes objects in the namespace from the metadata query engine and HCP search facility indexes. If you subsequently reenable search for the namespace, the namespace must be completely reindexed. The amount of time required to rebuild the indexes depends on the amount of data in the namespace. With a very large amount of
+
+data, this process can take several days. Content classes and content properties
+
+A content class is a named construct that is used to characterize objects in one or more namespaces. Content classes use object metadata to impose structure on unstructured namespace content. They do this through content properties.
+
+A content property is a named construct used to extract an element or attribute value from custom metadata that's well-formed XML. Content properties use XPath expressions to identify the metadata of interest. When content properties are indexed, users can use them to find unstructured content that matches structured patterns.
+
+For example, consider the following XML structure that could occur in the custom metadata for multiple objects in a namespace that contains medical data: <doctor> <name>doctor-name</name> </doctor> <patient>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+293/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+<name>patient-name</name> </patient>
+
+The information of interest in this custom metadata consists of the doctor’s name and the patient’s name.
+
+Based on the metadata structure above, you could create content properties named Doctor_Name and Patient_Name that extract the doctor’s name and patient’s name from the custom metadata XML for each object. The metadata query engine could then index objects with this metadata structure by those property values. Using the metadata query API or the Metadata Query Engine Console, users could query for objects that have Doctor_Name or Patient_Name equal to a specific value. Content properties belong to content classes. Both content classes and content properties are defined at the tenant level. Content classes are optionally associated with namespaces. Through this association, content properties are associated with namespaces. Metadata query engine indexing of custom metadata
+
+By default, when custom metadata indexing is enabled for a namespace, the metadata query engine indexes the content properties for that namespace and not the full text of custom metadata. If the namespace doesn’t have any content properties (that is, it’s not associated with any content classes that have content properties), no custom metadata is indexed.
+
+You can choose to have the metadata query engine index the full text of custom metadata. If you enable this option, the metadata query engine indexes both content properties, if any exist, and the full text of custom metadata.
+
+With content properties, the metadata query engine indexes only the values that you determine are of interest. When indexing the full text of custom metadata, the metadata query engine indexes each word individually.
+
+For example, suppose an object has this XML in its custom metadata: <doctor> <name>Lee Green</name> </doctor> <patient> <name>Paris Black</name> </patient>
+
+If you’ve defined the Doctor_Name and Patient_Name properties, the metadata query engine index includes:
+
+Lee Green Paris Black
+
+If full text indexing is enabled, the metadata query engine index includes:
+
+doctor name Lee Green name doctor patient name Paris Black name patient
+
+In this case, to use the metadata query API to find the objects that have a doctor named Lee Green, users would need to query for custom metadata containing “doctor.name.Lee Green.name.doctor”. This kind of query can become very complex when elements are nested to deeper levels or when they have attributes. Content class and content property workflow
+
+Here’s the basic procedure for working with content classes and content properties:
+
+1. Create one or more content classes for the tenant. Give each class a meaningful name. For example, if a class will contain object properties that pertain to medical images,
+
+you could name it DICOM. (DICOM is a standard for managing medical images.)

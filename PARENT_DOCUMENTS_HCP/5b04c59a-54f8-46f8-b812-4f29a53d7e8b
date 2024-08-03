@@ -1,0 +1,61 @@
+With content properties, the metadata query engine indexes only the values that you determine are of interest. When indexing the full text of custom metadata, the metadata query engine indexes each word individually.
+
+For example, suppose an object has this XML in its custom metadata: <doctor> <name>Lee Green</name> </doctor> <patient> <name>Paris Black</name> </patient>
+
+If you’ve defined the Doctor_Name and Patient_Name properties, the metadata query engine index includes:
+
+Lee Green Paris Black
+
+If full text indexing is enabled, the metadata query engine index includes:
+
+doctor name Lee Green name doctor patient name Paris Black name patient
+
+In this case, to use the metadata query API to find the objects that have a doctor named Lee Green, users would need to query for custom metadata containing “doctor.name.Lee Green.name.doctor”. This kind of query can become very complex when elements are nested to deeper levels or when they have attributes. Content class and content property workflow
+
+Here’s the basic procedure for working with content classes and content properties:
+
+1. Create one or more content classes for the tenant. Give each class a meaningful name. For example, if a class will contain object properties that pertain to medical images,
+
+you could name it DICOM. (DICOM is a standard for managing medical images.)
+
+A tenant can have at most 25 content classes.
+
+2. Create content properties for each content class. Create only the content properties that will be useful to metadata query API and Search Console users. Creating content
+
+properties that won’t be used unnecessarily increases the size of the metadata query engine index.
+
+A content class can have at most 100 content properties.
+
+3. If custom metadata indexing isn’t already enabled for the namespaces you plan to associate with the content classes, enable it. 4. Associate namespaces with the applicable content classes. For clarity, associate a namespace with a content class only if the namespace contains objects that can be
+
+characterized by the content properties in the content class.
+
+You can associate any number of namespaces with a content class. Additionally, a namespace can be associated with any number of content classes.
+
+5. Optionally, reindex some or all of the namespaces associated with the content classes. You would reindex a namespace if you want objects that were already in the
+
+namespace to be indexed by the new content properties.
+
+You can reindex namespaces starting from the time they were created or starting from a specific date. When reindexing a namespace, the metadata query engine reindexes all objects with a change time that’s equal to or later than the time you specify.
+
+Tip: Because reindexing can take a long time, before reindexing a namespace: Create all the content properties you want for the namespace Associate all the content classes containing those properties with the namespace
+
+Content property definitions
+
+The definition of a content property consists of:
+
+A name for the property. The XPath expression that identifies the property values.
+
+The data type of the property values. For numeric and datetime data types, the format of the property values. An indication of whether the property is single-valued or multivalued. A multivalued property can have multiple values for any given object. The examples of content property definitions in the following sections are based on this sample custom metadata XML:
+
+<?xml version="1.0" ?> <dicom_image> <image type="MRI">
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+294/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help <date>09/27/2012</date> <technician>Morgan Grey</technician> </image> <doctor> <name>Lee Green</name> <office>ABC Oncology</office>
+
+<address> <address1>Anytown Medical Building</address1> <address2>1 Main Street</address2> <city>Anytown</city> <state>MA</state> <zip>02000</zip> </address> <specialties> <specialty primary="true">Oncology</specialty>

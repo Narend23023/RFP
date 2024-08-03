@@ -1,0 +1,109 @@
+8029 Prometheus alert
+
+The Alertmanager service stopped for one of the following reasons:
+
+Contact your authorized service provider.
+
+Notice
+
+HCP was shutdown. Prometheus was disabled. Alert rules were removed.
+
+The configuration changed. The storage was almost full. The Prometheus no longer ran on this node. The node became unavailable.
+
+8030 Prometheus alert
+
+The Alertmanager service experienced a failure and three attempts to restart it were
+
+Contact your authorized service provider.
+
+Warning
+
+unsuccessful.
+
+8031
+
+Prometheus alert
+
+Alertmanager is not available on any node.
+
+Contact your authorized service provider.
+
+Error
+
+8032
+
+Prometheus alert
+
+Prometheus is not available on any node.
+
+Contact your authorized service provider. Error
+
+9000
+
+A hardware failure occurred.
+
+A hardware failure detected (RC={0}).
+
+Check that the hardware is functioning properly. If a problem exists, contact your authorized service provider.
+
+Error Configuring SNMP
+
+You can configure HCP to work with SNMP. With SNMP enabled, you can have HCP send system log messages to one or more specified SNMP managers. When you do this, you can use tools in your SNMP environment to perform functions such as sorting the messages, querying for certain events, or forwarding error messages to a mobile device.
+
+To use HCP to send log messages to external SNMP managers, each SNMP manager must be configured to use at least one IPv4 or IPv6 address that is routable from the [hcp_system] network. For this reason, if you specify an IPv6 unique local address (ULA) for an external SNMP manager, then the [hcp_system] network must be configured with an IPv6 ULA that can be used to connect to that SNMP manager.
+
+To send the log messages, HCP uses the arcAdminLogEvent trap in its own management information base (MIB), HCP-MIB. You can download this MIB from the SNMP page of the HCP System Management Console. HCP can also send notification of certain types of events to the specified SNMP managers. These event types are determined by traps in several standard MIBs available to SNMP clients.
+
+Tenant-level administrators can choose to include tenant log messages along with the system log messages sent to the SNMP managers.
+
+Additionally, with SNMP enabled, you can use SNMP tools to view almost all the system settings available in the System Management Console, as well as other settings available
+
+only through standard MIBs. You can also allow or disallow the use of SNMP to change HCP settings such as the shredding rate or whether nodes should respond to ping requests. You can specify IP addresses from which viewing and changing these settings is allowed or denied.
+
+To use SNMP for event notification, receiving log messages, and viewing and modifying system settings, you need to have an SNMP tool installed on your client. SNMP tools are available from multiple sources. Note: When you change the SNMP configuration while SNMP is enabled, SNMP functions are briefly disrupted.
+
+Log messages sent to SNMP managers
+
+For each system log message about an event, HCP sends the information shown in the following table to the specified SNMP managers.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+168/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Information
+
+Field in HCP-MIB
+
+Data type
+
+Severity of the event
+
+hcpAdminLogEventSeverity
+
+INTEGER. Possible values are: 3 - Error 4 - Warning 5 - Notice
+
+Date time the event occurred
+
+hcpAdminLogEventTimestamp
+
+DateAndTime
+
+Message ID
+
+hcpAdminLogEventType
+
+Integer32
+
+Full message text
+
+hcpAdminLogEventMessage
+
+LongDisplayString (up to 1,024 bytes)
+
+You can choose the severity level of the log messages to be sent. You can also choose whether or not to send messages about security events (that is, attempts to log into the System Management Console with an invalid user name) and compliance events. Compliance events happen at the namespace level, so these messages are sent to the SNMP
+
+managers only if SNMP logging is enabled at the tenant level.

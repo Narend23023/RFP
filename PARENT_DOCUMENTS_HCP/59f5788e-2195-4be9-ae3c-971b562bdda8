@@ -1,0 +1,51 @@
+The list of ETag values used in the If-Match and If-None-Match header has this format:
+
+"ETag-value"[, "ETag-value"]...
+
+Because the individual ETag values are enclosed in double quotation marks ("), in curl and PycURL commands, you need to enclose the entire header in single quotation marks ('), as shown below:
+
+'If-None-Match: "d158a5494cf76bf2cbbe40a7aa674543","638c9bd8d4c2c1022c6fcac9227f5af4"'
+
+In the If-Match and If-None-Match headers, you typically use the ETag values returned in ETag headers of prior requests, such as when you store objects. This way, for example, you can prevent your application from retrieving a version of an object that your application has already cached or from storing an object version that already exists in HCP. Datetime headers
+
+Datetime headers let you perform operations based on whether an object has been modified since a specific time.
+
+Datetime values for the If-Modified-Since and If-Unmodified-Since headers must be in one of these formats:
+
+Format: DDD, dd MMM yyyy hh:mm:ss GMT
+
+Example: Mon, 01 Jan 2013 15:30:00 GMT
+
+The Last-Modified header returned by GET and HEAD requests for objects and versions is in this format. Format: Day, dd-MMM-yy hh:mm:ss GMT
+
+Example: Monday, 01-Jan-13 15:30:00 GMT Format: DDD MMM d hh:mm:ss yyyy
+
+Example: Mon Jan 1 15:30:00 2013
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+753/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The following considerations apply to using datetime headers for conditional processing:
+
+HCP compares the header value with the object change time. Several events, including system events, cause HCP to update the object change time. Change time resolution is only to the second, so you cannot use these headers to differentiate between changes that happened during the same second.
+
+If a header contains an invalid datetime value, HCP ignores the header and does not return an error response.
+
+Handling objects that might not have ETags
+
+If the HCP system has been upgraded from a release earlier than 6.0, some objects that were stored in the namespace before the upgrade may not yet have ETags. In such cases, the HCP behavior depends on the request type and object size, as follows:
+
+For a GET request for an object 512,000 bytes or smaller, HCP automatically calculates the ETag, returns it in the ETag header and uses it, if needed, for conditional processing.
+
+For a GET request for an object larger than 512,000 bytes, by default, HCP does not calculate the ETag. In this case:
+
+The response does not return an ETag header. If the request has an If-Match or If-None-Match header, HCP returns a 400 error response with a message explaining the cause.
+
+For a PUT request to copy an object, HCP handles the source object the same way it handles the object in a GET request. For source objects of 512,000 bytes or less, HCP calculates and saves the ETag and uses it to processes any X-HCP-CopySource-If-Match or X-HCP-CopySource-If-None-Match header. For larger source objects, using these headers results in a 400 error response. For a PUT or HEAD request, including for the target of a PUT request to copy an object, HCP does not generate the ETag for an existing object. If a PUT or HEAD request has an If-Match or If-None-Match header and specifies an object that does not yet have an ETag, HCP returns a 400 error.
+
+If you get an error because an object does not have an ETag, you can force HCP to calculate the missing ETag by including a forceEtag query parameter with a value of true in either of these requests:

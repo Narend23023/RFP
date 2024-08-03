@@ -1,0 +1,71 @@
+replication Links
+
+Specifies the replication links included in the erasure coding topology.
+
+This property is required on a PUT request. It is not valid on a POST request.
+
+The properties returned for each replication link in response to a GET request for an erasure coding topology depend on whether the request includes the verbose=true query parameter. restorePeriod
+
+Integer
+
+Specifies the restore period for the erasure coding topology as a number of days. Valid values are integers in the range zero through 180. The default is zero
+
+This property is optional on a PUT request.
+
+state
+
+String
+
+This property is not valid on a PUT or POST request.
+
+Specifies the state of the erasure coding topology. Possible values are: ACTIVE
+
+The topology is currently being used to erasure-code newly ingested objects that are subject to erasure coding.
+
+RETIRED
+
+The topology is retired.
+
+RETIRING
+
+The topology is in the process of retiring.
+
+tenants
+
+List
+
+Lists the tenants included in the erasure coding topology.
+
+This property is not valid on a PUT or POST request.
+
+In XML, the element that identifies each tenant is name. In JSON, the name in the name/value pair that lists the tenants is name. type
+
+String
+
+Specifies the type of the underlying replication topology. Valid values for an erasure coding topology with four, five, or six systems are:
+
+This property is required on a PUT request. It is not valid on a POST request.
+
+FULLY_CONNECTED
+
+The erasure coding topology is based on a fully connected active/active replication topology. RING
+
+The erasure coding topology is based on an active/active replication ring topology.
+
+For an erasure coding topology with three systems, the value of this property must be FULLY_CONNECTED.
+
+These values are not case-sensitive. Example
+
+Here's an XML example of the ecTopology data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<ecTopology> <description>Erasure coding topology for the US, Europe, Canada, and Africa-North divisions.</description> <erasureCodedObjects>3289</erasureCodedObjects> <erasureCodingDelay>10</erasureCodingDelay> <fullCopy>false</fullCopy>
+
+<hcpSystems> <name>hcp-an.example.com</name> <name>hcp-ca.example.com</name> <name>hcp-eu.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <id>faa9b2e5-a8b0-4211-ac83-6a25dff50800</id> <minimumObjectSize>4096</minimumObjectSize> <name>ex-corp-4</name> <protectionStatus>HEALTHY</protectionStatus> <readStatus>HEALTHY</readStatus> <replicationLinks> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-eu.example.com</name> </hcpSystems> <name>eu-ca</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>7ae4101c-6e29-426e-ae71-9a7a529f019d</uuid> </replicationLink>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+462/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

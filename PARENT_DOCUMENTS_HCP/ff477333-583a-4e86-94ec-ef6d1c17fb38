@@ -1,0 +1,43 @@
+namespace must be stored on the tier:
+
+The object age (number of days since ingest) at which one or more copies of the object data must be moved from the previous tier to this tier.
+
+The age of an object created by a multipart upload is counted from the time the multipart upload was completed.
+
+For service plans that define exactly two tiers, including the ingest tier, whether a threshold will be applied to the second tier, and if so, the percentage of ingest tier storage capacity that must be used (the threshold) before object data can be moved to the second storage tier. For HCP systems with replication enabled, whether objects must be fully replicated before they can be transitioned from the previous tier onto this tier. If replication is disabled for the HCP system, this transition criterion does not appear in the HCP System Management Console.
+
+For a namespace that’s currently being replicated to another system, whether the copies of the object that are stored on the tier are to be made metadata-only.
+
+Regardless of the transition criteria that are specified for a metadata-only tier, objects are moved to such a tier only after they are replicated. When a replicated object is
+
+moved to a metadata-only tier, all existing copies of the object data are deleted from the current tier and the ingest tier, and HCP stores the specified number of copies of the https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+59/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+object metadata on primary running storage.
+
+Erasure-coded objects never become metadata-only on any systems in the applicable erasure coding topology. If an erasure-coded object reaches a point in its lifecycle where the object should move to a metadata-only tier, the chunk for the object remains on the last tier before the metadata-only tier, and the DPL for that tier still applies to
+
+the chunk. Whether the data for each object stored on the tier is rehydrated (that is, restored on the ingest tier) upon being read from the tier, and if so, the number of days HCP is
+
+required to keep a rehydrated copy of object data on the ingest tier.
+
+Rehydration does not apply to erasure-coded objects. Instead, if the applicable erasure coding topology specifies a restore period, after an erasure-coded object is read, the chunk for the object is restored to a full copy on the ingest tier on the system from which the object was read.
+
+How HCP uses the information in service plans
+
+If the service plan for a given namespace defines only the ingest tier, for each object in that namespace, the Protection service works to ensure that:
+
+The correct number of copies of the object data are always stored on the ingest tier, which can be primary running storage or HCP S Series storage The correct number of copies of the object metadata are always stored on primary running storage
+
+If the service plan for a given namespace defines multiple storage tiers, the Storage Tiering service works to ensure that each object in that namespace is stored on the correct tier and the correct number of copies of the object are stored on each tier. For each object in that namespace, the Storage Tiering service:
+
+Moves copies of the object data among the storage tiers that are defined for the namespace to satisfy the transition criteria that are defined for each storage tier Upon moving all existing copies of the data for an object from one tier to another:
+
+If the new tier has a different DPL from the previous tier, creates or deletes copies of the object data as required to satisfy the DPL setting for the new tier If the new tier has a different primary running storage metadata protection level (MPL) from the previous tier, creates or deletes copies of object metadata as required to satisfy the MPL setting for the new tier
+
+Upon moving a replicated object to a metadata-only tier, deletes all copies of the object data from the previous tier, and if the previous tier is not the ingest tier, deletes any copies of the object data that exist on the ingest tier (primary running storage or HCP S Series storage) Checks to see whether the object data has been read from a data storage tier for which rehydration is enabled, and if so, creates an extra copy of the object data on the ingest tier

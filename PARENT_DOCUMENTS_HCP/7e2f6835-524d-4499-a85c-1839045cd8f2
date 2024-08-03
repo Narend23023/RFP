@@ -1,0 +1,61 @@
+query engine index, and any redundant data required to satisfy data protection level and metadata protection level settings in service plans.
+
+If the HCP system has HCP S Series storage available to it, the Overview page also has an S Series Storage section that contains a graph showing the amount of used HCP S Series storage during the past 30 days (or since HCP was installed if that was less than 30 days ago). The used storage value is the total amount of storage occupied by object data,
+
+system metadata, and any redundant data required to satisfy data protection level settings in service plans. Used storage includes storage occupied by the parts of in-progress multipart uploads that have already been written to the repository. Used storage does not include replaced parts
+
+of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads.
+
+The x-axes in the Primary Storage and S Series Storage graphs mark the passage of time. The y-axes measure the used storage in megabytes, gigabytes, terabytes, or petabytes,
+
+depending on the amount of used storage. As the amount of used storage increases, the intervals on the y-axis get larger. The graph heading indicates the current measurement unit (megabytes (MB), gigabytes (GB), terabytes (TB), or petabytes (PB)).
+
+To see the amount of used storage at a given point in time, hover over the top edge of the colored portion of the graph at the time you want. Above the Primary Storage graph heading, the Overview page shows the total amount of primary storage in the HCP system, excluding the space required for system overhead and
+
+the operating system. Above the S Series Storage graph heading, the Overview page shows the total amount of HCP S Series storage available to the HCP system.
+
+Below the Primary Storage section option, the Overview page shows the most recent value for the amount of used primary storage. Below the S Series Storage section option, the
+
+Overview page shows the most recent value for the amount of used HCP S Series storage. The bottom left corner of the Overview page shows the date and time these values and the Primary Storage and S Series Storage graphs were last updated. To update these values and the graphs to show the most current information, click Refresh Now in the bottom right corner of the Overview page.
+
+Note:
+
+When merging data from identical objects, the Duplicate Elimination service flags the redundant data for deletion. Similarly, when compressing an object, the
+
+Compression/Encryption service flags the uncompressed version for deletion. The Primary Storage and S Series Storage graphs do not reflect space reclaimed by either service
+
+until the flagged data is actually deleted.
+
+Considerations for monitoring your HCP system
+
+You need to keep these considerations in mind when monitoring your HCP system Overview page:
+
+When an HCP system begins to approach its total storage capacity, you need to add nodes, hard drives, or arrays depending on the type of system you have. For more information about the different types of available storage upgrades, contact your HCP sales representative. There are two ways to determine when it is time to add storage: A Storage usage percent-used warning appears on the Overview page when the system has used 75 to 90 percent of its primary storage capacity. The warning becomes an alert when the system is over 90 percent of its total storage capacity.
+
+You can also monitor your HCP system by checking the object count on the Overview page. The page contains a graph that shows the total number of objects that
+
+were stored in the repository during the past 30 days out of a maximum storage capacity.
+
+Configuring the system time
+
+HCP can be configured to maintain the system time internally or to synchronize the system time to one or more external time servers. In the latter case, if either of the following
+
+events occurs, the HCP system restarts automatically:
+
+The time on the time server is changed by more than 1,000 seconds. The HCP system starts using a new time server whose time differs from the original time server by more than 1,000 seconds.
+
+Note: Changing the system time restarts the HCP system automatically, which makes system data unavailable for several minutes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+27/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+1. On the Configuration menu, click Time.
+
+The Time Settings dialog box appears.
+
+2. Perform one of the following steps:

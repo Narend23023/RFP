@@ -1,0 +1,69 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+44/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Get Started wizard exits and the System Management Console opens the applicable Add Component wizard.
+
+5. Specify the information that HCP needs to use to access and use the extended storage component:
+
+To create an Amazon S3 storage component, use the Amazon S3 storage component settings. Then return to this procedure.
+
+To create a Google Cloud storage component, use the Google Cloud storage component settings. Then return to this procedure.
+
+To create a Microsoft Azure storage component, use the Microsoft Azure storage component settings. Then return to this procedure.
+
+To create an S3 compatible storage component, including a ThinkOn cloud storage component, use the S3 compatible storage component settings. Then return to this procedure.
+
+To create an NFS storage component, use the NFS storage component settings. Then return to this procedure.
+
+6. Click Next to save the information you entered and advance to the last page of the wizard.
+
+7. On the Review page, take one of these actions:
+
+If the extended storage component configuration information that you entered is correct, click Finish.
+
+If the extended storage component configuration information is not correct, use the Previous and Next buttons to navigate through the pages in the wizard and
+
+change any settings that are not correct. Then navigate to the Review page and click Finish.
+
+The wizard closes and the System Management Console displays the Components panel on the Storage page
+
+You created and configured the extended storage component.
+
+HCP can use the storage that is represented by a given component only if at least one of its access points (a mount point, bucket, or container) is contained in a storage pool that’s included in at least one storage tier that is defined for a namespace by its service plan.
+
+Amazon S3 storage component settings
+
+Each Amazon S3 component represents a single endpoint that’s used to access cloud storage using one or more Amazon S3 Web Services user accounts.
+
+To enable HCP to access the storage that’s represented by an Amazon S3 storage component, when you create that component, specify the following information: The component name.
+
+Optionally, a description of the component.
+
+Optionally, the network you want HCP to use for communication with storage component. This field is only visible if Virtual network management is enabled.
+
+Whether you want HCP to use the default endpoint, s3.amazonaws.com, to connect to Amazon S3 Web Services, and if not, the fully qualified domain name (FQDN) of the
+
+endpoint that you want HCP to use instead of the default.
+
+Optionally, you may choose any of these advanced configuration settings:
+
+Whether you want HCP to use HTTPS to access the endpoint, and if so, the HTTPS port you want to use to connect to the endpoint (default is 443). The HTTP port you want to use to connect to the endpoint (default is 80).
+
+Whether you want to use a proxy server to connect to the endpoint, and if so, the following information about the proxy server: The hostname or IP address of the proxy server.
+
+The port number you want to use to connect to the proxy server (default is 0).
+
+The user name, password, and AD domain of the user account that HCP needs to use to access the proxy server.
+
+Whether you want HCP to use path-style URLs to access the storage that’s represented by the storage component, and if so, the region that includes the Amazon S3
+
+Web Services datacenter that hosts the storage that’s represented by this component. If you select this option, you need to specify a region-specific endpoint instead
+
+of using the default endpoint. The region that includes the Amazon S3 Web Services datacenter that hosts the storage that’s represented by this component (default is us-east-1).
+
+For faster access to storage located in a particular region, you should specify a region-specific endpoint instead of using the default endpoint. Whether the extended storage component supports S3 metadata on objects. If you are unsure whether S3 metadata is supported, contact your service provider. In the Max metadata size field, type the maximum size (in bytes) of the S3 metadata that will be attached to objects tiered to the storage component. Each extended

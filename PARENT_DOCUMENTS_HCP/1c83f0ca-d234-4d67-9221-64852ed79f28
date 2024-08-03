@@ -1,0 +1,58 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> You can use the node status command to check the status of a target node in your HCP system. Any user can perform the node status command. System-level users with the
+administrator role can enable and disable the node status API.
+The request to check the status of a node requires a URL specifying the front-end IP address of the target node. You enter the command in the following format:
+http://node-front-end-ip-address/node_status
+You can also request node metrics to be returned with the node HTTP status return code. To request node metrics, you additionally need to:
+Specify a type URL query parameter with a value of metrics.
+Specify the format URL query parameter with a value of xml or json.
+If you omit the format parameter, you are only returned a response status code.
+Request-specific return codes (node status)
+The following table describes the HTTP return status codes that can be returned from a node status request.<br>
+                       <b>Bounding box:</b> x1=185, y1=523, x2=1516, y2=860
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>HTTP\nstatus</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>204</td>
+      <td>OK</td>
+      <td>Node is configured to return node status</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>The HCP node status check returns a 403 forbidden message for the following reasons:\nThe system administrator has not enabled node status through the System Management Console.\nThe HCP system does not have a load balancer or the system administrator has not added the load balancer IP address to the Security Console\nAllow list.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>540</td>
+      <td></td>
+      <td>System is in Read Only mode</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>541</td>
+      <td></td>
+      <td>Node is not available</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

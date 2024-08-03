@@ -1,0 +1,107 @@
+Use the supportAccessCredentials data type to retrieve Support access credentials for an HCP system.
+
+Note: A system-level user account with the monitor, administrator, security, or service role is required to retrieve Hitachi Vantara Support access credentials for an HCP system. supportAccessCredentials data type properties
+
+The following table describes the properties included in the supportAccessCredentials data type.
+
+Property name
+
+Data type
+
+Description
+
+applyTimeStamp
+
+Integer
+
+Time that the exclusive Hitachi Vantara Support Access Credentials key was applied to the HCP system createTimeStamp
+
+String
+
+Time that the exclusive Hitachi Vantara Support Access Credentials key was created
+
+type
+
+String
+
+Valid values:
+
+Default Exclusive
+
+defaultKeyType
+
+String
+
+Default key type that shipped with the HCP system
+
+serialNumberFromPackage
+
+Integer Serial number of the installed Hitachi Vantara Support Access Credentials key
+
+Here is an XML example of the supportAccessCredentials data type returned for system-specific exclusive Hitachi Vantara Support access credentials:
+
+<supportAccessCredentials> <applyTimeStamp>1599143327</applyTimeStamp> <createTimeStamp>1597699675</createTimeStamp> <type>Exclusive</type> <defaultKeyType>Arizona</defaultKeyType> <serialNumberFromPackage>425999</serialNumberFromPackage> </supportAccessCredentials>
+
+Here is an XML example of the supportAccessCredentials data type returned for default Hitachi Vantara Support access credentials:
+
+<supportAccessCredentials> <type>Default</type> <defaultKeyType>Arizona</defaultKeyType> </supportAccessCredentials> tenant (data type for replication link content tenant resource)
+
+The tenant data type in this section describes the tenant-name resource for replication link content.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+519/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Replication link content tenant data type properties
+
+The following table describes the properties included in the tenant data type that describes the tenant-name resource for replication link content. Property name
+
+Data type
+
+Description
+
+bytesPending
+
+Long
+
+For an active/active link, an outbound active/passive link during replication, or an inbound active/passive link during data recovery, specifies the approximate amount of data in the tenant's namespaces that is currently waiting to be replicated from the local system to the remote system for the replication link, in bytes.
+
+For an outbound link during data recovery or for an inbound link during replication, the value of this property is always zero. This value is also always zero for the default tenant. bytesPendingRemote
+
+Long
+
+Specifies the approximate amount of data in the tenant's namespaces that is currently waiting to be replicated from the remote system for the replication link to the local system, in bytes.
+
+For an active/passive link, the value of this property is always zero. This value is also always zero for the default tenant.
+
+objectsPending Long
+
+For an active/active link, an outbound active/passive link during replication, or an inbound active/passive link during data recovery, specifies the approximate number of objects in the tenant's namespaces that are currently waiting to be replicated from the local system to the remote system for the replication link.
+
+For an outbound link during data recovery or for an inbound link during replication, the value of this property is always zero. This value is also always zero for the default tenant. objectsPendingRemote Long
+
+Specifies the approximate number of objects in the tenant's namespaces that are currently waiting to be replicated from the remote system for the replication link to the local system.
+
+For an active/passive link, the value of this property is always zero. This value is also always zero for the default tenant. status
+
+String
+
+Specifies the status of activity for the tenant on the replication link. Possible values are:
+
+AUTO_PAUSED
+
+HCP automatically paused replication or recovery of the tenant.
+
+PAUSED
+
+A user paused replication or recovery of the tenant.
+
+REPLICATING
+
+Replication or recovery of the tenant is proceeding normally. upToDateAsOfMillis
+
+Long

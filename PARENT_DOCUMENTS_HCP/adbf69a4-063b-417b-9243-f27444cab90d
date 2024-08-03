@@ -1,0 +1,79 @@
+628/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have read permission for the specified bucket or object. The S3 compatible API is currently disabled for the specified bucket. The object exists, but the HCP system does not have the object data. Retry the request, targeting a different system in the replication topology. The object is in the process of being deleted.
+
+404 Not Found
+
+One of these:
+
+The specified object or object version does not exist. The current version of the specified object is a delete marker or delete record. The specified item is a folder. The specified bucket does not exist.
+
+409
+
+Conflict
+
+Possible reasons include that the object data is currently being written to HCP.
+
+412 Precondition Failed
+
+One of these:
+
+The request included an If-Match header, and the ETag for the specified object or object version does not match any of the values specified by the header. The request included an If-Unmodified-Since header, and the specified object or object version was modified after the date and time specified by the header.
+
+416 Requested Range Not Satisfiable
+
+The request included a Range header that specified either:
+
+A range in which the starting value is greater than or equal to the size of the object data An offset of zero
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Retrieving an object
+
+Here is a sample GET request that retrieves the current version of the object named mktg/campaign_GoGetEm_expenses.xls in the finance bucket. Versioning is enabled on the bucket. Because the user has data access permission on the bucket, labeled holds are returned in a JSON format string. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -v -k "https://finance.europe.hcp.example.com/mktg/campaign_GoGetEm_expenses.xls"
+
+Request headers
+
+GET /mktg/campaign_GoGetEm_expenses.xls HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 26 June 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:3ymfU6KeNWnFEvpphFxYvJ881W Response headers
+
+HTTP/1.1 200 OK Date: Fri, 26 June 2020 17:19:26 GMT ETag: "6ed7faad1e0661c03ad65a4317d4a94c" Accept-Ranges: bytes x-amz-version-id: 87288825190337 Last-Modified: Mon, 13 Feb 2017 17:44:53 GMT Content-Type: application/vnd.ms-excel X-HCP-Retention: 0 X-HCP-LabelRetentionHold: true X-HCP-LabelRetentionHold-Labels: '[{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}, {"id":"UniqueLabelHold-3","hold":true}]' Content-Length: 94328
+
+Example: Conditionally retrieving an object
+
+Here is a sample GET request that retrieves the current version of the object named mktg/campaign_GoGetEm_expenses.xls in the finance bucket only if the ETag for the object does not match a specified value. In this example, the specified value is the ETag of the first version of mktg/campaign_GoGetEm_expenses.xls. The request writes the object data to a file named mktg_GoGetEm.xls. The request is being made while versioning is enabled for the bucket.
+
+Request with s3curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+629/907

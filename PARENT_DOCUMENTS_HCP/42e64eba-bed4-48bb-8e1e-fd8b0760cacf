@@ -1,0 +1,111 @@
+returns an HTTP 400 (Bad Request) error code in response to a conditional DELETE request for any of these items.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+752/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers You use the headers described in the table below to specify conditional operations.
+
+Header
+
+Value
+
+Description
+
+If-Match
+
+One of:
+
+Perform the operation only if the ETag of the object or version is identical to one of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object exists. asterisk (*)
+
+If-None-Match
+
+One of:
+
+Perform the operation only if the ETag of the object or version is not equal to any of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object doesn’t exist.
+
+asterisk (*)
+
+If-Modified-Since
+
+Datetime value
+
+Perform the operation only if the object or version change time was after the specified time. If-Unmodified-Since
+
+Datetime value
+
+Perform the operation only if the object or version change time was at or before the specified time.
+
+When you use the PUT method to copy an object, the headers listed in the table above apply to any existing version of the target object. You can use the headers describe in the table below to specify conditions for the source object. Header
+
+Contents
+
+Description
+
+X-HCP-CopySource-If-Match
+
+One of:
+
+Perform the copy operation only if the ETag of the source object or version is equal to
+
+one of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object exists.
+
+asterisk (*) X-HCP-CopySource-If-None-Match
+
+One of:
+
+Perform the copy operation only if the ETag of the source object or version is not equal
+
+to any of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object does not exist.
+
+asterisk (*)
+
+X-HCP-CopySource-If-Modified-Since Datetime value
+
+Perform the copy operation only if the source object or version change time was after the specified time.
+
+X-HCP-CopySource-If-Unmodified-Since
+
+Datetime value
+
+Perform the copy operation only if the source object or version change time was at or
+
+before the specified time.
+
+A request can specify more than one condition. In such a request:
+
+HCP evaluates all the conditions. However, if the request includes both If-None-Match and If-Modified-Since headers, the If-Modified-Since header is ignored. Headers that use ETag values are processed before headers that use datetime values. ETag values
+
+The list of ETag values used in the If-Match and If-None-Match header has this format:
+
+"ETag-value"[, "ETag-value"]...
+
+Because the individual ETag values are enclosed in double quotation marks ("), in curl and PycURL commands, you need to enclose the entire header in single quotation marks ('), as shown below:
+
+'If-None-Match: "d158a5494cf76bf2cbbe40a7aa674543","638c9bd8d4c2c1022c6fcac9227f5af4"'
+
+In the If-Match and If-None-Match headers, you typically use the ETag values returned in ETag headers of prior requests, such as when you store objects. This way, for example, you can prevent your application from retrieving a version of an object that your application has already cached or from storing an object version that already exists in HCP. Datetime headers
+
+Datetime headers let you perform operations based on whether an object has been modified since a specific time.
+
+Datetime values for the If-Modified-Since and If-Unmodified-Since headers must be in one of these formats:

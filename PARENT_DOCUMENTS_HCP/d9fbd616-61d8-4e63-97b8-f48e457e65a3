@@ -1,0 +1,83 @@
+Child of the ListAllMyBucketsResult element and container for the Name and CreationDate elements. The response body contains one Bucket element for each bucket you own.
+
+CreationDate
+
+Child of the Bucket element. The CreationDate element specifies the date and time when the applicable bucket was created, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+DisplayName
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+570/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Child of the Owner element. If the bucket owner is identified by an HCP user account, the value of the DisplayName element is the username for that account. If the bucket owner is identified by an AD user account, the value of the DisplayName element is the username of that account followed by an at sign (@) and the AD domain name. ID
+
+Child of the Owner element. If the bucket owner is identified by an HCP user account, the value of the ID element is the user ID for that account. If the bucket owner is identified by an AD user account, the value of the ID element is the SID for that account.
+
+ListAllMyBucketsResult
+
+Root element. Name
+
+Child of the Bucket element. The Name element specifies the name of a bucket.
+
+Owner
+
+Child of the ListAllMyBucketsResult element and container for the DisplayName and ID elements. The Owner element identifies the owner of the applicable bucket.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to list the buckets you own. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the list of buckets you own.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. The tenant does not currently support use of the S3 compatible API for listing the buckets you own. The specified tenant does not exist.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the buckets you own
+
+Here’s a sample GET request that returns a list of the buckets owned by user lgreen in the context of the europe tenant. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://europe.hcp.example.com" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET / HTTP/1.1 Host: europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:Gek+OrFpyg06Bufgg+TW6kH5ISA= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body

@@ -1,0 +1,97 @@
+2. Click Add.
+
+Removing entries from an Allow or Deny list
+
+Changes you make to either list of IP addresses take effect immediately.
+
+1. To remove a single entry, click the delete control ( ) for that entry.
+
+2. To remove all entries, click Delete All.
+
+Disabling Prometheus
+
+Disabling Prometheus removes the current configuration settings, disables Alertmanager, and halts collection of HCP performance metrics.
+
+To disable Prometheus on HCP nodes, you need an administrator or security role. CAUTION: Disabling Prometheus deletes all monitoring data that has been collected.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus. 2. To disable Prometheus, clear the Enable Prometheus option. 3. Click Update Settings. 4. Select the I Understand check box, and then click Update Settings.
+
+HCP performance metrics collected by Prometheus
+
+Performance metrics provide information about the different operations of an HCP component. Prometheus server and Alertmanager provides high availability by running on two storage nodes in the cluster: the node with the highest IP address and the node with the second highest IP address. If one of these nodes become unavailable, Prometheus server switches to the other node. If both the nodes become unavailable, you cannot collect or view metrics until one of the nodes become available again.
+
+If you permanently remove a node running a Prometheus server from the system, HCP starts a replacement Prometheus server on another node. Prometheus metrics collection continues even if one node running the Prometheus server goes down. In this situation, HCP automatically connects to the second node to retrieve metrics. Both the nodes remain active at all times. The replacement server synchronizes its historical metrics data with the other active node running the Prometheus server. If HCP can’t start one or both of the https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+173/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Prometheus or Alertmanager servers, it creates a system event to indicate that the server is unavailable. This situation could occur if the volume storing the metrics runs out of space, forcing the Prometheus server to shutdown.
+
+Prometheus collects performance metrics in the following categories: Gateway metrics
+
+Storage metrics Node metrics Replication metrics Event metrics
+
+Services metrics
+
+After you upgrade to HCP v9.6 or later versions and enable Prometheus, all the collectors are enabled by default and HCP begins collecting performance metrics. However, if the filesystem storing the Prometheus TSDB reaches or exceeds 95% of its total capacity, the filesystem will become read-only and Prometheus will stop collecting metrics until there is sufficient disk space.
+
+The following table describes the performance metrics collected by Prometheus.
+
+Note: In the following table, the instance label refers to the node from where the HCP performance metrics is collected.
+
+Metric
+
+Description
+
+Label
+
+disk_transfers_per_second
+
+The speed at which data can be transferred between the node and the disk drives. instance, disk_name, job
+
+gateway_operation_latency_milliseconds_count
+
+Count of gateway operations.
+
+instance, tenant, request_code, response_code, interface,
+
+namespace
+
+gateway_operation_latency_milliseconds_bucket
+
+Count of gateway operations by bucket based on the latency in milliseconds.
+
+instance, tenant, request_code, response_code, interface, namespace
+
+Valid values must be less than or equal to the one of the following values:
+
+10 milliseconds 1000 milliseconds 1 second 10 seconds infinity
+
+gateway_operation_latency_milliseconds_sum
+
+Sum of the latency of gateway operations in milliseconds.
+
+instance, tenant, request_code, response_code, interface, namespace
+
+gateway_operation_size_bytes_sum
+
+Sum of the size of the gateway operations in bytes.
+
+instance, tenant, request_code, response_code, interface, namespace
+
+gateway_operation_size_bytes_bucket
+
+Count of gateway operations by bucket based on size in bytes.
+
+instance, tenant, request_code, response_code, interface, namespace
+
+Valid values must be less than or equal to one of the following values:
+
+1000 (1K) 100000 (100K) 10000000 (10M) 1000000000 (1G) infinity
+
+gateway_operation_size_bytes_count
+
+Count of gateway operations.

@@ -1,0 +1,79 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+An object on labeled hold cannot be deleted or have its metadata modified until all holds (labeled and unlabeled) are explicitly released. You can use either the S3 compatible
+API or REST API to place one or more labeled holds on an object or release an object from labeled hold.
+S3 Object Lock does not support labeled hold.
+Privileged delete
+Privileged delete enables you to delete objects even if they are under retention. However, you cannot use privileged delete operations to delete objects that are on hold or
+labeled hold, regardless of the retention settings of those objects.
+S3 Object Lock does not support privileged delete. However, with bypass governance mode in S3 Object Lock, you can perform operations such as deleting an object
+version, shortening the retention time of object versions that are locked in governance mode. To do this, you need to include the x-amz-bypass-governance-retention:tr
+header in your request. ue
+Retention periods
+The retention period for an object is the length of time the object must remain in the bucket. A retention period can be a specific length of time, infinite time, or no time, in
+which case the object can be deleted at any time.
+When the retention period for an object expires, the object becomes deletable.
+Normally, if you try to delete an object that is under retention, HCP prevents you from doing so.
+S3 Object Lock supports retention periods.
+Retention classes
+A retention class is a named retention setting. Retention classes let you manage object retention consistently by specifying how long the object must remain in the repository.
+Retention classes cannot be created using the S3 compatible API.
+S3 Object Lock does not support retention classes.
+Automatic deletion
+A bucket can be configured to automatically delete objects after their retention periods expire. For an object to be deleted automatically:
+In HCP retention mode, a specified retention period must expire. Objects with or retention settings are not Deletion Allowed (0) Initial Unspecified (-2)
+automatically deleted.
+If the object is in an HCP retention class, the class must have automatic deletion enabled.
+Automatic deletion cannot be configured using the S3 compatible API.
+S3 Object Lock supports automatic deletion.
+Object retention settings
+Every object, including objects assigned to retention classes, has a specific retention setting that specifies when (or whether) the retention period for the object ends. HCP
+represents the retention setting in numeric and text formats, as shown in the following table.<br>
+                       <b>Bounding box:</b> x1=185, y1=899, x2=1516, y2=1162
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Numeric value</td>
+      <td>Text value</td>
+      <td>Meaning</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>Deletion Allowed</td>
+      <td>The object can be deleted at any time.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1</td>
+      <td>Deletion Prohibited</td>
+      <td>The object cannot be deleted, except by a privileged delete, and the retention setting cannot be changed.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2</td>
+      <td>Initial Unspecified</td>
+      <td>The object does not yet have a retention setting. An object that has this value cannot be deleted, except by\na privileged delete. You can change this retention setting to any other setting.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>An integer number of seconds\nsince January 1, 1970, at\n00:00:00 UTC</td>
+      <td>A datetime value</td>
+      <td>The object cannot be deleted, except by a privileged delete, until the specified date and time.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

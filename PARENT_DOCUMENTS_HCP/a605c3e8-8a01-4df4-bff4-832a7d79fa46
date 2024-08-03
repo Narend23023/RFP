@@ -1,0 +1,83 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+428/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Support access credentials resource
+
+Use the Support access credentials resource to retrieve current Hitachi Vantara Support access credentials and to configure exclusive Support access credentials for additional security compliance. Note:
+
+To retrieve Support access credentials for an HCP system, a system-level user account with the monitor, administrator, security, or service role is required. To configure exclusive Hitachi Vantara Support access credentials for an HCP system, a system-level user account with the administrator or service role is required. .../supportaccesscredentials
+
+Data type
+
+Method Use
+
+Access
+
+supportAccessCredentials GET
+
+Retrieve the currently configured Support access credentials.
+
+System-level user with the monitor,administrator, security, or service role.
+
+PUT
+
+Configure exclusive Support access credentials by uploading the exclusive Hitachi Vantara Support access credentials package to the HCP system. System-level user with the administrator or service role.
+
+Example: Retrieving information about Support access credentials when exclusive Support access credentials are installed
+
+Here is a sample GET request that retrieves information about the currently configured exclusive Hitachi Vantara Support access credentials on the HCP system.
+
+Request using the cURL command line:
+
+curl -i -k -b hcp-api-auth="c2VjdXJpdHk=:a3b9c163f6c520407ff34cfd" https://172.18.150.236:9090/mapi/supportaccesscredentials?prettyprint Response body:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <supportAccessCredentials> <applyTimeStamp>1599143327</applyTimeStamp> <createTimeStamp>1597699675</createTimeStamp> <type>Exclusive</type> <defaultKeyType>Arizona</defaultKeyType> <serialNumberFromPackage>425999</serialNumberFromPackage> </supportAccessCredentials>
+
+Example: Retrieving information about Support access credentials when the default Support access credentials are installed
+
+Here is a sample GET request that retrieves information about the currently configured default Hitachi Vantara Support access credentials.
+
+Request using the cURL command line:
+
+curl -i -k -b hcp-api-auth="c2VjdXJpdHk=:a3b9c163f6c520407ff34cfd" https://172.18.150.236:9090/mapi/supportaccesscredentials?prettyprint
+
+Response body:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <supportAccessCredentials> <type>Default</type>
+
+<defaultKeyType>Arizona</defaultKeyType> </supportAccessCredentials>
+
+Example: Updating Support access credentials to exclusive Hitachi Vantara Support access
+
+Here is a sample PUT request that updates the Support access credentials on an HCP system to exclusive Hitachi Vantara Support access by uploading an SSH key from the Exclusive Hitachi Vantara Support Access Credentials package.
+
+Request using the cURL command line: curl -i -k -T HCP-SSHKeyPackage-04022020_14-58-20.plk -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" https://admin.hcp.example.com:9090/mapi/supportAccesscredentials
+
+Response header:
+
+Response header:HTTP/1.1 200 OK Content-Type: application/xml Expires: Thu, 07 Oct 2021 00:00:00 GMT X-HCP-SoftwareVersion: 9.2.0.251 Content-Length: 0 System-level group account resources
+
+System-level group account resources let you retrieve information about the system-level group accounts. The tables below provide information about these resources.
+
+.../groupAccounts
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the system-level group

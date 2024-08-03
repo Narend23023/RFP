@@ -1,0 +1,121 @@
+} }
+
+/** * At this point, the header has all been read or put into the
+
+buffer. *
+
+Time to add some GZIP compressed data, if there is still some * left.
+
+/ if (0 != super.available()) {
+
+// Get some data bytes from the DeflaterInputStream.
+
+dataBytesCount = super.read(outBuffer, offset+retval, maxLength-retval);
+
+// As long as we didn't get EOF (-1), update the buffer index and // retval. if (0 <= dataBytesCount) {
+
+bIndex += dataBytesCount; retval += dataBytesCount;
+
+}
+
+// Return the number of bytes copied during this call if we
+
+// exhausted the maxLength requested. // NOTE: Should never be >, but...
+
+if (retval == maxLength) { return retval;
+
+}
+
+// If we got here, we should have read all that can be read from // the input stream, so make sure the input stream is at EOF just
+
+// in case someone tries to read it outside this class. byte[] junk = new byte[1];
+
+if (-1 != super.read(junk, 0, junk.length)) { // Should never happen, but...
+
+throw new IOException( "Unexpected content read from input stream when EOF expected");
+
+}
+
+}
+
+/** * Got this far; time to write out the GZIP trailer.
+
+/
+
+// Have we already set up the GZIP trailer in a previous // invocation?
+
+if (null == mTrailer) { // Time to prepare the trailer. mTrailer = new byte[TRAILER_SIZE];
+
+// Put the content in it. writeTrailer(mTrailer, 0);
+
+}
+
+// If there are still GZIP trailer bytes to be returned to the // caller, do as much as will fit in the outBuffer.
+
+if (mTrailerPos < mTrailer.length) {
+
+// Get the number of bytes that will fit in the outBuffer.
+
+int trailerSize = Math.min(mTrailer.length - mTrailerPos, maxLength - bIndex); // Move them in.
+
+for (int i = trailerSize; i > 0; i--) {
+
+outBuffer[bIndex++] = mTrailer[mTrailerPos++];
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+828/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+}
+
+// Return the total number of bytes written during this call. return retval + trailerSize;
+
+}
+
+/** * If we got this far, we have already been asked to read
+
+all content that is available. *
+
+So we are at EOF. */ mReachedEOF = true; return -1;
+
+}
+
+/***
+
+Helper functions to construct the trailer. */
+
+/*
+
+Write GZIP member trailer to a byte array, starting at a given * offset.
+
+/ private void writeTrailer(byte[] buf, int offset) throws IOException { writeInt((int)mCRCInputStream.getCRCValue(), buf, offset);
+
+// CRC32 of uncompr. data writeInt(def.getTotalIn(), buf, offset + 4); // Number of uncompr. bytes }
+
+/*
+
+Write integer in Intel byte order to a byte array, starting at
+
+a given offset. */
+
+private void writeInt(int i, byte[] buf, int offset) throws IOException {
+
+writeShort(i & 0xffff, buf, offset); writeShort((i >> 16) & 0xffff, buf, offset + 2);
+
+} /*
+
+Write short integer in Intel byte order to a byte array, * starting at a given offset
+
+/ private void writeShort(int s, byte[] buf, int offset) throws IOException { buf[offset] = (byte)(s & 0xff);
+
+buf[offset + 1] = (byte)((s >> 8) & 0xff); }
+
+} WholeIOOutputStream class
+
+package com.hds.hcp.apihelpers;
+
+import java.io.IOException; import java.io.InputStream;

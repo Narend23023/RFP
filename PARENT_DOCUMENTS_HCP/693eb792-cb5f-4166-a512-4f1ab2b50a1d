@@ -1,0 +1,55 @@
+If a tenant is not allowed to create namespaces in compliance mode, the retention mode setting is not available for its namespaces.
+
+When you change the HCP retention mode of a namespace from enterprise to compliance, you have no guarantee that objects that should have been retained were not already deleted. Important: Changing the retention mode of a namespace may violate local regulations regarding data retention. Before taking this action, be sure you understand the implications.
+
+To view the retention mode setting for a namespace, you need the monitor or administrator role. To change the retention mode of a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Retention.
+
+5. In the Retention Mode panel, select Compliance. 6. Click Update Settings. A confirming message appears.
+
+7. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 8. Click Update Settings. Configuring S3 Object Lock
+
+Configuring an S3 Object Lock namespace allows you to apply retention periods or legal holds to your objects, ensuring that they remain locked for a specified period of time.
+
+To view the S3 Object Lock settings for a namespace, you need the monitor, administrator, or compliance role. To change the default S3 Object Lock settings for a namespace, you need the administrator role. To configure S3 Object Lock, you must enable it when you create the namespace. For more information about enabling S3 Object Lock, see Creating a namespace. You must enable versioning at the tenant level.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Retention.
+
+5. In the Default Retention section in the Retention pane: a. Select Enabled to enable Default Retention. b. Select Disabled to disable Default Retention.
+
+The default retention mode determines the level of protection applied to objects placed in the namespace. When you create a new namespace with S3 Object Lock enabled, you can choose to configure a default retention mode. If you disable default retention, objects will not have an active retention period and can be deleted.
+
+6. In the Default Retention Mode section in the Retention pane:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+281/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+a. Select Governance to enable governance mode.
+
+In S3 Object Lock governance mode, users with the necessary permissions can change the retention settings or delete objects.
+
+b. Select Compliance to enable compliance mode. In compliance mode, users and administrators cannot delete objects or modify the retention settings to reduce or remove retention time. However, users and administrators can extend the retention time as needed.
+
+c. In the Default Retention Period field, type the number of days or years that you want to retain the object.
+
+The minimum duration is 1 day from the current date and the maximum duration is 100 years. If you choose compliance mode, neither users nor administrators can change retention settings or delete objects..
+
+7. Click Update Settings. Namespace-level CORS rules configuration
+
+You can use the Tenant Management Console to configure CORS rules for a namespace.
+
+Alternatively, you can use either the Hitachi API for Amazon S3 or the HCP management API to configure CORS rules at the namespace level.
+
+You can also configure CORS rules at the tenant level to serve as the default CORS configuration for all namespaces owned by a tenant. To configure CORS settings at the tenant level, use either the System Management Console or the HCP management API. Note that you must have the administrator role to modify a tenant.
+
+This section of the help describes how to use the Tenant Management Console to configure CORS settings at the namespace level. Request elements (CORS rules)
+
+A CORS rules configuration uses the request elements described in the next table. Some of the request elements are optional.
+
+CORSConfiguration

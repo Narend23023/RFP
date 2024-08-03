@@ -1,0 +1,59 @@
+System correctly configured
+
+All of the following are true:
+
+No HCP components are missing from the AD domain. The HCP configuration of AD support is complete (that is, it’s not configured only for the CIFS protocol for the default namespace). The username mapping file used by the CIFS protocol does not contain any invalid mappings.
+
+Time server correctly configured
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+210/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP is configured to use an external time server. Zero-copy failover behavior
+
+In a HCP with SAN-attached storage system, zero-copy failover is the process of one node automatically taking over management of storage previously managed by another node that has failed. Support for zero-copy failover is configured at the storage tier and enabled in the HCP system configuration.
+
+Zero-copy failover is supported for storage nodes only.
+
+This chapter describes the storage setup required to support zero-copy failover and explains how zero-copy failover works. Storage setup for zero-copy failover
+
+In a HCP with SAN-attached storage system, nodes have both physical and logical connections to the SAN storage. The physical connections are through paths established by Fibre Channel cables and, in some systems, Fibre Channel switches. The logical connections are through mappings of the logical volumes in the storage array to the nodes. Physical paths
+
+In an HCP with SAN-attached storage system, each node has two physical paths to the storage array. This is called multipathing.
+
+The following figure shows two nodes, A and B, at the bottom, each with a multipath connection to the storage array at the top.
+
+Logical mappings
+
+To support zero-copy failover, the logical volumes in the storage array must be cross-mapped to the nodes. Cross-mapping means that each logical volume that maps to one node (A) must also map to the same second node (B), called the peer node. The mappings to node A are the primary mappings for those logical volumes, and the mappings to node B are the standby mappings. Similarly, each logical volume with a primary mapping to node B must have a standby mapping to node A.
+
+The following figure shows two sets of logical volumes in a storage array that map to two nodes, A and B. The primary mappings for each node are shown in blue. The secondary mappings are shown in red.
+
+Failing over and failing back Under normal circumstances, each node in a cross-mapped pair manages the logical volumes with primary mappings to it. However, if one node becomes unavailable and zero-copy failover is enabled, its peer can take over management of those volumes. The process of one node taking over storage management from another is called failover.
+
+When an unavailable node rejoins the HCP system, it normally takes back management of its own logical volumes. This process is called failback.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+211/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note:
+
+During failover, all spindown volumes on the node taking over are spun up. During failback, all spindown volumes on both nodes are spun up. Zero-copy failover does not apply to external storage volumes. If a node becomes unavailable, the external storage volumes it manages also become unavailable. System Management Console information on failover
+
+During failover, the logical volumes associated with the node that became unavailable first appear as initialized
+
+on the Hardware page in the HCP System Management Console. After the peer takes over a logical volume, the icon moves from the row for the unavailable node to the row for the peer, where it once again shows as available.
+
+While any logical volumes are in a failed-over state, this daily access failover alert appears in the alerts section on the Overview page. Data outages during failover
+
+While a logical volume is failing over, the data stored on it is temporarily unavailable. If the node that managed the volume became unavailable because you shut it down from the System Management Console, the data outage lasts less than 5 minutes.

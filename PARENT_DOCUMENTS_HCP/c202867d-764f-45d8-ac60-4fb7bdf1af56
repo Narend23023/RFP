@@ -1,0 +1,49 @@
+associated with a different node.
+
+HCP creates protection sets for each possible ingest tier DPL setting that can be specified in a service plan. For example, if an HCP system has six nodes, it creates three groups of protection sets:
+
+One group of six protection sets with one node in each set (for DPL 1)
+
+One group of three protection sets with two nodes in each set (for DPL 2) One group of two protection sets with three nodes in each set (for DPL 3)
+
+For each object in a given namespace, to store copies of the object data on primary running storage, HCP uses the group of protection sets that corresponds to the ingest tier DPL
+
+setting that’s specified in the service plan for the namespace. To store copies of the object data on primary spindown storage (if it’s used), HCP uses the group of protection sets that corresponds to the primary spindown storage tier DPL setting. The nodes in a protection set are not necessarily all associated with the same amount of storage. If the total number of storage nodes in the system is not evenly divisible by a DPL setting, HCP can use the storage associated with the extra nodes as standby storage. At any time, HCP can add standby storage to any existing protection set that requires additional storage to balance available storage capacity among its nodes.
+
+The Protection Service is responsible for checking and repairing protection sets. If a node in a protection set fails and the system includes an extra node, the service creates a new protection set that includes all the healthy nodes in the original protection set and the extra node.
+
+Note: Regardless of whether HCP uses the storage associated with a node that’s not in a protection set, the node itself runs all the HCP software and performs all the same functions as the nodes in protection sets. Data availability
+
+When HCP needs to maintain multiple copies of the data for an object on primary running storage or on primary spindown storage, HCP stores each copy of the object data on
+
+storage that’s managed by a different node. All but one of these copies can become unavailable without affecting access to the object.
+
+Copies of object data become unavailable on primary running storage or primary spindown storage when HCP detects an improperly functioning logical volume or corrupted or missing data. Copies of the object data also become unavailable if the nodes that provide access to those copies become unavailable. A data outage occurs when all the nodes that
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+120/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+provide access to all the copies of the data for an object fail.
+
+Protection service processing The Protection service has two main functions: detecting protection violations and repairing those violations.
+
+Detecting protection violations
+
+To detect protection violations, the Protection service checks that for each object in a given namespace, at any given point in the object lifecycle:
+
+The total number of existing copies of object data is equal to the total number of copies of object data that are currently required to exist on all of the storage tiers defined for the namespace by its service plan If copies of the object data are stored on primary running storage or primary spindown storage:
+
+Each copy of the object data is stored on a different node All copies of the object data are stored in the same protection set Each copy of the object data is accessible
+
+A violation occurs when any one of these conditions is not true.
+
+Repairing protection violations The Protection service can repair certain protection violations for an object, usually by relying on other good copies of the object data stored in the HCP repository.
+
+For each object in a given namespace, at any given point in the object lifecycle:
+
+If the total number of existing copies of the object data is less than the total required number of copies that’s specified in the namespace service plan (for example, because of a logical volume failure on primary running storage), then on each storage tier that’s defined for the namespace, the Protection service creates the number of copies of the object data that’s required to bring the object into compliance with the namespace service plan.

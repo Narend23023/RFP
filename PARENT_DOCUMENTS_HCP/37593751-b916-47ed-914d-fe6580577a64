@@ -1,0 +1,113 @@
+This property is optional on a PUT request to create an active/passive link. It is not valid on a PUT or POST request for an active/active link and is not returned by any GET request for an active/active link.
+
+is 120.
+
+The up-to-date-as-of time is the difference between:
+
+The date and time before which configuration changes and changes to namespace content are guaranteed to have been sent to the remote system The current date and time
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+475/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Property name
+
+Data type
+
+Description
+
+Notes
+
+autoFailover
+
+Boolean
+
+Specifies whether the replication link automatically fails over to the local system after a loss of connectivity to the remote system for the link. Valid values are:
+
+This property is optional on a PUT request to create a replication link. true
+
+The link automatically fails over.
+
+false
+
+The link does not fail over automatically.
+
+The default is false.
+
+autoFailoverMinutes
+
+Integer
+
+Specifies the number of minutes HCP waits before automatically failing over the replication link to the local system after a loss of connectivity to the remote system for the link. Valid values are integers in the range seven through 9,999. The default is 120.
+
+This property is optional on a PUT request to create a replication link. Example
+
+Here’s an XML example of the local data type that describes the local property of the failoverSettings data type; the properties shown are those that are returned by a GET request sent to the replica for an active/passive link:
+
+<local> <autoFailover>true</autoFailover> <autoFailoverMinutes>120</autoFailoverMinutes> <autoCompleteRecovery>false</autoCompleteRecovery> <autoCompleteRecoveryMinutes>60</autoCompleteRecoveryMinutes> </local> local (data type for replication link schedule local property)
+
+The local data type in this section describes the local property of the schedule data type that describes the schedule resource for replication links.
+
+Replication link schedule local data type properties
+
+The following table describes the properties included in the local data type that describes the local property of the schedule data type. Property name
+
+Data
+
+Description
+
+type
+
+scheduleOverride String
+
+Specifies an override for the local schedule for the replication link. Valid values are:
+
+low
+
+The performance level is low for the entire week.
+
+MEDIUM
+
+The performance level is medium for the entire week.
+
+HIGH
+
+The performance level is high for the entire week. CUSTOM
+
+The performance level is the custom setting for the entire week.
+
+NONE
+
+The schedule for the link is not overridden.
+
+These values are not case-sensitive.
+
+To remove an existing override, specify NONE as the value for this property. If you don’t explicitly remove an existing override when changing the local schedule, the override remains in effect. transition
+
+transition Specifies a scheduled change of performance level for the replication link on the local system.
+
+Example
+
+Here’s an XML example of the local data type that describes that describes the local property of the schedule data type:
+
+<local>
+
+<scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sun:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> <transition> <time>Sat:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sat:06</time> <performanceLevel>MEDIUM</performanceLevel>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+476/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+</transition> </local>
+
+logDownload
+
+The logDownload data type describes the download of all system logs for the HCP system.
+
+logDownload data type properties

@@ -1,0 +1,59 @@
+operation type, and the change time.
+
+If you specify a verbose entry with a value of true in the request body, HCP returns complete system metadata for the object or operation. If you aren’t interested in the complete system metadata, you can specify the objectProperties entry with only the system metadata you want. Object-based query results
+
+Object-based queries return information about objects that currently exist in the repository. For objects with multiple versions, these queries return information only for the current
+
+version.
+
+Object-based queries return information only about objects that have been indexed. Operation-based query results
+
+HCP maintains records of object creation, deletion, disposition, prune, and purge operations (also called transactions). These records can be retrieved through operation-based
+
+queries. The HCP system configuration determines how long HCP keeps deletion, disposition, prune, and purge records. HCP keeps creation records for as long as the object exists in the repository.
+
+Each record has a change time. For creation records, this is the time the object was last modified. For deletion, disposition, prune, and purge records, the change time identifies the time of the operation.
+
+Records returned while versioning is enabled
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+832/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If versioning is enabled for an HCP namespace, the types of records that are returned by an operation-based query depend on the query request parameters. However, the following the rules determine which operation records can be returned:
+
+HCP returns a creation record for the current version of an object, as long as this version is not a delete marker.
+
+HCP returns creation records for old versions of an object. HCP returns creation records for versions of both deleted objects and disposed objects. HCP returns a single purge record for each purge operation. It does not return records for the individual versions of the purged object.
+
+HCP returns deletion, disposition, prune, and purge records until it removes them from the system.
+
+Records returned while versioning is disabled
+
+If you create and then delete an object while versioning is disabled, HCP keeps only the deletion record and not the creation record. Operation-based queries return the deletion record until HCP removes that record from the system.
+
+If you create an object and then HCP disposes of that object while versioning is disabled, HCP keeps only the disposition record and not the creation record. Operation-based
+
+queries return the disposition record until HCP removes that record from the system.
+
+If versioning was enabled at an earlier time but is no longer enabled, operation-based queries continue to return records of all operations performed during that time. If you delete an object while versioning is disabled or if HCP disposes of an object while versioning is disabled, operation-based queries do not return any creation records for that object, regardless of whether versioning was enabled when it was created.
+
+Paged queries
+
+With paged queries, you issue multiple requests that each retrieve a limited number of results. You would use a paged query, for example, if:
+
+The size of the response to a single request would reduce the efficiency of the client. In this situation, you can use a paged query to prevent overloading the client. The client can process the results in each response before requesting additional data.
+
+The application issuing the query handles a limited number of objects at a time. For example, an application that lists a given number of objects at a time on a web page would use a paged query in which each request returned that number of results.
+
+The criteria for paged queries differ between object-based queries and operation-based queries. Object index
+
+To support object-based queries, HCP maintains an index of objects in the repository. This index is based on object paths, system metadata, custom metadata that’s well formed XML, and ACLs.
+
+Namespace indexing
+
+Indexing is enabled on a per-namespace basis. If a namespace is not indexed, object-based queries do not return results for objects in the namespace.

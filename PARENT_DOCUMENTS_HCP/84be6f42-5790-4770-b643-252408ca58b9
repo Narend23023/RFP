@@ -1,0 +1,45 @@
+With the x-amz-meta- header, you specify custom metadata as property/value pairs. You append the property name to the header and specify the value of the property as the value of the header. For example, to give an object a department property with a value of Sales&Mktg and a year property with a value of 2020, you would specify these headers: x-amz-meta-department: Sales&Mktg x-amz-meta-year: 2020
+
+HCP stores the custom metadata you specify with the S3 compatible API as an annotation named .metapairs. In this annotation, the property/value pairs are stored as well-formed XML in which each property is represented by an element. For example, the XML stored for the headers shown above is:
+
+<metapairs version="600"> <meta-department><![CDATA[Sales&Mktg]]></meta-department>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+550/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<meta-year><![CDATA[]]></meta-year> </metapairs>2020
+
+The root element in the .metapairs annotation is metapairs. For each property/value pair, the name of the corresponding element is the concatenation of meta- and the property name, modified if necessary to be a valid XML element name. Valid XML element names can contain alphanumeric characters, periods (.), hyphens (-), underscores (_), and colons (:). When creating element names from property names, HCP changes any other character to an underscore. For example, the property name city/town becomes the element name city_town.
+
+For each property/value pair, the property value becomes the value of the corresponding element. This value is enclosed in a CDATA section.
+
+If you specify an x-amz-meta- header with no value, HCP doesn’t store an element for the property named in the header. If all the x-amz-meta- headers you specify have no value, HCP doesn’t create a .metapairs annotation for the object. In a request to store or copy an object, you can specify the same x-amz-meta- property multiple times with different values. In the .metapairs annotation XML, these values are stored as comma-separated values for a single element.
+
+Here’s an example that shows three occurrences of the same property along with the resulting XML: x-amz-meta-author: P.D. Grey
+
+x-amz-meta-author: Morgan White x-amz-meta-author: Paris Black
+
+<metapairs> <meta-author> <![CDATA[P.D. Grey,Morgan White,Paris Black]]> </meta-author> </metapairs>
+
+Property names are case sensitive, so names that differ only in case correspond to separate XML elements. For example, these x-amz-meta- headers result in three separate XML elements: x-amz-meta-date_written, x-amz-meta-Date_Written, and x-amz-meta-DATE_WRITTEN.
+
+Retrieving custom metadata with the S3 compatible API
+
+When you check the existence of or retrieve an object that has a .metapairs annotation containing well-formed XML, the response headers include x-amz-meta- headers with property/value pairs that correspond to the XML elements in the annotation. The property names in these headers are the element names with the initial meta- removed. An element with comma-separated values is returned as a single x-amz-meta- header with comma-separated values. Here’s an example that shows an XML element with comma- separated values and the x-amz-meta- header that results from that element:
+
+<meta-author> <![CDATA[P.D. Grey,Morgan White,Paris Black]]> </meta-author>
+
+x-amz-meta-author:P.D. Grey,Morgan White,Paris Black
+
+Custom metadata usage considerations
+
+The following considerations apply to using custom metadata with the S3 compatible API.
+
+Custom metadata and object versions
+
+Custom metadata is specific to the object version for which it's stored:

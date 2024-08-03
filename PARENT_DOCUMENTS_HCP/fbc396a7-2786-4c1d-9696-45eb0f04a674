@@ -1,0 +1,29 @@
+When you first add HCP tenants, namespaces, and/or default-namespace directories to a replication link, the Replication service replicates the configuration of those items as soon as possible. The service then starts replicating objects in those namespaces and default-namespace directories. The service replicates objects in chronological order either across all namespaces or within each namespace in turn, depending on the link configuration. The chronological order is oldest-first based on the time of the last metadata change to the object.
+
+Whenever you add a new item to a replication link or change the configuration of an item already included on the link, the Replication service replicates the configuration of the new item or the configuration change as soon as possible. This ensures the correct behavior of objects on the receiving system. Whole-object protection with unavailable systems
+
+With whole object protection, the Replication service on the system where an object is ingested sends a full copy of the data for the object to the available systems to which the ingest system is directly connected by a replication link and on which the object is not supposed to be metadata-only. If a system is unavailable, the Replication service sends the full copy of the object data to that system when the system becomes available. Chunk distribution with unavailable systems
+
+For erasure-coded protection with chunk distribution, the Replication service on the system where an object is ingested sends a chunk for the object to each available system in the erasure coding topology. When an unavailable system becomes available, the Replication service on the ingest system sends a chunk to that system. After all the systems that were unavailable have chunks and the erasure coding delay has expired, the Geo-distributed Erasure Coding service reduces the full copy of the object data on the ingest system to a chunk.
+
+A system in an erasure coding topology can suffer a catastrophic failure after ingesting data while another system in the topology is unavailable. If this happens with a topology that's configured for chunk distribution, the data that was ingested on the failed system while the other system was unavailable is lost. To minimize the risk of data loss, if an erasure coding topology is configured for chunk distribution:
+
+Any upgrade of a system in the topology should be performed while the system is online Planned system unavailability (due, for example, to a system shutdown for maintenance or to a loss of connectivity during a network upgrade) should be scheduled for times when data ingest is at a minimum
+
+Tip: To protect newly ingested objects during a period of planned system unavailability, take these actions before making the system unavailable: 1. For each namespace that's owned by a tenant included in the erasure coding topology and that allows erasure coding, ensure that the service plan associated with that namespace does not include a metadata-only storage tier on at least two of the systems that will remain available. If an applicable service plan includes a metadata-only storage tier, you can temporarily either modify the service plan or associate the namespace with a different service plan.
+
+2. Disable the erasure coding service. 3. Reconfigure the erasure coding topology to use full-copy distribution.
+
+After making the system available again:
+
+1. Reconfigure the erasure coding topology to use chunk distribution. 2. Enable the erasure coding service. Full-copy distribution with unavailable systems
+
+For erasure-coded protection with full-copy distribution, when an object is ingested, each available system in the erasure coding topology, except systems where the object should be metadata-only storage tier, receives a full-copy of the object data. When an unavailable system becomes available:
+
+If the erasure coding delay has not expired and the object is not supposed to be metadata-only, the system receives a full copy of the object data. If the object should be metadata-only, the system does not receive either a full copy or a chunk.
+
+After all the systems in the topology are available, when the erasure coding delay expires, each system where the object should be metadata-only receives a chunk for the object, and all full copies of the object data are reduced to chunks. If the erasure coding delay has expired, the system receives a chunk for the object regardless of whether the object should be metadata-only. After all the systems in the topology are available, full copies of the object data are reduced to chunks.
+
+Geo-Distributed Erasure Coding service processing
+
+The Geo-Distributed Erasure Coding service is responsible for ensuring that objects that are or have ever been subject to erasure coding are in the correct state at any given time.

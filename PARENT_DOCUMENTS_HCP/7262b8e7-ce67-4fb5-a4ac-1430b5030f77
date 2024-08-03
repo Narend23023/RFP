@@ -1,0 +1,83 @@
+Hold
+
+1
+
+1
+
+Deletion Prohibited Deletion Prohibited
+
+Hold
+
+1
+
+1
+
+Deletion Prohibited (retention-class-name, -1)
+
+Deletion Prohibited (retention-class-name, -1)
+
+Hold
+
+2
+
+2
+
+Initial Unspecified
+
+Initial Unspecified
+
+Hold
+
+2
+
+2
+
+Initial Unspecified (retention-class-name, -2)
+
+Initial Unspecified (retention-class-name, -2)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+696/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Hold
+
+retention-period-end-seconds-past-1970-1-1retention-period-end-datetime
+
+retention-period-end-seconds-past-1970-1-1retention-period-end-datetimeHold retention-period-end-seconds-past-1970-1-1retention-period-end-datetime (retention- class-name, retention-class-duration)
+
+retention-period-end-seconds-past-1970-1-1retention-period-end-datetime (retention- class-name, retention-class-duration)
+
+Hold retention.txt settings for deleted retention classes
+
+If the retention class assigned to an object is deleted, the retention.txt metafile for the object then contains:
+
+A retention setting of Deletion Prohibited (-1) The name of the deleted retention class A retention class value of undefined
+
+For example, suppose you assign an object to the HlthReg-107 retention class and then the class is deleted. The retention.txt metafile for the object then contains:
+
+1 Deletion Prohibited (HlthReg-107, undefined)
+
+Specifying retention settings
+
+You can change the retention setting for an existing object. With HTTP, you can also specify a retention setting when you store an object in the namespace. The following information describes the retention settings you can specify. With WebDAV, CIFS, or NFS, you change the retention setting on an object by overwriting its retention.txt metafile. In the new file, you specify a single value that tells HCP what change to make. This value must be on a single line. To ensure that HCP processes the value correctly, end the line with a carriage return.
+
+Tip: With Windows and Unix, you can also use the echo command to insert the new value into the retention.txt metafile.
+
+Retention setting values
+
+These general rules apply to values you can set: If you’re storing an object in the namespace with HTTP or setting retention for an existing object that is not under retention, you can specify any retention setting — past or present. If you set a time in the past, the object is immediately deletable. If you’re changing the setting for an existing object that is in a retention class, you can replace the class with another class, as long as the duration of the replacement class is not shorter than the duration of the original class. You cannot replace the class with an explicit retention setting, such as Deletion Prohibited or a datetime value. If you’re changing the setting for an existing object that has an explicit datetime retention setting, you can change the setting to lengthen the retention period but not to shorten it.
+
+The list below describes the values you can use to specify the retention setting for an object and contains rules for specifying these values. These values are not case sensitive. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you add it to the namespace or when its retention setting is -2. The value -0 is equivalent to 0 (zero).
+
+1 or Deletion Prohibited
+
+Prevents the object from being deleted and its retention setting from being changed. You can assign this value to an object that is not in a retention class at any time. If an object is assigned to a retention class and that class is then deleted, the retention setting for that object changes to -1.
+
+2 or Initial Unspecified

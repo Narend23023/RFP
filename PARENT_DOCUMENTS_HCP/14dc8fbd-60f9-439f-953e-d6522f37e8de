@@ -1,0 +1,115 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+768/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.setopt(pycurl.INFILESIZE,
+
+os.path.getsize("Q1_2012.custom-metadata.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata&annotation=report_data HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 317 Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com
+
+X-HCP-Hash: SHA-256 20BA1FDC958D8519D11A4CC2D6D65EC64DD12466E456... Location: /rest/quarterly_rpts/Q1_2012.ppt
+
+X-HCP-Time: 1334829227 Content-Length: 0
+
+Checking the existence of an annotation
+
+You use the HTTP HEAD method to check whether an object or specific version of an object has a specific annotation. Access permission
+
+To check for the existence of an annotation, you need browse permission.
+
+Request header
+
+HEAD /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension. type
+
+Yes
+
+Use the value custom-metadata.
+
+annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter.
+
+version
+
+No
+
+To check whether an annotation exists for a specific object version, in addition to specifying the request elements listed above, specify this URL query parameter. Response headers
+
+The list below describes the request-specific response headers for this operation.
+
+Content-Type
+
+Always text/xml.
+
+Content-Length
+
+The size of the annotation, in bytes.
+
+ETag
+
+The ETag of the object or version enclosed in double quotation marks ("). This header is returned only if the object has an ETag. X-HCP-ChangeTimeMilliseconds
+
+The change time for the object, in milliseconds since January 1, 1970, at 00:00:00 UTC, followed by an integer that is unique for the change time. For example: 1336483100178.00.
+
+X-HCP-ChangeTimeString
+
+The change time for the object in this format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2020-09-18T09:18:20-0400 represents the start of the 20th second into 9:18 AM, September 18, 2020, EDT. X-HCP-Hash
+
+The cryptographic hash algorithm HCP uses, along with the cryptographic hash value stored for the object, in this format:
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is the same as the data you sent. To perform the verification, compare this value with a hash value that you generate from the original data. The
+
+X-HCP-Hash
+
+header is not returned for multipart objects.
+
+X-HCP-Size
+
+The size of the object data, in bytes.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created.

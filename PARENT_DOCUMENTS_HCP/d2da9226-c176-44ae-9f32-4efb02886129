@@ -1,0 +1,29 @@
+192.168.210.15 2001:0db8::101
+
+192.168.210.16 2001:0db8::102 192.168.210.17 2001:0db8::103 192.168.210.18 2001:0db8::104 192.168.24.72 2001:0db8::201 192.168.24.73
+
+2001:0db8::202 192.168.24.74 2001:0db8::203 192.168.24.75 2001:0db8::204 Configuring Active Directory to support HCP
+
+An HCP system can be configured to support Active Directory. With the system configured this way, you can create HCP group accounts that correspond to AD groups at both the system and tenant levels. AD users in those AD groups then have access to HCP through the various HCP interfaces, subject to the roles and permissions associated with the HCP group accounts.
+
+For HCP to work with AD, you first need to prepare AD for access by HCP. Then you need to configure HCP to support AD. The table below outlines the major steps in this procedure.
+
+This appendix describes the prerequisites for configuring AD to support HCP and contains instructions for the first six steps outlined above. These instructions are for Windows Server 2008 R2, but the concepts are the same for all versions of Windows Server.
+
+Prerequisites for configuring support for HCP in AD
+
+This chapter assumes the following: You have a basic understanding of AD concepts. You have an AD user account with the administrator role in the AD domain you plan to use when configuring support for AD in HCP.
+
+If you plan to secure communication between HCP and AD: The applicable AD domain is configured with a CA. You have access to a Windows server running the AD CA. You have access to the Windows client from which you plan to access the HCP System Management Console for the purpose of configuring support for AD. For creating the AD group and user account, you have access to a Windows or Unix server from which you can access AD. The OU or CN in which you want to create the AD group already exists in the applicable domain. The OU or CN in which you want to create the AD user account already exists in the applicable domain. This can be, but does not have to be, the same OU or CN as the one in which you create the AD group. The OU or CN in which computer accounts will be created for the HCP nodes already exists in the applicable domain. This is the OU or CN you specify as the organizational unit in the HCP configuration of support for AD. The default for this in HCP is the CN Computers. Your DNS is configured on a Windows server. Your DNS contains a stub zone for HCP that’s configured for AD integration. Your DNS contains a forward lookup zone definition for the applicable AD domain. You have access to a Windows server from which you can configure your DNS. Optionally, you have prepopulated the domain controller filter list even if HCP was not joined to Active Directory at the time.
+
+Considerations for the information you need to supply
+
+These considerations apply to the information you need to supply when configuring HCP support for AD:
+
+Before configuring AD support in HCP:
+
+Create an AD group in the target domain. Give the group permission to add members to itself. Then give the group these permissions in the specified OU: Read all properties on descendant computer objects Write all properties on descendant computer objects Change password on descendant computer objects Reset password on descendant computer objects Delete on descendant computer objects Create computer objects in this object and all descendant objects Delete computer objects in this object and all descendant objects
+
+Create an AD user account and add it to only that group. This is the user to specify as the domain user in the AD configuration in HCP.
+
+If HCP is not joined to AD, you can still prepopulate the domain controller filter list. Allow a new computer account for use in querying AD for groups to be created automatically. Do not create this account ahead of time. If you have more than one HCP system for which you are enabling support for AD, specify a computer account name that’s unique among those systems. By default, for the OU in which computer accounts will be created, HCP uses CN=Computers. For the computer account, HCP uses HCPSrv-hcp-name (for example, HCPSrv-hcp), where hcp-name is the first segment of the domain name associated with the [hcp_system] network. Required permissions for Active Directory Domain

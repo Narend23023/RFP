@@ -1,0 +1,141 @@
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+779/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.close()
+
+filehandle.close() Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt?type=acl HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1335016427
+
+X-HCP-SoftwareVersion: 7.0.0.16 Content-Type: application/xml
+
+Content-Length: 263 X-HCP-ServicedBySystem: hcp.example.com Response body
+
+<accessControlList> <grant>
+
+<grantee> <name>all_users</name>
+
+<type>group</type> </grantee>
+
+<permissions> <permission>READ</permission>
+
+</permissions>
+
+</grant> </accessControlList>
+
+Deleting an ACL
+
+You use the HTTP DELETE request to delete an ACL from an object. You cannot delete an ACL from an old version of an object. Access permission
+
+To delete an ACL, you need write ACL or delete permission.
+
+Request header
+
+DELETE /rest/directory/file?type=acl HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value acl.
+
+Response headers
+
+This operation does not return any request-specific response headers. Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully deleted the ACL.
+
+HCP returns this status code even if the object does not have an ACL.
+
+400
+
+Bad Request
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find the specified object
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+409
+
+Conflict
+
+HCP could not delete the ACL because it is currently being written to the namespace.
+
+Example: Deleting an ACL for an object
+
+Here’s a sample HTTP DELETE request that deletes the ACL for an object named Q1_2012.ppt located in the quarterly_rpts directory.
+
+Request with curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+780/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl -k -iX DELETE
+
+-H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt ?type=acl"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP

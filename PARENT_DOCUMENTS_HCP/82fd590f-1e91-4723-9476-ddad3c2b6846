@@ -1,0 +1,55 @@
+The If-Match and If-None-Match headers compare the ETag for the requested object or object version to one or more values that you specify. Typically, each value is the ETag for an object or object version of interest. The If-Modified-Since and If-Unmodified-Since headers compare the date and time the requested object or object version was last modified to a date and time that you specify.
+
+If the requested object or object version meets all the conditions specified by the conditional headers included in the request, HCP returns the object data. If the requested object or object version does not meet the condition specified by: An If-Match or If-Unmodified-Since header, HCP returns a 412 (Precondition Failed) status code and does not return the object data An If-None-Match or If-Modified-Since header, HCP returns a 304 (Not Modified) status code and does not return the object data
+
+If a request includes multiple different conditional headers, HCP processes any If-Match and If-None-Match headers before any If-Modified-Since or If-Unmodified-Since headers. If a request includes more than one of any given header, HCP processes only the first one of those headers and ignores the rest.
+
+Overriding response headers
+
+In a request to retrieve an object or object version, you can specify values to be returned in certain response headers. The values you specify in the request override any values that might otherwise be returned for those headers. The headers you can override are returned only in response to a successful request. To specify response header values, you can use the request headers listed in the table below. The valid values for each request header are the valid values for the corresponding response header.
+
+Request header
+
+Response header
+
+response-cache-control
+
+Cache-Control
+
+response-content-disposition
+
+Content-Disposition response-content-encoding
+
+Content-Encoding
+
+response content-language
+
+Content-Language
+
+response-content-type
+
+Content-Type
+
+response-expires
+
+Expires
+
+This book does not describe the response headers listed above, with the exception of Content-Type. For information about the other response headers, see http://www.w3.org/Protocols/rfc2616/rfc2616.html.
+
+Deleting an object or folder
+
+You use the HTTP DELETE method to delete an object or folder in a bucket. To delete an object, you need delete permission for the bucket containing the object or for the object itself. To delete a folder, you need delete permission for the bucket. Usage considerations
+
+You cannot delete an object or any version of that object if the object is under retention or on hold. When you delete an object while versioning is enabled, HCP:
+
+Retains the current version of the object as an old version. The version ID does not change. If delete marker is enabled, it creates a new current version of the object. A delete marker is a special version of an object that indicates that a version of the object has been deleted.
+
+A delete marker has a version ID but does not have any data or metadata. When you delete an object while versioning is enabled, the version ID of the delete marker is different from the version ID of the object you deleted. You can delete a delete marker by specifying its version ID on a DELETE request. If you delete the delete marker, the object version prior to the delete marker becomes the current version. If you delete an object without specifying the version ID, the delete marker becomes the current version and the previous versions of the object are maintained as is. A delete marker version is returned in a GET bucket versions response just like any other object version. If you try to delete an object where the current version is a delete marker or delete record, HCP returns a 204 (No Content) status code. If you inadvertently delete an object, you can recover it from an old version. You can recover an object only while versioning is enabled.
+
+To recover an object, use a PUT request to copy the object to itself. Use the versionId query parameter with the source object specification to specify which version of the object you want to use for recovery. You cannot recover an object from an old version that has been pruned.
+
+Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to delete an object, an object version, or a folder has either of these formats:
+
+With the bucket name included in the hostname: DELETE /(object-name|(folder-name(/|%2F))) HTTP/1.1

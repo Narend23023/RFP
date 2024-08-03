@@ -1,0 +1,111 @@
+The list below describes the headers returned in response to a successful request to upload a part of a multipart upload.
+
+Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to upload a part of a multipart upload, the value of this header is always 0 (zero). Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an object, copying an object, and retrieving an object. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to upload a part of a multipart upload.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully uploaded the part.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+The specified part number is not an integer in the range 1 (one) through 10,000. The value specified by the Content-MD5 header does not match the Base64-encoded MD5 hash of the data HCP received. The request includes a custom metadata (x-amz-meta-) header.
+
+403 Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can upload parts for a multipart upload. The credentials provided with the request are invalid. The credentials provided with the request do not match the credentials used to initiate the multipart upload.
+
+You do not have permission to upload parts in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+One of these:
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was aborted or completed.
+
+In the case of completion, if the part being uploaded is a replacement for an existing part, the existing part is used for completing the multipart upload.
+
+The specified bucket does not exist.
+
+411 Length Required
+
+Either the request does not include a Content-Length header, or the request includes a Content-Length header with no value.
+
+413
+
+Request Entity Too Large
+
+The part you are trying to upload is too big for the amount of space left in the bucket.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+643/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+If this error persists, contact your tenant administrator.
+
+Example: Uploading a part
+
+Here’s a sample PUT request that uploads a part of the multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. The data for the part is in a file named /file-parts-temp/RulesAndRegs-Acctg-1.
+
+The example shows the response headers HCP returns while versioning is enabled for the bucket and while versioning is disabled for the bucket. Request with s3curl command line

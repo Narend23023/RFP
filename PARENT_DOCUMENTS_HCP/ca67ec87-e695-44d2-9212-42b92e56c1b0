@@ -1,0 +1,117 @@
+transition Specifies a scheduled change of performance level for the replication link on the local system.
+
+Example
+
+Here’s an XML example of the local data type that describes that describes the local property of the schedule data type:
+
+<local>
+
+<scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sun:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> <transition> <time>Sat:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sat:06</time> <performanceLevel>MEDIUM</performanceLevel>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+476/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+</transition> </local>
+
+logDownload
+
+The logDownload data type describes the download of all system logs for the HCP system.
+
+logDownload data type properties
+
+The following table describes the properties included in the logDownload data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+nodes
+
+String
+
+Specifies, through a comma-separated list, the General
+
+If you omit the nodes property from your XML file, you download the logs for all General nodes
+
+Nodes in the HCP system you want to download logs from.
+
+in the system. If you include the nodes property in your XML file with an empty list, you do not download any logs from the General Nodes. snodes
+
+String
+
+Specifies, through a comma-separated list, the HCP S Series Nodes in the HCP system you want to download logs for.
+
+If you omit the snodes property from your XML file or include the property with an empty list, you do not download any S Series Node logs.
+
+content
+
+String
+
+Specifies, through a comma-separated list, the General Nodes log types you want to download. The possible types are:
+
+The content property only applies to General node. You download all HCP S Series Node log types, regardless of what you specify for the content property.
+
+If you omit the content property from your XML file, you download all General Node log types. ACCESS SYSTEM SERVICE APPLICATION
+
+You cannot include the content property in your XML file with an empty list.
+
+Example
+
+Here's an XML example of the logDownload data type:
+
+<logDownload> <nodes>175,176</nodes> <snodes>S10-12345,S30-84022</snodes> <content>ACCESS,SYSTEM,SERVICE,APPLICATION</content> </logDownload> logDownloadPrepare
+
+The logDownloadPrepare data type specifies the HCP system logs you want to prepare for download.
+
+logDownloadPrepare data type properties
+
+The following table describes the properties included in the logDownloadPrepare data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+startDate String
+
+Specifies the start date for HCP to begin collecting HCP General Node logs for download preparation
+
+The default is the current date. The date format is:
+
+MM/DD/YYYY
+
+endDate
+
+String
+
+Specifies the end date for HCP to finish collecting HCP General Node logs for download preparation
+
+The default is the current date. The date format is: MM/DD/YYYY
+
+snodes
+
+String
+
+Specifies, through a comma-separated list, the HCP S Series Nodes that you want to prepare HCP system logs for download
+
+Example
+
+Here's an XML example of the logDownloadPrepare data type:
+
+<logDownloadPrepare> <startDate>06/14/2017</startDate>
+
+<endDate>07/14/2017</endDate> <snodes>S10-12345, S30-28843</snodes> </logDownloadPrepare> logDownloadStatus
+
+The logDownloadStatus data type describes the download status for General and S Series Nodes.
+
+logDownloadStatus data type properties

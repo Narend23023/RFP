@@ -1,0 +1,133 @@
+206 Partial Content
+
+GET: HCP successfully retrieved the data in the byte range specified in the request.
+
+207
+
+Multi-status
+
+PROPPATCH, PROPFIND, or DELETE for a directory: The operation generated multiple status codes. The
+
+response body contains an XML document that shows the status codes and the names of the objects to which they apply.
+
+400 Bad Request
+
+All methods: The request is not well-formed. Correct the request and try again.
+
+PROPPATCH or PROPFIND: The request XML is invalid.
+
+PUT: For a request to add or replace custom metadata, the namespace is configured with custom
+
+metadata XML checking enabled, and the request includes custom metadata that is not well-formed XML.
+
+COPY or MOVE: The request does not specify the full URL for the target location.
+
+403 Forbidden
+
+For all methods, one of:
+
+The namespace does not exist.
+
+The WebDAV protocol is not enabled for the namespace. The URL specifies https and the namespace configuration does not support SSL. You don’t have permission to perform the requested operation.
+
+MKDIR: You cannot create a directory in the specified location.
+
+PROPPATCH: The requested change is not allowed.
+
+COPY or MOVE: The specified source and destination locations are the same.
+
+DELETE: The specified object is under retention.
+
+404 Not Found
+
+GET, HEAD, PROPPATCH, PROPFIND, COPY, MOVE, DELETE, LOCK, or UNLOCK: HCP could not find
+
+the object, metafile, or directory specified in the request.
+
+405
+
+Method Not Allowed
+
+MKCOL: HCP could not create the directory because it already exists.
+
+DELETE: HCP could not delete the specified object or custom metadata because it is currently being written to the namespace.
+
+409 Conflict
+
+PUT: HCP could not store the object because it already exists.
+
+PUT, MKCOL, COPY, or MOVE: One or more directories in the target path do not exist.
+
+PROPPATCH: HCP could not store dead properties as custom metadata because the default annotation contains custom metadata.
+
+412
+
+Precondition Failed
+
+COPY or MOVE: The operation failed because either:
+
+HCP could not correctly copy or move the object metadata
+
+The target object already exists and could not be deleted
+
+LOCK: HCP could not lock the specified object.
+
+414 Request URI Too Long
+
+All methods: The portion of the URL following data or metadata is longer than 4,095 bytes.
+
+416
+
+Requested Range Not Satisfiable
+
+GET: For a byte-range request, either:
+
+The specified start position is greater than the size of the requested data.
+
+The size of the specified range is zero.
+
+423 Locked
+
+PUT, PROPPATCH, COPY, MOVE, DELETE, or LOCK: HCP could not perform the requested operation because the target object is locked.
+
+500
+
+Internal Server Error
+
+All methods: An internal error occurred. Try the request again, gradually increasing the delay between
+
+each successive attempt.
+
+If this happens repeatedly, please contact your tenant administrator.
+
+503 Service Unavailable
+
+One of:
+
+HCP is temporarily unable to handle the request, probably to due to system overload, maintenance, or upgrade.
+
+HCP tried to read the object from another system in the replication topology but could not.
+
+In either case, try the request again, gradually increasing the delay between each successive attempt.
+
+507
+
+Insufficient Storage
+
+PUT: Not enough space is available to store the object. Try the request again after objects are deleted from the namespace or the namespace capacity is increased.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+793/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+PROPPATCH, MKCOL, or COPY: Not enough space is available to complete the request. Try the request again after objects are deleted from the namespace or the namespace capacity is increased. WebDAV examples

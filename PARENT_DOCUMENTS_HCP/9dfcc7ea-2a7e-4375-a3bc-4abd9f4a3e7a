@@ -1,0 +1,61 @@
+Request headers
+
+PUT /mapi/tenants/finance/groupAccounts HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 365
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0 Example Retrieving group accounts
+
+Here’s a sample GET request that retrieves all the group accounts defined for the Finance tenant. The request writes the list of group accounts to a file named finance-groups.xml. The request is made using a tenant-level user account that includes the security role. Request with cURL command line
+
+curl -k -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/groupAccounts ?prettyprint" > finance-groups.xml
+
+Request in Python using PycURL
+
+import pycurl filehandle = open("finance-groups.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Accept: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://finance.hcp.example.com:9090/mapi/tenants/finance/" + "groupAccounts?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+439/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers GET /mapi/tenants/groupAccounts?prettyprint HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Accept: application/xml
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 307
+
+Response body in XML <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<groupAccounts> <groupname>hcp-admin@ad.example.com</groupname> <groupname>hcp-security@ad.example.com</groupname> <groupname>hcp-compliance@ad.example.com</groupname> <groupname>AR-read@ad.example.com</groupname> <groupname>AR-full-access@ad.example.com</groupname> <groupname>AP-read@ad.example.com</groupname> <groupname>AP-full-access@ad.example.com</groupname> </groupAccounts> Tenant-level user account resources
+
+Tenant-level user account resources let you create, retrieve information about, modify, and delete tenant-level user accounts. The table below provides information about these resources.
+
+User account resources are not available for the default tenant.
+
+.../tenants/tenant-name/userAccounts Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+userAccount
+
+PUT
+
+Create a user account for a tenant
+
+Tenant-level user account with the security role
+
+List
+
+GET
+
+Retrieve a list of the user accounts defined for a tenant

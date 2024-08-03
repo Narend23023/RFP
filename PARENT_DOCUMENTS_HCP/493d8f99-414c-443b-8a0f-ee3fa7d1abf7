@@ -1,0 +1,129 @@
+The JSON request body has the format shown below. Entries at each hierarchical level can be in any order:
+
+{
+
+"operation": { "count":"number-of-results", "lastResult":{
+
+"urlName":"object-url", "changeTimeMilliseconds":"change-time-in-milliseconds.index",
+
+"version":version-id },
+
+"objectProperties":"comma-separated-list-of-properties", "systemMetadata":{
+
+"changeTime":{ "start":start-time-in-milliseconds,
+
+"end":end-time-in-milliseconds },
+
+"directories":{ "directory":["directory-path",...]
+
+}, "indexable":"(true|false)",
+
+"namespaces":{ "namespace":["namespace-name.tenant-name",...]
+
+}, "replicationCollision":"(true|false)", "transactions":{
+
+"transaction":["operation-type",...] }
+
+}, "verbose":"(true|false)"
+
+} }
+
+For the namespace, directory, and transaction entries, the square brackets shown in this format are required.
+
+The JSON body for an operation-based query that requests all available operation records contains only this line:
+
+{}
+
+Request operation body contents
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+847/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The following sections describe the entries in an operation-based metadata query API request body.
+
+Top-level entry
+
+XML has a single top-level queryRequest entry. JSON has a corresponding unnamed top-level entry. All request bodies must contain this entry. operation entry
+
+Except when requesting all available information, the operation entry is required for operation-based queries. It can contain any combination of the entries listed in the table below.
+
+Entry
+
+Valid values
+
+Description
+
+count
+
+One of:
+
+Specifies the maximum number of operation records to return per request.
+
+1, to request all operation records that meet the
+
+If you omit this entry, HCP returns up to ten thousand operation records per request.
+
+query criteria A positive integer lastResult
+
+N/A
+
+Specifies the last record returned by the previous query. Use this entry in paged queries
+
+to request additional results after an incomplete response. Omit this entry if you are not using a paged query or if this is the first request in a paged query.
+
+objectProperties
+
+A comma separated list of object properties.
+
+Requests specific object property values for each object entry in the query results.
+
+If the request body contains both the verbose and objectProperties entries, HCP returns only the object URL, version ID, operation type, and change time and the information specified in the objectProperties entry. systemMetadata
+
+N/A
+
+Specifies the properties to use as the query criteria.
+
+verbose
+
+One of:
+
+true
+
+Specifies whether to return complete metadata for each operation record in the result set (true) or to return only the object URL, version ID, operation type, and change time (fal se).
+
+Return all object properties. false
+
+The default is false.
+
+Return only the object URL, version ID, operation,
+
+and change time.
+
+If the query request body contains both the verbose and objectProperties entries, HCP returns only the object URL, version ID, operation type, and change time and the information specified in the objectProperties entry. lastResult entry
+
+Use the lastResult entry only in the second through final requests of a paged query. This entry identifies the last record that was returned in the previous query so that HCP can retrieve the next set of records. The entry contains the child entries described in the table below.
+
+Entry Valid values
+
+Description
+
+urlName
+
+A fully qualified object URL, for example:
+
+Specifies the urlName value in the last operation record returned in response to the previous query.
+
+http://finance.europe.hcp.example.com/rest/Pres
+
+entations/Q1_2012.ppt
+
+changeTime
+
+A timestamp in milliseconds since January 1, 1970, at
+
+00:00:00 UTC, followed by a period and a two-digit suffix

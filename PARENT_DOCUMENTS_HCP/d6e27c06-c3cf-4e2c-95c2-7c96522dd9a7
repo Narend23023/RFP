@@ -1,0 +1,101 @@
+<![CDATA[customMetadataContent:"<temp_high unit=deg_F>31 </temp_high>"]]>" aclGrant property
+
+To query for objects based on the content of ACLs, you specify the aclGrant property in a query expression. Valid values for this property have these formats:
+
+"permissions" "permissions,USER[,location,username]"
+
+"permissions,GROUP,location,(ad-group-name|all_users|authenticated)" In these formats:
+
+permissions
+
+One or more of these with no space between them:
+
+R
+
+Read_ACL
+
+r
+
+Read
+
+W
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+844/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Write_ACL
+
+w
+
+Write
+
+d
+
+Delete
+
+If you specify only permissions as the aclGrant property value, the query expression finds objects with ACLs that grant you the specified permissions to any user or group. USER
+
+Required when querying for objects with ACLs that grant permissions to a specified user. If the credentials you specify in the query request are for a tenant-level user account that’s defined in HCP, you can find objects that have ACLs that grant the specified permissions to that user account by specifying only a value for permissions and USER. GROUP
+
+Required when querying for objects with ACLs that grant permissions to a specific group of users.
+
+location
+
+The location in which the specified user or group is defined. Valid values are either:
+
+The name of an HCP tenant
+
+The name of an AD domain preceded by an at sign (@)
+
+If the value for the aclGrant property includes all_users or authenticated, location must be the name of an HCP tenant. username
+
+The name of a user to which matching ACLs grant the specified permissions. Valid values are:
+
+The user name for a user account that’s defined in HCP.
+
+The user name for an AD user account. This can be either the user principal name or the Security Accounts Manager (SAM) account name for the AD user account. ad-group-name
+
+The name of an AD group to which the matching ACLs grant the specified permissions.
+
+all_users
+
+Represents all users.
+
+authenticated
+
+Represents all authenticated users.
+
+Specifying permissions
+
+The permissions in an aclGrant property value must be specified in this order:
+
+R, r, W, w, d
+
+For example, to find objects that have ACLs that grant write and write_ACL permissions, and only those permissions, to the user rsilver who is defined in the europe tenant, specify this query expression:
+
+aclGrant:"Ww,USER,europe,rsilver"
+
+You can replace one or more permissions with the asterisk (*) wildcard character. When you do this, you still need to specify permissions in the correct order.
+
+When you specify both an asterisk and one or more permissions, the metadata query API finds objects with ACLs that grant only the permissions you explicitly specify or that grant
+
+the permissions you explicitly specify and any permissions represented by the asterisk. For example, this query expression finds objects with ACLs that grant read, read_ACL, write, and write_ACL permissions and may also grant delete permission: aclGrant:"RrWw*"
+
+A single asterisk represents all the missing permissions in the location where it appears. Therefore, you don’t use consecutive asterisks. For example, in this query expression, the wildcard character represents any combination of write, write_ACL, and delete permissions:
+
+aclGrant:"r*"
+
+In this query expression, the wildcard character represents any combination of read and write_ACL permissions: aclGrant:"R*w"
+
+In this query expression, the wildcard character represents only read_ACL permission:
+
+aclGrant:"*r"
+
+You can specify multiple asterisks in a query expression. For example, this query expression finds objects with ACLs that grant read permission and any combination of other permissions to the AD group named managers that is defined in the corp.widgetco.com domain:
+
+aclGrant:"*r*,GROUP,@corp.widgetco.com,managers"

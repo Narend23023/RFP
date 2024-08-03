@@ -1,0 +1,75 @@
+a. Click Minimum Security Protocol and select the minimum security protocol you want to use for front-end communications.
+
+You see a table that displays the list of available ciphers.
+
+b. Select or clear the option to enable each cipher.
+
+Note: Changing Minimum Security Protocol setting causes the HCP system to restart and requires your confirmation.
+
+3. Click Update Settings.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+128/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+4. Click Reset to restore all cipher settings to their default configuration.
+
+After upgrading to HCP v9.7, the table will display the previously used old ciphers. However, resetting will enable the default ciphers for HCP v9.7.
+
+Setting exclusive Support access credentials Exclusive Hitachi Vantara Support access credentials provide additional security compliance for an HCP system by enabling each system with a unique set of SSH keys. These keys, which are used for the sole purpose of system support and maintenance by authorized service and Support personnel, can be applied by an authorized service provider during final on-site setup or at a later time.
+
+To apply exclusive Support access credentials on the HCP system after final on-site setup, the administrator obtains the exclusive credentials from an authorized service provider or Hitachi Vantara Support. The administrator can apply the credentials package using either the Upload Support Access Credentials wizard in the System Management Console, or the HCP management API supportaccesscredentials resource.
+
+Applying the exclusive Support access credentials package
+
+The administrator or service role is required to apply exclusive Hitachi Vantara Support access credentials.
+
+1. Open the System Management Console. 2. From the Security menu, select Support Access Credentials.
+
+The Manage tab of the Support Access Credentials page is displayed. The Access Credentials Details section indicates whether the current Support access credentials are the default credentials or exclusive Hitachi Vantara Support access credentials. 3. Click Upload Support access credentials.
+
+The Upload tab of the Upload Support Access Credentials wizard is displayed.
+
+4. Open your file system browser window, navigate to the location of the exclusive Hitachi Vantara Support access credentials package that you obtained from an authorized
+
+service provider or Support, and double-click the .plk file. The file system browser window closes and the Upload Support access credentials page is updated with the name of the .plk file.
+
+5. Click Next.
+
+The package validation procedure runs.
+
+If the package validation fails with an invalid package error, either return to step 4 to browse and select another exclusive Support access credentials package, or cancel the operation.
+
+If the package validation succeeds, the Review tab of the Upload Support Access Credentials wizard is displayed.
+
+6. Review the package validation details and any warning messages.
+
+If the information is correct, click Finish. The Manage tab of the Support Access Credentials page is updated with details about the applied exclusive Support access credentials. Go to step 7.
+
+If the information is incorrect, click Cancel.
+
+The wizard closes and the Manage tab of the Support Access Credentials page is displayed.
+
+7. Review the HCP system log to ensure that it includes an informational event indicating that the exclusive Support access credentials have been applied to the system. If you
+
+see any error messages related to applying the exclusive credentials, notify your authorized service provider.
+
+Managing domains and SSL server certificates
+
+You can create multiple domains in HCP and associate one or more SSL server certificates with each domain. HCP uses these domains and certificates to facilitate and secure communications over its built-in and user-defined networks.
+
+About domains
+
+A domain is a group of computers or devices that are administered as a unit. In terms of HCP, a domain consists of nodes in a single HCP system.
+
+Domains are associated with networks. Clients that communicate with HCP over a given network can use the name of the domain associated with that network to identify the system.
+
+Each network specifies IP addresses for the system nodes. A single domain can be associated with multiple networks. Therefore, a single domain can correspond to multiple sets of
+
+IP addresses.
+
+An HCP system can have at most 201 domains. You can create domains at any time. You can delete a domain only while it is not associated with any networks. Domain names

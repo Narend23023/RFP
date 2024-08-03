@@ -1,0 +1,167 @@
+POST /mapi/logs?mark=Mark+the+log HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Namespace resources
+
+Namespace resources let you create, retrieve information about, modify, and delete namespaces. The table below provides information about these resources. .../tenants/tenant-name/namespaces
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+namespace
+
+PUT
+
+Create an HCP namespace
+
+Tenant-level user account with the administrator role or allow namespace management property
+
+Not valid for the default namespace.
+
+List
+
+GET
+
+Retrieve a list of the namespaces owned by a tenant
+
+For an HCP tenant, tenant-level user account with the monitor, administrator, or compliance role or allow namespace
+
+The listed namespaces are identified by namespace name.
+
+management property For the default tenant, system-level user account with the monitor or administrator role
+
+In XML, the element that identifies each namespace is name. The root element for the list of namespaces is namespaces.
+
+In JSON, the name in the name/value pair that lists the namespaces is name.
+
+For a user with the allow namespace management property and no roles, the retrieved list includes only the namespaces the user owns. .../tenants/tenant-name/namespaces/cors
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+cors
+
+PUT
+
+Set the CORS rules configuration for a namespace
+
+System-level user account with the administrator role Tenant-level user account with the administrator role
+
+A CORS configuration set on a namespace overrides the default tenant-level CORS configuration.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+407/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+GET
+
+Retrieve the CORS configuration for a namespace
+
+System-level user account with the monitor or administrator role Tenant-level user account with the monitor or administrator role DELETE
+
+Delete the CORS configuration for a namespace
+
+System-level user account with the administrator role Tenant-level user account with the
+
+If a CORS configuration is not set on the namespace, the HTTP status code 404 Not Fou nd is returned.
+
+administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+namespace
+
+GET
+
+Retrieve information about a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role or allow namespace management property For the default namespace, system-level user account with the monitor or administrator role
+
+A user with the allow namespace management property and no roles can retrieve information only about the namespaces the user owns. In this case, the retrieved information includes only the namespace name and owner. N/A
+
+HEAD
+
+Check for the existence of a namespace
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role or allow namespace management property For the default namespace, system-level user account with the monitor or administrator role
+
+namespace
+
+POST
+
+Modify a namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete an HCP
+
+Tenant-level user account with the administrator
+
+namespace
+
+role or allow namespace management property
+
+A user with the allow namespace management property and no roles can delete only the namespaces the user owns.
+
+The namespace cannot contain any objects. Not valid for the default namespace.
+
+.../tenants/tenant-name/namespaces/namespace-name/chargebackReport
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+chargeback
+
+GET
+
+Generate a chargeback report for a namespace

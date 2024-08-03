@@ -1,0 +1,63 @@
+ETag: "827ccb0eea8a706c4c34a16891f84e7b" Expires: Fri, 18 Dec 2020 00:00:00 GMT
+
+Content-Type: application/vnd.ms-powerpoint Content-Disposition: attachment;
+
+Content-Length: 678400 X-HCP-Type: object
+
+X-HCP-Size: 678400 X-HCP-Hash: SHA-256 36728BA190BC4C377FE4C1A57AEF9B6AFDA98720422960...
+
+X-HCP-VersionId: 80232998058817 X-HCP-IngestTime: 1433265536 X-HCP-RetentionClass: X-HCP-RetentionString: Deletion Allowed
+
+X-HCP-Retention: 0 X-HCP-IngestProtocol: HTTP
+
+X-HCP-RetentionHold: false X-HCP-Shred: false
+
+X-HCP-DPL: 2 X-HCP-Index: true
+
+X-HCP-Custom-Metadata: false
+
+X-HCP-ACL: false X-HCP-Owner: myuser
+
+X-HCP-Domain: X-HCP-UID:
+
+X-HCP-GID: X-HCP-CustomMetadataAnnotations: X-HCP-Replicated: false X-HCP-ReplicationCollision: false
+
+X-HCP-ChangeTimeMilliseconds: 1433265537266.00 X-HCP-ChangeTimeString: 2020-09-18T13:18:57-0400
+
+Last-Modified: Fri, 18 Sep 2020 17:18:57 GMT
+
+Checking the existence of a range of object versions
+
+Here is a sample HTTP HEAD request that checks the existence of a range of object versions for an object named Q2_2020.ppt in the quarterly_rpts directory. The version range for
+
+the object is 80232998058817-80232998058819. Request with curl command line
+
+curl -i -I -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt
+
+?version=80232998058817-80232998058819" > Q2_2020.ppt
+
+Request in Python using PycURL
+
+import pycurl
+
+import StringIO cin = StringIO.StringIO() curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q2_2020.ppt?version=80232998058817-80232998058819")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.HEADER, 1) curl.setopt(pycurl.NOBODY, 1)
+
+curl.setopt(pycurl.WRITEFUNCTION, cin.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) print cin.getvalue()
+
+curl.close()
+
+Request headers
+
+HEAD /rest/quarterly_rpts/Q2_2020.ppt?version=80232998058817-80232998058819 HTTP/1.1 Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 18 Sep 2020 18:21:14 GMT

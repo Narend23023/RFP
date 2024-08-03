@@ -1,0 +1,93 @@
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Wed, 16 Nov 2016 23:29:17 +0000 Authorization: AWS bGdyZWVu:FiWxioJHDGMLyP0WkCuqUpRqr2w= x-amz-meta-author: P .D. Grey x-amz-meta-author: Morgan White
+
+x-amz-meta-author: Paris Black x-amz-acl: authenticated-read Content-Length: 881932 Response headers
+
+HTTP/1.1 200 OK
+
+Date: Wed, 16 Nov 2016 23:29:17 GMT ETag: "76216527ff2f6219f7c29251a619c8db" Content-Length: 0
+
+Creating a folder
+
+You use the HTTP PUT method to create a folder in a bucket. To create a folder, you need write permission for the bucket.
+
+To tell HCP to create a folder instead of an object in response to a PUT request, you can do either these:
+
+Include a forward slash (/) or the percent-encoded equivalent (%2F) after the folder name in the request. Include the Content-Type header in the request with a value of x-directory.
+
+In either case, you also need to include the Content-Length header in the request. However, HCP ignores any request body.
+
+When you create a folder, you specify a name for it. The rules for folder names are the same as the rules for object names. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to create a folder has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /folder-name[(/|%2F)] HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /bucket-name/folder-name[(/|%2F)] HTTP/1.1
+
+Required headers
+
+The list below describes the headers you can use in a request to create a folder. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-Length
+
+Specifies the size, in bytes, of the data being stored. In a request to create a folder, the value of this header should be 0 (zero). Even if you specify a value greater than zero for this header, no request body is sent to HCP. Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format:
+
+DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format: DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+607/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+yyyy
+
+The four-digit year.
+
+HH The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date

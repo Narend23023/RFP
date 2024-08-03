@@ -1,0 +1,99 @@
+To specify the list of parts to use when completing a multipart upload, you use an XML request body. You identify each part by its part number and the ETag returned when the part was uploaded. The list of parts must be in ascending order by part number.
+
+Only the parts listed in the request to complete a multipart upload are used as data for the resulting object. Parts that were uploaded for the multipart upload but that are not listed in the request are automatically deleted after the request is processed.
+
+A multipart upload must have at least one part to complete. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+652/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When you complete a multipart upload, you become the owner of the resulting object.
+
+If a request to complete a multipart upload includes any custom metadata x-amz-meta- headers, HCP returns a 400 (Bad Request) status code and does not complete the multipart upload.
+
+HCP ignores ACL headers in requests to complete a multipart upload. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to complete a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+POST /object-name?uploadId=upload-id HTTP/1.1
+
+With the bucket name following the hostname: POST /bucket-name/object-name?uploadId=upload-id HTTP/1.1
+
+The uploadId query parameter is case sensitive.
+
+Required headers
+
+The following list describes the required headers to use in a request to complete a multipart upload.
+
+Authorization
+
+Specifies user credentials or requests anonymous access. Content-Length
+
+Specifies the size, in bytes, of the request body.
+
+Content-Type
+
+Specifies the Internet media type of the request body. The only valid values are application/xml and text/xml.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Optional headers
+
+If-Match
+
+Specifies a value for comparison with the ETag of the most recent version of the object specified in the request. If the specified value matches the Etag, HCP continues processing the request. If the specified value doesn't match the Etag or the specified object doesn't exist, HCP returns an error response body and does not complete the multipart upload. The value of this header can be any string of one or more characters. x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true

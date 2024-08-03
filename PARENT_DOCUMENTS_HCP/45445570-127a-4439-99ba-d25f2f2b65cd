@@ -1,0 +1,75 @@
+While HCP is reading very large objects (thousands of megabytes or more) through NFS, system performance decreases.
+
+Walking large directory trees
+
+HCP occasionally reuses inode numbers. Normally, this has no impact. However, it can affect programs that walk the directory tree, like the Unix du command. If you run such a program against a very large directory tree, it may not go down certain subdirectory paths.
+
+One way to prevent this problem is to work on directory segments, instead of the entire directory tree. For example, when you use the du command you can run the command against smaller segments of the directory hierarchy; then add the returned values together to get the total. NFS delete operations
+
+While an object is open for write through NFS on a given node, it cannot be deleted through NFS on other nodes.
+
+NFS mounts on a failed node
+
+If an HCP node fails, NFS mounts that target the failed node lose their connections to the namespace. To recover from a node failure, unmount the namespace at the current mount point. Then take one of these actions:
+
+Mount the namespace on a different node. You can do this by specifying either the domain name of the HCP system or a different node IP address in the mount command. If
+
+you specify a domain name, HCP automatically selects a node from among the healthy ones. When the failed node becomes available again, remount the namespace on that node. Multithreading with NFS
+
+HCP lets multiple threads access a namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple
+
+directories.
+
+With NFS, multiple concurrent threads can write to the same object, but only if they are working against the same node. Multiple concurrent threads can read the same object on the same or different nodes.
+
+With a single mount point, concurrent threads are always working against the same node.
+
+HCP doesn’t limit the number of concurrent NFS threads per node but does limit the total number of outstanding requests using all protocols to 500 per node. Note: CIFS and NFS share the same thread pool.
+
+Namespace Browser
+
+This section of the Help contains information on using the HCP Namespace Browser.
+
+Introduction to the Namespace Browser
+
+The HCP Namespace Browser lets you manage namespace content and view information about namespaces. This chapter contains instructions for logging in to the Namespace
+
+Browser and describes the Browser interface. About the Namespace Browser
+
+The Namespace Browser is an easy-to-use web application that lets you:
+
+Navigate and manage namespace content View information about namespaces
+
+When you work with namespace content, you can list directories and view or retrieve objects. You can also manage namespace content by adding directories and by adding and
+
+deleting objects. If versioning is enabled, you can list, view, and retrieve old versions and view deleted objects.
+
+When you view information about namespaces, the Browser can display the namespaces that you can access, retention classes that you can use in a namespace, permissions for
+
+namespace access, and statistics about a namespace.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+802/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Depending on the namespace configuration, you can log into the Namespace Browser as an authenticated user or you can log in anonymously. If the namespace supports Active Directory authentication, it can also be configured to support single sign-on. With single sign-on, if you’re logged in to a Windows client with an AD user account that HCP
+
+recognizes, you do not need to explicitly log into the Namespace Browser.
+
+Note: If the namespace is configured to support single sign-on, you cannot log into the Namespace Browser anonymously.
+
+For single sign-on to work, your web browser must be configured to support it.
+
+The information you see and actions you can perform in the Namespace Browser depend on the permissions you have. Namespace Browser sessions
+
+A Namespace Browser session begins when you take one of these actions:
+
+Log into the Browser using an HCP user account.
+
+Log into the Browser anonymously. Access a Browser page using single sign-on.
+
+Log into the Browser using a recognized AD user account other than the one with which you’re currently logged in to Windows.
+
+A session ends when you log out.

@@ -1,0 +1,41 @@
+Changing the default shred setting
+
+When you create a namespace, its default shred setting is not to shred. Once the namespace exists, you can change this setting at any time.
+
+Once an object is marked for shredding, its shred setting cannot be changed.
+
+Note: If HCP is allowed to use erasure coding to implement replication of a namespace, setting the default shred setting to shred for that namespace can significantly increase the load on all systems in the replication topology.
+
+To view the default shred setting for a namespace, you need the monitor, administrator, or compliance role. To change the default shred setting for a namespace, you need the compliance role. 1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Shredding. 5. In the Shredding panel:. To enable secure deletion, select Shred on delete. To disable secure deletion, deselect Shred on delete .
+
+6. Click Update Settings.
+
+Allowing object overwrites
+
+When using HCP and the Hitachi API for Amazon S3, executing a PUT request for an object that has the same name as an existing object in a versioned namespace creates a new version of the object. For objects in non-versioned namespaces, you can enable an overwrite option to overwrite the prior contents of an object when executing a PUT request for an existing object. This option is available when creating or editing a non-versioned namespace. Observe the following guidelines when using the overwrite option with objects in a non-versioned namespace:
+
+By default, the overwrite option is disabled. Executing a PUT request for an existing object results in a 409 Conflict error. If the overwrite option is enabled for a namespace, executing a PUT request for an existing object in that namespace succeeds and overwrites the previous contents of the object. This behavior is similar to issuing a DELETE request followed by a PUT request for an object in a non-versioned namespace. The overwrite option applies to the S3 compatible API only. It does not apply to REST or NFS/CIFS. For versioned namespaces, the overwrite option has no effect until versioning is disabled. If the overwrite option is selected and subsequent versioning is enabled for the namespace, the overwrite option remains selected and has no effect unless versioning is disabled. Objects under retention cannot be overwritten. Any custom metadata included with the overwrite PUT request is written with the object and any existing custom metadata associated with the prior instance of the object is deleted. If you add custom metadata with an overwrite PUT request, the custom metadata will be added to the object. The overwrite option is replicated to other HCP systems that support the overrite feature.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 ) to
+
+277/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If you replicate a namespace that suports the overwrite option to an HCP version that does not support this option, the overwrite option is not available for the earlier version. However, the object overwrite succeeds, and a DELETE request and a PUT request are sent to the replica system.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. Check Allow overwrite of objects via Hitachi API for Amazon S3 if versioning is disabled.
+
+Changing the default index setting
+
+When you create a namespace, its default index setting is to index. Once the namespace exists, you can change this setting at any time.
+
+To view the default index setting for a namespace, you need the monitor or administrator role. To change the default index setting for a namespace, you need the administrator role. 1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies.
+
+4. On the left side of the Policies panel, click Indexing. 5. In the Indexing panel: To enable indexing, select Index objects. To disable indexing, deselect Index objects.
+
+6. Click Update Settings.
+
+Changing minimum data access permissions

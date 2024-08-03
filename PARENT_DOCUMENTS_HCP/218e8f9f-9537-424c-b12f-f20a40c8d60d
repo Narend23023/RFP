@@ -1,0 +1,111 @@
+id
+
+Unique label name. The maximum label size is 64 characters. hold
+
+Either true or false.
+
+Examples
+
+Place two labeled holds on the object.
+
+x-hcp-labelretentionhold [{"id":"LabelHold-1","hold":true}, {"id":"LabelHold-2","hold":true}]
+
+Remove a labeled hold from the object.
+
+x-hcp-labelretentionhold [{"id":"LabelHold-2","hold":false}]
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to copy an object.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to copy an object, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object.
+
+ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an object, copying an object, and retrieving an object. Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. x-amz-copy-source-version-id
+
+Specifies the version ID of the source object. This header is returned only while versioning is enabled for the source bucket. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Response body
+
+HCP returns information about the target object that results from a successful copy request in an XML response body.
+
+The next list describes the XML elements in the response body returned in response to a request to copy an object. The elements are listed in alphabetical order.
+
+CopyObjectResult Root element.
+
+ETag
+
+Child of the CopyObjectResult element. The ETag element specifies the ETag for the target object.
+
+LastModified
+
+Child of the CopyObjectResult element. The LastModified element specifies the date and time when the target object was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+621/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to copy an object. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully copied the object.
+
+400
+
+Bad Request
+
+Possible reasons include that an ACL grant header specifies an invalid grantee.
+
+403
+
+Forbidden
+
+Possible reasons include:

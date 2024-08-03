@@ -1,0 +1,105 @@
+✓
+
+✓ View HCP documentation from the Tenant Management Console
+
+✓
+
+✓
+
+✓
+
+Data access permissions
+
+Data access permissions allow users to access namespace content and some information about namespaces. These permissions are granted separately for individual namespaces.
+
+The data access permissions that can be associated with user and group accounts for any given namespace are: Browse
+
+List directory contents.
+
+Read
+
+View and retrieve objects, including the system and custom metadata for objects. View and retrieve previous versions of objects. Check the existence of objects. List annotations for objects. For this permission to be granted, users must also have browse permission.
+
+Read ACL
+
+View and retrieve object ACLs.
+
+Write
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Compliance
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+253/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Add objects to the namespace. Modify system metadata (except retention hold). Add or replace custom metadata. Write ACL
+
+Add, replace, and delete object ACLs.
+
+Change owner
+
+Change the owners of objects in the namespace.
+
+Delete
+
+Delete objects, custom metadata, and ACLs from the namespace.
+
+Purge
+
+Delete all versions of an object with a single operation. For this permission to be granted, users must also have delete permission. Privileged
+
+Delete or purge objects that are under retention, provided the user also has delete or purge permission for the applicable namespace Hold or release objects, provided the user also has write permission for the applicable namespace Search
+
+Use the HCP metadata query API and the HCP Search Console to query or search the namespace. For this permission to be granted, users must also have read permission.
+
+Users with any data access permissions for a namespace can view information about that namespace.
+
+Note: An Active Directory (AD) user can be added to an AD group while the user is using the Namespace Browser. However, if the AD group corresponds to an HCP group account, the data access permissions might not take effect immediately. It could take up to eight hours for the user to get the data access permissions associated with the group account. To get the data access permissions immediately, the user must log out of the Namespace Browser and then log back in. If the user is also currently using the HCP System Management Console or the Tenant Management Console, logging out of either of those interfaces has the same effect. User authentication
+
+To use these HCP Console and command-line interfaces, a user needs to supply a username and password for authentication:
+
+Console interfaces:
+
+Tenant Management Console Namespace Browser
+
+Search Console
+
+Command-line interfaces:
+
+HCP management API Namespace access protocols that require authentication HCP metadata query API
+
+User authentication is the process of checking whether the combination of the specified username and password is valid.
+
+For user accounts defined in HCP, the system supports local and RADIUS authentication. User accounts defined in AD must be authenticated by AD. RADIUS and AD authentication are types of remote authentication.
+
+A tenant can support one or more of these authentication types. The types supported are set when the tenant is created. HCP system-level administrators can change these settings at any time. Local authentication
+
+For locally authenticated users, the user account password is stored in the HCP system. When a user submits the account username and password either on a login page for a Console or with a cookie in a command line, HCP checks the username and password internally.
+
+HCP lets the user into the target Console or performs the requested operation if these conditions are true:
+
+The combination of the specified username and password is valid. The user account is enabled. For the Tenant Management Console, the user account is associated with at least one role. For the Search Console, the user account is associated with the search permission. For the HCP management API, the user account is associated with a role that allows the requested operation. For a namespace access protocol, the user account is associated with permissions that allow the requested operation. For the metadata query API, the user account is associated with the search permission. If any of these conditions is not true, HCP rejects the login or command-line request.

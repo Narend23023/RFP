@@ -1,0 +1,55 @@
+and then log back in. If the user is also currently using the Tenant Management Console or Namespace Browser, logging out of either of those interfaces has the same effect.
+
+Alternatively, you can force the roles to be recognized immediately by clearing the AD cache. Available roles
+
+The roles that you can associate with a user or group account are:
+
+Monitor
+
+Grants permission to use the System Management Console to view the HCP system status and most aspects of the system configuration, including tenant configurations. The monitor role also grants read-only permission to view user and group accounts. Administrator
+
+Grants permission to use the System Management Console to view the HCP system status, perform most system configuration activities, create and manage tenants, and
+
+download the HCP internal logs. The administrator role also grants read-only permission to view user and group accounts. The administrator role does not grant permission to configure user or group accounts. Security
+
+Grants permission to use the System Management Console to view the HCP system status, create and manage user accounts, configure remote authentication, modify
+
+system security settings, configure syslog and SNMP logging and email notification, and view security events in the system log.
+
+Compliance
+
+Grants permission to use the Tenant Management Console to work with retention classes and retention-related settings and perform privileged deletes, as well as to use the
+
+System Management Console to view the HCP system status. Using the Tenant Management Console is possible only for the default tenant and for HCP tenants that are configured to allow system-level users to manage them and search their namespaces Service
+
+Grants permission to use the System Management Console to view the HCP system status and perform advanced system reconfiguration and management activities. The
+
+service role does not grant permission to view or configure user or group accounts. Important: You should perform activities restricted to the service role only after consulting your authorized HCP service provider. Search
+
+Grants permission to use the metadata query API and Search Console to query or search the default namespace and any namespaces owned by HCP tenants that are
+
+configured to allow system-level users to manage them and search their namespaces. To use the metadata query API or Search Console for access only to the HCP namespaces owned by a specific tenant, a user must have a tenant-level user account or an AD user account that’s recognized at the tenant level.
+
+The monitor, administrator, security, and compliance roles also grant access to use the HCP management API for specific activities. Tenant-level administration
+
+Tenants, except the default tenant, have their own user and group accounts that can enable access to the Tenant Management Console and HCP management API. The roles
+
+available for these accounts are monitor, system, security, and compliance. Tenant security administrators define tenant-level user and group accounts in the Tenant Management Console.
+
+HCP system-level users with the monitor, administrator, security, or compliance role automatically have access to the Tenant Management Console and HCP management API
+
+functions for the default tenant. The default tenant does not have user or group accounts of its own.
+
+A tenant-level user with the administrator role can configure an HCP tenant to allow system-level users to manage it and search its namespaces. This enables system-level users with the monitor, administrator, security, or compliance role to log into the Tenant Management Console or use the HCP management API for the tenant. System-level users with the
+
+monitor or administrator role can also access the Tenant Management Console directly from the System Management Console. For the default tenant, access by system-level users
+
+is enabled automatically and cannot be disabled. Note:
+
+If a tenant-level user account has the same username and password as your system-level user account, you cannot use your system-level account to log into the Tenant Management Console for that tenant. You can, however, access that Console directly from the System Management Console, in which case, you are still using your system-level user account.
+
+After accessing the Tenant Management Console or HCP management API for a tenant that is configured to allow system-level users to manage it and search its namespaces, system-level users can perform the activities allowed by the tenant-level roles that correspond to their system-level roles.
+
+An AD user can belong to AD groups for which corresponding HCP group accounts exist at both the system and tenant levels. When such a user accesses the Tenant Management
+
+Console, that user has the roles associated with both the applicable system-level group accounts and the applicable tenant-level group accounts.

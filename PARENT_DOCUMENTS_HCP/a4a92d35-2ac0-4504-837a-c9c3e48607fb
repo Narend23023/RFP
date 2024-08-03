@@ -1,0 +1,37 @@
+For example, suppose:
+
+Tenants ten1 and ten2 both use the network named net1 for data access.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+372/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Tenant ten1 and its namespace ns1 are in a replication link that is failed over from system A to system B. Tenant ten2 and its namespace ns2 are not in the failed-over replication link. Client requests for access to ns1 on system A, where the request URL specifies the name of the domain associated with net1, are redirected to system B. Because they come in on the same network, client requests for access to ns2 on system A, where the request URL specifies the domain name, are also redirected to the system B and, therefore, fail. For those requests to succeed, they need to access system A by using an IP address assigned to a node in net1 on that system instead of by using the domain name.
+
+The same consideration applies to access to other HCP interfaces. For example, if the data access network for a tenant in a link that’s failed over from system A to system B is [hcp_system], you need to use an IP address to access the HCP System Management Console on system A. DNS failover also affects replication between the failed-over system and any other system with which that system participates in a replication link. If the other system identifies the failed-over system by domain name, all replication activity on the link between the two systems stops. Attention:
+
+DNS failover affects all the tenants on an HCP cluster. For DNS failover to succeed, all Active-Active and Active-Passive links must fail over to the target system. If the HCP cluster has tenants that are not part of a replication link, or if the tenant is on a replication link that has not failed over, write requests to the tenant and read requests from the tenant fail if the domain name is used in the request. Requests will succeed if the request includes the IP address of the primary cluster instead of the domain name.
+
+Enabling or disabling DNS failover
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, take either of these actions: To enable DNS failover, select Enable DNS failover to other systems in the replication topology. To disable DNS failover, deselect Enable DNS failover to other systems in the replication topology. 4. Click Update Settings.
+
+Alternatives to DNS failover
+
+DNS failover is an HCP-specific method for automatically managing service by remote systems. With active/active replication, other options exist:
+
+In an environment in which load balancers are used to spread client requests among multiple HCP systems, if one of the systems fails, the load balancers can ensure that the requests go to other systems. In a cloud storage environment, the networking and DNS infrastructure can be configured to support multiple HCP systems that use the same domain names. In this configuration, client requests are normally handled by the local DNS, but if an HCP system fails, the request can be passed on to another DNS that’s local to another HCP system. Managing the Replication Verification service
+
+You can set the Replication Verification service to run once or to run continuously, or you can disable the service so that it doesn't run at all.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, take one of these actions:
+
+To run the Replication Verification service once, select Run Replication Verification service. Then select Run once. To run the Replication Verification service continuously, select Run Replication Verification service. Then select Run continuously. To disable the Replication Verification service, deselect Run Replication Verification service.
+
+4. Click Update Settings.
+
+Changing link connectivity failure reporting In the HCP System Management Console, you can set how long you want the HCP system to wait after a failed replication link connection before reporting the link connectivity failure.

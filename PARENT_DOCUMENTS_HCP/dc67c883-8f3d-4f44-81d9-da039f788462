@@ -1,0 +1,55 @@
+Enabling or disabling XML checking for custom metadata
+
+When you create a namespace, custom metadata XML checking is enabled. You can change this setting at any time.
+
+To view the custom metadata XML checking setting for a namespace, you need the monitor or administrator role. To change the custom metadata XML checking setting for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Metadata. 5. In the Metadata panel, take one of these actions:
+
+To enable custom metadata XML checking, select Check on ingestion that XML in custom metadata files is well-formed. To disable custom metadata XML checking, deselect Check on ingestion that XML in custom metadata files is well-formed.
+
+6. Click Update Settings.
+
+Configuring object versioning
+
+When you create a namespace, you specify whether versioning is enabled or disabled for it. Once the namespace exists, you can change this setting at any time except while the
+
+WebDAV, CIFS, NFS, or SMTP protocol is enabled for the namespace.
+
+If a tenant is not allowed to create namespaces with versioning enabled, the versioning setting is not available for its namespaces. When you enable versioning, you can also enable version pruning. If versioning has ever been enabled for a namespace, you can change the pruning settings for the namespace at any time regardless of whether versioning is currently enabled.
+
+Tip: To immediately remove old versions of objects, set the number of days to keep them to zero.
+
+HCP maintains a transaction log in which it records create, delete, purge, prune, and disposition operations performed on objects. HCP uses this log to respond to operation-based queries issued through the metadata query API.
+
+For any given namespace, you can choose whether HCP should keep records of deletion operations (delete, purge, prune, and disposition) if the namespace has ever had versioning enabled. The amount of time for which HCP keeps deletion records is determined by the system configuration. In a namespace that was replicated but is not currently selected for replication, the following sequence of actions can cause objects that were deleted to reappear:
+
+1. You deselect the option to keep records of deletion operations. 2. You reselect the namespace for replication.
+
+To view the versioning settings for a namespace, you need the monitor or administrator role. To change the versioning settings for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Versioning. 5. In the Versioning panel:
+
+To enable or disable versioning, select or deselect the Enable versioning option, respectively. To enable or disable version pruning, select or deselect the Prune versions older than ... days option, respectively. If you select this option, in the option field, type the number of days old versions of objects must remain in the namespace before they are pruned. Valid values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+This option is available only if you select the Enable versioning option or if versioning has ever been enabled.
+
+To keep or not keep deletion records, select or deselect the Keep deletion records for versioned objects option, respectively.
+
+6. Click Update Settings.
+
+If the version pruning option is unselected, a confirming message appears.
+
+7. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 8. Click Update Settings.
+
+Changing the compatibility setting
+
+When you create a namespace, atime synchronization is disabled. You can change this setting at any time. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+279/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+To view the compatibility setting for a namespace, you need the monitor or administrator role. To change the compatibility setting, you need the administrator role.

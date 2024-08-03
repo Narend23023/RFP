@@ -1,0 +1,55 @@
+Retrieving and listing versions
+
+When you retrieve an object from a namespace that supports versioning, you get the current version by default. You can retrieve an older version of the object by specifying a version ID or ingest time. You can also retrieve multiple object versions by specifying a range of version IDs. To determine the ID to use, you can retrieve an XML listing of the available versions of the object. When you list versions, the list includes the system metadata values for each version. You can retrieve the system metadata for an individual version by specifying the version ID in the command that checks for object existence. You can retrieve both the custom metadata and system metadata for an individual version by specifying the version ID in the command that retrieves custom metadata. You can retrieve the ACL for an individual version by specifying the version ID in the command that retrieves an ACL.
+
+Deleting objects with versioning enabled
+
+If you delete an object while versioning is enabled, HCP:
+
+Retains a copy of the deleted object as an old version. Creates a special version, called delete marker or delete record as the current version to indicate that the object has been deleted. This version has a version ID but does not include any object data or metadata. After you delete an object, any attempt to retrieve the object without specifying the version ID of an old version results in an HTTP 404 (Not Found) error code.
+
+HCP keeps all old versions of a deleted object until pruned or is purged. If shredding is enabled on a version, HCP shreds the version when it is pruned or purged.
+
+Because HCP keeps deleted objects as old versions, you can retrieve an accidentally deleted object if HCP has not yet pruned it. To do so, request the object, specifying the version ID of the version you want. You can restore the deleted object by storing the retrieved version as a new version.
+
+Note: When you restore a deleted object, the new version gets the default metadata values for the namespace (unless you explicitly override them). The new version does not inherit the system metadata, custom metadata, or ACL from the delete marker or any old version of the object. When you list the versions of an object that has been deleted and restored, the returned XML for delete marker or delete record identifies the version state as deleted, contains the date and time the object was deleted, and contains the version ID for the delete marker or delete record. The remaining XML contains information about the object that was deleted.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+704/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Purging objects
+
+You cannot delete specific old versions of an object, but if you have purge permission, you can purge the object to delete all its versions.
+
+If the current version of an object is under retention, you cannot purge the object. However, if you have both purge and privileged permissions, you can perform a privileged purge to delete all versions of the object. Custom metadata
+
+Custom metadata is user-supplied descriptive information about an object. Custom metadata is specified as annotations, where each annotation is a discrete unit of information about the object.
+
+You can add, replace, or delete an annotation in its entirety. You cannot modify it in place.
+
+Each object can have zero or more annotations, including a special one named default.
+
+Annotations let you compartmentalize custom metadata by logical units, such as organization or application. They can also help prevent collisions between two users or applications trying to update custom metadata at the same time. You can create an annotation that has no content. Each annotation has a name. The default annotation can be created or accessed without specifying a name or by using the name default. Annotation names must be one through 32 characters long. They must contain at least one alphanumeric character and can contain periods (.), underscores (_), and hyphens (-). Annotation names are case sensitive.
+
+Annotations are typically specified in XML format, but this is not necessarily required. The namespace configuration determines whether HCP checks that annotations are well- formed XML. While checking is enabled, if you try to store an annotation that is not well-formed XML, HCP rejects it.
+
+The following list shows limits that apply to custom metadata. Maximum number of annotations per object
+
+10
+
+Maximum annotation size
+
+1 GB
+
+Largest annotation that HCP indexes
+
+1 MB
+
+Largest nondefault annotation that HCP checks for well-formed XML
+
+1 MB

@@ -1,0 +1,91 @@
+Working with objects and versions
+
+With the REST API, you can perform operations on individual objects. If the namespace you are using is configured to allow versioning, you can also store multiple versions of an object. You can use this technique, for example, to preserve multiple states of a file that changes over time.
+
+Storing an object or version of an object
+
+You use the HTTP PUT method to store an object or new version of an existing object in a namespace. You can optionally use this method to store the object or version data and custom metadata in a single operation.
+
+To store versions, the namespace must be configured to allow versioning. When versioning is enabled, storing an object with the same name as an existing object creates a new version of the object.
+
+You can store new versions of any object, including multipart objects created by using the multipart upload feature of the S3-compatible API, as long as the object is not under
+
+retention or on hold. You cannot store new versions of an object that is under retention or on hold.
+
+By default, a new object inherits several metadata values from namespace configuration settings. A new version of an object inherits the metadata values of the previous version of the object. In either case, you can override this default metadata when you store the object or version.
+
+Tip: To store very large objects, use the S3-compatible API. With the S3 compatible API, you can break up the data for an object into multiple parts and upload the parts to HCP individually. The process of creating an object by uploading the data in parts is called multipart upload. The result of a multipart upload is a single object that behaves in the same way as objects for which all the data was stored by means of a single PUT object request.
+
+Access permission
+
+To store an object in a namespace, you need write permission for the namespace.
+
+To store a version of an object in a namespace, you need write permission for the object or namespace.
+
+Request header PUT /rest/directory/file?type=whole-object&annotaton=annotation_location HTTP/1.1
+
+The PUT request to store an object or version has these elements:
+
+If you are accessing the namespace as an authenticated user, an Authorization header A URL specifying the location in which to store the object
+
+A body containing the fixed-content data to be stored in the namespace
+
+You can use a single request to store object data and a single annotation. To do this, the request body must contain the fixed-content data to be stored, followed by the annotation
+
+content, with no delimiter between them. Additionally, specify the request elements in the next table. Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+No
+
+Use the value whole-object to retrieve a single object or version data.
+
+annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter. Response headers
+
+The list below describes request-specific HTTP response headers returned by a successful request.
+
+ETag
+
+The ETag of the object or version enclosed in double quotation marks ("). This header is returned only if the object has an ETag.
+
+X-HCP-CustomMetadata Hash
+
+The cryptographic hash algorithm HCP uses and the cryptographic hash value of the stored annotation, in this format: X-HCP-CustomMetadataHash: hash-algorithm hash-value
+
+You can use the returned hash value to verify that the content of the stored annotation is the same as the annotation content you sent. To do this, compare this value with a
+
+hash value that you generate from the original annotation content.
+
+This header is returned only if the request contains both data and custom metadata. X-HCP-Hash
+
+The cryptographic hash algorithm HCP uses, along with the cryptographic hash value stored for the object, in this format:
+
+X-HCP-Hash: hash-algorithmhash-value
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+715/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

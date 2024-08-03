@@ -1,0 +1,143 @@
+{} Request object body contents
+
+The following sections describe the entries in an object-based metadata query API request body.
+
+Top-level entry
+
+XML has a single top-level queryRequest entry. JSON has a corresponding unnamed top-level entry. All request bodies must contain this entry.
+
+object entry
+
+The object entry is required for object-based requests. It must contain the query entry and can contain any combination of the other entries listed in the table below. Entry
+
+Valid values
+
+Description
+
+query
+
+A query expression
+
+Specifies the query criteria. This entry is required.
+
+content
+
+One of:
+
+Returns information about the content properties available for use in queries.
+
+Properties
+
+true
+
+The default is false.
+
+Return information for all content
+
+properties.
+
+To return only content properties, specify a count entry with a value of 0. false
+
+Do not return any information on
+
+content properties.
+
+count
+
+One of:
+
+Specifies the maximum number of results to return.
+
+1, to request all results
+
+If you omit this entry, HCP returns a maximum of one hundred results.
+
+0, to request a response that includes only the object count and,
+
+if requested, content properties and facets. An integer between one and 10,000
+
+HCP responds significantly faster to a request for all results when the request is for basic information only (that is, the value of the verbose entry is (or defaults to) false and the objectProperties entry is omitted). Additionally, a request for all results that includes the verbose entry with a value of true or that includes the objectProperties entry may not return all the expected results due to a connection timeout.
+
+facets
+
+A comma-separated list of zero or more of: Requests summary information for the returned values of the specified object properties.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+838/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Entry
+
+Valid values
+
+Description
+
+hold namespace
+
+The values for this entry are case sensitive. retention retentionClass
+
+content-property-name
+
+A comma-separated list of object
+
+object
+
+properties
+
+Requests specific object properties to return for each object entry in the query results.
+
+Properties
+
+All object entries include the operation, version, urlName, and changeTimeMillisec onds properties, so you don’t need to specify them in this property.
+
+If you specify this property, any verbose property is ignored. offset
+
+An integer between zero and 100,000
+
+Skips the specified number of object entries in the complete result set. Specify this entry
+
+when you’re performing a paged query.
+
+The default is zero.
+
+sort
+
+A comma-separated list of object
+
+Specifies the sort order for object entries in the result set. properties and content properties with optional sort-order indicators
+
+verbose
+
+One of:
+
+Specifies whether to return complete metadata for each object in the result set (true) or only the object URL, version ID, operation type, and change time.
+
+true
+
+Return all object properties.
+
+The default is false. false
+
+Return only the object URL, version
+
+ID, operation, and change time.
+
+If the request body contains both this property and the objectProperties property, this property is ignored.
+
+sort entry
+
+You use the sort entry to specify the order in which object-based query results are listed. The entry contains a comma-separated list of properties and a sort-order indicator, in this format: object-property[+(asc|desc)][,.object-property[+(asc|desc)]]...
+
+asc means sort in ascending order. desc means sort in descending order. The default is asc.
+
+Sort order
+
+Objects are sorted by properties in the order in which the properties are listed in the sort entry. For example, to sort query results in ascending order based on namespace name and descending order based on size within each namespace, specify this entry: <sort>namespace+asc,size+desc</sort>
+
+If you omit the sort entry, the query results are listed in order of relevance to the query criteria.
+
+Sorting on content properties

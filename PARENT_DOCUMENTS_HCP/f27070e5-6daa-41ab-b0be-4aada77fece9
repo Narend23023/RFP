@@ -1,0 +1,49 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If link AB no longer exists on A, follow the steps for option one or option two below.
+
+Option one:
+
+a. On system B, update the configuration of the automatically recreated link AB to include the IP addresses or hostname for system A. b. On system B, restore link AB. c. On system A, accept the restored link. d. On system B, begin and complete data recovery on link AB.
+
+When data recovery is complete, T1 and D1 are read-write on A and read-only on B and C, and replication restarts on link AB. Option two:
+
+a. On system B, suspend and then delete link AB.
+
+T1 and D1 become directly included on link BC, which still includes T2, and become read-write on B.
+
+b. Optionally, create a new replication chain B > C > A:
+
+i. Reinstall HCP on A. ii. On system C, create outbound link CA, including link BC as an inbound link. iii. On system A, accept the new link.
+
+c. T1, D1, and T2 are read-write on B and read-only on C and A, and replication starts on link CA. Scenario: Systems A and C fail
+
+To return to normal operation after systems A and C fail:
+
+1. On system B, fail link AB over to B.
+
+T1 and D1 become read-write on B. T2 remains read-write on B.
+
+2. When system C becomes available again, on system B, restore link BC. 3. On system C, accept the restored link.
+
+T1, D1, and T2 are read-write on B and read-only on C, and replication restarts on link BC.
+
+4. When system A becomes available again, on system B, restore link AB. 5. On system A, accept the restored link. 6. On system B, begin and complete data recovery on link AB.
+
+When data recovery is complete, T1 and D1 become read-write on A and read-only on B, and replication resumes on link AB. Scenario: Systems B and C fail
+
+To return to normal operation after systems B and C fail:
+
+1. When system B becomes available again, on system A, restore link AB. 2. On system B, accept the restored link. T1 and D1 are read-write on A and read-only on B, and replication restarts.
+
+3. When system C becomes available again, if T1 and D1 still exist on system C, delete them. This requires that all objects in the namespaces owned by T1 and in D1 be deleted first. Note: If T2 still exists on systems B and C, delete it from C. If T2 still exists on system C and not on system B, you can recover it to B by creating a link from C to B. However, you cannot then replicate T2 from B to C unless you first delete it from C.
+
+4. On system B, create outbound link BC, including link AB as an inbound link. If T2 still exists on B, also include T2 in the link. 5. On system C, accept the new link. T1 and D1 are read-only on B and C. If T2 is on link BC, T2 is read-write on B and read-only on C. Replication restarts on link BC. Failover and failback in an active/passive one-to-many topology
+
+In an active/passive one-to many replication topology, one HCP system replicates to two or more other systems.
+
+If one of the replicas fails, you follow the normal pattern for recovering from a replica failure. If more than one replica fails, you follow the normal recovery pattern for each replication link individually. The order in which you perform the recovery procedures doesn’t matter.
+
+Throughout these failure scenarios, the HCP tenants and namespaces and default-namespace directories on each link remain read-write on the primary system and read-only on the replicas. Therefore, even if the links include the same items, no conflicts can occur.

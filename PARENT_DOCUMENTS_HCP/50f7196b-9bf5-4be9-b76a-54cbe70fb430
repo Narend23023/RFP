@@ -1,0 +1,87 @@
+If you don’t want to secure communication, skip Step 1.
+
+To create SSL certificates for communication between HCP and AD, you need to create a certificate on every domain controller that communicates with HCP.
+
+To create the SSL certificate, do the following:
+
+1. (Optional) Create the SSL certificate.
+
+a. On the Windows server, click Start. b. In the Search programs and files field, enter: mmc The Console1 - [Console Root] window opens. c. On the File menu, select Add/Remove Snap-in.
+
+The Add or Remove Snap-ins window opens.
+
+d. In the Available snap-ins list, select Certificates, then click Add.
+
+The Certificates snap-in window opens.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+217/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help e. Select Computer account, then click Next.
+
+The Select Computer window opens.
+
+f. Click Finish.
+
+Certificates (Local Computer) appears in the Selected snap-ins list in the Add or Remove Snap-ins window.
+
+g. Click OK. h. In the tree view in the left panel of the Console1 - [Console Root] window, expand Certificates (Local Computer) > Personal, then select Certificates.
+
+The middle panel in the window lists information about the CA root certificate.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+218/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: The CA root certificate is only shown on the Domain Controller where the CA service is installed. i. On the Action menu, select All Tasks > Request New Certificate.
+
+The Certificate Enrollment window opens.
+
+j. Click Next.
+
+The Select Certificate Enrollment Policy page appears.
+
+k. Click Next.
+
+The Request Certificates page appears.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+219/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+l. Select Domain Controller. Then click Enroll. The Certificates Installation Results page appears.
+
+m. Click Finish.
+
+The Certificates list now includes the SSL certificate for LDAP communication.
+
+The value in the Issued To column for this certificate is the concatenation of the computer name and the FQDN of the AD domain (for example, WIN-AD- SERVER.example.local).
+
+2. (Optional) Export the SSL certificate.
+
+If you are securing communication between HCP and AD, you must export the SSL root certificate of the CA that you created in Create the SSL certificate so that you can upload it to HCP. If you did not create an SSL certificate, skip this step. a. 1.On the Windows server running the AD CA, click Start. b. In the Search programs and files field, enter: cmd A Windows command prompt window opens.
+
+c. Change to the directory to which you want to write the file containing the exported certificate. d. Enter the following command to export the certificate:
+
+certutil -ca.cert cert-name.cer
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+220/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this command, cert-name is the name (minus the .cer extension) of the file that will contain the exported certificate. If the export is successful, the window displays the contents of the certificate followed by this message:
+
+CertUtil: -ca.cert command complete successfully. If you don’t see this message, make sure the applicable AD domain has a domain controller that is configured with the CA role and that you ran this command on the domain controller that has the CA role installed.

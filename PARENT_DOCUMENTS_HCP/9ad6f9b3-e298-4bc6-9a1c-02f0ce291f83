@@ -1,0 +1,45 @@
+190/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For more information about the diagnostic commands that you can execute from the Appliance Diagnostics menu, see the man pages for the commands on a Linux system.
+
+ping
+
+The ping command pings a device that you identify by IP address or fully qualified domain name (FQDN). You might run this diagnostic, for example, to determine whether the node you’re on can communicate with a specific DNS server, external time server, or external storage device. The ping command pings the specified device 10 times, displaying the result of the ping each time. However, if the device is unreachable, the command displays only the summary of the ping attempts after the 10 tries.
+
+To execute the ping command:
+
+1. From the Appliance Diagnostics menu, enter 1. A prompt for an IP address or FQDN appears.
+
+This command tries to ping (count=10) an address or FQDN. Please enter the address or FQDN:
+
+2. Enter the target device IP address or FQDN.
+
+The results of the ping command are displayed on the screen.
+
+3. After viewing the display, press Enter to return to the Appliance Diagnostics menu.
+
+The following is a sample response to the ping command:
+
+Pinging 172.20.33.40... PING 172.20.33.40 (172.20.33.40) 56(84) bytes of data. 64 bytes from 172.20.33.40: icmp_req=1 ttl=63 time=0.331 ms 64 bytes from 172.20.33.40: icmp_req=2 ttl=63 time=0.443 ms 64 bytes from 172.20.33.40: icmp_req=3 ttl=63 time=1.93 ms 64 bytes from 172.20.33.40: icmp_req=4 ttl=63 time=2.20 ms
+
+64 bytes from 172.20.33.40: icmp_req=5 ttl=63 time=3.23 ms 64 bytes from 172.20.33.40: icmp_req=6 ttl=63 time=5.28 ms 64 bytes from 172.20.33.40: icmp_req=7 ttl=63 time=0.247 ms 64 bytes from 172.20.33.40: icmp_req=8 ttl=63 time=0.254 ms 64 bytes from 172.20.33.40: icmp_req=9 ttl=63 time=2.87 ms 64 bytes from 172.20.33.40: icmp_req=10 ttl=63 time=4.38 ms
+
+--- 172.20.33.40 ping statistics --- 10 packets transmitted, 10 received, 0% packet loss, time 9008ms
+
+Rtt min/avg/max/mdev = 0.247/2.120/5.287/1.732 ms traceroute
+
+The traceroute command displays the network path through which the node you’re on communicates with a device that you identify by IP address or FQDN. You might run this diagnostic, for example, if communication between the node and another device, such as a DNS server, is taking longer than expected.
+
+For each pair of points in the network path, the traceroute command displays the round-trip time between the two points for each of three probes. You can use this information, for example, to determine whether the network topology is configured correctly.
+
+To execute the traceroute command:
+
+1. From the Appliance Diagnostics menu, enter 2. A prompt for an IP address or FQDN appears.
+
+This command tries to trace routing to an address or FQDN. Please enter the address or FQDN: 2. Enter the target device IP address or FQDN. The results of the traceroute command are displayed on the screen. 3. After viewing the display, press Enter to return to the Appliance Diagnostics menu. The following is a sample response to the traceroute command:
+
+Traceroute to 192.168.100.45 (192.168.100.45), 30 hops max, 60 byte packets 1 172.20.43.253 (172.20.43.253) 0.286 ms 0.368 ms 0.425 ms

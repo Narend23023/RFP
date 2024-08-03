@@ -1,0 +1,91 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+401/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+POST /mapi/healthCheckReport/download HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.1.0 Content-Length: 575
+
+Example: Retrieving the health check reports download status
+
+Here is a sample GET request that retrieves the health check reports download status. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -b hcp-api-auth="HCP ZGVa3b9c17d52107f34fhdb83c7a5" https://admin.hcp.example.com:9090/mapi/healthCheckReport?prettyprint
+
+Request headers
+
+GET /mapi/healthCheckReport HTTP/1.1
+
+Host: admin.hcp.example.com:9090 Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5
+
+Response headers HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.2.27 Content-Length: 383
+
+Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <healthCheckDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <error>false</error>
+
+<started>true</started> <content>HCR</content> </healthCheckDownloadStatus>
+
+Example: Canceling the health check reports
+
+Here is a sample POST request that cancels the health check reports download. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -X POST -k -b hcp-api-auth="HCP ZGVa3b9c17d52107f34fhdb83c7a5" -H "Accept: application/xml" https://admin.hcp.example.com:9090/mapi/healthCheckReport?cancel
+
+Request headers
+
+POST /mapi/healthCheckReport?cancel HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5 Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.1.0
+
+Content-Length: 0
+
+License resources
+
+License resources let you upload a license key and retrieve the current license or a list of the current and past licenses.
+
+.../storage/licenses
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+Licenses GET
+
+Retrieve either the current storage license or a list of the current and past storage licenses System-level user account with the monitor or administrator role
+
+HCP does not return information about licensing of S Series storage.
+
+To display the list of current and past storage licenses, use the verbose query parameter.
+
+N/A
+
+PUT
+
+Upload a new storage license
+
+System-level user account with the administrator role
+
+With the PUT request, you need to supply a the license text key string.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+402/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Retrieving a premium storage license list
+
+Here is a sample GET request that retrieves the current premium storage license information. The request is made using a system-level user account that includes the administrator role. Request with cURL command line

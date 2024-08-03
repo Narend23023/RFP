@@ -1,0 +1,95 @@
+Requests to upload parts for the multipart upload
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+640/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Requests to upload parts for the multipart upload by copying Requests to complete the multipart upload Requests to abort the multipart upload Requests to list the parts that have been uploaded for the multipart upload Responses to requests to list in-progress multipart uploads Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to initiate a multipart upload.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully initiated the multipart upload.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+The specified object name is too long.
+
+An ACL grant header specifies an invalid grantee.
+
+403 Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can initiate a multipart upload. The credentials provided with the request are invalid. You do not have permission to initiate multipart uploads in the specified bucket. The specified bucket does not support multipart uploads.
+
+The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+The request includes the x-amz-acl header with an invalid value.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Initiating a multipart upload
+
+Here’s a sample POST request that initiates a multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --post -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf?uploads" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+POST /acctg/RulesAndRegulations.pdf?uploads HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:u0eqPDwPw1SR7kdZn87dnGACzaM= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-server-side-encryption: None x-amz-abort-date: Sat, 25 Mar 2017 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <InitiateMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Bucket>finance</Bucket> <Key>acctg/RulesAndRegulations.pdf</Key> <UploadId>94837746087105</UploadId> </InitiateMultipartUploadResult>
+
+Uploading a part of a multipart upload
+
+You use the HTTP PUT method with the uploadId and partNumber query parameters to upload a part of a multipart upload. The bucket where you upload the part must be the same bucket as the one where the multipart upload was initiated.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+641/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

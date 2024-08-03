@@ -1,0 +1,43 @@
+The Migration service reports the progress of the HCP S Series or extended storage retirement on the Storage > Retirement page. You can refresh this page at any time to
+
+view the current status of the HCP S Series or extended storage pool, component, or volume retirement.
+
+If you’re retiring HCP S Series or extended storage that has data on it, you can use the Storage > Retirement page to manage the Migration service throughout the entire data migration process. At any time during the migration, you can click Retirement Settings to display the controls that you can use to change the performance level of the migration, pause and resume the migration as needed, or cancel the migration (and the retirement). You can also use the applicable field in the Retirement Settings section to modify the retirement description at any time (for example, to record when and how long the data migration was paused). About service plans
+
+Each namespace has a service plan that defines both a storage tiering strategy and a data protection strategy for the objects in that namespace. At any given point in the lifecycle of an object, its storage tiering strategy specifies the types of storage on which copies of that object must be stored, and its data protection strategy specifies the number of object
+
+copies that must be stored on each type of storage.
+
+For the purposes of storage tiering and data protection, HCP treats these as individual objects:
+
+Parts of multipart objects Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects The service plan for a given namespace defines one or more tiers of storage that can be used to store objects in that namespace. For each object in the namespace, at any given point in the object lifecycle, the service plan specifies the criteria that determine which storage tiers must be used to store copies of that object and the number of copies of that
+
+object that must be stored on each tier.
+
+Primary running storage is designed to provide both high data availability and high performance for object data storage and retrieval operations. To optimize data storage
+
+price/performance for the objects in a namespace, you can configure the service plan for that namespace to define S Series storage as the ingest tier or create a storage tiering strategy that specifies multiple storage tiers.
+
+By default, HCP stores every object on primary running storage, so every service plan automatically defines primary running storage as the initial storage tier, called the ingest tier. If the HCP system is using HCP S Series storage, this storage can be used as the ingest tier instead of primary running storage. This causes object data to be written directly to the S Series Nodes. Even if you set HCP S Series storage as the ingest tier, metadata is stored on primary running storage.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+58/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Storage tiers
+
+The service plan for a given namespace defines one or more storage tiers for that namespace. For each storage tier, the service plan specifies the data protection level (DPL) and the primary running storage metadata protection level (MPL) for each storage tier:
+
+The DPL for a given storage tier is the number of copies of the object data that HCP must maintain for each object that’s stored on that tier. The MPL for a given storage tier is the number of copies of the object metadata that HCP must maintain on primary running storage for each object that’s stored on the tier.
+
+For any given storage tier, the primary running storage MPL must be equal to or greater than the DPL.
+
+Note: For the purpose of storage tiering, HCP treats parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects.
+
+Every service plan initially defines primary running storage as the initial storage tier, called the ingest tier, and specifies a DPL setting and an MPL setting for that tier. If the HCP system is using HCP S Series storage, you can define HCP S Series storage as a service plan ingest tier to be used as an alternative to primary running storage. If an HCP S Series pool, or pools, is selected as the ingest tier, DPL copies of objects are written directly to HCP S Series storage. MPL copies of object metadata are written to primary running storage.
+
+Tiering objects that are subject to erasure coding

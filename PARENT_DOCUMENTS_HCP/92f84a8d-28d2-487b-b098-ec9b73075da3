@@ -1,0 +1,105 @@
+You can change the namespace name any time after you create the namespace, except while the S3 compatible, CIFS, or NFS protocol is enabled for the namespace. However, when you change the name, the URL for the namespace may change as well.
+
+Namespace names cannot contain special characters other than hyphens and are not case sensitive. White space is not allowed. Namespace names cannot start with xn-- (that is, the
+
+characters x and n followed by two hyphens).
+
+Namespace names must be unique for the owning tenant. Different tenants can have namespaces with the same name.
+
+You can reuse namespace names that are not currently
+
+in use. So, for example, if you delete a namespace, you can give a new namespace the same name as the one the deleted namespace had.
+
+The name of the default namespace is always Default.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+482/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+optimizedFor
+
+String
+
+For an HCP namespace, specifies whether the namespace is optimized for cloud protocols only or optimized for all namespace access protocols. Valid values are: CLOUD
+
+This property is optional on a PUT request.
+
+You can set this property to ALL on a POST request only if the namespace already does not allow erasure coding or the allowErasureCoding property is set to false in the same request.
+
+Optimizes the namespace for cloud protocols only
+
+This property is not valid for the default namespace ALL
+
+Optimizes the namespace for all namespace access protocols
+
+The default is specified by the namespace defaults for the tenant.
+
+These values are not case sensitive.
+
+owner String
+
+For an HCP namespace, specifies the namespace owner. Valid values are:
+
+This property is optional on a PUT request.
+
+If the owner has an HCP user account, the
+
+If this property is included on a PUT or POST request with a value that identifies an AD user account, the
+
+username for that account. If the owner has an AD user account, the account username along with the name of the AD domain in which the account is defined, in this format: username@ad-domain-name
+
+If the namespace doesn’t have an owner, this property has no value.
+
+request must also include the ownerType property with a value of EXTERNAL.
+
+In response to a GET request, if the owner is an AD user and HCP cannot communicate with AD or cannot find the user account in AD, the value of this property is the security ID (SID) for the AD user account.
+
+This property is not valid for the default namespace. ownerType
+
+String
+
+For an HCP namespace, specifies the type of the user account that identifies the object owner. Valid values are:
+
+This property is optional on a PUT request.
+
+LOCAL
+
+The user account is defined in HCP.
+
+You can specify a value for this property on a PUT or POST request only if you specify a value for the owner property in the same request. EXTERNAL
+
+The user account is defined in AD.
+
+This property is not valid for the default namespace.
+
+The default is LOCAL.
+
+These values are not case sensitive.
+
+If the namespace doesn’t have an owner, this property has no value.
+
+readFromReplica Boolean
+
+Specifies whether read from replica is enabled for the namespace.
+
+Valid values are:
+
+true — Read from replica is enabled.
+
+This property is optional on a PUT request. You can set the value of this property to true on a PUT request only if, for an HCP namespace, the replicationEnabled property is set to true in the same request or, for the default namespace, the HCP system supports replication.
+
+false — Read from replica is disabled.
+
+On a PUT request, the default is true if replicationEnabled is set to true in the same request; otherwise, the default is false.

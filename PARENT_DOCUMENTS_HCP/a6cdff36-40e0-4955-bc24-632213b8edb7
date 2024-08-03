@@ -1,0 +1,77 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=2088
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Property</td>
+      <td>Data type</td>
+      <td>Description</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>replicationTimestamp</td>
+      <td>String</td>
+      <td>Specifies the oldest change time for objects and\nconfiguration changes not yet replicated or recovered\nfrom the namespace, as applicable, in this format:\nyyyy-MM-ddThh:mm:ssZ\nrepresents the offset from UTC, in this format: Z\n(+|-)hhmm\nFor example:\n2012-02-27T14:32:19-0500</td>
+      <td>This property is not valid on a or request. It is PUT POST\nreturned only by a verbose request and only when GET\nthese conditions are true:\n•The namespace is selected for replication.\n•The tenant that owns the namespace is included in a\nreplication link.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>retentionType</td>
+      <td>String</td>
+      <td>Specifies the retention type to be applied to all objects in\nthe namespace. Valid values are:\nHCP\nHCP retention type\nS3\nS3 Object Lock\nDefault value is HCP retention.</td>
+      <td>When you set the retentionType to S3 Object Lock in a\nMAPI request for a namespace, versioning, delete\nmarkers, and cloud-optimized protocols are\nautomatically enabled. You do not need to set these\nparameters explicitly.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>s3UnversionedOverwrite</td>
+      <td>Boolean</td>
+      <td>Specifies whether object overwrite is enabled for the\nnamespace. Valid values are:\ntrue\nObject overwrite is enabled.\nfalse\nObject overwrite is disabled.\nThe default is false.</td>
+      <td>You can set the value of this property to either or true f\nHowever, if you enable versioning for the alse.\nnamespace, changing the value will not have any effect.\nThis property applies only to the requests made through\nHitachi API for Amazon S3.\nOverwriting an object will also overwrite its custom\nmetadata.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>searchEnabled</td>
+      <td>Boolean</td>
+      <td>Specifies whether search is enabled for the namespace.\nValid values are:\ntrue\nSearch is enabled.\nfalse\nSearch is disabled.\nThe default is the search setting specified by the\nnamespace defaults for the tenant.</td>
+      <td>This property is optional on a request. PUT\nYou can set the value of this property to only if the true\nowning tenant is allowed to enable search for its\nnamespaces.\nDisabling search after it has been enabled:\nAutomatically disables indexing for the\nnamespace.\nRemoves objects in the namespace from the\nmetadata query engine index. If you\nsubsequently reenable search for the\nnamespace, the namespace must be reindexed\nfrom scratch.\nDeletes the list of excluded annotations for the\nnamespace.\nDeletes all associations the namespace has with\nany content classes.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>servicePlan</td>
+      <td>String</td>
+      <td>Specifies the service plan associated with the\nnamespace. Valid values are names of existing service\nplans. The default is the service plan specified by the\nnamespace defaults for the tenant.</td>
+      <td>This property is valid on a PUT or POST request and\nreturned by a GET request only if the owning tenant is\nallowed to select service plans for its namespaces. If\nvalid, this property is optional on a PUT request.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>serviceRemoteSystemRequests</td>
+      <td>Boolean</td>
+      <td>Specifies whether HCP can service HTTP-based data\naccess requests against the namespace that are\nredirected from other HCP systems. Valid values are:\ntrue\nHCP can service requests against the\nnamespace that are redirected from other\nsystems.\nfalse\nHCP cannot service requests against the\nnamespace that are redirected from other\nsystems.\nThe default is true.</td>
+      <td>This property is optional on a PUT request.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>softQuota</td>
+      <td>Integer</td>
+      <td>For an HCP namespace, specifies the percentage point\nat which HCP notifies the tenant that free storage space\nfor the namespace is running low. Valid values are\nintegers in the range ten through 95. The default is the\nsoft quota specified by the namespace defaults for the\ntenant.</td>
+      <td>This property is optional on a PUT request.\nThis property is not valid for the default namespace.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

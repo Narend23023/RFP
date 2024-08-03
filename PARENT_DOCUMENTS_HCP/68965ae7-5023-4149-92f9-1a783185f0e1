@@ -1,0 +1,23 @@
+For an active/active link or an outbound active/passive link, in the Remote System section: To enable automatic failover to the other system involved in the link, select Fail over automatically. Then, in the Automatically fail over link after loss of connectivity for field, type the number of minutes HCP should wait before automatically failing over the link after a loss of connectivity to the current system. Valid values are integers in the seven through 9,999. To disable automatic failover to the other system involved in the link, deselect Fail over automatically. For active/passive links only, to enable automatic failback to the current system, select Complete recovery automatically. Then, in the Automatically complete recovery when synchronization is less than field, type the number of minutes the up-to-date-as-of time for the link must be less than before HCP should automatically fail back the link. Valid values are integers in the one through 9,999. For active/passive links only, to disable automatic failback to the current system, deselect Complete recovery automatically.
+
+7. Click Update Settings.
+
+Considerations for deleting a replication link
+
+These considerations apply to deleting replication links: You can delete a replication link in the HCP System Management Console for either system involved in the link. You can delete a replication link only while activity on the link is suspended. When you delete a replication link, replication on that link immediately stops. The HCP tenants and default-namespace directories on the link remain or become read-write on both systems involved in the link. You can delete a replication link that’s included as a chained link in a second replication link. When you do this, the HCP tenants and default-namespace directories that were on the deleted link are automatically included individually in the second link. After deleting an active/passive link, you can no longer replicate the HCP tenants and default-namespace directories included on that link to the same replica on an active/passive link unless you first delete them on the replica. If you don’t delete them, when you create a new active/passive link with the same replica, HCP doesn’t let you include them because they now exist on both systems. If the possibility exists that you will want to replicate those tenants and directories again to the same replica on an active/passive link, you should either pause replication for the individual tenants or suspend activity on the link instead of deleting the link.
+
+After deleting an active/passive link, you can include the HCP tenants and default-namespace directories that were included on the deleted link in a new or existing active/active link. In this case, you do not need to delete those tenants and directories from the system that was the replica for the deleted link. A namespace can contain metadata-only objects on one or more systems in a replication topology. If you delete the only replication link that involves such a system, the data
+
+for those metadata-only objects becomes inaccessible from that system. In this case, to make the data accessible again: If the deleted link was active/active, recreate the link. If the deleted link was active/passive, recreate the link as an active/active link. You cannot delete a replication link that's part of an active or retiring erasure coding topology. You can delete a link that's part of a retired erasure coding topology.
+
+Deleting a replication link
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the replication Links page, click the name of the link you want to delete. 3. On the replication link details page, click Link.
+
+4. In the replication Link panel, click the Management tab. 5. In the Management panel, click Delete Replication Link. 6. In the Delete Replication Link section, click Delete. 7. In response to the confirming message:
+
+If any namespace being replicated on the link contains metadata-only objects on either of the systems involved in the link or if the two systems involved in the link cannot communicate with each other: a. In the field in the message window, type YES. This value is case sensitive. b. Click Delete Link.
+
+If no namespaces being replicated on the link contain metadata-only objects on either of the systems involved in the link and the two systems involved in the link can communicate with each other, click Delete Link.
+
+Working with erasure coding topologies

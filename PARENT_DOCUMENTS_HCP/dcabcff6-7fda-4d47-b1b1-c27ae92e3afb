@@ -1,0 +1,53 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Pausing replication or recovery of a tenant on a link in an erasure coding topology prevents each system involved in the link from sending full copies of object data and chunks for objects in the tenant's namespaces to the other system over that link. Pausing replication or recovery of a tenant, therefore, may prevent newly ingested objects in those namespaces from being protected.
+
+Pausing replication or recovery of a tenant on a link does not prevent full copies of object data in the tenant's namespaces from being reduced to chunks on the systems involved in that link.
+
+The Replication service periodically checkpoints its progress. When you pause replication or recovery of a tenant, no special checkpoint occurs. When you resume processing, therefore, processing starts from the last checkpoint before the pause.
+
+Pausing and resuming tenant replication or recovery 1. In the top-level menu of the HCP System Management Console, select Services > Replication.
+
+2. On the replication Links page, click the link for which you want to pause or resume replication or recovery. 3. On the replication link details page, click Status. 4. In the link Status panel, click the Tenants tab.
+
+5. In the list of tenants, click the pause control (
+
+) or resume control (
+
+), as applicable, for the tenant for which you want to pause or resume activity.
+
+Automatically paused tenant replication or recovery
+
+Certain events can cause the Replication service to automatically pause replication or recovery of a tenant on a replication link. The following sections describe these events. Tip: To avoid situations that can cause the Replication service to automatically pause replication of a tenant, do not try to create the same tenants, namespaces, content classes, user accounts, and group accounts on both of the systems that are replicating to each other on an active/active link. Instead, allow the items you create on each system to replicate to the other system. Tenant name collisions
+
+A tenant name collision occurs when the Replication service tries to replicate an HCP tenant from one HCP system to another HCP system that already has a different tenant with the same name.
+
+To recover from a tenant name collision, take one of these actions:
+
+Rename the tenant on one of the systems involved in the link. Delete the tenant on the receiving system.
+
+Here are two scenarios that show how a tenant name collision can cause the Replication service to pause replication of a tenant. Scenario 1
+
+In this scenario:
+
+System A replicates to system B on link AB. Link AB can be either active/active or active/passive. System A has a tenant named T1 that is not on link AB.
+
+These events occur in the order shown:
+
+1. On system A, you add T1 to link AB. 2. Before T1 is replicated to system B, you create a tenant named T1 on system B. 3. The Replication service tries to replicate T1 to system B. The replication is unsuccessful because a different tenant named T1 already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. Scenario 2
+
+In this scenario:
+
+System A replicates to system B on link AB, which replicates to system C on link BC, where link AB is chained into link BC. Link AB can be either active/active or active/passive. Link BC is active/passive. System A and system C each have a tenant named T1, where T1 was created independently on each system.
+
+These events occur in the order shown:
+
+1. On system A, you add T1 to link AB. 2. T1 is replicated to system B. 3. Because link BC includes link AB, the Replication service tries to replicate T1 to system C. The replication is unsuccessful because a different tenant named T1 already exists on system C. As a result, the service automatically pauses replication of T1 on link BC. Namespace name collisions
+
+Each HCP namespace you create in an HCP system has an internal ID that uniquely identifies that namespace. As a result, two namespaces created on different systems are different from each other, even if they have the same name and are owned by the same tenant.
+
+A namespace name collision occurs when the Replication service tries to replicate a namespace from one system to another system that already has a different namespace with the same name, where both namespaces are owned by the same tenant.
+
+To recover from a namespace name collision, take one of these actions:

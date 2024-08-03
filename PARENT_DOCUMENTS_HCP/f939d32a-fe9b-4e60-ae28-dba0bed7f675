@@ -1,0 +1,61 @@
+Using the Retire Primary Storage wizard to perform a data migration Important: This section describes how to use the Retire Primary Storage wizard to migrate data off one or more primary storage devices, but it does not provide a detailed description of the entire data migration process.
+
+To retire one or more primary storage devices, you can use the Retire Primary Storage wizard on the Retirement panel to specify the devices you want to retire and then configure
+
+and run a data migration to move all the data off the storage devices you want to retire and onto one or more other primary storage devices.
+
+When configuring a data migration on an HCP with internal storage system, you select nodes to be retired. When configuring a data migration on an HCP with SAN-attached storage
+
+system, you can either retire an entire storage system or individual nodes.
+
+You can use the Storage page to perform a data migration in preparation for retiring primary storage.
+
+1. On the left side of the Storage page, click Retirement. 2. On the Retirement panel, click Retire Storage.
+
+The Get Started wizard opens. You use this wizard to select the type of storage you want to retire. After you select a type of storage, the System Management Console
+
+dynamically builds either the Retire Primary Storage wizard or the Retire Extended Storage wizard, depending on the type of storage you selected.
+
+3. In the Get Started wizard, click the arrow and select Primary Storage from the dropdown list. 4. Click Go.
+
+The Get Started wizard exits, and the Retire Primary Storage wizard opens.
+
+5. On the Select page of the Retire Primary Storage wizard, in the Select Hardware for Retirement section, select the HCP with internal storage system storage nodes you want
+
+to retire. If you're retiring an HCP with SAN-attached storage system, either select Retire Entire Array and select the storage systems you want to retire or select Retire Specific Hardware Nodes and select the nodes you want to retire. To clear your selections and start over, click Cancel.
+
+6. Click Next.
+
+The Review page of the Retire Primary Storage wizard opens, displaying step two of the migration configuration process (Review configuration summary and confirm). The
+
+Configuration Summary section on this page in the wizard indicates whether the migration configuration is acceptable.
+
+When you click Next, HCP checks that the system is in a valid state to perform the migration. This includes checking for degraded RAID groups. This check can take
+
+up to 90 seconds. Certain hardware errors, such as a degraded RAID group on a source or target node, prevent you from configuring a data migration. In such cases, you need to fix
+
+the problem before you can continue. If the configuration is not acceptable, you can click view details in the Configuration Summary section to display the specific reasons why. You can also click Configuration Report to download the configuration summary and details to a file. The default name for this file is Configuration-Report.txt.
+
+The Configuration Details section on the Review page in the Retire Primary Storage wizard lists the HCP with internal storage system nodes or the HCP with SAN-attached storage system storage systems that are selected for migration
+
+7. Take one of these actions:
+
+To change the list of selected nodes or storage arrays, click Previous to return to the Select page in the wizard. Use this page to change your selections. Then click Next to return to the Review page in the wizard.
+
+To cancel the migration and exit the wizard, click Cancel.
+
+If the list of selected storage devices is correct, and you want to perform the data migration, continue on to step 8. 8. Optionally, add a description of the data migration and/or change the performance level for the Migration service:
+
+a. To add a description, click Add description.
+
+In the text box that opens, type a description of the migration. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+b. To change the performance level, in the Performance Level field, select Low, Medium, or High. The higher the performance level, the greater the load on the HCP system.
+
+9. Click Finish.
+
+The Migration service begins the data migration process, and the wizard exits. The Migration service reports its progress on the Retirement panel on the Storage page. You can refresh this page at any time to view the current status of the data migration.
+
+If any nodes become unavailable while the Migration service is running, the service stops migrating data. When those nodes become available, the service automatically
+
+starts migrating data again.

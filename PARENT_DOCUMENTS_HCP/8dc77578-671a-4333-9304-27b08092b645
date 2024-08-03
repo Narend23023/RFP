@@ -1,0 +1,55 @@
+A group account collision occurs when the Replication service tries to replicate a group account from one system to another system that already has a different group account
+
+created from the same AD group, where both group accounts are defined for the same tenant.
+
+To recover from a group account collision, delete the group account on either of the systems involved in the link. Here’s a scenario that shows how a group account collision can cause the Replication service to pause replication of a tenant. In this scenario:
+
+System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems.
+
+These events occur in the order shown:
+
+1. On system A, you create an HCP group account for T1 from the AD group named AD1. The name of the group account you create is AD1. 2. Before AD1 is replicated to system B, you create an HCP group account for T1 from the AD group named AD1 on system B. The name of the group account you create is AD1.
+
+3. The Replication service tries to replicate the HCP group account named AD1 to system B. The replication is unsuccessful because a different group account named AD1
+
+already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. Tenant conflicts
+
+A tenant conflict occurs when you add a tenant to an erasure coding topology and that tenant is on one or more replication links where:
+
+The link is not in the topology One or both of the systems involved in the link are in the topology
+
+When a tenant conflict occurs, the Replication service automatically pauses replication or recovery of the tenant on each link that meets the criteria listed above.
+
+To recover from a tenant conflict, take one of these actions:
+
+Remove the tenant from the links on which replication or recovery of the tenant is paused. Remove the tenant from the erasure coding topology. Then resume replication or recovery of the tenant on the applicable links.
+
+Here's a scenario that shows how a tenant conflict can cause the Replication service to pause replication of a tenant. In this scenario:
+
+Erase coding topology ECT1 is a ring topology that consists of: Systems A, B, C, and D Active/active link AB between systems A and B Active/active link BC between systems B and C Active/active link CD between systems C and D Active/active link DA between systems D and A
+
+ECT1 is the active erasure coding topology. Tenant T1 is included in topology ECT1. Therefore, T1 is included on links AB, BC, CD, and DA and exists on systems A, B, C, and D.
+
+These events occur in the order shown:
+
+1. You deploy system E.
+
+2. You retire topology ECT1. 3. You create active/active link BE between systems B and E. 4. You create active/active link CE between systems C and E.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+369/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+5. You create a new topology, ECT2, that consists of systems B, C, and E and links BC, BE, and CE.
+
+6. You add tenant T1 to topology ECT2. 7. All of these occur: T1 is added to links BE and CE and is replicated to system E. The Replication service on system B pauses replication or recovery of T1 on link AB because system B is in topology ECT2 and system A is not The Replication service on system C pauses replication or recovery of T1 on link CD because system C is in topology ECT2 and system D is not
+
+Labeled holds in a replication topology
+
+In a replication topology, when one or more labeled retention holds are placed on an object, there is a small time period when the hold settings will not be synchronized across all clusters. In a healthy replication environment, this time period should be minimal.
+
+Before labeled hold settings are synchronized, the object is not protected from deletion. The object should not be considered on labeled retention hold until all clusters in the replication topology are synchronized.

@@ -1,0 +1,73 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Example: Creating an empty directory
+Here’s a sample HTTP PUT request that creates a new directory named graphics in the quarterly_rpts directory.
+Request with curl command line
+curl -k -iX PUT
+-H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/graphics
+?type=directory"
+Request in Python using PycURL
+import pycurl
+curl = pycurl.Curl()
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+/rest/quarterly_rpts/graphics?type=directory")
+curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+curl.setopt(pycurl.CUSTOMREQUEST, "PUT")
+curl.perform()
+print curl.getinfo(pycurl.RESPONSE_CODE)
+curl.close()
+Request headers
+PUT /rest/quarterly_rpts/graphics?type=directory HTTP/1.1
+Host: finance.europe.hcp.example.com
+Authorizaton: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+Response headers
+HTTP/1.1 201 Created
+X-HCP-ServicedBySystem: hcp.example.com
+Location: /rest/quarterly_rpts/graphics
+Content-Length: 0
+Checking the existence of a directory
+You use the HTTP HEAD method to check whether a directory exists in a namespace.
+Access permission
+To check for directory existence, you need browse permission.
+Request header
+HEAD /rest/directory HTTP/1.1
+The HEAD request to check the existence of a directory has these elements:
+If you’re accessing the namespace as an authenticated user, an Authorization header<br>
+                       <b>Bounding box:</b> x1=185, y1=1974, x2=1516, y2=2124
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>deleted</td>
+      <td>No</td>
+      <td>By default, the GET request to retrieve object versions does not include delete records. To retrieve a listing\nthat includes delete records, specify this URL query parameter:</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

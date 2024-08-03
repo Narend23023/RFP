@@ -1,0 +1,87 @@
+This appendix contains instructions for configuring Windows Internet Explorer® and Mozilla® Firefox® to support single sign-on. Configuring Windows Internet Explorer for single sign-on
+
+Before you set up single sign-on, you need to configure Windows Internet Explorer. The following instructions apply with Windows Internet Explorer 11.
+
+1. Open Internet Explorer. 2. On the Tools menu, click Internet Options.
+
+3. In the Internet Options window, click the Security tab. 4. On the Security page, select Local intranet.
+
+5. Click Sites.
+
+6. In the Local intranet window, ensure that all the options are selected. 7. Click Advanced.
+
+8. In the Add this website to the zone field, take either of these actions:
+
+To enable single sign-on with HTTP, type: http://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com
+
+To enable single sign-on with HTTPS, type:
+
+https://*.hcp-name.domain-name
+
+For example:
+
+https://*.hcp.example.com
+
+9. Click Add. 10. Click Close.
+
+11. In the Local intranet window, click OK. 12. In the Internet Options window, click the Advanced tab.
+
+13. In the Settings list, under Security, select Enable Integrated Windows Authentication. 14. Click OK.
+
+15. Close Internet Explorer. Configuring Mozilla Firefox for single sign-on
+
+1. Open Firefox.
+
+2. In the address field in the Firefox window, enter:
+
+about:config
+
+3. In response to the warning message, click I’ll be careful, I promise!.
+
+4. In the Preference Name list, double-click network.negotiate-auth.delegation-uris. 5. In the Enter string value window, type: http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com,https://*.hcp.example.com
+
+6. Click OK. 7. In the Preference Name list, double-click network.negotiate-auth.trusted-uris. 8. In the Enter string value window, type:
+
+http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+831/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+9. Click OK.
+
+10. Close Firefox. HCP Metadata Query API Reference
+
+Introduction to the HCP metadata query API
+
+The HCP metadata query API is a RESTful HTTP API that lets you query HCP for objects that meet specific criteria. In response to a query, HCP returns metadata for the matching
+
+objects. With the metadata query API, you can query not only for objects currently in the repository but also for information about objects that have been deleted from the repository. About the metadata query API
+
+The HCP metadata query API lets you query namespaces for objects that match criteria you specify. Query criteria can be based on system metadata, custom metadata, ACLs, and
+
+operations performed on objects. The API does not support queries based on object content.
+
+In response to a query, HCP returns metadata for objects that match query criteria. It does not return object data.
+
+The metadata query API supports two types of queries, object-based queries and operation-based queries.
+
+A single query can return metadata for objects in multiple namespaces, including a combination of HCP namespaces and the default namespace. For HCP namespaces that support versioning, operation-based queries can return metadata for both current and old versions of objects.
+
+To support object-based queries, HCP maintains an index of objects in the repository. To access HCP through the metadata query API, you use the HTTP POST method. With this method, you specify query criteria in the request body. In the request body you also specify what information you want in the query results.
+
+The API accepts query criteria in XML or JSON format and can return results in either format. For example, you could use XML to specify the query criteria and request that the
+
+response be JSON.

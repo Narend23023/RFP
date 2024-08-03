@@ -1,0 +1,74 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> In the response to a client request, HCP includes a cookie that contains encoded session information.
+HCP supports two formats for encoding the session cookie:
+RFC2109
+HCP used only this format in releases 5.0 and earlier.
+RFC6265
+HCP has used this format by default in all releases since 5.0.
+You can use the request header to specify the format HCP should use to encode the session cookie. Valid values for this header are RFC2109 and X-HCP-CookieCompatibility
+RFC6265.
+The header is: X-HCP-CookieCompatibility
+Optional and typically not used for RFC6265
+Required for RFC2109
+HTTP status codes for the HCP management API
+This table below explains the possible status codes for HCP management API requests.<br>
+                       <b>Bounding box:</b> x1=185, y1=923, x2=1516, y2=2123
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Methods</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>OK</td>
+      <td>All</td>
+      <td>HCP successfully created, retrieved, checked the existence of, modified, or deleted a\nresource.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>302</td>
+      <td>Found</td>
+      <td>HEAD</td>
+      <td>Either the specified resource does not exist, or the specified resource exists, but the\nuser account identified by the Authorization header or cookie doesn’t hcp-api-auth\nhave permission to access the resource.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>All</td>
+      <td>The request was not valid. These are some, but not all, of the possible reasons:\nThe URL in the request is not well-formed.\nThe request is missing a required query parameter.\nThe request contains a required or optional non-Boolean query parameter with\nan invalid value.\nFor a PUT or POST request, the request body:\nIs missing a required property\nIncludes a property that is invalid for the resource\nHas a property with an invalid value\nContains XML or JSON that is not well-formed\nThe or header in the request specifies a nonexistent Content-Type Accept\nInternet media type.\nIf more information about the error is available, the response headers include the HCP-\nspecific header. X‑HCP-ErrorMessage</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>401</td>
+      <td>Unauthorized</td>
+      <td>All</td>
+      <td>HCP was unable to handle the request. If this happens repeatedly, contact your\nauthorized HCP service provider for help.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>All</td>
+      <td>The requested operation is not allowed. These are some, but not all, of the possible\nreasons:\nThe URL in the request is missing the port number (9090).\nThe request does not include an header or Authorization hcp-ns-auth\ncookie.\nThe header or cookie specifies invalid Authorization hcp-ns-auth\ncredentials.\nThe user account identified by the header or Authorization hcp-api-auth\ncookie is either a system-level account where a tenant-level account is required\nor a tenant-level account where a system-level account is required.\nThe user account identified by the header or Authorization hcp-api-auth\ncookie doesn’t have permission to perform the requested operation.\nFor a or request, the request body includes a property that is valid for PUT POST\nthe resource but that cannot be modified by the requested operation.\nFor a request: DELETE\nFor a namespace, HCP could not delete the namespace because it\ncontains one or more objects.\nFor a user account, HCP could not delete the user account because it is\nthe last locally authenticated, enabled user account with the security role,</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

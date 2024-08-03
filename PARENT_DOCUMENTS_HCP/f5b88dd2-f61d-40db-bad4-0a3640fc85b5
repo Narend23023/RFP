@@ -1,0 +1,31 @@
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:WAamEr9PkL76M/kWkFu5K2rY9Bs= x-amz-copy-source: /finance/hum_res/budget_proposals/BudgProp-2020 x-hcp-retentionhold: true x-amz-metadata-directive: REPLACE x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+624/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.062Z</LastModified> <ETag>"76216527ff2f6219f7c29251a619c8db"</ETag> </CopyObjectResult>
+
+Example: Placing a labeled hold on an object
+
+Here is a sample PUT request that places a labeled hold on an exiting object namedhum_res/budget_proposals/BudgProp-2020 in the finance bucket. The labeled hold is placed on the current version of the object. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/finance/hum_res/budget_proposals/BudgProp-2020 -- -v -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/ BudgProp-2020" -H "x-hcp-retentionhold: true" -H 'x-hcp-labelretentionhold: [{"id":"UniqueLabelHold-1","hold":true}]' -H "x-amz-metadata-directive: REPLACE" -H "x-hcp-pretty-print: true" Request headers
+
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 26 June 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:WAamEr9PkL76M/kWkFu5K2rY9Bs= x-amz-copy-source: /finance/hum_res/budget_proposals/BudgProp-2020 X-HCP-RetentionHold: true X-HCP-LabelRetentionHold: true x-amz-metadata-directive: REPLACE x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 26 June 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2020-06-12T17:19:26.062Z</LastModified> <ETag>"76216527ff2f6219f7c29251a619c8db"</ETag> </CopyObjectResult>
+
+Conditionally copying an object
+
+You can use the x-amz-copy-source-if-match, x-amz-copy-source-if-none-match, x-amz-copy-source-if-modified-since, and x-amz-copy-source-if-unmodified-s ince request headers to make copy requests conditional:

@@ -1,0 +1,131 @@
+<license> <localCapacity>10000000000000</activeCapacity> <expirationDate>Jan 1, 2021</expirationDate> <extendedCapacity>0</extendedCapacity> <feature>Premium</feature> <serialNumber>12345</serialNumber> <uploadDate>Aug 14, 2016</uploadDate> </license>
+
+licenses
+
+The licenses data type describes the storage licenses resource.
+
+licenses data type properties
+
+The following table describes the property included in the licenses data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+License
+
+License
+
+Specifies information about individual storage license.
+
+The response to a GET for the licenses resource returns either a single instance of the license property or multiple instances depending on whether the request includes the verbose query parameter. Example
+
+Here’s an XML example of the licenses data type:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <licenses> <license> <localCapacity>10000000000000</activeCapacity> <expirationDate>Jan 1, 2021</expirationDate> <extendedCapacity>0</extendedCapacity> <feature>Premium</feature> <serialNumber>12345</serialNumber> <uploadDate>Aug 14, 2016</uploadDate> </license> </licenses>
+
+Query parameter for retrieving a list of licenses
+
+To retrieve a list of all the storage licenses that have ever been uploaded to the HCP system, you use this query parameter: verbose=true
+
+Here’s a sample GET request that retrieves both the current and past storage licenses for an HCP system:
+
+curl -k -b -H “Accept:application/xml -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" https://admin.hcp.example.com:9090/mapi/storage/licenses?verbose=true
+
+link
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+472/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The link data type describes the links resource.
+
+link data type properties
+
+The following table describes the properties included in the link data type. Property name
+
+Data type Description
+
+Notes
+
+compression
+
+Boolean
+
+This property is optional on a PUT request.
+
+Specifies whether HCP should compress data before transmitting it to the other system involved in the replication link. For an active/active link, this setting applies to data being replicated in both directions on the link.
+
+Valid values are: true
+
+HCP should compress data.
+
+false
+
+HCP should not compress data.
+
+The default is false.
+
+connection
+
+connection Identifies the remote system for the replication link and specifies how the two systems
+
+This property is required on a PUT request.
+
+should communicate with each other.
+
+description
+
+String
+
+This property is optional on a PUT request.
+
+Specifies a description of the replication link. This description is optional. The default is no description.
+
+To remove a description from an existing link, specify the description property with no value. encryption
+
+Boolean
+
+This property is optional on a PUT request.
+
+Specifies whether HCP should encrypt data before transmitting it to the other system involved in the replication link. For an active/active link, this setting applies to data being replicated in both directions on the link.
+
+Valid values are: true
+
+HCP should encrypt data.
+
+false
+
+HCP should not encrypt data.
+
+The default is false.
+
+failoverSettings
+
+Specifies the automatic failover and failback settings for the replication link.
+
+This property is optional on a PUT request.
+
+failover
+
+Settings
+
+id
+
+String
+
+Specifies the system-supplied unique ID for the replication link. HCP generates this ID automatically when you create a link.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request. name
+
+String
+
+This property is required on a PUT request.

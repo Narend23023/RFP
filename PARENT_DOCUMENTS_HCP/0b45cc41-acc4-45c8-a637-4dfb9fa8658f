@@ -1,0 +1,83 @@
+Content Platform System Management Help
+
+curl -ik -b HCAP-Login="acmepKMUfWLEu" "https://tenant.hcp.example.com:9090/mapi/tenants"
+
+In Python with PycURL, you use the HTTPHEADER option to specify a header, as in this example: curl.setopt(pycurl.HTTPHEADER, ["Authorization: AD lgreen@example.com:p4sswOrd"])
+
+Query requests
+
+This chapter describes how to construct both object-based and operation-based query requests.
+
+Request format
+
+You use the HTTP POST method to send a metadata query API request to HCP. The POST request for both object-based and operation-based queries has these elements:
+
+A request URL. Optionally, if the URL starts with an IP address, an HTTP Host header.
+
+An Authorization header. An HTTP Content-Type header with one of these values:
+
+If the request body is XML, application/xml If the request body is JSON, application/json
+
+An HTTP Accept header to specify the response format: application/xml or application/json.
+
+Optionally, to send the query in gzip-compressed format: An HTTP Content-Encoding header with a value of gzip
+
+A chunked transfer encoding
+
+Note: When using cURL to send the query in gzip-compressed format, the request must specify --data-binary. If the request specifies -d instead, HCP returns a 400 (Bad
+
+Request) error. Optionally, to request that HCP return the response in gzip-compressed format, an HTTP Accept-Encoding header containing the value gzip or *. The header can specify additional compression algorithms, but HCP uses only gzip. Optionally, to request that HCP format the returned XML or JSON in an easily readable format, a prettyprint URL query parameter. The prettyprint parameter increases the
+
+time it takes to process a request. Therefore, you should use it only for testing purposes and not in production applications. A request body containing the query criteria and specifications for the contents of the result body. The entries you can specify depends on whether the request body is for an object-based query or an operation-based query. A request returns a 413 response code if the request exceeds the 8K Content-Length body limit.
+
+Object-based query requests
+
+The body of an object-based query request consists of entries in XML or JSON format.
+
+XML request body for object-based queries
+
+The XML request body for an operation-based query must contain a top-level queryRequest entry and, except when requesting all available information, an operation entry. All other entries are optional.
+
+The XML request body has the format shown below. Entries at each hierarchical level can be specified in any order: <queryRequest>
+
+<operation> <count>number-of-results</count>
+
+<lastResult> <urlName>object-url</urlName>
+
+<changeTimeMilliseconds>change-time-in-milliseconds.index </changeTimeMilliseconds>
+
+<version>version-id</version> </lastResult>
+
+<objectProperties>comma-separated-list-of-properties </objectProperties>
+
+<systemMetadata> <changeTime>
+
+<start>start-time-in-milliseconds</start> <end>end-time-in-milliseconds</end>
+
+</changeTime> <directories> <directory>directory-path</directory> ...
+
+</directories>
+
+<indexable>(true|false)</indexable> <namespaces>
+
+<namespace>namespace-name.tenant-name</namespace> ...
+
+</namespaces> <replicationCollision>(true|false)</replicationCollision>
+
+<transactions> <transaction>operation-type</transaction>
+
+... </transactions>
+
+</systemMetadata> <verbose>(true|false)</verbose>
+
+</operation> </queryRequest>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+837/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The XML body for an operation-based query that requests all available operation records contains only this line:

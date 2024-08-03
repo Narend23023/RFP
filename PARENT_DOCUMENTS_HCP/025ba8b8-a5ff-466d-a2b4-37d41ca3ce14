@@ -1,0 +1,53 @@
+XPath expressions can be much more complex than the ones shown so far. For example, an XPath expression can navigate XML based on the values of elements and attributes. Here’s an expression that finds the name of a doctor whose primary specialty is oncology: /dicom_image/doctor/specialties/specialty[@primary='true' and text()='Oncology']/ ancestor::doctor/name
+
+This expression navigates down from the doctor element to the specialty elements and finds the one that has both a value of Oncology and a primary attribute with a value of true. The expression then navigates back up to the same doctor element and from there down to the name element that’s the child of the doctor element. Annotation-specific content properties
+
+You can associate content properties with annotation names. When a content property is associated with an annotation name, the metadata query engine indexes the value of that property only when the value occurs in an annotation with the specified name.
+
+To associate a content property with an annotation name, you specify the case-sensitive annotation name in front of the XPath expression for the property, in this format: @annotation-name:xpath-expression
+
+For example, suppose:
+
+The objects in a namespace can have either of two annotations — one named dicom, the other named appointment Both of these annotations have a date element
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+296/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Depending on who created the dicom annotation, the date element in it might be a child of the root element or a child of the image element
+
+To find the value of the date element in the dicom annotation, you would need to use this XPath expression: //date
+
+This expression means find a date element that occurs anywhere in the XML. Without more context, it applies equally to the dicom and appointment annotations.
+
+To have the content property with this XPath expression apply only to the dicom annotation, you would specify the expression this way: @dicom://date
+
+Content property data types
+
+Each content property has a data type that determines how the property values are treated by the metadata query engine. The possible data types are:
+
+String
+
+The metadata query engine indexes the value as a text string. The value is handled as a single unit, even if it contains white space. Users cannot base queries on individual terms within a string value.
+
+Tokenized
+
+The metadata query engine indexes the value as a text string after breaking it into tokens. A token is a string of either alphabetic or numeric characters. For example, the value SSN12345789 becomes this string of two tokens: ssn 123456789. Tokens are not case sensitive. The metadata query engine treats white space and special characters as token separators. For example, the value 12A Elm Street, apt. 2D becomes this string of seven tokens: 12 a elm street apt 2 d. Users can base queries on any individual token or sequence of tokens within a tokenized string. Boolean
+
+The metadata query engine indexes the value as true or false. Values that start with 1, t, or T are treated as true. Any other values are treated as false.
+
+Integer
+
+The metadata query engine indexes the value as an integer. Users can base queries on comparative numeric values. The metadata query engine indexes values for a content property with a data type of integer only if the values conform to the format for the property. Float
+
+The metadata query engine indexes the value as a decimal number with or without an exponent, depending on the value. Users can base queries on comparative numeric values. The metadata query engine indexes values for a content property with a data type of float only if the values conform to the format for the property. Datetime
+
+The metadata query engine indexes the value as a date and time. Users can base queries on comparative datetime values. The metadata query engine indexes values for a content property with a data type of date only if the values conform to the format for the property.
+
+Format for the integer and float data types
+
+For a content property with the integer or float data type, you can specify a format that values needs to match in order to be indexed. The following sections include basic information about these formats. You can find more information at: http://docs.oracle.com/javase/6/docs/api/java/text/DecimalFormat.html

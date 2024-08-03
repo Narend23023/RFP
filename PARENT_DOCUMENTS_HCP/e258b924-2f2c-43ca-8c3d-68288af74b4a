@@ -1,0 +1,101 @@
+// Parse the response into the QueryResult object. mQueryResult = QueryResult.parse(bodyReader);
+
+// Get a copy of the query status from the query result. Status mStatus = mQueryResult.getStatus();
+
+// Display the status of what we just accomplished.
+
+System.out.println(); System.out.println("Batch " + HTTPCalls + " Status: " + mStatus.getCode()
+
++ " Record Count:" + mStatus.getResults());
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+864/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help // Display the first and last object of the result set.
+
+List<ResultSetRecord> mResultSet = mQueryResult.getResultSet(); ResultSetRecord mFirstRecord = mResultSet.get(0);
+
+System.out.println(" First Record (" + (TotalRecordsProcessed+1) + ") "
+
++ mFirstRecord.getUrlName()); System.out.println(" Size: " + mFirstRecord.getSize());
+
+TotalRecordsProcessed += mStatus.getResults();
+
+ResultSetRecord mLastRecord = mResultSet.get(mResultSet.size()-1); System.out.println(" Last Record (" + TotalRecordsProcessed + ") "+ mLastRecord.getUrlName()); System.out.println(" Size: " + mLastRecord.getSize());
+
+System.out.println();
+
+// Now we need to see whether the query is complete or whether there are more // objects. If INCOMPLETE, it is a successful paged query.
+
+if (Status.Code.INCOMPLETE == mStatus.getCode()) {
+
+// We have more, so update the offset for the next query to be the previous
+
+// offset plus the number we just read.
+
+mObjQuery.setOffset( (null == mObjQuery.getOffset() ? 0 : mObjQuery.getOffset()) + mStatus.getResults() );
+
+}
+
+// Clean up after ourselves and release the HTTP connection to the connection // manager.
+
+EntityUtils.consume(httpResponse.getEntity());
+
+} // Keep doing this while we have more results.
+
+while (Status.Code.INCOMPLETE == mQueryResult.getStatus().getCode());
+
+/*
+
+Print out the final statistics. */ System.out.println("Total Records Processed: " + TotalRecordsProcessed); System.out.println("HTTP Calls: " + HTTPCalls);
+
+} catch(Exception e) { e.printStackTrace();
+
+} }
+
+/*
+
+@param args */
+
+public static void main(String[] args) {
+
+PagedObjectQuery myClass = new PagedObjectQuery();
+
+if (args.length != 3) { System.out.println();
+
+System.out.println("Usage: " + myClass.getClass().getSimpleName()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+865/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
++ " <DNS-Namespace> <Username> <Password>\n"); System.out.println(" where ");
+
+System.out.println(" <DNS-Namespace> is the fully qualified domain name" + " of the HCP Namespace.");
+
+System.out.println(" For example: \"ns1.ten1.myhcp.example.com\""); System.out.println(" <Username> and <Password> are the credentials of the" + " HCP user with data access permissions for the namespace"); System.out.println();
+
+System.exit(-1);
+
+}
+
+try {
+
+// Initialize the class with the input parameters myClass.initialize(args[0], args[1], args[2]);
+
+// Issue the query and process the results
+
+myClass.runQuery();
+
+// Clean up before object destruction myClass.shutdown(); } catch (Exception e) {
+
+e.printStackTrace(); }
+
+} }

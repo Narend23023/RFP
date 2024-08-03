@@ -1,0 +1,49 @@
+that HCP must maintain on primary running storage for each object that’s moved to the new storage tier. At the bottom of the page, select I Understand to indicate that you understand the consequences of moving all copies of the object data to the new tier.
+
+If in step 7 above, you selected the option to make this tier metadata-only, on the Storage Pools page: In the Metadata Copies on Primary Running Storage field, specify the primary running storage MPL for the new tier. This is the number of copies of the object metadata that HCP must maintain on primary running storage for each object that’s moved to the new storage tier.
+
+Select I Understand to indicate that you understand the consequences of moving all copies of the object data to the new tier. In this case, this statement means that you understand that the DPL of the new tier is zero, so all copies of the object data will be deleted for each object that’s moved to the new tier.
+
+10. Click Next.
+
+11. On the Review page in the wizard, review the storage tier configuration settings that you specified in the wizard. 12. Take one of the following actions: If the information you entered is correct, click Finish.
+
+If the information is incorrect, use the Previous and Next buttons to navigate through the pages of the wizard and make the changes you want. When you’re satisfied with the configuration settings you’ve entered, click Finish.
+
+When you click Finish, the wizard exits, and the Storage page displays the Tiers panel on the service plan configuration page for the service plan for which you’ve just created a new storage tier.
+
+Removing one or more storage tiers from a service plan
+
+To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire, and delete service plans, you need the administrator role.
+
+1. On the left side of the Storage page, click the Service Plans tab. 2. On the Service Plans panel, click the table row that corresponds to the service plan for which you want to configure a new storage tier. 3. At the top of the panel that opens, click the Tiers tab.
+
+4. The Tiers panel opens, showing a list of storage tiers that are currently configured for the service plan. A delete control ( ) appears in the row for each storage tier except
+
+for the ingest tier.
+
+5. Click the delete control for any storage tier to delete it from the service plan.
+
+Choose the ingest tier
+
+The default ingest tier for HCP is primary running storage. If you have HCP S Series Node on your HCP system, you can select HCP S Series storage pools as the ingest tier of a
+
+service plan. This means that all objects ingested through namespaces under that service plan are written directly to S Series Nodes rather than primary running storage. Regardless of the ingest tier, HCP keeps all object metadata on primary running storage.
+
+If one or more namespaces on the service plan have ingested data through CIFS, NFS, or WebDAV, the service plan ingest tier cannot be changed to HCP HCP S Series. Likewise, NFS, CIFS, and WebDAV cannot be enabled on namespaces that have HCP HCP S Series set as the ingest tier. Note:
+
+The following services do not process objects ingested or tiered to HCP S Series storage: Content Verification, Duplicate Elimination, Shredding, hardware encryption, Capacity Balancing, and Scavenging.
+
+Selecting primary running storage as the ingest tier
+
+To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire,
+
+and delete service plans, you need the administrator role.
+
+1. On the left side of the Storage page, click the Service Plans tab. 2. On the Service Plans panel, click the table row that corresponds to the service plan for which you want to configure a new storage tier.
+
+3. At the top of the panel that opens, click the Tiers tab. 4. On the Tiers panel, click the tier you want to modify. The Edit Tier wizard opens.
+
+5. Select Primary running as the ingest tier.
+
+Selecting Primary running as the ingest tier deselects all HCP S Series options. You cannot have both Primary running and HCP S Series as the ingest tier.

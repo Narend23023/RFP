@@ -1,0 +1,47 @@
+c. In the Default Retention Period field, type the number of days or years that you want to retain the object.
+
+The minimum duration is 1 day from the current date and the maximum duration is 100 years. If you choose compliance mode, neither users nor administrators can change retention settings or delete objects..
+
+7. Click Update Settings. Namespace-level CORS rules configuration
+
+You can use the Tenant Management Console to configure CORS rules for a namespace.
+
+Alternatively, you can use either the Hitachi API for Amazon S3 or the HCP management API to configure CORS rules at the namespace level.
+
+You can also configure CORS rules at the tenant level to serve as the default CORS configuration for all namespaces owned by a tenant. To configure CORS settings at the tenant level, use either the System Management Console or the HCP management API. Note that you must have the administrator role to modify a tenant.
+
+This section of the help describes how to use the Tenant Management Console to configure CORS settings at the namespace level. Request elements (CORS rules)
+
+A CORS rules configuration uses the request elements described in the next table. Some of the request elements are optional.
+
+CORSConfiguration
+
+Container for CORSRules elements. Type: Container Children: CORSRules Ancestor: None A CORS rules configuration in HCP can have any number of CORSRule, AllowedMethod, AllowedOrigin, and AllowedHeader elements. However, the maximum size of the CORS configuration cannot exceed 2.5 MB. CORSRule
+
+A set of origins and methods that you want to allow to access a resource. Type: Container Children: AllowedMethod, AllowedOrigin, AllowedHeader, MaxAgeSeconds, ExposeHeader Ancestor: CORSConfiguration
+
+Id
+
+Optional. A unique identifier for the rule. The Id value assists you in finding a rule in the CORS configuration. Type: String Ancestor: CORSRule AllowedMethod
+
+HTTP methods that you want to allow the origin to execute. Each CORSRule must identify at least one origin and one method. Type: Enum (GET, PUT, HEAD, POST, DELETE) Ancestor: CORSRule
+
+AllowedOrigin
+
+Origins that you want to allow cross-origin requests from. Each CORSRule must identify at least one origin and one method. The origin value can include at most one wildcard character "*", for example, http://*.example.com. Alternatively, you can specify the wildcard character by itself to enable all origins to send cross-origin requests. Type: String Ancestor: CORSRule AllowedHeader
+
+Optional. List of headers that are allowed in a preflight OPTIONS request through the Access-Control-Request-Headers header. This element can contain at most one wildcard character "*". Each header name in the Access-Control-Request-Headers header must have a corresponding entry in the CORSRule. The server will send only the allowed headers that were requested in a response. Type: String Ancestor: CORSRule MaxAgeSeconds Optional.
+
+Maximum time, in seconds, that the browser can cache a preflight OPTIONS response for a specified resource. By caching the response, the browser does not have to send preflight requests to the server within the MaxAgeSeconds time window if repeated requests (same origin, HTTP method, and resource) are issued. A CORSRule can have at most one MaxAgeSeconds element. Type: Integer (seconds) Ancestor: CORSRule ExposeHeader
+
+Optional. One or more response headers that customers can access from their applications, for example, from a JavaScript XMLHttpRequest object. You add one ExposeHeader element in the rule for each header. This element restricts the response headers that are accessible by the client. Type: String Ancestor: CORSRule CORS configuration template
+
+Here is a sample XML template for setting a CORS rules configuration.
+
+<CORSConfiguration> <CORSRule> <Id>Optional: Unique string value that identifies the rule</Id> <AllowedOrigin>Origin that you want to allow cross-origin requests from</AllowedOrigin> <AllowedOrigin>A single wildcard is allowed</AllowedOrigin>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+282/907
+
+6/25/24, 11:33 AM

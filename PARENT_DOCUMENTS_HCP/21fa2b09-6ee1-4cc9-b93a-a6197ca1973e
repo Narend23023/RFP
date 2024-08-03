@@ -1,0 +1,45 @@
+Before you can include any default-namespace directories in a replication link, the default namespace must exist on both systems involved in the link. The default namespaces in the two systems must have the same cryptographic hash algorithm and retention mode.
+
+The default namespace can be configured to prevent writes and deletes. This configuration can differ between the default namespace on the two systems involved in a link. However, even if the system receiving data is configured to prevent these actions, changes to namespace content on the sending system are replicated.
+
+Replicated directories
+
+You select directories for replication when you create the replication link. You can select additional directories or deselect directories by modifying the link at a later time. A replication
+
+link can include, at most, 256 directories. Directories can be created in the default namespace on both of the systems involved in a replication link, so the two systems can have directories with the same name. You cannot
+
+replicate a directory created on one of the systems if a locally created directory with the same name already exists on the other system.
+
+The one exception to this is the directory used for email archiving through SMTP. You can replicate the email directory if the email directory name is the same on both systems.
+
+Replicated changes
+
+With an active/active link, replicated directories are read-write on both systems involved in the link. All changes made to the content of those directories on either system are replicated to the other system. With an active/passive link, the replicated directories are read-write on the primary system and read-only on the replica. Users and applications cannot make any changes to the content of the replicated directories on the replica. However, all changes made on the primary system are replicated to the replica.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+320/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Replicated items
+
+The Replication service replicates these items for the default tenant:
+
+Existing objects, object creations, object deletions, and metadata changes in the directories being replicated Retention class creations, modifications, and deletions for the default namespace
+
+Content class and content property creations, modifications, and deletions All log messages relating to retention classes and privileged delete operations Replication service processing
+
+With an active/active link, the Replication service runs on both HCP systems involved in the link. With an active/passive link, the Replication service runs only on the primary system.
+
+Each replication link has a schedule that specifies when the Replication service should run. By default, when you create a link, the link schedule has the service running 24 hours a day, seven days a week.
+
+The Replication service starts sending information on a link the first time you add HCP tenants and/or default-namespace directories to that link, as long as the link schedule has the service running at that time. If the service is not scheduled to run at that time, the service starts sending information as soon as the next scheduled run period starts. Configuration information first
+
+When you first add HCP tenants, namespaces, and/or default-namespace directories to a replication link, the Replication service replicates the configuration of those items as soon as possible. The service then starts replicating objects in those namespaces and default-namespace directories. The service replicates objects in chronological order either across all namespaces or within each namespace in turn, depending on the link configuration. The chronological order is oldest-first based on the time of the last metadata change to the object.
+
+Whenever you add a new item to a replication link or change the configuration of an item already included on the link, the Replication service replicates the configuration of the new item or the configuration change as soon as possible. This ensures the correct behavior of objects on the receiving system. Whole-object protection with unavailable systems
+
+With whole object protection, the Replication service on the system where an object is ingested sends a full copy of the data for the object to the available systems to which the ingest system is directly connected by a replication link and on which the object is not supposed to be metadata-only. If a system is unavailable, the Replication service sends the full copy of the object data to that system when the system becomes available. Chunk distribution with unavailable systems

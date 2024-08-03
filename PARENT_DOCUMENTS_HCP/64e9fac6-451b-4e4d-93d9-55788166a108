@@ -1,0 +1,53 @@
+To monitor the status of and activity on a replication link, you use the link status Overview panel in the HCP System Management Console. To display this panel:
+
+1. In the list of links on the replication Links page, click the link you want to monitor.
+
+2. On the replication link details page, click Status. 3. In the link Status panel, click the Overview tab.
+
+If the replication link is part of one or more active, retiring, or retired erasure coding topologies, the top part of the link status Overview panel lists the topologies that include that link.
+
+The Sending and Receiving sections in the link status Overview panel show the current status of activity on the link:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+360/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help For an active/active link, a section labeled Sending shows the status of send activity on the local system. A section labeled Receiving shows the status of send activity on the remote system. For an outbound active/passive link during replication and an inbound active/passive link during data recovery, a section labeled Sending shows the status of send activity on the local system. For an outbound active/passive link during data recovery and an inbound active/passive link during replication, a section labeled Receiving shows the status of send activity on the remote system.
+
+The Sending and Receiving sections show:
+
+Data pending The approximate amount of data currently waiting to be sent to the other system, in bytes. This is the sum of the amounts of data waiting to be sent in each HCP namespace being replicated on the link. This value does not include data in the default namespace. Information about pending data is not available in the Receiving section on a replica during replication or on a primary system during data recovery.
+
+Objects pending
+
+The approximate number of objects and parts of multipart objects currently waiting to be sent to the other system. This is the sum of the numbers of objects and object parts waiting to be sent in each HCP namespace being replicated on the link. This number does not include objects in the default namespace. The number of objects pending does not include parts of in-progress multipart uploads. Those parts are not replicated until the applicable multipart upload has been completed. Information about pending objects and object parts is not available in the section on a replica during replication or on a primary system during data recovery. Up to date as of
+
+The amount of time that is the difference between:
+
+The date and time before which configuration changes and changes to namespace content are guaranteed to have been sent to the other system The current date and time
+
+If the Replication Verification service is running or has ever run, a Verifying section appears below the Receiving section. The Verifying section shows: Last Pass Completed
+
+The date and time at which the Replication Verification service finished its last run.
+
+Status
+
+The current status of the Replication Verification service. Possible values are:
+
+Enabled
+
+The Replication Verification service is either running or set to run the next time the Replication service runs. Disabled
+
+The Replication Verification service is not running and is not set to run. Issues Found
+
+Either None or the current total number of nonreplicating objects and object parts in all the namespaces owned by the tenants on the link. If nonreplicating objects or object parts exist, View appears next to Issues Found. To see a list of the tenants with namespaces that contain nonreplicating objects or object parts, click View. The list shows the total number of nonreplicating objects parts for each tenant. If you have administrative access to a listed tenant, you can click the tenant name in the list to open the Tenant Management Console for that tenant. In the Tenant
+
+Management Console, you can see which namespaces have nonreplicating objects and object parts. For each of those namespaces, you can view a list of the nonreplicating objects and object parts in the namespace.
+
+The link status Overview panel also contains:
+
+A graph showing the history of the rate of data transmissions on the link A graph showing the history of the rate of operations on the link For active/active links and outbound active/passive links, one or two pie charts showing the amount of used and free storage space on the remote system
+
+The statistics for replication links are updated every ten minutes. To see updated statistics, redisplay the Links page. Data transmission rate

@@ -1,0 +1,55 @@
+An ACL is treated as a single unit. If a collision occurs when a changed ACL for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+If the last change to the ACL on system A is more recent than the last change to the ACL on system B, HCP changes the ACL on system B to match the changed ACL on system A If the last change to the ACL on system B is more recent than the last change to the ACL on system A, HCP does not change the ACL on system B
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+557/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help For example, suppose the ACL for a given object starts out with these grants on both system A and system B:
+
+All users: read User lgreen: write User mwhite: write, delete
+
+The list below shows a sequence of events in which the ACL for the object is changed and the change is then replicated.
+
+1. On system B, a client changes the grants in the ACL to:
+
+All users: read User lgreen: write, delete User pdgrey: write
+
+2. On system A, a client changes the grants in the ACL to:
+
+All users: read User mwhite: write User pdgrey: write
+
+3. The changed ACL on system A is replicated to system B. The resulting ACL for the object on system B contains these grants:
+
+All users: read User mwhite: write User pdgrey: write
+
+Access and authentication
+
+The Hitachi API for Amazon S3 is an HTTP-based API. This means that you use URLs to identify tenants, buckets, and objects. Every S3 compatible request for access to HCP must include the URL for the service point, bucket, or object that’s the target of the request.
+
+With every S3 compatible request, you also need to either provide credentials for the user account you’re using or request anonymous access. If HCP determines that credentials
+
+you provide correspond to a valid user account and that the user account has the applicable permissions for the requested operation, you become an authenticated user. HCP supports three methods of user authentication for the S3 compatible API: Amazon Web Services™ (AWS™), Active Directory (AD), and HCP. With AWS authentication, HCP follows the Amazon S3 method of authenticating users. With AD authentication, HCP authenticates users with AD. With HCP authentication, HCP uses its own standard method. If you’re using the S3 compatible API to develop applications that are compatible with Amazon S3, you should use AWS authentication.
+
+This section of the Help describes the URLs you can use in S3 compatible requests when using AWS or AD authentication. It also explains how to provide credentials or request anonymous access with that authentication method.
+
+Note:
+
+All the examples of S3 compatible requests in this book assume AWS authentication. To use a recognized Active Directory user account for access to HCP through the S3 compatible API, applications can use AWS authentication with the AD identifier. Alternatively, they can use the SPNEGO protocol to negotiate the AD user authentication themselves. URLs for access to HCP
+
+With the S3 compatible API, the service point (also called the endpoint) is a tenant. Every request you make to access HCP using the S3 compatible API is made within the context of a tenant.
+
+The URL in a request identifies the target of the request. This target can be the tenant, a bucket within the tenant, or an object within a bucket within the tenant. The format you use for a URL depends on the target of the request and the authentication method being used.
+
+An HCP system can have multiple tenants and, therefore, multiple service points. Each tenant has its own default configuration settings for new buckets. Buckets, therefore, can have different characteristics depending on the tenants within which you create them.
+
+Each tenant also has its own set of user accounts. For access that requires you to be an authenticated user, you need to use a user account that’s defined for the applicable tenant.
+
+Targeting a tenant In an S3 compatible request that uses AWS authentication, if the target is a tenant, you use a URL in this format:
+
+http[s]://tenant-name.hcp-domain-name
+
+Here’s an example in which the tenant name is europe:

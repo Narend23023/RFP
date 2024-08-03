@@ -1,0 +1,73 @@
+Objects left by failed CIFS write operations:
+
+May have none, some, or all of their data If partially written, may or may not have a cryptographic hash value
+
+If the failure was on the HCP side, remain open and:
+
+Are not WORM
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 798/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Cannot have annotations Are not indexed
+
+Are not replicated
+
+If the failure was on the client side, are WORM after the lazy close
+
+If a write operation fails, delete the object and try the write operation again.
+
+Note: If the object is WORM, any retention setting applies. In this case, you may not be able to delete the object.
+
+Storing zero-sized files with CIFS
+
+When you store a zero-sized file with CIFS, the resulting object has no data. After lazy close occurs, the object becomes WORM and is treated like any other object in the namespace.
+
+Out-of-order writes with CIFS
+
+CIFS can write the data for an object out of order. If HCP receives an out-of-order write for a large file (200,000 bytes or larger), it discards the cryptographic hash value it already
+
+calculated. The object then has no hash value until one of these occurs:
+
+HCP returns to the object at a later time and calculates the hash value for it.
+
+A user or application opens or downloads the hash.txt metafile for the object, which causes HCP to calculate the hash value. However, because HCP calculates this value asynchronously, the value may not be immediately available. This is particularly true for large objects.
+
+Temporary files created by Windows clients
+
+During certain operations, Windows clients may create temporary files. In a namespace, these files correspond to successfully created objects. As with any other new object stored through the CIFS protocol, the retention period for such an object is determined by the namespace configuration. If the object ends up being under retention, it remains in the namespace after the operation completes and cannot be deleted until its retention period expires.
+
+Tip: When writing applications, be sure to take into account that objects created for temporary files may be closed and made WORM unexpectedly. Once this happens, the application cannot reopen the object. Multithreading with CIFS
+
+HCP lets multiple threads access a namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple directories.
+
+With CIFS, multiple concurrent threads can write to the same object, but only if they are working against the same node. Multiple concurrent threads can read the same object on the same or different nodes.
+
+With a single share of the namespace, concurrent threads are always working against the same node.
+
+HCP doesn’t limit the number of concurrent CIFS threads per node but does limit the total number of outstanding requests using all protocols to 500 per node. Note: CIFS and NFS share the same thread pool.
+
+NFS
+
+This section of the Help contains information on using the NFS namespace access protocol.
+
+Using NFS
+
+NFS is one of the industry-standard protocols HCP supports for namespace access. To access a namespace through NFS, you can write applications that use any standard NFS
+
+client library, or you can use the command line in an NFS client to access the namespace directly.
+
+Using the NFS protocol, you can store, view, retrieve, and delete objects. You can also change certain system metadata for existing objects.
+
+For you to access a namespace through NFS, this protocol must be enabled in the namespace configuration. If you cannot use NFS to access the namespace, contact your tenant administrator.
+
+This chapter explains how to use NFS for namespace access.
+
+Namespace access with NFS
+
+You access the namespace through NFS by mounting a namespace directory on an NFS client. You can mount the namespace as a whole, either root directory (data or metadata), or any specific data directory or metadirectory. Additionally, you can have multiple directories mounted at the same time.
+
+Once mounted, the namespace appears to be part of the local file system, and you can perform any of the operations HCP supports for NFS.

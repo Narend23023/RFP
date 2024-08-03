@@ -1,0 +1,49 @@
+Access to the System Management Console is available only through HTTP with SSL security (HTTPS).
+
+To access the HCP System Management Console in Internet Explorer® on a Windows server, Internet Explorer Enhanced Security Configuration must be disabled for administrators on that server. Console access
+
+To use the System Management Console, you need either:
+
+A system-level user account defined in HCP. If the HCP system is configured to support Windows Active Directory (AD), an AD user account for a user that belongs to one or more AD groups for which corresponding
+
+system-level group accounts are defined in HCP. In the help, such an AD user account is referred to as a recognized AD user account.
+
+Your HCP user account or group account configuration includes settings that specify what you have permission to do in the Console. The menu options, pages, and panels that you see in the Console depend on the permissions that have been configured for your user or group account.
+
+If an AD user belongs to multiple AD groups for which HCP group accounts exist, that user has all the permissions associated with all those group accounts. Console sessions
+
+A System Management Console session begins when you take one of these actions:
+
+Log into the Console using an HCP user account or recognized AD user account. Access a Console page while logged in to Windows with a recognized AD user account. This is called single sign-on. With single sign-on, you don’t need to explicitly log into the Console.
+
+Your web browser must be configured to support single sign-on.
+
+A session ends when you log out. During a session, you can perform any actions for which you have permission.
+
+During a session, if you don’t take any action for a certain amount of time, the Console displays the Idle Timeout page. If you explicitly logged in to the session, the Console
+
+automatically logs you out and, when you click any tab on the Idle Timeout page, displays the login page. If you started the session by using single sign-on, when you click any tab, the Console displays the requested page. The amount of idle time allowed is configurable.
+
+Note: Logging in to or out of the System Management Console has no effect on HCP operations. HCP management API
+
+HCP includes a RESTful HTTP interface to a subset of its administrative functions. Using this interface, called the management API, you can create, modify, and delete tenants and
+
+manage replication. If a tenant has been configured to allow system-level users to manage it and search its namespaces, you can also view available service plans that can be assigned to that tenant, and you can create, modify, and delete namespaces, user and group accounts, and content classes for that tenant. Additionally, you can create, modify, and delete retention classes for tenant namespaces.
+
+You use the HCP System Management Console to enable the management API. To use the management API, you need a user account that includes the applicable permissions for the actions that you want to take.
+
+If HCP is configured to support AD authentication, applications can also use recognized AD user accounts to access HCP through the management API. To do this, an application
+
+must use the SPNEGO protocol to negotiate the AD user authentication. Hitachi Device Manager and Hitachi Tiered Storage Manager
+
+As an alternative to the System Management Console, you can use Hitachi Device Manager (HDvM) to report on HCP storage usage. Additionally, when using USP or USP V storage, you can use Hitachi Tiered Storage Manager to migrate repository content to different storage tiers.
+
+You cannot make changes to the HCP configuration through HDvM or Hitachi Tiered Storage Manager.
+
+HCP supports IPv4 and IPv6 network connections to HDvM servers. However, HDvM support for IPv6 network connections varies based on the HDvM server operating system. For information about requirements for HDvM servers that support IPv6 networks, see the applicable Hitachi Command Suite documentation. Hitachi Remote Ops
+
+Hitachi Remote Ops is a Hitachi Vantara product that enables you and HCP support personnel to monitor your HCP system remotely. With Hitachi Remote Ops, you can monitor
+
+nodes, back-end switches, and front-end switches. For HCP with SAN-attached storage systems, you can also monitor SAN arrays and Fibre Channel switches.
+
+Hitachi Remote Ops is used for monitoring and error notification purposes only. It does not allow any changes to the HCP system.

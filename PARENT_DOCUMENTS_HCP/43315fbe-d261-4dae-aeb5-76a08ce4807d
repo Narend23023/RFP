@@ -1,0 +1,55 @@
+Indicates that the signature does not match the content of the request. This can happen if the secret key used in the signature calculation does not correspond to the password for the account with the applicable user name but can also be due to other errors.
+
+Changing your password
+
+If you have an HCP user account, the password for the account is initially set by a tenant administrator. You can change this password at any time, as long as you have browse or read permission for at least one bucket. For security purposes, you should change your password as soon as possible after you receive your account information.
+
+Your password is used to calculate your secret key for use with the S3 compatible API. When you change your password, your secret key also changes. You can use a few different HCP interfaces to change your password, as long as you have access to those interfaces. When you change your password in one interface, it changes for all HCP interfaces to which you have access.
+
+The next procedure describes how to change your password using the Namespace Browser.
+
+1. Open a web browser window. 2. In the address field, enter the URL for a bucket for which the S3 compatible API requires user authentication and for which you have browse or read permission. Use this format: http[s]://bucket-name.tenant-name.hcp-domain-name/browser
+
+For example:
+
+https://finance.europe.hcp.example.com/browser
+
+Either of these events happen:
+
+If the tenant does not support AD authentication or the tenant supports AD authentication but the namespace does not support AD single sign-on, the Namespace Browser login page is displayed. If the tenant supports AD authentication and the S3 compatible API is configured to support AD single sign-on, a message is displayed indicating that single sign-on was not possible.
+
+Click the Console login page link in the message to display the Namespace Browser login page.
+
+3. On the Namespace Browser login page:
+
+a. In the Username field, type your username. b. In the Password field, type your case-sensitive password. c. In the Domain field, if present, select the domain name of the HCP system. 4. Click Log In. 5. In the top right corner of the Namespace Browser window, click the Password link. 6. On the Change Password page: a. In the Existing Password field, type your current password. b. In the New Password field, type your new password.
+
+Passwords can be up to 64 characters long, are case sensitive, and can contain any valid UTF-8 characters including white space. To be valid, a password must include at least one character from two of these three groups: alphabetic, numeric, and other. When changing your password, you cannot reuse your current
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+561/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+password.
+
+c. In the Confirm New Password field, type your new password again.
+
+7. Click Update Password. Requests and responses
+
+With the Hitachi API for Amazon S3, you submit requests for operations to HCP, and HCP returns responses that indicate the outcome of the request and include any requested information or content.
+
+This section of the Help contains general information about S3 compatible requests and HCP responses to those requests. Request line
+
+The request line for an S3 compatible request specifies the operation to be performed and the version of HTTP on which the S3 compatible API is based. Additionally:
+
+If the target of the request is a tenant or if the target is a bucket and the hostname includes the bucket name, the request line includes a forward slash by itself.
+
+For example, here are the request line and HOST header for a request to create a bucket named finance where the bucket name is included in the hostname: PUT / HTTP/1.1 HOST: finance.europe.hcp.example.com
+
+If the target of the request is a bucket and the hostname does not include the bucket name, the request line includes the a forward slash followed by the bucket name.
+
+For example, here are the request line and HOST header for a request to create a bucket named finance where the bucket name is not included in the hostname: PUT /finance HTTP/1.1 HOST: europe.hcp.example.com

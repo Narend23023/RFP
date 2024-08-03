@@ -1,0 +1,97 @@
+x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid. Response headers
+
+The list below describes the headers returned in response to a successful request to add an ACL to an object.
+
+Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to add an ACL to an object, the value of this header is always 0 (zero). Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to add an ACL to an object. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully added the ACL to the object.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+You are trying to add an ACL that contains more than one hundred permission grants. A specified grantee does not exist. The specified owner does not exist. Two grants of the same permission specify the same grantee. The x-amz-acl header specifies an invalid value. An x-amz-grant- header specifies an invalid identifier type. The XML in the ACL request body is malformed or contains an invalid value.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to add an ACL to the object. The specified bucket does not currently support the requested operation. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found One of these:
+
+The specified object does not exist. The specified bucket does not exist.
+
+409
+
+Conflict
+
+Possible reasons include that the object data is currently being written to HCP.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Adding an ACL to an object by using a canned ACL
+
+Here’s a sample PUT request that adds a canned ACL to the object named AcctgBestPractices.doc. The ACL grants read permission to all users. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put ~ -- -k "https:// finance.europe.hcp.example.com/AcctgBestPractices.doc?acl" -H "x-amz-acl: public-read"
+
+Request headers
+
+PUT /AcctgBestPractices.doc?acl HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000
+
+Authorization: AWS bGdyZWVu:C8KpGuK62B7j2US0kN0Bl0Wx48k= x-amz-acl: public-read
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+615/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response headers HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Length: 0
+
+Example: Adding an ACL to an object by using an ACL request body
+
+Here’s a sample PUT request that uses an ACL request body to add an ACL to the object named mktg/budget_proposals/BudgProp-2020. The ACL grants read access to all authenticated users and full control user pblack. It makes no change to the object owner. The ACL request body is in a file named acl-3.xml. Request body

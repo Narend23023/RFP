@@ -1,0 +1,43 @@
+Your configuration is saved and persists in HCP. Notice that the HCP software added the following XML header at the top of the CORS configuration:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+Configuring namespace access protocols
+
+HCP supports the REST, S3 compatible, WebDAV, CIFS, NFS, and SMTP protocols for access to namespaces. You use these protocols to add, view, modify, and delete namespace content. Additionally, you can use the S3 compatible API to create, view or change the versioning status of, and delete namespaces.
+
+Each protocol is configured separately for each namespace. Any given protocol can be enabled on some namespaces and disabled on others unless protocol optimization is configured for cloud-only protocols.
+
+This section of the help provides instructions for enabling and configuring each of the supported protocols. Namespace access protocol configuration
+
+Users and applications have access to the content stored in namespaces through these industry-standard protocols: REST, S3 compatible API, WebDAV, CIFS, NFS, and SMTP. By default, when a namespace is created, the REST API is enabled. The other protocols are initially disabled. For any namespace access to occur, at least one protocol must be enabled.
+
+For enhanced security, keep unused namespace access protocols disabled.
+
+When you enable a namespace access protocol, you also need to configure it. Each protocol, with the exception of the REST, S3 compatible, and WebDAV protocols, has its own set of configuration options. REST, the S3 compatible API, and WebDAV share a set of these options. Some configuration options are common to multiple protocols; others are protocol specific. Note: If your system administrator has configured new namespaces to be optimized for cloud protocols only, you cannot configure new namespaces to use CIFS, NFS, WebDAV or SMTP without first disabling cloud optimization for the namespace. If you have already begun ingesting data in the namespace, you cannot disable cloud optimization. Similarly, NFS, CIFS, and WebDAV cannot be enabled if the namespace assigned to a service plan has HCP S Series Nodes set as the ingest tier. To allow enabling of CIFS, NFS, WebDAV, or SMTP, see the topic Modifying a service plan in the Administering HCP online help and select Primary Running as the ingest tier for the service plan to which the namespace is assigned.
+
+For namespaces configured with S3 Object Lock, only the S3 gateway protocol is supported.
+
+Display the Protocols panel To enable and configure the protocols for a namespace, you use the Protocols panel for that namespace in the Tenant Management Console. This panel has separate tabs for each protocol except REST, the S3 compatible API, and WebDAV, which share a tab.
+
+To view the Protocols panel, you need the monitor or administrator role. To enable, disable, and configure namespace access protocols, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want to configure. 3. In the row of tabs below the namespace name, click Protocols.
+
+Changing the protocol optimization for a namespace
+
+A namespace can be optimized for all namespace access protocols or for cloud protocols only. Optimization for all protocols is required if clients will be using the WebDAV, CIFS, NFS, or SMTP protocol to access the namespace. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+283/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Optimization only for cloud protocols increases the ingest rate for the namespace but also configures the namespace to ingest objects exclusively through the cloud protocols (REST and the S3 compatible API). This setting is recommended if clients will be using only cloud protocols to access the namespace.
+
+Only cloud-optimized namespaces can allow erasure coding. Also, only cloud-optimized namespaces support multipart uploads with the S3 compatible API.
+
+You can change the protocol optimization setting for a namespace from optimized only for cloud protocols to optimized for all protocols only if all of these are true:
+
+The namespace does not contain any objects.

@@ -1,0 +1,105 @@
+List
+
+Lists the HCP systems on which the tenant exists. Each system is identified by the fully qualified name of the domain associated with the [hcp_system] network on that system.
+
+This property is returned only by a verbose GET request.
+
+In XML, the element that identifies each system is name. In JSON, the name in the name/value pair that lists the systems is name. name
+
+String
+
+Specifies the name of the tenant.
+
+uuid
+
+String
+
+Specifies the unique ID for the tenant.
+
+This property is returned only by a verbose GET request.
+
+Example
+
+Here's an XML example of the tenantCandidate data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<tenantCandidate> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>finance</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+524/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<uuid>838cd575-0f94-489a-8f94-f36c1337c446</uuid> </tenantCandidate> tenantCandidates
+
+The tenantCandidates data type describes the tenantCandidates and tenantConflictingCandidates resources for erasure coding topologies.
+
+tenantCandidates data type property
+
+The following table describes the properties included in the tenantCandidates data type.
+
+Property name Data type Description
+
+tenantCandidate tenant
+
+Candidate
+
+Specifies a tenant that is (tenantCandidates) or is not (tenantConflictingCandidates) eligible for inclusion in an erasure coding topology.
+
+Example
+
+Here's an XML example of the tenantCandidates data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<tenantCandidates> <tenantCandidate> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>finance</name> <uuid>838cd575-0f94-489a-8f94-f36c1337c446</uuid> </tenantCandidate> <tenantCandidate>
+
+<hcpSystems> <name>hcp-us.example.com</name> </hcpSystems> <name>it</name> <uuid>5c881746-5a93-48d0-a55a-d1aaec50c522</uuid> </tenantCandidate> </tenantCandidates> transition
+
+The transition data type describes the transition property of the local and remote data types used to describe the local and remote properties of the replication link schedule resource.
+
+transition data type properties
+
+The following table describes the properties included in the transition data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+performanceLevel String
+
+Specifies the performance level that applies to the replication link on the local or remote system, as applicable, starting at the day and time specified by the time property. Valid values are:
+
+This property is required for within occurrence of the transition property. LOW
+
+The performance level changes to low at the specified day and time.
+
+MEDIUM
+
+The performance level changes to medium at the specified day and time.
+
+HIGH
+
+The performance level changes to high at the specified day and time.
+
+CUSTOM
+
+The performance level changes to the custom setting at the specified day and time. OFF
+
+The local or remote system, as applicable, stops sending data on the link at the specified day and time.
+
+These values are not case-sensitive.
+
+You cannot set the schedule to OFF for the entire week. To stop replication on the link for the entire week, suspend the link.
+
+time
+
+Date
+
+Specifies a day and time at which the performance level for the replication link changes to the level specified by the performanceLevel property. Valid values are datetime values in this format:
+
+This property is required for within occurrence of the transition property. EE:hh
+
+In this format:

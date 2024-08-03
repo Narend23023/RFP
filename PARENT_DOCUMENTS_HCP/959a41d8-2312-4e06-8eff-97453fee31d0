@@ -1,0 +1,19 @@
+The response body for an OPTIONS request is always returned as WADL. The HTTP response headers include Allow, which lists the supported methods for the resource.
+
+Here’s a request for the methods you can use with the user accounts resource:
+
+curl -k -iX OPTIONS -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/tenants/finance/userAccounts ?prettyprint"
+
+Here are the response headers: HTTP/1.1 200 OK Content-Type: application/vnd.sun.wadl+xml Allow: OPTIONS,HEAD,POST,GET,PUT X-HCP-SoftwareVersion: 6.0.1.64 Content-Length: 3575
+
+Here’s the WADL response body:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <application xmlns="http://research.sun.com/wadl/2006/10"> <doc xmlns:jersey="http://jersey.dev.java.net/" jersey:generatedBy="Jersey: 1.1.5 01/20/2010 04:04 PM"/> <resources base="https://admin.hcp.example.com:9090/mapi/"> <resource path="tenants/finance/userAccounts"> <method name="PUT" id="createUserAccount"> <request> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="password"/> <representation mediaType="application/xml"/> <representation mediaType="application/json"/> </request> <response> <representation mediaType="*/*"/> </response> </method> <method name="HEAD" id="getUserAccountsHead"> <request> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="offset"/> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="count"/> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="filterType"/> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="filterString"/> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="sortType"/> <param xmlns:xs="http://www.w3.org/2001/XMLSchema" type="xs:string" style="query" name="sortOrder"/> </request> <response> <representation mediaType="application/xml"/> <representation mediaType="application/json"/>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+384/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

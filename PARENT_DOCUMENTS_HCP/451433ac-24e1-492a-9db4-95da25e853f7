@@ -1,0 +1,35 @@
+The Storage Tiering service performs these functions according to rules specified in service plans:
+
+Moving copies of the objects in a given namespace among all of the storage tiers that are defined for that namespace by its service plan Creating and deleting copies of objects in a given namespace on each storage tier that is defined for that namespace to ensure that each tier always contains the correct number of copies of each object Changing objects stored on primary running storage to be metadata-only or restoring data to metadata-only objects For the purpose of storage tiering, HCP treats these as individual objects:
+
+Parts of multipart objects. These parts are tiered based on the time of completion of the multipart upload that created the object. Chunks for erasure-coded objects. These chunks are tiered based on the object ingest time. Chunks for erasure-coded parts of multipart objects. These chunks are tiered based on the time of completion of the multipart upload that created the object.
+
+The Storage Tiering service does not tier parts of in-progress multipart uploads.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+125/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Storage Tiering service tiers full copies of the data for objects and parts that are subject to erasure coding if the target storage tier is primary running storage, HCP S Series storage, or primary spindown storage. The service does not tier full copies of the data for objects and parts that are subject to erasure coding if the target storage tier is extended storage.
+
+The Storage Tiering service can move objects and parts that are subject to erasure coding to a metadata-only storage tier before they are due to be reduced to chunks, provided that a full copy of the object or part data exists on at least one other system. While on the metadata-only tier, the object or part has metadata but no data.
+
+If an object or part on a metadata-only storage tier is due to be reduced to a chunk, the Geo-distributed Erasure-Coding service gets the applicable chunk from another system. That service then removes the object or part from the metadata-only tier and stores the chunk for the object or part on the previous tier, as specified by the applicable service plan. The Storage Tiering service does not move chunks for erasure-coded objects and parts to metadata-only storage tiers.
+
+The Storage Tiering service runs according to the active service schedule.
+
+Important: HCP S Series Nodes run the risk of reaching maximum storage capacity. Objects do not tier to S Series Nodes that are full.
+
+Moving copies of objects among storage tiers
+
+One of the functions of the Storage Tiering service is to move copies of objects in a namespace among storage tiers that are defined for that namespace by its service plan. The tier on which HCP initially stores every object in the namespace is called the ingest tier. The ingest tier must be either primary running storage or HCP S Series storage.
+
+For each storage tier, including the ingest tier, the service plan for a given namespace specifies: The storage pools that are used to store copies of each object on the tier. Each storage pool consists of one or more storage components. Each storage component represents a type of primary storage (running or spindown), HCP S Series storage, an extended storage device, or a cloud storage service endpoint. For each object that’s stored on the tier, the number of copies of the object data that HCP must maintain on each storage pool and the number of copies of object metadata that HCP must maintain on the ingest tier.
+
+The transition criteria for each tier except for the ingest tier. The transition criteria for a storage tier are the rules that determine when one or more copies of each object in the namespace must be stored on the tier: The object age (number of days since ingest) at which one or more copies of the object data must be moved from the previous tier onto this tier For service plans that define exactly two tiers, including the ingest tier, whether a threshold will be applied to the second tier, and if so, the percentage of ingest tier
+
+storage capacity that must be used (the threshold) before object data can be moved to the second storage tier For HCP systems with replication enabled, whether objects must be fully replicated before they can be transitioned from the previous tier onto this tier. If replication is disabled for the HCP system, this transition criterion does not appear in the HCP System Management Console.

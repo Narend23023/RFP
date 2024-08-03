@@ -1,0 +1,75 @@
+to an HCP system either to increase primary storage capacity or to replace one or more retired storage devices, contact your authorized HCP service provider for help.
+
+On a HCP with internal storage or HCP with SAN-attached storage system, you can use either the Storage page or the Migration page in the System Management Console to retire one or more primary storage devices. When you retire primary storage, HCP automatically updates each primary storage component, as needed, to reflect the changes in the total
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 37/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+storage capacity and the total number of disks represented by each primary storage component.
+
+HCP S Series storage components
+
+HCP can use HCP S Series Nodes as an alternative to primary storage or for tiering purposes.
+
+To connect the S Series Nodes to the HCP system, you need to add them to the HCP system on the Hardware page of the System Management Console.
+
+You can configure HCP to write directly to S Series Nodes by changing the ingest tier of a service plan. This does not remove the need for primary storage. Primary running storage
+
+still keeps all custom metadata of objects tiered to HCP S Series storage.
+
+After an HCP S Series storage component is added, you can use the Storage page to view its health status, availability, capacity, and current and historical storage usage statistics. S Series Nodes have a storage capacity limit. You can use the Storage page to monitor the health and usage of HCP S Series storage components and determine when you need to
+
+add more S Series Nodes to the HCP system.
+
+Extended storage components
+
+HCP supports several types of extended storage. To enable HCP to use a specific type of extended storage, you first create and configure one or more storage components of the applicable type.
+
+You can configure HCP to access and store object data on the following types of extended storage:
+
+NFS
+
+Volumes that are accessed on physical storage devices using NFS mount points
+
+Amazon S3
+
+Cloud storage that is accessed using an Amazon Web Services user account
+
+Google Cloud
+
+Cloud storage that is accessed using a Google Cloud Platform user account Microsoft Azure
+
+Cloud storage that is accessed using a Microsoft Azure user account
+
+S3 compatible
+
+Any physical storage device or cloud storage service that is accessed using a protocol that is compatible with the Amazon S3 access protocol
+
+ThinkOn cloud
+
+S3 compatible cloud storage that is accessed using a ThinkOn cloud user account
+
+Important: Extended storage is intended to increase the amount of storage that’s available to HCP. Extended storage does not function as backup storage. You should secure, back
+
+up, and monitor the health and availability of each extended storage device and cloud storage service that you use to store data in an HCP repository. About storage pools
+
+HCP uses storage pools to represent logical groups of storage components that can be used as storage tiers. Each storage pool consists of one or more storage components that
+
+are used to access the same type of storage.
+
+Each storage tier typically consists of only one storage pool, but a tier can be configured to use multiple storage pools. To store objects on a given tier, HCP uses all of the storage
+
+that’s accessed using the storage components that are contained in the storage pools that are configured for the storage tier. Therefore, the capacity of a given storage pool is the
+
+total amount of space that’s associated with all the physical storage devices or all of the cloud storage service endpoints represented by the storage components in the pool. You can
+
+add storage components to a pool at any time, thereby increasing the capacity of the pool. You should size extended storage pools to accommodate the amount of data you expect to be written to them. In making this calculation, you need to account for multiple
+
+namespaces using the same service plan as well as for multiple service plans specifying the same target storage pool. Primary storage pools
+
+Every HCP system has a pre-configured storage pool for each type of primary storage that the system is configured to use. The primary running storage pool contains the pre-
+
+configured primary running storage component, which represents all continuously spinning disks that are currently managed by the HCP nodes. For HCP with SAN-attached storage

@@ -1,0 +1,53 @@
+Content verification repair disabled
+
+The Content Verification service is currently not checking for or repairing objects with corrupted data.
+
+This alert appears when Do not check and repair objects is selected on the Content Verification page. Data access failover
+
+For HCP with SAN-attached storage systems with zero-copy failover enabled, a node has taken over management of storage normally managed by another node. contact your authorized HCP service provider.
+
+Degraded network assigned
+
+One or more tenants are associated with a degraded network for management or data access purposes. A degraded network presents a single point of failure for clients accessing HCP over that network. Check the Networks page for degraded networks that are associated with tenants. Then reconfigure each network to assign IP addresses to one or more additional nodes.
+
+Empty network assigned
+
+One or more tenants are associated with an empty network for management or data access purposes. A tenant with an empty management network cannot be accessed through the Tenant Management Console or HCP management API. Namespaces belonging to a tenant with an empty data access network are inaccessible. Check the Networks page for empty networks that are associated with tenants. Then reconfigure each network to assign IP addresses to one or more nodes.
+
+Erasure coding error
+
+One or more of these conditions exist:
+
+The protection status of the active erasure coding topology is broken. The read status of an erasure coding topology is broken. One or more tenants added to an erasure coding topology have not been added to one or more replication links in the topology. HCP does not report this condition for a tenant until ten minutes after the tenant was added to the topology. HCP cannot find one or more replication links that are included in an erasure coding topology.
+
+Erasure coding warning
+
+One or more of these conditions exist: The protection status of the active erasure coding topology is vulnerable. The read status of an erasure coding topology is vulnerable. Replication is paused for one or more tenants on one or more replication links in the active erasure coding topology. The Geo-distributed Erasure Coding service is not in the active service schedule. New erasure coding activity is limited. The Geo-distributed Erasure Coding service is disabled. New erasure coding activity is limited.
+
+Error spinning down volume
+
+An error occurred while a logical volume was in the process of spinning down. contact your authorized HCP service provider.
+
+Error spinning up volume
+
+An error occurred while a logical volume was in the process of spinning up. contact your authorized HCP service provider. Expired Active Directory certificates
+
+One or more AD SSL certificates have expired. Communication with AD may fail. To make sure communication with AD is not disrupted, export a new SSL certificate from AD and upload it to HCP.
+
+Expired replication certificates
+
+One or more trusted replication server certificates have expired. Replication with the systems from which the applicable certificates were obtained has stopped. When the other system in any of the applicable replication pairs installs a new SSL server certificate, download that certificate and upload it to this system as a trusted replication server certificate. For ease of maintenance, delete expired certificates from the list of trusted replication server certificates. Expired SSL server certificate
+
+One or more SSL server certificates for one or more HCP domains have expired. If a domain has no valid certificates, clients must accept the invalid certificate presented by HCP for access to namespaces in that domain. If the domain associated with the replication network has no valid certificates, replication fails.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+197/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Check the Domains and Certificates page to see which certificates have expired. Then make sure each affected domain has at least one valid certificate.
+
+External storage volumes unavailable One or more external storage volumes have a status of unavailable, broken, or initializing. Check the Storage page to see which volumes are having problems. Then make sure the devices hosting those volumes and the network connections to those devices are functioning properly. Also make sure the exported shares are configured correctly, that any NFS servers being used are running on each device, and that any NFS security software on the device is not blocking access by any of the HCP nodes. If the problem persists for a volume, remount the volume in HCP. If that doesn’t resolve the problem, contact your authorized HCP service provider for help. Front-end connection error

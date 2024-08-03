@@ -1,0 +1,119 @@
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2015-11-16T14:27:20-0500 represents the start of the 20th second into 2:27 PM, November 16, 2015, EST.
+
+If you specify certain forms of invalid dates, HCP automatically adjusts the retention setting to make a real date. For example, if you specify 2015-11-33, which is three days past the end of November, HCP changes it to 2015-12-03.
+
+Specifying an offset
+
+You can set retention by specifying an offset from:
+
+The time at which the object was added to the namespace The current retention setting for the object The current time
+
+Because you can only extend a retention period, the offset must be a positive value. Offset syntax
+
+To use an offset as a retention setting, specify a standard expression that conforms to this syntax:
+
+^([RAN])?([+-]\d+y)?([+-]\d+M)?([+-]\d+w)?([+-]\d+d)?([+-]\d+h)?([+-]\d+m)?([+-]\d+s)?
+
+The list below explains this syntax.
+
+^
+
+Start of the expression
+
+( )
+
+Sequence of terms treated as a single term
+
+?
+
+Indicator that the preceding term is optional
+
+[ ]
+
+Group of alternatives, exactly one of which must be used
+
++ Plus
+
+Minus
+
+R*
+
+The current retention setting for the object
+
+A*
+
+The time at which the object was added to the namespace
+
+N*
+
+The current time
+
+d+
+
+An integer in the range 0 (zero) through 9,999
+
+y
+
+Years
+
+M
+
+Months
+
+w
+
+Weeks
+
+d
+
+Days
+
+h
+
+Hours
+
+m
+
+Minutes
+
+s
+
+Seconds
+
+Offset examples
+
+Here are some examples of offset values used to extend a retention period:
+
+This value sets the retention value to 100 years past the time when the object was stored:
+
+A+100y
+
+This value sets the end of the retention period to 20 days minus five hours past the current date and time:
+
+N+20d-5h
+
+This value extends the current retention period by two years and one day:
+
+R+2y+1d atime synchronization with retention
+
+Some file systems support the use of the POSIX atime attribute to set retention. To take advantage of this existing mechanism, HCP gives you the option of synchronizing atime values with HCP retention settings. When these properties are synchronized, changing one for an object causes an equivalent change in the other.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+698/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The tenant administrator enables or disables atime synchronization for a namespace. While atime synchronization is enabled, atime values are automatically synchronized with retention settings for objects subsequently added to the namespace except in these cases: The object is added through NFS with an initial retention setting of Deletion Allowed. The object is added through any protocol with an initial retention setting that is either Initial Unspecified or a retention class.
+
+In these cases, the atime value of an object is set to the time the object is stored.
+
+For any given object, if atime synchronization was not enabled automatically, you can enable it manually.
+
+While atime synchronization is enabled for a namespace, the rules for changing retention settings also apply to changing atime values. You cannot use atime to shorten a retention period, nor can you use it to specify a retention period if the current setting is Deletion Prohibited. Additionally, you cannot change the atime value if the object is on hold. atime synchronization does not work with objects in retention classes. When you assign an object to a retention class, the atime value for the object does not change, even if the at ime value had previously been synchronized with the retention setting. Triggering atime synchronization for an object in a retention class has no effect.

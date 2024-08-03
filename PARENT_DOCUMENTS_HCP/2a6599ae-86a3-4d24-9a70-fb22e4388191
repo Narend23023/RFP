@@ -1,0 +1,91 @@
+Represents the number of the week into the year. Repetition has no effect.
+
+W
+
+Represents the number of the week into the month, where the first week is the week that includes the first day of the month. Repetition has no effect.
+
+D
+
+Represents the number of the day into the year. Repetition has no effect. d
+
+Represents the number of the day into the month. Repetition has no effect.
+
+F
+
+Represents the number of the week into the month, where the first week starts with the first Sunday in the month. Repetition has no effect.
+
+E
+
+Represents the day of the week. Matching values include the name of the day in full or as a three-letter abbreviation. Repetition has no effect. a
+
+Represents a valid morning or afternoon indicator, such as AM or pm. Repetition has no effect.
+
+H
+
+Represents the hour on a 24-hour clock, where midnight is represented by zero. Repetition has no effect.
+
+k
+
+Represents the hour on a 24-hour clock, where midnight is represented by 24. Repetition has no effect. K
+
+Represents the hour on a 12-hour clock, where midnight and noon are represented by zero. Repetition has no effect.
+
+h
+
+Represents the hour on a 12-hour clock, where midnight and noon are represented by 12. Repetition has no effect.
+
+m
+
+Represents the minute into the hour. Repetition has no effect. If a datetime pattern doesn’t include any occurrences of m, the metadata query engine assumes that the number of minutes is zero for matching values. s
+
+Represents the second into the minute. Repetition has no effect. If a datetime pattern doesn’t include any occurrences of s, the metadata query engine assumes that the number of seconds is zero for matching values.
+
+S
+
+Represents a number of milliseconds past the applicable second. Repetition has no effect. z
+
+Represents a valid time zone specified as text, such Eastern Standard Time, EDT, or GMT. Repetition has no effect. Z
+
+Represents a valid time zone specified as an offset from GMT, formatted as (+|-)nnnn, such as +0500 or -0200. Repetition has no effect.
+
+If a datetime format doesn’t include a representation for:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+298/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+A day, the metadata query engine assumes that the day is the first day of the applicable month for matching values An hour, the metadata query engine assumes that the hour is midnight
+
+A time zone, the metadata query engine assumes that the time is in the HCP system time zone
+
+The separators in a datetime format can be any of several different special characters, including forward slashes (/), hyphens (-), colons (:), semicolons (;), at signs (@), and spaces.
+
+To include text in a datetime format, enclose the text in single quotation marks ('). To include a single quotation mark, specify two single quotation marks in a row. Here are some examples of datetime formats with examples of values that match them:
+
+Format
+
+Example
+
+MM/dd/yy HH:mm:ss z
+
+03/19/12 14:35:27 EST
+
+hh 'o''clock' a, zzz
+
+2 o'clock PM, Eastern Standard Time
+
+yyyy-MM-dd'T'HH:mm:ss.SSSZ
+
+2012-03-19T14:35:27.236-0400 E., MMM d, yyyy 'at' k:s
+
+Mon., March 19, 2012 at 14:35
+
+If you don’t specify a format for a content property with the datetime data type, the metadata query engine indexes only values that match patterns such as MM/dd/yyyy, MM-dd- yyyy, yyyy-MM-dd, or yyyy-MM-dd'T'HH:mm:ssZ.
+
+Multivalued content properties
+
+A content property is defined as either single-valued or multivalued:

@@ -1,0 +1,49 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+350/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Supported replication topologies
+
+An erasure coding topology can include from three through six HCP systems. An erasure coding topology with four, five, or six systems can be based on either an active/active replication ring topology or a fully connected active/active replication topology. A three-system erasure coding topology is always based on a fully connected active/active replication topology.
+
+Before you can create an erasure coding topology, the underlying replication topology must already exist.
+
+The figures below show all the replication topologies on which an erasure coding topology can be based. Erasure coding topology retirement
+
+When you retire an erasure coding topology, the protection type for any namespaces that were using erasure-coded protection changes to whole-object protection. This change causes the Geo-distributed Erasure Coding service to, for any given object:
+
+Restore the chunk for the object to a full copy of the object data on HCP systems where the object is not supposed to be metadata-only. As the service restores chunks to full copies, the use of storage on those systems increases.
+
+Delete the chunk for the object on HCP systems where the object should be metadata-only. The service does not delete the chunk for an object until a full copy of the object data exists either on at least two systems in the topology or on one system if the object should have data on only one system.
+
+For any given erasure-coded object, if the object should be metadata-only on every system in the topology, the Geo-distributed Erasure Coding service on one system restores the chunk to a full copy. The system where this occurs varies depending on when the service processes the object on each system in the topology.
+
+The number of concurrent system failures HCP can tolerate for a replicated namespace with whole-object protection is one less than the number of systems where the namespace
+
+contains object data. Therefore, to maintain at least the same protection level with whole-object protection as the protection level maintained by erasure-coded protection, the underlying replication topology must include at least two systems where the replicated namespaces contain object data.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+351/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Before retiring an erasure coding topology, you need to ensure that any system where object chunks will be restored to full copies of the object data has sufficient storage to accommodate that data. Tip: To estimate the amount of storage required on a given system:
+
+1. For each tenant included in the retiring erasure coding topology, use the management API to get the value of the erasureCodedSize property of the /tenants/tenant-
+
+name/statistics resource. This value is the total amount of storage, in bytes, occupied by chunks for erasure-coded objects in all the tenant's namespaces.
+
+2. Add together the numbers of bytes occupied by chunks for erasure coded objects for all the tenants. The total is the number of bytes occupied by chunks for all erasure-
+
+coded objects on the system.
+
+3. Multiply the total number of bytes by the number of data chunks in the topology protection level. The result is an estimate of the required amount of storage, in bytes. Also before retiring an erasure coding topology, if you don't want chunks for objects in a namespace restored to full copies of the object data on a given system, ensure that, on that system, the namespace is already associated with a service plan that keeps all objects in the namespace on a metadata-only storage tier. That way, chunks are not unnecessarily restored to full copies on systems where the objects should be metadata-only.
+
+As the Geo-distributed Erasure Coding service on a system processes the chunks for a retiring erasure coding topology, the number of erasure-coded objects for that topology on that system decreases. When that number reaches zero on all the systems in the topology, the state of the topology changes to retired.

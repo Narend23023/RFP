@@ -1,0 +1,55 @@
+Optionally, in the Allow/Deny section, specify IP addresses to be allowed or denied access to the namespace through CIFS.
+
+CIFS case sensitivity
+
+The Windows operating system is case preserving but not case sensitive. The HCP CIFS implementation, by default, is both case preserving and case sensitive. One result of this discrepancy is that Windows applications that do not observe differences in case may not be able to access HCP objects by name.
+
+For example, suppose a Windows application adds a file named File.txt to the namespace by using the CIFS protocol. CIFS preserves case, so the namespace then contains an
+
+object named File.txt. Now suppose the application tries to retrieve that object using the name file.txt. CIFS is case sensitive, so it passes the request to HCP with only the name file.txt. It doesn’t include any case variations on the name, such as File.TXT, FILE.txt, or File.txt. As a result, HCP cannot find the object. If you have Windows applications that ignore case, you may want HCP to ignore case as well. You can change the CIFS protocol configuration in either of two ways to meet this need:
+
+Make CIFS case forcing
+
+With this behavior, CIFS changes names to all upper- or lowercase in the requests it passes to HCP. To Windows applications, then, HCP appears to be case-insensitive. An application that stores File.txt and then retrieves File.TXT will get the right object back. The drawback to this method is that applications using other namespace access protocols must accommodate this behavior. For example, suppose CIFS changes names to all uppercase. If an application using the CIFS protocol stores an object named File.txt, applications using the case-sensitive HTTP, WebDAV, and NFS protocols need to retrieve the object as FILE.TXT. Make CIFS case insensitive
+
+With this behavior, CIFS preserves case as objects are stored in the namespace but passes through every case variation possible when applications make other requests for objects. For example, suppose an application using the CIFS protocol requests an object named FILE.txt. CIFS passes the request through with the names File.txt, FILE.txt, fiLe.TXT,
+
+and so on. HCP then returns the first object it finds with a name that matches any of these. The major drawback to this method is that performance is slowed by the need to check for matches to multiple case variations. A second drawback is that if the namespace contains multiple objects with names that vary only in case, HCP may return the wrong object.
+
+If you make CIFS both case forcing and case insensitive, it is case forcing when storing objects and case insensitive on requests for existing objects.
+
+Configuring the NFS protocol With the NFS protocol, users and applications can add, view, and delete objects and modify object metadata through familiar directory structures.
+
+NFS protocol configuration
+
+You use the NFS panel to enable and configure the NFS protocol for a namespace. To display this panel, on the left side of the Protocols panel, click NFS.
+
+The top of the NFS panel shows the string to use to identify the namespace when mounting it on an NFS client.
+
+The NFS panel lets you:
+
+Enable the NFS protocol.
+
+Specify default values for POSIX UIDs and GIDs. Specify the client IP addresses that have access to the namespace through NFS.
+
+Enabling NFS access to a namespace
+
+The NFS panel has two sections for enabling and configuring the NFS protocol. Settings section
+
+1. Select Enable NFS. 2. (Optional) In the UID field, type a different UID to be displayed for objects that don’t have an explicit POSIX UID. Valid values are integers greater than or equal to zero.
+
+3. (Optional) In the GID field, type a different GID to be displayed for objects that don’t have an explicit POSIX GID.
+
+Valid values are integers greater than or equal to zero.
+
+4. Click Update Settings.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+288/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Allowed IP Addresses section

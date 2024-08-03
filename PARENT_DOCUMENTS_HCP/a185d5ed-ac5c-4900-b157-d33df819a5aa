@@ -1,0 +1,91 @@
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. x-amz-copy-source-version-id
+
+Specifies the version ID of the source object. This header is returned only while versioning is enabled for the source bucket. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Response body
+
+HCP returns information about the part of a multipart upload that results from a successful upload part copy request in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to upload a part by copying. The elements are listed in alphabetical order. CopyPartResult
+
+Root element.
+
+ETag
+
+Child of the CopyPartResult element. The ETag element specifies the ETag for the uploaded part.
+
+LastModified
+
+Child of the CopyPartResult element. The LastModified element specifies the date and time when the uploaded part was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+646/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to upload a part of a multipart upload by copying. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully uploaded the part.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+The specified part number is not an integer in the range 1 (one) through 10,000. The request specifies a range, and one of these is true:
+
+The start position for the range is greater than or equal to the size of the source object data. The start position for the range is greater than the end position.
+
+The request includes conflicting conditional headers (for example, x-amz-copy-source-if-match and x-amz-copy-source-if-none-match). The request includes a custom metadata (x-amz-meta-) header.
+
+403 Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can upload parts for a multipart upload. The credentials provided with the request are invalid. The credentials provided with the request do not match the credentials used to initiate the multipart upload. You do not have permission to upload parts in the specified bucket. The S3 compatible API is currently disabled for the specified bucket. The source object exists, but the HCP system does not have the source object data. Try the request again later. The source object is in the process of being deleted.
+
+404 Not Found
+
+One of these:
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was aborted or completed.
+
+In the case of completion, if the part being uploaded is a replacement for an existing part, the existing part is used for completing the multipart upload.
+
+The specified bucket does not exist.
+
+409 Conflict
+
+The specified multipart upload was completed or aborted while the upload part copy operation was in progress.
+
+412
+
+Precondition Failed
+
+One of these:

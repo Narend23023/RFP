@@ -1,0 +1,123 @@
+Example
+
+Here's an XML example of the logDownloadStatus data type:
+
+<logDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <started>true</started> <error>false</error> <content>ACCESS,SYSTEM,SERVICE,APPLICATION</content> </logDownloadStatus> namespace
+
+The namespace data type describes the namespaces resource.
+
+Properties
+
+The table below describes the properties included in the namespace data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+aclsUsage
+
+String
+
+Specifies whether the namespace supports access control lists (ACLs) and, if so, whether HCP honors ACLs in the namespace. Valid values are: NOT_ENABLED
+
+The namespace does not support ACLs.
+
+This property is optional on a PUT request.
+
+You can change the value of this property from NOT_ENABLED to ENFORCED or NOT_ENFORCED but not from ENFORCED or NOT_ENFORCED to NOT_ENABLED.
+
+ENFORCED
+
+The namespace supports ACLs, and HCP honors ACLs in the namespace.
+
+This property is not valid for the default namespace.
+
+NOT_ENFORCED
+
+The namespace supports ACLs, but HCP does not honor ACLs in the namespace.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+478/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+The default is NOT_ENABLED.
+
+These values are not case sensitive.
+
+allowErasureCoding Boolean
+
+For an HCP namespace, specifies whether HCP is allowed to use erasure coding to implement replication of the objects in the namespace. Valid values are:
+
+This property is valid on a PUT or POST request only if the owning tenant is allowed to manage erasure coding for its namespaces.
+
+true
+
+This property is optional on a PUT request. false
+
+HCP is allowed to use erasure coding for replication of the namespace.
+
+HCP is not allowed to use erasure coding for replication of the namespace.
+
+You can set the value of this property to true on a PUT request only if the value of the optimizedFor property is set to true in the same request or if new namespaces are cloud optimized by default.
+
+If the tenant is allowed to manage erasure coding for namespaces, the default is the setting specified by the namespace defaults for the tenant. If the tenant does not have this ability, the default is to allow erasure coding for namespaces that are cloud optimized.
+
+You can set the value of this property to true on a POST request only if the namespace is already cloud optimized or the optimizedFor property is set to true in the same request.
+
+This property is not returned by any GET request for a namespace that is not selected for replication or for which the owning tenant is not allowed to manage erasure coding for its namespaces. This property is not valid for the default namespace.
+
+allowPermissionAnd OwnershipChanges
+
+Boolean
+
+Specifies whether changes to POSIX UIDs, GIDs, and permissions and to object ownership are allowed for objects under retention in the namespace. Valid value are:
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace. true
+
+Changes to POSIX UIDs, GIDs, and permissions and to object ownership are allowed for objects under retention.
+
+false
+
+Changes to POSIX UIDs, GIDs, and permissions and to object ownership are not allowed for objects under retention.
+
+The default is false.
+
+appendEnabled
+
+Boolean
+
+Specifies whether the namespace supports appendable objects. Valid values are:
+
+This property is optional on a PUT request. true
+
+You cannot enable both appendable objects and versioning for a namespace.
+
+The namespace supports appendable objects.
+
+false
+
+This property is not valid for the default namespace.
+
+The namespace does not support appendable objects.
+
+The default is false.
+
+Note: The appendable-object feature provides snaplock volume support for third-party backup solutions. Do not enable this feature unless you have been explicitly told to do so.

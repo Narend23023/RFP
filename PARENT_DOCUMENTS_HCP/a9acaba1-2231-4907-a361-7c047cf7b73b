@@ -1,0 +1,43 @@
+Creating many-to-one replication with disaster recovery support
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+330/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+In this example, HCP systems A, B, and C replicate to system D, which replicates to system E. To create this combined topology: 1. When you create the replication links from A to D, from B to D, and from C to D, select the tenants, namespaces, and directories you want to replicate. 2. When you create the replication link from D to E, select the links from A to D, from B to D, and from C to D to be included in that link.
+
+This causes the tenants, namespaces, and directories replicated on all three of those links to be replicated again from D to E. In effect, you’re creating three replication chains: A → D → E, B → D → E, and C → D → E. The following below shows a many-to-one replication topology with disaster recovery support. Bidirectional active/passive replication
+
+For any given pair of HCP systems, each system can serve as both a primary system and a replica for the other system, as long as different HCP tenants and different default- namespace directories are being replicated in each direction. A system that serves as both a primary system and a replica at the same time has two active/passive links: one outbound and one inbound. This topology is called bidirectional active/passive replication.
+
+What this looks like
+
+The following figure shows a bidirectional active/passive replication topology in which two systems (A and B) are each replicating to the other system. In this figure:
+
+From system A, two locally created tenants are being replicated to system B. In both tenants, all namespaces are selected for replication. From system B, one locally created tenant is being replicated to system A. In this tenant, all namespaces are selected for replication. Uses
+
+For each link in a bidirectional active/passive replication topology, the tenants, namespaces, and directories being replicated are read-write on the primary system and read-only on the replica. Therefore, a bidirectional active/passive replication topology supports a scenario like this:
+
+Application 1 running in a data center in New York needs read-write access to Tenant-1, which was created locally in the HCP system (A) in New York. Application 2 running in a data center in Tokyo needs read-write access to Tenant-2, which was created locally in the HCP system (B) in Tokyo. Application 1 needs only read access to Tenant-2. Application 2 needs only read access to Tenant-1
+
+To meet these needs, you could: Create an active/passive link from system A to system B that includes Tenant-1. System A sends Tenant-1 to system B, where the tenant is in read-only mode. Application 2 can access the tenant more efficiently on system B than on system A. Create an active/passive link from system B to system A that includes Tenant-2. System B sends Tenant-2 to system A, where the tenant is in read-only mode. Application 1 can access the tenant more efficiently on system A than on system B.
+
+Bidirectional active/passive chained replication
+
+In a bidirectional active/passive chained replication topology, three HCP systems participate in two active/passive replication chains, with each chain going in a different direction. That is, given three HCP systems A, B, and C:
+
+In one chain, system A replicates to system B, which replicates to system C. In the other chain, system C replicates to system B, which replicates to system A.
+
+What this looks like The following figure shows a bidirectional active/passive chained replication topology in which the replication chains are A → B → C and C → B → A.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+331/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this figure:

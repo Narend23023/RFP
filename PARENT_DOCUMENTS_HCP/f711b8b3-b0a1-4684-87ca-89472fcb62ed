@@ -1,0 +1,55 @@
+"replicationEnabled" : true, "readFromReplica" : true, "serviceRemoteSystemRequests" : true, "tags" : { "tag" : [ "Billing", "lgreen" ] } }
+
+JSON file for modifying a namespace
+
+Here’s the content of the JSON file that enables disposition for the Accounts-Receivable namespace. The name of the file is AcctsRecCompliance.json.
+
+{ "dispositionEnabled" : true }
+
+JSON file for configuring the REST API
+
+Here’s the content of the JSON file that is used to configure the REST API for both namespaces. The name of the file is http.json. { "httpsEnabled" : true, "httpEnabled" : false, "restEnabled" : "true", "restRequiresAuthentication" : true, "httpActiveDirectorySSOEnabled" : true, "ipSettings" : {
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+533/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+"allowAddresses" : { "ipAddress" : [ "192.168.140.10", "192.168.140.15", 192.168.149.0/24" ] }, "denyAddresses" : {
+
+"ipAddress" : [ "192.168.149.5" ] }, "allowIfInBothLists" : false } }
+
+JSON file for creating the user account with no roles
+
+Here’s the content of the JSON file that creates a user account with the username pblack. The name of the file is pblack-UA.json. For the password for this account, the sample application specifies start123.
+
+{ "username" : "pblack", "fullName" : "Paris Black", "description" : "Data access user.",
+
+"localAuthentication" : true, "forcePasswordChange" : false, "enabled" : true } JSON file for granting data access permissions to the user account
+
+Here’s the content of the JSON file that grants data access permissions to the user account with the username pblack. The name of the file is pblack-UAperms.json.
+
+{ "namespacePermission" : [ { "namespaceName" : "Accounts-Receivable", "permissions" : { "permission" : [ "BROWSE", "READ", "SEARCH", "PURGE", "DELETE", "WRITE" ]
+
+} }, { "namespaceName" : "Accounts-Payable", "permissions" : { "permission" : [ "BROWSE", "READ" ] } } ] }
+
+JSON file for creating the retention class
+
+Here’s the content of the JSON file that creates a retention class named Fn-Std-42 for the Accounts-Receivable namespace. The name of the file is RC-FN-Std-42.json.
+
+{ "name" : "FN-Std-42",
+
+"description" : "Implements Finance department standard #42 - keep for 10 years.", "value" : "A+10y", "allowDisposition" : true }
+
+JSON file for creating the replication link Here’s the content of the JSON file that creates a replication link named MA-CA. The name of the file is LinkMA-CA.json.
+
+{ "name" : "MA-CA", "description" : "Active/active link between systems in MA and CA", "type" : "ACTIVE_ACTIVE", "connection" : { "remoteHost" : "replication.admin.hcp-ca.example.com"
+
+}, "compression" : false, "encryption" : false, "priority" : "OLDEST_FIRST", "failoverSettings" : { "remote" : { "autoFailover" : true, "autoFailoverMinutes" : 60 }, "local" : { "autoFailover" : true, "autoFailoverMinutes" : 60 } } } JAVA application
+
+Here is the sample Java application that uses the JSON files shown in the preceding sections.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3

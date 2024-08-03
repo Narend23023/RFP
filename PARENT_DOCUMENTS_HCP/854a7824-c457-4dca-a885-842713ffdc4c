@@ -1,0 +1,113 @@
+The size of the object data, in bytes.
+
+X-HCP-SoftwareVersion
+
+The version number of the HCP software.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created. This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. X-HCP-Type
+
+The object entity type.
+
+X-HCP-UID
+
+The POSIX user ID for the object.
+
+For objects added through the NFS protocol, this value is determined by the NFS client. This value is an empty string if either of these conditions are true:
+
+The object was added through a protocol other than NFS and neither the UID nor the GID for the object was changed.
+
+The HCP product-specific owner of the object was changed. X-HCP-VersionId
+
+The version ID of the object.
+
+Response headers for retrieving a range of object versions
+
+The next list describes request-specific response headers for retrieving a range of object versions from a namespace.
+
+When retrieving multiple versions of an object, you can only request all the object data. Four headers are returned for each object version, as described in the following list.
+
+X-HCP-VersionID
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+735/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The version ID of the object or object version.
+
+X-HCP-Operation
+
+Whether the object or object version is created or deleted. X-HCP-IngestTimeMilliseconds
+
+The time when HCP stored the object or object version, in seconds since January 1, 1970, at 00:00:00 UTC.
+
+X-HCP-Size
+
+The size of the object or object version in bytes.
+
+Status codes
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully processed the request.
+
+This code is also returned if the URL specified a valid directory path and HCP returned a directory listing.
+
+Note: For a request for an object or version, if the number of bytes returned does not equal the value of the Content-Length response header, try the request again later.
+
+206 Partial Content
+
+HCP successfully retrieved the data in the byte range specified in the request.
+
+304
+
+Not Modified
+
+One of:
+
+The request specified an If-None-Match header, and the ETag of the requested object or version matches the value in the header. The request specified an If-Modified-Since header, and the object change time is at or before the time specified in the header.
+
+400 Bad Request
+
+The request was not valid. Possible reasons include:
+
+The URL in the request is not well formed. The request has both a type=whole-object query parameter and a Range request header. The requested object is larger than 512,000 bytes and does not yet have an ETag, and the request included an If-Match or If-None-Match header that did not specify a forceEtag=true query parameter.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter.
+
+If more information about the error is available, the response headers include the HCP product-specific X-HCP-ErrorMessage header.
+
+403 Forbidden
+
+The requested operation is not allowed. Possible reasons include:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user does not have read permission.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP product-specific X-HCP-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find an object, version, or directory at the specified URL. The specified object or version does not exist, or the request specified the current version of an object that has been
+
+deleted. When retrieving object or version data and an annotation together, the requested object does not
+
+have an annotation with the specified name.
+
+406 Not Acceptable

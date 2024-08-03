@@ -1,0 +1,41 @@
+Example: Conditionally retrieving an object
+
+Here is a sample GET request that retrieves the current version of the object named mktg/campaign_GoGetEm_expenses.xls in the finance bucket only if the ETag for the object does not match a specified value. In this example, the specified value is the ETag of the first version of mktg/campaign_GoGetEm_expenses.xls. The request writes the object data to a file named mktg_GoGetEm.xls. The request is being made while versioning is enabled for the bucket.
+
+Request with s3curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+629/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help ./s3curl.pl --id=lgreen -- -k
+
+"https://finance.europe.hcp.example.com/mktg/campaign_GoGetEm_expenses.xls" -H 'If-None-Match:"74d824cd5076a1361da128ee18e5a42b"' > mktg_GoGetEm.xls
+
+Request headers
+
+GET /mktg/campaign_GoGetEm_expenses.xls HTTP/1.1
+
+Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:3ymfU6KeNWnFEvpphFxYvJ881Wg= If-None-Match: "74d824cd5076a1361da128ee18e5a42b" Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "6ed7faad1e0661c03ad65a4317d4a94c" Accept-Ranges: bytes x-amz-version-id: 87288825190337 Last-Modified: Mon, 13 Feb 2017 17:44:53 GMT Content-Type: application/vnd.ms-excel Content-Length: 94328
+
+Example 2: Retrieving an old version of an object
+
+Here is a sample GET request that retrieves an old version of the object named AcctgBestPractices.doc in the finance bucket. The request writes the object data to a file named AcctgBestPractices.doc-10-08-16.doc. The request is being made while versioning is enabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com/ AcctgBestPractices.doc?versionId=87288808614529" > AcctgBestPractices-10-08-16.doc
+
+Request headers
+
+GET /AcctgBestPractices.doc?versionId=87288808614529 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:6Am3akZkcfc4fD3WXSBFr+dV7DE= Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "5ab7542f753b09fdb73141a66c134b9" Accept-Ranges: bytes x-amz-version-id: 87288808614529 Last-Modified: Wed, 28 Dec 2016 21:06:52 GMT
+
+Content-Type: application/msword Content-Length: 3557448
+
+Example: Retrieving part of an object
+
+Here is a sample GET request that retrieves the first hundred thousand bytes of the object named quarterly_rpts/Q4_2019.ppt in the finance bucket. The request writes the object data to a file named Q4_2019_Rpt_Part-1. The request is being made while versioning is disabled for the bucket. Request with s3curl command line

@@ -1,0 +1,71 @@
+Every object, including objects assigned to retention classes, has a specific retention setting that specifies when (or whether) the retention period for the object ends. HCP represents the retention setting in numeric and text formats, as shown in the following table. Numeric value
+
+Text value
+
+Meaning
+
+0
+
+Deletion Allowed
+
+The object can be deleted at any time.
+
+1
+
+Deletion Prohibited
+
+The object cannot be deleted, except by a privileged delete, and the retention setting cannot be changed.
+
+2 Initial Unspecified
+
+The object does not yet have a retention setting. An object that has this value cannot be deleted, except by a privileged delete. You can change this retention setting to any other setting.
+
+An integer number of seconds since January 1, 1970, at
+
+A datetime value
+
+The object cannot be deleted, except by a privileged delete, until the specified date and time.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+694/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Numeric value
+
+Text value
+
+Meaning
+
+00:00:00 UTC
+
+The format used for retention settings depends on whether you are specifying or retrieving a setting and on the protocol you are using.
+
+Deleting object and versions under retention
+
+If you have privileged permission and the namespace allows it, you can use the HTTP protocol to: Delete an object that is under retention. This action is called privileged delete. Purge all versions of an object that is under retention. This action is called privileged purge. To perform a privileged purge, the namespace must support versioning.
+
+Holding an object
+
+If you have both write and privileged permissions, you can place an object on hold. An object on hold cannot be deleted, even by a privileged delete operation. Also, you cannot store new versions of an object that is on hold. Holding objects is particularly useful when the objects are needed for legal discovery.
+
+While an object is on hold, you can change its retention setting only by increasing the value. You can also change its shred setting and its ACL. And if the namespace is configured to allow changes to custom metadata for objects under retention, you can change its custom metadata. If you have both write and privileged permissions, you can also release an object from hold. When an object is released, its previous retention setting is again in effect.
+
+Tip: You can use the HCP Search Console to place multiple objects on hold or release multiple objects at the same time.
+
+Holding an object using labeled holds
+
+A labeled retention hold, or labeled hold, is a named retention hold that has a unique identifier. The ability to set multiple, independent labeled holds on an object enables multiple organizations or custodians to place a hold on the same object to prevent its deletion or versioning, or metadata modification, until all holds are explicitly released. This feature is supported by both the REST API and Hitachi API for Amazon S3. A common use of labeled holds is when an object is needed for legal discovery by multiple organizations or custodians. For example, there might be several lawsuits handled by different organizations within a company. The investigations or inquiries have different but overlapping time lines. A file relevant to all of the lawsuits must not be deleted when the first legal hold ends because the other lawsuits need the file as well.
+
+A labeled hold can be placed on a new object at ingest time, or on an existing object in the namespace, provided the client application has write and privileged data access permissions. Similarly, the application can modify a labeled hold on an existing object.
+
+To place a labeled hold on an object at ingest time, use the Hitachi API for Amazon S3 or REST API with the HTTP PUT object method and the X-HCP-LabelRetentionHold header. To add or remove a labeled hold on an existing object, use the S3 compatible API with the HTTP PUT object copy method and the X-HCP-LabelRetentionHold header, or the REST API HTTP PUT method with the query parameter method to add or remove system metadata.
+
+Retention holds and labeled retention holds on the same object
+
+An object can have both a single hold and one or more labeled holds at the same time. These hold settings are independent of one another. All holds must be released on the object before it can be deleted or have its metadata modified, regardless of the retention setting.
+
+Prerequisite to set privileged data access and write permissions

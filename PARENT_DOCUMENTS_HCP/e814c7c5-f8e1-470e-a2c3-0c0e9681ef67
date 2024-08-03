@@ -1,0 +1,35 @@
+Here’s the sample Java application.
+
+/** * This sample Java application shows how to use the Hitachi API for Amazon S3, * which is compatible with Amazon S3. The application uses the Amazon S3 SDK.
+
+/ package com.hds.hcp.examples; import java.io.File; import java.io.FileInputStream; import java.io.FileOutputStream; import java.io.IOException;
+
+import com.amazonaws.AmazonClientException; import com.amazonaws.AmazonServiceException; import com.amazonaws.ClientConfiguration; import com.amazonaws.Protocol; import com.amazonaws.auth.BasicAWSCredentials; import com.amazonaws.services.s3.AmazonS3; import com.amazonaws.services.s3.AmazonS3Client; import com.amazonaws.services.s3.model.AccessControlList; import com.amazonaws.services.s3.model.CanonicalGrantee; import com.amazonaws.services.s3.model.EmailAddressGrantee;
+
+import com.amazonaws.services.s3.model.GetObjectRequest; import com.amazonaws.services.s3.model.ListObjectsRequest; import com.amazonaws.services.s3.model.ObjectMetadata; import com.amazonaws.services.s3.model.Permission;
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+683/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help import com.amazonaws.services.s3.model.PutObjectRequest; import com.amazonaws.services.s3.model.Bucket;
+
+import com.amazonaws.services.s3.model.PutObjectResult; import com.amazonaws.services.s3.model.S3Object; import com.amazonaws.services.s3.model.ObjectListing; import com.amazonaws.services.s3.model.S3ObjectInputStream; import com.amazonaws.services.s3.model.S3ObjectSummary; public class HS3SampleApp {
+
+/** * @param args */ public static void main(String[] args) {
+
+/* * Initialize access credentials for the S3 compatible API client. */ // base64 of HCP user name: "lgreen" String accessKey = "bGdyZWVu"; // md5 of HCP user password: "p4ssw0rd"
+
+String secretKey = "2a9d119df47ff993b662a8ef36f9ea20";
+
+/* * Set up the client configuration to allow for 200 max HTTP * connections, as this is an HCP best practice. */ ClientConfiguration myClientConfig = new ClientConfiguration(); myClientConfig.setMaxConnections(200);
+
+/* * By default, AWS SDK uses the HTTPS protocol and validates * certificates with a certificate authority. The default * certificates installed in HCP are self-signed. If these * self-signed certificates are used, certificate validation * will need to be disabled. */ myClientConfig.setProtocol(Protocol.HTTPS); System.setProperty("com.amazonaws.sdk.disableCertChecking", "true"); /* * Build the hs3Client to be used for communication with HCP. */ AmazonS3 hs3Client = new AmazonS3Client( new BasicAWSCredentials(accessKey, secretKey), myClientConfig);
+
+// Set up the service point to be the tenant in HCP. hs3Client.setEndpoint("europe.hcp.example.com");
+
+/* * Now that the hs3Client is created for HCP usage, proceed with some * operations. */ String bucketName = "finance";
+
+try { /*

@@ -1,0 +1,47 @@
+When you reenable replication of a namespace that has already been replicated, all operations that occurred in that namespace while replication was not happening, including object deletions, are replicated to the other system. During this replication, conflicts can occur between changes made on different systems while the namespace was not being replicated.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 268/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If you disable replication for a namespace that has already been replicated and then delete the namespace on one or more systems, the namespace deletions are not replicated. If you then reenable replication for that namespace and the namespace still exists on one or more systems, the namespace is replicated back to the systems where you deleted it.
+
+You can also enable or disable replication for a namespace and specify whether the namespace allows erasure coding on the namespace Replication panel.
+
+Depending on the current status of replication, if the tenant is being replicated, you may not be able to disable replication for namespaces that are being replicated.
+
+Allowing erasure coding for a namespace that has shredding enabled as the default for new objects can significantly increase the load on all systems in the replication topology. Important: Disabling replication for a namespace that has already been replicated may cause object data in that namespace to become inaccessible on one or more systems in the replication topology.
+
+1. Click Namespace Selection for Replication.
+
+The Namespace Replication Selection section lists all the tenant's namespaces. For each namespace, the section shows whether the namespace is cloud optimized. The Namespace Replication Selection section has a column in which you can select or deselect namespaces for replication. If you can specify whether namespaces allow erasure coding, this section also has a column in which you can allow or disallow erasure coding for namespaces.
+
+2. In the Namespace Replication Selection section:
+
+To enable or disable replication for a namespace, select or deselect the namespace in the Replication column. To enable or disable replication for all namespaces at the same time, select or deselect the Replication column heading. When you deselect Replication for a namespace, Allow Erasure Coding is automatically deselected for that namespace.
+
+To allow or disallow erasure coding for a namespace, select or deselect the namespace in the Allow Erasure Coding column. This option is available only for cloud- optimized namespaces. To allow or disallow erasure coding for all cloud-optimized namespaces at the same time, select or deselect the Replication column heading.
+
+When you select Allow Erasure Coding for a namespace, Replication is automatically selected for that namespace.
+
+The Allow Erasure Coding column is present only if you're allowed to choose whether namespaces allow erasure coding.
+
+3. Click Update Namespaces.
+
+Generating chargeback reports
+
+You can generate chargeback reports from the Tenant Management Console. A chargeback report contains current and historical statistics about the tenant and its namespaces, broken out by hour. Chargeback reports are a good source of information for namespace analysis, enabling you to adjust storage and bandwidth allocations based on usage patterns. These reports can also serve as input to billing systems that need to determine charges for capacity and bandwidth usage. About chargeback reports
+
+A chargeback report contains statistics for each namespace owned by the current tenant. It also contains aggregated namespace statistics for the tenant. For example, the total number of reads for the tenant during a given reporting interval is the total number of successful read operations that occurred during that interval in each of the tenant's namespaces.
+
+When generated from the Tenant Management Console, chargeback reports are in CSV format. Each line in a report contains the values for one namespace or for the tenant during one instance of the reporting interval.
+
+The lines in a chargeback report are ordered alphabetically by namespace name. The lines for the tenant are at the end of the report. Multiple lines for a namespace or the tenant are ordered in ascending chronological order.
+
+Roles: To generate chargeback reports, you need the monitor or administrator role. Types of chargeback reports
+
+You use the Chargeback page in the Tenant Management Console to generate chargeback reports. From this page, you can generate an hourly, daily, or monthly report:
+
+Hourly report

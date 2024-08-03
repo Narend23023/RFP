@@ -1,0 +1,61 @@
+Error
+
+The event is serious and most likely requires manual intervention. Examples are:
+
+Storage capacity critical Volume failure
+
+Network interface down
+
+The date and time at which the event occurred, shown for the time zone in which the HCP system is located. A short description of the event.
+
+To view more details about an event, click anywhere in the row containing the event message. To hide the details, click again in the row.
+
+The details displayed for an event are:
+
+The user ID of the event initiator For user-initiated events, the port through which HCP received the event request For user-initiated events, the IP address from which the event request was sent The message ID
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+143/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The number of the node on which the event occurred
+
+If the event applies to a specific logical volume, the volume ID The full text of the event message
+
+Managing the message list
+
+You can manage the message list using the All Events panel and the Search option. Using the All Events Panel
+
+To view the All Events panel, you need the monitor, administrator, security, service, or compliance role. However, only users with the security role can see messages about attempts to log into the System Management Console with an invalid user name.
+
+You can display the All Events panel.
+
+1. To display details for all the listed events, click expand all. To hide all details, click collapse all. 2. To view a different number of messages per page, select the number you want in the Items field.
+
+3. To page forward or backward through the messages, click the next ( ) or back ( ) control, respectively.
+
+Using the Search Option
+
+Another way to manage the message list is by using the Search option on the System Events and Tenant Events pages. This option allows you to view event log, security log, and compliance event records based on a user-specified date range, event ID, or node. When you click this option, the Search box appears.
+
+For Node Number, you can specify one node or All. For Event ID, enter a single event ID or multiple IDs separated by a comma (for example, 3005,2606). When finished, click Search. You can clear searched events when they are no longer needed.
+
+Configuring syslog logging You can have HCP send system log messages to one or more syslog servers. You can also have HCP send access log messages about HTTP data access events or log messages about management API access requests to the syslog servers. When you send log messages to syslog servers, you can use tools in your syslog environment to perform functions such as sorting the messages, querying for certain events, or forwarding error messages to a mobile device.
+
+Tenant-level administrators can choose to include tenant log messages along with the system log messages sent to the syslog servers.
+
+If you identify any syslog servers to HCP, HCP also sends the results of diagnostic commands to those servers.
+
+System log messages sent to syslog servers
+
+For each system log message about an event, HCP sends this information to the specified syslog servers: A unique identifier for the system log entry. A message segment number, if applicable. Messages that exceed 1,024 characters are split into two or more messages, all of which have the same log entry identifier. These message segments are numbered sequentially, starting with 0 (zero) for the first segment.
+
+HCP sends at most 100 segments for a log message, for a total of 102,400 characters. Any text beyond that is not sent.
+
+The message ID. The date and time the event occurred. The severity of the event. The front-end network IP addresses and node number assigned to the node on which the event occurred. If the event applies to a specific logical volume, the volume identifier.
+
+The user name and ID of the event initiator. The full message text. You can choose the severity level of the log messages to be sent. You can also choose whether or not to send messages about security events (that is, attempts to log into the System Management Console with an invalid user name) and compliance events. Compliance events happen at the namespace level, so these messages are sent to the syslog servers only if syslog logging is enabled at the tenant level.

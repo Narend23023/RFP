@@ -1,0 +1,95 @@
+index="true" hold="false" hashScheme="SHA-256" hash="SHA-256 0662D2A2DEF74EF02A8DF5A4F16BF4D55FEE582..."
+
+gid="0" objectPath="/presentations/Q1_2020.ppt"
+
+dpl="2" customMetadata="false"
+
+changeTimeString="2020-03-31T15:41:35-0400" changeTimeMilliseconds="1333222895615.00"
+
+accessTimeString="2020-03-31T15:41:35-0400" accessTime="1333222895" acl="false" />
+
+. .
+
+. </resultSet>
+
+<status results="7"
+
+message="" code="COMPLETE" />
+
+<facets> <facet
+
+property="namespace <frequency
+
+count="4" value="finance.europe" />
+
+<frequency count="3"
+
+value="marketing.europe" /> </facet>
+
+</facets>
+
+</queryResult>
+
+Example: Querying for replication collisions in a namespace
+
+Here’s a sample metadata query API request that retrieves metadata for all objects that are:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+867/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Flagged as replication collisions In the finance namespace owned by the europe tenant
+
+The query uses an XML request body and requests results in XML format.
+
+This request returns only the URL, version ID, operation type, and change time for the objects in the result set. The request specifies that the result set be sorted by object path in ascending order.
+
+Request body in the XML file named FinanceCollisions.xml <queryRequest>
+
+<object> <query>
+
++namespace:finance.europe +replicationCollision:true
+
+</query> <objectProperties>objectPath</objectProperties>
+
+<sort>objectPath+asc</sort>
+
+</object> </queryRequest>
+
+Request with cURL command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H "Content-Type: application/xml" -H "Accept: application/xml"
+
+d @FinanceCollisions.xml "https://europe.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL import pycurl import os
+
+curl = pycurl.Curl()
+
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file
+
+filehandle = open("FinanceCollisions.xml", 'rb') curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.INFILESIZE, os.path.getsize("FinanceCollisions.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+POST /query?prettyprint HTTP/1.1 Host: europe.hcp.example.com

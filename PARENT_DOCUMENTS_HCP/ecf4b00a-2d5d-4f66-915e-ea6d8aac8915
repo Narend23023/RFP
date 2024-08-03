@@ -1,0 +1,129 @@
+To perform actions on tenants in replication links, you use these query parameters:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+520/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+pause
+
+Pauses replication or recovery for the tenant on the replication link, as applicable.
+
+resume
+
+Resumes replication or recovery for the tenant on the replication link, as applicable.
+
+You use these query parameters with a POST request against the replication link content tenant resource. You cannot include a request body with this request.
+
+Here’s a sample POST request that pauses replication activity for the Finance tenant on the replication link named MA-CA: curl -k -iX POST -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp-ma.example.com:9090/mapi/services/replication/links/ MA-CA/content/tenants/Finance?pause"
+
+tenant (data type for tenant resource)
+
+The tenant data type in this section describes the tenants resource.
+
+When you create an HCP tenant, you need to specify query parameters that define the initial user account for the tenant. When you create the default tenant, you need to specify query parameters that further define the default namespace. Properties
+
+The table below describes the properties included in the tenant data type that describes the tenants resource.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+administrationAllowed
+
+Boolean
+
+This property is not valid for the default tenant.
+
+For an HCP tenant, specifies whether system-level users have administrative access to the tenant. Valid values are: true
+
+System-level users have administrative access to the tenant.
+
+false
+
+System-level users do not have administrative access to the tenant.
+
+The default is false.
+
+authenticationTypes
+
+String
+
+For an HCP tenant, lists the types of user authentication supported by the tenant. Possible authentication types are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request. LOCAL
+
+The tenant supports local authentication by HCP.
+
+RADIUS
+
+In XML, each listed authentication type is the value of an element named authenticationType. In JSON, the name in the name/value pair that lists the authentication types is authenticationType.
+
+The tenant supports remote authentication by RADIUS servers.
+
+This property is not valid for the default tenant. EXTERNAL
+
+The tenant supports remote authentication by AD.
+
+complianceConfiguration
+
+Boolean
+
+Enabled
+
+For an HCP tenant, specifies whether the tenant can set the retention mode of the namespaces it owns. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant. true
+
+false
+
+The tenant can set the retention mode.
+
+The tenant cannot set the retention mode.
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode, these activities are not allowed.
+
+creationTime
+
+String
+
+Specifies the date and time at which the tenant was created, in this ISO 8601 format:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request. yyyy-MM-ddThh:mm:ssZ
+
+Z represents the offset from UTC, in this format:
+
+(+|-)hhmm
+
+For example:
+
+2017-02-09T19:26:32-0500
+
+fullyQualifiedName
+
+String
+
+Specifies the fully qualified hostname of the tenant.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+hardQuota String
+
+For an HCP tenant, specifies the total amount of space available to the tenant for allocation to its namespaces.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+Possible values are decimal numbers with up to two places after the period, followed by a space, followed by
+
+This property is not valid for the default tenant.

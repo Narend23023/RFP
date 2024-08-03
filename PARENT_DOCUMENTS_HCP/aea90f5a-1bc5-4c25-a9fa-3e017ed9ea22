@@ -1,0 +1,99 @@
+Shredding
+
+The shred setting for the object, which indicates whether the object will be shredded when it’s deleted. Shredding is the process of deleting an object and overwriting the place where it was stored in such a way that none of its data or metadata can be reconstructed. Replication
+
+An indication of whether the object has been replicated to another HCP system.
+
+User ID
+
+The POSIX user ID of the object owner.
+
+While the metadata query engine is active, this metadata is shown for all objects.
+
+Group ID
+
+The POSIX ID of the owning group. While the metadata query engine is active, this metadata is shown for all objects. . Permissions
+
+The object permissions in POSIX format and as an octal value.
+
+While the metadata query engine is active, this metadata is shown for all objects.
+
+Owner
+
+(metadata query engine only)
+
+For objects in HCP namespaces, the user that owns the object. The owner is an HCP-specific metadata property and does not correspond to the POSIX UID of an object. This value has this format: USER,location,username
+
+For objects with no owner, this value has this format:
+
+GROUP,location,all_users
+
+In these formats:
+
+location
+
+The location in which the user account of the object owner is defined. For objects with no owner, this is the tenant that owns the namespace that contains the object. This value can be the name of an HCP tenant or the name of an Active Directory domain preceded by an at sign (@). username
+
+The user name of the object owner. This value can be the username of a user account that’s defined in HCP or the username of an Active Directory user account. The
+
+username for an AD user account can be either the user principal name or the Security Accounts Manager (SAM) account name.
+
+For objects in the default namespace, the value for owner is an empty string.
+
+For objects in HCP namespaces that existed before the HCP system was upgraded from a pre-5.0 release and that have not subsequently had their owner changed, the value for owner is nobody. These objects effectively have no owner. POSIX permissions
+
+POSIX permissions are represented by three 3-character strings — one for the user identified by the POSIX user ID, one for the group identified by the POSIX group ID, and one for all others. From left to write, the positions in each string represent read (r), write (w), and execute (x). Each position has either the character that identifies the applicable permission,
+
+meaning the permission is allowed, or a hyphen (-), meaning the permission is denied. Each string is preceded by a hyphen (-).
+
+For example, the string below means that the user identified by the POSIX user ID has all permissions for the object, the group identified by the POSIX group ID has read and execute permissions, and others have only read permission:
+
+rwxr-xr-- Octal permission values
+
+Permissions are also represented by octal values. Each object has an octal permission value that’s the sum of the octal permission values specified for the object owner, the owning
+
+group, and all other users not in that group. The table below shows the value that corresponds to each permission. Read
+
+Write
+
+Execute
+
+Owner
+
+400
+
+200
+
+100
+
+Group
+
+040
+
+020
+
+010 Other
+
+004
+
+002
+
+001
+
+You can represent permissions numerically by combining these values. For example, the octal value 755 represents these permissions:
+
+POSIX owner has read, write, and execute permissions (700).
+
+POSIX group has read and execute permissions (050).
+
+Other has read and execute permissions (005).
+
+Paging through search results
+
+The Search Results page shows both the number of objects in the search results and the number of pages required to list them, as well as how long the search took, in seconds. The number of pages depends on both the number of objects returned and the number of objects listed on each page.
+
+By default, the Search Console displays ten objects per page. You can use the results/page option on the Search Results page to select a different number. The choices are 10, 20,
+
+50, 75, 100, and 200.
+
+When you select a number of objects, the Search Results page immediately changes the number of objects it lists on each page. To page through the search results, you can take either of these actions:

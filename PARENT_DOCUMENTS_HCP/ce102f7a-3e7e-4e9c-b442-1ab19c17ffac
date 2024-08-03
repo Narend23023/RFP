@@ -1,0 +1,47 @@
+The Search Console for the default tenant enables users to search the default namespace and any namespaces owned by HCP tenants that allow system-level administrative access to themselves. You can choose to allow access to the Search Console for the default tenant only from specific IP addresses. Similarly, you can choose to deny access to the Search Console for the default tenant from specific IP addresses. You use the Search Security page in the System Management Console to control access to the Search Console for the default tenant. To display this page, in the top-level menu of the System Management Console, select Security > Search Security.
+
+Note: To view and modify information on the Search Security page, you need the security role.
+
+To control access to the Search Console for the default tenant, on the Search Security page:
+
+Optionally, specify IP addresses to be allowed access to the Search Console. To do this:
+
+1. Click the Allow tab. 2. Follow the instructions in Adding entries in Allow and Deny lists.
+
+Optionally, specify IP addresses to be denied access to the Search Console. To do this:
+
+1. Click the Deny tab.
+
+2. Follow the instructions in Removing entries in Allow and Deny lists. Configuring Active Directory or Windows workgroup support
+
+You can configure HCP to support Microsoft Active Directory (AD) or Windows workgroups. HCP cannot support AD and Windows workgroups at the same time.
+
+You can configure HCP to support Active Directory authentication. An authenticated AD user can use any HCP interface that requires authentication, such as the System
+
+Management Console, Search Console, or namespace access protocols provided the user has the applicable HCP permissions.
+
+A Windows workgroup is a named collection of computers on a LAN that share resources such as printers and file servers. User accounts are specific to each computer in a
+
+workgroup. No authentication is required for access to the shared resources. When you configure HCP to support Windows workgroups, you provide the name of the workgroup in which you want CIFS-enabled namespaces to be shared resources. If HCP is on the same LAN as the computers in the workgroup, all CIFS-enabled namespaces are automatically exposed in the workgroup. HCP namespaces are displayed as a single
+
+shared resource with a name in this format: tenant-name_namespace-name
+
+For example, finance_accounts-receivable). The default namespace is displayed as two shared resources, fcfs_data and fcfs_metadata.
+
+If the CIFS protocol is configured to require authentication for access to a given namespace, that namespace cannot be accessed through a workgroup. About Active Directory
+
+The following sections provide more information about using AD with HCP.
+
+User authentication with Active Directory
+
+When an AD user tries to access HCP using a client application that supports Integrated Windows authentication (such as Firefox, Internet Explorer, or Windows Explorer):
+
+If the user is logged into Windows with a recognized AD user account, HCP accepts the authenticated credentials from the client computer and lets the user access the requested interface by using single sign-on. If the user is requesting HCP access with a recognized AD user account that is not the account with which the user is currently logged in to Windows, HCP sends the
+
+specified user credentials to AD for authentication. If AD successfully authenticates the user, HCP lets the user access the requested interface.
+
+A recognized AD user account is an AD account for a user who belongs to one or more AD groups with corresponding group accounts in HCP. Note: Tenant administrators can configure individual namespaces not to support single sign-on with HTTP-based interfaces, for example, the HCP Namespace Browser. HCP configuration for Active Directory support
+
+For HCP to support AD, you need to configure HCP to identify the domain in the AD forest to be used for HCP user authentication and provide credentials for an existing AD account in that domain. This AD user account is used to configure HCP in the AD domain.
+
+All AD domain controllers configured for the domain used for HCP user authentication must be able to communicate with HCP over the [hcp_system] network. Therefore, each AD domain controller must have at least one IPv4 or IPv6 address that is routable from the [hcp_system] network.

@@ -1,0 +1,29 @@
+If the Geo-Distributed Erasure Coding service doesn't have sufficient run time on a system that's receiving full copies of object data, those full copies may not be reduced to chunks in a timely manner. When scheduling the service, keep in mind that full copies of object data use the full storage required by the object data until they are reduced to chunks.
+
+The Geo-Distributed Erasure Coding service cannot restore a chunk for an object to a full copy of the object data if the system where the service is running doesn't have enough space for the complete object data. In this case, the service leaves the chunk on the system as is. Note: The Geo-Distributed Erasure Coding service is automatically added to the HCP Default Schedule service schedule when HCP is upgraded to release 8.x from a release earlier than 8.0. You need to schedule the service yourself in any user-created service schedules in which you want the service to have run time.
+
+Determining what the state of an object should be
+
+Several factors determine whether a system should have a chunk or a full copy of the data for a given object: 1. First, the Geo-Distributed Erasure Coding service on the system must determine whether the namespace containing the object has erasure coding allowed. 2. Then, if erasure coding is allowed, the service must determine whether the tenant that owns the namespace is currently included in an active erasure coding topology. 3. Finally, if the tenant is included in an active erasure coding topology, the service must determine: What the state of the object should be with respect to these properties of the erasure coding topology: distribution method, erasure coding delay, restore period, and minimum size for erasure coding. What the state of the object is on the other systems in the erasure coding topology.
+
+Keeping objects sufficiently protected
+
+An object that is subject to erasure coding: Is sufficiently protected as long as all the systems in the erasure coding topology are available or as long as at least two systems in the topology have a full copy of the object data Is insufficiently protected if the object would become unavailable due to a system in the erasure coding topology becoming unavailable
+
+The Geo-Distributed Erasure Coding service never reduces a full copy of the data for an object to a chunk if doing so would cause the object to be insufficiently protected. Namespace configuration changes
+
+Erasure coding can be disallowed for a namespace that previously had erasure coding allowed. Similarly, replication can be disabled for a namespace that was previously selected for replication.
+
+If erasure coding is disallowed or replication is disabled for a namespace that contains erasure-coded objects, the Geo-Distributed Erasure Coding service on each system that contains those objects is responsible for:
+
+Restoring the chunks for the objects to full copies of the object data on HCP systems where the object is not supposed to be metadata-only. The service can restore the object data as long as no more than one system in the erasure coding topology is unavailable or at least one system in the topology has a full copy of the object data. Deleting chunks for the objects on HCP systems where the object should be metadata-only. Before disallowing erasure coding or disabling replication for a namespace that contains erasure-coded objects, you need to ensure that each system where the chunks for the objects will be restored to full copies of the object data has sufficient storage to accommodate that data. Replication Verification service processing
+
+The HCP Replication Verification service is responsible for checking whether the Replication service missed replicating or was unable to replicate any objects that should have been replicated. If the Replication Verification service encounters such an object, the service tries to replicate the object.
+
+If either the Replication service or the Replication Verification service encounters an object it cannot replicate, the service marks the object as nonreplicating. If the Replication Verification service replicates a nonreplicating object, the service removes the nonreplicating mark from the object.
+
+The Replication Verification service is not a scheduled service. The service runs only when you: Set the service to run continuously while the Replication service is running. Set the service to run once. In this case, if the Replication service is running, the Replication Verification service starts immediately. Otherwise, the Replication Verification service waits to start until the next time the Replication service runs.
+
+You can also disable the service so that it doesn't run at all.
+
+While running, the Replication Verification service may degrade HCP system performance. Normally, you run the service only when directed to do so by your authorized HCP service provider.

@@ -1,0 +1,57 @@
+To change the list of selected nodes or storage arrays, click Previous to return to the Select page in the wizard. Use this page to change your selections. Then click Next to return to the Review page in the wizard.
+
+To cancel the migration and exit the wizard, click Cancel.
+
+If the list of selected storage devices is correct, and you want to perform the data migration, continue on to step 8. 8. Optionally, add a description of the data migration and/or change the performance level for the Migration service:
+
+a. To add a description, click Add description.
+
+In the text box that opens, type a description of the migration. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+b. To change the performance level, in the Performance Level field, select Low, Medium, or High. The higher the performance level, the greater the load on the HCP system.
+
+9. Click Finish.
+
+The Migration service begins the data migration process, and the wizard exits. The Migration service reports its progress on the Retirement panel on the Storage page. You can refresh this page at any time to view the current status of the data migration.
+
+If any nodes become unavailable while the Migration service is running, the service stops migrating data. When those nodes become available, the service automatically
+
+starts migrating data again.
+
+You can use the Retirement panel on the Storage page to manage the Migration service throughout the entire data migration process. At any time during the migration, you
+
+can click Retirement Settings to change the performance level of the retirement process.
+
+You can also click Primary running to display the controls that you can use to change the performance level of the migration, pause and resume the migration as needed, or cancel the migration. You can use the applicable field in the Overview panel on the Migration page to modify the migration description at any time (for example, to record when and how long the migration was paused).
+
+10. When the data migration is complete (that is, the migration status is Migrated), if a migration report is available, review it.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+57/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+This report identifies tenants that own namespaces containing unacknowledged irreparable objects. For the default tenant and for HCP tenants that are configured to allow system-level users to manage them, the report also lists the unacknowledged irreparable objects in those namespaces.
+
+If the Migration service encounters one or more objects that it cannot migrate, it marks those objects as irreparable (if they weren’t already marked that way). If the data migration statistics show that not all objects were migrated, contact your authorized service provider for help.
+
+11. Submit a request to your authorized service provider to finalize the migration and remove the retired hardware.
+
+Retiring HCP S Series and extended storage pools, components, and volumes
+
+You can use the Storage > Retirement page in the System Management Console to retire both HCP S Series and extended storage pools, storage components, and storage
+
+volumes that are associated with storage component access points (buckets, containers, or NFS volumes). If you are retiring HCP S Series components and pools that are selected as the ingest tier of a service plan, their replacements are limited to other HCP S Series components and pools.
+
+Before retiring an HCP S Series or extended storage, you must remove the bucket(s) associated with the component, storage pool, or volume being retired from the storage pool. To do this, clear the checkbox associated with the bucket(s) in the storage pool. Clearing the checkbox renders the bucket read-only. While HCP can still read data from the bucket, it cannot write to it. HCP does not automatically remove the bucket from the storage pool marked for retirement.
+
+When you retire an HCP S Series or extended storage that’s associated with a specific storage pool, component, or volume, HCP migrates all the data off that storage and moves it to the replacement storage that you specify.
+
+You can use the Storage > Retirement page to retire an HCP S Series or extended storage pool, component, or volume.
+
+1. On the Storage > Retirement page, click Retire Storage.
+
+The Get Started wizard opens. You use this wizard to select the type of storage you want to retire. After you select a type of storage, the System Management Console

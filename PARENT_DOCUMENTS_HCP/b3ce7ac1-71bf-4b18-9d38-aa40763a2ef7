@@ -1,0 +1,29 @@
+From system A, two of three locally created tenants are being replicated to system B. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication. In system B, no locally created tenants are being replicated. Uses
+
+The main purpose of a simple active/passive replication topology is to have a backup of the primary system for use in disaster recovery. However, this topology also supports a scenario in which some applications need read-write access to the replicated items while other applications need only read access. By directing requests from the latter to the replica, you can reduce the load on the primary system. Active/passive many-to-one replication
+
+In an active/passive many-to-one replication topology, multiple HCP systems replicate to a single other HCP system. Each of the replicating systems is the primary system for an active/passive replication link. The other system is the replica for each of those links.
+
+In this topology, the replica is like a hub, with the primary systems being at the ends of spokes connected to that hub. The spokes themselves are the replication links. The hub can have up to five spokes.
+
+Each HCP tenant and default-namespace directory selected for replication on a primary system must be unique on the replica. For example, if two of the primary systems each have a tenant named Finance, the Finance tenant can be replicated from only one of the systems. For both tenants to be replicated, they must have different names. Similarly, before you can have an email directory in the default namespace on multiple primary systems replicated, the SMTP protocol on each system must specify a different email directory name.
+
+Note: You can also create a many-to-one replication topology that consists of a combination of active/passive and active/active links or even active/active links only.
+
+What this looks like
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+327/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The figure below shows an active/passive many-to-one replication topology in which three primary systems (A, B, and C) are replicating to a single replica (D). In this figure:
+
+From system A, two HCP tenants are being replicated to system D. In the first tenant, two of three namespaces are selected for replication. In the second tenant, one of two namespaces is selected for replication. From system B, two of three HCP tenants are being replicated to system D. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication. From system C, one of two HCP tenants is being replicated to system D. In that tenant, both namespaces are selected for replication. System D has one HCP tenant of its own that is not the result of replication. This tenant has two namespaces. Uses
+
+In an active/passive many-to-one replication topology, the replica is typically the largest HCP system. The data center in which it resides is usually fully staffed with IT personnel. The primary systems typically are smaller. Because replication links can be created and managed from either side, the data centers where these systems reside can be minimally staffed with less experienced people.
+
+Active/passive many-to-one replication supports a scenario in which the outlying sites are branch offices of an enterprise that has an HCP system at a primary data center. Applications running at each of those offices connect over a local area network (LAN) to an HCP system at the local data center. Because they are close to the storage they use, the applications perform better than they would if they were using a wide area network (WAN) to connect to the HCP system at the hub. Also, the distribution of the network load among the outlying sites further enhances application performance. With active/passive many-to-one replication, you can consolidate similar data from multiple sources in a single HCP system. Using a search application, you can then perform federated queries across the replicated namespaces on that system. For example, suppose each of the branch offices of an enterprise stores completed orders in a namespace in its own HCP system. If each of those namespaces is replicated to a single HCP system, you could query that system to find all orders placed for a specific product at any of the branch offices.

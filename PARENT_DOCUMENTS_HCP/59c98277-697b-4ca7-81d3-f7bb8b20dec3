@@ -1,0 +1,135 @@
+allowPermissionAnd OwnershipChanges
+
+Boolean
+
+Specifies whether changes to POSIX UIDs, GIDs, and permissions and to object ownership are allowed for objects under retention in the namespace. Valid value are:
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace. true
+
+Changes to POSIX UIDs, GIDs, and permissions and to object ownership are allowed for objects under retention.
+
+false
+
+Changes to POSIX UIDs, GIDs, and permissions and to object ownership are not allowed for objects under retention.
+
+The default is false.
+
+appendEnabled
+
+Boolean
+
+Specifies whether the namespace supports appendable objects. Valid values are:
+
+This property is optional on a PUT request. true
+
+You cannot enable both appendable objects and versioning for a namespace.
+
+The namespace supports appendable objects.
+
+false
+
+This property is not valid for the default namespace.
+
+The namespace does not support appendable objects.
+
+The default is false.
+
+Note: The appendable-object feature provides snaplock volume support for third-party backup solutions. Do not enable this feature unless you have been explicitly told to do so.
+
+atimeSynchronization Enabled Boolean
+
+Specifies whether atime synchronization with retention settings is enabled for the namespace. Valid values are:
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace.
+
+true
+
+Atime synchronization is enabled.
+
+false
+
+Atime synchronization is not enabled.
+
+The default is false. authAndAnonymous MinimumPermissions
+
+List
+
+Lists the minimum data access permissions for all unauthenticated users of the namespace. Authenticated users also have these permissions when the value of the authUsersAlways-GrantedAllPermissions property is true.
+
+This property is optional on a PUT request.
+
+The set of permissions specified in the request body replaces the current set of minimum permissions for all users. To remove all the permissions for all users, specify an empty list.
+
+Valid values for permissions are: BROWSE DELETE PURGE READ READ_ACL WRITE WRITE_ACL
+
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes READ, browse permission is enabled automatically.
+
+This property is not valid for the default namespace.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+479/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+The default is no permissions.
+
+These values are not case sensitive. authMinimum Permissions
+
+List
+
+Lists the minimum data access permissions for authenticated users of the namespace. Valid values for permissions are:
+
+This property is optional on a PUT request.
+
+The set of permissions specified in the request body
+
+BROWSE DELETE PURGE READ READ_ACL WRITE WRITE_ACL
+
+replaces the current set of permissions for authenticated users. To remove all the permissions for authenticated users, specify an empty list.
+
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes READ, browse permission is enabled automatically.
+
+The default is no permissions.
+
+This property is not valid for the default namespace.
+
+These values are not case sensitive.
+
+authUsersAlwaysGranted AllPermissions Boolean
+
+Specifies whether users have the minimum data access permissions specified by the authAndAnonymous-Minim umPermissions property in addition to the minimum data access permissions specified by the authMinimumP ermissions property when using a protocol that requires authentication. Valid values are:
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace. true
+
+Users have the minimum data access permissions specified by both properties when using a protocol that requires authentication.
+
+false
+
+Users have only the minimum data access permissions specified by the authMinimum-Perm issions property when using a protocol that requires authentication.
+
+The default is true. creationTime
+
+String
+
+Specifies the date and time at which the namespace was created, in this ISO 8601 format:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+yyyy-MM-ddThh:mm:ssZ

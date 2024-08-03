@@ -1,0 +1,49 @@
+Considerations for replacing an erasure coding topology
+
+You can replace an erasure coding topology with a topology that includes some but not all of the HCP systems in the old topology. When you add a tenant in the old topology to the new topology, replication of that tenant is automatically paused on each link where:
+
+The link is not in the new topology
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+352/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+One or both of the systems involved in the link are in the new topology Although replication of the tenant is paused on those links, the tenant, its replicated namespaces, and the objects in those namespaces still exist on systems in the old topology that are not in the new topology.
+
+In this situation, you may want to sever the relationship between the tenant on systems in the new topology and the tenant on systems that are not in the new topology. Severing this relationship lets you:
+
+Delete the tenant either on systems in the new topology or on systems that are not in the new topology but not on both Delete one or more of the tenant's replicated namespaces either on systems in the new topology or on systems that are not in the new topology but not on both Delete one or more objects in the tenant's replicated namespaces either on systems in the new topology or on systems that are not in the old topology but not on both Before you sever the tenant relationship, do not let clients access the tenant or its replicated namespaces on systems where you plan to delete that tenant or those namespaces . Disallowing access prevents situations such as this, where these events occur in the order shown:
+
+1. A client makes a change to an object on a system where the tenant or containing namespace will be deleted. 2. You sever the tenant relationship before the change is replicated to a system where the tenant or namespace will not be deleted.
+
+To sever the tenant relationship:
+
+1. Wait for each system in the old topology to have no objects that are erasure coded according to that topology.
+
+You can see the number of objects that are erasure coded according to a given topology on the details page for that topology in the HCP System Management Console.
+
+2. When the state of the old topology changes to retired, delete that topology. Important: Do not resume replication of the tenant on the links where replication of the tenant is paused.
+
+3. Remove the tenant from each link between a system in the new topology and a system that's not in the new topology.
+
+After severing a tenant relationship, you can add the tenant back to the links from which you removed that tenant only if the tenant is not in the erasure coding topology (either because you removed the tenant from the topology or because you deleted the tenant from the systems in the topology).
+
+Erasure coding topology replacement procedure
+
+When replacing an erasure coding topology, use this procedure to ensure that the replacement process occurs in the most efficient manner:
+
+1. Disable the Geo-distributed Erasure Coding service on each system in the topology you're replacing. Doing this will prevent the service from restoring chunks for objects to full copies that will later need to be reduced to chunks. Note: Services can be disabled from the system Overview page in the System Management Console. To disable services, you need the service role.
+
+2. Disable the Storage Tiering service on each system in the topology you're replacing.
+
+Doing this will prevent the service from tiering full copies of object data that will later need to be reduced to chunks.
+
+3. If all of the following are true for any given namespace on any given system, ensure that the service plan associated with that namespace keeps all objects in the namespace on a metadata-only storage tier on that system:
+
+The system will be included in the new erasure coding topology. The namespace has erasure coding allowed, and the tenant that owns the namespace will be included in the new topology.
+
+You want each object in the namespace to use whole-object protection until the erasure coding delay specified by the new topology expires. You want objects in the namespace to be metadata-only on the system while they are subject to whole-object protection.

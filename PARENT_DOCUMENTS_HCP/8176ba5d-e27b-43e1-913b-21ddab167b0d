@@ -1,0 +1,47 @@
+A retention class collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the same retention class on each of two systems in a replication topology. 2. The changed retention class on one of the systems is replicated to the other system.
+
+If a collision occurs when a change to a retention class is replicated from one system (system A) in a replication topology to another system (system B) involved in the topology:
+
+If the last change to the retention class on system A is more recent than the last change to the class on system B and:
+
+The value of the class on system A is greater than the value of the class on system B, HCP changes the value of the class on system B to the value of the class on system A The value of the class on system A is less than the value of the class on system B and: System B is in enterprise mode, HCP changes the value of the class on system B to the value of the class on system A Note: An exception to this rule is when the value of the class on system A is -2 (Initial Unspecified) and the value of the class on system B is not 0 (Deletion Allowed). In this case, the value of the class on system B does not change. System B is in compliance mode, HCP does not change the value of the class on system B
+
+If the last change to the retention class on system B is more recent than the last change to the class on system A, HCP does not change the value of the class on system B
+
+Note: A retention class value of -1 (Deletion Prohibited) is greater than a value that’s a specific duration. A retention class value of 0 (Deletion Allowed) or -2 (Initial Unspecified) is less than a value that’s a specific duration. Service plans
+
+A service plan is a named option that can be associated with a namespace. This option determines how HCP manages the objects in that namespace. Service plan names are system specific.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+246/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+When creating a tenant, the HCP system administrator specifies whether the tenant is allowed to associate service plans with namespaces. HCP system administrators can change this setting from not allowing these associations to allowing them. However, they cannot do the reverse.
+
+The service plan you select for a namespace should match the expected usage pattern and properties for that namespace. For example, if the purpose of the namespace is to store objects that most likely will not be accessed again, you would choose a service plan with a description indicating that the plan is intended for archiving. System-level administrative access
+
+A tenant can optionally grant HCP system-level users administrative access to itself. This enables those users to access the Tenant Management Console for that tenant and
+
+perform the same management and monitoring activities as the tenant-level users. Additionally, it enables system-level users to search the namespaces owned by that tenant and perform all allowed operations on the objects they find. General administrative information
+
+As an HCP tenant administrator, you are responsible for managing a tenant and the namespaces it owns. Your primary job is to ensure that users and applications have the access
+
+they need to those namespaces.
+
+The tool you use for this purpose is a web application called the Tenant Management Console. Depending on the permissions you have, you can use the Console to configure and monitor the tenant and its namespaces, as well as perform compliance activities. Tenant Management Console
+
+The Tenant Management Console is a tenant-specific web application that lets you manage tenants and namespaces. The Console shows you tenant and namespace status in real time, so you can effectively monitor activity and take action as needed.
+
+Using the Console, you can modify tenant and namespace settings and perform compliance activities. Changes you make through the Console take effect immediately.
+
+Access to the Tenant Management Console is available only through HTTP with SSL security (HTTPS). About the Console
+
+Console access
+
+To use the Tenant Management Console, you need either:

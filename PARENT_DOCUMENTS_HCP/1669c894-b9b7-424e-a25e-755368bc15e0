@@ -1,0 +1,39 @@
+/* * Perform a conditional download of object. This will get the * object only if it doesn't match the ETag we received when * storing the object. */ System.out.println("Checking the second object"); GetObjectRequest conditionalRequest = new GetObjectRequest(bucketName, secondObjectName) .withNonmatchingETagConstraint(secondObjectEtag); S3Object conditionalObject = hs3Client.getObject(conditionalRequest); if (null == conditionalObject) { System.out.println(" The object did not change; not " + "downloaded.\n"); } else { // The object has changed, download it to a new file. System.out.println(
+
+" The object changed; downloading new revision\n");
+
+S3ObjectInputStream refreshResponseStream = conditionalObject.getObjectContent(); FileOutputStream dataFile2 = new FileOutputStream( "output/Q3_2019_Rev2.ppt");
+
+// Keep reading bytes until the end of stream is reached. byte readBuffer[] = new byte[2048]; int conditionalReadSize; while (-1 != (conditionalReadSize = refreshResponseStream.read(readBuffer))) { dataFile2.write(readBuffer, 0, conditionalReadSize); } dataFile2.close(); }
+
+/*
+
+Delete the objects. */ System.out.println( "Deleting the objects created by this sample application\n"); hs3Client.deleteObject(bucketName, firstObjectName); hs3Client.deleteObject(bucketName, secondObjectName); /* * Delete the folder. */ System.out.println( "Deleting the folder created when the first object was stored\n"); hs3Client.deleteObject(bucketName, objectNamePrefix);
+
+/* * Delete the bucket. */ System.out.println("Deleting the finance bucket\n"); hs3Client.deleteBucket(bucketName);
+
+} catch (AmazonServiceException ase) { System.out.println( "Caught an AmazonServiceException, which means the request " + "made it to HCP but was rejected for some reason."); System.out.println("Error Message: " + ase.getMessage());
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+686/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help System.out.println("HTTP Status Code: " + ase.getStatusCode()); System.out.println("AWS Error Code: " + ase.getErrorCode()); System.out.println("Error Type: " + ase.getErrorType()); System.out.println("Request ID: " + ase.getRequestId()); } catch (AmazonClientException ace) { System.out.println( "Caught an AmazonClientException, which means the client " + " encountered a serious internal problem while trying " + " to communicate with HCP through the S3 compatible API," + " such as not being able to access the network."); System.out.println("Error Message: " + ace.getMessage()); } catch (IOException ioe) { System.out.println( "Caught an IOException while trying to create an object or read " + "from an internal buffer."); System.out.println("Error Message: " + ioe.getMessage()); } }
+
+} Hitachi API for Amazon S3 XML schema
+
+HCP uses the Amazon S3 schema to validate the XML in S3 compatible API request bodies and to generate the XML in S3 compatible API response bodies. To view this schema, navigate to the following page:
+
+https://admin.hcp-domain-name/static/xsd/AmazonS3.xsd
+
+Using a Namespace Overview
+
+Introduction to Hitachi Content Platform
+
+Hitachi Content Platform (HCP) is a distributed storage system designed to support large, growing repositories of fixed-content data. HCP stores objects that include both data and metadata that describes the data.
+
+HCP provides access to stored objects through a variety of industry-standard protocols, as well as through various HCP-specific interfaces.
+
+This chapter introduces basic HCP concepts and includes information on what you can do with an HCP namespace. About Hitachi Content Platform

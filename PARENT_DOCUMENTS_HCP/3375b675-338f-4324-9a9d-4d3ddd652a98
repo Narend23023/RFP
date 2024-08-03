@@ -1,0 +1,141 @@
+757/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334829227
+
+X-HCP-SoftwareVersion: 7.0.0.16 Content-Type: text/xm
+
+X-HCP-ChangeTimeMilliseconds: 1326336965436 X-HCP-ChangeTimeString: 2012-01-11T09:56:05-0500
+
+X-HCP-Type: directory Content-Length: 0
+
+Listing directory contents
+
+You use the HTTP GET method to list the contents of a directory in a namespace. This method does not list old versions of objects. Access permission
+
+To list the contents of a directory, you need browse permission.
+
+Request header
+
+GET /rest/directory?deleted=true HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+delete
+
+No
+
+By default, a directory list does not include deleted objects or directories. If the namespace supports
+
+versioning, you can include deleted objects and directories in the list. To do this, specify this URL query parameter: deleted=true
+
+You can also specify deleted=false, which results in the default behavior.
+
+Also specify the deleted=true parameter to list the contents of a deleted directory (which can contain only deleted objects and directories).
+
+mostRecentDirTimes
+
+No
+
+Either:
+
+false, the default, which shows the change time returned for each subdirectory in a directory list is the time the subdirectory was created or, if the subdirectory is a deleted directory, the time it was deleted. . true, which shows change times that are the most recent of
+
+The time the subdirectory was created
+
+The time the subdirectory was deleted
+
+The time an object was most recently added to the subdirectory The time an object was most recently deleted from the subdirectory Response headers
+
+The list below describes the request-specific response header for this operation.
+
+X-HCP-Type
+
+The object entity type.
+
+X-HCP-ChangeTimeMilliseconds
+
+The change time for the directory, in milliseconds since January 1, 1970, at 00:00:00 UTC, followed by an integer that is unique for the change time. For example: 1336483100178.00.
+
+The change time for a directory is the most recent of:
+
+The time the directory was created
+
+The time the directory was deleted The time an object was added to the directory
+
+The time an object was deleted from the directory X-HCP-ChangeTimeString
+
+The change time for the object in this format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2020-09-18T09:18:20-0400 represents the start of the 20th second into 9:18 AM, September 18, 2020, EDT.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false.
+
+Response body
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+758/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The body of the HTTP response consists of XML that lists the contents of the requested directory, including metadata for the objects the directory contains. It lists only the immediate directory contents, not the contents of any subdirectories. Element
+
+Attribute
+
+Description
+
+directory
+
+path
+
+Location of the directory.
+
+directory
+
+utf8path
+
+UTF-8 compatible location of the directory.
+
+directory
+
+parentDir
+
+Location of the parent directory.
+
+directory
+
+utf8ParentDir
+
+UTF-8 compatible location of the parent directory.
+
+directory

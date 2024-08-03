@@ -1,0 +1,51 @@
+Then click Cancel to reinitialize the Prepare Reports for Download pane.
+
+3. In the Prepare Reports for Download pane:
+
+a. In the Start Date and End Date fields, enter or select a date range for the reports.
+
+The default values for these fields is the current day.
+
+b. (Optional) Enter a comment to include in the manifest.csv file that is included in the reports download archive.
+
+4. Click Prepare Health Check Reports.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+187/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The HCP system runs a health diagnostic tool on the available system nodes. The tool runs various signatures to collect system health information. You do not need to remain on the Health Check Reports page while the report preparation is in progress.
+
+After the health diagnostic tool finishes and the reports are prepared, status messages are displayed in the General Node Preparation Status pane in the Status column associated with each node, the checkboxes associated with each node for which the reports were successfully prepared are selected, and the Download Health Check
+
+Reports button is enabled. 5. Complete one of these actions:
+
+a. To download an archive that contains health check reports for all selected nodes, click Download Health Check Reports. b. To download an archive that contains a subset of the prepared reports, select only the checkboxes associated with the nodes for which you want to download reports. Then click Download Health Check Reports.
+
+The collected data is saved in a .zip archive. A system dialog box opens prompting you to save the file to a designated location.
+
+6. Save the file.
+
+Extract the contents of the .zip archive and the node-specific .tar archives to view the health check reports and manifest.csv file contents. Health check reports archive contents
+
+The HCP health check reports .zip archive contains the following contents:
+
+A manifest.csv file, which contains the optional comment that you might have added when you prepared the health check reports A separate .tar archive for each available node in the cluster Within each node-specific .tar archive:
+
+In the /var/ris/retired folder, the health check reports .tar files corresponding to the date range you specified when you prepared the health check reports In the /var/ris/logs/HealthCheckReport folder, the latest run of the health check report at the time you prepared the reports for the specified date range
+
+Health check report signatures
+
+When you prepare health check reports, the HCP system runs a health diagnostic tool on the available nodes in the cluster. This tool runs various signatures to collect information about the health of the HCP nodes.
+
+Signatures are JSON files containing different shell commands that gather configuration information and collect data on potential issues related to the health of a node. Signatures are classified into components and types (info and issue). Components include items such as replication, admin, or JVM. Info signatures collect node configuration information such as memory configuration, HCP version, hot fixes, and other HCP configurations. Issue signatures report if a node either is experiencing a certain issue or is at risk of experiencing an issue, such as server issues, object issues, repeated node restarts, or other general issues.
+
+Example: Signature that provides information about disk errors
+
+The following sample health check report signature provides information about specific disk errors on an HCP system. The output format is a JSON file.
+
+{

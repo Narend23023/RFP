@@ -1,0 +1,75 @@
+Description
+
+Gateway metrics
+
+Provides information about gateway operations. These metrics can be used to monitor system performance.
+
+Storage metrics
+
+Provides information about the storage usage of a system. These metrics can be used to monitor disk space usage, disk I/O, and disk latency etc.
+
+Node metrics
+
+Provides information about hardware and OS-level system metrics. These metrics can be used to monitor node (or server) performance.
+
+Replication metrics
+
+Provides information about the replication process of the system. These metrics can be used to monitor replication status.
+
+Event metrics
+
+Provides information about system events. These metrics can be used to monitor system status.
+
+Note: If you are performing a new installation of HCP v9.6 or upgrading from an older version, all performance metrics collectors will be automatically enabled when
+
+Prometheus is enabled.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+171/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For a list of the HCP metrics collected by Prometheus, see HCP performance metrics collected by Prometheus.
+
+5. Click Update Settings. Configuring Alert rules
+
+Alert rules allow you to define alert conditions in order to trigger alerts and send notifications to HCP. Prometheus processes the alerts before forwarding them to an internal Alertmanager server, which handles sending them to HCP. Alertmanager operates on two storage nodes within the cluster: the node with the highest IP address and the node with the second-lowest IP address. The alert functionality remains operational even if one of these nodes fails. If one of the nodes running Alertmanager is permanently removed,
+
+Alertmanager will initiate on another node.
+
+You can configure HCP to use syslog messages, SNMP traps, and email notifications to notify you when important or critical events are detected. Notifications are triggered
+
+immediately after an event occurs. The events are displayed in the Major Events pane on the HCP Overview page.
+
+To configure syslog messages, see Configuring syslog logging To configure SNMP traps, see Configuring SNMP To configure email notifications, see Configuring email notification
+
+To configure Alert rules, you need an administrator, or security role.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus > Alert Rules . 2. Edit Alert Rules text box to create a new rule or edit an existing rule.
+
+The example alert rule configuration is commented out by default. For more information about defining alert rules, see Alerting Rules in the Prometheus documentation at: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/.
+
+To create alert rules, you may specify these custom labels. Labels are optional. If you do not specify a label, a default value is used.
+
+severity: notice | warning | error (default: warning) security: false | true (default: false) compliance: false | true (default: false) importance: major | minor (default: minor) The following example creates a new alert rule if one of the instances in the cluster is not reachable for more than five minutes.
+
+# Alert rules for HCP metrics # Please see HCP documentation for the list of HCP metrics # HCP will convert the alerts into HCP events. Please use the following four labels to categorize the alerts:
+
+# - severity: notice | warning | error # - security: true | false # - compliance: true | false # - importance: major | minor # Example alert for any instance that is unreachable for >5 minutes.
+
+# Remove the following comment markers (#) to enable this example alert. groups: name: example rules: - alert: InstanceDown
+
+expr: up == 0 for: 5m labels: severity: warning security: false
+
+compliance: false importance: major annotations: summary: "Instance {{ $labels.instance }} down"
+
+description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+3. Click Update Settings.
+
+Viewing HCP metrics in Grafana
+
+Grafana is an open-source tool for metrics visualization. You can use it with Prometheus as the data source to visualize HCP metrics for operational visibility into the performance of your HCP instance.

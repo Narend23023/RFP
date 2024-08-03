@@ -1,0 +1,31 @@
+On a system where the object is not supposed to be metadata-only:
+
+If the system has a chunk for the object, the chunk is restored to a full copy of the object data If the system has a full copy of the object, the full copy remains as is On a system where the object should be metadata-only, the chunk for the object or the full copy of the object data, as applicable, is deleted
+
+When you increase the erasure coding delay for an erasure coding topology configured for full-copy distribution, chunks for existing objects for which the new delay has not yet expired are restored to full copies of the object data. When you decrease the restore period, objects that are currently in a restored state and for which the new restore period has already expired are returned to their previous erasure-coded states. When you increase the restore period, objects that are currently in a restored state and for which the new restore period has not yet expired are returned to their previous erasure-coded states after the new restore period expires.
+
+You can modify an erasure coding topology from any system in the topology. While a system in an erasure coding topology is being upgraded, you cannot use that system to modify the topology. Modifying an erasure coding topology
+
+1. In the top-level menu of the HCP System Management Console, select Services > Geo-distributed EC. 2. On the EC Topologies page, click the topology you want to modify. 3. On the erasure coding topology details page, click Settings.
+
+4. In the Settings panel, make the changes you want. 5. Click Update Settings.
+
+Retiring an erasure coding topology
+
+Before retiring an erasure coding topology, be sure you're familiar with the information in Erasure coding topology retirement. You cannot make a retiring or retired topology active again.
+
+1. In the top-level menu of the HCP System Management Console for any system in the topology, select Services > Geo-distributed EC. 2. On the EC Topologies page, click the topology you want to retire. 3. On the erasure coding topology details page, click Management. 4. In the Management panel, click Retire. 5. In response to the confirming message, click Retire.
+
+Considerations for deleting an erasure coding topology These considerations apply to deleting an erasure coding topology:
+
+You can delete an erasure coding topology only while either of these is true: At least one system in the topology is available, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retired. These are the normal conditions for deleting a topology. No more than one system in the topology is unavailable, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retiring. In this case, you are prompted to confirm the delete request. Important: Deleting an erasure coding topology under these conditions may result in inaccessible data in namespaces on the unavailable system, even if those namespaces are configured to be compliant. You should delete the topology only if that system is no longer needed. If the system is still needed, wait to delete the topology until the topology has finished retiring on all systems. You cannot delete an erasure coding topology while either of these is true:
+
+The total number of erasure-coded objects and erasure-coded parts of multipart objects on any available system in the topology is greater than zero.
+
+The Management panel on the EC Topologies page for a retiring or retired topology shows the number of erasure-coded objects and erasure-coded parts of multipart objects on the available systems.
+
+More than one system in the topology is unavailable, and the state of the topology is retiring.
+
+Deleting an erasure coding topology
+
+1. In the top-level menu of the HCP System Management Console for any system in the topology, select Services > Geo-distributed EC. 2. On the EC Topologies page, click the topology you want to delete. 3. On the erasure coding topology details page, click Management. 4. In the Management panel, click Delete. If deleting the topology could result in inaccessible data in namespaces on an unavailable system, a confirming message appears. In the field in the message window, type YES (this is case sensitive) to confirm that you understand the consequences of your action. Then click Delete Topology.

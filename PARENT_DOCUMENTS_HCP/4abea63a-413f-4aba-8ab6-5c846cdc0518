@@ -1,0 +1,41 @@
+JSON file for configuring the Tenant Management Console Here’s the content of the JSON file that configures the Tenant Management Console for the Finance tenant. The name of the file is FinanceMgmtConsole.json.
+
+{ "ipSettings" : { "allowAddresses" : { "ipAddress" : [ "192.168.103.18", "192.168.103.24", "192.168.103.25" ] }, "denyAddresses" : { "ipAddress" : [ ] }, "allowIfInBothLists" : false }, "minimumPasswordLength" : 6, "forcePasswordChangeDays" : 45,
+
+"disableAfterAttempts" : 3, "disableAfterInactiveDays" : 30, "logoutOnInactive" : 20, "loginMessage" : "Welcome to the Finance Tenant" }
+
+JSON file for modifying the tenant
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+532/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Here’s the content of the JSON file that enables syslog logging for the Finance tenant and also enables system-level administrative access to the tenant. The name of the file is modFinance.json. { "administrationAllowed" : true, "maxNamespacesPerUser" : 5, "syslogloggingEnabled" : true }
+
+JSON files for creating the namespaces
+
+Here’s the content of the JSON file that creates a namespace named Accounts-Receivable. The name of the file is AccountsRecNS.json.
+
+{
+
+"name" : "Accounts-Receivable", "description" : "Created for the Finance department at Example Company by Lee Green", "hashScheme" : "SHA-256", "enterpriseMode" : true, "hardQuota" : "50.00 GB", "softQuota" : 75, "versioningSettings" : { "enabled" : true, "prune" : true, "pruneDays" : 10, "useDeleteMarkers" : true, }, "aclsUsage" : "ENABLED", "searchEnabled" : true, "indexingEnabled" : true, "customMetadataIndexingEnabled" : true, "replicationEnabled" : true, "readFromReplica" : true,
+
+"serviceRemoteSystemRequests" : true, "tags" : { "tag" : [ "Billing", "lgreen" ] } }
+
+Here’s the content of the JSON file that creates a namespace named Accounts-Payable. The name of the file is AccountsPayNS.json. { "name" : "Accounts-Payable", "description" : "Created for the Finance department at Example Company by Lee Green", "hashScheme" : "SHA-256", "enterpriseMode" : true, "hardQuota" : "50.00 GB", "softQuota" : 75, "versioningSettings" : { "enabled" : true, "prune" : true, "pruneDays" : 10, "useDeleteMarkers" : true, }, "aclsUsage" : "ENABLED", "searchEnabled" : true, "indexingEnabled" : true, "customMetadataIndexingEnabled" : true,
+
+"replicationEnabled" : true, "readFromReplica" : true, "serviceRemoteSystemRequests" : true, "tags" : { "tag" : [ "Billing", "lgreen" ] } }
+
+JSON file for modifying a namespace
+
+Here’s the content of the JSON file that enables disposition for the Accounts-Receivable namespace. The name of the file is AcctsRecCompliance.json.
+
+{ "dispositionEnabled" : true }
+
+JSON file for configuring the REST API
+
+Here’s the content of the JSON file that is used to configure the REST API for both namespaces. The name of the file is http.json. { "httpsEnabled" : true, "httpEnabled" : false, "restEnabled" : "true", "restRequiresAuthentication" : true, "httpActiveDirectorySSOEnabled" : true, "ipSettings" : {

@@ -1,0 +1,71 @@
+Object names are case sensitive.
+
+Object names can include nonprinting characters, such as spaces and line breaks. All characters are valid except the NULL character (ASCII 0 (zero)) and the forward slash (ASCII 47 (/)), which is the separator character in directory paths.
+
+Object names cannot consist of a single period (.) or a single forward slash (/). The client operating system, in conjunction with HCP, ensures that object specifications are converted, as needed, to conform to POSIX requirements (for example,
+
+when using CIFS, backslashes (\) are converted to forward slashes (/)).
+
+.directory-metadata is a reserved name. The maximum length for the combined directory path and name of an object, symbolic link, or metafile, starting below rest, data, or metadata, including separators, is 4,095
+
+bytes. For CIFS and NFS, the maximum length of an individual item name is 255 bytes. This applies not only to naming new objects but also to retrieving existing objects.
+
+Therefore, an object stored through HTTP or WebDAV with a longer name may not be accessible through CIFS or NFS. Some character-set encoding schemes, such as UTF-8, can require more than one byte to encode a single character. As a result, such encoding can invisibly increase the
+
+length of a full object specification (directory path and object name) causing it to exceed the HCP limit of 4,095 bytes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+809/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Note: In some cases, an extremely long object name may prevent a CIFS or NFS client from reading the entire directory that contains the object. When this happens,
+
+attempts to list the contents of the directory result in an error. When searching namespaces, HCP rely on UTF-8 encoding conventions to find objects by name. If the name of an object is not UTF-8 encoded, searches for the object by
+
+name may return unexpected results. When the metadata query engine or HCP search facility indexes an object with a name that includes certain characters that cannot be UTF-8 encoded, it percent-encodes
+
+those characters. Searches for such objects by name must explicitly include the percent-encoded characters in the name. Names for email objects stored through SMTP are system-generated.
+
+Naming conventions for email objects
+
+HCP handles email objects the same way it handles other objects, except that for email stored through SMTP, HCP automatically generates directory paths and object names. It generates the paths directly under a parent directory that’s specified in the namespace configuration. To learn the parent directory path, contact your tenant administrator.
+
+Email directory and object names
+
+The generated path and object name for email stored using SMTP consists of, in order:
+
+The email path specified in the namespace configuration, ending with a forward slash (/): Example: /email/
+
+A system-generated numeric ID followed by a forward slash (/):
+
+Example: 341/
+
+The date and time the email was stored, in this format, followed by a hyphen (-):
+
+year/month/day/hour/minute/hour-minute-second.millisecond
+
+Example: 2013/03/02/02/47/02-47-22.186-
+
+An internally generated message ID followed by a hyphen: Example: 1D34A84A-
+
+A repeat of the system-generated numeric ID followed by a hyphen:
+
+Example: 341-
+
+A counter to ensure that all objects stored in the same millisecond have unique names followed by an at sign (@):
+
+Example: 0@
+
+The domain name of the sender contained in the From field of the mail header, followed by a hyphen (-): Example: example.com-
+
+The email suffix specified in the namespace configuration:
+
+Example: mbox.eml
+
+Here’s the complete path and object name for a sample email message:
+
+/rest/email/341/2013/03/02/02/47/02-47-22.186-1D34A84A-341-0@example.com-mbox.eml
+
+The message ID that the mail server generates for an email ingested through the SMTP protocol can include one or more forward slashes (/) or colons (:). Before storing an email,

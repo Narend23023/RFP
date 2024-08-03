@@ -1,0 +1,103 @@
+The user that owns the object, if any. Domain
+
+If the object is owned by an Active Directory user, the AD domain in which the user account for the object owner is defined.
+
+Size
+
+The object size, in bytes.
+
+Retention
+
+The retention setting as a date and time or as a special value such as Deletion Allowed.
+
+Retention Class
+
+The retention class name, if any. Ingested
+
+One of:
+
+For object versions, the date and time the version was added to the namespace. For delete record, the date and time the object was deleted.
+
+Metadata
+
+A representation of the state of the metadata for the version:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+805/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The object is on hold. All versions of an object have the same hold setting.
+
+The version will be shredded when it is deleted.
+
+The version is marked for indexing.
+
+The version has one or more annotations. Clicking this icon displays a list of the annotations. You can then click the name of an annotation to view its contents.
+
+The version has an ACL. Click this icon to view the ACL. DPL
+
+The data protection level.
+
+Hash (algorithm name)
+
+Hash information. Hover over the View Hash link to display the hash value for the object. You can then highlight the value and copy the hash value to the clipboard.
+
+Listing versions of deleted objects and directories with the same name
+
+A directory listing in the Namespace Browser can include only one item with a specific name, but a version listing for a deleted object can include entries for both the object and a deleted directory with the same name. The following example shows how this can happen
+
+1. Create a directory named test1.
+
+2. In the test1 directory, create and delete a subdirectory named test2. 3. In the test1 directory, save and delete an object with the name test2.
+
+4. List the contents of the test1 directory and select Show deleted objects.
+
+The test1 directory listing includes the deleted test2 object but not the deleted test2 directory.
+
+5. List the versions of the test2 object and select Show deleted objects. The version list includes the deleted test2 directory. Note: If you create and delete the test2 object before you create the test2 directory (whether you delete the test2 directory or not), you cannot list versions of test2 in the
+
+Namespace Browser, and you cannot see the deleted object versions. You can however, use direct HTTP requests (for example, with curl) to get this information.
+
+Accessing objects
+
+To view or retrieve an object, navigate to the directory that contains the object and click the object name or the type icon to the left of the object name. The browser downloads the
+
+object data and either opens it in the default application for the content type or prompts to open or save it.
+
+Accessing old versions of an object
+
+1. Navigate to the directory that contains the object.
+
+2. Click the version icon ( 3. In the version list, click the version ID or type icon for the version you want. ) to display a list of the versions of the object. Storing objects and versions
+
+1. Navigate to the directory in which you want to store the object or version.
+
+2. If the Upload Object tab is not active, click it. 3. Click Browse. Then select the file you want.
+
+4. Click Upload.
+
+The new object is added with the default metadata values for the namespace.
+
+Deleting objects and symbolic links
+
+1. Navigate to the directory that contains the object or symbolic link.
+
+2. Click the delete icon (
+
+) for the object or link you want to delete.
+
+Note: Deleting a symbolic link deletes the link itself, not the target object.
+
+3. In response to the confirming message, click OK.
+
+If the list displays deleted objects, the object name is crossed-out. If the list does not display deleted objects, the object disappears from the list.
+
+Creating directories
+
+1. Navigate to the parent directory.
+
+2. If the Create Directory tab is not active, click it. 3. Enter the name of the new directory in the entry field below the Create Directory tab. 4. Click Create.

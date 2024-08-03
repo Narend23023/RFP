@@ -1,0 +1,87 @@
+You can specify an ACL for an object in the same request as you use to store the object. To do this, you use an ACL header. You cannot use an ACL request body when storing an object.
+
+If the ACL you specify in a request to store an object is invalid, HCP returns a 400 (Bad Request) or 501 (Not Implemented) status code and does not store the object.
+
+If you are an authenticated user, when you store an object, you become the object owner. If you are accessing the bucket anonymously, the new object has no owner. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to store an object has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /object-name HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /bucket-name/object-name HTTP/1.1
+
+Required headers
+
+The next list describes the headers you can use in a request to store an object. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-Length
+
+Specifies the size, in bytes, of the data being stored.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+603/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+tenant-name.hcp-domain-name For a bucket, use this format: bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above.
+
+Optional headers Content-MD5
+
+Directs HCP to check the integrity of the data it receives by comparing a Base64-encoded MD5 hash of that data to the value specified by this header. The valid value for this header is the Base64-encoded MD5 hash of the data in the request body. When you store an object, you can use the Content-MD5 request header to ensure the integrity of the object data. The value you specify for this header must be the Base64- encoded MD5 hash of the original file data. When you include the Content-MD5 header in a request to store an object, HCP calculates the Base64-encoded MD5 hash of the data it receives and compares that to the header value. If the values don’t match, HCP returns a 400 (Bad Request) status code and does not store the object. Content-Type
+
+Specifies the Internet media type of the data being stored. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg).
+
+Expect

@@ -1,0 +1,65 @@
+Common words such as a and is are indexed and are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a.
+
+Search terms are not case sensitive. Therefore, the strings AnnualReport, Annualreport, and annualreport are equivalent.
+
+Common words such as a and is are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a. To prevent such a match, use a phrase as described below.
+
+To specify a negative number as a criterion, enclose the value in double quotation marks, for example, "-3121". To specify a phrase as a criterion, put the text string in double quotation marks. A phrase matches paths and custom metadata that contain each of the alphabetic or numeric search terms within the quotation marks in the specified order, but any special characters or white space between the individual strings is ignored. For example, the phrase "product 123" matches custom metadata that contains any of these strings: product 123 product123
+
+product_123
+
+Multiple values for a single property
+
+A criterion can specify multiple values for a single property. To specify multiple values, use this format:
+
+property:([+|-]value [[+|-]value]...)
+
+In this format, the parentheses are required.
+
+For example, this query expression finds objects in either the HlthReg-107 or HlthReg-224 retention class: retentionClass:(HlthReg-107 HlthReg-224)
+
+This query expression finds objects with custom metadata that contains the string finance but not the string foreign.
+
+customMetadataContent:(+finance -foreign)
+
+When you specify multiple values for a single property, you can precede each value with a Boolean operator. For example, this query expression finds objects whose paths contain sales but not 2012:
+
+objectPath:(+sales -2012)
+
+When you specify multiple values for a single property, you can combine values that are preceded by Boolean operators with values that do not have Boolean operators. In this case, objects that match the property values that are not preceded by Boolean operators may or may not appear in the result set, but objects that match the terms without Boolean
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+902/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+operators are sorted higher in the query results than objects that don’t match those terms.
+
+For example, this query expression finds objects that have custom metadata that contains both the terms quarterly report and accounting department or only the term quarterly report: customMetadataContent:(+"quarterly report" "accounting department")
+
+Objects that contain both terms are sorted higher in the query results.
+
+Value ranges
+
+You can query based on ranges of values for properties with numeric, string, or date data types. These properties are accessTime, accessTimeString, changeTimeString, dpl, h ash, hashScheme, ingestTime, ingestTimeString, retention, retentionClass, retentionString, size, updateTime, updateTimeString, and utf8Name. You can also query based on ranges for content properties with numeric, string or date data types.
+
+Criteria that query for a range of values for a single property can have either of these formats:
+
+For a range that includes the start and end values: property:[start-valueTOend-value]
+
+In this format, the square brackets are required.
+
+For example, this query expression finds objects that were ingested from 0800 through 0900 UTC on March 1, 2012, inclusive:
+
+ingestTimeString:[2012-03-01T08:00:00-0000 TO 2012-03-01T09:00:00-0000]
+
+For a range that does not include the start or end values: property:{start-valueTOend-value}
+
+In this format, the curly braces are required.
+
+For example, this query expression finds objects that have names that occur alphabetically between Brown_Lee.xls and Green_Chris.xls, exclusive of those values: utf8Name:{Brown_Lee.xls TO Green_Chris.xls}
+
+Note: utf8Name property values are case sensitive and are ordered according to the positions of characters in the UTF-8 character table.

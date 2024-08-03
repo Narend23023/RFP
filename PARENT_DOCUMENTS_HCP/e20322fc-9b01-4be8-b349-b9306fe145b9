@@ -1,0 +1,157 @@
+LOWER
+
+The protocol changes object names to all lowercase in requests it passes to HCP.
+
+DISABLED
+
+The protocol is not case forcing.
+
+The default is DISABLED.
+
+These values are not case sensitive. caseSensitive
+
+Boolean
+
+Specifies whether the CIFS protocol is case sensitive for the namespace. Valid values are:
+
+true
+
+The protocol is case sensitive.
+
+false
+
+The protocol is not case sensitive.
+
+The default is true.
+
+enabled
+
+Boolean
+
+Specifies whether the CIFS protocol is enabled for the namespace. Valid values are: true
+
+CIFS is enabled.
+
+false
+
+CIFS is disabled.
+
+The default is false.
+
+ipSettings
+
+ipSettings
+
+Specifies which IP addresses can and cannot access the namespace through the CIFS protocol.
+
+requiresAuthentication
+
+Boolean
+
+Specifies whether user authentication is required or allowed for access to the namespace through the CIFS protocol. Valid values are: true
+
+User authentication is required.
+
+false
+
+User authentication is allowed.
+
+The default is true.
+
+This property can be set to true only if the owning tenant supports AD authentication.
+
+Example
+
+Here’s an XML example of the cifsProtocol data type:
+
+<cifsProtocol> <caseForcing>DISABLED</caseForcing/> <caseSensitive>true</caseSensitive> <enabled>true</enabled> <ipSettings> <allowAddresses> <ipAddress>192.168.140.10</ipAddress> <ipAddress>192.168.140.14</ipAddress> <ipAddress>192.168.140.15</ipAddress>
+
+<ipAddress>192.168.149.0/24</ipAddress> </allowAddresses> <denyAddresses> <ipAddress>192.168.149.5</ipAddress> </denyAddresses> </ipSettings> <requiresAuthentication>true</requiresAuthentication> </cifsProtocol> complianceSettings
+
+The complianceSettings data type describes the complianceSettings resource for namespaces.
+
+Properties
+
+The table below describes the properties included in the complianceSettings data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+451/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+customMetadataChanges
+
+String
+
+Specifies which operations are allowed with custom metadata for objects under retention. Valid values are: ADD
+
+Allows custom metadata to be added for objects under retention but not replaced or deleted
+
+ALL
+
+Allows custom metadata to be added, replaced, and deleted for objects under retention
+
+NONE
+
+Disallows all custom metadata operations for objects under retention
+
+The default is ADD.
+
+These values are not case sensitive.
+
+dispositionEnabled Boolean
+
+Specifies whether objects with expired retention periods should automatically be deleted from the namespace. Valid values are:
+
+For disposition to take effect at the namespace level, it must also be enabled in the HCP system configuration.
+
+true
+
+Disposition is enabled.
+
+false
+
+Disposition is not enabled.
+
+The default is false.
+
+minimumRetentionAfterInitialUnspecified String
+
+This property is not valid for the default namespace.
+
+For an HCP namespace, specifies that the retention set on Initial Unspecified objects must be greater than the Minimum Retention after Initi al Unspecified value.
+
+The default is 0 (zero) years, 0 months, and 0 days. retentionDefault
+
+String
+
+This property is not valid for the default namespace.
+
+For an HCP namespace, specifies the default retention setting for objects added to the namespace. Valid values are special values, offsets, retention classes, and fixed dates.
+
+The default is 0 (zero), which is equivalent to Deleti on Allowed. shreddingDefault
+
+Boolean
+
+For an HCP namespace, specifies the default shred setting for objects added to the namespaces. Valid values are:
+
+This property is not valid for the default namespace.
+
+Once an object is marked for shredding, its shred setting cannot be changed.
+
+true
+
+New objects are marked for shredding. false
+
+New objects are not marked for shredding.

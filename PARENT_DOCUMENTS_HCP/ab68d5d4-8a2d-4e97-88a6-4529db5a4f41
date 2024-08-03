@@ -1,0 +1,79 @@
+HCP supports access to namespace content through namespace access protocols, the HCP Namespace Browser, the HCP metadata query API, and the HCP Search Console.
+
+Namespace access protocols
+
+HCP supports access to namespace content through several industry-standard protocols:
+
+For HCP namespaces only:
+
+REST API, which is a RESTful, HTTP-based API.
+
+Hitachi API for Amazon S3, which is a RESTful, HTTP-based S3 compatible API. With the S3-compatible API, namespaces are called buckets. For the default namespace only, a non-RESTful implementation of HTTP.
+
+For all namespaces:
+
+WebDAV
+
+CIFS NFS
+
+These protocols support various operations: storing data, creating directories, viewing object data and metadata, viewing directories, modifying certain metadata, and deleting objects. You can use these protocols to access data with a web browser, third-party applications, Windows® Explorer, and other native Windows and Unix tools.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+3/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP allows special-purpose access to namespaces through SMTP. This protocol is used only for storing email.
+
+For backup of the default namespace, HCP supports NDMP. Objects are backed up in OpenPGP format, which uses a tar file to package the files that represent an object. This
+
+standard format, which can be both signed and encrypted, allows backup objects to be restored to other storage systems. HCP tenant administrators can create secure namespaces by enabling only REST and CIFS, configured to require authentication, and the S3-compatible which always require
+
+authentication.
+
+HCP Namespace Browser
+
+The HCP Namespace Browser lets you manage content in and view information about HCP namespaces. With the Namespace Browser, you can:
+
+List, view, and retrieve objects, including old versions of objects
+
+View custom metadata and ACLs for objects, including old versions of objects Store and delete objects
+
+Create empty directories
+
+Display namespace information, including:
+
+The namespaces that you own or can access
+
+Retention classes available for a given namespace
+
+Permissions for namespace access Namespace statistics such as the number of objects in a given namespace or the total capacity of the namespace
+
+The Namespace Browser is not available for the default namespace. However, you can use a web browser to view the contents of that namespace. HCP metadata query API
+
+The HCP metadata query API lets you search HCP for objects that meet specified criteria. The API supports two types of queries:
+
+Object-based queries search for objects based on object metadata. This includes both system metadata and the content of custom metadata and ACLs. The query criteria
+
+can also include the object location (that is, the namespace and/or directory that contains the object). These queries use a robust query language that lets you combine search criteria in multiple ways.
+
+Object-based queries search only for objects that currently exist in the repository. For objects with multiple versions, object-based queries return only the current version.
+
+Operation-based queries search not only for objects currently in the repository but also for information about objects that have been deleted by a user or application, deleted
+
+through disposition, purged, or pruned. For namespaces that support versioning, operation-based queries can return both current and old version of objects.
+
+Criteria for operation-based queries can include object status (for example, created or deleted), change time, index setting, and location.
+
+The metadata query API returns object metadata only, not object data. The metadata is returned either in XML format, with each object represented by a separate element, or in JSON format, with each object represented by a separate name/value pair. For queries that return large numbers of objects, you can use paged requests.
+
+HCP Search Console
+
+The HCP Search Console is an easy-to-use web application that lets you search for and manage objects based on specified criteria. For example, you can search for objects that
+
+were stored before a certain date or that are larger than a specified size. You can then delete the objects listed in the search results or prevent those objects from being deleted.
+
+Similar to the metadata query API, the Search Console returns only object metadata, not object data.

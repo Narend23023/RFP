@@ -1,0 +1,103 @@
+Tip: For enhanced security, restrict access to namespaces to as few IP addresses as possible. The Tenant Management Console panels for the namespace access protocols each contain an Allow list and, except for the NFS panel, a Deny list. Each list has an associated field in which you type entries for it.
+
+Add entries in Allow and Deny lists
+
+Changes you make to either list of IP addresses take effect immediately.
+
+1. In the field above the list, type the entry you want. 2. Click Add. Remove entries in Allow and Deny lists
+
+To remove a single entry, click the delete control (
+
+) for that entry.
+
+To remove all entries, click Delete All.
+
+Changes you make to either list of IP addresses take effect immediately.
+
+Valid Allow and Deny list entries
+
+Each entry in an Allow or Deny list can be one of: An IP address A comma-separated list of IP addresses
+
+A range of IP addresses specified as ip-address/subnet-mask (for example, 192.168.100.197/255.255.255.0) or in CIDR format (for example, 192.168.100.0/24)
+
+The CIDR entry that matches all IP addresses is 0.0.0.0/0. Allow and Deny list handling
+
+IP addresses can be included in neither, one, or both of the Allow and Deny lists for REST, the S3 compatible API, WebDAV, CIFS, and SMTP. They can be included or not included in the Allow list for the NFS protocol. The way HCP handles allowed and denied IP addresses differs depending on the protocol.
+
+Allow and Deny list handling for REST, the S3 compatible API, and WebDAV
+
+For HTTP and WebDAV, you can choose how HCP handles Allow and Deny list entries by selecting or deselecting Allow request when same IP is used in both lists in the HTTP(S) panel. The table below describes the effects of selecting or deselecting this option. Either action takes effect immediately.
+
+Allow requests when same IP is used in both lists List entries
+
+Selected
+
+Not selected
+
+Allow list: empty
+
+All IP addresses can access the namespace through REST, the S3 compatible API, and WebDAV.
+
+No IP addresses can access the namespace through REST, the S3 compatible API, or WebDAV.
+
+Deny list: empty
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+284/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Allow requests when same IP is used in both lists
+
+List entries
+
+Selected
+
+Not selected Allow list: at least one entry
+
+All IP addresses can access the namespace through REST, the S3 compatible API, and WebDAV.
+
+Only IP addresses in the Allow list can access the namespace through REST and WebDAV.
+
+Deny list: empty
+
+All IP addresses not in the Deny list can access the
+
+No IP addresses can access the namespace through Allow list: empty
+
+Deny list: at least one entry
+
+namespace through REST, the S3 compatible API, and WebDAV. IP addresses in the Deny list cannot.
+
+REST, the S3 compatible API, or WebDAV.
+
+Allow list: at least one entry
+
+Deny list: at least one entry
+
+IP addresses appearing in both or neither of the lists can access the namespace through REST, the S3 compatible API, and WebDAV.
+
+Only IP addresses appearing in the Allow list and not in the Deny list can access the namespace through REST, the S3 compatible API, or WebDAV.
+
+Allow and Deny list handling for CIFS
+
+For CIFS, HCP handles Allow and Deny list entries as described in the table below. List entries
+
+Effect
+
+All IP addresses can access the namespace through the CIFS protocol.
+
+Allow list: empty
+
+Deny list: empty
+
+Allow list: at least one entry
+
+Only IP addresses in the Allow list can access the namespace through the CIFS protocol.
+
+Deny list: empty
+
+Allow list: empty

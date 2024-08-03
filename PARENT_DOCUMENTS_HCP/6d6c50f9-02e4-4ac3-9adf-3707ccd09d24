@@ -1,0 +1,39 @@
+You change the domain associated with the replication network to a domain that’s also associated with another network. You select a new replication network, and the new network is associated with a domain that’s also associated with another network. You change the domain associated with another network to the domain that’s associated with the replication network.
+
+Selecting the replication network
+
+By default, HCP uses the [hcp_system] network for replication.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+371/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help 1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, in the Replication Network field, select the network you want to use for replication traffic.
+
+The dropdown list of networks does not include empty, degraded, or partial networks. The Replication Network field is present only while virtual network management is enabled for the HCP system.
+
+4. Click Update Settings.
+
+Displaying the zone definition for the replication network domain
+
+Each network in HCP is associated with a domain. Multiple networks can be associated with the same domain. If you’re using DNS for domain name resolution, the DNS needs to include a zone definition for each combination of network and domain.
+
+If an HCP system is involved in replication, the zone definition for the replication network domain for that system needs to be added to the upstream DNS servers for the other system on the replication link. An upstream DNS server is a DNS server to which HCP routes the outbound communications HCP initiates (for example, for sending log messages to syslog servers or for communicating with Active Directory).
+
+If the domain for the replication network is shared with other networks, the domain name in the zone definition you add for the replication network domain must be: replication.admin.replicaton-network-domain-name
+
+From the Replication page, you can display the zone definition for the replication network domain, formatted for Unix DNS servers. You can then copy that definition to the upstream DNS servers.
+
+Note: You can display the zone definition only while virtual network management is enabled for the HCP system and only if at least one user-defined network exists.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, click Zone Definition.
+
+The Zone Definition section opens. This section shows the zone definition for the network (with a type of slave or stub, as applicable), formatted as shown in this example: # net1 Special-purpose HCP system network zone "replication.admin.system_1.example.com" IN { type slave; file "/var/named/slave/replication.admin.system_1.example.com"; masters { 172.25.147.11; 172.25.147.12; 172.25.147.13; 172.25.147.14; }; }; Managing DNS failover
+
+HCP replication helps ensure continuous namespace availability. If a system in a replication topology fails, client requests for access to a replicated namespace can be serviced by other systems in the topology.
+
+You can use the HCP DNS failover feature to automate the process of redirecting client requests from a failed system to a healthy one. For active/active links, this process can be automated in other ways as well. Automating redirection means that applications do not need to be modified to explicitly direct requests to another system when the normally targeted system fails.
+
+The DNS failover feature requires that the HCP systems involved use a shared DNS for system addressing. If the systems don’t use a shared DNS, DNS failover is not an option for automating redirection of client requests. An HCP system can service automatically redirected requests only if the target namespace is configured to support service by remote systems. If the namespace is not configured this way, requests to access the namespace on a failed system fail. About DNS failover

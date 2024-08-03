@@ -1,0 +1,69 @@
+Objects can be placed on hold in HCP retention mode. An object on hold cannot be deleted. You can use the S3 compatible API to place an object on hold or release an object from hold.
+
+S3 Object Lock supports placing objects on hold.
+
+Labeled hold
+
+An object can also be placed on one or more labeled holds in HCP retention mode. A labeled hold is a named retention hold that has a unique identifier. An object can have both a single, unlabeled hold and one or more labeled holds at the same time.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+546/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+An object on labeled hold cannot be deleted or have its metadata modified until all holds (labeled and unlabeled) are explicitly released. You can use either the S3 compatible API or REST API to place one or more labeled holds on an object or release an object from labeled hold. S3 Object Lock does not support labeled hold. Privileged delete
+
+Privileged delete enables you to delete objects even if they are under retention. However, you cannot use privileged delete operations to delete objects that are on hold or labeled hold, regardless of the retention settings of those objects. S3 Object Lock does not support privileged delete. However, with bypass governance mode in S3 Object Lock, you can perform operations such as deleting an object version, shortening the retention time of object versions that are locked in governance mode. To do this, you need to include the x-amz-bypass-governance-retention:tr ue header in your request. Retention periods
+
+The retention period for an object is the length of time the object must remain in the bucket. A retention period can be a specific length of time, infinite time, or no time, in which case the object can be deleted at any time. When the retention period for an object expires, the object becomes deletable. Normally, if you try to delete an object that is under retention, HCP prevents you from doing so. S3 Object Lock supports retention periods. Retention classes
+
+A retention class is a named retention setting. Retention classes let you manage object retention consistently by specifying how long the object must remain in the repository. Retention classes cannot be created using the S3 compatible API. S3 Object Lock does not support retention classes. Automatic deletion
+
+A bucket can be configured to automatically delete objects after their retention periods expire. For an object to be deleted automatically:
+
+In HCP retention mode, a specified retention period must expire. Objects with Deletion Allowed (0) or Initial Unspecified (-2) retention settings are not automatically deleted. If the object is in an HCP retention class, the class must have automatic deletion enabled.
+
+Automatic deletion cannot be configured using the S3 compatible API. S3 Object Lock supports automatic deletion. Object retention settings
+
+Every object, including objects assigned to retention classes, has a specific retention setting that specifies when (or whether) the retention period for the object ends. HCP represents the retention setting in numeric and text formats, as shown in the following table.
+
+Numeric value Text value
+
+Meaning
+
+0
+
+Deletion Allowed
+
+The object can be deleted at any time.
+
+1
+
+Deletion Prohibited
+
+The object cannot be deleted, except by a privileged delete, and the retention setting cannot be changed.
+
+2
+
+Initial Unspecified
+
+The object does not yet have a retention setting. An object that has this value cannot be deleted, except by a privileged delete. You can change this retention setting to any other setting. An integer number of seconds
+
+A datetime value
+
+The object cannot be deleted, except by a privileged delete, until the specified date and time.
+
+since January 1, 1970, at 00:00:00 UTC
+
+The format used for retention settings depends on whether you are specifying or retrieving a setting and on the protocol you are using.
+
+Deleting an object under retention
+
+If you have privileged permission and the bucket allows it, you can use the S3 compatible API to delete an object that is under retention. This action is called privileged delete.
+
+You cannot use privileged delete operations to delete objects that are on hold, regardless of the retention settings of those objects.
+
+Holding an object

@@ -1,0 +1,135 @@
+(Conflict) error code, and for CIFS and NFS, the request may time out. When you get such errors, wait a few minutes and then try the request again.
+
+Deleting directories
+
+You can delete a directory only when it is empty. Some clients, however, can appear to delete nonempty directories, as long as those directories don’t contain objects under retention. In such cases, what’s really happening is that the client is using a single call to HCP to first delete the objects in the directory and then delete the now empty directory. Multithreading
+
+HCP lets multiple threads access the namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple directories.
+
+Here are some guidelines for the effective use of multithreading:
+
+Concurrent threads, both reads and writes, should be directed against different directories. If that’s not possible, multiple threads working against a single directory is still
+
+better than a single thread. To the extent possible, concurrent threads should work against different IP addresses. If that’s not possible, multiple threads working against a single IP address is still better
+
+than a single thread. Only one client can write to a given object at one time. Similarly, a multithreaded client can write to multiple objects at the same time but cannot have multiple threads writing
+
+to the same object simultaneously. Multiple clients can read the same object concurrently. Similarly, a multithreaded client can use multiple threads to read a single object. However, because the reads can
+
+occur out of order, you generally get better performance by using one thread per object. Status code considerations
+
+User applications should account for all possible codes returned in response to requests that access a namespace.
+
+For lists of possible codes with each namespace access protocol, see:
+
+HTTP status codes with the REST API
+
+WebDAV status codes
+
+CIFS return codes NFS return codes
+
+REST API reference
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+811/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+This section of the Help contains a reference of the HTTP methods available for accessing a namespace using the REST API. This section also describes the possible status codes
+
+and HCP-specific response headers for the REST API.
+
+HTTP methods supported by the REST API DELETE
+
+Deletes:
+
+Objects Versions (purge)
+
+Annotations Empty directories
+
+ACLs Symbolic links
+
+Permissions
+
+For all operations: delete
+
+For purge: purge
+
+For privileged operations: privileged
+
+Elements
+
+For all operations:
+
+Authorization header Object, directory, or symbolic link URL
+
+For privileged operations, these as URL query parameters or form-encoded data: privileged=true
+
+reason=reason-text
+
+To purge all versions, this as a URL query parameter or form-encoded data:
+
+purge=true
+
+To delete an annotation, these as URL query parameters:
+
+type=custom-metadata
+
+annotation=annotation-name
+
+The annotation name is optional for the default annotation.
+
+To delete an ACL, this as a URL query parameter: type=acl
+
+Response headers
+
+X-HCP-Time X-HCP-ServicedBySystem
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Status codes
+
+Success: 200, 204
+
+Error: 400, 403, 404, 409, 414, 500, 503
+
+GET, except for namespace information requests
+
+Retrieves:
+
+Objects
+
+Versions Annotations ACLs
+
+Lists:
+
+Versions
+
+Directories Annotations
+
+Permissions
+
+For object, version, and annotation operations: read
+
+To retrieve directory listings: browse
+
+To retrieve ACLs: read ACL
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+812/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Elements
+
+For all operations: Authorization header Object, directory, or symbolic link URL
+
+To retrieve data in Gzip format, an Accept-Encoding header that contains gzip or *.

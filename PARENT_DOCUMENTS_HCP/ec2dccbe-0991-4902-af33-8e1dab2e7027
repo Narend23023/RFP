@@ -1,0 +1,141 @@
+With the bucket name included in the hostname: HEAD / HTTP/1.1
+
+With the bucket name following the hostname:
+
+HEAD /bucket-name HTTP/1.1
+
+Required headers
+
+Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Response headers
+
+Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to store an object, the value of this header is always 0 (zero).
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to check the existence of a bucket.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+The specified bucket exists.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+572/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. The specified bucket exists, but you do not have read permission for it. The specified bucket does not currently support the requested operation. The S3 compatible API is currently disabled for the specified bucket. The tenant does not currently support use of the S3 compatible API for checking bucket existence.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Checking the existence of a bucket
+
+Here’s a sample HEAD request that checks the existence of a bucket named finance. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com"
+
+Request headers
+
+HEAD / HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000

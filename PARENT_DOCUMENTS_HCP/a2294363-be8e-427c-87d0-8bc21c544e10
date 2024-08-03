@@ -1,0 +1,39 @@
+LM-SENSORS-MIB UCD-DISKIO-MIB UCD-DLMOD-MIB UCD-SNMP-MIB
+
+You can download:
+
+Files for all these MIBs, except MTA-MIB and RFC1213-MIB, from http://www.net-snmp.org/docs/mibs The file for MTA-MIB from http://www.oidview.com/mibs/0/MTA-MIB.html The file for RFC1213-MIB from http://www.oidview.com/mibs/0/RFC1213-MIB.html. Walking the MIB
+
+To find out exactly which fields HCP exposes under mib-2 and ucdavis, you can have the SNMP client query HCP for the exposed fields. This is called walking the MIB.
+
+How you walk the MIB depends on your SNMP tool. The following instruction uses the command-line tool from the publicly available net-snmp package, which you can download from http://www.net-snmp.org. To walk the MIB with net-snmp, you use the snmpwalk command with this format: snmpwalk-v snmp-version -csnmp-community-name node-ip-address-or-hostnamemib-root
+
+The string node-ip-address-or-hostname is a valid front-end IP address or hostname of a storage node in the HCP system. The node that you specify must be running and healthy (that is, it must be available to the system).
+
+his sample snmpwalk command queries the node with the IP address 192.168.210.16 for the fields that HCP exposes in subtrees branching from mib-2:
+
+snmpwalk -v 2c -c public 192.168.210.16 mib-2 Configuring DNS for HCP
+
+Domain name system (DNS) is a network service that translates, or resolves, domain names (for example, example.com) into IP addresses for client access. The service is provided by one or more servers, called name servers, that share responsibility for resolving client requests.
+
+An HCP system can exist as multiple domains in the DNS: one for each front-end network defined in the system. Each domain must be a subdomain of a DNS domain to which you have administrative access, such as your corporate domain. All nodes that have IP addresses defined for a given front-end network belong to the HCP domain defined for that network.
+
+Note: If you enable the management network, you cannot access your front-end network through DNS unless you create secondary zones for the management network. To enable access to HCP by domain name on any given network, you need to configure the HCP domain for that network in your DNS. To do this, you can use either secondary zones or stub zones.
+
+This chapter contains:
+
+A discussion of the advantages of using DNS A description of zones, secondary zones, and stub zones Windows and Unix instructions for configuring HCP domains in the DNS Instructions for verifying the HCP domain definitions DNS considerations for implementing HCP service by remote systems Note:
+
+HCP does not require DNS. When communicating with a DNS server, HCP may send packets that are larger than 512 bytes. You must make sure these packets can pass through your corporate firewall.
+
+DNS advantages
+
+Using DNS provides several advantages over using IP addresses for access to the HCP system. For example:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+213/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

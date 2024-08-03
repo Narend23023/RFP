@@ -1,0 +1,169 @@
+Modify settings specific to metadata query engine indexing of custom metadata for a search-enabled namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/permissions Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve the list of permissions in the data access permission mask for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role For the default namespace, system-level user account with the monitor or administrator role List
+
+POST
+
+Modify the list of permissions in the data access permission mask for a namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+Valid values for permissions are:
+
+DELETE PRIVILEGED PURGE READ SEARCH WRITE
+
+These values are case sensitive.
+
+The set of permissions specified in the request body replaces the set of permissions currently included in the data access permission mask for the namespace. To remove all permissions, specify an empty list.
+
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes SEARCH, read permission is enabled automatically.
+
+By default, when you create a namespace, its data access permission mask includes all permissions. .../tenants/tenant-name/namespaces/namespace-name/protocols
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+protocols
+
+GET
+
+Retrieve a subset of the HTTP namespace access protocol settings for the default namespace
+
+System-level user account with the monitor or administrator role
+
+Not valid for HCP namespaces. For HCP namespaces, this resource has been superseded by the .../protocols/http resource. POST
+
+Modify a subset of the HTTP namespace access protocol settings for the default namespace
+
+System-level user account with the administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/protocols/protocol-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+Determined by protocol-name. Possible data types are: GET
+
+Retrieve the applicable namespace access protocol settings for a namespace
+
+Tenant-level user account with the monitor or administrator role
+
+Not valid for the default namespace.
+
+Valid values for protocol-name are:
+
+cifsProtocol httpProtocol nfsProtocol
+
+cifs http nfs smtp
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+409/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+smtpProtocol
+
+POST
+
+Modify the applicable namespace access protocol settings for a namespace
+
+Tenant-level user account with the administrator role
+
+These values are case sensitive.
+
+The httpProtocol data type includes properties for both the HTTP and WebDAV protocols. .../tenants/tenant-name/namespaces/namespace-name/replicationCollisionSettings
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+replication Collision Settings
+
+GET
+
+Retrieve the replication collision handling settings for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role For the default namespace, system-level user account with the monitor or administrator role POST
+
+Modify the replication collision handling settings for a
+
+namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/statistics
+
+Data type Method
+
+Use
+
+Access
+
+Notes
+
+statistics
+
+GET
+
+Retrieve information about the content of a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator
+
+role For the default namespace, system-level user account with the monitor or administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/versioningSettings Data type
+
+Method
+
+Use

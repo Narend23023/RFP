@@ -1,0 +1,57 @@
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q1_2012.ppt?version=80232998058817-80232998058819")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?version=80232998058817-80232998058819 HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Date: Wed, 03 Jun 2015 16:42:45 GMT Expires: Thu, 01 Jan 1970 00:00:00 GMT X-HCP-ServicedBySystem: hcp.example.com
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<DeleteResult> <SuccessResult>
+
+<VersionId>80232998058817</VersionId> </SuccessResult>
+
+<SuccessResult> <VersionId>80232998058818</VersionId>
+
+</SuccessResult> <ErrorResult>
+
+<VersionId>80232998058819</VersionId> <HttpResponseCode>403</HttpResponseCode> </ErrorResult> </DeleteResult>
+
+Example: Deleting a range of object versions using timestamp
+
+Here’s a sample HTTP DELETE request that deletes a range of object versions for an object named Q1_2012.ppt in the quarterly_rpts directory using ingest timestamps. The version ingest timestamp range for the object is @1493911519816–@1493911519820. In this example, two objects are deleted successfully, and one delete fails. Request with curl command line
+
+curl -k -iX DELETE -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt
+
+?version=@1493911519816–@1493911519820" > Q1_2012.ppt
+
+Request in Python using PycURL
+
+import pycurl
+
+import StringIO cin = StringIO.StringIO() curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \
+
+rest/quarterly_rpts/Q1_2012.ppt?version=@1493911519817–@1493911519820") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?version=@1493911519817–@1493911519820 HTTP/1.1

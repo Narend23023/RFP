@@ -1,0 +1,55 @@
+System log messages sent to syslog servers
+
+For each system log message about an event, HCP sends this information to the specified syslog servers: A unique identifier for the system log entry. A message segment number, if applicable. Messages that exceed 1,024 characters are split into two or more messages, all of which have the same log entry identifier. These message segments are numbered sequentially, starting with 0 (zero) for the first segment.
+
+HCP sends at most 100 segments for a log message, for a total of 102,400 characters. Any text beyond that is not sent.
+
+The message ID. The date and time the event occurred. The severity of the event. The front-end network IP addresses and node number assigned to the node on which the event occurred. If the event applies to a specific logical volume, the volume identifier.
+
+The user name and ID of the event initiator. The full message text. You can choose the severity level of the log messages to be sent. You can also choose whether or not to send messages about security events (that is, attempts to log into the System Management Console with an invalid user name) and compliance events. Compliance events happen at the namespace level, so these messages are sent to the syslog servers only if syslog logging is enabled at the tenant level.
+
+Note: System log messages are not guaranteed to arrive at the syslog servers to which they’re sent. This is because the syslog protocol uses UDP for data transmission.
+
+Enabling syslog logging
+
+For HCP to send log messages through syslog, you need to specify the IP addresses of one or more syslog servers. Each syslog server IP address that you specify must be routable from the [hcp_system] network. For this reason, if you specify an IPv6 unique local address (ULA) for a syslog server, then the [hcp_system] network must be configured https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+144/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+with an IPv6 ULA that can be used to connect to that syslog server. When you specify multiple servers, HCP sends log messages to all of the specified servers.
+
+You also need to select the syslog local facility to which to direct the log messages. This selection applies to all the syslog servers that you specify.
+
+You use the Syslog page in the HCP System Management Console to set up logging through syslog. You also use this page to test the connections to the syslog servers you specify.
+
+To display the Syslog page, in the top-level menu of the System Management Console, select Monitoring > Syslog.
+
+To view the Syslog page, you need the monitor, administrator, security, or compliance role. To configure syslog logging and test the connections to syslog servers, you need the administrator or security role.
+
+To configure HCP to send log messages to syslog servers, on the Syslog page:
+
+Specify syslog settings:
+
+Select Enable syslog To include log messages about compliance events, select Send compliance events.
+
+To include log messages about security events, select Send security events. In the Send log messages at this level or higher field, select the severity level of messages to be sent to the specified syslog servers: OFF
+
+tells HCP not to send any log messages.
+
+NOTICE
+
+sends messages with a severity level of Notice, Warning, or Error.
+
+WARNING
+
+sends messages with a severity level of Warning or Error. ERROR
+
+sends only messages with a severity level of Error.
+
+In the HTTP access Facility field, select the syslog local facility to which to direct log messages. The options are local0 through local7. To include log messages about HTTP-based data access events, select Send log messages for HTTP-based data access requests. When you enable this option, HCP sends information to the syslog regarding data access requests that use the HTTP namespace access protocol. In the MAPI access Facility field, select the syslog local facility to which to direct log messages. The options are local0 through local7.
+
+To include log messages about management API request events, select Send log messages for management API requests. When you enable this option, HCP sends information to the syslog regarding request events that use the HCP management API. Then click Update Settings.

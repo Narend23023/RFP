@@ -1,0 +1,31 @@
+Request with s3curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+647/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+./s3curl.pl --id=lgreen --copysrc=finance/acctg/AcctgRR-Summary -- -k
+
+"https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105&partNumber=6" -H "x-amz-copy-source-if-none-match:7914d874df2c1d55cfab4fa82088ff56" -H "x-hcp-pretty-print: true" Request headers
+
+PUT /acctg/RulesAndRegulations.pdf?uploadId=94837746087105&partNumber=6 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:PBZDJM2WbzEIX4jFBO4Crah4GMQ= x-amz-copy-source: finance/acctg/AcctgRR-Summary x-amz-copy-source-if-none-match:7914d874df2c1d55cfab4fa82088ff56 x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "f79eac0151d6b62226986e721c89a2f1" x-amz-version-id: 94870864774145 x-amz-copy-source-version-id: 94842948673409 Content-Type: application/xml;charset=UTF-8 x-amz-server-side-encryption: None Transfer-Encoding: chunked
+
+Response body <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyPartResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"f79eac0151d6b62226986e721c89a2f1"</ETag> </CopyPartResult>
+
+Example: Creating a part from part of an object
+
+Here’s a sample PUT request that uploads a part of the multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket by copying part of the data for an existing object named AcctgBestPractices.doc in the same bucket.
+
+The example shows the response headers HCP returns while versioning is enabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=finance/AcctgBestPractices.doc -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105&partNumber=5" -H "x-amz-copy-source-range: bytes=2800000-9499999" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+PUT /acctg/RulesAndRegulations.pdf?uploadId=94837746087105&partNumber=5 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:a0wC/DuV+w2Agq6FagnIe6cShaU= x-amz-copy-source: finance/AcctgBestPractices.doc x-amz-copy-source-range: bytes=2800000-9499999 x-hcp-pretty-print: true Response headers

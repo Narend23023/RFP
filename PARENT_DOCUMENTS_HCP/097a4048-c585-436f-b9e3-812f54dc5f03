@@ -1,0 +1,65 @@
+Typically, the systems involved in cross-system data management are in separate geographic locations and are connected by a high-speed wide area network. This
+
+arrangement provides geographically distributed data protection (called geo-protection).
+
+Geo-protection enables HCP to support a cloud storage model, where any type of client request can be serviced equally by any system in the topology. Additionally, each
+
+system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. HCP supports two methods of geo-protection: whole-object protection and erasure-coded protection. Both methods are implemented by the Replication service, which is responsible for the distribution of configuration information and either complete copies of object data or chunks for erasure-coded objects.
+
+Read from remote
+
+If an object in a replicated HCP namespace or default-namespace directory is unavailable on one system in a replication topology (for example, because a node is unavailable), HCP can try to read the object from another system in the topology. HCP tries this only if the namespace has the read-from-remote feature enabled and the
+
+object has already been replicated. Note: The read-from-remote feature does not affect the ability of HCP to read the data for metadata-only objects from another system or to restore or reconstruct erasure- coded objects.
+
+Automatic redirection to other systems in a replication topology
+
+HTTP requests for access to an unavailable HCP system can be automatically redirected to any other system in a replication topology in which the unavailable system participates. This means that, to be satisfied, the request does not need to be reissued with a different URL.
+
+For another system to satisfy the request, the target HCP namespace or default-namespace directory must be replicated to that system. Also, the namespace must be
+
+configured to accept requests directed to other HCP systems. Additionally, the DNS must be configured to support redirection between HCP systems in the replication topology, and the unavailable system must be configured to allow this redirection. Regulatory compliance
+
+HCP includes features that enable you to comply with local regulations regarding data storage and maintenance:
+
+Data privacy
+
+At HCP installation time, you can choose to encrypt all data and metadata stored in the repository, thereby ensuring data privacy in a compliance context. Encryption prevents unauthorized users and applications from directly viewing namespace content. Lost or stolen storage devices are useless to parties without the correct encryption key.
+
+HCP handles data encryption and decryption automatically, so no access or process changes are required.
+
+Retention classes
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+8/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Some government regulations require that certain types of data be kept for a specific length of time. For example, local law may require that medical records be kept for a
+
+specific number of years.
+
+A retention class is a named duration that can be used as the retention setting for an object. When an object is assigned to a retention class, the object cannot be deleted until the specified length of time past its creation date. For example, a retention class named HlthReg-107 could have a duration of 21 years. Objects assigned to that class
+
+then could not be deleted for 21 years after they were created. Retention mode
+
+A namespace can be created in either of two modes: enterprise or compliance. The retention mode determines which operations are allowed on objects that are under
+
+retention:
+
+In enterprise mode, users and applications can delete objects under retention if they have explicit permission to do so. This is called privileged delete (see below).
+
+Also, in enterprise mode, authorized administrative users can delete retention classes and shorten retention class durations.
+
+In compliance mode, objects that are under retention cannot be deleted through any mechanism. Additionally, retention classes (see above) cannot be deleted, and
+
+retention class durations cannot be shortened. Privileged delete
+
+Some localities require that certain data be destroyed in response to changing circumstances. For example, companies may be required to destroy particular information
+
+about employees who leave.
+
+Privileged delete is an HCP feature that enables authorized users to delete objects even if they are under retention. This feature is available only in namespaces that are in enterprise mode. In compliance mode, objects can never be deleted while they are under retention.

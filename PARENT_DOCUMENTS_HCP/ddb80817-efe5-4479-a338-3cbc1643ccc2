@@ -1,0 +1,57 @@
+# Alert rules for HCP metrics # Please see HCP documentation for the list of HCP metrics # HCP will convert the alerts into HCP events. Please use the following four labels to categorize the alerts:
+
+# - severity: notice | warning | error # - security: true | false # - compliance: true | false # - importance: major | minor # Example alert for any instance that is unreachable for >5 minutes.
+
+# Remove the following comment markers (#) to enable this example alert. groups: name: example rules: - alert: InstanceDown
+
+expr: up == 0 for: 5m labels: severity: warning security: false
+
+compliance: false importance: major annotations: summary: "Instance {{ $labels.instance }} down"
+
+description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+3. Click Update Settings.
+
+Viewing HCP metrics in Grafana
+
+Grafana is an open-source tool for metrics visualization. You can use it with Prometheus as the data source to visualize HCP metrics for operational visibility into the performance of your HCP instance.
+
+The following are some of the Grafana dashboard and panel templates that you can use to visualize HCP performance metrics collected by Prometheus to perform deeper analysis. You can download these templates from the Product Downloads page of the Hitachi Support Connect portal. Application Load: Displays metrics related to HCP gateway operations and HTTP connections. HCP Overview: Displays a selected collection of panels from other HCP dashboards to provide an overview of system behavior. Replication: Displays metrics related to replication operations such as pending operations, replicated objects, and replication errors. Resources: Displays metrics related to node hardware status, such as CPU utilization, disk I/O, and network I/O. Storage and Objects: Displays metrics related to object storage and system capacity.
+
+Enable Prometheus and configure its settings in HCP. Install and configure Grafana in your environment.
+
+For more information about installing Grafana, see "Install Grafana" in the Grafana documentation at https://grafana.com/docs/grafana/latest/setup-grafana/installation/ 1. From the System Management Console main menu, select Monitoring > Prometheus. 2. To access the Prometheus dashboard, click the Prometheus URL: https://<prometheus.example.com>:<port>)
+
+<prometheus.example.com>: FQDN that refer to the complete domain name of your Prometheus server.
+
+<port>: HCP access port number. The reserved port number for Prometheus is 9094.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+172/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+3. To view HCP metrics in Grafana, copy the Prometheus URL to add it as a data source in Grafana.
+
+For more information about adding a data source in Grafana, see "Add a data source" in the Grafana documentation at: https://grafana.com/docs/grafana/latest/datasources/add-a-data-source/
+
+Note: Grafana may display empty graphs if there is no data or if the datasource is not correctly configured.
+
+4. Import the template, that you downloaded, into Grafana.
+
+For more information about importing dashboard templates in Grafana, see "Import dashboard" in the Grafana documentation at: https://grafana.com/docs/grafana/latest/setup-grafana/installation/
+
+5. Configure Grafana dashboard.
+
+For more information about configuring Grafana dashboards, see "Configuring Dashboards" in the Grafana documentation at: https://grafana.com/docs/grafana/latest/dashboards/use-dashboards/.
+
+6. Visualize Prometheus data in Grafana.
+
+For more information about visualizing data using Prometheus, see "Grafana support" in the Prometheus documentation at: https://prometheus.io/docs/visualization/grafana.
+
+Resetting alert rule settings When you reset alert rule settings, HCP removes all alert rules and resets the configuration to default settings.
+
+To reset alert rule settings, you need an administrator or security role.

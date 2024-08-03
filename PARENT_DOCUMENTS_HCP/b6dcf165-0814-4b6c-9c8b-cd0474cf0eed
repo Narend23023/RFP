@@ -1,0 +1,41 @@
+<!-- The elements after this will be ignored --> <input type="submit" name="submit" value="Upload to HCP" /> </form>
+
+</html>
+
+Security policy
+
+{ "expiration": "2019-12-31T12:00:00.000Z", "conditions": [ {"bucket": "finance"}, ["starts-with", "$key", "acctg/"], {"acl": "public-read"}, {"x-amz-meta-class": "business"}, ["content-length-range", 0, 10485760] ] } Response headers
+
+Cache-Control: no-cache,no-store,must-revalidate Content-Encoding: gzip Content-Security-Policy: default-src 'self'; script-src…elf'; frame-ancestors 'self'; Content-Type: application/xml;charset=utf-8 Date: Thu, 11 Apr 2019 20:10:25 GMT Expires: Thu, 01 Jan 1970 00:00:00 GMT Pragma: no-cache Strict-Transport-Security: max-age=31536000; includeSubDomains Transfer-Encoding: chunked Vary: Origin, Access-Control-Request…Access-Control-Request-Method
+
+Vary: Accept-Encoding, User-Agent x-amz-version-id: 99520854223169 X-Content-Type-Options: nosniff X-DNS-Prefetch-Control: off X-Download-Options: noopen X-Frame-Options: SAMEORIGIN X-XSS-Protection: 1; mode=block
+
+Response body
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+663/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <PostResponse> <Location>https://finance.europe.hcp.example.com/hs3/acctg%2FChecklist.txt</Location> <Bucket>finance</Bucket>
+
+<Key>acctg/Checklist.txt</Key> <ETag>"fc7abcc28fdf00ef400d7240546de4b9"</ETag> </PostResponse>
+
+Using CORS to process cross-domain requests
+
+HCP supports Cross-Origin Resource Sharing (CORS). CORS is a mechanism that uses additional HTTP headers to allow a web application running on a browser at one origin (domain) to have permission to access restricted resources on a server at a different origin. A web application executes a cross-origin HTTP request when it requests a resource that has a different origin (domain, protocol, and port) than its own.
+
+To use CORS with HCP, you first need to configure CORS rules for a namespace to specify the sites that are allowed cross-origin access. Then, the HCP software validates incoming requests for compliance to these rules. CORS rules are specific to a namespace and can be configured at either the namespace level or tenant level.
+
+CORS use cases
+
+With a proper CORS rules configuration for a namespace, the HCP software can process CORS requests from web applications hosted in a different domain (origin).
+
+HCP supports the following CORS use cases. Simple request
+
+A simple request is a request that does not trigger a CORS preflight request. A simple request meets the following conditions:
+
+The method request is GET, HEAD, or POST. The only headers added manually are Accept, Accept-Language, Content-Language, Content-Type, DPR, Downlink, Save-Data, Viewport-Width, Width. The Content-Type header value is application/x-www-form-urlencoded, multipart/form-data, or text/plain. No ReadableStream object or event listeners are registered on any XMLHttpRequestUpload object that the request uses. Preflight request
+
+A preflight request is a CORS request that checks to see if the CORS protocol is understood. It is an OPTIONS request that uses three HTTP request headers: Access-Control-Request-Method Access-Control-Request-Headers Origin

@@ -1,0 +1,27 @@
+Request headers
+
+GET /acctg/RulesAndRegulations.pdf?uploadId=94837746087105 &part-number-marker=1&max-parts=3 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:Ey256+39Nz19jRw7chPIOJwD8m4= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-abort-date: Sat, 25 Feb 2017 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListPartsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Bucket>finance</Bucket> <Key>acctg/RulesAndRegulations.pdf</Key> <UploadId>94837746087105</UploadId>
+
+<Initiator> <ID>835be4b1-8f84-407b-8084-b9329beadf9b</ID> <DisplayName>lgreen</DisplayName> </Initiator> <Owner> <ID>835be4b1-8f84-407b-8084-b9329beadf9b</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> <PartNumberMarker>1</PartNumberMarker> <NextPartNumberMarker>5</NextPartNumberMarker> <MaxParts>3</MaxParts> <IsTruncated>true</IsTruncated> <Part> <PartNumber>2</PartNumber> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"97ede335e69d08bb3cfbbd974bae68e4"</ETag> <Size>6800000</Size> </Part> <Part> <PartNumber>3</PartNumber> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"a39ebe49948a821cab2c4d7d04f9b1c3"</ETag> <Size>6800000</Size> </Part> <Part> <PartNumber>5</PartNumber> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"bbe438b2a0376f08dc37867a82ea87e6"</ETag> <Size>6700000</Size> </Part> </ListPartsResult>
+
+Completing a multipart upload
+
+You use the HTTP POST method with the uploadId query parameter to complete a multipart upload. You must use the same user account as the account used in the request to initiate the multipart upload. Additionally, you need write permission for the bucket where the multipart upload was initiated. You use the uploadId query parameter to specify the upload ID of the multipart upload you are completing. If the upload ID you specify does not match the upload ID of an in- progress multipart upload or is not associated with the object specified in the request, the upload does not complete and HCP returns a 404 (Not Found) status code.
+
+To specify the list of parts to use when completing a multipart upload, you use an XML request body. You identify each part by its part number and the ETag returned when the part was uploaded. The list of parts must be in ascending order by part number.
+
+Only the parts listed in the request to complete a multipart upload are used as data for the resulting object. Parts that were uploaded for the multipart upload but that are not listed in the request are automatically deleted after the request is processed.
+
+A multipart upload must have at least one part to complete. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+652/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

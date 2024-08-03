@@ -1,0 +1,163 @@
+403
+
+Forbidden
+
+RequestTimeTooSkewed
+
+The difference between the request time and the server's time is too large.
+
+404 Not Found
+
+NoSuchBucket
+
+The specified bucket does not exist.
+
+404
+
+Not Found
+
+NoSuchKey
+
+HCP could not find an object with the specified name.
+
+404
+
+Not Found
+
+NoSuchUpload
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was aborted or completed.
+
+404 Not Found
+
+NoSuchLifecycleConfiguration The lifecycle configuration does not exist.
+
+405
+
+Method Not Allowed
+
+MethodNotAllowed
+
+The requested HTTP method is not supported for the target tenant, bucket, or object.
+
+409
+
+Conflict
+
+BucketAlreadyExists
+
+You are trying to create a bucket, but a bucket with the specified name already exists and either is owned by a user other than you or has no owner.
+
+409 Conflict
+
+BucketNotEmpty
+
+You are trying to delete a bucket that is not empty.
+
+409
+
+Conflict
+
+InvalidBucketState
+
+The target bucket does not currently support the requested operation.
+
+409
+
+Conflict
+
+OperationAborted
+
+Possible reasons include:
+
+HCP cannot perform the requested operation because a conflicting operation is already in progress. You are trying to delete an object that is under retention. You are trying to create an object with the same name as an existing object, and versioning is disabled. You are trying to read, add an ACL to, or delete an object that is currently being written to the bucket.
+
+411 Length Required
+
+MissingContentLength
+
+You must provide the Content-Length HTTP header.
+
+412
+
+Precondition Failed
+
+PreconditionFailed
+
+HCP did not perform the requested operation because a specified precondition for the operation was not satisfied.
+
+When this error occurs with a request to complete a multipart upload, the returned status code is 200 (OK), but the multipart upload is not completed.
+
+413 Request Entity Too Large
+
+OutOfSpace
+
+The object you are trying to store or the custom metadata you are trying to add is too big for the amount of space left in the bucket.
+
+416
+
+Requested Range Not Satisfiable
+
+InvalidRange
+
+You are trying to retrieve part of an object, and one of these is true:
+
+The specified start position is greater than the size of the requested data. The size of the specified range is zero.
+
+500 Internal Server Error
+
+InternalError
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+NotImplemented
+
+The requested operation is not supported.
+
+503
+
+Service Unavailable
+
+ServiceUnavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload,
+
+maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+403 Forbidden
+
+SignatureDoesNotMatch
+
+The signature provided with the request does not match the request contents. Check that the secret key and signing method used are correct.
+
+Working with buckets
+
+With the Hitachi API for Amazon S3, you can perform operations on individual buckets. You can also list all the buckets you own.
+
+Note: To perform these bucket activities, the management API must be enabled for the owning tenant:
+
+Create a bucket List the buckets you own Enable, disable, or check the status of versioning for a bucket
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+566/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Add, retrieve, or remove the ACL for a bucket Delete a bucket
+
+If you cannot perform these activities, contact your tenant administrator.
+
+Creating a bucket You use the HTTP PUT method to create a bucket. To create a bucket, you must be an authenticated user. Additionally, your user account must be configured to let you create buckets.
+
+When you create a bucket, you specify a name for it. The specified name must be at least three characters long and at most 63 characters long. The name can contain only alphanumeric characters and hyphens (-) but cannot start or end with a hyphen.

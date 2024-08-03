@@ -1,0 +1,61 @@
+To view the SNMP page, you need the monitor, administrator, security, or compliance role. To configure SNMP for HCP and test connections to SNMP managers, you need the administrator or security role.
+
+1. On the SNMP page, click Test.
+
+HCP sends this message to the specified SNMP managers: User username sent system log test message.
+
+2. Check each SNMP manager to ensure that the message arrived.
+
+If an SNMP manager doesn’t receive the message:
+
+Check that you’ve correctly specified the target IP address. Check that you can successfully ping the target IP address. If you’re unable to determine the cause of the problem, please contact your authorized HCP service provider.
+
+Viewing and downloading the HCP-MIB.txt file
+
+The SNMP MIB for HCP is described in the HCP-MIB.txt file. To use this MIB, you need to download the file to your SNMP tool.
+
+Tip: You can download the HCP-MIB.txt file even if your user account includes only the monitor role. To view the SNMP page, you need the monitor, administrator, security, or compliance role. To configure SNMP for HCP and test connections to SNMP managers, you need the administrator or security role.
+
+1. To view the HCP-MIB.txt file, click HCP-MIB.txt on the SNMP page. 2. To download the HCP-MIB.txt file, right-click HCP-MIB.txt on the SNMP page and select the browser-specific option for downloading the file.
+
+3. Save the file as HCP-MIB.txt in the applicable directory for your SNMP tool.
+
+Using SNMP to view or change HCP settings
+
+You can use the fields HCP-MIB and other MIBs to view and, when allowed, change HCP settings. The interface you use for these activities depends on your SNMP tool. Here are examples of viewing and changing HCP settings with the command-line tool net-snmp:
+
+To view the total storage capacity of the HCP system:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+170/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Command:
+
+snmpget -v 2c -c public -m +/usr/share/snmp/mibs/HCP-MIB.txt snmp.hcp-ma.example.com HCP-MIB::totalCapacity.0 Response:
+
+HCP-MIB::totalCapacity.0 = Counter64: 562110914560 To set the shredding rate to low:
+
+Command
+
+snmpset -v 2c -c public -m +/usr/share/snmp/mibs/HCP-MIB.txt snmp.hcp-ma.example.com HCP-MIB::shreddingRate.0 i 5000
+
+Response:
+
+HCP-MIB::shreddingRate.0 = INTEGER: low(5000)
+
+net-snmp is a publicly available tool. Monitoring HCP performance using Prometheus
+
+HCP supports Prometheus, an open-source monitoring and alerting framework that collects, organizes, and stores performance metrics. When Prometheus is used with a visualization tool like Grafana, data collected by Prometheus provides operational visibility into the performance of your HCP instance.
+
+The Prometheus server runs on two storage nodes in the cluster: the node with highest IP address and the node with the second lowest IP address. By default, Prometheus retains all the collected metrics in a time series database for 15 days.
+
+For a list of the HCP metrics collected by Prometheus, see HCP performance metrics collected by Prometheus Enabling and configuring Prometheus
+
+Enabling Prometheus allows you to collect various HCP performance metrics. HCP exposes Prometheus metrics on TCP port 9094. Use this unauthenticated port to monitor system performance without exposing sensitive data. To prevent user access, block the port on user data networks. HCP system blocks all POST requests to the unauthenticated port. You can only send GET requests.
+
+To enable Prometheus on HCP nodes, you need an administrator or security role.

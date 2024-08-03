@@ -1,0 +1,119 @@
+String
+
+For an HCP namespace, specifies the type of the user account that identifies the object owner. Valid values are:
+
+This property is optional on a PUT request.
+
+LOCAL
+
+The user account is defined in HCP.
+
+You can specify a value for this property on a PUT or POST request only if you specify a value for the owner property in the same request. EXTERNAL
+
+The user account is defined in AD.
+
+This property is not valid for the default namespace.
+
+The default is LOCAL.
+
+These values are not case sensitive.
+
+If the namespace doesn’t have an owner, this property has no value.
+
+readFromReplica Boolean
+
+Specifies whether read from replica is enabled for the namespace.
+
+Valid values are:
+
+true — Read from replica is enabled.
+
+This property is optional on a PUT request. You can set the value of this property to true on a PUT request only if, for an HCP namespace, the replicationEnabled property is set to true in the same request or, for the default namespace, the HCP system supports replication.
+
+false — Read from replica is disabled.
+
+On a PUT request, the default is true if replicationEnabled is set to true in the same request; otherwise, the default is false.
+
+On a POST request, you can set the value for this property to true for an HCP namespace only if the namespace is already selected for replication or the replicationEnabled property is set to true in the same request. You can set the value for this property to true for the default namespace only if the HCP system supports replication. This property is not returned by any GET request for an HCP namespace that is not selected for replication. This property is not returned by any GET request for the default namespace if the HCP system does not support replication.
+
+replicationEnabled Boolean
+
+For an HCP namespace, specifies whether the namespace is selected for replication. Valid values are:
+
+This property is optional on a PUT request.
+
+true — The namespace is selected for replication.
+
+You can set the value of this property to true only if replication is enabled for the owning tenant.
+
+false — The namespace is not selected for replication.
+
+If the HCP system does not support replication, this property is not returned by any GET request.
+
+The default is the replication setting specified by the namespace defaults for the tenant.
+
+This property is not valid for the default namespace. If the HCP system supports replication, replication is automatically enabled for that namespace.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+483/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+replicationTimestamp
+
+String Specifies the oldest change time for objects and configuration changes not yet replicated or recovered from the namespace, as applicable, in this format:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request and only when these conditions are true:
+
+yyyy-MM-ddThh:mm:ssZ
+
+The namespace is selected for replication.
+
+Z represents the offset from UTC, in this format:
+
+The tenant that owns the namespace is included in a replication link.
+
+(+|-)hhmm For example:
+
+2012-02-27T14:32:19-0500
+
+retentionType
+
+String
+
+Specifies the retention type to be applied to all objects in the namespace. Valid values are:
+
+HCP
+
+HCP retention type
+
+When you set the retentionType to S3 Object Lock in a MAPI request for a namespace, versioning, delete markers, and cloud-optimized protocols are automatically enabled. You do not need to set these parameters explicitly. S3
+
+S3 Object Lock
+
+Default value is HCP retention.
+
+s3UnversionedOverwrite
+
+Boolean
+
+Specifies whether object overwrite is enabled for the namespace. Valid values are:
+
+true
+
+Object overwrite is enabled.
+
+You can set the value of this property to either true or f alse. However, if you enable versioning for the namespace, changing the value will not have any effect. This property applies only to the requests made through Hitachi API for Amazon S3. false
+
+Object overwrite is disabled.

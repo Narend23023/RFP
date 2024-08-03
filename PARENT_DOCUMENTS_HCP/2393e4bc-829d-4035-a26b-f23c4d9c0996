@@ -1,0 +1,31 @@
+Example: Listing the versions of an individual object Here’s a sample GET request for a bucket listing that lists all the versions of the object named AcctgBestPractices.doc and includes one delete marker, indicating that one version was deleted. The request uses these query parameters:
+
+versions
+
+Lists item versions
+
+prefix=AcctgBestPractices.doc
+
+Lists only items that start with AcctgBestPractices.doc Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?versions &prefix=AcctgBestPractices.doc" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET /?versions&prefix=AcctgBestPractices.doc HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:zkfUJoEb+pOrtVpxxOHeamoD4cI= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListVersionsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix>AcctgBestPractices.doc</Prefix> <KeyMarker></KeyMarker> <VersionIdMarker></VersionIdMarker> <MaxKeys>1000</MaxKeys> <IsTruncated>false</IsTruncated> <Version>
+
+<Key>AcctgBestPractices.doc</Key> <VersionId>87288758401473</VersionId> <IsLatest>false</IsLatest> <LastModified>2019-05-29T14:56:05.630Z</LastModified> <ETag>"26aa5129552e57fc64e10aa5b3911ee2"</ETag> <Size>3206178</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> <Version> <Key>AcctgBestPractices.doc</Key> <VersionId>87288800665537</VersionId> <IsLatest>false</IsLatest> <LastModified>2019-10-28T19:23:31.305Z</LastModified> <ETag>"b7235e841a2cc45a7e42a8a576d493b1"</ETag> <Size>3374982</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+590/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<Version> <Key>AcctgBestPractices.doc</Key> <VersionId>87288808614529</VersionId>

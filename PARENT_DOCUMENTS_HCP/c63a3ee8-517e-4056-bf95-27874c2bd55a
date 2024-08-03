@@ -1,0 +1,39 @@
+The tenant supports remote authentication by RADIUS. To be authenticated, a user must have a RADIUS-authenticated HCP user account.
+
+A tenant that supports RADIUS authentication must also support local authentication, Active Directory authentication, or both. Active Directory
+
+The tenant supports remote authentication by AD. To be authenticated, a user must have an AD user account. Tip: To help ensure that AD authentication is available for those tenants that need to support it, enable AD only for those tenants.
+
+For RADIUS or Active Directory authentication to work for the tenant to access the Tenant Management Console and HCP management API, the tenant management network must be [hcp_system]. Similarly, for RADIUS or Active Directory authentication to work for the tenant to access the content of the tenant's namespaces, the tenant data access network must be [hcp_system].
+
+You can change the allowed authentication methods at any time after you create the tenant. However, you cannot disable local authentication if the only tenant-level account with the security role is a locally authenticated HCP user account. Similarly, you cannot disable AD authentication if the only tenant-level account with the security role is a group account. If you disable AD authentication for a tenant after the tenant has created group accounts, those accounts continue to exist but are not visible to the tenant. If you subsequently reenable AD authentication for the tenant, the group accounts become visible again.
+
+An initial security account for the tenant. This can be a locally authenticated HCP user account or an HCP group account, depending on which authentication methods are allowed for the tenant:
+
+For a locally authenticated user account, you specify the account username and password. When HCP creates the tenant, it also creates a tenant-level user account
+
+with the specified username and password. This account has only the security role and no data access permissions. For an HCP group account, you select an AD group. When HCP creates the tenant, it also creates a tenant-level group account that corresponds to that AD group. This group account has only the security role and no data access permissions. For the initial security account to be a group account, Active Directory must be selected as an authentication method for the tenant, HCP must be configured to support AD, and HCP must be able to communicate with AD.
+
+After creating the tenant, you cannot modify the initial security account configuration from the System Management Console. However, tenant administrators can modify the initial security account configuration in the Tenant Management Console.
+
+Optionally, contact information for the tenant. For example, you can specify contact information for the primary person responsible for administering the tenant.
+
+You can change this information at any time after you create the tenant. Tenant-level administrators can also change this information from the Tenant Management Console. Optionally, tags for the tenant. A tag is an arbitrary text string associated with an HCP tenant. You can associate up to ten tags with any given tenant, and you can use the same tags for multiple tenants.
+
+You can use tags to group tenants and filter tenant lists. For example, if you’ve created multiple tenants for a company named ABC Corporation, you could associate the tag ABC with each of those tenants. Then you could filter a list of tenants to display only the tenants with that tag.
+
+Tags exist only as long as they are associated with at least one tenant. If you remove a tag from the last tenant with which it’s associated, the tag no longer exists.
+
+You can change the tags associated with the tenant at any time after you create the tenant.
+
+Whether the tenant can be replicated.
+
+After creating the tenant, you can change this setting from not allowing replication to allowing replication. However, you cannot do the reverse. If the tenant can be replicated, whether tenant administrators can choose which cloud-optimized namespaces allow erasure coding. If tenant administrators are not allowed to do this, all cloud-optimized namespaces owned by the tenant allow erasure coding.
+
+After creating the tenant, you can change this setting from having all cloud-optimized namespaces allow erasure coding to allowing tenant administrators to choose which
+
+cloud-optimized namespaces allow erasure coding. However, you cannot do the reverse.
+
+When HCP is upgraded to release 8.0 or later, preexisting tenants are configured such that tenant administrators cannot select erasure coding for namespaces.
+
+Whether tenant administrators can select the retention mode for the namespaces that the tenant owns. If this is not allowed, tenant administrators can create namespaces only in enterprise mode. After creating the tenant, you can change this setting from not allowing tenant administrators to select the retention mode to allowing it. However, you cannot do the reverse.

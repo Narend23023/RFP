@@ -1,0 +1,127 @@
+<objectProperties>comma-separated-list-of-properties </objectProperties>
+
+<systemMetadata> <changeTime>
+
+<start>start-time-in-milliseconds</start> <end>end-time-in-milliseconds</end>
+
+</changeTime> <directories> <directory>directory-path</directory> ...
+
+</directories>
+
+<indexable>(true|false)</indexable> <namespaces>
+
+<namespace>namespace-name.tenant-name</namespace> ...
+
+</namespaces> <replicationCollision>(true|false)</replicationCollision>
+
+<transactions> <transaction>operation-type</transaction>
+
+... </transactions>
+
+</systemMetadata> <verbose>(true|false)</verbose>
+
+</operation> </queryRequest>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+837/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The XML body for an operation-based query that requests all available operation records contains only this line:
+
+<queryRequest/> JSON request body for operation-based queries
+
+The JSON request body for an operation-based query must contain an unnamed top-level entry and, except when requesting all available information, the operation entry. All other entries are optional.
+
+The JSON request body has the format shown below. Entries at each hierarchical level can be in any order: { "operation": {
+
+"count":"number-of-results", "lastResult":{
+
+"urlName":"object-url", "changeTimeMilliseconds":"change-time-in-milliseconds.index",
+
+"version":version-id },
+
+"objectProperties":"comma-separated-list-of-properties", "systemMetadata":{
+
+"changeTime":{ "start":start-time-in-milliseconds,
+
+"end":end-time-in-milliseconds },
+
+"directories":{ "directory":["directory-path",...]
+
+}, "indexable":"(true|false)", "namespaces":{
+
+"namespace":["namespace-name.tenant-name",...] },
+
+"replicationCollision":"(true|false)", "transactions":{
+
+"transaction":["operation-type",...] }
+
+}, "verbose":"(true|false)"
+
+} }
+
+For the namespace, directory, and transaction entries, the square brackets shown in this format are required.
+
+The JSON body for an operation-based query that requests all available operation records contains only this line:
+
+{} Request object body contents
+
+The following sections describe the entries in an object-based metadata query API request body.
+
+Top-level entry
+
+XML has a single top-level queryRequest entry. JSON has a corresponding unnamed top-level entry. All request bodies must contain this entry.
+
+object entry
+
+The object entry is required for object-based requests. It must contain the query entry and can contain any combination of the other entries listed in the table below. Entry
+
+Valid values
+
+Description
+
+query
+
+A query expression
+
+Specifies the query criteria. This entry is required.
+
+content
+
+One of:
+
+Returns information about the content properties available for use in queries.
+
+Properties
+
+true
+
+The default is false.
+
+Return information for all content
+
+properties.
+
+To return only content properties, specify a count entry with a value of 0. false
+
+Do not return any information on
+
+content properties.
+
+count
+
+One of:
+
+Specifies the maximum number of results to return.
+
+1, to request all results
+
+If you omit this entry, HCP returns a maximum of one hundred results.
+
+0, to request a response that includes only the object count and,
+
+if requested, content properties and facets. An integer between one and 10,000

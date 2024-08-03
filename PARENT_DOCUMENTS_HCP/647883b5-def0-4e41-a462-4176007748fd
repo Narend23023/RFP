@@ -1,0 +1,123 @@
+Specifying an offset
+
+You can set retention by specifying an offset from:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+549/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The time at which the object was added to the namespace The current retention setting for the object The current time
+
+Because you can only extend a retention period, the offset must be a positive value. Offset syntax
+
+To use an offset as a retention setting, specify a standard expression that conforms to this syntax:
+
+^([RAN])?([+-]\d+y)?([+-]\d+M)?([+-]\d+w)?([+-]\d+d)?([+-]\d+h)?([+-]\d+m)?([+-]\d+s)?
+
+The list below explains this syntax.
+
+^
+
+Start of the expression
+
+( )
+
+Sequence of terms treated as a single term
+
+?
+
+Indicator that the preceding term is optional
+
+[ ]
+
+Group of alternatives, exactly one of which must be used
+
++ Plus
+
+Minus
+
+R*
+
+The current retention setting for the object
+
+A*
+
+The time at which the object was added to the namespace
+
+N*
+
+The current time
+
+d+
+
+An integer in the range 0 (zero) through 9,999
+
+y
+
+Years
+
+M
+
+Months
+
+w
+
+Weeks
+
+d
+
+Days
+
+h
+
+Hours
+
+m
+
+Minutes
+
+s
+
+Seconds
+
+Offset examples
+
+Here are some examples of offset values used to extend a retention period:
+
+This value sets the retention value to 100 years past the time when the object was stored:
+
+A+100y
+
+This value sets the end of the retention period to 20 days minus five hours past the current date and time:
+
+N+20d-5h
+
+This value extends the current retention period by two years and one day:
+
+R+2y+1d Custom metadata
+
+Objects can optionally have custom metadata in the form of one or more annotations. Annotations are a powerful means for understanding and analyzing the contents of buckets. Using the HCP metadata query API or Search Console, you can search for objects based on the content of their annotations.
+
+Storing custom metadata with the S3 compatible API
+
+With the S3 compatible API, you use x-amz-meta- request headers to specify custom metadata. You can use these headers when you store or copy an object.
+
+With the x-amz-meta- header, you specify custom metadata as property/value pairs. You append the property name to the header and specify the value of the property as the value of the header. For example, to give an object a department property with a value of Sales&Mktg and a year property with a value of 2020, you would specify these headers: x-amz-meta-department: Sales&Mktg x-amz-meta-year: 2020
+
+HCP stores the custom metadata you specify with the S3 compatible API as an annotation named .metapairs. In this annotation, the property/value pairs are stored as well-formed XML in which each property is represented by an element. For example, the XML stored for the headers shown above is:
+
+<metapairs version="600"> <meta-department><![CDATA[Sales&Mktg]]></meta-department>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+550/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<meta-year><![CDATA[]]></meta-year> </metapairs>2020

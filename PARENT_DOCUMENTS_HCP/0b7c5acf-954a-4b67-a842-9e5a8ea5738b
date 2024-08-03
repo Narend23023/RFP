@@ -1,0 +1,73 @@
+This example shows an all search for objects in the finance namespace owned by the europe tenant that belong to the SEC-17a retention class and are on hold. On the Structured Search page, the search criteria look like this:
+
+Example: Search for objects with specified text in their custom metadata (metadata query engine only)
+
+This example shows an all search for objects that have custom metadata that contains x-ray. On the Structured Search page, the search criterion looks like this:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+900/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Search for objects with a specified ACL grant (metadata query engine only) This example shows an all search for objects with ACLs that grant delete permission to the user pdgrey, whose user account is defined in the europe tenant. On the Structured Search page, the search criterion looks like this:
+
+Example: Search using a content property (metadata query engine only)
+
+This example shows a query using the Sales content property of the Regions content class. The Sales content property has the Float data type. The query will find any object with custom metadata that identifies the region as having aggregate sales of at least $3,000,000.00. To search for a floating point number, you need to type only the numeric value,
+
+without a dollar sign or commas. Because the query is for a whole dollar figure, the decimal value is optional and has been omitted.
+
+Working with advanced searches Advanced searches are one of the three types of searches you can perform from the HCP Search Console. For an advanced search, you can specify queries equivalent to those for simple and structured searches. However, in an advanced query, you can combine criteria with various operators to refine your searches in more ways.
+
+This chapter provides instructions for performing advanced searches. It provides an introduction to specifying advanced queries and contains many examples.
+
+Once you have the results of an advanced search, you can filter and export them.
+
+Note: While the metadata query engine is active, advanced searches are called advanced queries. About advanced searches
+
+Advanced searches provide more flexibility than both simple and structured searches. They enable you not only to search for text and metadata with multiple search criteria but also to nest and combine those criteria by using parentheses and Boolean and other operators.
+
+To perform an advanced search, you use the Advanced Query page of the Search Console. On this page, you write your own query (called an advanced query) using a query language. The language you use depends on the active search facility.
+
+You can generate advanced queries from the Structured Search page. To do this, construct the query on the Structured Search page and then click Show as advanced search. The Advanced Search page opens and shows the specified search criteria translated into the applicable query language.
+
+Note: While the metadata query engine is active, the Advanced Search page is called the Advanced Query page and the Show as advanced search link is called the Show as advanced query link.
+
+Criteria for advanced queries with the metadata query engine
+
+This section describes the formats for the criteria you use to construct advanced queries while the metadata query engine is active. For more information about the query language
+
+used with the metadata query engine, see the applicable Apache Solr documentation at http://lucene.apache.org/solr. Query expressions
+
+With the metadata query engine, query expressions have this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, [+|-] is an optional Boolean operator and criterion is one of:
+
+A simple criterion One or more criteria in parentheses, in this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, criterion can be a simple criterion or one or more criteria in parentheses.
+
+For example, here is one possible query expression:
+
+(namespace:"finance.europe") +(retention:0 index:1)
+
+Query expressions can contain only valid UTF-8 characters.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+901/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Criterion format
+
+The format for a simple advanced criterion is: property:value

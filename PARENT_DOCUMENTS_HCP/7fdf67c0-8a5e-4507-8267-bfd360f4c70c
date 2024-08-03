@@ -1,0 +1,67 @@
+Creates a resource. When creating a resource, you need to supply values for all properties that do not have default values. If properties with default values are omitted from the request body, those values are applied to the resource.
+
+GET
+
+Retrieves information about an individual resource or retrieves a list of resources of a given type. HEAD
+
+Performs a GET but does not return the response body. You can use a HEAD request to check whether a particular resource exists.
+
+POST
+
+Modifies a resource. When modifying a resource, you need to supply values only for the properties whose values you want to change. If properties are omitted from the request body, they remain unchanged. DELETE
+
+Deletes a resource.
+
+OPTIONS
+
+Describes the methods supported by a given resource.
+
+Each request you submit to the management API can work on only one resource. So, for example, you cannot use a single PUT request to create two tenants.
+
+Input and output formats
+
+When you create or modify a resource through the HCP management API, you use XML or JSON to specify the resource properties. When you request information about resources, you can ask for the response to be returned in XML format or in JSON format. For one resource, chargebackReport, you can also ask for the response to be returned in CSV format.
+
+The response to an OPTIONS request is always returned as Web Application Description Language (WADL). WADL is an XML-based description language for HTTP-based web applications.
+
+All responses returned through the management API are UTF-8 encoded. The request bodies you create for input to the API must also be UTF-8 encoded. HTTP Content-Type and Accept headers
+
+With a PUT or POST request, you use the HTTP Content-Type request header to specify the format of the request body. This header is required if the request includes a request body.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+381/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+With a GET request, you can use the HTTP Accept request header to specify the format for the response body. If you omit this header, the API returns the response body in XML format.
+
+In a Content-Type or Accept header, you specify the input or output format as an Internet media type:
+
+For XML, the Internet media type is application/xml. For JSON, the Internet media type is application/json. For JSON with callback, the Internet media type is application/javascript. For CSV, the Internet media type is text/csv. You don’t need to specify an Internet media type in an OPTIONS request. If you do specify one, it is ignored.
+
+With cURL, you use the -H option to specify an HTTP header. So, for example, to specify that a request body uses XML, you include this in the curl command:
+
+H "Content-Type: application/xml"
+
+In Python with PycURL, you do this with the HTTPHEADER option. For example: curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml"])
+
+HTTP headers and Internet media types are not case sensitive.
+
+XML
+
+In an XML request or response body:
+
+Property names are element names. Property values are element values. For example, the element that corresponds to the softQuota property with a value of 85 is:
+
+<softQuota>85</softQuota>
+
+The name of the root element for a request that involves a single resource is the data type of that resource. For example, for this URL, which identifies a single namespace named Accounts-Receivable, the root element is namespace: https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/Accounts-Receivable
+
+The name of the root element for a request for a list of resources is the term used to identify those resources in the URL. For example, for this URL, the root element is namespaces:
+
+https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces
+
+In a list of resources, each resource is the value of an element whose name is the name of the property used to identify the resource. For example, the response body for a request for the namespaces owned by the Finance tenant might include this:

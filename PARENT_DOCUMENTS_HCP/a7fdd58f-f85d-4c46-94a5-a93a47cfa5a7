@@ -1,0 +1,119 @@
+true
+
+Specifies whether to return complete metadata for each operation record in the result set (true) or to return only the object URL, version ID, operation type, and change time (fal se).
+
+Return all object properties. false
+
+The default is false.
+
+Return only the object URL, version ID, operation,
+
+and change time.
+
+If the query request body contains both the verbose and objectProperties entries, HCP returns only the object URL, version ID, operation type, and change time and the information specified in the objectProperties entry. lastResult entry
+
+Use the lastResult entry only in the second through final requests of a paged query. This entry identifies the last record that was returned in the previous query so that HCP can retrieve the next set of records. The entry contains the child entries described in the table below.
+
+Entry Valid values
+
+Description
+
+urlName
+
+A fully qualified object URL, for example:
+
+Specifies the urlName value in the last operation record returned in response to the previous query.
+
+http://finance.europe.hcp.example.com/rest/Pres
+
+entations/Q1_2012.ppt
+
+changeTime
+
+A timestamp in milliseconds since January 1, 1970, at
+
+00:00:00 UTC, followed by a period and a two-digit suffix
+
+Specifies the changeTimeMilliseconds value in the last operation record returned in response to the previous Milliseconds
+
+query.
+
+version
+
+A version ID
+
+Specifies the version value in the last operation record returned in response to the previous query.
+
+systemMetadata entry
+
+The systemMetadata entry specifies the criteria that the returned operation records must match. The entry contains the child entries listed in the table below. Some of the subentries, such as changeTime, have children. In this table, the parent entries are immediately followed by their children. Entry
+
+Valid values
+
+Description
+
+changeTime
+
+N/A
+
+Specifies the range of change times of the objects for which to return operation records. This entry can contain neither, one, or both of the start and end child entries.
+
+If you omit this entry, HCP returns operation records for objects with change times
+
+between January 1, 1970, at 00:00:00 UTC and one minute before the time HCP received the request. start(child)
+
+One of:
+
+Requests operation records for objects with change times on or after the specified date and time. This entry is a child entry of the changeTime entry.
+
+Milliseconds since January 1, 1970, 00:00:00 UTC.
+
+The default is zero (January 1, 1970, 00:00:00 UTC).
+
+An ISO 8601 datetime value in this format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+In the ISO 8601 format, you cannot specify a millisecond value. The time corresponds to zero milliseconds into the specified second.
+
+Z represents the offset from UTC, in this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+848/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Entry
+
+Valid values
+
+Description
+
+(+|-)hhmm
+
+For example, 2011-11-16T14:27:20-0500
+
+represents the start of the 20th second into 2:27 PM, November 16, 2011, EST. end(child)
+
+One of:
+
+Requests operation records for objects with change times before the specified date and time. This entry is a child entry of the changeTime entry.
+
+Milliseconds since January 1, 1970, 00:00:00 UTC
+
+An ISO 8601 datetime value in this format:
+
+The default value is one minute before the time HCP received the request. yyyy-MM-ddThh:mm:ssZ
+
+In the ISO 8601 format, you cannot specify a millisecond value. The time corresponds to zero milliseconds into the specified second.
+
+If you specify a value that is less than one minute before the current time, ensure that all writes finished at least one minute ago so that you get results for the most recent operations.
+
+directories
+
+N/A
+
+Specifies the directories to query. This entry contains zero or more directory entries.

@@ -1,0 +1,35 @@
+Request headers
+
+GET /AcctgBestPractices.doc?versionId=87288808614529 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:6Am3akZkcfc4fD3WXSBFr+dV7DE= Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "5ab7542f753b09fdb73141a66c134b9" Accept-Ranges: bytes x-amz-version-id: 87288808614529 Last-Modified: Wed, 28 Dec 2016 21:06:52 GMT
+
+Content-Type: application/msword Content-Length: 3557448
+
+Example: Retrieving part of an object
+
+Here is a sample GET request that retrieves the first hundred thousand bytes of the object named quarterly_rpts/Q4_2019.ppt in the finance bucket. The request writes the object data to a file named Q4_2019_Rpt_Part-1. The request is being made while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com/quarterly_rpts/Q4_2019.ppt" -H "Range: bytes=0-99999" > Q4_2019_Rpt_Part-1
+
+Request headers
+
+GET /quarterly_rpts/Q4_2019.ppt HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:f6RKgLahMlrfc7de89aJ0Xt8wKM= Range: bytes=0-99999 Response headers
+
+HTTP/1.1 206 Partial Content Date: Fri, 07 February 2020 17:19:26 GMT ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Accept-Ranges: bytes Last-Modified: Fri, 20 Jan 2017 17:19:26 GMT Content-Type: application/vnd.ms-powerpoint Content-Range: bytes 0-99999/235813 Content-Length: 100000
+
+Conditionally retrieving an object
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+630/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+You can choose to retrieve an object or object version only if its ETag and/or last modification date and time meet certain criteria. You might do this, for example, in an application that maintains a local cache of frequently used objects. With such an application, you can reduce the load on HCP and the network by retrieving objects only if they have changed since they were cached. You use the If-Match, If-None-Match, If-Modified-Since, and If-Unmodified-Since request headers to make GET requests conditional:
+
+The If-Match and If-None-Match headers compare the ETag for the requested object or object version to one or more values that you specify. Typically, each value is the ETag for an object or object version of interest. The If-Modified-Since and If-Unmodified-Since headers compare the date and time the requested object or object version was last modified to a date and time that you specify.
+
+If the requested object or object version meets all the conditions specified by the conditional headers included in the request, HCP returns the object data. If the requested object or object version does not meet the condition specified by: An If-Match or If-Unmodified-Since header, HCP returns a 412 (Precondition Failed) status code and does not return the object data An If-None-Match or If-Modified-Since header, HCP returns a 304 (Not Modified) status code and does not return the object data

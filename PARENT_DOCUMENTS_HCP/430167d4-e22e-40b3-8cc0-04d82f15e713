@@ -1,0 +1,61 @@
+URI for the group of all authenticated users or the group of all users
+
+Identifier types are case sensitive.
+
+Here’s a sample x-amz-grant-write header that grants write permission to two users who are identified by their HCP user account IDs:
+
+x-amz-grant-write: id=53344e3b-00de-4941-962e-827ac143fa84, id=53344e3b-00de-494e-962e-827ac143fa84
+
+Here's a sample x-amz-grant-read header that grants read permission to all users: x-amz-grant-read: uri=http://acs.amazonaws.com/groups/global/AllUsers
+
+If you include the same header multiple times in a single request, HCP uses only the first one.
+
+Specifying an ACL in the request body
+
+An ACL request body can specify one or more permission grants and/or an owner for the bucket or object. If the specified owner is not the current owner, the owner changes to the specified owner (provided that you change owner permission for the bucket).
+
+For the content of an ACL request body, you use XML in this format:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> To specify the current owner or change the owner, include the Owner element. <Owner> <ID>user-id</ID> <DisplayName>username</DisplayName> </Owner> <AccessControlList> Include one Grant element for each combination of grantee and permission. <Grant> <Grantee identifier-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" To identify the grantee, use either the ID and, optionally, DisplayName elements, the URI element, or the EmailAddress element. <ID>user-id</ID> <DisplayName>username</DisplayName> <URI>group-uri</URI> <EmailAddress>username</EmailAddress> </Grantee> <Permission>permission</Permission> </Grant> </AccessControlList> </AccessControlPolicy>
+
+The list below describes XML elements in an ACL request body. The elements are listed in alphabetical order. AccessControlList
+
+Child of the AccessContolPolicy element and container for zero or more grants of permissions to individual users or groups. Each grant is represented by a Grant element. The AccessControlList element is required in an ACL request body.
+
+AccessControlPolicy
+
+Root element. This must be the first element in the ACL request body. The AccessControlPolicy element must include this XML namespace specification: xmlns="http://s3.amazonaws.com/doc/2006-03-01/"
+
+DisplayName
+
+Child of the Owner element or of the Grantee element when the identifier type is CanonicalUser. The value of the DisplayName element can be:
+
+User name of an HCP user account User name of an AD user account followed by an at sign (@) and the AD domain name
+
+authenticated all_users
+
+The DisplayName element is optional and ignored. EmailAddress
+
+Child of the Owner element or of the Grantee element when the identifier type is AmazonCustomerByEmail. The value of the DisplayName element can be:
+
+User name of an HCP user account For object ACLs only, username of an AD user account followed by an at sign (@) and the AD domain name Grant
+
+Child of the AccessControlList element and container for the Grantee and Permission elements, which can occur in either order. Each occurrence of the Grant element grants one permission to one grantee.
+
+Grantee
+
+Child of the Grant element and container for the grantee identifier.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+554/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The Grantee element must include this XML namespace specification:
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+The Grantee element must also include one of these specifications of identifier type to indicate how the grantee is identified: xsi:type="CanonicalUser"

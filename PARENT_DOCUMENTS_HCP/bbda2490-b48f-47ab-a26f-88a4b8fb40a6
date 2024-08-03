@@ -1,0 +1,137 @@
+GET or HEAD for an object or
+
+version data and an annotation together
+
+The custom metadata type, one of:
+
+text/xml if HCP checked for well-formed XM L when the annotation was stored unknown otherwise
+
+X-HCP-CustomMetadataFirst
+
+GET for an object or version data
+
+and an annotation together One of:
+
+true if the custom metadata precedes the object data. false if the object data precedes the custom metadata.
+
+X-HCP-CustomMetadataHash
+
+PUT for object data and an annotation together
+
+The cryptographic hash algorithm HCP uses and the cryptographic
+
+hash value of the stored annotation, in this format: X-HCP-CustomMetadataHash: hash-algorithm hash-value
+
+You can use the returned hash value to verify that the stored
+
+annotation is the same as the custom metadata you sent. To do this, compare this value with a hash value that you generate from the
+
+original custom metadata.
+
+X-HCP-DataContentType
+
+GET for and object or version data and an annotation together
+
+The Internet media type of the object, such as text/plain or image/ jpg. X-HCP-Domain
+
+GET or HEAD for an object or version
+
+The Active Directory domain that contains the user account identified by the X-HCP-Owner header.
+
+This value is an empty string if the X-HCP-Owner header identifies a user account defined in HCP or if the object has no owner.
+
+If the X-HCP-Owner header returns a user account ID or nobody, the value of the X-HCP-Domain header is one of several invalid domains that begin with the percent sign (%). These values have meanings internal to the HCP system.
+
+X-HCP-DPL
+
+GET or HEAD for an object or version
+
+The data protection level of the object or version.
+
+X‑HCP-ErrorMessage
+
+All
+
+Detailed information about the cause of an error.
+
+This header is returned only if a request results in a 400, 403, or 503
+
+error code and HCP has specific information about the cause.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+822/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Header
+
+Methods
+
+Description
+
+X-HCP-GID
+
+GET or HEAD for an object or version
+
+The POSIX group ID for the object.
+
+For objects added through the NFS protocol, this value is determined by the NFS client.
+
+This value is an empty string if either of these are true:
+
+The object was added through a protocol other than NFS, and neither the UID nor the GID for the object has been changed.
+
+The HCP owner of the object was changed. X-HCP-Hash
+
+HEAD and GET for an object,
+
+The cryptographic hash algorithm the namespace uses, along with a
+
+version, or annotation
+
+cryptographic hash value of the stored object or annotation:
+
+PUT for an object or annotation
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is
+
+the same as the data you sent. To do this, compare this value with a hash value that you generate from the original data.
+
+The X-HCP-Hash header is not returned for multipart objects. X-HCP-Index
+
+HEAD and GET for objects and object versions
+
+A true or false value indicating whether the object is marked for indexing.
+
+X-HCP-IngestProtocol
+
+HEAD and GET for objects and object versions
+
+The namespace access protocol through which the object was added
+
+to the namespace. One of:
+
+CIFS_NFS HTTP SMTP
+
+WebDAV
+
+If HCP cannot determine the protocol through which the object was added, this value is UNKNOWN.
+
+X-HCP-IngestTime
+
+HEAD and GET for objects and
+
+The time when HCP stored the object, in seconds since January 1,
+
+object versions
+
+1970, at 00:00:00 UTC.
+
+X-HCP-LabelRetentionHold
+
+HEAD and GET for objects

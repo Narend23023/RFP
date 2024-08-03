@@ -1,0 +1,71 @@
+UIDs are not related to HCP-specific object ownership. A POSIX permissions value, which is made up of three sets of POSIX permissions — one for the user identified by the POSIX user ID, one for the group identified by the POSIX group ID, and one for all others. A set of permissions is any combination of read, write, or execute, including none.
+
+POSIX permission values determine the actions users can perform on an item when accessing it on a CIFS or NFS client: For an object:
+
+Read permission lets users view and retrieve the object content. Write permission has no effect. Note: Even if an object has write permission, its data is secure because WORM semantics prevent it from being modified. Execute permission, which applies only to objects created for executable files, lets users execute the object. For a directory:
+
+Read permission lets users see which objects are in the directory. Write permission lets users add and delete objects in the directory or rename empty subdirectories. Execute permission lets users traverse the directory to get to known objects in it, but it does not let users read the directory. Viewing POSIX permissions
+
+You can view POSIX permission values through the WebDAV, CIFS, and NFS protocols.
+
+With the WebDAV and NFS protocols, permissions are represented by three 3-character strings: one for the owner, one for the owning group, and one for all others. From left to right, the three character positions in each string represent read (r), write (w), and execute (x). Each position has either the character that represents the applicable permission or a hyphen (-), meaning that the permission is denied.
+
+For example, the string below means that the object owner has all permissions for the object, the owning group has read and execute permissions, and all others have only read permission:
+
+rwxr-xr--
+
+The initial hyphen (-) indicates that this is an object. For a directory, the hyphen is replaced by the letter d. For a symbolic link, it is replaced by the letter l (lower case L). Windows displays permissions in the Security tab in the Properties window for an item. These permissions don’t map exactly to the POSIX permissions used in a namespace.
+
+Octal permission values
+
+Permissions are also represented by octal values. Each object has an octal permission value that’s the sum of the octal permission values specified for the object owner, the owning group, and all other users not in that group. The table below shows the value that corresponds to each permission. Read
+
+Write
+
+Execute
+
+Owner
+
+400
+
+200
+
+100
+
+Group
+
+040
+
+020
+
+010
+
+Other
+
+004
+
+002
+
+001
+
+You can represent permissions numerically by combining these values. For example, the octal value 755 represents these permissions:
+
+POSIX owner has read, write, and execute permissions (700).
+
+POSIX group has read and execute permissions (050).
+
+Other has read and execute permissions (005). POSIX ownership and permissions for new items
+
+For items added through NFS, HCP sets the initial UID, GID, and POSIX permissions to values determined by the NFS client. For items added through HTTP, WebDAV, CIFS, or SMTP, HCP does not set values for these properties.
+
+When you use NFS to view POSIX ownership and permission values for any item for which these values have not been set, HCP displays default values. For UID and GID, these values are determined by the namespace configuration. For POSIX permissions, these values are 555 for objects and 777 for directories.
+
+You can use the CIFS or NFS protocol to change the UID, GID, and permissions for an object.
+
+Changing POSIX ownership and permissions for existing items
+
+If you’re the root user, you can change the UID and GID for an existing item. If you’re the user identified by the UID value for an item or the root user, you can change the permissions for an item. You can make these changes through the CIFS and NFS protocols. Note:
+
+The namespace can be configured to disallow POSIX ownership and permission changes for objects that are under retention. If an object has an HCP-specific object owner, you cannot change the UID and GID values for the object.
+
+To change POSIX ownership and permissions through CIFS or NFS, you use the standard technique for that protocol. Versioning

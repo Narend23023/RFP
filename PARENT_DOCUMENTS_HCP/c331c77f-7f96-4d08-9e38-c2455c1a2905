@@ -1,0 +1,85 @@
+HCP has these canned ACLs: private
+
+Grants full control to the bucket or object owner
+
+public-read
+
+Grants full control to the bucket or object owner and read permission to all users
+
+public-read-write
+
+Grants full control to the bucket or object owner and read and write permissions to all users
+
+authenticated-read
+
+Grants full control to the bucket or object owner and read permission to all authenticated users bucket-owner-read
+
+Grants full control over the object to the object owner and read permission to the bucket owner bucket-owner-full-control
+
+Grants full control over the object to the bucket owner and object owner
+
+Specifying ACLs
+
+To specify an ACL in an S3 compatible request to create a bucket or store or copy an object, you use request headers. To specify an ACL in a separate operation, you can either use request headers or specify the grants in the request body.
+
+You can also use an ACL request body to change the owner of a bucket or object. You cannot do that with request headers.
+
+Specifying an ACL with headers
+
+Using request headers, you can specify either a canned ACL or individual ACL grants of permissions. You cannot specify both a canned ACL and individual grants in the same request.
+
+Using a canned ACL
+
+To specify a canned ACL, you use the x-amz-acl request header. The value of this header can be the name of any one of the canned ACLs. These names are case sensitive.
+
+Here’s a sample x-amz-acl header that specifies the canned ACL named authenticated-read: x-amz-acl: authenticated-read
+
+Using individual grant headers
+
+To grant specific permissions to specific users or groups, you use these headers:
+
+x-amz-grant-read x-amz-grant-read-acp x-amz-grant-write x-amz-grant-write-acp x-amz-grant-full-control
+
+Each header grants the permission indicated by the header itself.
+
+The value for any of these headers is a comma-separated list of one or more grantees, in this format: identifier-type=grantee-identifier
+
+The list below lists the identifier types and indicates how you identify the grantee with each type.
+
+id
+
+User ID of an HCP user account or, for object ACLs only, SID of an AD user account. To learn the ID or SID for a user account, see your tenant administrator. emailAddress
+
+One of these:
+
+Username of an HCP user account
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+553/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For object ACLs only, username of an AD user account followed by an at sign (@) and the AD domain name
+
+authenticated
+
+all_users
+
+When specifying a username, percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If a username contains spaces, enclose it in quotation marks. Third-party tools that are compatible with the Hitachi API for Amazon S3 may not be able to handle usernames with non-ASCII characters, special characters, or spaces. When using such tools, identify the user by user ID rather than by username. uri
+
+URI for the group of all authenticated users or the group of all users
+
+Identifier types are case sensitive.
+
+Here’s a sample x-amz-grant-write header that grants write permission to two users who are identified by their HCP user account IDs:
+
+x-amz-grant-write: id=53344e3b-00de-4941-962e-827ac143fa84, id=53344e3b-00de-494e-962e-827ac143fa84
+
+Here's a sample x-amz-grant-read header that grants read permission to all users: x-amz-grant-read: uri=http://acs.amazonaws.com/groups/global/AllUsers
+
+If you include the same header multiple times in a single request, HCP uses only the first one.
+
+Specifying an ACL in the request body

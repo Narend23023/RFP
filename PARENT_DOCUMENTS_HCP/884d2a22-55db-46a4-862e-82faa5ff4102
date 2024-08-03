@@ -1,0 +1,49 @@
+The HCP Namespace Browser lets you manage content in and view information about namespaces. With the Namespace Browser, you can:
+
+List, view, and retrieve objects, including old versions of objects
+
+View custom metadata and ACLs for objects, including old versions of objects Store and delete objects Create empty directories Display namespace information, including:
+
+The namespaces that you own or can access Retention classes available for a given namespace Permissions for namespace access Namespace statistics such as the number of objects in a given namespace or the total capacity of the namespace HCP metadata query API
+
+The HCP metadata query API lets you search HCP for objects that meet specified criteria. The API supports two types of queries:
+
+Object-based queries search for objects based on object metadata. This includes both system metadata and the content of custom metadata and ACLs. The query criteria can also include the object location (that is, the namespace and/or directory that contains the object). These queries use a robust query language that lets you combine search criteria in multiple ways.
+
+Object-based queries search only for objects that currently exist in the repository. For objects with multiple versions, object-based queries return only the current version.
+
+Operation-based queries search not only for objects currently in the repository but also for information about objects that have been deleted by a user or application or deleted through disposition, purged or pruned. For namespaces that support versioning, operation-based queries can return both current and old version of objects.
+
+Criteria for operation-based queries can include object status (for example, created or deleted), change time, index setting, and location. The metadata query API returns object metadata only, not object data. The metadata is returned either in XML format, with each object represented by a separate element, or in JSON format, with each object represented by a separate name/value pair. For queries that return large numbers of objects, you can use paged requests.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+235/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP Search Console
+
+The HCP Search Console is an easy-to-use web application that lets you search for and manage objects based on specified criteria. For example, you can search for objects that were stored before a certain date or that are larger than a specified size. You can then delete the objects listed in the search results or prevent those objects from being deleted. Similar to the metadata query API, the Search Console returns only object metadata, not object data. By offering a structured environment for performing searches, the Search Console facilitates e-discovery, namespace analysis, and other activities that require the user to examine the contents of namespaces. From the Search Console, you can:
+
+Open objects Perform bulk operations on objects Export search results in standard file formats for use as input to other applications Publish feeds to make search results available to web users
+
+The Search Console works with HCP metadata query engine: The HCP metadata query engine
+
+This facility is integrated with HCP and works internally to perform searches and return results to the Search Console. The metadata query engine is also used by the metadata query API. Note: When working with the metadata query engine, the Search Console is called the Metadata Query Engine Console.
+
+The search facility is selected at the HCP system level. If you do not select the search facility, the HCP system does not support use of the Search Console to search namespaces.
+
+The search facility maintains its own index of objects in each search-enabled namespace and uses this index for fast retrieval of search results. The search facility automatically update their indexes to account for new and deleted objects and changes to object metadata.
+
+Note: Not all namespaces support search. To find out whether a namespace is search-enabled, see your tenant administrator. Object representation
+
+HCP represents objects differently based on the namespace access protocol the client is using.
+
+Object representation with HTTP
+
+With HTTP, HCP represents each object as a URL. The root of the object path in the URL is always rest.
+
+Here’s an example of the URL for an object named wind.jpg in the images directory in a namespace named climate in a tenant named geo in an HCP system named hcp.example.com: http://climate.geo.hcp.example.com/rest/images/wind.jpg

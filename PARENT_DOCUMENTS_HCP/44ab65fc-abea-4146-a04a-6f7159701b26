@@ -1,0 +1,69 @@
+2. When system A becomes available again, on system B, restore link AB. 3. On system A, accept the restored link. 4. On system B, begin and complete data recovery on link AB.
+
+When data recovery is complete, T1 and D1 become read-write on A and read-only on B, and replication resumes on link AB. Scenario: System B fails
+
+To return to normal operation after system B fails:
+
+1. On system C, fail link BC over to C.
+
+T1 and D1 remain read-write on A and read-only on C. T2 becomes read-write on C.
+
+2. When system B becomes available again, on system A, restore link AB. 3. On system B, accept the restored link.
+
+T1 and D1 are read-write on A and read-only on B and C, and replication restarts on link AB.
+
+4. On system C, restore link BC. 5. On system B, accept the restored link.
+
+6. On system C, begin and complete data recovery on link BC.
+
+When data recovery is complete, T1 and D1 are read-only on B and C. T2 becomes read-write on B and read-only on C, and replication resumes on link BC. Scenario: System C fails
+
+To return to normal operation after system C fails:
+
+1. When system C becomes available again, on system B, restore link BC. 2. On system C, accept the restored link.
+
+T1 and D1 remain read-only on B and C. T2 remains read-write on B and read-only on C, and replication restarts on link BC. Scenario: Systems A and B fail
+
+To return to normal operation after systems A and B fail:
+
+1. On system C, fail link BC over to C.
+
+T1 and D1 remain read-only on C. T2 becomes read-write on C.
+
+2. When system B becomes available again, on system C, restore link BC. 3. On system B, accept the restored link. 4. On system C, begin and complete data recovery on link BC.
+
+When data recovery is complete, T1 and D1 are read-only on B and C. T2 becomes read-write on B and read-only on C, and replication resumes on link BC.
+
+System B automatically recreates link AB without the primary system IP addresses or hostname from the inbound link AB in link BC.
+
+5. When system A becomes available again, take either of these actions:
+
+If link AB still exists on A:
+
+a. On system A, restore link AB. b. On system B, accept the restored link. c. On system B, begin and complete data recovery on link AB. When data recovery is complete, T1 and D1 become read-write on A and remain read-only on B, and replication resumes on link AB.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+377/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If link AB no longer exists on A, follow the steps for option one or option two below.
+
+Option one:
+
+a. On system B, update the configuration of the automatically recreated link AB to include the IP addresses or hostname for system A. b. On system B, restore link AB. c. On system A, accept the restored link. d. On system B, begin and complete data recovery on link AB.
+
+When data recovery is complete, T1 and D1 are read-write on A and read-only on B and C, and replication restarts on link AB. Option two:
+
+a. On system B, suspend and then delete link AB.
+
+T1 and D1 become directly included on link BC, which still includes T2, and become read-write on B.
+
+b. Optionally, create a new replication chain B > C > A:
+
+i. Reinstall HCP on A. ii. On system C, create outbound link CA, including link BC as an inbound link. iii. On system A, accept the new link.
+
+c. T1, D1, and T2 are read-write on B and read-only on C and A, and replication starts on link CA. Scenario: Systems A and C fail

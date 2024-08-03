@@ -1,0 +1,89 @@
+Query parameter for forcing the deletion of an erasure coding topology
+
+You can delete an erasure coding topology only while either of these is true:
+
+At least one system in the topology is available, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retired. These are the normal conditions for deleting a topology. No more than one system in the topology is unavailable, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retiring. To delete the topology under these conditions, you need to include the force=true query parameter on the DELETE request. Important: Deleting an erasure coding topology under these conditions may result in inaccessible data in namespaces on the unavailable system, even if those namespaces are configured to be compliant. You should delete the topology only if that system is no longer needed. If the system is still needed, wait to delete the topology until the topology has finished retiring on all systems.
+
+Here's a sample DELETE request that deletes the erasure coding topology named ex-corp-3 while the topology meets the second set of conditions listed above: curl -k -X DELETE -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ ecTopologies/ex-corp-3?force=true"
+
+emailNotification
+
+The emailNotification data type describes the emailNotification resource for tenants.
+
+Properties
+
+The table below describes the properties included in the emailNotification data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+463/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+emailTemplate
+
+email Template
+
+Specifies the template for email messages HCP sends to the specified recipients.
+
+The email template specified in the request body replaces the current email template. To restore the default email template, specify the emailTemplate property with no value.
+
+For information about the default email template, see Email template defaults.
+
+enabled Boolean
+
+Specifies whether email notification is enabled for the tenant. Valid values are:
+
+Email notification at the tenant level is supported only if HCP is configured to support it at the system level.
+
+true
+
+Email notification is enabled.
+
+false
+
+Email notification is disabled.
+
+The default is false. recipients
+
+recipients
+
+Specifies the set of recipients for email notification.
+
+The set of recipients specified in the request body replaces the set of recipients currently configured for email notification. To remove all email recipients, specify an empty set.
+
+Recipients are added to the Bcc list for each email. Example
+
+Here’s an XML example of the emailNotification data type:
+
+<emailNotification> <enabled>true</enabled>
+
+<emailTemplate> <from>log@$location</from> <subject>$severity - $shortText</subject> <body>A message was written to the tenant log on $date.\n\n$reason\n\n $action</body> </emailTemplate> <recipients> <recipient> <address>lgreen@example.com, sgold@example.com</address> <importance>MAJOR</importance> <severity>ERROR</severity> <type>GENERAL,SECURITY</type> </recipient> <recipient> <address>mwhite@example.com</address> <importance>ALL</importance> <severity>WARNING</severity> <type>COMPLIANCE</type> </recipient> </recipients> </emailNotification>
+
+emailTemplate
+
+The emailTemplate data type describes the emailTemplate property of the emailNotification data type.
+
+Properties
+
+The table below describes the properties included in the emailTemplate data type.
+
+Property
+
+Data type
+
+Description
+
+Notes body
+
+String

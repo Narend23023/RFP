@@ -1,0 +1,59 @@
+1. In the Irreparable Objects panel, individually select the objects you want to acknowledge, or click select all to select all the unacknowledged objects on the current page. 2. Click Acknowledge Selected.
+
+Working with nonreplicating objects
+
+To view the Nonreplicating Objects panel, you need the monitor or administrator role.
+
+Displaying nonreplicating objects
+
+HCP keeps track of objects and parts of multipart objects that cannot be replicated. You can view a list of these objects and object parts for any given namespace in the Tenant Management Console.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Monitoring. 4. On the left side of the Monitoring panel, click Nonreplicating Objects. About nonreplicating objects
+
+For each listed object or object part, the Nonreplicating Objects panel shows the date and time when HCP discovered the nonreplicating object or object part, the version number of the object or object part, the reason why the object or object part was not replicated, and the name of the object or object part.
+
+The possible reasons why an object or object part is nonreplicating are:
+
+Object is not completely written
+
+The object or object part is nonreplicating because the write operation used to create the object was never completed.
+
+Object is temporarily nonreplicating The object or object part is nonreplicating, but the situation that's causing it to be nonreplicating is most likely temporary. This state is typically due to a system-level issue such as a node becoming unavailable. HCP usually resolves these issues on its own within 24 to 48 hours. If the object or object part remains in this state for more than 48 hours, contact your HCP system administrator.
+
+Object is unavailable or irreparable
+
+The object or object part is nonreplicating because it is unavailable or irreparable.
+
+If HCP subsequently replicates a listed object or object part, the object or object part is removed from the list.
+
+By default, the objects and object parts in the Nonreplicating Objects panel are listed ten at a time in reverse chronological order by discovery time: To view a different number of objects, select the number of objects you want in the Items per page field. The options are 10, 20, 50, and 100. ) control, respectively. To page forward or backward, click the next ( ) or back (
+
+Deleting a namespace
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+292/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can delete a namespace that does not contain any objects.
+
+If a namespace is being replicated, you may not be able to delete it directly on all the HCP systems in the replication topology. However, if you delete it on one system, the deletion is replicated to the other systems.
+
+Important: If the namespace you want to delete is being replicated, do not clear it from replication before deleting it. If you clear it first, the deletion is not replicated and the namespace remains on the other systems where it was replicated. Depending on the replication topology, you may not be able to delete the namespace on one or more of those other systems. When a namespace is deleted, the chargeback statistics for it become unavailable. Therefore, before deleting a namespace for which you need these statistics, generate a chargeback report.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces.
+
+2. In the list of namespaces, click the delete control ( 3. In response to the confirming message, click Delete.
+
+) for the namespace you want to delete.
+
+Important: Removing a tenant from an Active-Passive replication link on the Active site followed by its deletion from the Passive site can result in lost data if, in the future, an
+
+Active/Active replication link is created between the same clusters and the same tenant is added to that link.
+
+Managing search and indexing
+
+You manage search and indexing for namespaces at both the tenant and namespace level. At the tenant level, you create content classes and content properties. At the namespace level, you enable search and indexing options. The discussion of content properties in this chapter assumes a basic understanding of XML. Search and indexing

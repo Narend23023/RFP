@@ -1,0 +1,137 @@
+This property is not valid on a PUT or POST request.
+
+In XML, the element that identifies each system is name. In JSON, the name in the name/value pair that lists the systems is name. id
+
+String
+
+Specifies the ID for the erasure coding topology.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+minimumObjectSize
+
+Long
+
+This property is optional on a PUT request.
+
+Specifies the minimum size for objects to be erasure coded. Valid values are:
+
+4096 16384 32768 65536 131072 262144 524288
+
+1048576
+
+The default is 4096. name
+
+String
+
+Specifies the name of the erasure coding topology. The name must be from one through 64 characters long and can contain any valid UTF-8 characters, including white space. Erasure coding topology names are not case sensitive.
+
+This property is required on a PUT request.
+
+protectionStatus String
+
+This property is not valid on a PUT or POST request.
+
+Specifies the current status of the erasure coding topology with respect to how well- protected erasure-coded objects are. Possible values are:
+
+BROKEN
+
+Two or more systems in the topology are unavailable. Objects erasure coded
+
+according to the topology are inaccessible and are not protected. HEALTHY
+
+All systems in the topology are available. Objects erasure coded according to the topology can be read and are fully protected.
+
+RETIRED
+
+The topology has finished retiring.
+
+RETIRING
+
+The topology is in the process of retiring.
+
+UNKNOWN
+
+HCP cannot determine the protection status.
+
+VULNERABLE
+
+One system in the topology is unavailable, and the loss of a link or suspension of activity on a link would prevent an additional system from receiving data or chunks for newly ingested objects. Objects erasure coded according to the topology can be read but are not fully protected. readStatus
+
+String
+
+This property is not valid on a PUT or POST request.
+
+Specifies the current status of the erasure coding topology with respect to the ability to read erasure-coded objects. Possible values are:
+
+BROKEN
+
+Two or more systems in the topology are unavailable. Objects erasure coded according to the topology are inaccessible. HEALTHY
+
+All systems in the topology are available. Objects erasure coded according to the topology can be read.
+
+RETIRED
+
+The topology has finished retiring.
+
+UNKNOWN
+
+HCP cannot determine the read status.
+
+VULNERABLE
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+461/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type Description
+
+Notes
+
+One system in the topology is unavailable. Objects erasure-coded according to the topology can be read, but the loss of a link would cause those objects to become inaccessible. replicationLinks
+
+replication Links
+
+Specifies the replication links included in the erasure coding topology.
+
+This property is required on a PUT request. It is not valid on a POST request.
+
+The properties returned for each replication link in response to a GET request for an erasure coding topology depend on whether the request includes the verbose=true query parameter. restorePeriod
+
+Integer
+
+Specifies the restore period for the erasure coding topology as a number of days. Valid values are integers in the range zero through 180. The default is zero
+
+This property is optional on a PUT request.
+
+state
+
+String
+
+This property is not valid on a PUT or POST request.
+
+Specifies the state of the erasure coding topology. Possible values are: ACTIVE
+
+The topology is currently being used to erasure-code newly ingested objects that are subject to erasure coding.
+
+RETIRED
+
+The topology is retired.
+
+RETIRING
+
+The topology is in the process of retiring.
+
+tenants
+
+List
+
+Lists the tenants included in the erasure coding topology.
+
+This property is not valid on a PUT or POST request.

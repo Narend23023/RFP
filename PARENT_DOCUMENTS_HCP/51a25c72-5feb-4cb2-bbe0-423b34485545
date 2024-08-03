@@ -1,0 +1,29 @@
+connected active/active replication topology.
+
+For each pair of selected systems that are connected to each other in the underlying replication topology, if the pair has only one active/active replication link between them, that link is automatically included in the erasure coding topology. If any pair of the selected systems is connected by more than one active/active link, you select which one of those links to
+
+include in the erasure coding topology.
+
+An erasure coding topology does not automatically include the tenants on the links in the underlying replication topology. Instead, you select the tenants to include in an erasure coding topology from all the replication-enabled tenants defined on the systems in the topology. Each tenant you select is automatically added to each link in the erasure coding topology.
+
+When you create an erasure coding topology, it's in the active state. If you want to stop using the active topology for erasure-coded protection, you need to retire the topology.
+
+Retiring an erasure coding topology causes the Geo-distributed Erasure Coding service to restore object chunks to full-copies or, on systems where the objects are on metadata- only storage tiers, delete the chunks. While the chunks are being restored or deleted, the topology is in the retiring state.
+
+When all the systems in a retiring erasure coding topology have no more chunks that are the result of that topology, the state of the topology changes to retired. Once a topology is retired, you can delete it. Deleting an erasure coding topology does not cause any systems, links, tenants, namespaces, or objects to be deleted. A system can be in at most five erasure coding topologies concurrently. Only one of those topologies can be active. The rest must be either retiring or retired.
+
+Erasure coding topology properties
+
+An erasure coding topology has these properties:
+
+A name and, optionally, a description. The number of HCP systems in the erasure coding topology. A topology can have from three through six systems. For an erasure coding topology with four or more systems, the type of the underlying replication topology: ring or fully connected. The topology type for three systems is always fully connected. A distribution method — chunk or full copy. A minimum size for erasure coding objects and object parts — 4 KB, 16 KB, 32 KB, 64 KB, 128 KB, 256 KB, 512 KB, or 1 MB. HCP erasure-codes only objects and object parts with a size greater than or equal to the minimum size you select. HCP uses whole-object protection for objects and parts below the minimum size, regardless of whether the containing namespace is using erasure-coded protection. Note: The service plan associated with a namespace can include a metadata-only storage tier on all the systems in an erasure coding topology. With this configuration, objects and parts in the namespace that are smaller than the minimum size for erasure coding may have data on only one of those systems. As a result, those objects and parts are not protected against a single system failure. An erasure coding delay. This is the amount of time the Geo-distributed Erasure Coding service waits before reducing a full copy of the data for an object or object part to a chunk. With full-copy distribution, this is also the amount of time the service waits on systems where the object or part is metadata-only before requesting a chunk for the object. Optionally, a restore period. If an erasure coding topology has a restore period, after an object or object part that's subject to erasure coding is read from a system in the topology, a full copy of the object or part data is kept on that system at least until the restore period expires.
+
+When setting the minimum size, erasure coding delay, and restore period, consider the tradeoffs with respect to storage efficiency and read performance.
+
+Erasure coding delay
+
+The erasure coding delay is counted from the time the ingest system receives the object or part data. You specify the delay as a number of days. Even if the erasure coding delay has expired for an object, the Geo-distributed Erasure Coding service does not reduce a full copy of the data for the object or part to a chunk if doing so would leave the object or part insufficiently protected.
+
+Restore period
+
+You specify the restore period for an erasure coding topology as a number of days. If the specified number is zero, the topology does not have a restore period.

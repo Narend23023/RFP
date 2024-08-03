@@ -1,0 +1,39 @@
+The DPL for a given storage tier is the number of copies of the object data that HCP must maintain for each object that’s stored on that tier. The MPL for a given storage tier is the number of copies of the object metadata that HCP must maintain on primary running storage for each object that’s stored on the tier.
+
+For any given storage tier, the primary running storage MPL must be equal to or greater than the DPL.
+
+Note: For the purpose of storage tiering, HCP treats parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects.
+
+Every service plan initially defines primary running storage as the initial storage tier, called the ingest tier, and specifies a DPL setting and an MPL setting for that tier. If the HCP system is using HCP S Series storage, you can define HCP S Series storage as a service plan ingest tier to be used as an alternative to primary running storage. If an HCP S Series pool, or pools, is selected as the ingest tier, DPL copies of objects are written directly to HCP S Series storage. MPL copies of object metadata are written to primary running storage.
+
+Tiering objects that are subject to erasure coding
+
+HCP does not tier objects that are subject to erasure coding but not yet erasure coded unless the target tier is primary running storage, an S Series Node, or primary spindown
+
+storage. Instead, on any given system in an erasure coding topology, if the system initially receives a full copy of the data for an object that's subject to erasure coding, HCP waits to tier the object until the full copy of the data has been reduced to a chunk.
+
+After the system has a chunk for the object, HCP can move the chunk to the applicable tier, according to the tiering strategy in the service plan associated with the namespace that contains the object. If the object was due to be tiered before the full copy of the data was reduced to chunk, HCP immediately moves the chunk to the applicable tier.
+
+If a system initially receives a chunk for an object, that chunk is immediately subject to the tiering strategy in the applicable service plan. On any given storage tier, for an object that's subject to erasure coding, HCP keeps DPL copies of the full object data or the chunk for the object, as applicable, where DPL is the DPL specified for that storage tier.
+
+DPL settings for objects and default-namespace directories
+
+Objects have a DPL setting as part of their metadata. This setting is the DPL for the tier where the object data currently should be stored, according the service plan associated with
+
+the namespace that contains the object. If the object is not yet on that tier or if the DPL for the tier changes while the object is on that tier, the actual number of copies of the object data may not immediately match the DPL setting for the object.
+
+Directories in the default namespace also have a DPL setting as part of their metadata. This setting is the DPL for the ingest tier in the service plan associated with the default namespace.
+
+Users and applications can see, but not modify, the DPL setting for an object or directory. Default ingest tier DPL setting
+
+Each HCP system has a default service plan that’s automatically created and configured during the HCP software installation. The default service plan is applied to each tenant and
+
+namespace for which another service plan is not explicitly selected.
+
+For any given HCP system, the ingest tier DPL setting that’s initially configured for the default service plan is used as the default ingest tier DPL setting for each new service plan
+
+that’s created on the HCP system. When you create a new service plan, you can choose to use the default ingest tier DPL setting or select a different setting. You can also modify any service plan, including the default service plan, to change the ingest tier DPL setting. However, changing the ingest tier DPL setting used for the default service plan does not
+
+change the default ingest tier DPL setting that’s used for new service plans. Typically, the default ingest tier DPL setting used for service plans created on an HCP system is the optimal setting for the type of physical storage that the HCP system uses. For HCP with internal storage systems, the default ingest tier DPL is two. For HCP with SAN-attached storage systems, for which SAN arrays provide a high level of data protection, and
+
+for VM systems, for which the virtual environment provides node failover capabilities, the default ingest tier DPL is one.

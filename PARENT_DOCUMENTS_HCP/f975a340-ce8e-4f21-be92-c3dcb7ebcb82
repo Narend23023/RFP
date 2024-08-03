@@ -1,0 +1,75 @@
+Example: Listing statistics for a namespace
+
+Here’s a sample HTTP GET request that retrieves statistics for the finance namespace owned by the europe tenant in the hcp.example.com system. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/proc/statistics"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /proc/statistics") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+GET /proc/statistics HTTP/1.1 Host: /finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 1286 Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1334326410
+
+Content-Length: 565
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="/static/xsl/proc-statistics.xsl"?> <statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/proc-statistics.xsd" namespaceName="finance"
+
+totalCapacity="10737418240" usedCapacity="932454739" softQuota="85" objectCount="43230"
+
+shredObjectCount="0" shredObjectBytes="0"
+
+customMetadataObjectCount="6754" customMetadataObjectBytes="894893"
+
+/> REST API usage considerations
+
+Data chunking with write operations
+
+In some cases, the size of the data to be stored cannot be known at the start of a REST API PUT request. For example, the size is unknown if data is dynamically generated and the PUT request starts before all data is available. This scenario would occur if you do not have enough memory or disk space to stage dynamically generated data locally, so the
+
+application streams the PUT request as the data is generated.
+
+In such cases, you can send the data using chunked HTTP transfer coding. Each chunk is sent with a known size, except for the last chunk, which is sent with a size of 0 (zero).
+
+If possible, you should avoid chunking data because it increases the overhead required for the PUT operation.
+
+Using the REST API with objects open for write
+
+These considerations apply to using the REST API with an object that is open for write:
+
+If you try to write to the object: https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+787/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If the namespace supports versioning, HCP creates a new version of the object.
+
+If the namespace does not support versioning, HCP returns an HTTP 409 (Conflict) error code and does not perform the operation.
+
+If you try to retrieve, check the existence of, or copy the object:
+
+If the namespace supports versioning:
+
+If the request does not specify a version ID and the object has one or more old versions, HCP performs the requested operation against the most recent version that is not open for write. However, if that version is a delete marker, HCP returns an HTTP 404 (Not Found) error code and does not perform the

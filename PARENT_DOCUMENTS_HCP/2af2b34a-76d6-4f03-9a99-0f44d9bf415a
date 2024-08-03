@@ -1,0 +1,105 @@
+Working with buckets
+
+With the Hitachi API for Amazon S3, you can perform operations on individual buckets. You can also list all the buckets you own.
+
+Note: To perform these bucket activities, the management API must be enabled for the owning tenant:
+
+Create a bucket List the buckets you own Enable, disable, or check the status of versioning for a bucket
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+566/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Add, retrieve, or remove the ACL for a bucket Delete a bucket
+
+If you cannot perform these activities, contact your tenant administrator.
+
+Creating a bucket You use the HTTP PUT method to create a bucket. To create a bucket, you must be an authenticated user. Additionally, your user account must be configured to let you create buckets.
+
+When you create a bucket, you specify a name for it. The specified name must be at least three characters long and at most 63 characters long. The name can contain only alphanumeric characters and hyphens (-) but cannot start or end with a hyphen.
+
+You can specify an ACL for a bucket in the same request as you use to create the bucket. To do this, you need to use ACL headers. You cannot use an ACL request body when creating a bucket.
+
+If the ACL you specify in a request to create a bucket is invalid, HCP returns a 400 (Bad Request) or 501 (Not Implemented) status code and does not create the bucket. When you create a bucket, you become the bucket owner. You also get browse, read, read ACL, write, write ACL, and delete data access permissions for the bucket. If search is enabled for the bucket, you also get search permission.
+
+Note: You cannot use Active Directory authentication with S3 compatible requests to create a bucket. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to create a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT / HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /bucket-name HTTP/1.1
+
+Required headers Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Note: You cannot create a bucket as an anonymous user.
+
+Content-Length
+
+Specifies the size, in bytes, of the request body. For a request to create a bucket, the value of this header must be 0 (zero).
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time.
+
+The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+Optional headers
+
+x-amz-acl
+
+Adds a canned ACL to the bucket.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3

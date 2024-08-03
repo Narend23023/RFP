@@ -1,0 +1,29 @@
+8. Click Next. 9. On the wizard Review page, review the link configuration.
+
+10. If the link configuration is what you want, click Finish to create the link.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+341/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If the link configuration is not what you want, use the Previous button in the wizard to return to pages on which you want to make corrections. Alternatively, press Cancel to leave the wizard without creating the link. Tip: If HCP cannot create the configured link, check that the other system is healthy and that you’ve correctly shared SSL server certificates between the two systems.
+
+Considerations for specifying link content
+
+These considerations apply to specifying the content for replication links:
+
+The content for a replication link (that is, what is replicated on the link) consists of any number of: HCP tenants HCP namespaces Directories defined in the default namespace For active/passive links only, chained links
+
+You can add a tenant to a replication link only if the tenant is configured to allow replication. You cannot add a tenant to a replication link between two systems if another link between the same two systems already includes that tenant. You can choose which namespaces to replicate for any given HCP tenant only if the tenant has granted system-level users administrative access to itself. Namespaces that are selected for replication are replicated on every link that includes the owning tenant. To select and deselect HCP namespaces for replication, you can use any link that includes the owning tenant. You can add and remove HCP tenants, default-namespace directories, and chained links from a replication link at any time, except during an upgrade of either system involved in the link, while the link is failed over, while data recovery is occurring on the link, or while the two systems involved in the link cannot communicate with each other. When you add an HCP tenant to an erasure coding topology, the tenant is automatically added to every link in that topology. When you add an HCP tenant to a replication link without adding the tenant to an erasure coding topology, all replication-enabled namespaces owned by the tenant use whole-object protection regardless of whether they are configured to allow erasure coding. You cannot add an HCP tenant to a replication link while that tenant is included in an active, retiring , or retired erasure coding topology that includes one or both of the systems involved in the link but not the link itself. You cannot remove an HCP tenant from a replication link that's part of an active erasure coding topology. You cannot remove an HCP tenant from a replication link if that tenant was previously removed from the active erasure coding topology and any of the tenant's namespaces still contain chunks for erasure-coded objects. You cannot remove an HCP tenant from a replication link that's part of a retiring erasure coding topology if any of the tenant's namespaces still contain chunks for erasure- coded objects. You can select HCP namespaces for replication at any time, except during an upgrade of either system involved in the link you started from. You can deselect HCP namespaces from replication at any time, except during an upgrade of either system involved in the link you started from, while a link that includes the owning tenant is failed over, or while data recovery is occurring on a link that includes the owning tenant. After removing an HCP tenant or default-namespace directory from an active/active replication link, you can add the tenant or directory back to that link. While the tenant or directory is not on the link, operations on that tenant or directory, on replicated namespaces owned by that tenant, or on objects in those replicated namespaces or in that directory can occur on both systems involved in the link.
+
+Similarly, after deselecting a namespace for replication, you can select it again. If the tenant that owns the namespace is on an active/active link, while the namespace is
+
+deselected, operations on objects in the namespace can occur on both systems involved in the link.
+
+These considerations apply:
+
+When you add a replicated tenant back to a link:

@@ -1,0 +1,41 @@
+;<<>> DiG 9.7.4-P1-RedHat-9.7.4-2.P1.fc14 <<>> hcp.example.com ;; global options: +cmd ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 49028 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0 ;; QUESTION SECTION: ; hcp.example.com IN A
+
+;; AUTHORITY SECTION hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com
+
+;; ADDITIONAL SECTION:
+
+d9-014.hcp.example.com. 825 IN A 172.20.37.14 d9-015.hcp.example.com. 825 IN A 172.20.37.15 d9-016.hcp.example.com. 825 IN A 172.20.37.16 d9-017.hcp.example.com. 825 IN A 172.20.37.17 Route
+
+The route command displays the routing table for the node you’re on. This table shows the subnets that the node belongs to. The information for each subnet includes the subnet mask and the network interface. For the [hcp_system] network (shown as default) and the network used for replication, the subnet information also includes the network gateway IP address.
+
+This diagnostic is useful, for example, for exposing network connectivity problems such as missing interfaces. If you’ve created multiple networks in HCP, the display from the route command should show the subnet and interface for each network for which the node has an IP address.
+
+To execute the route command:
+
+1. From the Appliance Diagnostics menu, enter 4.
+
+The results of the route command are displayed on the screen.
+
+2. After viewing the display, press Enter to return to the Appliance Diagnostics menu.
+
+The following is a sample response to the route command: Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface default 172.20.43.254 0.0.0.0 UG 0 0 0 eth0 132.17.10.0 * 255.255.255.0 U 0 0 0 eth0.0010
+
+Link-local * 255.255.0.0 U 1002 0 0 eth0 Link-local * 255.255.0.0 U 1003 0 0 eth1 172.20.42.0 * 255.255.254.0 U 0 0 0 eth0 172.21.52.0 * 255.255.255.0 U 0 0 0 eth1 showmount
+
+The showmount command displays the NFS exports table for a device that you identify by IP address or FQDN or for the node you’re on. You might run this diagnostic, for example, to check whether shares associated with external storage volumes are properly exported on the external storage device.
+
+Each line in the exports table shows a path that can be mounted by other devices. For an HCP node, the exports table includes the paths to namespaces for which the NFS protocol is enabled.
+
+To execute the showmount command:
+
+1. From the Appliance Diagnostics menu, enter 5. A prompt for an IP address or FQDN appears.
+
+This command runs ‘showmount -e’ for the node you specify by address or FQDN. Please enter the address or FQDN:
+
+2. Enter the target device IP address or FQDN. For the FQDN of the node you’re on, use localhost.
+
+The results of the showmount command are displayed on the screen.
+
+3. After viewing the display, press Enter to return to the Appliance Diagnostics menu. The following is a sample response to the showmount command:
+
+Export list for 172.20.43.150: /hcp_shares/share2 172.20.43.151 /hcp_shares/share1 172.20.43.151 fchbainfo

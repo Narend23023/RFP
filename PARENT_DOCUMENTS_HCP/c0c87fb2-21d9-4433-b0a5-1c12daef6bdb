@@ -1,0 +1,91 @@
+For each listed service plan, the storage Service Plans page shows:
+
+Name
+
+The service plan name.
+
+Tenants
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+70/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The number of tenants with one or more namespaces that use the service plan.
+
+Namespaces
+
+The number of namespaces that use the service plan. Status
+
+The service plan status:
+
+Active
+
+The service plan is not retired.
+
+Retired
+
+A user retired the service plan. While a service plan is retired, it cannot be associated with any additional tenants or namespaces. However, the plan is still being used by the namespaces that were already using it. Compliant
+
+Whether the service plan is compliant. A green checkmark indicates that the service plan is compliant.
+
+A service plan is considered compliant if each tier in the plan includes at least one compliant storage pool. A storage pool is considered compliant if it includes at least
+
+one compliant component. Only compliant service plans can be associated with namespaces that are in compliance mode.
+
+Understanding service plan usage details
+
+The Overview tab on the details page for a service plan shows usage information for the plan. You can display the details page.
+
+1. In the top-level menu of the HCP System Management Console, click Storage. 2. On the left side of the Storage page, click Service Plans.
+
+3. In the service plan list, click the service plan you want.
+
+The Overview tab contains four graphs. These graphs show information about the use of HCP S Series and extended storage because of the service plan. The graphs cover the past 30 days (or since the plan was added to the HCP system if that was less than 30 days ago).
+
+The graphs are:
+
+Writes (bytes)
+
+Shows the number of bytes of data written to HCP S Series and extended storage because of the service plan.
+
+This number includes:
+
+Bytes written to HCP S Series storage both with the storage included in a storage pool in the ingest tier and with the storage included in a storage pool in a non-ingest tier.
+
+Bytes written for all parts of multipart uploads regardless of whether the upload of the part has finished, the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Writes (operations)
+
+Shows the number of successful write operations that targeted HCP S Series and extended storage because of the service plan.
+
+Each write of a part of a multipart object counts as a separate write operation.
+
+This number includes:
+
+Write operations that targeted HCP S Series storage both with the storage included in the ingest tier and with the storage included in a non-ingest tier. Each write of a part of a multipart upload. The write operation counts even if the part was subsequently replaced, the multipart upload was aborted, or the part
+
+was not used in the completed multipart upload. Reads (bytes)
+
+Shows the number of bytes of data read from HCP S Series and extended storage, where the data was on that storage due to the service plan.
+
+Reads (operations)
+
+Shows the number of read operations that successfully retrieved data from HCP S Series and extended storage, where the data was on that storage because of the service plan.
+
+Each read of a part of a multipart object counts as a separate read operation. About storage reports
+
+Storage reports contain statistics about the use of HCP S Series, extended storage, and service plans over time. These reports are a good source of information for storage
+
+analysis, enabling you to monitor storage usage patterns at either the component, pool, or service plan level.
+
+Each storage report covers one of these: A single storage component, single storage pool, or single service plan
+
+All storage components, all storage pools, or all service plans All storage components, storage pools, and service plans
+
+Storage reports do not include statistics for components and pools representing primary storage.
+
+You generate storage reports from the HCP System Management Console. For each report, you specify the start and end dates of the report period, which is the time period covered
+
+by the report. You also specify the reporting interval, which determines whether HCP generates hourly, daily, or total values for the report period.

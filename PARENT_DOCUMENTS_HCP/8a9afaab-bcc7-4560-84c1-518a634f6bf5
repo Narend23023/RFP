@@ -1,0 +1,173 @@
+type=custom-metadata-info
+
+To retrieve only an ACL, this URL query parameter:
+
+type=acl
+
+Optionally, to specify the format for the returned ACL, a Content-Type header with one of: application/json
+
+application/xml (the default)
+
+Response headers
+
+Standard
+
+X-HCP-Time X-HCP-SoftwareVersion
+
+X-HCP-ServicedBySystem X-HCP-SymlinkTarget
+
+(if URL is a symbolic link)
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+813/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Objects, versions, directory listings, and annotations:
+
+X-HCP-ChangeTime Milliseconds X-HCP-ChangeTime String
+
+Objects, versions, and annotations:
+
+ETag
+
+Objects and versions:
+
+Last-Modified
+
+X-HCP-ACL
+
+X-HCP-Custom-Metadata X-HCP-Domain
+
+X-HCP-DPL X-HCP-GID
+
+X-HCP-Hash
+
+(not returned for multipart objects)
+
+X-HCP-Index
+
+X-HCP-IngestProtocol X-HCP-IngestTime
+
+X-HCP-LabelRetentionHold X-HCP-LabelRetentionHold-Labels X-HCP-Owner
+
+X-HCP-Replicated X-HCP-Retention
+
+X-HCP-RetentionClass X-HCP-RetentionHold
+
+X-HCP-RetentionString X-HCP-Shred
+
+X-HCP-Size X-HCP-Type
+
+X-HCP-UID X-HCP-VersionID
+
+Partial objects and versions:
+
+Content-Range
+
+Objects and versions with annotations:
+
+X-HCP-CustomMetadata Annotations
+
+X-HCP-CustomMetadata ContentType X-HCP-CustomMetadata First X-HCP-DataContentType
+
+Annotations:
+
+X-HCP-ContentLength
+
+X-HCP-Hash X-HCP-Size
+
+If response is in Gzip compressed format:
+
+Content-Encoding X-HCP-ContentLength
+
+Directory listings:
+
+X-HCP-Type
+
+Status codes
+
+Success: 200, 206
+
+Error: 314, 400, 403, 404, 406, 412, 414, 416, 500, 503
+
+GET of namespace information Retrieves:
+
+Namespace list
+
+Namespace settings Namespace retention classes
+
+Namespace and user permissions Namespace statistics
+
+Permissions
+
+Any
+
+Elements
+
+For all operations:
+
+Authorization header
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+814/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Namespace information URL
+
+To retrieve a namespace list: http[s]://namespace.tenant.domain/proc
+
+To retrieve settings for an individual namespace:
+
+http[s]://namespace.tenant.domain/proc?single=true
+
+To retrieve retention classes:
+
+http[s]://namespace.tenant.domain/proc/retentionClasses
+
+To retrieve permissions:
+
+http[s]://namespace.tenant.domain/proc/permissions
+
+To retrieve statistics: http[s]://namespace.tenant.domain/proc/statistics
+
+Response headers
+
+X-HCP-Time X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Status codes
+
+Success: 200
+
+Error: 400, 401, 403, 404, 414, 500, 503
+
+HEAD
+
+Checks existence of:
+
+Objects Versions
+
+Directories Annotations
+
+ACLs Retrieves metadata for:
+
+Objects
+
+Versions
+
+Permissions
+
+For all operations: read

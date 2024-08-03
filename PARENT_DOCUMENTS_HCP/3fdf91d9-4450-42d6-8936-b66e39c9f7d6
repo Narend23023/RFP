@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+
+<accessControlList> <grant>
+
+<grantee>
+
+<type>(user|group)</type> <name>(hcp-username| active-directory-username| active-directory-group-name|
+
+all_users| authenticated)
+
+</name> If the name element specifies an Active Directory
+
+user or group, include the domain entry
+
+<domain>active-directory-domain</domain> </grantee>
+
+<permissions> Any combination of the following
+
+<permission>READ</permission> <permission>READ_ACL</permission>
+
+<permission>WRITE</permission>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+892/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<permission>WRITE_ACL</permission>
+
+<permission>DELETE</permission> </permissions>
+
+</grant> Up to 999 additional grant elements </accessControlList>
+
+Here is an example of an ACL that grants read and write permission to all users and grants read, write, and delete permission to the tenant-level HCP user with the username lgreen:
+
+<?xml version="1.0" ?>
+
+<accessControlList> <grant>
+
+<grantee> <name>all_users</name>
+
+<type>group</type>
+
+</grantee> <permissions> <permission>READ</permission> <permission>WRITE</permission>
+
+</permissions> </grant>
+
+<grant> <grantee>
+
+<name>lgreen</name> <type>user</type>
+
+</grantee> <permissions>
+
+<permission>READ</permission> <permission>WRITE</permission>
+
+<permission>DELETE</permission> </permissions>
+
+</grant>
+
+</accessControlList> XML elements
+
+The XML for an ACL has a single top-level accessControlList element. All ACLs must contain this element. The XML for an ACL also contains the elements listed in the table below.
+
+Element
+
+Values
+
+Description
+
+grant
+
+N/A
+
+Container for the grantee and permissions elements. Identifies one user or one group of users and the permissions granted to that user or group.
+
+An ACL can contain up to one thousand grant elements.
+
+grantee
+
+N/A
+
+Child of the grant element. Container for the name, type, and domain elements.
+
+name
+
+One of:
+
+Specifies the user or group of users to which the ACL grants
+
+permissions.
+
+The username of a tenant-level user account that’s defined in HCP.
+
+HCP has two special groups that you can specify in an ACL:
+
+The username of an Active Directory user account. This can be either the user principal name or the Security Accounts all_users
+
+Manager (SAM) account name for the AD user account. The name of an Active Directory group. all_users. authenticated.
+
+Grants permissions to all users, including those that access the namespace anonymously
+
+authenticated
+
+Grants permissions to all authenticated users
+
+To grant permissions to one of these special groups, specify group in the type element and omit the domain element.
+
+The Search Console returns an error if a given user or group is specified in more than one name element. type
+
+One of:
+
+Specifies the type of the value specified in the name element.
+
+user
+
+The name element specifies an HCP or Active Directory user account
+
+The Search Console returns an error if the value of the type element doesn’t correspond to the value of the name element.
+
+group
+
+The name element specifies an Active Directory group, all_us ers, or authenticated domain
+
+The name of an Active Directory domain
+
+Specifies the Active Directory domain that contains the user account or group specified in the name element.
+
+This element is required if the name element specifies an Active Directory user account or group. This element is invalid if the name

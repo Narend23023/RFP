@@ -1,0 +1,47 @@
+The traceroute command displays the network path through which the node you’re on communicates with a device that you identify by IP address or FQDN. You might run this diagnostic, for example, if communication between the node and another device, such as a DNS server, is taking longer than expected.
+
+For each pair of points in the network path, the traceroute command displays the round-trip time between the two points for each of three probes. You can use this information, for example, to determine whether the network topology is configured correctly.
+
+To execute the traceroute command:
+
+1. From the Appliance Diagnostics menu, enter 2. A prompt for an IP address or FQDN appears.
+
+This command tries to trace routing to an address or FQDN. Please enter the address or FQDN: 2. Enter the target device IP address or FQDN. The results of the traceroute command are displayed on the screen. 3. After viewing the display, press Enter to return to the Appliance Diagnostics menu. The following is a sample response to the traceroute command:
+
+Traceroute to 192.168.100.45 (192.168.100.45), 30 hops max, 60 byte packets 1 172.20.43.253 (172.20.43.253) 0.286 ms 0.368 ms 0.425 ms
+
+2 2001:0db8::101 (2001:0db8::101) 0.531 ms 0.604 ms 0.669 ms 3 192.168.100.45 (192.168.100.45) 0.339 ms 0.343 ms 0.330 ms dig
+
+The dig command queries the DNS for records that match an IP address or FQDN that you specify. You might run this diagnostic with an HCP domain name, for example, if you have user-defined networks that are not working as expected.
+
+When you execute the dig command, you are prompted for arguments. Although you can specify any dig command arguments, this document describes only IP addresses and FQDNs.
+
+To execute the dig command:
+
+1. From the Appliance Diagnostics menu, enter 3. A prompt for dig command arguments appears.
+
+This command runs dig with he arguments you provide. Enter dig arguments:
+
+2. Enter one of these arguments:
+
+x followed by an IP address (for example, -x 172.20.33.40) An FQDN
+
+3. In response to the confirming prompt, enter y to confirm your entry or n to try again. When you enter y, the results of the dig command are displayed on the screen. 4. After viewing the display, press Enter to return to the Appliance Diagnostics menu.
+
+The following is a sample response to the dig command with the argument hcp.example.com:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+191/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+;<<>> DiG 9.7.4-P1-RedHat-9.7.4-2.P1.fc14 <<>> hcp.example.com ;; global options: +cmd ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 49028 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0 ;; QUESTION SECTION: ; hcp.example.com IN A
+
+;; AUTHORITY SECTION hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com hcp.example.com. 825 IN NS hcp.example.com
+
+;; ADDITIONAL SECTION:
+
+d9-014.hcp.example.com. 825 IN A 172.20.37.14 d9-015.hcp.example.com. 825 IN A 172.20.37.15 d9-016.hcp.example.com. 825 IN A 172.20.37.16 d9-017.hcp.example.com. 825 IN A 172.20.37.17 Route

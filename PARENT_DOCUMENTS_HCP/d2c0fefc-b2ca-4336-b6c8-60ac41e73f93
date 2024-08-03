@@ -1,0 +1,37 @@
+the upgrade. Use this link to replicate all the HCP tenants, HCP namespaces, and default-namespace directories in the HCP with internal storage system. 2. Create a replication link from the new HCP with SAN-attached storage primary system to the second HCP with SAN-attached storage system.
+
+Include the link created in Step 1 above in this link to create a replication chain.
+
+3. When replication is completely up to date, fail over the link from the HCP with internal storage system to the HCP with SAN-attached storage system.
+
+To enable replication to become completely up to date, you may need to stop clients from writing to the HCP with internal storage system before you fail over the link. 4. Delete the link from the HCP with internal storage system to the HCP with SAN-attached storage system. 5. Decommission the two HCP with internal storage systems. Active/active replication with disaster recovery support
+
+You can combine active/active replication with active/passive replication to create a topology in which a third system provides disaster recovery support for the two systems that participate in an active/active link. In this topology, a set of HCP tenants and namespaces and default-namespace directories is replicated on an active/active link between two
+
+systems (A and B). Some of those items are also replicated on an active/passive link from A to a third system (C). The rest of the items are also replicated on an active/passive link from system B to system C.
+
+The choice of which items to replicate on each active/passive link is independent of which system the items were initially created on. For example, an HCP tenant created locally on
+
+system A could be included on the active/passive link from B to C.
+
+The following figure shows a simple active/active replication topology with disaster recovery support. In this figure:
+
+Two of three HCP tenants created locally in system A are replicated between system A and system B. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication.
+
+Two HCP tenants created locally in system B are replicated between system A and system B. In the first tenant, two namespaces are selected for replication. In the second tenant, one of three namespaces is selected for replication. From system A, one HCP tenant initially created on system A and one HCP tenant initially created on system B are replicated to system C. From system B, one HCP tenant initially created on system A and one HCP tenant initially created on system B are replicated to system C. Many-to-one replication with disaster recovery support
+
+You can combine the many-to-one and chained replication topologies to create a configuration in which multiple HCP systems replicate to a single HCP system (many-to-one), which, in turn, replicates to another HCP system (chained). The last system provides additional assurance of continuous data availability for all the HCP tenants and namespaces and default-namespace directories originally selected for replication. It also provides disaster recovery functionality for the HCP system to which those tenants, namespaces, and directories are initially replicated.
+
+Creating many-to-one replication with disaster recovery support
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+330/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+In this example, HCP systems A, B, and C replicate to system D, which replicates to system E. To create this combined topology: 1. When you create the replication links from A to D, from B to D, and from C to D, select the tenants, namespaces, and directories you want to replicate. 2. When you create the replication link from D to E, select the links from A to D, from B to D, and from C to D to be included in that link.
+
+This causes the tenants, namespaces, and directories replicated on all three of those links to be replicated again from D to E. In effect, you’re creating three replication chains: A → D → E, B → D → E, and C → D → E. The following below shows a many-to-one replication topology with disaster recovery support. Bidirectional active/passive replication

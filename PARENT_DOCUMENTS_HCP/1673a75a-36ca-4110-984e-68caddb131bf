@@ -1,0 +1,177 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:33 AM
+Content Platform System Management Help
+(HCP with SAN-attached storage systems only) Primary running storage that stores only the metadata query engine index. All storage nodes should have the same
+number of index volumes.
+Index volumes have numeric IDs in the range 64 through 91.
+Shared volume
+Primary running storage that stores both object data and the metadata query engine index. All storage nodes have one shared volume.
+The shared volume for each node has a numeric ID in the same range as data volumes.
+Spindown volume
+(HCP with SAN-attached storage systems only) Primary spindown storage that is used for tiering purposes. Primary spindown storage is storage that is managed by
+the nodes in the HCP system and consists of disks that can be spun down and spun up as needed. Primary spindown storage stores object data, but it does not store
+the metadata query engine index. All storage nodes should have the same number of spindown volumes.
+Spindown volumes have numeric IDs in the range 96 through 127. The volume numbering starts at 96.
+A HCP with SAN-attached storage system can have spindown volumes only if both of these conditions are true:
+One or more logical volumes used by the system are capable of being spun down. This means that they are on storage systems that support spindown.
+The system is configured to use one or more spindown-capable logical volumes as primary spindown storage.
+NFS volume
+(also called an external volume) Extended storage that is accessed using an NFS mount point. Extended storage is storage that is managed by devices outside of the
+HCP system and is used for storage tiering. NFS storage is one of six types of extended storage that you can configure HCP to use. NFS storage can be used to
+store object data only.
+NFS volumes have numeric IDs in the range 96 through 127. The volume numbering starts from 127 and goes down.
+Database volume
+A volume that holds database transaction logs and indexes. Optional rear mounted SSD volumes are also available for G10 and G11 nodes. SSD volumes store only
+indexes.
+The Logical Volumes column displays a status icon for each logical volume managed by the node. The hover text for each icon shows the volume type, volume ID, and, for
+NFS volumes, the share path and the name of the extended storage pool that contains the NFS volume.
+The next table describes the logical volume status icons.<br>
+                       <b>Bounding box:</b> x1=241, y1=905, x2=1516, y2=2091
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Icon</td>
+      <td>Volume\ntype</td>
+      <td>Volume status</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Data</td>
+      <td>Available — The volume is available and functioning properly.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>Data</td>
+      <td>Unavailable — The volume is unavailable, likely because the node is not running. If the volume does not become available soon, contact your\nauthorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>Data</td>
+      <td>Shutting down — The volume is shutting down and is no longer accessible.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td></td>
+      <td>Data</td>
+      <td>Broken — The volume is experiencing errors or has failed and requires replacement. Contact your authorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>Data</td>
+      <td>Migrating — The Migration service is migrating data off the volume.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>Database</td>
+      <td>Available — The volume is available and functioning properly.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td></td>
+      <td>Database</td>
+      <td>Degraded — The volume is experiencing errors or has failed. Contact your authorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td></td>
+      <td>Database</td>
+      <td>Initialized — The volume is started up and accessible.</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td></td>
+      <td>Database</td>
+      <td>Initializing — The volume is starting up but is not yet accessible.</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td></td>
+      <td>Database</td>
+      <td>Migrating — The Migration service is migrating data off the volume.</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td></td>
+      <td>Database</td>
+      <td>Rebuilding — The volume is rebuilding and is therefore inaccessible.</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td></td>
+      <td>Database</td>
+      <td>Unavailable — The volume is unavailable, likely because the node is not running. If the volume does not become available soon, contact your\nauthorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td></td>
+      <td>Index</td>
+      <td>Available — The volume is available and functioning properly.</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td></td>
+      <td>Index</td>
+      <td>Unavailable — The volume is unavailable, likely because the node is not running. If the volume does not become available soon, contact your\nauthorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td></td>
+      <td>Index</td>
+      <td>Initializing — The volume is starting up but is not yet accessible.</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td></td>
+      <td>Index</td>
+      <td>Shutting down — The volume is shutting down and is no longer accessible.</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td></td>
+      <td>Index</td>
+      <td>Broken — The volume is experiencing errors or has failed and requires replacement. Contact your authorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td></td>
+      <td>Index</td>
+      <td>Migrating — The Migration service is migrating data off the volume.</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td></td>
+      <td>Shared</td>
+      <td>Available — The volume is available and functioning properly.</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td></td>
+      <td>Shared</td>
+      <td>Unavailable — The volume is unavailable, likely because the node is not running. If the volume does not become available soon, contact your\nauthorized HCP service provider.</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td></td>
+      <td>Shared</td>
+      <td>Initializing — The volume is starting up but is not yet accessible.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

@@ -1,0 +1,65 @@
+For the format for a content property with the float data type, you can use any of the formats for the integer data type. However, with the float data type, the thousands separator, if used, must be a comma (,).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+297/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can include a period as a decimal separator in the number pattern for the float data type, although this is not required. If you do include it, any number signs (#) must come after any zeroes in the part following separator. For example, a value of 1234.5 matches any of these number patterns:
+
+0 00.0 .0 #0.0# ##,000
+
+0,0 #,0.0#
+
+You can also include an exponent character (E) followed by one or more zeroes in the number pattern for the float data type. However, values with an exponent character also match patterns that don’t include the exponent character, and values without an exponent character also match patterns with an exponent character. For example, a value of 1234E5 matches any of these number patterns:
+
+0 00.0
+
+.0E0 #0.0#E000 ##,000E0 0,0 #,0.0E00
+
+You can use a percent sign (%) by itself as the prefix or suffix in the format for the float data type. Before indexing values with a matching percent sign, the metadata query engine converts them to their decimal equivalents. For example, a value of 1234% matches a format of 0% and is indexed as 12.34.
+
+White space is not required between the number pattern and a suffix that’s a percent sign.
+
+If you don’t specify a format for a float data type, the metadata query engine indexes only sequences of digits that optionally include one decimal point. Datetime data type formats
+
+For a content property with the datetime data type, you can specify a format that values needs to match in order to be indexed. The format consists of a pattern of letters, optional separators, and optional quoted text. The letters represent date or time components, as outlined in the list below. Letters can be repeated, which can affect their meaning. G
+
+Represents a valid era indicator, such as AD, BC, or BCE. Repetition has no effect. If a datetime pattern doesn’t include any occurrences of G, the metadata query engine assumes an era of AD for matching values.
+
+y
+
+Represents a year. For matching values with a two-digit year, a pattern that includes y more than twice in a row causes the metadata query engine to interpret the two digits as being preceded by two zeroes rather than by the number that indicates the current century. If a datetime pattern doesn’t include any occurrences of y, the metadata query engine assumes a year of 1970 for matching values. M
+
+Represents a month. Values that include the month as a number match a pattern that includes M or MM. Values that include the name of the month, either in full or as a three-letter abbreviation, match a pattern that includes three or more occurrences of M in a row. If a datetime pattern doesn’t include any occurrences of M, the metadata query engine assumes a month of January for matching values. w
+
+Represents the number of the week into the year. Repetition has no effect.
+
+W
+
+Represents the number of the week into the month, where the first week is the week that includes the first day of the month. Repetition has no effect.
+
+D
+
+Represents the number of the day into the year. Repetition has no effect. d
+
+Represents the number of the day into the month. Repetition has no effect.
+
+F
+
+Represents the number of the week into the month, where the first week starts with the first Sunday in the month. Repetition has no effect.
+
+E
+
+Represents the day of the week. Matching values include the name of the day in full or as a three-letter abbreviation. Repetition has no effect. a
+
+Represents a valid morning or afternoon indicator, such as AM or pm. Repetition has no effect.
+
+H
+
+Represents the hour on a 24-hour clock, where midnight is represented by zero. Repetition has no effect.
+
+k

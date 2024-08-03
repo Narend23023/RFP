@@ -1,0 +1,83 @@
+Represents all users.
+
+authenticated
+
+Represents all authenticated users.
+
+Specifying permissions
+
+The permissions in an aclGrant property value must be specified in this order
+
+R, r, W, w, d
+
+For example, to find objects that have ACLs that grant write and write_ACL permissions, and only those permissions, to the user rsilver who is defined in the europe tenant, specify this advanced query:
+
+aclGrant:"Ww,USER,europe,rsilver"
+
+You can replace one or more permissions with the asterisk (*) wildcard character. When you do so, you still need to specify permissions in the correct order.
+
+When you specify both an asterisk and one or more permission values, the Console returns objects with ACLs that grant only the permissions you explicitly specify or that grant the permissions you explicitly specify and any permissions represented by the asterisk. For example, this advanced query returns objects with ACLs that grant read, read_ACL, write,
+
+and write_ACL permissions and may also grant delete permission: aclGrant:"RrWw*"
+
+A single asterisk represents all the missing permissions in the location where it appears. For example, in this advanced query, the wildcard character represents any combination of
+
+write, write_ACL, and delete permissions:
+
+aclGrant:"r*"
+
+In this advanced query, the wildcard character represents any combination of read and write_ACL permissions: aclGrant:"R*w"
+
+In this advanced query, the wildcard character represents only read_ACL permission:
+
+aclGrant:"*r"
+
+You can specify multiple asterisks in an advanced query. For example, this advanced query returns objects with ACLs that grant read permission and any combination of other permissions to the AD group named managers that is defined in the corp.widgetco.com domain:
+
+aclGrant:"*r*,GROUP,@corp.widgetco.com,managers"
+
+By replacing all permission values with a single asterisk, you query for objects that have ACLs that grant any combination of permissions. For example, if you are accessing the Console with a tenant-level user account, this advanced query finds objects with ACLs that grant any combination of permissions to that user account: aclGrant:"*,USER"
+
+aclGrant considerations
+
+These considerations apply when you specify the aclGrant property in an advanced query:
+
+The entire value for this property must be enclosed in double quotation marks (").
+
+The locations and usernames you specify are not case sensitive. The group names you specify, except all_users and authenticated, are not case sensitive. The permission values you specify and the values USER and GROUP are case sensitive. Content properties
+
+When you search using a content property, the operators you can use depend on the data type of the property. Content properties can have these types:
+
+Boolean
+
+Datetime Float
+
+Integer Text Tokenized
+
+Searches using text content properties find an element or attribute only if it exactly matches the search string.
+
+Tokenized content properties are indexed for full-text search. Therefore, you can search for any of several words, words that occur in any order, or a specific phrase.
+
+To learn the valid operations on a content property, select the property on the Structured Query page and the middle dropdown list will show the operations you can use.
+
+Performing an advanced search
+
+1. In the Search Console, click the Advanced Search tab.
+
+While the metadata query engine is active, the Advanced Search tab is called the Advanced Query tab and the Search button is called the Query button.
+
+2. In the entry field on the Advanced Search page, type the query for your search.
+
+3. Click Search.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+905/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help While you’re working on a query specification, you can click Reset to return to the most recently submitted query.
+
+Working with saved queries
+
+The HCP Search Console lets you save the queries you create so you can run them again at any time. Saving a query saves the criteria only, not the search results. Each time you run a saved query, you get a new set of returned objects.

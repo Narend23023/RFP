@@ -1,0 +1,51 @@
+User and group accounts control access to HCP interfaces. The administrative roles associated with these accounts allow users to use:
+
+The Tenant Management Console The HCP management API
+
+You need the security role to create, modify, delete, and associate roles with user and group accounts.
+
+The data access permissions associated with user and group accounts allow users to access namespace content through:
+
+Namespace access protocols that require authentication The Namespace Browser The HCP metadata query API The HCP Search Console
+
+You need the administrator role to associate data access permissions with user and group accounts.
+
+The allow namespace management property, which you can assign to a user or group account, allows users to use the HCP management and S3 compatible APIs to:
+
+Create namespaces List, view and change the versioning status of, and delete namespaces they own You need the administrator role to assign the allow namespace management property to a user or group account. User accounts
+
+An HCP user account is a set of credentials that gives a user access to one or more of the interfaces listed above. You create and manage user accounts in the Tenant Management Console.
+
+When you create a user account, you specify whether the user credentials are authenticated locally or by RADIUS. Additionally, for locally authenticated users, you specify whether the account password must be changed the next time the account is used to access one of the Consoles.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+250/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+When you create a user account, you have the option of associating roles with it and assigning the allow namespace management property. You can change these properties as well associate data access permissions with the account at any time thereafter. You can enable and disable user accounts, as needed. While an account is disabled, it cannot be used to access any of the applicable interfaces. You might decide to disable an account, for example, while the user for whom you created it is on vacation.
+
+Multiple people can use the same user account concurrently for the same or different interfaces. To prevent this from happening, you should create a separate account for each user, and users should keep their passwords confidential.
+
+Note: For HCP user accounts, HCP logs failed namespace access attempts with a given username once an hour. This prevents repeated log messages in the case where an application specifies invalid credentials. The message that’s logged indicates the number of failed attempts that occurred in the past hour.
+
+A tenant can have at most 10,000 HCP user accounts. Group accounts
+
+An HCP group account is a representation of an Active Directory group. The group account enables AD users in the AD group to access one or more of the interfaces listed above. You create and manage group accounts in the HCP Tenant Management Console.
+
+When you create a group account, you have the option of associating roles with it. You can change these associations and also associate data access permissions with the account at any time thereafter.
+
+A tenant can have at most 100 group accounts. Administrative roles and permissions
+
+A role is a named collection of permissions that can be granted to a user either through an HCP user account or through one or more HCP group accounts. Each permission in a role lets the user perform some specific interaction or set of interactions with the HCP system. Roles generally correspond to job functions.
+
+You can associate any number of roles with a user or group account. The account user then has all the permissions granted by each of those roles. Tip: Before associating roles with a user or group account, make sure the permissions granted by those roles are consistent with job functions of the user or group for which you’re creating the account. Note: An AD user can be added to an AD group while that user is using the Tenant Management Console. If the AD group corresponds to an existing HCP group account, the user may not automatically get the roles associated with that group account for up to eight hours. To get the roles immediately, the user needs to log out of the Tenant Management
+
+Console and then log back in. If the user is also currently using the HCP System Management Console or the Namespace Browser, logging out of either of those interfaces has the same effect. Available roles
+
+The roles you can associate with a user or group account are:
+
+Monitor

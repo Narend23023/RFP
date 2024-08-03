@@ -1,0 +1,49 @@
+View and change the versioning status of the namespace
+
+Delete the namespace See the namespace in a namespace listing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+237/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can also use the Tenant Management Console and HCP management API to perform these activities if you have the administrator role, even if you’re not the namespace owner.
+
+You can specify the owner of a namespace when you create the namespace or at any time thereafter. You can also change namespace owners at any time.
+
+When the S3 compatible API is used to create a namespace, the namespace creator automatically becomes the namespace owner. When a user with an HCP user account becomes the owner of a namespace, that user account automatically gets the browse, read, write, read ACL, and write ACL data access permissions for that namespace. If the S3 compatible API was used to create the namespace, the owner user account also automatically gets the delete permission for the namespace.
+
+You can limit the number of namespaces that can be owned by a single user. You can change this limit at any time.
+
+Namespace tags
+
+A tag is an arbitrary text string associated with a namespace. You can associate up to ten tags with any given namespace, and you can use the same tags for multiple namespaces.
+
+You can use tags to group namespaces and filter namespace lists. For example, if you’ve created multiple namespaces for a company named ABC Corporation, you could associate the tag ABC with each of those namespaces. Then you could filter a list of namespaces to display only the namespaces with that tag.
+
+You can associate tags with a namespace when you create the namespace or at any time thereafter. You can also remove tags from a namespace at any time.
+
+Default retention setting Each namespace has a default retention setting. This is the setting applied to an object when it is stored in the namespace unless the retention setting is explicitly specified in the request to store the object. After an object is stored, users can change its retention setting (subject to the rules for changing retention settings).
+
+When you create a namespace, its default retention setting is Deletion Allowed. Objects with this retention setting can be deleted at any time except when they’re on hold.
+
+You can change the default retention setting for a namespace at any time. Changing this setting does not affect existing objects in the namespace.
+
+Default shred setting
+
+Shredding, also called secure deletion, is the process of overwriting the places where all the copies of an object were stored in such a way that none of the object data or metadata, including custom metadata, can be reconstructed. Each object has a shred setting that determines whether it is shredded when it’s deleted from the namespace.
+
+Each namespace has a default shred setting. This is the setting applied to an object when it is stored in the namespace unless the shred setting is explicitly specified in the request to store the object. After an object is stored, users can change its shred setting from don’t shred to shred but not from shred to don’t shred.
+
+When you create a namespace, its default shred setting is not to shred. You can change this setting at any time. Changing this setting does not affect existing objects in the namespace.
+
+Note: If HCP is allowed to use erasure coding to implement replication of a namespace, setting the default shred setting to shred for that namespace can significantly increase the load on all systems in the replication topology.
+
+Default index setting Each object in the repository has an index setting that is either true or false. This setting is present even if the namespace containing the object is not search-enabled or indexed.
+
+The metadata query engine uses the index setting for an object to determine whether to index custom metadata for that object. The HCP search facility uses the index setting to determine whether to index the object at all. Metadata query API requests can use the index setting as a search criterion. Additionally, third-party applications can use this setting for their own purposes.
+
+Note: If custom metadata indexing is disabled, the metadata query engine does not index custom metadata regardless of the index settings for individual objects.

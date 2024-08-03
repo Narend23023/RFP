@@ -1,0 +1,187 @@
+For an HCP management API request, the HTTP response headers always include headers that address browser security concerns. These headers have fixed values. The table below describes these headers.
+
+Header
+
+Value
+
+Description
+
+Cache-Control
+
+no-cache,no-store,must- revalidate
+
+Specifies directives that must be obeyed by all caching mechanisms along the request/response chain Content-Security- Policy
+
+default-src 'self'; script-src 'self' 'unsafe- eval' 'unsafe- inline'; connect-src 'self'; img- src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; frame-ancestors 'self';
+
+Restricts the content that the browser can load to the sources specified by the header value Expires
+
+Thu, 01 Jan 1970 00:00:00 GMT
+
+Causes the response to become stale immediately after it is sent
+
+Pragma
+
+no-cache
+
+Prevents the response from being used for subsequent requests for the same resource without the browser first checking whether the resource has changed
+
+X-Content-Type- Options nosniff
+
+Prevents the browser from examining the returned content to determine the content MIME type
+
+X-DNS-Prefetch- Control
+
+off
+
+Prevents the browser from performing domain name resolution on URLs embedded in returned content before the URLs are requested
+
+X-Download- Options
+
+noopen
+
+Prevents the browser from opening resources that are downloaded through links in the returned content X-Frame-Options
+
+SAMEORIGIN
+
+Prevents the browser from rendering the returned content in a frame on a page containing content not returned by the HCP system
+
+X-XSS-Protection
+
+1; mode=block
+
+Stops the browser from loading the returned content if the browser detects reflected cross-site scripting (XSS) in the response
+
+Note: The Cache-Control and Expires headers are not returned with error responses.
+
+Enabling the management API in the Consoles
+
+1. Log into the System Management Console or Tenant Management Console using a user account with the security role. 2. In the top-level menu of either Console, select Security > MAPI. 3. In the Management API Setting section on the Management API page, select Enable the HCP management API.
+
+4. Click Update Settings. Support for the Amazon S3 API
+
+HCP is compatible with the Amazon Simple Storage Service (Amazon S3) REST API, which allows clients to store objects in namespaces. A namespace is a container for objects that has its own settings, such as ownership and lifecycle. Using HCP, users can perform common operations on objects and namespaces.
+
+For information about using Amazon S3, see the Amazon S3 API documentation.
+
+The following tables list the level of support for each of the HCP S3 API methods compared with the Amazon S3 API methods and describes any implementation differences in the S3 APIs. Amazon S3 API
+
+Support level
+
+Implementation differences
+
+Authenticating Requests (AWS Signature Version 4)
+
+Supported
+
+None
+
+Authenticating Requests (AWS Signature Version 2)
+
+Supported
+
+None
+
+GET Service / List Buckets
+
+Supported
+
+None
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+386/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Amazon S3 API
+
+Support level
+
+Implementation differences
+
+DELETE Bucket
+
+Supported
+
+None DELETE Bucket analytics
+
+Not supported
+
+None
+
+DELETE Bucket cors
+
+Supported
+
+None
+
+DELETE Bucket encryption
+
+Not supported
+
+None
+
+DELETE Bucket inventory
+
+Not supported
+
+None
+
+DELETE Bucket lifecycle
+
+Not supported
+
+None
+
+DELETE Bucket metrics
+
+Not supported
+
+None
+
+DELETE Bucket policy
+
+Not supported None
+
+DELETE Bucket replication
+
+Not supported
+
+None
+
+DELETE Bucket tagging
+
+Not supported
+
+None
+
+DELETE Bucket website
+
+Not supported
+
+None
+
+GET Bucket (List Objects) Version 1
+
+Supported
+
+None
+
+GET Bucket (List Objects) Version 2
+
+Supported
+
+None
+
+GET Bucket accelerate
+
+Not supported
+
+None
+
+GET Bucket acl Supported
+
+None

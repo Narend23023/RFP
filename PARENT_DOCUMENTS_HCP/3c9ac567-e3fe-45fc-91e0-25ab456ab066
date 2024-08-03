@@ -1,0 +1,61 @@
+HCP offers these features to help maximize network throughput and reduce the use of network bandwidth by read and write operations:
+
+Link aggregation
+
+Each node in an HCP system has two bonded ports for connecting to the front-end network. When using a single front-end switch, you can take advantage of this setup by using two cables per node to connect to the switch and configuring both HCP and the applicable ports on the switch for active-active (802.3ad) bonding. The redundant ports
+
+and cables help ensure a high-availability connection to the front-end network and the active-active bonding allows for increased network throughput. 10Gb Ethernet connectivity
+
+Optionally, for HCP with SAN-attached storage systems, HCP supports 10Gb Ethernet connectivity to the front-end network. The 10GbE network interface allows for greater
+
+network throughput than does the 1GbE interface option.
+
+Systems with the 10GbE network interface on the front end also use 10GbE for the back-end network. This enables the HCP nodes to transmit data among themselves at a
+
+rate that supports the higher front-end throughput.
+
+Compressed data transmission
+
+Clients that use the HTTP protocol to communicate with HCP can reduce network bandwidth usage by sending and receiving data in a compressed format. Before sending
+
+data to HCP, the client uses the publicly available gzip utility to compress the data. Upon receiving the data, HCP uncompresses it automatically before storing it. When requested to do so, HCP uses gzip to compress data before sending it to the client. The client then uses gunzip to uncompress the data. Combined data and custom metadata on reads and writes
+
+Clients that use the HTTP protocol for namespace access can store or retrieve both the data and custom metadata for an object with a single request. Issuing a single
+
+request instead of separate requests for the data and custom metadata reduces the network load.
+
+This feature can be used in conjunction with compressed data transmission to further reduce the network load. HCP administration
+
+As an HCP system-level administrator, you play a role in ensuring the continued viability and accessibility of the HCP system. The primary tool for these purposes is a web application called the System Management Console. Note:
+
+Tenant-level administrators use a separate web application called the Tenant Management Console to configure and manage tenants and namespaces.
+
+Depending on the permissions you have, you can use the System Management Console to configure various aspects of the system and manage administrative user accounts, as well as monitor system activity. Additionally, the Console reports hardware problems as they occur, so you can initiate repairs in a timely manner.
+
+System Management Console
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+10/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The System Management Console is a system-specific web application that lets you monitor and manage HCP and its individual nodes. The Console shows you the status of the system in real time, so you can take action when necessary to ensure system health (for example, restarting a node that has failed). Through the Console, you can also modify various system settings, create tenants, and monitor repository usage across all namespaces. Changes you make through the Console take effect immediately.
+
+Access to the System Management Console is available only through HTTP with SSL security (HTTPS).
+
+To access the HCP System Management Console in Internet Explorer® on a Windows server, Internet Explorer Enhanced Security Configuration must be disabled for administrators on that server. Console access
+
+To use the System Management Console, you need either:
+
+A system-level user account defined in HCP. If the HCP system is configured to support Windows Active Directory (AD), an AD user account for a user that belongs to one or more AD groups for which corresponding
+
+system-level group accounts are defined in HCP. In the help, such an AD user account is referred to as a recognized AD user account.
+
+Your HCP user account or group account configuration includes settings that specify what you have permission to do in the Console. The menu options, pages, and panels that you see in the Console depend on the permissions that have been configured for your user or group account.
+
+If an AD user belongs to multiple AD groups for which HCP group accounts exist, that user has all the permissions associated with all those group accounts. Console sessions
+
+A System Management Console session begins when you take one of these actions:

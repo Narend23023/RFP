@@ -1,0 +1,121 @@
+Properties
+
+The table below describes the properties included in the customMetadataIndexingSettings data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes contentClasses
+
+List
+
+Associates zero, one, or more content classes with the namespace. Valid values are the names of existing content classes.
+
+The set of content classes specified in the request body replaces the set of content classes currently associated with the namespace. To dissociate all content classes from the namespace, specify an empty set.
+
+Content class names are case sensitive.
+
+In XML, element that identifies each content class is name. In JSON, the name in the name/value pair that lists the content classes is name.
+
+fullIndexingEnabled Boolean
+
+Specifies whether the metadata query engine indexes the full text of custom metadata. Valid values are:
+
+You can set this property to true only while custom metadata indexing is enabled for the namespace.
+
+true
+
+The metadata query engine indexes the full text of custom metadata.
+
+false
+
+The metadata query engine does not index the full text of custom metadata.
+
+The default is false. excludedAnnotations
+
+String Specifies a comma-separated list of the names of
+
+The list of annotation names you specify for this property
+
+annotations to be excluded from indexing by the metadata query engine.
+
+replaces the current list of annotation names. To remove all annotation names from the list, specify this property with no value.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+459/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+Instead of explicit names, you can use patterns. The wildcard character for pattern matching is the asterisk (*), which matches any number of characters of any type, including none. The asterisk can occur anywhere in the pattern.
+
+You can set a value for this property only while custom metadata indexing is enabled for the namespace.
+
+Disabling custom metadata indexing for the namespace automatically deletes the list of excluded annotation for the namespace. Annotation names are case sensitive.
+
+Example
+
+Here’s an XML example of the customMetadataIndexingSettings data type:
+
+<customMetadataIndexingSettings> <contentClasses> <name>DICOM</name> <name>Appointment</name> </contentClasses> <excludedAnnotations>misc*, email</excludedAnnotations> <fullIndexingEnabled>false</fullIndexingEnabled> </customMetadataIndexingSettings>
+
+dataAccessPermissions
+
+The dataAccessPermissions data type describes the dataAccessPermissions resource for group accounts and user accounts.
+
+Properties
+
+The table below describes the property included in the dataAccessPermissions data type.
+
+Property
+
+Data type
+
+Description Notes
+
+namespacePermission
+
+namespace
+
+Permission
+
+Specifies the permissions the user or group account has for a namespace.
+
+Include one instance of this property for each namespace for which you want to change the permissions. If you omit a namespace, its permissions are not changed.
+
+Example
+
+Here’s an XML example of the dataAccessPermissions data type:
+
+<dataAccessPermissions> <namespacePermission> <namespaceName>Accounts-Payable</namespaceName> <permissions> <permission>BROWSE</permission> <permission>READ</permission> </permissions> </namespacePermission> <namespacePermission> <namespaceName>Accounts-Receivable</namespaceName> <permissions> <permission>BROWSE</permission> <permission>SEARCH</permission> <permission>PURGE</permission> <permission>DELETE</permission>
+
+<permission>READ</permission> <permission>WRITE</permission> </permissions> </namespacePermission> </dataAccessPermissions> ecTopology
+
+The ecTopology data type describes the ecTopologies resource.
+
+ecTopology data type properties
+
+The following table describes the properties included in the ecTopology data type.
+
+Property name
+
+Data type Description
+
+Notes
+
+description String
+
+This property is optional on a PUT request.

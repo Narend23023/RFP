@@ -1,0 +1,157 @@
+type=custom-metadata
+
+annotation=annotation-name
+
+The annotation name is optional for the default annotation.
+
+To delete an ACL, this as a URL query parameter: type=acl
+
+Response headers
+
+X-HCP-Time X-HCP-ServicedBySystem
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Status codes
+
+Success: 200, 204
+
+Error: 400, 403, 404, 409, 414, 500, 503
+
+GET, except for namespace information requests
+
+Retrieves:
+
+Objects
+
+Versions Annotations ACLs
+
+Lists:
+
+Versions
+
+Directories Annotations
+
+Permissions
+
+For object, version, and annotation operations: read
+
+To retrieve directory listings: browse
+
+To retrieve ACLs: read ACL
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+812/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Elements
+
+For all operations: Authorization header Object, directory, or symbolic link URL
+
+To retrieve data in Gzip format, an Accept-Encoding header that contains gzip or *.
+
+To retrieve a specific version, an annotation or ACL for a specific version, or list annotations for a specific version, this URL query parameter:
+
+version=version-id
+
+To retrieve a version list, this URL query parameter: version=list
+
+To list deleted objects or versions, this URL query parameter:
+
+deleted=true
+
+To choose not to wait for delayed retrievals, this URL query parameter:
+
+nowait
+
+To retrieve object or version data and an annotation together:
+
+This URL query parameter:
+
+type=whole-object
+
+To control the order of the returned information, an X-HCP-CustomMetadataFirst request header with a value of true or false (the default)
+
+To retrieve part of an object or version, an HTTP Range header specifying any of these zero-indexed byte ranges: start-position-end-position start-position-
+
+offset-from-end
+
+To conditionally retrieve an object or version, these headers:
+
+If-Match: etag-list
+
+If-None-Match: etag-list If-Modified-Since: datetime
+
+If-None-Modified-Since: datetime
+
+To force HCP to generate an ETag if the object does not yet have one: forceEtag=true
+
+To include or exclude the X-HCP-Replicated header in the response, this header:
+
+X-HCP-Get-Replicated: true|false
+
+To have change times for subdirectories in a directory listing reflect object additions and deletions, this URL query parameter:
+
+mostRecentDirTimes=true
+
+To retrieve an annotation, these as URL query parameters: type=custom-metadata
+
+annotation=annotation-name
+
+The annotation name is optional for the default annotation.
+
+To list annotations, this URL query parameter:
+
+type=custom-metadata-info
+
+To retrieve only an ACL, this URL query parameter:
+
+type=acl
+
+Optionally, to specify the format for the returned ACL, a Content-Type header with one of: application/json
+
+application/xml (the default)
+
+Response headers
+
+Standard
+
+X-HCP-Time X-HCP-SoftwareVersion
+
+X-HCP-ServicedBySystem X-HCP-SymlinkTarget
+
+(if URL is a symbolic link)
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+813/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Objects, versions, directory listings, and annotations:
+
+X-HCP-ChangeTime Milliseconds X-HCP-ChangeTime String
+
+Objects, versions, and annotations:
+
+ETag
+
+Objects and versions:
+
+Last-Modified
+
+X-HCP-ACL
+
+X-HCP-Custom-Metadata X-HCP-Domain

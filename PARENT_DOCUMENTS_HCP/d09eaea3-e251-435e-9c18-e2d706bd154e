@@ -1,0 +1,53 @@
+Changing the IP addresses and domain name used to access the namespaces that a tenant owns causes all CIFS and NFS mounts of those namespaces to be disconnected from HCP.
+
+Be sure to notify the tenant contact when you select a different data access network for a tenant.
+
+A hard quota for the tenant. This is the total amount of storage available to the tenant. The tenant allocates this storage to the namespaces it owns by setting a hard quota for each namespace.
+
+You can allocate more total space to your tenants than is actually available for storing objects. HCP warns you when the space used by all tenants is approaching the system storage capacity.
+
+You can change this quota at any time after you create the tenant. However, you cannot specify a quota that is less than the total amount of storage that the tenant has already allocated to its namespaces.
+
+HCP checks the amount of data stored in a namespace against the namespace hard quota hourly. If large amounts of data are added rapidly to a namespace, the namespace can store substantially more data than its hard quota allows.
+
+Each namespace managed by a tenant can exceed its hard quota in this way. As a result, the total amount of storage used by all namespaces owned by a tenant can exceed the hard quota for that tenant.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+91/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+A soft quota for the tenant. This is the percentage point at which HCP should notify tenant administrators that the storage available to the tenant is running low on free space.
+
+You can change this quota any time after you create the tenant.
+
+A namespace quota for the tenant. This is the number of namespaces that HCP reserves for the tenant out of the total number of namespaces that the system can have (10,000).
+
+You cannot overallocate namespaces. That is, the maximum number of namespaces that you can allocate to tenants is 10,000, or 9,999 if the system includes the default namespace.
+
+You can create tenants that do not have quotas. The total number of namespaces that these tenants can own is equal to the number of unallocated namespaces in the HCP
+
+system. If you allocate a total of 10,000 namespaces to other tenants, the tenants that do not have quotas cannot create any namespaces.
+
+You can change the namespace quota for a tenant at any time after you create the tenant, as long as the new quota is not less than the number of namespaces that the
+
+tenant currently owns.
+
+While an active/passive replication link that includes a given HCP tenant is failed over to the replica, you cannot change the namespace quota for that tenant on the replica.
+
+The authentication methods allowed for the tenant. At least one of these authentication methods must be enabled: Local
+
+The tenant supports internal authentication by HCP. To be authenticated, a user must have a locally authenticated HCP user account.
+
+RADIUS
+
+The tenant supports remote authentication by RADIUS. To be authenticated, a user must have a RADIUS-authenticated HCP user account.
+
+A tenant that supports RADIUS authentication must also support local authentication, Active Directory authentication, or both. Active Directory
+
+The tenant supports remote authentication by AD. To be authenticated, a user must have an AD user account. Tip: To help ensure that AD authentication is available for those tenants that need to support it, enable AD only for those tenants.
+
+For RADIUS or Active Directory authentication to work for the tenant to access the Tenant Management Console and HCP management API, the tenant management network must be [hcp_system]. Similarly, for RADIUS or Active Directory authentication to work for the tenant to access the content of the tenant's namespaces, the tenant data access network must be [hcp_system].
+
+You can change the allowed authentication methods at any time after you create the tenant. However, you cannot disable local authentication if the only tenant-level account with the security role is a locally authenticated HCP user account. Similarly, you cannot disable AD authentication if the only tenant-level account with the security role is a group account. If you disable AD authentication for a tenant after the tenant has created group accounts, those accounts continue to exist but are not visible to the tenant. If you subsequently reenable AD authentication for the tenant, the group accounts become visible again.

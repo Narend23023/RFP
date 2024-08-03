@@ -1,0 +1,125 @@
+Default value is HCP retention.
+
+optimizedFor
+
+String
+
+Specifies whether new namespaces are cloud optimized by default. Valid values are:
+
+ALL
+
+You can set this property to ALL or DEFAULT on a POST request only if new namespaces already disallow erasure coding by default or the allowErasureCoding property is set to false in the same request.
+
+The namespace is optimized for all namespace access protocols. CLOUD
+
+The namespace is optimized for cloud protocols only.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+487/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Date Type
+
+Description
+
+Notes
+
+DEFAULT
+
+The protocol optimization setting for the namespace is determined by the system-level setting for this property.
+
+The default is DEFAULT.
+
+These values are not case sensitive.
+
+replicationEnabled Boolean
+
+Specifies the default replication setting for new HCP namespaces. Valid values are:
+
+This property is valid on a POST request and returned by a GET request only if replication is enabled for the tenant for which you’re specifying namespace defaults.
+
+true
+
+The namespace is selected for replication. false
+
+The namespace is not selected for replication.
+
+The default is false.
+
+s3UnversionedOverwrite
+
+Boolean
+
+Specifies whether object overwrite is enabled for the namespace. Valid values are:
+
+true
+
+Object overwrite is enabled.
+
+You can set the value of this property to either true or fal se. However, if you enable versioning for the namespace, changing the value will not have any effect. This property applies only to the requests made through Hitachi API for Amazon S3. false
+
+Object overwrite is disabled.
+
+Overwriting an object will also overwrite its custom metadata.
+
+The default is false.
+
+searchEnabled
+
+Boolean
+
+This property is valid on a POST request and returned by
+
+Specifies the default search setting for new HCP namespaces. Valid values are:
+
+a GET request only if the owning tenant is allowed to enable search for its namespaces. true
+
+Search is enabled.
+
+false
+
+Search is disabled.
+
+The default is false.
+
+servicePlan
+
+String
+
+Specifies the default service plan for new HCP namespaces. Valid values are names of existing service plans. The default is the Default service plan.
+
+This property is valid on a POST request and returned by a GET request only if the tenant for which you’re specifying namespace defaults is allowed to select service plans for its namespaces. softQuota
+
+Integer
+
+Specifies the default soft quota for new HCP namespaces. Valid values are integers in the range ten through 95. The default is 85.
+
+versioningSettings
+
+versioning
+
+Settings
+
+Specifies the default versioning settings for new HCP namespaces.
+
+This property is valid on a POST request and returned by a GET request only if the tenant for which you’re specifying namespace defaults has versioning configuration enabled.
+
+The default is no versioning. Example
+
+Here’s an XML example of the namespaceDefaults data type:
+
+<namespaceDefaults> <description></description>
+
+<dpl>Dynamic</dpl> <effectiveDpl>Dynamic</effectiveDpl> <enterpriseMode>true</enterpriseMode> <allowErasureCoding>true</allowErasureCoding> <hardQuota>75 GB</hardQuota> <hashScheme>SHA-256</hashScheme> <optimizedFor>CLOUD</optimizedFor> <replicationEnabled>true</replicationEnabled> <searchEnabled>true</searchEnabled> <servicePlan>Short-Term-Activity</servicePlan> <softQuota>75</softQuota> <versioningSettings> <enabled>true</enabled> <prune>true</prune> <pruneDays>10</pruneDays> <useDeleteMarkers>true</useDeleteMarkers> </versioningSettings> </namespaceDefaults>
+
+namespacePermission
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+488/907

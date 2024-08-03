@@ -1,0 +1,37 @@
+If more than the maximum number of multipart uploads satisfy the criteria for a request, you can use the the key-marker and, optionally, upload-id-marker query parameters in conjunction with max-uploads to retrieve the parts in groups. Valid values for the max-uploads query parameter are integers in the range 0 (zero) through 1,000. If you specify an integer greater than one thousand, HCP returns a 400 (Invalid Argument) status code and does not return a multipart upload listing. The max-uploads parameter name is case sensitive.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+596/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+prefix You use the prefix query parameter to request a multipart upload listing that contains only multipart uploads with object names that begin with a specified character string (the prefix). For example, the multipart upload listing returned in response to a GET bucket list multipart uploads request with the prefix=acctg query parameter contains only these items: acctg/AcctgAtExampleCorp-Advanced.mov acctg/AcctgAtExampleCorp-Introduction.mov acctg/RulesAndRegulations.pdf
+
+The character string you specify for the prefix query parameter can contain any valid UTF-8 characters, including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The prefix parameter name and the character string you specify are both case sensitive. upload-id-marker
+
+By default, if a bucket contains multiple multipart uploads for a given object, a multipart upload listing for the bucket includes all the multipart uploads for that object, where those multipart uploads satisfy the request criteria. You use the upload-id-marker query parameter in conjunction with the key-marker parameter to start a multipart upload listing with a multipart upload for which:
+
+The object name is the same as the character string specified by the key-marker parameter. The upload ID is the first upload ID for the named object that's alphanumerically greater than the character string specified by the upload-id-marker parameter. If no multipart upload satisfies the above criteria, the returned listing starts with the first multipart upload with an object name that's alphanumerically greater than the character string specified by the key-marker parameter. If the multipart upload listing request includes the upload-id-marker parameter without the key-marker parameter, the upload-id-marker parameter is ignored. When the response body for a multipart upload listing request includes the IsTruncated element with a value of true, the response body also includes the NextUploadIdMa rker element, except when both of these are true:
+
+The response body lists one or more common prefixes. The last multipart upload that satisfies the request criteria does not appear in the response body because the object name for that multipart upload starts with the last listed common prefix. The value of the NextUploadIdMarker element, when present, is the upload ID of the last multipart upload included in the returned listing. This is the value to use for the upload-id-marker query parameter in a request to retrieve the next group of multipart uploads that satisfy the request criteria. The character string you specify for the upload-id-marker query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks.
+
+The upload-id-marker parameter name and the character string you specify are both case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to list in-progress multipart uploads. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time.
+
+The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD

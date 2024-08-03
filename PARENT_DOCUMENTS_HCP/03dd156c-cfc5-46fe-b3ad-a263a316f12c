@@ -1,0 +1,63 @@
+CORS use cases
+
+With a proper CORS rules configuration for a namespace, the HCP software can process CORS requests from web applications hosted in a different domain (origin).
+
+HCP supports the following CORS use cases. Simple request
+
+A simple request is a request that does not trigger a CORS preflight request. A simple request meets the following conditions:
+
+The method request is GET, HEAD, or POST. The only headers added manually are Accept, Accept-Language, Content-Language, Content-Type, DPR, Downlink, Save-Data, Viewport-Width, Width. The Content-Type header value is application/x-www-form-urlencoded, multipart/form-data, or text/plain. No ReadableStream object or event listeners are registered on any XMLHttpRequestUpload object that the request uses. Preflight request
+
+A preflight request is a CORS request that checks to see if the CORS protocol is understood. It is an OPTIONS request that uses three HTTP request headers: Access-Control-Request-Method Access-Control-Request-Headers Origin
+
+A web browser automatically issues a preflight request when needed. The browser determines whether it needs to send a preflight request based on the web application request parameters used in the JavaScript code. If the HCP server approves the validity of the preflight request, the server responds with an approval response header. Then, the web browser sends the actual HTTP resource request.
+
+If any of the following conditions is true, the browser uses a preflight request before the actual resource request:
+
+The request uses the Authorization header. The request uses one of these methods: PUT, DELETE, OPTIONS. The request uses headers and a Content-Type other than the ones used for a simple request (described above). The request contains event listeners registered on an HTMLHttpRequestUpload object or a ReadableStream object. CORS limits
+
+The HCP implementation of CORS has several limits.
+
+Maximum size of a CORS policy
+
+A CORS rules configuration in HCP can have any number of CORSRule, AllowedMethod, AllowedOrigin, and AllowedHeader elements. However, the maximum size of the CORS configuration cannot exceed 2.5 MB.
+
+Unsupported namespace names for preflighted CORS requests
+
+To safeguard an HCP instance, HCP does not support preflighted CORS requests for namespaces with path-style and virtual-path URLs that include the following reserved keywords:
+
+rest webdav fcfs_data browser hs3 swift
+
+Tenant-level API calls not supported
+
+CORS does not support tenant-level API calls (S3 compatible API, REST API, HCP management API). CORS rules configuration
+
+Namespaces (buckets) to which you would like to allow cross-origin access must first be configured with CORS rules.
+
+A CORS rules configuration is an XML document with rules that describe the external origins (domains), HTTP methods (operations), and HTTP headers that are allowed access to each bucket. You add the XML document to a bucket as a CORS subresource either programmatically or by using the Tenant Management Console or System Management
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+664/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Console, as described next.
+
+CORS rules can be configured at the namespace level or tenant level.
+
+To configure CORS rules for a namespace, use one of these interfaces: Tenant Management Console S3 compatible API HCP management API
+
+To configure CORS rules at the tenant level to server as the default for all namespaces owned by a tenant, use one of these interfaces:
+
+System Management Console
+
+HCP management API
+
+Setting CORS rules at the tenant level supports deployments in which a large number of HCP namespaces support the same CORS configuration.
+
+If a namespace managed by the tenant does not have a CORS configuration, the namespace inherits the tenant-level configuration. If a namespace has its own CORS configuration, the namespace-level configuration overrides the tenant-level configuration. HCP permissions for CORS configuration
+
+Users with the administrator or monitor role can read CORS settings at the namespace level or tenant level. Users with the administrator role can also modify CORS settings at the namespace level or tenant level.

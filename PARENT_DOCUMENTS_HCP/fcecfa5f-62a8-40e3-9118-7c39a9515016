@@ -1,0 +1,143 @@
+2 Initial Unspecified
+
+Prevents the object from being deleted but allows its retention setting to be changed.
+
+These values are not case sensitive.
+
+Specifying an offset
+
+To specify an offset as a retention value, use a standard expression that conforms to this syntax:
+
+^A([+-]\d+y)?([+-]\d+M)?([+-]\d+w)?([+-]\d+d)?([+-]\d+h)?([+-]\d+m)?([+-]\d+s)?$
+
+The list below explains this syntax.
+
+^
+
+Start of the expression
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+515/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+$
+
+End of the expression
+
+( )
+
+Sequence of terms treated as a single term
+
+? Indicator that the preceding term is optional
+
+[ ]
+
+Group of alternatives, exactly one of which must be used
+
++
+
+Plus
+
+Minus
+
+A
+
+The time at which the object was added to the repository
+
+/d+
+
+An integer in the range 0 (zero) through 9,999
+
+y
+
+Years
+
+M
+
+Months
+
+W
+
+Weeks
+
+D
+
+Days
+
+h
+
+Hours
+
+m
+
+Minutes s
+
+Seconds
+
+The time measurements included in an expression must go from the largest unit to the smallest (that is, in the order in which they appear in the syntax). These measurements are case sensitive. You can omit measurements that have value of zero.
+
+Here are some offset examples:
+
+A+100y
+
+A+20d-5h
+
+A+2y+1d
+
+Specifying a retention class
+
+To specify a retention class as a retention value, use this format: C+retention-class-name
+
+For example, if the name of the retention class is HlthReg-107, specify the property value as:
+
+C+HlthReg-107
+
+The retention class you specify must already exist.
+
+Specifying a fixed date
+
+To specify a fixed date as a retention value, you can use either of these formats:
+
+Time in seconds since January 1, 1970, at 00:00:00. For example:
+
+1514678400
+
+The calendar date that corresponds to 1514678400 is Sunday, December 31, 2017, at 00:00:00 EST. Date and time in this ISO 8601 format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example: 2017-12-31T00:00:00-0500
+
+If you specify certain invalid dates, HCP automatically adjusts the value to make a real date. For example, if you specify a default retention setting of 2017-11-33T00:00:00-0500, which is three days past the end of November, objects added to the namespace get a retention setting of 2017-12-03T00:00:00-0500. statistics (data type for replication link statistics property)
+
+The statistics data type in this section describes the statistics property of the link data type.
+
+Replication link statistics data type properties
+
+The following table describes the properties included in the statistics data type that describes the statistics property of the link data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+516/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description bytesPending
+
+Long
+
+Specifies the approximate amount of data currently waiting to be replicated from the local system to the remote system for the replication link, in bytes. This value is the sum of the amounts of data waiting to be sent in each HCP namespace included in the link. This value does not include data in the default namespace.

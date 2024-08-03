@@ -1,0 +1,41 @@
+HCP with SAN-attached storage system in preparation for retiring those devices. During a data migration, the service copies objects and, if applicable, the metadata query engine index from the selected devices to free storage on the remaining devices. Before you start a data migration, you need to ensure that those devices have enough unused capacity to hold the data to be migrated.
+
+After copying an object, the service deletes it from the source device. Once the migration is complete, you can submit a request to your authorized HCP service provider to finalize the migration and remove the retired devices from the system.
+
+For the purpose of data migration, HCP treats these as individual objects: Parts of multipart objects
+
+Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+115/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Important:
+
+After a data migration off a storage node in an HCP system is finalized, the system can never again include a node with the same fourth octet in its back-end IP address as that node had.
+
+Retiring a node is not part of the normal procedure for replacing a node that has failed or for upgrading to newer hardware. In these cases, the new node can use the same back- end IP address as the one being replaced.
+
+The Migration service runs only when you explicitly start a data migration. When the migration is complete, the service stops automatically. When you start a data migration, the selected nodes or storage arrays automatically become read-only (except for allowing the Migration service to delete objects). After the migration is complete, they remain read-only.
+
+When you start a migration of data off selected nodes in an HCP system, HCP automatically removes any NFS volumes from those nodes and associates those volumes with other nodes in the system.
+
+Typically, when migrating data off nodes, before starting a data migration, you submit a request to your authorized HCP service provider to add new nodes to the HCP system in
+
+order to maintain (or increase) the system storage capacity. However, if the nodes not selected for migration have sufficient free space to accommodate all the data to be migrated, adding new nodes before the data migration is not required.
+
+For a HCP with SAN-attached storage system, before starting a data migration off storage arrays, your SAN storage administrator, working in conjunction with your authorized HCP service provider, needs to add logical volumes (LUNs) from new or existing storage arrays to any nodes on which all the existing LUNs on all the existing arrays are being retired. Migrated data, however, can be written to any node, and does not necessarily have to be written to the same node from which the data is being migrated. The HCP system cannot be upgraded while a data migration is in progress. Before the system can be upgraded, you need to either allow the migration to finish or cancel the migration. If you cancel the migration, you can configure a new migration of data off the same devices after the system is upgraded.
+
+Important: To prevent data loss in namespaces that are not being replicated and that have service plans that set the ingest tier DPL to 1, always migrate data off a device before submitting a request to your authorized HCP service provider to remove the device from the HCP system. Considerations for migrations on HCP with internal storage systems
+
+Using the Migration service to retire nodes in an HCP with internal storage system entails removing nodes from the system and, optionally, adding new nodes. After any new nodes are added to the HCP system but before you begin the data migration, you need to:
+
+For each combination of domain and network configured in the DNS, remove the IP addresses of the nodes being retired and add the IP addresses of any new nodes For each replication link that identifies the HCP system by its IP addresses, remove from the link configuration the IP addresses of the nodes that are being retired and add the IP addresses of any new nodes
+
+Target storage requirements for HCP with SAN-attached storage systems
+
+The information in this section is intended for your SAN storage administrator. It outlines storage requirements that, if not met, prevent a data migration from being started.

@@ -1,0 +1,69 @@
+The service plan in effect for the namespace.
+
+This feature is present only if the tenant is allowed to associate service plans with namespaces.
+
+The retention mode of the namespace depending on the retention type of the namespace.
+
+HCP Retention Mode: Compliance or enterprise. S3 Object Lock: Disabled, governance, or compliance.
+
+The cryptographic hash algorithm for the namespace. The DPL for the namespace. Namespace permission mask
+
+The Permissions section in the namespace Overview panel shows:
+
+The permissions included in the inherited mask, which is the effective tenant permission mask.
+
+These permissions are indicated by gray dots.
+
+The permissions included in the namespace permission mask.
+
+These permissions are indicated by orange dots.
+
+The permissions included in effective permission mask for the namespace.
+
+These permissions are indicated by checkmarks. Namespace description
+
+The Description section in the namespace Overview panel shows the description of the namespace, if a description exists.
+
+Creating a namespace
+
+You create namespaces in the Tenant Management Console. When you create a namespace, you set some of its properties. Other namespace properties have default settings that
+
+you can change only after the namespace has been created.
+
+You can change most of the properties for existing namespaces. Note:
+
+If the tenant supports Active Directory authentication, you can create a namespace only while HCP can communicate with AD. Under certain circumstances, the current state of replication for the tenant may prevent namespace creation.
+
+To create a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. On the Namespaces page, click Create Namespace.
+
+The Create Namespace panel opens. Below the Namespace Name field, this panel shows the number of namespaces the tenant currently owns and the number of additional namespaces currently available for the tenant to create.
+
+The default settings that appear in the Create Namespace panel are determined by the settings on the Namespace Defaults page.
+
+3. In the Namespace Name field, type a name for the namespace.
+
+HCP derives the hostname for the namespace from this name. The hostname is used in URLs for access to the namespace. In English, the name you specify for a namespace must be from one through 63 characters long and can contain only alphanumeric characters and hyphens (-) but cannot start or end with a hyphen. In other languages, because the derived hostname cannot be more than 63 characters long, the name you specify may be limited to fewer than 63 characters.
+
+Namespace names cannot contain special characters other than hyphens and are not case sensitive. White space is not allowed.
+
+Namespace names cannot start with xn-- (that is, the characters x and n followed by two hyphens).
+
+The namespace name must be unique for the current tenant. Different tenants can have namespaces with the same name.
+
+You can change the namespace name any time after you create the namespace, except while the CIFS or NFS protocol is enabled for the namespace. However, when you change the name, the URL for the namespace may change as well. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+274/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can reuse namespace names that are not currently in use. So, for example, if you delete a namespace, you can give a new namespace the same name as the deleted namespace had.
+
+4. (Optional) Specify an owner for the namespace:
+
+If the owner has an HCP user account, select Local. Then type the username for the account in the Namespace Owner field. If the owner has an AD user account, select Active Directory. Then, in the Namespace Owner field, type the account username along with the name of the AD domain in which the account is defined, in this format: username@ad-domain-name.
+
+5. (Optional) In the Description field, type a description of the namespace. The description can be up through 1,024 characters long and can contain any valid UTF-8 characters, including white space. However, it must not include special characters such as \n (carriage return) and \r (line feed).

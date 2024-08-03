@@ -1,0 +1,63 @@
+If the service plan is associated with one or more tenants or namespaces, on the Service Plans panel:
+
+a. Click the table row that corresponds to the service plan that you want to delete. b. At the top of the panel that opens, click the Manage tab. c. On the Manage panel, in the Delete service plan section in the Replacement Service Plan field, select the service plan that you want to assign to all
+
+namespaces and tenants that are currently assigned to the service plan you want to delete. d. Click Delete Service Plan.
+
+HCP deletes the service plan from the system and assigns the specified replacement service plan to each tenant and namespace to which the deleted service plan was assigned.
+
+Monitoring storage
+
+In the HCP System Management Console, you can monitor the status and usage of storage components, storage pools, buckets, containers, mount points, and service plans.
+
+Several System Management Console pages and reports display storage status and usage information:
+
+The Storage > Overview shows storage and service plan usage statistics in various formats. The details pages for these items show overall usage statistics for the applicable component or pool:
+
+Primary running storage component
+
+Primary running storage pool Primary spindown storage component Primary spindown storage pool
+
+The Storage > Components page lists all storage components and shows status and high-level usage information for them.
+
+The details page for an HCP S Series or extended storage component shows detailed usage information for that component. The Storage > Pools page lists all storage pools and shows status and high-level usage information for them.
+
+The details page for an S Series or extended storage pool shows detailed usage statistics for that pool. The Storage > Service Plans page lists all service plans and shows status and high-level usage information for them. The details page for a service plan shows detailed usage information for that service plan.
+
+The Storage > Reports page lets you generate reports that show current and historical usage statistics for storage components, storage pools, and service plans. About the storage Overview page
+
+The storage Overview page provides a high-level view of storage component, storage pool, and service plan usage. To display this page, in the top-level menu of the HCP System Management Console, click Storage.
+
+The top part of the storage Overview page has these sections: Extended and S Series Storage Statistics
+
+Displays the following storage statistics::
+
+The total number of objects and object parts stored on HCP S Series or extended storage. This number includes objects that are in the process of being created by multipart uploads. The total number of bytes used to store objects and object parts on HCP S Series or extended storage. This number includes the parts of in-progress multipart
+
+uploads that have already been written to primary running storage or HCP S Series storage, as applicable. This number does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads. Erasure Coding Statistics
+
+Displays the total number of erasure-coded objects and object parts stored on the HCP system
+
+Metadata-only Statistics
+
+Displays the following metadata statistics::
+
+The total number of objects for which the HCP system stores only metadata.
+
+The total number of bytes not used for storing data for metadata-only objects. This number does not take compression or duplicate elimination into consideration.
+
+If you have an active/active replication link, the metadata-only statistics fluctuate during object replication. The Component Usage By Capacity section of the storage Overview page contains:
+
+A bar graph showing the number of bytes used to store objects on storage represented by each storage component defined on the HCP system. Hover your cursor over a bar to see the name of the applicable component and the number of used bytes for that component.
+
+A pie chart showing the number of bytes used to store objects on storage represented by each storage component defined on the HCP system. Hover your cursor over a segment to see, for the applicable component:
+
+The amount of used storage for the component as a percent of the total amount of used storage for all storage components defined on the HCP system The component name The number of used bytes for the component
+
+A legend for the bar graph and pie chart. The legend shows the color used for each storage component and the number of bytes used to store objects on storage
+
+represented by the component.
+
+For an NFS storage component, the number of bytes shown is the total number of bytes used on the NFS storage in the component, including bytes used for the OS, non- HCP files, and system overhead.
+
+The Pool Usage By Capacity section of the storage Overview page contains:

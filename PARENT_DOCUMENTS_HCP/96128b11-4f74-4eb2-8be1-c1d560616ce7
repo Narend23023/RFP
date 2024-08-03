@@ -1,0 +1,68 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Retrieving annotations for objects and versions
+You use the HTTP
+GET method to retrieve an annotation for an object or version of an object. The annotation is returned in the format it had before it was stored.
+You can also use a single request to retrieve object or version data and custom metadata together.
+Access permission
+To retrieve an annotation, you need read permission.
+Request header
+GET /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1<br>
+                       <b>Bounding box:</b> x1=185, y1=1281, x2=1516, y2=1744
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>type</td>
+      <td>Yes</td>
+      <td>Use the value custom-metadata.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>annotation</td>
+      <td>No</td>
+      <td>Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in\nconjunction with the parameter. type</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>nowait</td>
+      <td>No</td>
+      <td>HCP may detect that a GET request will take a significant amount of time to return an object. You can\nchoose to have the request fail in this situation instead of waiting for HCP to return the object.\nWhen a GET request fails because the request would take a significant amount of time to return an object\nand the parameter is specified, HCP returns an HTTP 503 (Service Unavailable) error code. If this nowait\nhappens, retry the request a few times, waiting about thirty seconds between retries.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>version</td>
+      <td>No</td>
+      <td>To check whether an annotation exists for a specific object version, in addition to specifying the request\nelements listed above, specify this URL query parameter.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

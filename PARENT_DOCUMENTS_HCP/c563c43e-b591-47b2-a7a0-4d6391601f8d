@@ -1,0 +1,99 @@
+Response:
+
+HCP-MIB::shreddingRate.0 = INTEGER: low(5000)
+
+net-snmp is a publicly available tool. Monitoring HCP performance using Prometheus
+
+HCP supports Prometheus, an open-source monitoring and alerting framework that collects, organizes, and stores performance metrics. When Prometheus is used with a visualization tool like Grafana, data collected by Prometheus provides operational visibility into the performance of your HCP instance.
+
+The Prometheus server runs on two storage nodes in the cluster: the node with highest IP address and the node with the second lowest IP address. By default, Prometheus retains all the collected metrics in a time series database for 15 days.
+
+For a list of the HCP metrics collected by Prometheus, see HCP performance metrics collected by Prometheus Enabling and configuring Prometheus
+
+Enabling Prometheus allows you to collect various HCP performance metrics. HCP exposes Prometheus metrics on TCP port 9094. Use this unauthenticated port to monitor system performance without exposing sensitive data. To prevent user access, block the port on user data networks. HCP system blocks all POST requests to the unauthenticated port. You can only send GET requests.
+
+To enable Prometheus on HCP nodes, you need an administrator or security role.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus > Configuration . 2. To enable Prometheus, select the Enable Prometheus option. 3. In the Prometheus Settings pane, enter the configuration information. The following table describes the values that you can specify. Values Scrape interval
+
+The frequency at which Prometheus retrieves metrics from endpoints on each HCP node.
+
+Default value: 60 seconds.
+
+Valid value: 10 seconds or greater.
+
+Scrape timeout
+
+Duration of time Prometheus will wait for a response from an endpoint before it determines that the target is down.
+
+Default value: 60 seconds. Valid value: 1 second or greater.
+
+Evaluation interval
+
+The frequency at which Prometheus evaluates alert rules to see if a rule has been triggered.
+
+Default value: 60 seconds.
+
+Valid value: 10 seconds or greater.
+
+TSDB retention time
+
+Duration of time Prometheus keeps the data in the time-series database. When the specified retention time limit is reached, Prometheus begins Default value: 15 days.
+
+discarding data starting with the oldest first.
+
+Valid value: Greater than or equal to 1 day; and lesser than or equal to 365
+
+days.
+
+TSDB
+
+retention size
+
+Specifies the maximum number of storage blocks (in GB) to retain on disk. When the specified retention size limit is reached, Prometheus begins discarding data starting with the oldest first. Default value: 100 GB.
+
+Valid value: Greater than or equal to 1 GB; and lesser than or equal to 1000 GB.
+
+Important: If you specify both TSDB retention time and TSDB retention size, whichever limit is reached first will take effect.
+
+Important: Prometheus accepts the data setting in gigabytes (GB), but reports
+
+it back in gibibytes (GiB). GB is a metric measurement, while GiB is a binary measurement. One GB equals 0.93 GiB.
+
+4. In the Prometheus Metrics pane, select the performance metrics you want to monitor. The following table describes the various metric categories. Performance metrics category
+
+Description
+
+Gateway metrics
+
+Provides information about gateway operations. These metrics can be used to monitor system performance.
+
+Storage metrics
+
+Provides information about the storage usage of a system. These metrics can be used to monitor disk space usage, disk I/O, and disk latency etc.
+
+Node metrics
+
+Provides information about hardware and OS-level system metrics. These metrics can be used to monitor node (or server) performance.
+
+Replication metrics
+
+Provides information about the replication process of the system. These metrics can be used to monitor replication status.
+
+Event metrics
+
+Provides information about system events. These metrics can be used to monitor system status.
+
+Note: If you are performing a new installation of HCP v9.6 or upgrading from an older version, all performance metrics collectors will be automatically enabled when
+
+Prometheus is enabled.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+171/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For a list of the HCP metrics collected by Prometheus, see HCP performance metrics collected by Prometheus.

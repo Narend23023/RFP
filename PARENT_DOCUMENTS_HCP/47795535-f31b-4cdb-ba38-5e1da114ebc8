@@ -1,0 +1,95 @@
+GET /mapi/tenants/finance/chargebackReport?start=2017-02-17T00:00:00-0500&end=2020-01-31T23:59:59-0500&granularity=day HTTP/1.1 Host: finance.hcp.example.com:9090
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+437/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Accept: text/csv Response headers
+
+HTTP/1.1 200 OK Content-Type: text/csv X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 767
+
+Response body
+
+systemName,tenantName,namespaceName,startTime,endTime,objectCount,ingestedVolume,storageCapacityUsed,bytesIn,bytesOut,reads,writes,deletes,multip artObjects,multipartObjectParts,multipartObjectBytes,multipartUploads,multipartUploadParts,multipartUploadBytes,deleted,valid finance.hcp.example.com,europe,finance,2017-02-17T00:00:00-0500,2017-02-17T23:59:59-0500,6,134243721,134270976,123986263,87561,1,10,0,2,7,9321388 9,0,0,0,false,true finance.hcp.example.com,europe,hr,2017-02-17T00:00:00-0500,2017-02-17T23:59:59-0500,7,9609368,9621504,9609368,0,0,7,0,0,0,0,0,0,0,false,true finance.hcp.example.com,europe,,2017-02-17T00:00:00-0500,2017-02-17T23:59:59-0500,13,143853089,143892480,133595631,87561,1,17,0,2,7,93213889,0,0, 0,false,true Tenant-level group account resources
+
+Tenant-level group account resources let you create, retrieve information about, modify, and delete tenant-level group accounts. The table below provides information about these
+
+resources.
+
+Group account resources are not available for the default tenant.
+
+.../tenants/tenant-name/groupAccounts Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+groupAccount
+
+PUT
+
+Create a group account for a tenant
+
+Tenant-level user account with the security role
+
+You can create a group account only if HCP is configured to support AD.
+
+List
+
+GET
+
+Retrieve a list of the group accounts defined for a tenant
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The listed group accounts are identified by the group name.
+
+In XML, the element that identifies each group account is groupname. The root element for the list of group accounts is groupAccounts.
+
+In JSON, the name in the name/value pair that lists the group accounts is groupname. .../tenants/tenant-name/groupAccounts/group-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+groupAccount
+
+GET
+
+Retrieve information about a group account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The information returned depends on the roles associated with the user making the request. N/A
+
+HEAD
+
+Check for the existence of a group account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+groupAccount
+
+POST
+
+Modify a group account Tenant-level user account with the administrator
+
+or security role
+
+A user with only the administrator role can modify only the allow-NamespaceManagement property. A user with only the security role cannot modify that property. N/A
+
+DELETE

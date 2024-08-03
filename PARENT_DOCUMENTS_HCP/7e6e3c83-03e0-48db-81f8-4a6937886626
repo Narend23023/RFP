@@ -1,0 +1,49 @@
+Cloud protocols, themselves, are further optimized for improved ingest performance.
+
+A namespace that is optimized only for cloud protocols is said to be cloud optimized. Clients can use only cloud protocols to access cloud-optimized namespaces. For clients to use
+
+noncloud protocols to access a namespace, the namespace must be optimized for all protocols. Only cloud-optimized namespaces support multipart uploads and the management of multipart objects. Additionally, only cloud-optimized namespaces support erasure coding as their protection type.
+
+To benefit most from optimization, you should increase system memory. Results are most apparent on systems with high object and directory counts. If you want to upgrade system memory, contact your HCP sales representative.
+
+At the system level, the default configuration setting for new namespaces is optimize for all namespace access protocols. You can change this to optimize for cloud protocols only. You can also change all existing namespaces for which no noncloud protocols are enabled to be cloud-optimized.
+
+Note: You cannot make protocol optimization changes while an HCP system upgrade is in progress.
+
+Setting the default protocol optimization option and directory usage for new namespaces Namespaces can be optimized for cloud protocols only or for all protocols and can be configured for either balanced or unbalanced directory usage. You can specify the type of
+
+protocol optimization and directory usage to be selected by default for new namespaces across all tenants. Tenant administrators can use these defaults or can override them by specifying a different default. Additionally, when creating a namespace, the tenant administrator can override the default by changing the setting for that namespace.
+
+To view the default protocol optimization and directory usage settings for new namespaces, you need the monitor or administrator role. To change the default protocol optimization
+
+and directory settings for new namespaces, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, select Configuration > Protocol Optimization. 2. On the Protocol Optimization and Directory Usage page, under Protocol Optimization take either of these actions: To set the default to cloud optimized, select Default new namespaces to optimize for cloud protocols only. To set the default to optimized for all protocols, select Default new namespaces to optimize for all protocols.
+
+3. On the Protocol Optimization and Directory Usage page, under Directory Usage take either of these actions: To set the default to Balanced, select Default new namespaces to balanced directory usage. To set the default to Unbalanced, select Default new namespaces to unbalanced directory usage.
+
+4. Click Update Settings.
+
+Cloud-optimizing existing namespaces
+
+You can use a single operation to optimize all existing eligible namespaces for cloud protocols only. Eligible namespaces are those for which no noncloud protocols are enabled. Note: A cloud-optimized namespace that contains objects cannot be changed to be optimized for all namespace access protocols. To cloud-optimize existing namespaces, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, select Configuration > Protocol Optimization. 2. On the Protocol Optimization page, click Optimize for Cloud Only. 3. In the Confirm: Optimize Existing Namespaces for Cloud Protocols Only window that appears, type YES in the text box. 4. Click Optimize Namespaces.
+
+Resetting HCP tenant security
+
+HCP ensures that each HCP tenant always has at least one:
+
+Locally authenticated HCP user account with the security role Group account with the security role
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+98/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For a given tenant, it is highly improbable that all locally authenticated users with the security role will forget their passwords at the same time. However, should this happen, if the tenant does not have a group account with the security role, the tenant would have no administrators who could manage user and group accounts.
+
+To resolve this issue, you can use the System Management Console to restore access to the tenant for locally authenticated users with the security role. You can do this in one of two ways: Reset the passwords for all locally authenticated user accounts with the security role. When you do this, you specify a single password for all affected accounts. Grant the security role to a new or existing group account. A new group account will have only the security role and no data access permissions. An existing group account will have the security role plus whatever roles and data access permissions it currently has.

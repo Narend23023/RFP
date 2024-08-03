@@ -1,0 +1,85 @@
+Method Use
+
+Access
+
+Notes
+
+healthCheckPrepare POST
+
+Post a system request to prepare the health check reports. System-level user with the administrator or service role
+
+Health check reports can be prepared only on nodes that are running and available.
+
+.../healthCheckReport/download
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+healthCheckDownload POST
+
+Post a system request to start the health check reports download. System-level user with the administrator or service role
+
+The health check reports archive can be downloaded at any time after the health check reports are successfully prepared.
+
+.../healthCheckReport/cancel
+
+This resource has no data types.
+
+Example: Preparing health check reports for download
+
+Here is a sample POST request that prepares health check reports for download. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -iX POST -d @HealthCheckPrepare.xml -k -H "Content-type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/healthCheckReport/prepare"
+
+Request headers
+
+POST /mapi/healthCheckReport/prepare HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5 Content-Type: application/xml Content-Length: 37
+
+Example: Request body
+
+<healthcheckPrepare> <startDate>09/19/2020</startDate> <endDate>09/21/2020</endDate> <exactTime>04:00</exactTime> <collectCurrent>false</collectCurrent> </healthcheckPrepare>
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.2.27 Content-Length: 0
+
+Example: Downloading the health check reports
+
+Here is a sample POST request that downloads a health check reports archive. The request downloads the reports for HCP nodes 107 and 120, as specified in an XML file named HealthCheckDownload.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <healthCheckDownload> <nodes>107,120</nodes> <content>HCR</content> </healthCheckDownload>
+
+Request with cURL command line
+
+curl -X POST -T HealthCheckDownload.xml -H "Content-Type: application/xml" -k -b hcp-api-auth="FL3Z:a3b9c17d52107f34fhdb83c7a5" https://admin.hcp.example.com:9090/mapi/healthCheckReport/download --output HCR_LOGS.zip
+
+Request headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+401/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+POST /mapi/healthCheckReport/download HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.1.0 Content-Length: 575
+
+Example: Retrieving the health check reports download status
+
+Here is a sample GET request that retrieves the health check reports download status. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -b hcp-api-auth="HCP ZGVa3b9c17d52107f34fhdb83c7a5" https://admin.hcp.example.com:9090/mapi/healthCheckReport?prettyprint
+
+Request headers
+
+GET /mapi/healthCheckReport HTTP/1.1

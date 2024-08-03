@@ -1,0 +1,51 @@
+Request headers
+
+GET /mapi/network HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda Content-Type: application/xml Content-Length: 152
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <networkSettings>
+
+<downstreamDNSMode>BASIC</downstreamDNSMode> </networkSettings>
+
+Node statistics resource
+
+The node statistics resource lets you retrieve the statistical information of nodes in your HCP system.
+
+Note: A best practice is to limit your HTTP GET requests for retrieving statistics and metrics to once per hour. Polling the system more frequently can lead to system instability. .../nodes/statistics
+
+Data type
+
+Method
+
+Use
+
+Access
+
+nodeStatistics
+
+GET
+
+Retrieve the statistics of nodes in the HCP system
+
+System-level user with the administrator or monitor role.
+
+Example: Retrieving node statistics
+
+Here is a sample request that retrieves node statistics for nodes in the system. In this example, statistics are collected on two nodes and two volumes on each node. Also, the management port network has been configured on each node.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+414/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request with cURL command line
+
+curl -ik -H "Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5" -H "Accept: application/xml" "https://admin.hcp.example.com:9090/mapi/nodes/statis tics?prettyprint"
+
+Response body in XML

@@ -1,0 +1,39 @@
+When you use the S3 compatible API to store or copy an object, you can specify at most two kilobytes of custom metadata. The size of the custom metadata you specify is the sum of the number of bytes in the UTF-8 encoding of each property name and value.
+
+Allowed operations
+
+Whether you can add, replace, or delete custom metadata for objects under retention depends on a bucket setting. When you create a bucket, it’s set to allow only the addition of custom metadata for objects under retention. You cannot use the S3 compatible API to change this setting. However, tenant administrators can change this setting for the buckets you create. .metapairs annotations with unexpected content
+
+You should not use HCP interfaces other than the S3 compatible API to store annotations named .metapairs. However, HCP does not prevent you from doing this. As a result, annotations named .metapairs are not guaranteed to be compatible with the S3 compatible API.
+
+Here are some ways in which HCP responds to S3 compatible requests for objects that have .metapairs annotations with unexpected content:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+551/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help If the .metapairs annotation doesn’t contain valid XML or if the first line in the annotation doesn’t begin with the metapairs element, HCP returns an x-amz-missing-meta header with a value of 1 (one) and does not return any x-amz-meta- headers. If an element name doesn’t start with meta-, HCP doesn’t return an x-amz-meta- header for the element. If a meta- element has no value, HCP doesn’t return an x-amz-meta- header for the element. If a meta- element has an attribute, HCP ignores the attribute and returns the applicable x-amz-meta- header. If the XML contains nested elements and the lowest-level element is a meta- element, HCP returns an x-amz- header for that element. It does not return x-amz- headers for any other elements in that nested structure. Bucket owners
+
+Buckets can have owners that correspond to HCP or AD user accounts. By default, when using an HCP user account, you own the buckets you create through the S3 compatible API. With an AD user account, you cannot use the S3 compatible API to create buckets.
+
+Normally, as the owner of a bucket, you can use the S3 compatible API to view and change the versioning status of the bucket and to delete the bucket if it’s empty. If you have write ACL and change owner permissions for a bucket you own, you can use the S3 compatible API to change the bucket owner to a different user. However, tenant administrators can
+
+reconfigure user accounts such that users using those accounts cannot manage the buckets they own.
+
+With the S3 compatible API, you use an ACL to change the owner of a bucket.
+
+Tenant administrators can take the same actions on a bucket as the bucket owner can. Additionally, tenant administrators can change a bucket to have no owner. The maximum number of buckets you can own is limited by a tenant-level configuration setting.
+
+Object owners
+
+Like buckets, objects can have owners that correspond to HCP or AD user accounts. By default, if you’re an authenticated user, you own the objects you create in a bucket, regardless of whether you own the bucket. As the owner of the object, you have read, read ACL, write, write ACL, and delete permissions for that object.
+
+If you’re not an authenticated user, the objects you create have no owner.
+
+If you have write ACL and change owner permissions for a bucket, you can use the S3 compatible API to change the owner of any object in that bucket to a different user. To change the owner of an object, you use an ACL.
+
+Users with the change owner data access permission for a bucket can use the REST API to change the owner of any object in the bucket to a different user. They can also change any object in the bucket to have no owner. Access control lists
+
+HCP supports access control lists (ACLs) for both buckets and objects. An ACL grants specified users or groups of users permissions to perform specific operations. An ACL can also be used to change the owner of a bucket or object.

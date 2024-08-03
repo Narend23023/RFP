@@ -1,0 +1,145 @@
+hold="false" shred="false"
+
+dpl="2" index="true" customMetadata="false"
+
+customMetadataAnnotations="" version="80238375537921"
+
+replicated="false" changeTimeMilliseconds="1326898187533.00"
+
+changeTimeString="2012-01-18T14:49:47-0400"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+760/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+owner="lgreen" domain=""
+
+hasAcl="false" state="created" /> <entry urlName="obsolete"
+
+utf8Name="obsolete" type="directory"
+
+changeTimeMilliseconds="1331847677748.00"
+
+changeTimeString="2012-03-15T17:41:17-0400" state="deleted"
+
+/> <entry urlName="Q1_2012.ppt"
+
+utf8Name="Q1_2012.ppt" type="object"
+
+size="678400" hashScheme="SHA-256"
+
+hash="E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1C257C01..." retention="0" retentionString="Deletion Allowed" retentionClass=""
+
+ingestTime="1334847117" ingestTimeString="4/19/2012 9:51AM"
+
+hold="false" shred="false"
+
+dpl="2" index="true"
+
+customMetadata="false"
+
+customMetadataAnnotations="" version="80238376132993"
+
+replicated="false" changeTimeMilliseconds="1334847117598.00"
+
+changeTimeString="2012-04-19T09:51:57-0400" owner="lgreen" domain="" hasAcl="false"
+
+state="created" />
+
+</directory>
+
+Notice that the obsolete directory was deleted. It does not appear in a directory listing if the URL does not include the deleted=true parameter.
+
+Deleting an empty directory
+
+You use the HTTP DELETE method to delete an empty directory from a namespace. You cannot delete a directory that contains any objects, subdirectories, or symbolic links. Access permission
+
+To delete a directory you need delete permission for the namespace.
+
+Request header
+
+DELETE /rest/directory/empty_dir HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+empty_dir
+
+Yes
+
+Name of the empty directory that you want to delete.
+
+Response header
+
+This operation does not return any request-specific response headers. Response body
+
+Not applicable
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully deleted the directory.
+
+404 Not Found
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403
+
+Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+761/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The specified directory is not empty. The user doesn’t have delete permission.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP-specific X-HCP-Err orMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find a directory, object, or version at the specified URL. The specified directory does

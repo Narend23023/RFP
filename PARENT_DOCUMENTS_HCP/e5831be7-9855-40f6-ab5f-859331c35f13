@@ -1,0 +1,51 @@
+The DPL for a namespace can be one (if allowed by the HCP system configuration), two, three, four, or dynamic. The highest allowed DPL is also determined by the HCP system configuration.
+
+When the DPL is set to dynamic, the namespace uses the current HCP system-level DPL setting. Typically, this is the optimal DPL for the system configuration. If the system-level DPL setting changes, HCP adjusts the number of copies of objects in the namespace to match the new setting. The DPL affects the amount of storage used when data is added to the namespace. With a DPL of one, HCP stores only one copy of the object. With a DPL of two, HCP stores two copies, thereby using twice as much storage.
+
+The DPL for a namespace is set when the namespace service plan is created. You can change this setting at any time. Cryptographic hash algorithm
+
+At object creation, HCP uses a cryptographic hash algorithm to calculate a hash value for the object from the object data. HCP then uses this hash value to ensure the integrity of the object over time.
+
+HCP supports these cryptographic hash algorithms:
+
+MD5 SHA-1 SHA-256 SHA-384 SHA-512 RIPEMD-160
+
+The cryptographic hash algorithm HCP uses for a namespace is set when the namespace is created. Once set, it cannot be changed. HCP Retention mode
+
+Each object has a retention setting that specifies how long the object must remain in the namespace before it can be deleted; this duration is called the retention period. While an object cannot be deleted due to its retention setting, it is said to be under retention.
+
+Retention mode is a property of a namespace that affects which operations are allowed on objects under retention. A namespace can be in either of two retention modes:
+
+In compliance mode, objects that are under retention cannot be deleted through any mechanism. Additionally, the duration of a retention class cannot be shortened, and retention classes cannot be deleted. Similarly, the Minimum Retention after Initial Unspecified value cannot be shortened and cannot be deleted.
+
+In enterprise mode, you can use the Tenant Management Console to delete objects under retention if you have the compliance role. This is called privileged delete. Also in enterprise mode, you can shorten the duration of a retention class, and you can delete retention classes.
+
+Note: Users can perform privileged deletes in a namespace that’s in enterprise mode. To do this, however, they need the privileged data access permission.
+
+The retention mode for a namespace is set when the namespace is created. You can change the retention mode of a namespace from enterprise to compliance mode but cannot do the reverse.
+
+You can create namespaces in compliance mode only if allowed to do so by the tenant configuration. HCP system-level administrators can change this configuration from not allowing the creation of namespaces in compliance mode to allowing it. However, they cannot do the reverse. Namespace owner
+
+A namespace can optionally have an owner that corresponds to an HCP or Active Directory® (AD) user. Assuming that the user has the allow namespace management property, the owner of a namespace can use the S3 compatible and HCP management APIs to:
+
+View and change the versioning status of the namespace
+
+Delete the namespace See the namespace in a namespace listing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+237/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can also use the Tenant Management Console and HCP management API to perform these activities if you have the administrator role, even if you’re not the namespace owner.
+
+You can specify the owner of a namespace when you create the namespace or at any time thereafter. You can also change namespace owners at any time.
+
+When the S3 compatible API is used to create a namespace, the namespace creator automatically becomes the namespace owner. When a user with an HCP user account becomes the owner of a namespace, that user account automatically gets the browse, read, write, read ACL, and write ACL data access permissions for that namespace. If the S3 compatible API was used to create the namespace, the owner user account also automatically gets the delete permission for the namespace.
+
+You can limit the number of namespaces that can be owned by a single user. You can change this limit at any time.
+
+Namespace tags

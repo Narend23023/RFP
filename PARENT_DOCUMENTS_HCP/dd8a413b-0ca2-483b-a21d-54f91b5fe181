@@ -1,0 +1,37 @@
+Duplicate Elimination service processing
+
+HCP performs duplicate elimination by first sorting objects, parts, and chunks according to their MD5 hash values. After sorting all the objects, parts, and chunks in the repository, the service checks for objects, parts, and chunks with the same hash value. If the service finds any, it compares the object, part, or chunk content. If the content is the same, the service merges the object, part, or chunk data but still maintains the required number of copies of the data that’s specified in the service plan for the namespace that contains the object, part, or chunk.
+
+The metadata for each merged object, part, or chunk points to the merged object, part, or chunk data. The Duplication Elimination service never deletes any of the metadata for duplicate objects, parts, or chunks.
+
+The following figure shows duplicate elimination for two objects with the same content where the DPL is two.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+113/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+These considerations apply: The Duplicate Elimination service does not merge objects, parts, and chunks smaller than seven KB. The Duplicate Elimination service does not merge the data for chunks with the data for objects and parts that are not erasure coded. If the Duplicate Elimination service merges the data for a whole object that is subject to erasure coding and then merges the data for applicable chunk after the object is erasure coded, only the merge of the whole object data is included in the duplicate elimination statistics. The Duplicate Elimination service does not merge data that is stored on extended storage. For objects, parts, and chunks stored on primary running storage, the Duplicate Elimination service generally merges objects, parts, and chunks from different namespaces only if the namespaces have the same ingest tier DPL. For objects, parts, and chunks stored on primary spindown storage, the Duplicate Elimination service generally merges objects, parts, and chunks from different namespaces only if the namespaces have the same primary spindown storage tier DPL. For the purpose of duplicate elimination, HCP considers an object, part, or chunk stored on extended storage to have a DPL that is one less than the ingest tier DPL that’s specified in the service plan for the namespace that contains the object, part, or chunk. So, for example, the Duplicate Elimination service will merge objects, parts, and chunks stored on primary running storage in a namespace that has an ingest tier DPL of 1 with objects stored on extended storage in a namespace that has an ingest tier DPL of 2. The Duplicate Elimination service may bypass merging certain objects until it reprocesses them. This can happen with:
+
+Objects stored with CIFS or NFS that are still open because of lazy close Objects stored with CIFS or NFS that do not immediately have MD5 hash values Understanding the Duplicate Elimination page
+
+The Duplicate Elimination page in the HCP System Management Console shows statistics about duplicate-eliminated objects, parts, and chunks.
+
+Note: To view the Duplication Elimination Status panel, you need the monitor or administrator role.
+
+To display the Duplicate Elimination page, in the top-level menu of the System Management Console, select Services > Duplicate Elimination. The Duplication Elimination page shows:
+
+Total objects and object parts merged
+
+The total number of these items for which data was merged since HCP was installed: objects, parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects.
+
+Total bytes saved from duplicate elimination
+
+The total number of bytes of storage freed due to duplicate elimination since HCP was installed.
+
+The amount of storage freed when you merge duplicates is the size of the data times one less than the number of objects, parts, and chunks merged, times the total number of copies that HCP needs to maintain on primary storage to comply with the ingest tier DPL and primary spindown storage DPL (if applicable) specified in the applicable service plans and to satisfy all protection set requirements. HCP increases both of these numbers when duplicate data is deleted but does not subtract from these numbers when duplicate-eliminated objects are deleted from the repository.
+
+Fast Object Recovery service

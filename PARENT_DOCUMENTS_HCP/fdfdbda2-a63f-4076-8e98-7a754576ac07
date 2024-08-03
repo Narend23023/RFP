@@ -1,0 +1,63 @@
+HCP returns E and F. It does not return D because D is now at offset two.
+
+You can page, sort, and filter resource lists in the same request.
+
+Tip: By default, resource lists are returned in an arbitrary order, and the order may not be the same if the request is issued more than once. To ensure that you get all the expected items when paging, specify a sort order in each request.
+
+Sorting resource lists
+
+You can retrieve a sorted list of items of a particular resource type by specifying the property you want to sort by and the sort order in the GET request. You can sort namespaces by name or by hard quota. You can sort user accounts by username.
+
+To specify a sort property and sort order, you use these query parameters in the GET request: sortType=property-name
+
+specifies the property you want to sort by. Valid values are:
+
+For the namespaces and dataAccessPermissions resources, name and hardQuota For the userAccounts resource, username
+
+This parameter is optional. For the namespaces and dataAccessPermissions resources, the default is name. sortOrder=(ascending|descending)
+
+specifies the order in which to sort the listed items. This parameter is optional. The default is ascending.
+
+For example, this GET request sorts the list of in descending order by hard quota: curl -k -i -H "Accept: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/tenants/finance/namespaces? sortType=hardQuota&sortOrder=descending&prettyprint"
+
+These considerations apply to sorting resource lists:
+
+The sortType and sortOrder parameters are valid only with the namespaces, userAccounts, and dataAccessPermissions resources. You can page, sort, and filter resource lists in the same request.
+
+Filtering resource lists
+
+You can retrieve a subset of items of a particular resource type by specifying a filter in the GET request. To apply a filter, you specify the property you want to filter by and the text string to use as the filter. The filtered list includes only those items for which the value of the specified property begins with or is the same as the specified text string.
+
+You can filter namespaces by name or by tag. You can filter user accounts by username. To specify a filter, you use these query parameters in the GET request:
+
+filterType=property-name
+
+specifies the property by which to filter the resource list. Valid values for property-name are:
+
+For the namespaces and dataAccessPermissions resources, name and tag For the userAccounts resource, username
+
+The filterType parameter is optional. For the namespaces and dataAccessPermissions resources, the default is name. filterString=text-string
+
+specifies the text string to use as the filter. This string is not case sensitive. Text strings can be at most 64 characters long and can contain any valid UTF-8 characters except commas (,). White space is allowed and must be percent encoded.
+
+For example, this GET request filters the list of namespaces for the Finance tenant by names beginning with the string accounts: curl -k -i -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces ?filterType=name&filterString=accounts&prettyprint"
+
+These considerations apply to filtering resource lists:
+
+The filterType and filterString parameters are valid only with the namespaces, userAccounts, and dataAccessPermissions resources. If a GET request includes the filterType parameter but does not include the filterString parameter, HCP returns the complete list of items of the applicable type. You can page, sort, and filter resource lists in the same request. Replication resources
+
+Replication resources let you configure, monitor, and manage replication. The table below provides information about these resources.
+
+.../services/replication
+
+Data type Method Use
+
+Access
+
+GET
+
+Retrieve Replication service settings
+
+System-level user account with the monitor or administrator role replication
+
+Service

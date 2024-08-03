@@ -1,0 +1,131 @@
+466/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data Type
+
+Description
+
+Notes
+
+Be sure to use the second format if a group with the specified name exists in more than one domain in the AD forest or if the group name looks like a SID. roles
+
+List
+
+Associates zero, one, or more roles with the group account. Valid values for roles are:
+
+This property is valid on a POST request and returned by a GET request only when the user making the request has the security role.
+
+ADMINISTRATOR COMPLIANCE MONITOR SECURITY
+
+A user with the ADMINISTRATOR role cannot POST this property.
+
+These values are not case sensitive.
+
+The default is no roles.
+
+For an existing group account, the set of roles specified in the request body replaces the set of roles currently associated with the group account. To remove all roles, specify an empty set.
+
+In XML, the element that identifies each role is role. In JSON, the name in the name/value pair that lists the roles is role. Example
+
+Here’s an XML example of the groupAccount data type:
+
+<groupAccount> <allowNamespaceManagement>false</allowNamespaceManagement> <externalGroupID>S-1-5-21-1522923621-2272695913-102089983-3621
+
+</externalGroupID> <groupname>hcp-admin@ad.example.com</groupname> <roles> <role>MONITOR</role> <role>ADMINISTRATOR</role> </roles> </groupAccount> healthCheckDownload
+
+The healthCheckDownload data type describes the health check reports download for specified HCP cluster nodes.
+
+healthCheckDownload data type properties
+
+The following table describes the properties included in the healthCheckDownload data type.
+
+Property Data type Description
+
+nodes String
+
+Specifies the HCP cluster nodes for which you want to download health check reports. The nodes are specified in a comma-separated list.
+
+content
+
+String
+
+Specifies the content that you want to download for the specified HCP cluster nodes. Note: As of HCP 9.2, the content property is obsolete. This property remains in the documentation for backward compatibility only. Example
+
+Here is an XML example of the healthCheckDownload data type:
+
+<healthCheckDownload> <nodes>107,120</nodes> </healthCheckDownload>
+
+healthCheckDownloadStatus
+
+The healthCheckDownloadStatus data type describes the download status of the health check reports archive for specified HCP cluster nodes. healthCheckDownloadStatus data type properties
+
+The following table describes the properties included in the healthCheckDownloadStatus data type.
+
+Property
+
+Data type
+
+Description
+
+readyForStreaming
+
+Boolean
+
+Specifies whether the health check reports are ready for download.
+
+streamingInProgress
+
+Boolean
+
+Specifies whether the health check reports download phase is in progress. error
+
+Boolean
+
+Specifies whether an error has occurred during the reports preparation or download phase.
+
+started
+
+Boolean
+
+Specifies whether the health check reports preparation phase has started.
+
+content
+
+String
+
+Specifies the type of download report.
+
+Example
+
+Here is an XML example of the healthCheckDownloadStatus data type:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+467/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<healthCheckDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <error>false</error> <started>true</started> <content>HCR</content> </healthCheckDownloadStatus> healthCheckPrepare
+
+The healthCheckPrepare data type describes the information needed to prepare the health check reports for the available HCP cluster nodes.
+
+healthCheckPrepare data type properties
+
+The following table describes the properties included in the healthCheckPrepare data type.
+
+Property Data type
+
+Description
+
+exactTime
+
+String
+
+(Optional) If this property is specified, the reports for each node will have a start date and time of startDate exactTime.

@@ -1,0 +1,37 @@
+HCP supports replication chains that consist of three HCP systems. Longer chains are not supported. Note: You can also create a chained replication topology in which the first link is active/active and the second link is active/passive. You cannot, however, create a chained replication topology in which the first link is active/passive and the second link is active/active or in which both links are active/active. In a replication chain A > B > C, in which the objects in a namespace on system B are supposed to be metadata-only, HCP does not remove data from those objects until that data has been replicated to system C.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+328/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Active/passive chained replication topology details
+
+What this looks like
+
+The following figure shows an active/passive chained replication topology in which system A is replicating to system B and system B is replicating to system C. In this figure:
+
+From system A, two HCP tenants are being replicated to system B. In the first tenant, two of three namespaces are selected for replication. In the second tenant, one of two namespaces is selected for replication. From system B, the tenants and namespaces created by replication from system A are being replicated to system C because the link from A to B is included in the link from B to C. One tenant that was originally created on system B is also being replicated to system C. Both the namespaces in that tenant are selected for replication. Uses
+
+In an active/passive chained replication topology, all three HCP systems typically are located at full-scale data centers. For example, suppose a corporation has three major
+
+locations: New York, Los Angeles, and Tokyo. Each of these locations runs an application that is vital to the corporation, but only New York generates the data for these applications. Replicating the data from New York to Los Angeles and from Los Angeles to Tokyo enables applications at each location to access the data through a local area network. Because those applications are not accessing the data on the HCP system in New York, this topology also reduces the load on that system.
+
+Active/passive chained replication helps ensure continuous data availability. If any one or even two of the HCP systems in the chain become unavailable, applications still have access to the stored data. In an active/passive replication chain, the third HCP system provides disaster recovery functionality for the second system, and the second system provides disaster recovery functionality for the first system.
+
+With an active/passive chained replication topology, you can create and manage both replication links from the HCP system in the middle of the chain. To this system, the link from the first system is an inbound link, and the link to the third system is an outbound link. Active/passive one-to-many replication
+
+In an active/passive one-to-many replication topology, one HCP system replicates to two or more other HCP systems using separate active/passive replication links. The replicating system is the primary system for each link. The other systems are replicas.
+
+Typically, in an active/passive one-to-many replication topology, the replication links include different HCP tenants and namespaces and default-namespace directories.
+
+If three systems need to have the same tenants, namespaces, and directories as each other, consider using a chained topology for them rather than a one-to-many topology. The one-to-many topology puts greater load on the single primary system than does a chained topology, which splits the load between the first and second systems in the chain.
+
+In some cases, however, replicating the same tenants and namespaces to two different replicas in a one-to-many topology may be appropriate. Note: You can also create a one-to-many replication topology that consists of a combination of active/passive and active/active links or even only active/active links.
+
+What this looks like
+
+The figure below shows an active/passive one-to-many replication topology in which one primary system (A) replicates to two replicas (B and C) over two separate replication links. In this figure:

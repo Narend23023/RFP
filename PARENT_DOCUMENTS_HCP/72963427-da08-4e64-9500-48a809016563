@@ -1,0 +1,39 @@
+./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com/sales_quotas_2020.pdf"
+
+Request headers
+
+HEAD /sales_quotas_2020.pdf HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 18 September 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:LDa147ALd+O5Q02LjkGRrXwSGAc= Response headers
+
+HTTP/1.1 200 OK Date: Fri, 18 September 2020 17:19:26 GMT ETag: "62e82b6d3ef16070a8d75ab55c42b80d" Accept-Ranges: bytes Last-Modified: Fri, 03 Jan 2020 14:28:48 GMT Content-Type: application/pdf X-HCP-Retention: 0 X-HCP-LabelRetentionHold: true X-HCP-LabelRetentionHold-Labels: '[{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}, {"id":"UniqueLabelHold-3","hold":true}]' Content-Length: 23166 Example: Retrieving custom metadata for an object version
+
+Here is a sample HEAD request that checks the existence of a version of the object named AcctgBestPractices.doc, which has custom metadata. The request is being made while versioning is enabled for the bucket.
+
+Request with s3curl command line ./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com/AcctgBestPractices.doc ?versionId=87288758401473"
+
+Request headers
+
+HEAD /AcctgBestPractices.doc?versionId=87288815588289 HTTP/1.1 Host: finance.europe.hcp.example.com
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+612/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:EUa2evHNUtlw8Xu/1iFdGgWSDc8= Response headers
+
+HTTP/1.1 200 OK
+
+Date: Fri, 07 February 2020 17:19:26 GMT ETag: "26aa5129552e57fc64e10aa5b3911ee2" Accept-Ranges: bytes x-amz-version-id: 87288758401473 Last-Modified: Sun, 29 May 2016 14:56:05 GMT x-amz-meta-author: P.D. Grey,Morgan White,Paris Black Content-Type: application/msword Content-Length: 3206178
+
+Example: Checking whether an object has been modified
+
+Here is a sample HEAD request that checks whether the object named AcctgBestPractices.doc has been modified since December 20, 2016, at 23:59:59 GMT. The request is being made while versioning is enabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com/AcctgBestPractices.doc" -H "If-Modified-Since: Tue, 20 Dec 2016 23:59:59 +0000"
+
+Request headers
+
+HEAD /AcctgBestPractices.doc HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:Yn7gcia/yqzGRKRC04HaOuD3aH0= If-Modified-Since: Tue, 20 Dec 2016 23:59:59 +0000 Response headers

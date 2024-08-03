@@ -1,0 +1,109 @@
+To specify that the objects have no owner, leave both the Username and Domain fields blank.
+
+3. Click Continue.
+
+HCP immediately begins the requested operation and opens a new window in which it shows its progress. For each object, the window shows whether the operation succeeded or
+
+failed. The sample window below shows objects that have successfully been placed on hold.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+890/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Setting an ACL on each object in the current search results 1. On the Search Results page, in the Control operations field, select Set ACL on results. 2. In the field in the window that opens, type the ACL XML. This XML can be at most 8,192 characters long.
+
+3. Click Continue.
+
+HCP immediately begins the requested operation and opens a new window in which it shows its progress. For each object, the window shows whether the operation succeeded or failed. The sample window below shows objects that have successfully been placed on hold.
+
+Updating the existing ACLs for all objects in the current search results
+
+1. On the Search Results page, in the Control operations field, select Update ACL on results.
+
+2. In the field in the window that opens, type the ACL XML.
+
+This XML can be at most 8,192 characters long.
+
+3. Click Continue. HCP immediately begins the requested operation and opens a new window in which it shows its progress. For each object, the window shows whether the operation succeeded or failed. The sample window below shows objects that have successfully been placed on hold.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+891/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Access control lists
+
+An access control list grants permissions for individual objects to specified users or groups of users. ACLs are specified in XML format.
+
+An ACL contains up to one thousand access control entries (ACEs). Each ACE specifies one user or one group of users and the permissions granted to that user or group. In the ACL body, an ACE is represented by the grant element.
+
+The permissions you grant to users and groups in an ACL must be equal to or less than your permissions for the object. You cannot use an ACL to grant a permission that you don’t
+
+already have. ACL permissions
+
+The following list lists the permissions you can grant through an ACL along with the operations they let you perform.
+
+Read
+
+Retrieve objects and system metadata Check for and retrieve custom metadata
+
+Read_ACL
+
+Check for and retrieve ACLs
+
+Write
+
+Add objects Create directories
+
+Set and change system and custom metadata Write_ACL
+
+Set and change ACLs
+
+Delete
+
+Delete objects, empty directories, custom metadata, and ACLs
+
+XML format
+
+The body of an ACL has the XML elements shown below. The elements at each hierarchical level can occur in any order.
+
+<?xml version="1.0" ?>
+
+<accessControlList> <grant>
+
+<grantee>
+
+<type>(user|group)</type> <name>(hcp-username| active-directory-username| active-directory-group-name|
+
+all_users| authenticated)
+
+</name> If the name element specifies an Active Directory
+
+user or group, include the domain entry
+
+<domain>active-directory-domain</domain> </grantee>
+
+<permissions> Any combination of the following
+
+<permission>READ</permission> <permission>READ_ACL</permission>
+
+<permission>WRITE</permission>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+892/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<permission>WRITE_ACL</permission>
+
+<permission>DELETE</permission> </permissions>
+
+</grant> Up to 999 additional grant elements </accessControlList>

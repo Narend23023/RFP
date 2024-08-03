@@ -1,0 +1,27 @@
+The transition criteria for each tier except for the ingest tier. The transition criteria for a storage tier are the rules that determine when one or more copies of each object in the namespace must be stored on the tier: The object age (number of days since ingest) at which one or more copies of the object data must be moved from the previous tier onto this tier For service plans that define exactly two tiers, including the ingest tier, whether a threshold will be applied to the second tier, and if so, the percentage of ingest tier
+
+storage capacity that must be used (the threshold) before object data can be moved to the second storage tier For HCP systems with replication enabled, whether objects must be fully replicated before they can be transitioned from the previous tier onto this tier. If replication is disabled for the HCP system, this transition criterion does not appear in the HCP System Management Console.
+
+For a namespace that’s currently being replicated to another system, whether the copies of the object that are stored on the tier are to be made metadata-only. Regardless of the transition criteria that are specified for a metadata-only tier, objects are moved to such a tier only after they are replicated. When a replicated object is moved to a metadata-only tier, all existing copies of the object data are deleted from the previous tier and from primary running storage, and the specified number of copies of the object metadata are stored on primary running storage.
+
+Whether the data for each object stored on the tier is rehydrated (that is, restored on the ingest tier) upon being read from the tier, and if so, the number of days HCP is required to keep a rehydrated copy of object data on the ingest tier.
+
+If the service plan for a given namespace defines multiple storage tiers, then for each object in that namespace, the Storage Tiering service: Moves copies of the object data among the storage tiers that are defined for the namespace to satisfy the transition criteria that are defined for each storage tier. Upon moving all existing copies of the data for an object from one tier to another:
+
+If the new tier has a different DPL from the previous tier, creates or deletes the number of copies of object data that’s required to satisfy the DPL setting for the new tier
+
+If the new tier has a different primary running storage metadata protection level (MPL) from the previous tier, creates or deletes the number of copies of object metadata that’s required to satisfy the MPL setting for the new tier Upon moving a replicated object to a metadata-only tier, deletes all copies of the object data from the previous tier, and if the previous tier is not the ingest tier, deletes any copies of the object data that exist on primary running storage. Checks to see whether the object data has been read from a storage tier for which rehydration is enabled, and if so, creates an extra copy of the object data on the ingest
+
+tier. After moving a replicated object to a metadata-only tier for which rehydration is enabled and making that object metadata-only, checks to see whether that object has been read from a remote system, and if so, restores the data to each copy of the object that’s stored on the ingest tier.
+
+Maintaining the correct number of object copies on each tier
+
+Another function of the Storage Tiering service is to maintain the correct number of copies of each object in a namespace on each storage tier that’s defined for that namespace by its service plan.
+
+If the number of object copies on a storage tier is less than the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service creates the
+
+applicable number of new copies of that object on that tier. If the number of copies of an object on a storage tier is higher than the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service deletes all unnecessary copies of that object from that tier. Differences between the Storage Tiering service and the Protection service
+
+The Protection service performs work that is nearly identical to the work performed by the Storage Tiering service to maintain the correct number of copies of object data and metadata on each service tier that’s defined for a namespace. However, the two services perform the work that they do in slightly different ways.
+
+The Storage Tiering service runs only when it’s scheduled to run. When the Storage Tiering service processes an object in a given namespace, the Storage Tiering service first checks to see whether copies of the object data are stored on the correct storage tier and moves the object data among tiers if necessary. The Storage Tiering service then checks

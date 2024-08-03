@@ -1,0 +1,95 @@
+The object count does not include object versions that are delete markers or delete records. Shred Object/Part Count
+
+The total number of these items waiting to be shredded: objects, old versions of objects, parts of multipart objects, parts of old multipart versions of objects, replaced parts of multipart uploads, parts of aborted multipart uploads, unused parts of completed multipart uploads, and transient parts created during the processing of certain multipart upload operations.
+
+Shred Object/Part Size
+
+The total number of bytes of object, object version, and part data and metadata waiting to be shredded.
+
+Custom Metadata Object Count
+
+The number of objects and object versions that have one or more annotations.
+
+Custom Metadata Size
+
+The number of bytes occupied by all annotations for all objects and object versions.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+807/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Viewing permissions
+
+View the permissions for the namespace and the current user.
+
+1. In the Namespace Browser menu bar, click Namespaces to open the list of accessible namespaces.
+
+2. Click the row for the namespace you want. 3. Click the Permissions tab. Namespace permissions
+
+Namespace namespace-name‘s permissions
+
+The permissions specified for the namespace.
+
+Namespace namespace-name’s effective permissions
+
+The permissions that are in effect for the namespace. This is the logical AND of the permissions specified at the system, tenant, and namespace levels.
+
+User account user-name’s permissions Your user permissions. User user-name’s effective permissions
+
+The permissions that are in effect for the combination of the namespace permissions and your user permissions. This is the logical AND of the permissions specified for the
+
+system, tenant, and namespace and your user permissions.
+
+Viewing retention classes
+
+1. In the Namespace Browser menu bar, click Namespaces to open the list of accessible namespaces.
+
+2. Click the row for the namespace you want. 3. Click the Retention Classes tab. For each retention class, the Namespace Browser shows:
+
+Retention class name Retention setting
+
+Whether to automatically delete objects in the class after their retention periods expire Retention class description
+
+General usage considerations
+
+This section of the Help contains usage considerations that affect namespace access in general.
+
+Choosing an access protocol
+
+The protocol you choose to use to access a namespace depends on a variety of factors. Some factors have to do with the protocols themselves, others with the environment in which you’re working. For example, your client operating system may dictate the choice of protocol. Or, you may need new applications to be compatible with existing applications
+
+that already use a given protocol.
+
+In terms of performance, HTTP is the fastest protocol and WebDAV is a close second. Both are suitable for transferring large amounts of data. CIFS and NFS are significantly slower than HTTP and WebDAV.
+
+Features
+
+With both HTTP and WebDAV:
+
+Client libraries are available for many different programming languages.
+
+You can store custom metadata in the namespace. You can use SSL security for data transfers. The namespace configuration determines whether this feature is available.
+
+You can retrieve object data by byte ranges. With HTTP:
+
+Each operation can be completed in a single transaction, which provides better performance.
+
+You can override metadata defaults when you add an object to the namespace. HCP automatically creates any new directories in the paths for objects you store in the namespace.
+
+You can change object ownership. You can add, replace, or delete ACLs for objects. With WebDAV:
+
+Some operations on directories, such as, COPY, MOVE, and DELETE, are performed in a single call. You can recursively delete a directory and its subdirectories.
+
+With CIFS and NFS:
+
+You get file-system semantics. Multiple concurrent threads can write to the same object.
+
+Drawbacks
+
+CIFS and NFS have lazy close With CIFS and NFS, performance degrades when write operations target directories with large numbers of objects (greater than 100,000).
+
+With CIFS and NFS, you need to use multiple mounts of a namespace to have HCP spread the load across the nodes in the system. Hostname and IP address considerations

@@ -1,0 +1,87 @@
+Each hosts file entry you create for access to a tenant must include:
+
+An IP address of a node in the HCP system The FQDN of the tenant domain
+
+For example, if the tenant domain name is finance.hcp.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you could add either or both of these lines to the hosts file on the client: 192.168.210.16 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the system through the management API.
+
+Sample hosts file
+
+Here’s a sample hosts file that contains mappings for the Finance tenant for nodes with both IPv4 and IPv6 addresses: 192.168.210.16 finance.hcp.example.com 192.168.210.17 finance.hcp.example.com 192.168.210.18 finance.hcp.example.com 192.168.210.19 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com 2001:0db8::102 finance.hcp.example.com 2001:0db8::103 finance.hcp.example.com 2001:0db8::104 finance.hcp.example.com URL considerations
+
+The following considerations apply to URLs in management API requests.
+
+URL length
+
+The portion of a URL that follows mapi, excluding any appended query parameters, is limited to 4,095 bytes. If a request includes a URL that violates that limit, HCP returns a status code of 414 (Request URI Too Large). Percent-encoding for special characters
+
+Some characters have special meaning when used in a URL and may be interpreted incorrectly when used for other purposes. To avoid ambiguity, percent-encode the special characters listed in the table below.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+389/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Percent-encoded values are not case sensitive.
+
+Character
+
+Percent-encoded values Space
+
+%20
+
+Tab
+
+%09
+
+New line
+
+%0A
+
+Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C
+
+Quotation marks with URLs in command lines
+
+When using the HCP management API, you work in a Windows, Unix, or Mac OS X shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters may indicate that a process should be put in the background.
+
+To avoid the possibility of the Windows, Unix, or Mac OS X shell misinterpreting special characters in a URL, always enclose the entire URL in double quotation marks. Authentication
+
+To use the HCP management API, you need either a system-level or tenant-level user account that’s defined in HCP. If HCP is configured to support Windows Active Directory® (AD), you can also use an AD user account that HCP recognizes to access HCP through the metadata query API.
+
+HCP also accepts Active Directory authentication provided through the SPNEGO protocol or the AD authentication header. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.

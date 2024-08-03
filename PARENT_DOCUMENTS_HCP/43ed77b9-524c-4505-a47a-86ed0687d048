@@ -1,0 +1,103 @@
+Tip: For better performance, consider limiting the number of concurrent read threads per node to 200 and concurrent write threads per node to 50 for small objects. For large objects, consider using fewer threads. Persistent connections
+
+HCP supports persistent connections. Following a request for an operation, HCP keeps the connection open for 60 seconds, so a subsequent request can use the same connection.
+
+Persistent connections enhance performance because they avoid the overhead of opening and closing multiple connections. In conjunction with persistent connections, using multiple threads so that operations can run concurrently provides still better performance.
+
+If the persistent connection timeout period is too short, tell your tenant administrator.
+
+Note: With persistent connections, if a single IP address has more than 254 concurrent open connections, those above the first 254 may have to wait as long as ten minutes to be serviced. This includes connections where the request explicitly targeted the IP address, as well as connections where the HCP hostname resolved to the target IP address. To avoid this issue, either don't use persistent connections or ensure that no more than 254 threads are working against a single node at any time. Connection failure handling
+
+You should retry a request if either of these happens:
+
+The client cannot establish a connection to the HCP system through the API. The connection breaks while HCP is processing a request. In this case, the most likely cause is that the node processing the request became unavailable.
+
+When retrying the request:
+
+If the original request used the hostname of the HCP system in the URL, repeat the request in the same way. If the original request used an IP address, retry the request using either a different IP address or the hostname of the system.
+
+If the connection breaks while HCP is processing a GET request, you may not know whether the returned data is all or only some of the object data. In this case, you can check the number of returned bytes against the content length returned in the Content-Length response header. If the numbers match, the returned data is complete.
+
+Session cookie encoding In the response to a client request, HCP includes a cookie that contains encoded session information.
+
+HCP supports two formats for encoding the session cookie:
+
+RFC2109
+
+HCP used only this format in releases 5.0 and earlier.
+
+RFC6265
+
+HCP has used this format by default in all releases since 5.0.
+
+You can use the X-HCP-CookieCompatibility request header to specify the format HCP should use to encode the session cookie. Valid values for this header are RFC2109 and RFC6265.
+
+The X-HCP-CookieCompatibility header is:
+
+Optional and typically not used for RFC6265 Required for RFC2109 Quick reference
+
+This topic contains a quick reference to the S3 compatible API methods. For each method, the topic shows:
+
+The query parameters you can use in requests that use the method. Required parameters are listed first followed by optional parameters enclosed in square brackets ([]). The request headers for requests that use the method. Required headers are listed first followed by optional headers enclosed in square brackets.
+
+The methods are grouped by the level of access (service (that is, tenant), bucket, or object, with methods for multipart uploads in a separate group at the end). Within each group, the methods are presented in alphabetical order.
+
+For general information on S3 compatible API requests, see Request line. Service-level operation
+
+API method
+
+Description and permission
+
+Query parameters
+
+Request headers
+
+Get service
+
+N/A
+
+Description
+
+Authorization: AWS access-key:signature
+
+Returns a list of buckets owned by the requester
+
+Permission
+
+OR
+
+None; requester must be an authenticated user
+
+Authorization: AD ad-username:ad-password
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+670/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+API method
+
+Description and permission
+
+Query parameters
+
+Request headers
+
+More information
+
+OR
+
+Listing the buckets you own Authorization: HCP access-key:secret-key
+
+Date: DDD, dd MMM yyyy HH:mm:ss
+
+(+0000|GMT)
+
+OR
+
+x-amz-date: DDD, dd MMM yyyy HH:mm:ss
+
+(+0000|GMT)

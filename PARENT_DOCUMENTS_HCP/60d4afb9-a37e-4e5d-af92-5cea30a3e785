@@ -1,0 +1,131 @@
+Query expression example
+
+N/A
+
+N/A
+
+replicationCollision:true retention:"-1"
+
+retentionClass:Reg-107
+
+retentionString: “2015-03-02T
+
+12:00:00-0500”
+
+shred:true
+
+size:[2000 TO 3000]
+
+N/A
+
+N/A
+
+N/A
+
+853/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object property
+
+Data type
+
+Description
+
+Query expression example
+
+Q1_2012.ppt
+
+updateTime
+
+Long
+
+The value of the POSIX mtime attribute for the object, in seconds since January 1, 1970, at 00:00:00 UTC.
+
+updateTime:[1309478400 TO 1312156800] updateTime String1
+
+Datetime
+
+The value of the POSIX mtime attribute for the object, in ISO 8601 format:
+
+updateTimeString:
+
+[2012-04-01 T00:00:00
+
+YYYY-MM-DDThh:mm:ssZ
+
+For more information about this format, see the description of the acc essTimeString property.
+
+TO 2012-04-30 T23:59:59]
+
+utf8Name4 String
+
+The UTF-8-encoded name of the object.
+
+utf8Name:23_John_Doe.xls
+
+In query expressions, the values you specify for this property are case
+
+sensitive.
+
+version
+
+Unsigned
+
+The version ID of the object. All objects, including those in the default namespace, have version IDs.
+
+version:83920048912257 long
+
+This property is not returned for objects with the
+
+NOT_FOUND operation type. For more information about this operation type, see the operation entry, above.
+
+When you specify the version ID of an old version in a query
+
+expression, HCP returns information about the current version of the object. content-property-name4
+
+Depends on property type
+
+The value of a content property.
+
+doctor_name: "John Smith" Notes:
+
+1. HCP maintains the time for this property as a value that includes millisecond, but the property format uses seconds. As a result, specifying a single datetime value for this
+
+property in a query does not return all expected results. To retrieve all expected results, take one of these actions:
+
+Specify a range of values for this property. Specify a value for the corresponding long-type object property. For example, instead of specifying ingestTimeString:2012-04-01T00:00:00, specify ingestTim e:1333238400.
+
+2. You cannot specify a range of values for this property. 3. For object-based queries, you can specify this property only in the objectProperties entry. If you specify this property in either the sort or query entry, HCP returns a 400 (Bad Request) error.
+
+4. You can use the asterisk (*) and question mark (?) wildcard characters when specifying values for this property. Query responses
+
+This chapter describes the response format for both object-based queries and operation-based queries.
+
+Note: In some situations, when you specify one or more namespaces in a query request, the result may differ depending on whether the query is object-based or operation-based.
+
+XML response bodies
+
+The format of an XML query response differs depending on the type of the query. XML reponse body for object-based queries
+
+An XML response for an object-based query has this format:
+
+<?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/query-result-6.0.xsd">
+
+<query> <expression>query-request-entry</expression> </query> <resultSet>
+
+<object changeTimeMilliseconds="change-time-in-milliseconds.index"
+
+version="version-id" urlName="object-url"
+
+operation="operation-type" Additional properties if specified in the objectProperties request entry
+
+or if the verbose request entry specifies true />
+
+Additional object entries </resultSet>
+
+<status totalResults="total-object-count"

@@ -1,0 +1,109 @@
+Recipients are added to the Bcc list for each email. Example
+
+Here’s an XML example of the emailNotification data type:
+
+<emailNotification> <enabled>true</enabled>
+
+<emailTemplate> <from>log@$location</from> <subject>$severity - $shortText</subject> <body>A message was written to the tenant log on $date.\n\n$reason\n\n $action</body> </emailTemplate> <recipients> <recipient> <address>lgreen@example.com, sgold@example.com</address> <importance>MAJOR</importance> <severity>ERROR</severity> <type>GENERAL,SECURITY</type> </recipient> <recipient> <address>mwhite@example.com</address> <importance>ALL</importance> <severity>WARNING</severity> <type>COMPLIANCE</type> </recipient> </recipients> </emailNotification>
+
+emailTemplate
+
+The emailTemplate data type describes the emailTemplate property of the emailNotification data type.
+
+Properties
+
+The table below describes the properties included in the emailTemplate data type.
+
+Property
+
+Data type
+
+Description
+
+Notes body
+
+String
+
+Specifies the format of the body of the email messages HCP sends when email notification is enabled. Valid values include any combination of plain text and email template variables.
+
+To change the body in the email template to blank, include the from and subject properties in the request body and omit the body property.
+
+Plain text can include spaces and line breaks but not tabs. The character sequence consisting of a backslash (\) followed by a lowercase n creates a line break.
+
+from
+
+String
+
+Specifies the content of the email From line. Valid values include any combination of plain text and email template variables and must have the form of a valid email address.
+
+If this property is included in the request body, the subject property must also be included.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+464/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+Some email servers require that the value in the From line
+
+be an email address that is already known to the server. subject
+
+String
+
+If this property is included in the request body, the from
+
+Specifies the content of the email Subject line. Valid values include any combination of plain text and email template variables.
+
+property must also be included.
+
+Plain text can include spaces but not line breaks or tabs.
+
+Variables
+
+The values you specify for the body, from, and subject properties of the emailTemplate data type can include variables that correspond to the information available for each log message (for example, the severity of the event that triggered the message or the short description of the event). When sending email, HCP replaces the variables in the email message with the applicable information.
+
+To include a variable in the email template, you specify the variable name preceded by the dollar sign ($). A dollar sign followed by anything other than a variable name is displayed as a dollar sign in the email HCP sends.
+
+The list below lists the variables you can use in the email template. $action
+
+The action to take in response to the message
+
+$date
+
+The date and time at which the event occurred (for example, Wed Feb 8 2017 3:15:57 PM EST)
+
+$fullText
+
+The full text of the message
+
+$id
+
+The message ID
+
+$location
+
+The fully qualified name of the HCP system on which the event occurred (for example, hcp-ma.example.com) $origin
+
+For user-initiated events, the IP address from which the event request was sent and the port through which HCP received the event request, separated by a colon (for example, 192.168.152.181:8000)
+
+$reason
+
+The reason why HCP issued the message
+
+$severity
+
+The severity of the event that triggered the message $shortText
+
+A brief description of the event that triggered the message
+
+$type

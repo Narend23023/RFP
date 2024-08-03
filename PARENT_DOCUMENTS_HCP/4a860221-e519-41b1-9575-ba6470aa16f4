@@ -1,0 +1,237 @@
+extended storage for the given namespace, for all the namespaces owned by the given tenant, or for all the HCP namespaces in the HCP system.
+
+Each part of a multipart object counts as a separate object and, on HCP S Series only, each part of an in-progress multipart upload counts as a separate object.
+
+valid
+
+N/A
+
+The status of the set of statistics in the line. Possible values are:
+
+true
+
+HCP successfully collected all statistics in the set.
+
+false
+
+The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to one or more nodes being unavailable during that time, to a network failure, or to other hardware issues. writes
+
+D
+
+The total number of write operations successfully performed in the given namespace, in all the namespaces owned by the given tenant, or in all the HCP namespaces in the HCP system during the reporting interval.
+
+Each upload of a part for a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Sample chargeback report
+
+Here's an example of a daily chargeback report, where the report was requested for February 17, 2017, through February 18, 2017. The report shows statistics for the canada and europe tenants. Because system-level users have administrative access to the europe tenant, the report also shows statistics for the individual namespaces owned by the europe
+
+tenant. The report is shown as it would appear in a spreadsheet. systemName
+
+tenantName namespaceName startTime endTime
+
+objectCount
+
+IngestedVolume storageCapacityUsed bytesIn
+
+bytesOut
+
+reads writes deletes tieredObjects
+
+hcp.example.com canada
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+15
+
+276947364
+
+276947364
+
+206315331 247634
+
+6
+
+15
+
+0
+
+0
+
+hcp.example.com canada
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+27
+
+297791424
+
+318572455
+
+91476093
+
+64387
+
+2
+
+27
+
+0
+
+0
+
+hcp.example.com europe finance
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+6
+
+134243721
+
+134270976
+
+123986263 87561
+
+1
+
+10
+
+0
+
+0
+
+hcp.example.com europe
+
+finance
+
+2/18/2017
+
+2/18/2017
+
+15
+
+186496747
+
+186548224
+
+52253026
+
+0
+
+0
+
+12
+
+0
+
+0
+
+0:00:00
+
+23:59:59
+
+hcp.example.com europe
+
+hr
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+7
+
+9609368
+
+9621504
+
+9609368
+
+0
+
+0
+
+7
+
+0
+
+0
+
+hcp.example.com europe hr
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+15
+
+19707387
+
+19730432
+
+10098019
+
+0
+
+0
+
+8
+
+0
+
+0
+
+hcp.example.com europe
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+13
+
+143853089
+
+143892480
+
+133595631 0
+
+0
+
+17
+
+0
+
+0
+
+hcp.example.com europe
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+30
+
+206204134
+
+206278656
+
+62351045
+
+0
+
+0
+
+20
+
+0
+
+0 hcp.example.com
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+28

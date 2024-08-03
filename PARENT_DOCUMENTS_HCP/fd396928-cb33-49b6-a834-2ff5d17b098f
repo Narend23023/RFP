@@ -1,0 +1,67 @@
+Adding a key management server
+
+Obtain the root certificate of your KM server. Obtain the client certificate for your KM server using one of the following options: Generate client certificate from your KM server. Use the certificate returned for an HCP-generated CSR.
+
+Use HCP's domain certificate.
+
+1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab.
+
+3. On the key management page in the System Management Console, click Add KM Server. An Add KM Server wizard opens.
+
+4. In the Name page:
+
+a. In the Name field, type the name of the KM server.
+
+b. In the Description field, type the description for the KM server. Then click Next.
+
+5. In the Configuration page:
+
+a. In the Hostname field, type the hostname. b. In the Port field, type the port number. c. In the Client Certificate section, click Browse and then select the client certificate.
+
+d. (Optional) Enter the password. e. In the Root Certificate section, click Browse and then select the root certificate.. Then click Next. f. Select a server from the Secondary KM Server dropdown menu.
+
+Note: If you are confguring a KM server first time, you will not see this option.
+
+6. Review the information in the review page and then click Finish.
+
+Modifying key manager settings 1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab. 3. In the key management servers list, double-click the name of the KM Server you want to modify.
+
+4. In the Configuration page:
+
+a. In the Name field, type the name of the KM Server. b. In the Description field, type the description for the KM Server.
+
+5. In the Certificates page:
+
+a. In the Client Certificates section, click Upload Certificate to upload a new client certificate.
+
+b. In the Root Certificates section, click Choose File to select a root certificate file, and then Upload Root Certificate to upload a new root certificate.
+
+6. In the Retirement page:
+
+a. The Service Plans section lists the names of the available service plans and the names of tenants.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+140/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+b. In the Optionally select a replacement server section, select a server from the Replacement server dropdown menu and then click Retire Server.
+
+When you retire a KM Server, HCP removes it from all the service plans that it is using and then replaces it with the specified secondary KM Server. If you did not select a secondary KM Server, it will use local key management.
+
+7. In the Manage page, in the Keys in use section, click Replace Keys.
+
+Note: When you choose to replace the keys, the Compression/Encryption service automatically re-encrypts the DEK with a new KEK.
+
+Viewing a key management server
+
+The Servers tab in the Key Management page lists all the registered KM Servers. 1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab. You see all the registered KM servers in the table. The page contains the following information about the KM server.
+
+Name: Name of the KM server.
+
+Hostname: The name of the KM server. Secondary Server: The name or IP address of the secondary KM server. Keys: Indicates whether any keys from the KM server are used to encrypt HCP objects. Objects: Number of objects encrypted using the KM server. Service Plans: Service plans associated with the KM server.
+
+Deleting a key management server
+
+1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab.

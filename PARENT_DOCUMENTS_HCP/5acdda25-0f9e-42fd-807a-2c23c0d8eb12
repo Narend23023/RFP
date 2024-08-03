@@ -1,0 +1,35 @@
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("dicom.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://anytown-general-hospital.hcp.example.com:9090/mapi/" + "tenants/anytown-general-hospital/contentClasses")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("dicom.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+PUT /mapi/tenants/anytown-general-hospital/contentClasses HTTP/1.1 Host: anytown-general-hospital.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6
+
+Content-Type: application/xml Content-Length: 2702
+
+Response headers HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Retrieving a list of content classes
+
+Here’s a sample GET request that retrieves a list of the content classes defined for the Anytown-General-Hospital tenant. The request writes the list of content classes to a file named AGH-cc.xml. The request is made using a tenant-level user account that includes the administrator role.
+
+Request with cURL command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+393/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl -k -i -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://anytown-general-hospital.hcp.example.com:9090/mapi/tenants/ anytown-general-hospital/contentClasses?prettyprint" > AGH-cc.xml
+
+Request in Python using PycURL import pycurl filehandle = open("AGH-cc.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Accept: application/xml",
+
+"Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://anytown-general-hospital.hcp.example.com:9090/mapi/" + "tenants/anytown-general-hospital/contentClasses") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+GET /mapi/tenants/anytown-general-hospital/contentClasses?prettyprint HTTP/1.1 Host: anytown-general-hospital.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Accept: application/xml
+
+Response headers

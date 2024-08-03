@@ -1,0 +1,91 @@
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the requested bucket listing.
+
+400
+
+Bad Request
+
+Possible reasons include that a query parameter has an invalid value.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to list the contents of the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+594/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the items in a folder
+
+Here’s a sample GET request for a bucket listing that lists the objects that are in the mktg folder and, separately, the subfolders that are in the mktg folder. The request uses these query parameters: list-type=2
+
+Uses version 2 of the S3 compatible API
+
+max-keys=1000
+
+Lists no more than 1000 items in the response
+
+prefix=mktg/
+
+Lists only items that start with mktg/
+
+start-after=mktg/
+
+Starts the listing with the item that follows mktg/ by itself
+
+delimiter=/
+
+Treats items that have a forward slash (/) after mktg/ as having a common prefix Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?list-type=2&max-keys=1000 &prefix=mktg/&start-after=mktg/&delimiter=/" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET /?list-type=2&max-keys=1000&prefix=mktg/&delimiter=/&start-after=mktg/ HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:ysiVYJ/cOr78z69BuDy6fy07ryo= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Content-Length: 157 Connection: close Server: HCP V9.0.0.2 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix>mktg/</Prefix> <StartAfter>mktg/</StartAfter>

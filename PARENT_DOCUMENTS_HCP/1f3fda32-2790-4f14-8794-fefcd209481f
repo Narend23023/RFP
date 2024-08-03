@@ -1,0 +1,113 @@
+The email template has three fields, each of which can be filled in with any combination of plain text and email template variables:
+
+The From field specifies the content of the email From line. This field must have a value. That value must have the form of a valid email address.
+
+Some email servers require that the value in the From line be an email address that is already known to the server.
+
+The Subject field specifies the content of the email Subject line. This field must have a value. For the email template subject, plain text can include spaces but not line breaks or tabs.
+
+The Body field specifies the body of the email. This field is optional.
+
+For the email template body, plain text can include spaces and line breaks but not tabs. The character sequence consisting of a backslash (\) followed by a lowercase n creates a line break.
+
+Modifying the template HCP uses for email notification about log messages
+
+To view the Email page, you need the monitor, administrator, security, or compliance role. To configure email notification and test the connection to the email server, you need the administrator or security role.
+
+1. On the Email page, in the From, Subject, and Body fields in the Message Settings section, specify the values that you want to use.
+
+2. Optionally, click Preview to preview the sample email with the specified format in the Message Preview field. 3. Click Update Settings at the bottom of the page. Email template variables
+
+The values you specify in the From, Subject, and Body fields in the email template can include variables that correspond to the information available for each log message (for example, the severity of the event that triggered the message or the short description of the event). When sending email, HCP replaces the variables in the email message with the applicable information.
+
+To include a variable in the email template, you specify the variable name preceded by the dollar sign ($). A dollar sign followed by anything other than a variable name is displayed as a dollar sign in the email HCP sends.
+
+The following table lists the variables you can use in the email template: Variable
+
+Description
+
+$action
+
+The action to take in response to the message
+
+$date
+
+The date and time at which the event occurred (for example, Wed Feb 8 2012 3:15:57 PM EST)
+
+$fullText
+
+The full text of the message
+
+$id
+
+The message ID
+
+$location
+
+The fully qualified name of the HCP system on which the event occurred (for example, hcp-ma.example.com) $origin
+
+For user-initiated events, the IP address from which the event request was sent and the port through which HCP received the event request, separated by a colon (for example, 192.168.152.181:8000)
+
+$reason
+
+The reason why HCP issued the message
+
+$scope
+
+$severity
+
+The severity of the event that triggered the message
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+177/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Variable
+
+Description
+
+$shortText A brief description of the event that triggered the message $type
+
+The type of message (General, Security, or Compliance), preceded by Important and a comma if the message is important (for example, Important, Security)
+
+$user
+
+The user ID and username of the event initiator (for example, 105ff38f-4770-4f98-b5b3-8371ab0af359 lgreen)
+
+Restoring the default template
+
+The following table shows the format of the default email template. Field
+
+Default value
+
+From
+
+log@$location
+
+Subject
+
+[$severity] $shortText
+
+Body
+
+The following event occurred on $date: $fullText
+
+Reason:
+
+$reason
+
+Action:
+
+$action
+
+Details: User: $user
+
+Origin: $origin
+
+Changing the email template back to the default
+
+To view the Email page, you need the monitor, administrator, security, or compliance role. To configure email notification and test the connection to the email server, you need the administrator or security role.

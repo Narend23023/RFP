@@ -1,0 +1,47 @@
+All objects, including those created while versioning is not enabled, have version IDs. Version IDs are integers. Each time a new version of an existing object is created, that new version is assigned an ID that is greater than the ID of the previous version of the object. The IDs for multiple versions of an object are not necessarily consecutive numbers.
+
+Version IDs are unique for the versions of a given object but are not necessarily unique across the versions of all objects.
+
+HCP also assigns version IDs to folders. However, folders cannot have multiple versions.
+
+When you store an object while versioning is enabled, HCP returns the version ID of the object in the x-amz-version-id response header. When you store an object while versioning is disabled, the response headers do not include x-amz-version-id.
+
+Version pruning If versioning is enabled for a namespace, pruning may also be enabled. Pruning is the automatic deletion of old versions of objects after a specific length of time since their creation. HCP does not prune old versions of objects that are on hold.
+
+Whether pruning is initially enabled when you create a bucket is determined by a tenant-level configuration setting. You cannot use the S3 compatible API to change the pruning setting for a bucket. However, tenant administrators can use other HCP interfaces to do this.
+
+Enabling delete markers
+
+HCP supports delete markers in Amazon S3 using Hitachi API for Amazon S3 and REST API. You must enable versioning to use delete marker feature. Enabling delete marker on a namespace is an irreversible change. When you delete an object in a version-enabled namespace, a delete marker is created. The delete marker then becomes the current version. The object behaves as if it is deleted. However, it automatically maintains previous versions of the object. A delete marker has the following characteristics:
+
+Like in any other versioned object, the delete marker has a version ID associated with it. The delete marker version ID does not store any information. Using an S3 DELETE request, you can delete the delete marker by specifying the version ID of the object. Using a GET bucket version request, you can retrieve a delete marker version ID.
+
+Allocated space
+
+When you create a bucket, the bucket is allocated a certain amount of space. This is the amount of space available for storing objects in the bucket. The initial amount of space allocated to a bucket is determined by a tenant-level configuration setting. You cannot use the S3 compatible API to change the amount of space allocated to a bucket. However, tenant administrators can use other HCP interfaces to do this.
+
+Search
+
+Buckets can be enabled for search. If a bucket is search enabled, users with the search data access permission can use the HCP metadata query API or Search Console to search for objects in the bucket. If a bucket is not search enabled, users cannot search the bucket.
+
+Whether search is initially enabled when you create a bucket is determined by a tenant-level configuration setting. You cannot use the S3 compatible API to enable or disable search for a bucket. However, tenant administrators can use other HCP interfaces to take these actions. Data access permission masks
+
+A data access permission mask determines which operations on objects are allowed in a bucket. If the permission mask does not include the permission to perform a particular operation, you cannot perform that operation, regardless of your data access permissions for the bucket or target object.
+
+Data access permission masks are set at the system, tenant, and bucket level. The effective permission mask for a bucket allows only the operations that are allowed at all three levels.
+
+For example, for you to be able to delete an object in a bucket:
+
+The system-level permission mask must include the delete permission The tenant-level permission mask must include the delete permissions
+
+The permission mask for the bucket must include the delete permission Either of these must be true:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+556/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Your data access permissions for the bucket include delete. You have delete permission for the target object either because you are the object owner or because the object has an ACL that grants you delete permission.
+
+When you create a bucket, its data access permission mask allows all operations. Tenant administrators can change the data permission mask for the buckets you create. You cannot use the S3 compatible API to change the permission mask for a bucket.

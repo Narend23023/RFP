@@ -1,0 +1,47 @@
+Namespaces provide a mechanism for separating the data stored for different applications, business units, or customers. For example, you could have one namespace for accounts
+
+receivable and another for accounts payable.
+
+Namespaces also enable operations to work against selected subsets of objects. For example, you could perform a query that targets the accounts receivable and accounts payable
+
+namespaces but not the employees namespace. Namespaces are owned and managed by administrative entities called tenants. A tenant typically corresponds to an organization, such as a company or a division or department within a company.
+
+In addition to being owned by a tenant, each HCP namespace can have an owner that corresponds to an individual HCP user. The owner of a namespace automatically has permission to perform certain operations on that namespace.
+
+Each tenant can own multiple namespaces. An HCP system can have a maximum of 1,000 locally defined tenants and 10,000 locally defined namespaces. The system configuration can limit the number of namespaces an individual tenant can own.
+
+Note: Replication can cause an HCP system to have more than 1,000 tenants and 10,000 namespaces.
+
+An HCP system has both system-level and tenant-level administrators: System-level administrators are concerned with monitoring the HCP system hardware and software, monitoring overall repository usage, configuring features that apply across the HCP system, and managing system-level users.
+
+Tenant-level administrators are concerned with monitoring namespace usage at the tenant and namespace level, configuring individual namespaces, managing tenant-level users, and controlling access to namespaces.
+
+System-level administrators create tenants. Tenant-level administrators create namespaces. System-level administrators can limit the number of namespaces an individual tenant can own. Namespace access
+
+HCP supports access to namespace content through several namespace access protocols, the HCP Namespace Browser, the HCP metadata query API, and the HCP Search Console. Namespace access protocols
+
+HCP supports access to namespace content through several industry-standard protocols:
+
+REST API, which is a RESTful, HTTP-based API. Hitachi API for Amazon S3, which is a RESTful, HTTP-based S3 compatible API. With the S3 compatible API, namespaces are called buckets. WebDAV. CIFS. NFS.
+
+These protocols support various operations: storing data, creating directories, viewing object data and metadata, viewing directories, modifying certain metadata, and deleting objects. You can use these protocols to access data with a web browser, third-party applications, Windows® Explorer, and other native Windows and Unix tools.
+
+HCP allows special-purpose access to namespaces through the SMTP protocol. This protocol is used only for storing email.
+
+The namespace access protocols are configured separately for each namespace and are enabled or disabled independently of each other. The REST, S3 compatible, and CIFS protocols can be configured to require authentication. To use a protocol that requires authentication, users and applications must present valid credentials for access to the namespace.
+
+If the REST, S3 compatible or CIFS protocol is enabled but is not configured to require authentication or if the WebDAV or NFS protocol is enabled, users and applications can access the namespace anonymously. You can create a secure namespace by enabling only protocols that require authentication. HCP Namespace Browser
+
+The HCP Namespace Browser lets you manage content in and view information about namespaces. With the Namespace Browser, you can:
+
+List, view, and retrieve objects, including old versions of objects
+
+View custom metadata and ACLs for objects, including old versions of objects Store and delete objects Create empty directories Display namespace information, including:
+
+The namespaces that you own or can access Retention classes available for a given namespace Permissions for namespace access Namespace statistics such as the number of objects in a given namespace or the total capacity of the namespace HCP metadata query API
+
+The HCP metadata query API lets you search HCP for objects that meet specified criteria. The API supports two types of queries:
+
+Object-based queries search for objects based on object metadata. This includes both system metadata and the content of custom metadata and ACLs. The query criteria can also include the object location (that is, the namespace and/or directory that contains the object). These queries use a robust query language that lets you combine search criteria in multiple ways.
+
+Object-based queries search only for objects that currently exist in the repository. For objects with multiple versions, object-based queries return only the current version.

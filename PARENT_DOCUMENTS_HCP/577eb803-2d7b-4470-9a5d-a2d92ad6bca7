@@ -1,0 +1,63 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+While versioning is enabled, you use the HTTP GET method to list the versions of an object. By default, the response body contains an XML listing that includes the current version
+and old versions that haven’t been pruned. It does not include versions that have been deleted. However, you can choose to include delete records in the list.
+If versioning is disabled, even if it was enabled in the past, HCP returns an HTTP 400 (Bad Request) error code in response to a request to list object versions. However, if
+versioning is then reenabled, HCP returns information about all old versions that have not been pruned.
+Access permission
+To list object versions, you need browse permission.
+Request header
+GET /rest/directory/file?version=list&deleted=true HTTP/1.1
+The GET request to list object versions has these elements:
+If you’re accessing the namespace as an authenticated user, an Authorization header.
+The URL of the object.
+A URL query parameter. version=list
+If you specify a condition, the HCP returns a version list only if all versions of the object meet the specified condition.<br>
+                       <b>Bounding box:</b> x1=185, y1=578, x2=1516, y2=982
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>version</td>
+      <td>Yes</td>
+      <td>Use the value list.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>deleted</td>
+      <td>No</td>
+      <td>By default, the GET request to retrieve object versions\ndoes not include delete records. To retrieve a listing that\nincludes delete records, specify this URL query\nparameter:\ndeleted=true\nYou can also specify which results in the deleted=false,\ndefault behavior.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

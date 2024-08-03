@@ -1,0 +1,99 @@
+List
+
+GET
+
+Retrieve a list of the group accounts defined for a tenant
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The listed group accounts are identified by the group name.
+
+In XML, the element that identifies each group account is groupname. The root element for the list of group accounts is groupAccounts.
+
+In JSON, the name in the name/value pair that lists the group accounts is groupname. .../tenants/tenant-name/groupAccounts/group-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+groupAccount
+
+GET
+
+Retrieve information about a group account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The information returned depends on the roles associated with the user making the request. N/A
+
+HEAD
+
+Check for the existence of a group account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+groupAccount
+
+POST
+
+Modify a group account Tenant-level user account with the administrator
+
+or security role
+
+A user with only the administrator role can modify only the allow-NamespaceManagement property. A user with only the security role cannot modify that property. N/A
+
+DELETE
+
+Delete a group account Tenant-level user account with the security role
+
+.../tenants/tenant-name/groupAccounts/group-name/dataAccessPermissions
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+dataAccess
+
+Permissions
+
+GET
+
+Retrieve information about the data access permissions associated with a group account Tenant-level user account with the administrator, security, or monitor role
+
+POST
+
+Modify the data access permissions associated with a group account Tenant-level user account with the administrator role
+
+The request body must contain all permissions granted for each included namespace. If a namespace is not included, its permissions are not changed by the POST request.
+
+By default, when you create a group account, it does not include any data access permissions.
+
+Example: Creating a group account
+
+Here’s a sample PUT request that creates a group account for the Finance tenant. The account is defined in an XML file named admin-GA.xml. The name of the group account is specified in the XML file. For the request to be successful, a group with this name must already exist in AD. The request is made using a tenant-level user account that includes the security role.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+438/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request body in XML <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <groupAccount> <groupname>hcp-admin@ad.example.com</groupname> <roles> <role>MONITOR</role> <role>ADMINISTRATOR</role> </roles> </groupAccount>
+
+Request with cURL command line curl -k -iT admin-GA.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/groupAccounts"
+
+Request in Python using PycURL

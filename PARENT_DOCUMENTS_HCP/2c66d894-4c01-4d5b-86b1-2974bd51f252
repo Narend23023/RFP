@@ -1,0 +1,31 @@
+Request headers
+
+GET /?list-type=2&max-keys=1000&prefix=mktg/&delimiter=/&start-after=mktg/ HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:ysiVYJ/cOr78z69BuDy6fy07ryo= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Content-Length: 157 Connection: close Server: HCP V9.0.0.2 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix>mktg/</Prefix> <StartAfter>mktg/</StartAfter>
+
+<NextContinuationToken>1eGcxW1r/XYCxHnhbY24cK3/Jd36Hy4vZkbM=</NextContinuationToken> <KeyCount>1000</KeyCount> <MaxKeys>1000</MaxKeys> <Delimiter>/</Delimiter> <IsTruncated>true</IsTruncated> <Contents> <Key>mktg/campaign_GoGetEm_expenses.xls</Key> <LastModified>2020-02-13T17:44:53.000Z</LastModified> <ETag>"6ed7faad1e0661c03ad65a4317d4a94c"</ETag> <Size>94328</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Contents> <Contents> <Key>mktg/campaign_LiveIt_expenses.xls</Key> <LastModified>2019-12-05T14:32:29.110Z</LastModified> <ETag>"7ad452af1e2f61b33a865c4362be5921"</ETag> <Size>81578</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Contents> . . . <CommonPrefixes> <Prefix>mktg/budget_proposals/</Prefix> . .
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+595/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+. </CommonPrefixes> </ListBucketResult>
+
+Listing the in-progress multipart uploads in a bucket
+
+You use the HTTP GET method with the uploads query parameter to list the multipart uploads that are in progress in a bucket. An in-progress multipart upload is one that has been initiated but not yet completed or aborted. While a multipart upload is in the process of being completed, it is still considered to be in progress. To list the in-progress multipart uploads in a bucket, you must be an authenticated user. Additionally, you need browse permission for the bucket.
+
+A multipart upload listing is returned in an XML response body. The multipart uploads are listed in ascending alphanumeric order by object name. If the listing includes multiple multipart uploads for the same object, those multipart uploads are listed in ascending chronological order by the time they were initiated. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list in-progress multipart uploads has either of these formats:
+
+With the bucket name included in the hostname:

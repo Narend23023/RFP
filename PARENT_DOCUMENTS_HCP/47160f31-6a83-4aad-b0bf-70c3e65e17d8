@@ -1,0 +1,115 @@
+x-hcp-privileged
+
+If you have privileged permission and the bucket allows it, this enables a privileged delete on an object that is under retention. The valid value for this header is a text string of up to 1,024 characters long, which can contain any valid UTF-8 characters, including white space. x-amz-bypass-governance-retention
+
+Used to override or remove governance-mode retention settings in S3 Object Lock, you must explicitly include x-amz-bypass-governance-retention:true as a request header.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to delete an object, object version, or folder. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+x-amz-delete-marker
+
+The value of this header is always true. This header is returned only when deleting a delete marker by specifying the delete marker's version ID. x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to delete an object, object version, or folder.
+
+Code
+
+Meaning
+
+Description
+
+204 No Content
+
+One of these:
+
+HCP successfully deleted the object or folder. The specified object or folder does not exist. The current version of the specified object is a delete marker or delete record.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+632/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The request did not specify a version ID or specified an invalid version ID.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have delete permission for the specified bucket or object. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found
+
+Possible reasons include that the specified bucket does not exist.
+
+409 Conflict
+
+Possible reasons include:
+
+The object data is currently being written to HCP. The specified object is under retention.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Deleting an object
+
+Here’s a sample DELETE request that deletes an object named hum_res/budget_proposals/BudgProp-2020 from the finance bucket.
+
+The example shows the response headers HCP returns while versioning is enabled for the bucket and while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/
+
+BudgProp-2020"
+
+Request headers
+
+DELETE /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:i9bRonH4gi1SrymsF0Fw84mWUeQ=
+
+Response headers with versioning enabled
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+x-amz-version-id: 87288781940929 x-amz-delete-marker: true
+
+Response headers with versioning disabled
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Example: Deleting a folder

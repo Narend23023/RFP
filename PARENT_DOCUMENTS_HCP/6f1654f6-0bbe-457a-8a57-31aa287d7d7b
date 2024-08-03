@@ -1,0 +1,57 @@
+You can change the tags associated with the tenant at any time after you create the tenant.
+
+Whether the tenant can be replicated.
+
+After creating the tenant, you can change this setting from not allowing replication to allowing replication. However, you cannot do the reverse. If the tenant can be replicated, whether tenant administrators can choose which cloud-optimized namespaces allow erasure coding. If tenant administrators are not allowed to do this, all cloud-optimized namespaces owned by the tenant allow erasure coding.
+
+After creating the tenant, you can change this setting from having all cloud-optimized namespaces allow erasure coding to allowing tenant administrators to choose which
+
+cloud-optimized namespaces allow erasure coding. However, you cannot do the reverse.
+
+When HCP is upgraded to release 8.0 or later, preexisting tenants are configured such that tenant administrators cannot select erasure coding for namespaces.
+
+Whether tenant administrators can select the retention mode for the namespaces that the tenant owns. If this is not allowed, tenant administrators can create namespaces only in enterprise mode. After creating the tenant, you can change this setting from not allowing tenant administrators to select the retention mode to allowing it. However, you cannot do the reverse.
+
+Whether tenant administrators can enable search for the namespaces that the tenant owns.
+
+After creating the tenant, you can change this setting from not allowing tenant administrators to enable search for the namespaces that the tenant to allowing it. However, you
+
+cannot do the reverse.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+92/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Whether tenant administrators can associate service plans with the namespaces that the tenant owns. If tenant administrators are not allowed to do this, you need to specify
+
+a service plan for the tenant. This specification is not visible in the Tenant Management Console. After creating the tenant, you can change this setting from not allowing tenant administrators to associate service plans with the namespaces that the tenant owns to allowing
+
+it. However, you cannot do the reverse.
+
+Whether tenant administrators can enable versioning for the namespaces that the tenant owns.
+
+After creating the tenant, you can change this setting from not allowing tenant administrators to enable versioning for the namespaces that the tenant owns to allowing it. However, you cannot do the reverse. HCP tenant creation procedure
+
+To create an HCP tenant or the default tenant and namespace, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants. 2. On the Tenants page, click Create Tenant. 3. In the Create Tenant panel:
+
+a. If the Make default tenant/namespace option is present, leave it unselected. This option does not appear if the default tenant already exists or if the system does not support creation of the default tenant.
+
+b. In the Tenant Name field, type a unique name for the tenant. HCP derives the host name for the tenant from this name. The host name is used in URLs for access to the tenant and its namespaces.
+
+In English, the name you specify for a tenant must be from one through 63 characters long, can contain only alphanumeric characters and hyphens (-), and cannot start or end with a hyphen. In other languages, because the derived English hostname cannot be more than 63 characters long, the name that you specify can be limited to fewer than 63 characters.
+
+Tenant names cannot contain special characters other than hyphens and are not case sensitive. White space is not allowed.
+
+Tenant names cannot start with xn-- (that is, the characters x and n followed by two hyphens).
+
+You can reuse tenant names that are not currently in use. So, for example, if you delete a tenant, you can create a new tenant with the same name that you originally
+
+assigned to the deleted tenant.
+
+The following words are reserved and cannot be used as tenant names: admin, cifs, default, fcfs, nfs, scavenging, search, search-api, smb, smtp, snmp, and www. c. Optionally, in the Description field, type a description of the tenant. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.

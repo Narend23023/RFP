@@ -1,0 +1,65 @@
+If you add an S Series Node to the HCP system, a storage pool needs to already exist or be created. To create a storage pool you must specify the following information:
+
+The storage pool name.
+
+Whether you want HCP to compress object data that’s stored on the storage that’s allocated to the buckets in the storage pool.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+38/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Whether you want HCP to encrypt object data that’s stored on the storage that’s allocated to the buckets in the storage pool. If encryption is disabled for the system, this
+
+option is not visible.
+
+For each bucket you want to include in the storage pool:
+
+The account to which the bucket is assigned The name of the bucket
+
+Note: At any given time, a bucket can be included in only one storage pool.
+
+Each bucket you add to a new storage pool must be empty or have only HCP data in it.
+
+A storage pool is compliant only if all of the buckets in the pool are associated with compliant storage components.
+
+When you deselect a component, HCP disables write operations to that component. However, you can still perform read and delete operations on the component until it is retired. Extended storage pools
+
+HCP supports the use of several different types of extended storage. To enable HCP to use a specific type of extended storage, you need to create and configure one or more
+
+storage pools of the applicable type.
+
+For each storage pool, you need to specify the name of the pool, the type of extended storage that’s represented by the pool, and the storage components that are contained in the pool.
+
+The next sections describe each type of extended storage pool and describe the information you need to specify to enable HCP access the storage that’s represented by each type of storage pool.
+
+Storing objects on extended storage tiers
+
+Each extended storage pool consists of one or more extended storage component access points (mount points, buckets, or containers) that are used to access the same type of
+
+extended storage. To store objects in a given extended storage pool, HCP uses all of the storage that’s accessed using all of the extended storage component access points that are
+
+contained in that pool. You can add access points to an extended storage pool at any time, thereby increasing the capacity of the pool.
+
+The service plan for a namespace defines one or more storage tiers for that namespace, and specifies the rules that determine which tier is used to store each object in that namespace at any given point in the object lifecycle. Each extended storage tier that’s defined for a namespace typically consists of only one extended storage pool, but a tier can
+
+be configured to use multiple storage pools. To store objects on a given extended storage tier, HCP uses all of the storage that’s accessed using the extended storage component access points contained in the storage pools that are configured for that tier.
+
+Considerations for tiering objects from primary storage to HCP S Series or extended storage
+
+When moving an object to a storage tier that includes only HCP S Series or extended storage pools, the Storage Tiering service moves only the object data onto the HCP S Series
+
+or extended storage that is used for the new tier.
+
+Note: For the purpose of storage tiering, HCP treats parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects. HCP keeps all metadata, including custom metadata, for an object on primary running storage. The system metadata for an object points to each specific NFS volume and each
+
+specific S Series or extended storage bucket or container that is used to store the data for that object. Primary storage keeps metadata even if S Series storage is used as an ingest
+
+tier alternative to running storage instead of as a storage tier.
+
+All objects added to a namespace are first written to the ingest tier defined in their namespace service plan. However, HCP can read the data for an object directly from any storage
+
+component the object may later be tiered to.

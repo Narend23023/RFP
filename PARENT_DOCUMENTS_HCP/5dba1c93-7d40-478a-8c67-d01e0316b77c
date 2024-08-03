@@ -1,0 +1,35 @@
+<name>hcp-ca.example.com</name> </hcpSystems> <name>ca-an</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>a1f21e03-fb46-48cc-967e-b0cedf80bb20</uuid> </replicationLink> </replicationLinks>
+
+Example: Creating an erasure coding topology
+
+Here's a sample PUT request that creates a four-system erasure coding topology named ex-corp-4. The topology definition is in an XML file named create-ect.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ecTopology> <name>ex-corp-4</name> <description>Erasure coding topology for the US, Europe, Canada, and Africa-North divisions.</description> <type>ring</type> <replicationLinks>
+
+<replicationLink> <name>us-eu</name> </replicationLink> <replicationLink> <name>eu-ca</name> </replicationLink> <replicationLink> <name>ca-an</name> </replicationLink> <replicationLink> <name>us-an</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+396/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+</replicationLink> </replicationLinks> <erasureCodingDelay>10</erasureCodingDelay> <fullCopy>false</fullCopy> <minimumObjectSize>4096</minimumObjectSize> <restorePeriod>5</restorePeriod> </ecTopology> Request with cURL command line
+
+curl -k -T create-ect.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ ecTopologies"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("create-ect.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97"]) curl.setopt(pycurl.URL, "https://admin.hcp-us.example.com:9090/mapi/services/" + "erasureCoding/ecTopologies") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("create-ect.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+PUT /mapi/services/erasureCoding/ecTopologies HTTP/1.1 Host: admin.hcp-us.example.com:9090 Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97 Content-Type: application/xml Content-Length: 775
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Retrieving a list of eligible tenants

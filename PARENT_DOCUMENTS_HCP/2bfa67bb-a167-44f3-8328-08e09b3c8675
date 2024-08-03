@@ -1,0 +1,70 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=2124
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Property</td>
+      <td>Data type</td>
+      <td>Description</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td></td>
+      <td>The default is NOT_ENABLED.\nThese values are not case sensitive.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>allowErasureCoding</td>
+      <td>Boolean</td>
+      <td>For an HCP namespace, specifies whether HCP is\nallowed to use erasure coding to implement replication of\nthe objects in the namespace. Valid values are:\ntrue\nHCP is allowed to use erasure coding for\nreplication of the namespace.\nfalse\nHCP is not allowed to use erasure coding for\nreplication of the namespace.\nIf the tenant is allowed to manage erasure coding for\nnamespaces, the default is the setting specified by the\nnamespace defaults for the tenant. If the tenant does not\nhave this ability, the default is to allow erasure coding for\nnamespaces that are cloud optimized.</td>
+      <td>This property is valid on a PUT or POST request only if\nthe owning tenant is allowed to manage erasure coding\nfor its namespaces.\nThis property is optional on a PUT request.\nYou can set the value of this property to on a PUT true\nrequest only if the value of the optimizedFor property is\nset to in the same request or if new namespaces true\nare cloud optimized by default.\nYou can set the value of this property to on a true\nPOST request only if the namespace is already cloud\noptimized or the optimizedFor property is set to in true\nthe same request.\nThis property is not returned by any GET request for a\nnamespace that is not selected for replication or for\nwhich the owning tenant is not allowed to manage\nerasure coding for its namespaces.\nThis property is not valid for the default namespace.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>allowPermissionAnd\nOwnershipChanges</td>
+      <td>Boolean</td>
+      <td>Specifies whether changes to POSIX UIDs, GIDs, and\npermissions and to object ownership are allowed for\nobjects under retention in the namespace. Valid value\nare:\ntrue\nChanges to POSIX UIDs, GIDs, and permissions\nand to object ownership are allowed for objects\nunder retention.\nfalse\nChanges to POSIX UIDs, GIDs, and permissions\nand to object ownership are not allowed for\nobjects under retention.\nThe default is false.</td>
+      <td>This property is optional on a PUT request.\nThis property is not valid for the default namespace.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>appendEnabled</td>
+      <td>Boolean</td>
+      <td>Specifies whether the namespace supports appendable\nobjects. Valid values are:\ntrue\nThe namespace supports appendable objects.\nfalse\nThe namespace does not support appendable\nobjects.\nThe default is false.</td>
+      <td>This property is optional on a PUT request.\nYou cannot enable both appendable objects and\nversioning for a namespace.\nThis property is not valid for the default namespace.\nNote: The appendable-object feature provides snaplock\nvolume support for third-party backup solutions. Do not\nenable this feature unless you have been explicitly told\nto do so.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>atimeSynchronization Enabled</td>
+      <td>Boolean</td>
+      <td>Specifies whether atime synchronization with retention\nsettings is enabled for the namespace. Valid values are:\ntrue\nAtime synchronization is enabled.\nfalse\nAtime synchronization is not enabled.\nThe default is false.</td>
+      <td>This property is optional on a PUT request.\nThis property is not valid for the default namespace.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>authAndAnonymous\nMinimumPermissions</td>
+      <td>List</td>
+      <td>Lists the minimum data access permissions for all\nunauthenticated users of the namespace. Authenticated\nusers also have these permissions when the value of the\nproperty authUsersAlways-GrantedAllPermissions\nis true.\nValid values for permissions are:\nBROWSE\nDELETE\nPURGE\nREAD\nREAD_ACL\nWRITE\nWRITE_ACL</td>
+      <td>This property is optional on a PUT request.\nThe set of permissions specified in the request body\nreplaces the current set of minimum permissions for all\nusers. To remove all the permissions for all users,\nspecify an empty list.\nIf the set of permissions includes PURGE, delete\npermission is enabled automatically. If the set of\npermissions includes READ, browse permission is\nenabled automatically.\nThis property is not valid for the default namespace.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

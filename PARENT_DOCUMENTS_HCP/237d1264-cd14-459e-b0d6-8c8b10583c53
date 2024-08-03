@@ -1,0 +1,65 @@
+The list below describes the values you can use to specify the retention setting for an object and contains rules for specifying these values. These values are not case sensitive. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you add it to the namespace or when its retention setting is -2. The value -0 is equivalent to 0 (zero).
+
+1 or Deletion Prohibited
+
+Prevents the object from being deleted and its retention setting from being changed. You can assign this value to an object that is not in a retention class at any time. If an object is assigned to a retention class and that class is then deleted, the retention setting for that object changes to -1.
+
+2 or Initial Unspecified
+
+Specifies that the object does not yet have a retention setting. You can assign this value to an object when you add the object to the namespace. You can also directly change the retention setting for an object from 0 to ‑2. You can change ‑2 to any other retention setting. datetime
+
+Prevents the object from being deleted until the specified date and time. You can assign this value to an object that is not in a retention class if the specified date and time is later than the current retention setting for the object. You cannot assign it to an object for which the current retention setting is -1. offset
+
+Specifies a period for which to retain the object. You can assign this value to an object that is not in a retention class at any time, except when its current retention setting is -1. HCP calculates the retention setting date and time from the offset and one of these:
+
+The time the object was added to the namespace The current retention setting The current time C+retention_class_name
+
+Assigns the object to a retention class. You can assign this value to an object if any one of these is true:
+
+The original retention period for the object has expired. The original retention period for the object has not expired, and the retention class results in a retention period that is longer than the current retention period. The retention setting for the object is 0 or -2. The retention setting for the object is -1, and the class has a retention setting of -1. The object is in a retention class, and the duration of the new class is not shorter than the duration of the original class.
+
+The retention class you assign must already be defined for the namespace.
+
+Specifying a date and time
+
+You can set retention by specifying a date and time in either of these formats: Time in seconds since January 1, 1970, at 00:00:00 UTC. For example:
+
+1450137600
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+697/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The calendar date that corresponds to 1450137600 is Tuesday, December 15, 2015, at 00:00:00 EST. Date and time in this ISO 8601 format: yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2015-11-16T14:27:20-0500 represents the start of the 20th second into 2:27 PM, November 16, 2015, EST.
+
+If you specify certain forms of invalid dates, HCP automatically adjusts the retention setting to make a real date. For example, if you specify 2015-11-33, which is three days past the end of November, HCP changes it to 2015-12-03.
+
+Specifying an offset
+
+You can set retention by specifying an offset from:
+
+The time at which the object was added to the namespace The current retention setting for the object The current time
+
+Because you can only extend a retention period, the offset must be a positive value. Offset syntax
+
+To use an offset as a retention setting, specify a standard expression that conforms to this syntax:
+
+^([RAN])?([+-]\d+y)?([+-]\d+M)?([+-]\d+w)?([+-]\d+d)?([+-]\d+h)?([+-]\d+m)?([+-]\d+s)?
+
+The list below explains this syntax.
+
+^
+
+Start of the expression

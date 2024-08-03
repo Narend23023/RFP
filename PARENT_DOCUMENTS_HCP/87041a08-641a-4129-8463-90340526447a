@@ -1,0 +1,97 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 11:33 AM
+Content Platform System Management Help
+Whether tenant administrators can associate service plans with the namespaces that the tenant owns. If tenant administrators are not allowed to do this, you need to specify
+a service plan for the tenant. This specification is not visible in the Tenant Management Console.
+After creating the tenant, you can change this setting from not allowing tenant administrators to associate service plans with the namespaces that the tenant owns to allowing
+it. However, you cannot do the reverse.
+Whether tenant administrators can enable versioning for the namespaces that the tenant owns.
+After creating the tenant, you can change this setting from not allowing tenant administrators to enable versioning for the namespaces that the tenant owns to allowing it.
+However, you cannot do the reverse.
+HCP tenant creation procedure
+To create an HCP tenant or the default tenant and namespace, you need the administrator role.
+1. In the top-level menu of the System Management Console, click Tenants.
+2. On the Tenants page, click Create Tenant.
+3. In the Create Tenant panel:
+a. If the Make default tenant/namespace option is present, leave it unselected. This option does not appear if the default tenant already exists or if the system does not
+support creation of the default tenant.
+b. In the Tenant Name field, type a unique name for the tenant. HCP derives the host name for the tenant from this name. The host name is used in URLs for access to
+the tenant and its namespaces.
+In English, the name you specify for a tenant must be from one through 63 characters long, can contain only alphanumeric characters and hyphens (-), and cannot
+start or end with a hyphen. In other languages, because the derived English hostname cannot be more than 63 characters long, the name that you specify can be
+limited to fewer than 63 characters.
+Tenant names cannot contain special characters other than hyphens and are not case sensitive. White space is not allowed.
+Tenant names cannot start with xn-- (that is, the characters x and n followed by two hyphens).
+You can reuse tenant names that are not currently in use. So, for example, if you delete a tenant, you can create a new tenant with the same name that you originally
+assigned to the deleted tenant.
+The following words are reserved and cannot be used as tenant names: admin, cifs, default, fcfs, nfs, scavenging, search, search-api, smb, smtp, snmp, and www.
+c. Optionally, in the Description field, type a description of the tenant. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including
+white space.
+d. In the Management Network field, select the management network for the tenant. The dropdown list of networks does not include empty networks.
+The Management Network field is present only if the HCP system is configured to support virtual networking or has the [hcp_management] network enabled.
+e. In the Data Network field, select the data access network for the tenant. The dropdown list of networks does not include empty networks.
+The Data Network field is present only if the HCP system is configured to support virtual networking.
+f. In the Hard Quota field, type the number of gigabytes (GB) or terabytes (TB) of storage to make available to the tenant and select either GB or TB to indicate the
+measurement unit. Valid values are decimal numbers with up to two places after the period. The minimum is 1 (one) for GB and .01 for TB.
+g. In the Soft Quota field, type the percentage point at which you want HCP to notify tenant administrators that free storage space is running low. Valid values are
+integers in the range 0 (zero) through 100.
+h. Take one of these actions:
+To specify a namespace quota for the tenant, in the Namespace Quota field, type an integer in the range 1 (one) through the current number of namespaces
+available for allocation.
+The number of available namespaces is displayed below the Namespace Quota field. This number is equal to 10,000 minus the number of namespaces
+currently allocated to HCP tenants, minus the number of namespaces currently owned by HCP tenants that do not have quotas, minus one for the default
+namespace, if it exists. If any tenants are above their quotas, the number of excess namespaces is also subtracted from the number of available namespaces.
+To create the tenant without giving it a namespace quota, select No quota.
+i. In the Authentication Methods section, select one or more of these authentication methods for the tenant: Local, RADIUS, and Active Directory. If you select RADIUS,
+you also need to select one or both of these RADIUS authentication methods: Local or Active Directory.
+j. In the Initial Security Account section, select Local or Active Directory to specify the type of initial security account that you want to create for the tenant. Then:
+If you selected Local, specify the user name and password for the initial HCP user account that you want to create for the tenant:
+In the Username field, type a name for the initial HCP user account for the tenant. Usernames must be from one through 64 characters long, can
+contain any valid UTF-8 characters, and cannot start with an opening square bracket ([). White space is allowed.
+User names are not case-sensitive.
+In the Password field, type a password for the initial HCP user account. Passwords can be up to 64 characters long, are case-sensitive, and can
+contain any valid UTF-8 characters, including white space. The minimum length for the password for the initial user account is six characters.
+To be valid, a password must include at least one character from two of these three groups: alphabetic, numeric, and other.
+In the Confirm Password field, type the password again.
+If you selected Active Directory, in the Group field, specify the name of the AD group account whose credentials you want to use for the initial HCP group
+account that you want to create for the tenant.
+k. Optionally, specify contact information for the tenant:
+i. Click Contact Information.
+ii. In the Contact Information panel, fill in the contact information. The table below describes the values that you can specify. Except as indicated, all fields are
+optional.<br>
+                       <b>Bounding box:</b> x1=352, y1=1905, x2=1516, y2=2105
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Field</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>First Name</td>
+      <td>First name of the tenant contact. First names can be up to 64 characters long and can contain any valid characters, including white UTF‑8\nspace.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Last Name</td>
+      <td>The last name of the tenant contact. Last names can be up to 64 characters long and can contain any valid characters, including UTF‑8\nwhite space.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Email</td>
+      <td>A valid email address for the tenant contact. Email addresses cannot be more than 254 characters long.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

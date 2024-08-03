@@ -1,0 +1,93 @@
+verbose
+
+One of:
+
+Specifies whether to return complete metadata for each object in the result set (true) or only the object URL, version ID, operation type, and change time.
+
+true
+
+Return all object properties.
+
+The default is false. false
+
+Return only the object URL, version
+
+ID, operation, and change time.
+
+If the request body contains both this property and the objectProperties property, this property is ignored.
+
+sort entry
+
+You use the sort entry to specify the order in which object-based query results are listed. The entry contains a comma-separated list of properties and a sort-order indicator, in this format: object-property[+(asc|desc)][,.object-property[+(asc|desc)]]...
+
+asc means sort in ascending order. desc means sort in descending order. The default is asc.
+
+Sort order
+
+Objects are sorted by properties in the order in which the properties are listed in the sort entry. For example, to sort query results in ascending order based on namespace name and descending order based on size within each namespace, specify this entry: <sort>namespace+asc,size+desc</sort>
+
+If you omit the sort entry, the query results are listed in order of relevance to the query criteria.
+
+Sorting on content properties
+
+You can sort only on single-valued content properties. You cannot sort on properties that can have multiple values.
+
+facets entry
+
+You use the facets entry to request summary information for the returned values of specified object properties. For each specified property, HCP returns a list of up to one hundred object property values that occur most frequently in the result set. Each entry in the list has the number of objects that have each of the object property value. For example, if you specify retentionClass in the facets entry, HCP returns a list of up to one hundred retention classes that occur with objects in the result set, along with the number of objects in each of those classes. Facet object properties
+
+The value of the facets entry is a comma-separated list of one or more of the object properties in the list below. Multiple properties can be specified in any order.
+
+hold
+
+Returns the numbers of objects in the result set that are on hold and not on hold.
+
+namespace
+
+Returns the names of namespaces that contain objects in the result set and the number of objects in the result set in each of those namespaces. retention
+
+For each of these retention values, returns the number of objects in the result set that have that value:
+
+initialUnspecified
+
+For objects with a retention setting of Initial Unspecified
+
+neverDeletable For objects with a retention setting of Deletion Prohibited
+
+expired
+
+For objects with a retention setting that is Deletion Allowed or a specific date in the past
+
+not expired
+
+For objects with a retention setting that is a specific date in the future
+
+retentionClass
+
+Returns the retention classes that are retention settings for objects in the result set and the number of objects in each retention class.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+839/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The count of objects in a retention class can include objects from more than one namespace. This is because multiple namespaces can have retention classes with the same name. To get an accurate count of the objects in a namespace that are in a specific retention class, restrict the query to a single namespace.
+
+content-property-name For Boolean and string content properties, returns the number of objects with the specified property value. For numeric and date properties, returns the number of objects in
+
+ranges of values.
+
+You cannot use tokenized (full-text searchable) content properties with facets.
+
+Content property facet ranges
+
+For numeric and date content properties, you specify the minimum and maximum values (range) for which to return information. You also specify the size of the sub-ranges (the interval) into which to divide the range.
+
+You use the following format to specify the range and interval for facets for content properties with a type of integer, floating point, or date: (start-value;end-value;+interval)
+
+In this expression:
+
+start-value is inclusive, that is the range includes the specified value.

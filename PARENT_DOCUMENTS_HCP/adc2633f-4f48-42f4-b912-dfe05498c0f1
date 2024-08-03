@@ -1,0 +1,33 @@
+Typically, the systems involved in cross-system data management are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection). You have multiple options for implementing geo-protection, each with its own benefits and drawbacks.
+
+This section of the Help provides an overview of how geo-protection works and how it supports business continuity and disaster recovery. About geo-protection
+
+Geo-protection is implemented by the HCP Replication service. The Replication service is responsible for keeping tenants and namespaces on two or more HCP systems in sync with each other. Replication entails sending information from the system where the service is running to one or more other systems. The information sent includes tenant and namespace configuration information, metadata and data for newly created objects, metadata changes for existing objects, and instructions to perform delete operations.
+
+The Replication service works on the systems in a replication topology. A replication topology is a configuration of HCP systems wherein each system is related to each other system through a path of one or more replication relationships. The HCP system from which you are viewing the replication topology is called the local system. Any other system in the replication topology is called a remote system. You select the tenants to be replicated in a replication topology. For each tenant, the tenant administrator selects the namespaces to be replicated. If the tenant administrator has granted system-level users access to the tenant, you also can select namespaces for replication. Geo-protection offers several benefits:
+
+If a system in a replication topology becomes unavailable, a remote system can provide continued data availability. A system is unavailable if it is not running or is unreachable. If a system in a replication topology suffers irreparable damage, a remote system can serve as a source for disaster recovery. If the Content Verification or Protection service discovers objects it cannot repair on a system in a replication topology, the service can use object data and metadata from a remote system to make the needed repairs. If an object cannot be read from a system in a replication topology, for example, because a node is unavailable, HCP can try to read it from a remote system. HCP tries to do this only if:
+
+The namespace that contains the object is involved in replication. The namespace has the read-from-remote-system feature enabled. The object has already been replicated. Users can check object metadata to determine whether an object has been replicated. The replication networks for the local and remote systems can both use the same IP mode (IPv4 or IPv6).
+
+If a system in a replication topology is unavailable, requests to that system that come through the REST, S3 compatible namespace access protocol can be automatically serviced by a remote system without the client needing to modify the target URL. A remote system can service a request only if:
+
+The namespace named in the URL is replicated to the remote system. The namespace named in the URL is configured to accept requests redirected from other HCP systems. The HCP systems involved use a shared DNS for system addressing.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+316/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Both the DNS and the unavailable system are configured to support DNS failover. (This condition is not a requirement if you’re using a load balancer that can target the requests to a remote system.)
+
+If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. If an enterprise has several satellite offices, an HCP system at a central facility can consolidate data from the HCP systems at those outlying locations. Protection types
+
+HCP supports two types of geo-protection: whole-object protection and erasure-coded protection.
+
+Whole-object protection
+
+With whole-object protection, all the data for each object in a replicated namespace is maintained on each HCP system in a replication topology, except on systems where the object is on a metadata-only storage tier. In response to a client request for an object on a metadata-only storage tier on the target HCP system, HCP retrieves the object data from another system in the replication topology.
+
+In case of system unavailability or loss, whole-object protection ensures continued data availability when at least one of the systems with the object data remains available. If an object is metadata-only on all the available systems, the object data is inaccessible.

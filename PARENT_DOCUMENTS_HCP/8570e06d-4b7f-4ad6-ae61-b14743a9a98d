@@ -1,0 +1,77 @@
+Repository management requires:
+
+Maintaining the integrity and security of stored data.
+
+Ensuring the continuous availability of that data. Keeping the data in compliance with local regulations.
+
+Optimizing the use of storage and network bandwidth.
+
+HCP supports these requirements through:
+
+The hardware and network configuration of the system Software configuration options (both installation and runtime)
+
+Automated processes Individual namespace and object settings Object storage and retrieval options
+
+Data integrity and security
+
+HCP includes many features specifically designed to protect the integrity and ensure the security of stored data:
+
+Write-once, read-many (WORM) storage
+
+After the data for an object is stored in the repository, HCP, by default, prevents that data from being modified or overwritten. Node login prevention
+
+HCP does not allow system-console logins on its nodes. This provides a basic level of protection not only for the stored data but also for the system software.
+
+Secure Sockets Layer (SSL)
+
+HCP can use SSL to ensure the privacy of HTTP and WebDAV access to namespaces. It always uses SSL to secure the Management and Search Consoles. Additionally,
+
+use of the HCP management API requires SSL. Content Verification service
+
+Each object has a cryptographic hash value that’s calculated from the object data. The Content Verification service ensures the integrity of each object by periodically checking that its data still matches its hash value.
+
+Scavenging service
+
+The Scavenging service protects namespaces from the loss of system metadata. If the service encounters an object with invalid metadata, it restores the correct metadata by
+
+using a copy from another location. Retention policy
+
+Each object has a retention setting that specifies how long the object must remain in the repository before it can be deleted; this duration is called the retention period. HCP ensures that objects are kept until their retention periods expire. The only exception to this behavior occurs in namespaces in enterprise mode. In these namespaces, users
+
+with explicit permission to do so can delete objects that are under retention. Such deletions are recorded in the tenant log.
+
+Shredding policy
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+7/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Objects can be marked for shredding. When such an object is deleted, HCP overwrites its storage location in such a way as to completely remove any trace that the object was there.
+
+Data access authentication The HTTP, S3 compatible, WebDAV, and CIFS protocols can be configured to require authentication for access to an HCP namespace. If these are the only protocols
+
+enabled for the namespace, users and applications must present valid credentials for access to the namespace content. HCP supports both local and remote authentication methods. For remote authentication, HCP supports Windows Active Directory® and RADIUS. Data access permission masks
+
+Data access permissions determine which operations a user or application can perform on the objects in an HCP namespace. These permissions can be:
+
+Associated with a tenant-level user or group account, in which case they apply to all objects in the namespace
+
+Specified in the namespace configuration as the minimum permissions for authenticated or unauthenticated users, in which case they apply to all objects in the namespace
+
+Specified in an ACL, in which case they apply to the individual object for which the ACL is defined Virtual networking
+
+Virtual networking is a technology that enables you to define multiple logical networks over which clients can communicate with HCP. You can assign different networks to
+
+different tenants, thereby segregating network traffic to and from the namespaces owned by one tenant from network traffic to and from the namespaces owned by other tenants. This segregation enhances the privacy and security of data transmitted between clients and the HCP system. Data availability
+
+HCP has these features that help ensure the continuous availability of stored data:
+
+Multipathing
+
+In an HCP with SAN-attached storage system, a single node can connect to more than one port on a storage system, either directly or through multiple Fibre Channel switches. This creates multiple physical paths between the node and any given logical volume that maps to it. With this setup, if one component of a physical path connecting
+
+such a node to the storage system fails, the node still has access to the logical volume through another physical path. Multiple means of access to a logical volume from a single node is called multipathing. Zero-copy failover

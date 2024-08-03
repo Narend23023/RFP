@@ -1,0 +1,37 @@
+500
+
+Internal Server Error
+
+An internal error occurred. If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Completing a multipart upload
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+655/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Here is a sample POST request that completes a multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. The request body is in a file named Acctg-RulesAndRegulations.xml.
+
+In this example, the retention value of the object is set to five days past the time when the object was stored. Additionally, a labeled retention hold is placed on the object. The user has write and data access permissions on the bucket.
+
+The request is being made while versioning is enabled for the bucket. Request body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CompleteMultipartUpload> <Part> <PartNumber>1</PartNumber> <ETag>4a01f8acf3353b0a7e1c03a0e34f63e4</ETag> </Part> <Part> <PartNumber>2</PartNumber> <ETag>97ede335e69d08bb3cfbbd974bae68e4</ETag> </Part> <Part> <PartNumber>3</PartNumber> <ETag>a39ebe49948a821cab2c4d7d04f9b1c3</ETag> </Part> <Part>
+
+<PartNumber>4</PartNumber> <ETag>a7b8192c98da2c13a034980376b6c809</ETag> </Part> <Part> <PartNumber>5</PartNumber> <ETag>bbe438b2a0376f08dc37867a82ea87e6</ETag> </Part> <Part> <PartNumber>6</PartNumber> <ETag>f79eac0151d6b62226986e721c89a2f1</ETag> </Part> </CompleteMultipartUpload> Request with s3curl command line
+
+./s3curl.pl --id=lgreen --post=Acctg-RulesAndRegulations.xml -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105" -H "x-hcp-retention: A+5d" .-H 'x-hcp-labelretentionhold: [{"id":"UniqueLabelHold-1","hold":true}]' -H "x-hcp-pretty-print: true" Request headers
+
+POST /acctg/RulesAndRegulations.pdf?uploadId=94837746087105 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 26 June 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:y4wahRZz+oLpASXkNeBy9LQAJsE= X-HCP-Retention: A+5d X-HCP-LabelRetentionHold: '[{"id":"UniqueLabelHold-1","hold":true}]' Response headers
+
+HTTP/1.1 200 OK Date: Fri, 26 June 2020 17:19:26 GMT x-amz-server-side-encryption: None x-amz-version-id: 94874564091777 Content-Type: application/xml;charset=ISO-8859-1 ETag: "e879d0c42d032f7b55d2be82825071d6-6" Content-Length: 401

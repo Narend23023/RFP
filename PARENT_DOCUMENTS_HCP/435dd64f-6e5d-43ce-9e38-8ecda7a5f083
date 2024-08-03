@@ -1,0 +1,45 @@
+Data access permission masks are set at the system, tenant, and bucket level. The effective permission mask for a bucket allows only the operations that are allowed at all three levels.
+
+For example, for you to be able to delete an object in a bucket:
+
+The system-level permission mask must include the delete permission The tenant-level permission mask must include the delete permissions
+
+The permission mask for the bucket must include the delete permission Either of these must be true:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+556/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Your data access permissions for the bucket include delete. You have delete permission for the target object either because you are the object owner or because the object has an ACL that grants you delete permission.
+
+When you create a bucket, its data access permission mask allows all operations. Tenant administrators can change the data permission mask for the buckets you create. You cannot use the S3 compatible API to change the permission mask for a bucket.
+
+Tenant administrators can also change the tenant-level permission mask, and HCP system administrators can change the system-level permission mask. Changes to the permission mask at any level may affect which operations you can perform with the S3 compatible API. Replication collisions
+
+If users can write to multiple systems in a replication topology, collisions can occur when different changes are made to the same objects on different systems. The way HCP handles collisions that occur due to replication depends on the type of collision. However, the general rule is that more recent changes have priority over conflicting less recent changes. Object content collisions
+
+An object content collision occurs when, for a namespace without versioning enabled, these events occur in the order shown:
+
+1. An object is created with the same name in that namespace on two systems in a replication topology, but the object has different content on the two systems. 2. The object on one of the systems is replicated to the other system.
+
+If versioning is enabled, no collision occurs. Instead, the less recently created of the two objects becomes an old version of the more recently created object.
+
+When an object content collision occurs, the more recently created object keeps its name and location. The other object is either moved to the .lost+found directory in the same namespace or renamed, depending on the namespace configuration.
+
+When HCP moves an object to the .lost+found directory, the full object path becomes .lost+found/replication/system-generated-directory/ old-object-path. When renaming an object due to a content collision, HCP changes the object name to object-name.collision or object-name.version-id.collision, where version-id is the version ID of the object. HCP uses the second format only if versioning has ever been enabled for the namespace that contains the object but is not currently enabled.
+
+If the new name is already in use, HCP changes the object name to object-name.1.collision or object-name.version-id.1.collision, as applicable. If that name is already in use, HCP successively increments the middle integer by one until a unique name is formed.
+
+Objects that have been relocated or renamed due to content collisions are flagged as replication collisions in their system metadata. Clients can use the metadata query API to search for objects that are flagged as replication collisions. If an object that’s flagged as a replication collision changes (for example, if its retention period is extended), its collision flag is removed. If a client creates a copy of a flagged object with a new name, the collision flag is not set on the copy.
+
+Depending on the bucket configuration, objects flagged as replication collisions may be automatically deleted after a set number of days. The days are counted from the time the collision flag is set. If the collision flag is removed from an object, the object is no longer eligible for automatic deletion.
+
+You cannot use the S3 compatible API to change the way HCP handles objects that are flagged as replication collisions. However, tenant administrators can change this configuration for the buckets you create. Custom metadata collisions
+
+A custom metadata collision occurs when these events occur in the order shown:
+
+1. One of these changes occurs:
+
+Custom metadata is added to a given object on each of two systems in a replication topology, but the added custom metadata is different on the two systems.

@@ -1,0 +1,57 @@
+Note: At any given time, a bucket can be included in only one storage pool.
+
+Each bucket you add to a new Google Cloud storage pool must be empty or have only HCP data in it.
+
+A storage pool is compliant only if all of the buckets in the pool are associated with compliant Google Cloud storage components.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+53/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Microsoft Azure storage pools Each Microsoft Azure storage pool contains one or more containers that are associated with specific Microsoft Azure storage components. Each Microsoft Azure storage pool includes all of the storage that is allocated to all of the containers in the pool
+
+To enable HCP to access the storage that is represented by a Microsoft Azure storage pool, when you create that component, you specify the following information:
+
+The storage pool name. Optionally, a description of the pool.
+
+Whether you want HCP to compress object data that is stored on the storage that is allocated to the containers in the storage pool. Whether you want HCP to encrypt object data that is stored on the storage that is allocated to the containers in the storage pool. If encryption is disabled for the system, this
+
+option is not visible. For each container you want to include in the storage pool: The name of the Microsoft Azure storage component that represents the Microsoft Azure endpoint that is used to access the container The account label used to identify the Microsoft Azure user account that is used to access the storage associated with the container
+
+The name of the container
+
+Note: At any given time, a container can be included in only one storage pool.
+
+Each container you add to a new Microsoft Azure storage pool must be empty or have only HCP data in it.
+
+A storage pool is compliant only if all of the containers in the pool are associated with compliant Microsoft Azure storage components. NFS storage pools
+
+Each NFS storage pool contains one or more mount points that are associated with specific NFS storage components. Each NFS storage pool includes all of the storage that’s accessed using the NFS mount points included in the pool.
+
+To enable HCP to access the storage that’s represented by an NFS storage pool, when you create that component, you specify the following information: The storage pool name.
+
+Optionally, a description of the pool. Whether you want HCP to compress object data that’s stored on the storage that’s accessed using the NFS mount points in the storage pool. Whether you want HCP to encrypt object data that’s stored on the storage that’s accessed using the NFS mount points in the storage pool. If encryption is disabled for the
+
+system, this option is not visible. For each NFS mount point you want to include in the storage pool:
+
+The name of the NFS storage component that represents the physical storage device that’s accessed using the NFS mount point The full path name of the directory that you want to access using the NFS mount point
+
+Note: At any given time, an NFS mount point can be included in only one storage pool.
+
+An NFS storage pool is compliant only if all of the NFS mount points in the pool are associated with compliant NFS storage components. When you add an NFS mount point to a new or existing NFS storage pool, HCP creates that mount point and mounts the applicable storage volume (called an NFS volume or an
+
+external storage volume) on a node in the HCP system. HCP then adds that NFS volume to the NFS storage pool.
+
+HCP uses a round-robin algorithm to determine which node to associate with each new NFS volume that’s added to an NFS storage pool. This method of assigning NFS volumes to
+
+the nodes in the HCP system ensures that the volumes are distributed evenly among the nodes.
+
+If the node with which an NFS storage volume is associated becomes unavailable, that volume also becomes unavailable. HCP does not reassign the volume to a different node. When the node returns to service, the volume becomes available again. In the HCP System Management Console, you can use the Hardware and Storage Node pages to view information about the NFS storage volumes (called external storage volumes) that are associated with each node in the HCP system.
+
+Considerations for using NFS volumes
+
+These considerations apply to using NFS volumes with HCP:

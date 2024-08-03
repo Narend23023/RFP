@@ -1,0 +1,41 @@
+storage, HCP writes all copies of the data to that storage.
+
+Each copy of the primary metadata for the object or part points to all copies of the data for that object or part. However, object or part data in primary running storage
+
+is not necessarily stored on the same nodes as the primary metadata for the object or part.
+
+In primary running storage, HCP stores the number of copies of the object or part metadata required to satisfy the ingest tier metadata protection level (MPL) in the service plan. These copies, called secondary metadata, let HCP reconstruct the primary metadata should that become necessary.
+
+If the ingest tier is primary running storage, the MPL is the same as the DPL.
+
+HCP stores MPL copies of any custom metadata for the object in primary running storage. For multipart objects, HCP stores MPL copies of the custom metadata for the object as a whole instead of MPL copies for each part. If the ingest tier is HCP S Series storage, HCP stores one copy of the secondary metadata along with each copy of the object data on that tier.
+
+The following figure shows the data and primary and secondary metadata that result from storing an object in a namespace with a service plan that sets both the DPL and MPL for the ingest tier to 2. The figure assumes that the ingest tier is primary running storage. When an object or part is moved from the ingest tier to another storage tier, HCP stores one copy of the secondary metadata along with each copy of the object or part data on that tier. Regardless of which tier the object or part data is on, HCP always keeps in primary running storage the number of copies of the secondary metadata and custom metadata
+
+required to satisfy the MPL for that tier.
+
+Service scheduling
+
+The Compression/Encryption, Content Verification, Disposition, Duplicate Elimination, Garbage Collection, Geo-distributed Erasure Coding, Protection, HCP S Series Balancing, Scavenging, and Storage Tiering services run according to a weekly schedule. The schedule controls when during the week each service runs and the performance level at which it runs. Within a time period, each scheduled service has a performance level of low, medium, or high. The performance level determines the load the service puts on the HCP system. The higher the performance level, the greater the load.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+105/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Replication service also runs according to a schedule, but this service has its own scheduling interface.
+
+HCP comes with a predefined service schedule named HCP Default Schedule. This schedule cannot be modified or deleted.
+
+HCP with SAN-attached storage systems with spindown storage come with an additional predefined schedule named HCP Spindown Schedule. This schedule is optimized for Storage Tiering service activity against spindown storage. The HCP Spindown Schedule is modifiable. You can create as many other schedules as you want. However, only one schedule can be active at a time. At any time, you can change which schedule is active. For example, you could create two schedules: one that puts a very light load on the system, and one that puts a heavier load on the system. During periods of high system usage, you could activate the first schedule. During periods of low system usage, you could activate the second schedule.
+
+After creating a service schedule, you can modify or delete it. You can modify a schedule regardless of whether it is active. You can delete a schedule only while it is inactive.
+
+Note: Although you can modify or delete the HCP Spindown Schedule, doing this is not recommended because once the schedule is modified or deleted, you cannot restore it.
+
+Instead, create a new schedule based on the HCP Spindown Schedule and then modify the new one. How scheduled services work
+
+The Compression/Encryption, Content Verification, Disposition, Duplicate Elimination, Garbage Collection, Geo-distributed Erasure Coding, Protection, HCP S Series Balancing, Scavenging, and Storage Tiering services each examine objects one at a time, determine whether any action needs to be taken with the object, and if so, take the applicable action. These services, except Scavenging, start with the primary metadata and use that to find the object data. The Scavenging service starts with the secondary metadata, which is stored with the object data.

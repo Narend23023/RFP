@@ -1,0 +1,45 @@
+For example, if the tenant domain name is finance.hcp.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you could add either or both of these lines to the hosts file on the client: 192.168.210.16 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the system through the management API.
+
+Sample hosts file
+
+Here’s a sample hosts file that contains mappings for the Finance tenant for nodes with both IPv4 and IPv6 addresses: 192.168.210.16 finance.hcp.example.com
+
+192.168.210.17 finance.hcp.example.com 192.168.210.18 finance.hcp.example.com 192.168.210.19 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com 2001:0db8::102 finance.hcp.example.com 2001:0db8::103 finance.hcp.example.com 2001:0db8::104 finance.hcp.example.com URL considerations
+
+The following considerations apply to URLs in S3 compatible API requests.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+559/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Case sensitivity in URLs
+
+In the URLs you specify in S3 compatible requests:
+
+HTTP and HTTPS are not case sensitive. Hostnames are not case sensitive. Bucket names are not case sensitive. Unlike the items above, object names are case sensitive. Quotation marks with URLs in command lines
+
+When using a command-line tool to access HCP through the S3 compatible API, you work in a Unix, Mac OS X, or Windows shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters also often indicates that a process should be put in the background.
+
+To avoid the possibility of the Unix, Mac OS X, or Windows shell misinterpreting special characters in a URL, always enclose the entire URL, including any query parameters, in double quotation marks.
+
+Disabling SSL certificate verification
+
+If you’re using HTTPS in your request URLs, check with your tenant administrator as to whether you need to disable SSL certificate verification. You would need to do this if the SSL server certificate presented by the HCP system is not signed by a trusted CA. With s3curl, you disable SSL certificate verification by including ‑k or ‑‑insecure in the request command line.
+
+Authentication
+
+To use the S3 compatible API as an authenticated user, you need to provide credentials. These credentials must be based on the username and password for your HCP user account or, if HCP is configured to support Windows Active Directory® (AD), for an AD user account that HCP recognizes.
+
+To provide credentials, you typically use the HTTP Authorization request header. However, HCP also accepts Active Directory authentication provided through the SPNEGO protocol. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.

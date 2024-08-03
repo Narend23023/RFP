@@ -1,0 +1,41 @@
+Maintaining the correct number of object copies on each tier
+
+Another function of the Storage Tiering service is to maintain the correct number of copies of each object in a namespace on each storage tier that’s defined for that namespace by its service plan.
+
+If the number of object copies on a storage tier is less than the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service creates the
+
+applicable number of new copies of that object on that tier. If the number of copies of an object on a storage tier is higher than the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service deletes all unnecessary copies of that object from that tier. Differences between the Storage Tiering service and the Protection service
+
+The Protection service performs work that is nearly identical to the work performed by the Storage Tiering service to maintain the correct number of copies of object data and metadata on each service tier that’s defined for a namespace. However, the two services perform the work that they do in slightly different ways.
+
+The Storage Tiering service runs only when it’s scheduled to run. When the Storage Tiering service processes an object in a given namespace, the Storage Tiering service first checks to see whether copies of the object data are stored on the correct storage tier and moves the object data among tiers if necessary. The Storage Tiering service then checks
+
+to see whether the correct number of object copies exists on each tier that’s defined for the namespace and takes corrective action if necessary. The Protection service runs when it’s scheduled to run and in response to its triggers. When the Protection service processes an object in a given namespace, the service first checks to see whether the correct number of copies of the object exist on all storage tiers. If not, the Protection service first checks to see whether the correct number of object
+
+copies exist on the active storage tier (the one on which the object is currently supposed to be stored) and takes corrective action if necessary. The Protection service then checks to see if the correct number of object copies exists on the other storage tiers and takes corrective action if necessary.
+
+The Storage Tiering service is designed to optimize storage utilization. The Storage Tiering service, therefore, first moves objects among storage tiers and then checks to make sure all copies of each object in a given namespace have been stored on the correct storage tiers. The Protection service is designed to optimize data availability and maintain the correct level of data redundancy for each object in a given namespace. The Protection service,
+
+therefore, constantly checks to see whether the correct number of copies of the object data are available to clients, and takes corrective action as soon as a violation occurs. When
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+126/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+the Protection service runs on a schedule, it checks the availability of each object on the active storage tier first, and then checks whether the correct number of objects copies exists on the other tiers.
+
+Making objects metadata-only
+
+The third function of the Storage Tiering service is to delete all existing copies of the data for any object that’s moved to a metadata-only storage tier and ensure that the correct number of copies of the metadata for that object are stored on primary running storage.
+
+The Storage Tiering service also restores data for metadata-only objects to the ingest tier. Restoring the data for an object to the ingest tier is called rehydrating the object.
+
+When the Storage Tiering service moves an object off the ingest tier and onto another storage tier, the service removes all copies of the object data from the ingest tier and stores the specified number of copies of the object data on the new storage tier. However, at least one copy of the object metadata must always remain on primary running storage. For each storage tier that’s defined for a given namespace, the service plan specifies the number of copies of object data that must be stored on the tier and the number of copies of
+
+object metadata that must be stored on primary running storage. If a given namespace is being replicated to another system, you can configure the service plan for that namespace to define a metadata-only storage tier. This type of tier specifies the number of copies of object metadata that must be stored on primary running storage, but it also specifies that no copies of the object data can be stored on any storage tier,
+
+including the ingest tier.

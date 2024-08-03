@@ -1,0 +1,45 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+583/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help If the string you specify as the value of the marker query parameter is the name of a folder and does not end with a forward slash (/), items that begin with that string followed by a forward slash are omitted from the listing. The character string you specify for the marker query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The marker parameter name and the character string you specify are both case sensitive. The marker parameter is ignored if specified in a GET request that includes the versions parameter. version-id-marker
+
+You use the version-id-marker parameter in conjunction with the key-marker parameter to start the returned bucket listing with the first item with:
+
+A name that’s equal to the character string specified by the key-marker parameter A version ID that’s greater than the value specified by the version-id-marker parameter
+
+If no such item exists, the returned bucket listing starts with the first item with a name that's alphanumerically greater than the character string specified by the key-marker parameter. For example, the version ID of the first version of the object named mktg/campaign_GoGetEm_expenses.xls is 87288784288321. The bucket listing returned in response to a GET request with the key-marker=mktg/campaign_GoGetEm_expenses.xls and version-id-marker=87288784288321 query parameters contains only these items: mktg/campaign_GoGetEm_expenses.xls (second version) mktg/campaign_LiveIt_expenses.xls quarterly_rpts/ quarterly_rpts/Q2_2019.ppt quarterly_rpts/Q3_2019.ppt quarterly_rpts/Q4_2019.ppt sales/ sales/budget_proposals/ sales/budget_proposals/BudgProp-2020 sales_quotas_2020.pdf
+
+When the response body for a version listing request includes the IsTruncated element with a value of true, the response body also includes the NextKeyMarker and Next VersionIdMarker elements. If the alphanumerically last item in the version listing is:
+
+Is a named item, the values of the NextKeyMarker and NextVersionIdMarker elements are the name and version ID of that item, respectively Is a common prefix, the value the NextKeyMarker element is that prefix, and NextVersionIdMarker is an empty element. To request the next part of the listing, you include the key-marker and version-id-marker query parameters in a new request. For the value of the key-marker parameter, you use the value of the NextKeyMarker element from the previously returned listing. For the value of the version-id-marker parameter, you use the value of the NextVersionId Marker element from the previously returned listing. Valid values for the version-id-marker query parameter are integers greater than or equal to zero. The version-id-marker parameter name is case sensitive. Request headers
+
+The list below describes the headers you can use in a request to list the contents of a bucket.
+
+Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH

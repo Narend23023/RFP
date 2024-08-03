@@ -1,0 +1,131 @@
+These values are not case sensitive.
+
+The default is MOVE.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+495/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+deleteDays
+
+Integer
+
+Specifies the number of days objects flagged as replication collisions must remain in the namespace before they are automatically deleted. Valid values are integers in the range zero through 36,500
+
+This property is required on a POST request when the value of the deleteEnab led property is true. It is invalid on a POST request when the value of the deleteEnabled property is false.
+
+(that is, 100 years). A value of zero means delete immediately.
+
+deleteEnabled Boolean
+
+Specifies whether HCP should automatically delete objects flagged as replication collisions. Valid values are:
+
+true
+
+Automatically delete objects flagged as replication collisions after the number of days specified by the deleteDays property.
+
+false
+
+Do not automatically delete objects flagged as replication collisions. Example
+
+Here’s an XML example of the replicationCollisionSettings data type property:
+
+<replicationCollisionSettings> <action>MOVE</action> <deleteDays>10</deleteDays> <deleteEnabled>true</deleteEnabled> </replicationCollisionSettings>
+
+replicationLink
+
+The replicationLink property describes the replicationLinks property of the linkCandidates resource for erasure coding and the replicationLinks property of the ecTopo logy data type.
+
+replicationLink data type properties
+
+The following table describes the properties included in the replicationLink data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+hcpSystems
+
+List
+
+Lists the two HCP systems included in the replication link. To specify a system, use the fully qualified name of the domain associated with the [hcp_system] network on that system.
+
+This property is optional on a PUT request to create an erasure coding topology.
+
+If a PUT request to create an erasure coding topology does not include the uuid property for a replication link and the name specified for the link is the same as the name of one or more other links, HCP may not know which link you want to include in the topology. To ensure that the correct link is used, the request should include the hcpSystems property for the link you want.
+
+In XML, the element that identifies each system is name. In JSON, the name in the name/value pair that lists the systems is name. name
+
+String
+
+Specifies the name of the replication link.
+
+This property is required on a PUT request to create an erasure coding topology if the request does not include the uuid property for the replication link. Otherwise, the name property is optional.
+
+pausedTenantsCount
+
+Integer Specifies the number of tenants for which replication on the
+
+link is currently paused.
+
+This property is not valid on a PUT request to create an erasure coding topology. It is returned only by a verbose GET request. state
+
+String
+
+Indicates the general health of the replication link. Possible values are:
+
+This property is not valid on a PUT request to create an erasure coding topology. It is returned only by a verbose GET request.
+
+HEALTHY
+
+The specific status of the link is one of these:
+
+oSynchronizing data oScheduled data NOT_REPLICATING
+
+The specific status of the link is one of these:
+
+oSuspended by user oRemote storage full, link suspended oLocal storage full, link suspended oFailed over
+
+UNHEALTHY
+
+The specific status of the link is one of these:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+496/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+oHigh error rate oStalled link oUnrecognized link oBroken link UNKNOWN
+
+HCP cannot determine the specific status of the link.
+
+uuid
+
+String
+
+Specifies the unique ID for the replication link.

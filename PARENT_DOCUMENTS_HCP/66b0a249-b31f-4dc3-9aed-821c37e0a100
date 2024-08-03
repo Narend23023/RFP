@@ -1,0 +1,71 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+833/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Access and authentication
+
+With the HCP metadata query API, each request you make must specify a URL that represents an HCP tenant, the default tenant, or all tenants to which system-level users have
+
+access. Each request must also include the credentials for the user account you’re using to access namespaces through the metadata query API. Your user account determines which namespaces you can access.
+
+This chapter describes request URLs and explains how to include account credentials in a metadata query API request. The examples in this book use cURL and Python with PycURL, a Python interface that uses the libcurl library. cURL and PycURL are both freely available open-source software. You can download them from http://curl.haxx.se.
+
+Request URL
+
+The URL format in a metadata query API request depends on whether you use a hostname or IP address to connect to the HCP system and on the namespaces you want to query.
+
+Connecting using a hostname
+
+When connecting to HCP using a hostname, the URL format you use depends on the namespaces you are querying:
+
+One or more namespaces owned by an HCP tenant
+
+To query one or more namespaces owned by an HCP tenant, use this format: http[s]://hcp-tenant-name.hcp-domain-name/query
+
+For example:
+
+https://europe.hcp.example.com/query
+
+To use this format, you need either a tenant-level user account or, if the tenant has granted system-level users administrative access to itself, a system-level user account. In either
+
+case, the account must be configured to allow use of the metadata query API.
+
+When you use a tenant-level user account, HCP returns results only for objects in namespaces for which the tenant-level user has search permission.
+
+Unlike with requests to the /rest interface, you do not specify a namespace in this URL. Only the default namespace
+
+To query only the default namespace, use this format:
+
+https://default.hcp-domain-name/query
+
+For example:
+
+https://default.hcp.example.com/query
+
+o use this format, you need a system-level user account that’s configured to allow the user to use the metadata query API.
+
+For this URL format, you need to use HTTP with SSL security (HTTPS). If the query specifies HTTP instead of HTTPS in the URL, HCP returns a 403 (Forbidden) error. Entire repository
+
+To query the entire repository (that is, both the default namespace and all namespaces owned by each tenant that has granted system-level users administrative access to itself), use this format:
+
+https://admin.hcp-domain-name/query
+
+For example:
+
+https://admin.hcp.example.com/query
+
+To use this format, you need a system-level user account that ‘s configured to allow use of the metadata query API.
+
+For this URL format, you need to use HTTP with SSL security (HTTPS). If the query specifies HTTP instead of HTTPS in the URL, HCP returns a 403 (Forbidden) error. Considerations
+
+The following considerations apply to these URLs:
+
+The URL must specify query, in all lowercase, as the first element following the hostname in the URL. If the URL specifies HTTPS and the HCP system uses a self-signed SSL server certificate, the request must include an instruction not to perform SSL certificate verification. With cURL, you do this by including the -k option in the request command line. In Python with PycURL, you do this by setting the SSL_VERIFYPEER option to false.
+
+Connecting using an IP address
+
+The core hardware for an HCP system consists of servers, called nodes, that are networked together. When you access an HCP system, your point of access is an individual node. Typically, you let HCP choose the node on which to process a metadata query API request. You can, however, use an IP address in the URL to access the system on a specific

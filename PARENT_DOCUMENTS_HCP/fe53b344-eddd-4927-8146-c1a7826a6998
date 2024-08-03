@@ -1,0 +1,105 @@
+Specifies the automatic failover and failback settings for the remote system for the replication link.
+
+This property is optional on a PUT request to create a replication link. Example
+
+Here’s an XML example of the failoverSettings data type; the properties shown are those that are returned by a GET request sent to the primary system for an active/passive link:
+
+<failoverSettings> <remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>120</autoFailoverMinutes> <autoCompleteRecovery>false</autoCompleteRecovery> <autoCompleteRecoveryMinutes>60</autoCompleteRecoveryMinutes> </remote> </failoverSettings>
+
+groupAccount
+
+The groupAccount data type describes the groupAccounts resource.
+
+Properties
+
+The table below describes the properties included in the groupAccount data type.
+
+Property
+
+Data Type
+
+Description
+
+Notes
+
+allowNamespace
+
+Management
+
+Boolean
+
+Specifies whether the group account has the allow namespace management property. Valid values are:
+
+This property is not valid on a PUT request. It is valid on a POST request only if the user making the request has the administrator role. true
+
+The group account has the allow namespace property.
+
+false
+
+The group account does not have the allow namespace management property.
+
+On a PUT request, the default is true if the roles property includes ADMINISTRATOR in the same request; otherwise, the default is false.
+
+On a POST request, adding ADMINISTRATOR to the roles for the group account automatically enables the allow namespace management property for the account.
+
+Users in groups with the allow namespace management property can use the HCP management and S3 compatible APIs to:
+
+Create namespaces List, view and change the versioning status of, and delete namespaces they own externalGroupID
+
+String
+
+Specifies the security identifier (SID) of the AD group that corresponds to the HCP group account. For a PUT request, valid values are the SIDs of AD groups defined in the AD forest supported by HCP.
+
+Either this property or the groupname property is required on a PUT request. If you include both properties in the request body, they must identify the same AD group.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request and only when the user making the request has the security role. groupname
+
+String
+
+Specifies the name of the HCP group account. For a PUT request, valid values are the names of AD groups defined in the AD forest supported by HCP, in either of these formats:
+
+Either this property or the externalGroupID property is required on a PUT request. If you include both properties in the request body, they must identify the same AD group.
+
+This property is not valid on a POST request. group-name
+
+group-name@ad-domain- name
+
+If you omit the domain name, HCP uses the AD domain specified in the system configuration.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+466/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data Type
+
+Description
+
+Notes
+
+Be sure to use the second format if a group with the specified name exists in more than one domain in the AD forest or if the group name looks like a SID. roles
+
+List
+
+Associates zero, one, or more roles with the group account. Valid values for roles are:
+
+This property is valid on a POST request and returned by a GET request only when the user making the request has the security role.
+
+ADMINISTRATOR COMPLIANCE MONITOR SECURITY
+
+A user with the ADMINISTRATOR role cannot POST this property.
+
+These values are not case sensitive.
+
+The default is no roles.
+
+For an existing group account, the set of roles specified in the request body replaces the set of roles currently associated with the group account. To remove all roles, specify an empty set.
+
+In XML, the element that identifies each role is role. In JSON, the name in the name/value pair that lists the roles is role. Example
+
+Here’s an XML example of the groupAccount data type:

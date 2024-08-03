@@ -1,0 +1,107 @@
+Chargeback statistics either reflect a point in time or are dynamic. Point-in-time statistics are measurements taken at the end of a reporting interval, such as the used storage capacity for a namespace at the end of an hour. Dynamic statistics are measurements, such as the number of reads or writes to a namespace, that are accumulated over time. HCP accumulates dynamic statistics on an hourly basis, starting at the beginning of each hour. So, for example, if the reporting interval is an hour, one statistic might represent the number of successful writes to a namespace that occurred between 11:00:00 and 11:59:59. If the reporting interval is a day, each reported dynamic statistic is the sum of the hourly values for the day, where the day starts at 00:00:00 and ends at 23:59:59. Properties
+
+The table below describes the properties included in the chargebackData data type. When the output format for a chargebackReport resource is CSV, the properties included in the chargebackData data type are ordered. This table lists the properties in the order in which they appear in a CSV response body. Property name
+
+Data type
+
+Description
+
+Notes
+
+systemName
+
+String
+
+One of:
+
+The name of the domain associated with the [hcp_system] network for the HCP system to which the set of aggregated statistics in the line applies The name of the domain associated with the data access network for the tenant to which the set of aggregated statistics in the line applies The name of the domain associated with the data access network for the tenant that owns the namespace to which the set of statistics in the line applies tenantName
+
+String
+
+Either:
+
+The name of the tenant to which the set of statistics applies
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+Notes
+
+446/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+The name of the tenant that owns the namespace to which the set of statistics applies namespaceName
+
+String
+
+The name of the namespace to which the set of statistics applies.
+
+For aggregated namespace statistics, this property has no value.
+
+startTime
+
+String
+
+The start time of the reporting interval to which the set of statistics applies, in this ISO 8601 format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+Z represents the offset from UTC, in this format:
+
+(+|-)hhmm For example:
+
+2017-02-18T14:00:00-0500
+
+endTime
+
+String
+
+The end time of the reporting interval to which the set of statistics applies, in the same ISO 8601 format as is used for the startTime property.
+
+objectCount
+
+Long
+
+This is a point-in-time statistic.
+
+The total number of objects currently stored in the given namespace or in all the namespaces owned by the given tenant.
+
+Each version of an object counts as a separate object. The object count does not include object versions that are delete markers or delete records.
+
+Each multipart object counts as a single object. Objects that are in the process of being created by multipart uploads are not included in the object count. ingestedVolume
+
+Long
+
+The total size of the currently stored data and custom metadata, in bytes, before it was added to the given namespace or to all the namespaces owned by the given tenant.
+
+This is a point-in-time statistic.
+
+Long
+
+This is a point-in-time statistic.
+
+storageCapacity
+
+Used
+
+The total number of bytes currently occupied by stored data in the given namespace or in all the namespaces owned by the given tenant. This includes object data, metadata, and any redundant data required to satisfy the applicable service plan.
+
+Used storage capacity also includes storage occupied by the parts of in-progress multipart uploads that have already been written to HCP. Used storage capacity does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads. bytesIn
+
+Long
+
+This is a dynamic statistic.
+
+The total number of bytes successfully written to the given namespace or to all the namespaces owned by the given tenant during the reporting interval.

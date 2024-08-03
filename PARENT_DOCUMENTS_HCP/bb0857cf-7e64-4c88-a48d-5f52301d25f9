@@ -1,0 +1,47 @@
+Important: To prevent data loss in namespaces that are not being replicated and that have service plans that set the ingest tier DPL to 1, always migrate data off a device before submitting a request to your authorized HCP service provider to remove the device from the HCP system. Considerations for migrations on HCP with internal storage systems
+
+Using the Migration service to retire nodes in an HCP with internal storage system entails removing nodes from the system and, optionally, adding new nodes. After any new nodes are added to the HCP system but before you begin the data migration, you need to:
+
+For each combination of domain and network configured in the DNS, remove the IP addresses of the nodes being retired and add the IP addresses of any new nodes For each replication link that identifies the HCP system by its IP addresses, remove from the link configuration the IP addresses of the nodes that are being retired and add the IP addresses of any new nodes
+
+Target storage requirements for HCP with SAN-attached storage systems
+
+The information in this section is intended for your SAN storage administrator. It outlines storage requirements that, if not met, prevent a data migration from being started.
+
+Each node in an HCP with SAN-attached storage system must have one OS LUN and at least two data LUNs. If a LUN being migrated is the OS LUN for a node, a replacement for that LUN must be added to the node before the data migration can occur. If the existing LUN is number zero, the new LUN must be number 128. If the existing LUN is number 128, the new LUN must be number zero. Additionally, the new LUN must have a capacity of at least 30 GB. Migration procedure
+
+The complete procedure for retiring a device is:
+
+1. Take one of these actions:
+
+Optionally, for a HCP with internal storage system, submit a request to your authorized HCP service provider to add one or more storage nodes to the system. After a
+
+data migration is finalized, the HCP system must still have at least four storage nodes. For a HCP with SAN-attached storage system, either submit a request to your SAN storage administrator and your authorized service provider to add one or more storage nodes to the system or work together with your authorized service provider to add LUNs to the nodes on which all of the existing LUNs are on the storage arrays that you’re retiring.
+
+2. For a HCP with internal storage system, update the DNS and any replication links as needed.
+
+3. Configure the data migration by selecting the devices to be retired. HCP can perform only one data migration at a time. Therefore, you should select all of the devices that you want to retire so that you don’t have to run multiple sequential data migrations.
+
+Certain hardware errors, such as a degraded RAID group on a source or target node, prevent you from configuring a data migration. In such cases, you need to fix the problem before you can continue.
+
+4. Review the configuration of the data migration.
+
+If the migration configuration is not acceptable, HCP provides detailed information about the problems.
+
+5. Submit requests to your authorized HCP service provider and/or your SAN administrator (if you’re migrating storage off a HCP with SAN-attached storage system), as
+
+necessary, to fix any reported problems.
+
+6. Optionally, enter a description for the data migration and/or change the performance level for the Migration service. 7. Ensure that all of the nodes in the HCP system are running and healthy.
+
+8. Start the data migration. If any nodes become unavailable while the Migration service is running, the service stops migrating data. When those nodes become available, the service automatically
+
+starts migrating data again.
+
+9. Monitor the data migration and manage it by changing the performance level or pausing the migration, as needed. You can also modify the migration description at any time
+
+(for example, to record when and how long the migration was paused).
+
+10. When the data migration is complete (that is, the migration status is Migrated):
+
+If a migration report is available, review it. This report identifies tenants that own namespaces containing unacknowledged irreparable objects. For the default tenant and for HCP tenants that are configured to allow system-level users to manage them, the report also lists the unacknowledged irreparable objects in those namespaces. If the Migration service encounters one or more objects that it cannot migrate, it marks those objects as irreparable (if they weren’t already marked that way).

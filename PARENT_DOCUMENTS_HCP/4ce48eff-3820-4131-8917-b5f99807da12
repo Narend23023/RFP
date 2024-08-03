@@ -1,0 +1,47 @@
+A chargeback report contains statistics for each namespace owned by the current tenant. It also contains aggregated namespace statistics for the tenant. For example, the total number of reads for the tenant during a given reporting interval is the total number of successful read operations that occurred during that interval in each of the tenant's namespaces.
+
+When generated from the Tenant Management Console, chargeback reports are in CSV format. Each line in a report contains the values for one namespace or for the tenant during one instance of the reporting interval.
+
+The lines in a chargeback report are ordered alphabetically by namespace name. The lines for the tenant are at the end of the report. Multiple lines for a namespace or the tenant are ordered in ascending chronological order.
+
+Roles: To generate chargeback reports, you need the monitor or administrator role. Types of chargeback reports
+
+You use the Chargeback page in the Tenant Management Console to generate chargeback reports. From this page, you can generate an hourly, daily, or monthly report:
+
+Hourly report
+
+Includes statistics for the most recent full hour, plus the statistics accumulated so far for the current hour. For example, if you request the report at 2:30:15 p.m., it will contain one set of statistics for the period of time between 1:00:00 p.m. and 1:59:59 p.m. and another set of statistics for the period of time between 2:00:00 p.m. and 2:30:15 p.m. Daily report
+
+Includes statistics for the most recent full day, plus the statistics accumulated so far for the current day. For example, if you request the report at 2:30:15 p.m. on October 7th, it will contain 24 sets of statistics for the period of time between 00:00:00 and 23:59:59 on October 6th and 15 sets of statistics for the period of time between 00:00:00 and 2:30:15 p.m. on October 7th. Monthly report
+
+Includes statistics for the past 30 days, plus the statistics accumulated so far for the current day. For example, if you request the report at 2:30:15 p.m. on October 7th, it will
+
+contain 24 sets of statistics for each of the past 30 days and 15 sets of statistics for the period of time between 00:00:00 and 2:30:15 p.m. on October 7th.
+
+The statistics reported for the current hour may not reflect some reads and writes that have already occurred during the hour. After the hour is past, however, the statistics reported
+
+for it are complete.
+
+Tip: You can use the HCP management API to generate chargeback reports that cover longer time periods and are in XML, JSON, or CSV format. This allows you to create applications that generate chargeback reports at regular intervals and feed those reports to a billing system. For information about using the management API to generate chargeback reports, see HCP Management API Reference.
+
+Generating a chargeback report
+
+To generate a chargeback report, you need the monitor or administrator role.
+
+1. In the top-level menu of the Tenant Management Console, select Monitoring > Chargeback. 2. On the Chargeback page: As applicable:
+
+Click Hourly Chargeback Report. Click Daily Chargeback Report. Click Monthly Chargeback Report.
+
+3. Select the browser-specific option for downloading the report.
+
+By default, the name of the downloaded report file is either Hourly-Chargeback-Report.csv, Daily-Chargeback-Report.csv, or Monthly-Chargeback-Report.csv, as applicable.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+269/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Chargeback statistics collection Chargeback statistics either reflect a point in time or are dynamic. Point-in-time statistics are measurements taken at the end of a reporting interval, such as the used storage capacity for a namespace at the end of an hour. Dynamic statistics are measurements, such as the number of reads or writes to a namespace, that are accumulated over time.

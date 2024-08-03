@@ -1,0 +1,35 @@
+POST /mapi/tenants/finance/userAccounts/mwhite HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 120
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Changing the data access permissions associated with a user account
+
+Here’s a sample POST request that changes the data access permissions associated with the user account with the username pblack. The new set of permissions is specified in an XML file named pblack-UAperms.xml. The file includes permissions for both the Accounts-Receivable and Accounts-Payable namespaces. The request is made using a tenant-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <dataAccessPermissions> <namespacePermission> <namespaceName>Accounts-Receivable</namespaceName> <permissions> <permission>READ</permission> <permission>BROWSE</permission> <permission>WRITE</permission> <permission>DELETE</permission>
+
+<permission>PURGE</permission> <permission>SEARCH</permission> </permissions> </namespacePermission> <namespacePermission> <namespaceName>Accounts-Payable</namespaceName>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+442/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<permissions> <permission>READ</permission> </permissions> </namespacePermission> </dataAccessPermissions>
+
+Request with cURL command line
+
+curl -k -i -d @pblack-UAperms.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/userAccounts/ pblack/dataAccessPermissions"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("pblack-UAperms.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://finance.hcp.example.com:9090/mapi/tenants/finance/" + "userAccounts/pblack/dataAccessPermissions") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.INFILESIZE, os.path.getsize("pblack-UAperms.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+POST /mapi/tenants/finance/userAccounts/pblack/dataAccessPermissions HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 572
+
+Response headers

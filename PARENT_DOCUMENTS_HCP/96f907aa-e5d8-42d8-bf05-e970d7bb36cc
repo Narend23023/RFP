@@ -1,0 +1,97 @@
+These values are case sensitive.
+
+The httpProtocol data type includes properties for both the HTTP and WebDAV protocols. .../tenants/tenant-name/namespaces/namespace-name/replicationCollisionSettings
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+replication Collision Settings
+
+GET
+
+Retrieve the replication collision handling settings for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role For the default namespace, system-level user account with the monitor or administrator role POST
+
+Modify the replication collision handling settings for a
+
+namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/statistics
+
+Data type Method
+
+Use
+
+Access
+
+Notes
+
+statistics
+
+GET
+
+Retrieve information about the content of a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator
+
+role For the default namespace, system-level user account with the monitor or administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/versioningSettings Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+versioning
+
+Settings
+
+GET
+
+POST
+
+Retrieve the versioning settings for a namespace
+
+Modify the versioning settings for a namespace
+
+Tenant-level user account with the monitor or administrator role or the allow namespace management property
+
+Tenant-level user account with the administrator role or the allow namespace management property
+
+A user with the allow namespace management property and no roles can retrieve and modify only the versioning enabled property and that property only for the namespaces the user owns. Not valid for the default namespace.
+
+DELETE
+
+Delete the versioning settings for a namespace
+
+Tenant-level user account with the monitor or administrator role or the allow namespace management property
+
+Example: Creating an HCP namespace
+
+Here’s a sample PUT request that creates an HCP namespace named Accounts-Receivable for the Finance tenant. The namespace definition is in an XML file named AccountsRecNS.xml. The request is made using a tenant-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <namespace> <name>Accounts-Receivable</name> <description>Created for the Finance department at Example Company by Lee Green on 2/9/2017.</description> <hashScheme>SHA-256</hashScheme> <enterpriseMode>true</enterpriseMode> <hardQuota>50 GB</hardQuota> <softQuota>75</softQuota> <servicePlan>Short-Term-Activity</servicePlan>
+
+<optimizedFor>CLOUD</optimizedFor> <versioningSettings> <enabled>true</enabled> <prune>true</prune> <pruneDays>10</pruneDays> <useDeleteMarkers>true</useDeleteMarkers> </versioningSettings> <multipartUploadAutoAbortDays>10</multipartUploadAutoAbortDays> <searchEnabled>true</searchEnabled> <indexingEnabled>true</indexingEnabled>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+410/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <customMetadataIndexingEnabled>true</customMetadataIndexingEnabled> <customMetadataValidationEnabled>true</customMetadataValidationEnabled> <replicationEnabled>true</replicationEnabled> <allowErasureCoding>true</allowErasureCoding> <readFromReplica>true</readFromReplica> <serviceRemoteSystemRequests>true</serviceRemoteSystemRequests> <tags> <tag>Billing</tag> <tag>lgreen</tag> </tags> </namespace> Request with cURL command line

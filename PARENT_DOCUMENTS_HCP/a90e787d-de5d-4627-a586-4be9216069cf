@@ -1,0 +1,131 @@
+This property is optional on a PUT request to create a replication link. Example
+
+Here’s an XML example of the remote data type that describes the remote property of the failoverSettings data type; the properties shown are those that are returned by a GET request sent to the primary system for an active/passive link:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+494/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>120</autoFailoverMinutes> <autoCompleteRecovery>false</autoCompleteRecovery> <autoCompleteRecoveryMinutes>60</autoCompleteRecoveryMinutes> </remote>
+
+remote (data type for replication link schedule remote property)
+
+The remote data type in this section describes the remote property of the schedule data type that describes the schedule resource for replication links. Replication link schedule local data type properties
+
+The following table describes the properties included in the local data type that describes the local property of the schedule data type.
+
+Property name
+
+Data type
+
+Description
+
+scheduleOverride String
+
+Specifies an override for the local schedule for the replication link. Valid values are: LOW
+
+The performance level is low for the entire week.
+
+MEDIUM
+
+The performance level is medium for the entire week.
+
+HIGH
+
+The performance level is high for the entire week.
+
+CUSTOM
+
+The performance level is the custom setting for the entire week.
+
+NONE
+
+The schedule for the link is not overridden.
+
+These values are not case-sensitive.
+
+To remove an existing override, specify NONE as the value for this property. If you don’t explicitly remove an existing override when changing the local schedule, the override remains in effect. transition
+
+transition Specifies a scheduled change of performance level for the replication link on the local system.
+
+Example
+
+Here’s an XML example of the local data type that describes that describes the local property of the schedule data type:
+
+<remote> <scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Mon:00</time> <performanceLevel>MEDIUM</performanceLevel> </transition> </remote> replicationCollisionSettings
+
+The replicationCollisionSettings data type describes the replicationCollisionSettings resource for namespaces.
+
+Properties
+
+The table below describes the properties included in the replicationCollisionSettings data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+action
+
+String
+
+Specifies how HCP should handle objects flagged as replication collisions. Valid values are: MOVE
+
+Move the object to the .lost+found directory in the same namespace.
+
+RENAME
+
+Rename the object in place.
+
+When renaming an object, HCP changes the object name to object -name.collision.
+
+These values are not case sensitive.
+
+The default is MOVE.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+495/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+deleteDays
+
+Integer
+
+Specifies the number of days objects flagged as replication collisions must remain in the namespace before they are automatically deleted. Valid values are integers in the range zero through 36,500
+
+This property is required on a POST request when the value of the deleteEnab led property is true. It is invalid on a POST request when the value of the deleteEnabled property is false.
+
+(that is, 100 years). A value of zero means delete immediately.
+
+deleteEnabled Boolean
+
+Specifies whether HCP should automatically delete objects flagged as replication collisions. Valid values are:
+
+true
+
+Automatically delete objects flagged as replication collisions after the number of days specified by the deleteDays property.
+
+false
+
+Do not automatically delete objects flagged as replication collisions. Example
+
+Here’s an XML example of the replicationCollisionSettings data type property:

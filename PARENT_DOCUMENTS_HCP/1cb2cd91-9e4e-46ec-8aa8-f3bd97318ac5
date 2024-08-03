@@ -1,0 +1,37 @@
+With an active/active link, clients can make configuration changes and changes to namespace content on both HCP systems involved in the link. This situation can result in configuration and content collisions.
+
+With an active/passive link, if clients are allowed to make changes on both HCP systems involved in the link while the link is failed over to the replica, configuration and content collisions can occur on failback. Collisions can also occur on failback if changes made on the replica while a link is failed over conflict with configuration or content that was not yet replicated at the time of failover.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+334/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help The way HCP handles collisions that occur due to replication depends on the type of collision. The general rule for namespace content is that more recent changes have priority over conflicting less recent changes. If conflicting changes occur at exactly the same time, HCP gives priority to the change that occurred on the system where the link was created.
+
+When configuration changes result in a conflict, the Replication service pauses replication or recovery of the tenant, as applicable.
+
+Note: If the system time is not in sync on the two systems involved in a replication link, replication collision handling may have unexpected results. Object content collisions
+
+An object content collision occurs when:
+
+For an HCP namespace without versioning enabled, these events occur in the order shown:
+
+1. An object is created with the same name in that namespace on both systems involved in a replication link, but the object has different content on the two systems. 2. The object on one of the systems is replicated to the other system.
+
+If versioning is enabled for the namespace, no collision occurs. Instead, the less recently created of the two objects becomes an old version of the more recently created object. If the two objects were created at exactly the same time, the object that was created on the system where the link was created is treated as the newer version.
+
+For a default-namespace folder, these events occur in the order shown: 1. An object is created with the same name in that folder on both systems involved in a replication link, but the object has different content on the two systems. 2. The object on one of the systems is replicated to the other system.
+
+When an object content collision occurs, the more recently created object keeps its name and location. The other object is either moved to the .lost+found folder in the same namespace or renamed, depending on the namespace configuration. If the two objects were created at exactly the same time, the object that was created on the system where the link was created keeps its name and location.
+
+When HCP moves an object to the .lost+found folder, the full object path becomes .lost+found/replication/link-id/old-object-path. When renaming an object due to a content collision, HCP changes the object name to object-name.collision or object-name.version-id.collision, where version-id is the version ID of the object. HCP uses the second format only if versioning has ever been enabled for the namespace that contains the object but is not currently enabled.
+
+If the new name is already in use, HCP changes the object name to object-name.1.collision or object-name.version-id.1.collision, as applicable. If that name is already in use, HCP successively increments the middle integer by one until a unique name is formed.
+
+Objects that have been relocated or renamed due to content collisions are flagged as replication collisions in their system metadata. Clients can use the metadata query API to search for objects that are flagged as replication collisions. If an object that has been flagged as a replication collision changes (for example, if its retention period is extended), its collision flag is removed. If a client creates a copy of a flagged object with a new name, the collision flag is not set on the copy.
+
+Namespaces can be configured to have the DIsposition service automatically delete objects that are flagged as replication collisions. When selecting this option for a namespace, the tenant administrator specifies the number of days the DIsposition service should wait before deleting such an object. The days are counted from the time the collision flag is set. If the collision flag is removed from an object, the object is no longer eligible for deletion by the DIsposition service.
+
+System metadata collisions

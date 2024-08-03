@@ -1,0 +1,123 @@
+true
+
+HCP periodically sends its domains and SSL server certificates to each other system with which it participates as a sending system in a replication link.
+
+false
+
+HCP does not send its domains and SSL server certificates to other systems.
+
+The default is false.
+
+network
+
+String
+
+Specifies the replication network for the HCP system. Valid values are any network defined in the HCP system except [hcp_backend]. The default is [hcp_system].
+
+Network names are not case-sensitive. status
+
+String
+
+Specifies whether all activity on all replication links in which the HCP system participates is
+
+currently stopped. Possible values are:
+
+ENABLED
+
+Activity on each replication link in which the system participates is occurring according the individual link status.
+
+SHUTDOWN
+
+All activity on all replication links in which the system participates is currently stopped. verification
+
+String
+
+Specifies whether replication verification is enabled for the HCP system. Possible values are:
+
+ON
+
+Replication verification is set to continuously run.
+
+ONCE
+
+Replication verification is set to run only on.
+
+OFF
+
+Replication verification is disabled.
+
+Example
+
+Here’s an XML example of the replicationService data type:
+
+<replicationService> <allowTenantsToMonitorNamespaces>false</allowTenantsToMonitorNamespaces> <enableDNSFailover>true</enableDNSFailover> <network>[hcp_system]</network> <connectivityTimeoutSeconds>30</connectivityTimeoutSeconds> <status>ENABLED</status> <verification>ONCE</verification> </replicationService>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+This data type has been deprecated and should not be used.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+498/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Query parameters for Replication service actions
+
+To shut down all replication links in which the HCP system participates, you use this query parameter: shutDownAllLinks=reason
+
+reason is a text string that specifies the reason why you’re shutting down all links. This string can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space. The string you specify must be percent encoded.
+
+To reestablish all replication links in which the HCP system participates after they have been shut down, you use this query parameter: reestablishAllLinks
+
+You use the shutDownAllLinks and reestablishAllLinks query parameters with a POST request against the replication resource. You cannot include a request body with this request.
+
+Here’s a sample POST request that shuts down all replication links:
+
+curl -k -iX POST -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp-ma.example.com:9090/mapi/services/replication ?shutDownAllLinks=More%20bandwidth%20for%20app%20XYZ" retentionClass
+
+The retentionClass data type describes the retentionClasses resource.
+
+Properties
+
+The table below describes the properties included in the retentionClass data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+allowDisposition
+
+Boolean
+
+Specifies whether HCP automatically
+
+This property is required on a PUT request
+
+deletes expired objects in the retention class. Valid values are:
+
+when the value of the retention class is an offset. It is ignored if the value is not an offset. true
+
+false
+
+Automatically delete expired objects.
+
+Do not automatically delete expired objects.
+
+This property is required on a POST request when the retention class value is being changed to an offset from another type of value.
+
+description
+
+String
+
+Specifies a description of the retention class. This description is optional. The default is no description.
+
+To remove a description from an existing retention class, specify the description property with no value. name
+
+String

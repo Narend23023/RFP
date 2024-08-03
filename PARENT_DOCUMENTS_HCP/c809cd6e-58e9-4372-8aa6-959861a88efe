@@ -1,0 +1,109 @@
+If the lowest-numbered node changes at any time (for example, because of prolonged node unavailability or the addition of a node with a lower number), you need to update the
+
+each CB 320 server configuration accordingly.
+
+For information about configuring CB 320 servers, see the applicable Hitachi documentation. About the individual HCP G Series Node pages
+
+On the Hardware > Nodes page you can click any of the general nodes to go to their individual page. The General Node page contains information about the node’s hardware status
+
+and events.
+
+Hardware status
+
+The Hardware Status section of an individual General Node page summarizes the current operating conditions of various components of the node you’re examining, and provides links to more detailed information about each component.
+
+To display more detailed information about a given component, click the table row containing the component summary. To hide the details, click on the row again.
+
+If any component is malfunctioning, the Hardware Status section automatically displays detailed information about that component. Logical volume usage details
+
+When you click Logical volume usage, the Console displays the following information for each logical volume that’s managed by the node you’re currently viewing:
+
+Volume ID
+
+The logical volume type and ID and, for NFS volumes, the share path and the name of the extended storage pool that contains the NFS volume. The volumes are not
+
+necessarily listed in numeric order. Status
+
+The logical volume status.
+
+Capacity
+
+The total number of bytes of storage on the logical volume.
+
+Used
+
+The number of bytes of storage that are currently in use on the volume. This number includes bytes occupied by parts of in-progress multipart uploads, including replaced
+
+parts, parts uploaded for aborted multipart uploads, and unused parts of completed multipart uploads until these parts are automatically deleted by the Garbage Collection service.
+
+Percent Used
+
+The percentage of storage space that’s currently in use on the volume.
+
+Note: Each node also has a logical volume for the operating system, but that logical volume is not included in this display.
+
+For HCP with SAN-attached storage systems that also have internal storage, this display does not include the logical volumes on the internal drives. Core hardware details
+
+When you click Core hardware, the Console displays the following information about the core hardware for the node you’re currently examining:
+
+Platform Hardware
+
+The type of hardware used for the node:
+
+For a standalone server, this is the type of server, as reported by the server.
+
+For a blade in a CB 320 server, this is Hitachi Compute Blade 320.
+
+For a node in an HCP VM system, this is VMware Virtual Platform.
+
+When connecting the switch to the HCP system, use the following figures to identify the ports in these figures:
+
+Blue denotes the back-end network.
+
+Red denotes the front-end network.
+
+Orange denotes the Fiber HBA and is present in SAN configurations only.
+
+Note: The BMC connector on the server is designated by a wrench icon. Figure. G11-BaseT FE and BE Interfaces
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+33/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Figure. G11-BaseT-FE SFP+BE Interfaces
+
+Figure. G11-SFP+ FE and SFP+ BE Interfaces
+
+Figure. G11-SFP+FE BaseT-BE Interfaces Status
+
+The status of the node. Possible values are:
+
+Available
+
+The node is running.
+
+Unavailable
+
+The node is either not running, starting up but not yet able to perform HCP functions, or shutting down and no longer able to perform HCP functions.
+
+Migrating
+
+The Migration service is currently migrating data out of the storage managed by the node.
+
+If the status of a node changes spontaneously from available to unavailable and the node does not restart automatically, contact your authorized HCP service provider. Do
+
+not attempt to restart the node manually; doing so could cause the loss of information needed to diagnose the problem. Last Status Update Time
+
+The time of the last update to the node status.
+
+Node ID
+
+The number assigned to the node.
+
+[hcp_system]
+
+All IPv4 and IPv6 addresses assigned to the node for the [hcp_system] network.

@@ -1,0 +1,101 @@
+"department.Accounting.department" </query>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+860/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<objectProperties>shred,retention</objectProperties>
+
+<sort>changeTimeMilliseconds+desc</sort> </object> </queryRequest>
+
+Request with cURL command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "Content-Type: application/xml" -H "Accept: application/json" -d @Accounting.xml "https://europe.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL
+
+import pycurl import os curl = pycurl.Curl()
+
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER,
+
+["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/json"]) # Set the request body from an XML file
+
+filehandle = open("Accounting.xml", 'rb') curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.INFILESIZE,
+
+os.path.getsize("Accounting.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+POST /query?prettyprint HTTP/1.1
+
+Host: europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Content-Type: application/xml Accept: application/json
+
+Content-Length: 192
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Transfer-Encoding: chunked JSON response body
+
+To limit the example size, the JSON below shows only one object in the result set.
+
+{"queryResult:
+
+{"query": {"expression":"customMetadataContent:
+
+"department.Accounting.department""}, "resultSet":[
+
+{"version":84689494804123, "operation":"CREATED",
+
+"urlName":"https://finance.europe.hcp.example.com/rest/presentations/
+
+Q1_2012.ppt", "changeTimeMilliseconds":"1334244924615.00",
+
+"retention":0, "shred":false},
+
+. .
+
+. ],
+
+"status":{ "message":"", "results":12, "code":"COMPLETE"}
+
+} }
+
+Custom metadata file for the Q1_2012.ppt object
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+861/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<?xml version="1.0">
+
+<presentation>
+
+<presentedBy>Lee Green</presentedBy> <department>Accounting</department>
+
+<slides>23</slides> <date>04-01-2012</date> </presentation>

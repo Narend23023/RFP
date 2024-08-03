@@ -1,0 +1,81 @@
+"query?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.POST, 1)
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file filehandle = open("ReplicationCollisions.xml", 'rb')
+
+curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST")
+
+curl.setopt(pycurl.INFILESIZE,
+
+os.path.getsize("ReplicationCollisions.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+POST /query?prettyprint HTTP/1.1 Host: europe.hcp.example.com
+
+Content-Type: application/xml Accept: application/xml
+
+Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Content-Length: 233 Response headers
+
+HTTP/1.1 200 OK
+
+Transfer-Encoding: chunked
+
+XML response body
+
+<?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2019/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/query-result-9.0.xsd">
+
+<query start="0"
+
+end="1395694699683" /> <resultSet /> <status results="0"
+
+message=""
+
+code="INCOMPLETE" /> </queryResult>
+
+Usage considerations
+
+Hostname and IP address considerations for paged queries
+
+For operation-based queries, HCP caches each query for a period of time on the node that receives the request. If you use an IP address in the URL in each request, you access the cached query and avoid having to recreate the query with each request. This can significantly improve the performance of paged queries that return metadata for large numbers of objects.
+
+Some HTTP libraries cache HTTP connections. Programs using these libraries may automatically reconnect to the same node for paged queries. In this case, using a hostname to
+
+establish the connection provides the same performance benefit as using an IP address.
+
+Maximum concurrent queries
+
+HCP nodes can each process a maximum of five concurrent queries. If a query arrives at a node that is currently processing five queries, HCP queues the query and processes it as
+
+soon as the current queries are complete. A 503 (Service Unavailable) error code is only returned if so many queries are queued up that the node fails to deal with them in the maximum allotted wait time.
+
+In response to a 503 error code, you should try the query again, gradually increasing the delay between each successive attempt. Query performance with object-based queries
+
+For improved query performance with object-based queries:
+
+Do not specify a true value for the verbose request entry. Specify the facets or sort request entries only when necessary. In the objectProperties entry, specify only urlName, objectPath, version, and changeTimeMilliseconds.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+875/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When performing paged queries, specify a value of one hundred or less in the count request entry.
+
+Queries based on object names
+
+The metadata query API relies on UTF-8 encoding conventions to find objects by name. If the name of an object is not UTF-8 encoded, queries for the object by name may return unexpected results.
+
+Queries specified namespaces

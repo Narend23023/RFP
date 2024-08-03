@@ -1,0 +1,55 @@
+111/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Content Verification service has two main functions: detecting corrupted data and discrepancies in metadata, and repairing that data and metadata.
+
+Detecting content verification violations
+
+To detect corrupted data, the Content Verification service regenerates the cryptographic hash values for each object. After regenerating the hash values, the Content Verification service checks that these regenerated values match the corresponding values in the primary metadata. The Content Verification service detects metadata discrepancies by checking that certain secondary metadata for each object matches the primary metadata for the object.
+
+A violation occurs when either of the conditions described above is not true. Violations of the second type are not reported in the system log. Note:
+
+When an object is stored through the CIFS or NFS protocol, its primary metadata does not initially include cryptographic hash values that are based on the object data. HCP waits several minutes to ensure that the object content is complete before calculating these values. Large objects stored through these protocols may take longer to get hash values than smaller objects do.
+
+If the Content Verification service encounters primary metadata without hash values, it adds the regenerated values to it.
+
+Repairing content verification violations
+
+If the Content Verification service finds a discrepancy between the cryptographic hash values it regenerates for the object and the corresponding hash value in the primary metadata,
+
+it creates a new copy of the object from an existing good copy and marks the corrupted copy for deletion. If replication is in effect and the Content Verification service cannot find a good copy of the object in the current repository, it can repair the object by using a copy from another HCP
+
+system in the replication topology.
+
+To repair a chunk for an erasure-coded object, the Content Verification service recalculates the chunk either by using a full copy of the object data, if one exists on another system in
+
+the replication topology, or by using the chunks for the object on all the other systems in the replication topology.
+
+If the Content Verification service finds a discrepancy between other secondary metadata for the object and the corresponding primary metadata, it uses the primary metadata to replace the secondary metadata. Unavailable, irretrievable, and irreparable objects
+
+When the Content Verification service cannot repair a violation, it marks the object as unavailable, irretrievable or irreparable:
+
+An object is unavailable if all of these are true:
+
+At least one copy of the object is unavailable because of a node, logical volume, or extended storage device being unavailable. None of the available copies of the object is of good quality. Either the namespace that contains the object is not being replicated, or all copies of the object data on other systems in the replication topology are either inaccessible or not good.
+
+An object is irretrievable if all of these are true:
+
+The object or its part stored in the primary storage is corrupted or damaged. Copies of the object located on secondary storage components such as AWS, Azure, S3 Compatible, HCP, HCP S Series, etc., are inaccessible. Service attempts to repair the object fail due to the unavailability of a viable copy. Note:
+
+An object is marked as irretrievable if it meets all the criteria listed above for a duration of 24 hours or after the Content Verification (CV) service makes 3 unsuccessful repair
+
+attempts, whichever occurs first. These settings, the 24-hour timeframe and the limit of 3 repair attempts, are configurable. After either the 24-hour period elapses or the 3 repair attempts are exhausted, the object is flagged as irreparable.
+
+An object is irreparable if all of these are true:
+
+All of the primary storage volumes, NFS volumes, and extended storage devices on which copies of the object data are stored are available. None of the available copies of the object is of good quality. Either the namespace that contains the object is not being replicated, or all copies of the object data on other systems in the replication topology are either inaccessible or not good. Configuring the Content Verification service
+
+The Content Verification service regenerates cryptographic hash values to detect object corruption. Under certain circumstances, you might want to modify or disable this function to reduce the load on the system.
+
+Before you begin
+
+The circumstances when you might want to modify or disable the Content Verification service from regenerating cryptographic hash values include:

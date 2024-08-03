@@ -1,0 +1,83 @@
+When you use the S3 compatible API without a user account, you are an anonymous user.
+
+Note: If the S3 compatible API is not working for you, the reason may be either that the tenant is not configured to support the API or that your user account is not configured to allow the operation you’re trying to perform. To resolve the problem, contact your tenant administrator. S3 Object Lock Permissions
+
+S3 Object Lock permissions allow you to manage retention and legal hold settings for objects in your namespace. These permissions apply only to the S3 protocol. This list describes the available permissions and their associated operations. BypassGovernanceRetention
+
+Allows a user to override or remove governance mode retention settings for objects protected by S3 Object Lock. With governance mode, you protect objects against being deleted by most users. However, you can still grant some users permission to alter the retention settings or delete the object.
+
+GetBucketObjectLockConfiguration
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+543/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Retrieves the Object Lock configuration details for a specified namespace. It shows if Object Lock is enabled for the namespace and, if enabled, whether a default retention mode and retention period are configured for the namespace.
+
+GetObjectLegalHold
+
+Retrieves the current legal hold status of the object. The response includes information about whether the specified object has a legal hold in place. GetObjectRetention
+
+Retrieves the retention settings including the information about the retention mode and retention period for the specified object.
+
+PutBucketObjectLockConfiguration
+
+Places an Object Lock configuration on a namespace. The rule specified in the Object Lock configuration will be applied by default to every new object placed in the specified namespace. You cannot change the retention type of an existing namespace. PutObjectLegalHold
+
+Either applies or removes a legal hold configuration for a specified object. You must specify the namespace containing the object that you want to place or remove a legal hold on.
+
+PutObjectRetention
+
+Places an object retention configuration on a specified object. Retention settings allow you to specify a period during which an object cannot be deleted or overwritten. Data access permissions
+
+Data access permissions allow you to access bucket content through the various HCP interfaces. You get these permissions either from your user account or from the bucket configuration.
+
+Data access permissions are granted separately for individual buckets. Each data access permission allows you to perform certain operations. However, not all operations allowed by data access permissions apply to every HCP interface. For example, you can view and retrieve ACLs through the REST API and the S3 compatible API but not through any other namespace access protocol.
+
+Although many of the operations allowed by data access permissions are not supported by the S3 compatible API, a tenant administrator can give you permission for those operations. You can then perform the operations through other HCP interfaces that support them.
+
+The data access permissions that you can have for a bucket are: Browse
+
+Lets you list bucket contents.
+
+Read
+
+Lets you:
+
+View and retrieve objects in the bucket, including the system and custom metadata for objects View and retrieve previous versions of objects List annotations for objects
+
+Check the existence of objects
+
+Users with read permission also have browse permission. Read ACL
+
+Lets you view and retrieve bucket and object ACLs.
+
+Write
+
+Lets you:
+
+Add objects to the bucket Modify system metadata (except retention hold) for objects in the bucket Add or replace custom metadata for objects in the bucket
+
+Write ACL
+
+Lets you add, replace, and delete bucket and object ACLs. Change owner
+
+Lets you change the bucket owner and the owners of objects in the bucket.
+
+Delete
+
+Lets you delete objects, custom metadata, and bucket and object ACLs.
+
+Purge
+
+Lets you delete all versions of an object with a single operation. Users with purge permission also have delete permission.
+
+Privileged Lets you:
+
+Delete or purge objects that are under retention, provided that you also have delete or purge permission for the bucket Hold or release objects, provided that you also have write permission for the bucket
+
+Note: All holds (a single hold and all labeled holds) must be released on the object before it can be deleted, regardless of the retention setting. Search

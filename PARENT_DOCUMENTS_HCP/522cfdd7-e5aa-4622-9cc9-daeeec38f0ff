@@ -1,0 +1,93 @@
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully created the folder.
+
+400
+
+Bad Request
+
+Possible reasons include that the request does not include a Content-Length header.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to create folders in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found
+
+The specified bucket does not exist.
+
+409
+
+Conflict
+
+An object or folder with the specified name already exists.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+608/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Creating a folder
+
+Here’s a sample PUT request that creates a folder named budget_proposals in the r&d folder in the finance bucket. If the r&d folder doesn’t already exist, this request also creates that folder. The request is being made while versioning is enabled for the bucket.
+
+Note: s3curl does not support the use of the forward slash (/) as the terminator for the folder name in PUT requests to create a folder. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put ~ -- -k "https://finance.europe.hcp.example.com/r&d/budget_proposals%2F" -H "Content-Length:0"
+
+Request headers
+
+PUT /r&d/budget_proposals%2F HTTP/1.1 Host: finance.europe.hcp.example.com Transfer-Encoding: chunked Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:VsSmWFRWwTPWPjH+QEs6Z2Qwf84= Content-Length: 0 Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-version-id: 87395113368065 ETag: "d41d8cd98f00b204e9800998ecf8427e" Content-Length: 0
+
+Checking the existence of an object or folder
+
+You use the HTTP HEAD method to check the existence of an object or folder in a bucket. To check the existence of an object, you need read permission for the bucket containing the object or for the object itself. To check the existence of a folder, you need read permission for the bucket.
+
+In response to a request to check the existence of an object or folder, HCP returns a 200 (OK) status code if the object or folder exists and a 404 (Not Found) status code if the object or folder does not exist. If you do not have read permission for the bucket or object, HCP returns a 403 (Forbidden) status code. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to check the existence of an object, object version, or folder has either of these formats:
+
+With the bucket name included in the hostname:
+
+HEAD /(object-name[?versionId=version-id])|(folder-name(/|%2F)) HTTP/1.1
+
+With the bucket name following the hostname: HEAD /bucket-name/(object-name[?versionId=version-id])|(folder-name(/|%2F)) HTTP/1.1
+
+Required headers
+
+The next list describes the required headers to use in a request to check the existence of an object, object version, or folder.
+
+Authorization
+
+Specifies user credentials or requests anonymous access. Date

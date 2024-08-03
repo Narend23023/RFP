@@ -1,0 +1,93 @@
+7. In the Manage page, in the Keys in use section, click Replace Keys.
+
+Note: When you choose to replace the keys, the Compression/Encryption service automatically re-encrypts the DEK with a new KEK.
+
+Viewing a key management server
+
+The Servers tab in the Key Management page lists all the registered KM Servers. 1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab. You see all the registered KM servers in the table. The page contains the following information about the KM server.
+
+Name: Name of the KM server.
+
+Hostname: The name of the KM server. Secondary Server: The name or IP address of the secondary KM server. Keys: Indicates whether any keys from the KM server are used to encrypt HCP objects. Objects: Number of objects encrypted using the KM server. Service Plans: Service plans associated with the KM server.
+
+Deleting a key management server
+
+1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab.
+
+3. In the list of key management servers on the Servers page, click to select the KM server you want to delete and then click the delete control ( ). The delete icon is enabled only if the KM Server is no longer associated with any keys and service plans. However, to delete a KM Server, the key count, object count, and service plan count must be zero. CAUTION: Delete operation is destructive and can't be undone. The KM Server will be permanently deleted.
+
+4. In response to the confirming message, click Delete.
+
+Encrypting storage pools
+
+The Encryption License Key feature protects your sensitive data against breaches. Only authorized individuals with an encryption key will be able to decode the information. Encryption License Key includes an integrated key management functionality that can leverage third-party key management solutions.
+
+1. In the top-level menu of the HCP System Management Console, select Security > Encryption. 2. On the Encryption page, select the Encrypt Storage Pools. Note: This option encrypts all the HCP S Series Nodes and cloud pools in the HCP system.
+
+3. Click Update Settings. Note: You cannot unencrypt storage pools.
+
+Setting the systemwide permission mask
+
+A data access permission mask determines which of these operations are allowed in a namespace: read, write, delete, purge (delete all versions of an object), privileged delete (delete an object that’s under retention), and search. Data access permission masks are set at the system, tenant, and namespace levels:
+
+The system-level mask applies across all namespaces (that is, systemwide). The tenant-level mask is set individually for each tenant. This mask applies only to the namespaces owned by that tenant. The namespace-level mask is set individually for each namespace and applies only to that namespace.
+
+The effective permissions for a tenant are the operations allowed by both the system-level and tenant-level permission masks. That is, to be in effect for a tenant, a permission must be included in the system-level permission mask and in the tenant-level permission mask. The effective permissions for a namespace are the operations that are allowed by the masks at all three levels. That is, to be in effect for a namespace, a permission must be included in the system-level permission mask, the tenant-level permission mask, and the namespace-level permission mask.
+
+The following table shows an example of the effective permissions for a namespace given a set of data access permission masks. Permission Mask
+
+Permissions
+
+Read
+
+Write
+
+Delete
+
+Purge
+
+Priv. delete
+
+Systemwide permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+Tenant permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Namespace permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+Effective permission mask
+
+✓
+
+✓
+
+✓
+
+What an individual user can do in a namespace is also limited by the permissions the user has from the applicable user or group accounts and, for HCP namespaces, the minimum data access permissions for the namespace.
+
+The Permissions page in the HCP System Management Console lets you set the systemwide permission mask. You can change this mask at any time.

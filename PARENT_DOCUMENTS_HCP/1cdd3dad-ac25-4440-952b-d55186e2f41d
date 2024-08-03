@@ -1,0 +1,157 @@
+logDownloadPrepare data type properties
+
+The following table describes the properties included in the logDownloadPrepare data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+startDate String
+
+Specifies the start date for HCP to begin collecting HCP General Node logs for download preparation
+
+The default is the current date. The date format is:
+
+MM/DD/YYYY
+
+endDate
+
+String
+
+Specifies the end date for HCP to finish collecting HCP General Node logs for download preparation
+
+The default is the current date. The date format is: MM/DD/YYYY
+
+snodes
+
+String
+
+Specifies, through a comma-separated list, the HCP S Series Nodes that you want to prepare HCP system logs for download
+
+Example
+
+Here's an XML example of the logDownloadPrepare data type:
+
+<logDownloadPrepare> <startDate>06/14/2017</startDate>
+
+<endDate>07/14/2017</endDate> <snodes>S10-12345, S30-28843</snodes> </logDownloadPrepare> logDownloadStatus
+
+The logDownloadStatus data type describes the download status for General and S Series Nodes.
+
+logDownloadStatus data type properties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+477/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The following table describes the properties included in the logDownloadStatus data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+readyForStreaming Boolean
+
+Specifies whether the download package is ready to be downloaded. Valid values are:
+
+true
+
+The logs have been prepared are ready for download.
+
+false
+
+The logs have either not been prepared, are still being prepared, or they have not been downloaded for twenty four hours after being prepared and so have been deleted. streamingInProgress Boolean
+
+Specifies whether the download package is currently being downloaded. Valid values are:
+
+true
+
+The logs are currently being downloaded.
+
+false
+
+The logs are not currently being downloaded.
+
+started
+
+Boolean
+
+Specifies whether the download package is currently being prepared. Valid values are: true
+
+The logs are currently being prepared for download.
+
+false
+
+The logs are not currently being prepared for downloaded.
+
+error
+
+Boolean
+
+Specifies whether an error has occurred during the package preparation or download phase. Valid values are:
+
+true
+
+The logs are experiencing an error with being prepared or downloaded. false
+
+The logs are not experiencing an error with being prepared or downloaded.
+
+content
+
+String
+
+Specifies, through a comma-separated list, the General Nodes log types being downloaded. The possible types are:
+
+This list does not apply to HCP S Series Nodes. All list types are taken from HCP S Series Nodes regardless of the content. ACCESS SYSTEM SERVICE APPLICATION
+
+Example
+
+Here's an XML example of the logDownloadStatus data type:
+
+<logDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <started>true</started> <error>false</error> <content>ACCESS,SYSTEM,SERVICE,APPLICATION</content> </logDownloadStatus> namespace
+
+The namespace data type describes the namespaces resource.
+
+Properties
+
+The table below describes the properties included in the namespace data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+aclsUsage
+
+String
+
+Specifies whether the namespace supports access control lists (ACLs) and, if so, whether HCP honors ACLs in the namespace. Valid values are: NOT_ENABLED
+
+The namespace does not support ACLs.
+
+This property is optional on a PUT request.
+
+You can change the value of this property from NOT_ENABLED to ENFORCED or NOT_ENFORCED but not from ENFORCED or NOT_ENFORCED to NOT_ENABLED.
+
+ENFORCED
+
+The namespace supports ACLs, and HCP honors ACLs in the namespace.
+
+This property is not valid for the default namespace.
+
+NOT_ENFORCED

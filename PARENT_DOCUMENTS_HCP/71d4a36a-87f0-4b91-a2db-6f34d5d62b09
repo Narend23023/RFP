@@ -1,0 +1,53 @@
+replicated, the selected namespaces are not replicated either.
+
+If an HCP tenant has granted system-level users administrative access to itself, you can select and deselect its namespaces for replication when you create the replication link or by
+
+modifying the link at a later time. You should coordinate namespace selection with the tenant administrator to ensure that you both have the same understanding of what should be replicated. Tenants can be replicated from one HCP system to another regardless of the number of tenants that already exist on the other system. However, you can create a new tenant on a
+
+system only if the total number of tenants on the system is less than 1,000.
+
+Similarly, namespaces can be replicated from one HCP system to another regardless of the number of namespaces that already exist on the other system. However, you can create
+
+a new namespace on a system only if the total number of namespaces on the system is less than ten thousand.
+
+HCP tenants created on different systems can have the same names as each other. However, every tenant has a unique internal ID, so HCP can distinguish tenants with the same name from one another. You cannot replicate a tenant from one system to another if the second system has a different tenant with the same name. To replicate the tenant in this
+
+case, you first need to change the name of the tenant on one of those systems. Replicated items
+
+The Replication service replicates these items for an HCP tenant:
+
+The tenant configuration The configuration of each namespace being replicated Existing objects, object creations, object deletions, and metadata changes in the namespaces being replicated Old versions of objects in the namespaces being replicated Retention class creations, modifications, and deletions for the namespaces being replicated Content class and content property creations, modifications, and deletions All tenant-level log messages All namespace-level log messages for the namespaces that are being replicated User accounts defined for the tenant
+
+Group accounts defined for the tenant
+
+Replicated changes With an active/active link, replicated HCP tenants are read-write on both systems involved in the link. Administrators can make changes to the configuration of the replicated tenants and namespaces on either system, and users and applications can make changes to the content of the replicated namespaces on either system. All changes made on each system
+
+are replicated to the other system.
+
+With an active/passive link, replicated HCP tenants are read-write on the primary system and read-only on the replica. Administrators cannot make any configuration changes to the
+
+replicated tenants or to any of their namespaces on the replica, nor can users and applications make any changes to the content of the replicated namespaces on the replica. However, all changes made on the primary system are replicated to the replica.
+
+Note: Although you cannot make any changes to the configuration of a replicated namespace on a replica, you can reindex the namespace. Replication of the default tenant
+
+For the default tenant, the Replication service works on one or more selected directories directly under fcfs_data in the default namespace. The service replicates the entire directory hierarchy under each selected directory.
+
+Default namespace properties
+
+Directories in the default namespace on one system involved in a replication link can be replicated only to the default namespace on the other system involved in the link. They cannot be replicated to HCP namespaces. Additionally:
+
+Before you can include any default-namespace directories in a replication link, the default namespace must exist on both systems involved in the link. The default namespaces in the two systems must have the same cryptographic hash algorithm and retention mode.
+
+The default namespace can be configured to prevent writes and deletes. This configuration can differ between the default namespace on the two systems involved in a link. However, even if the system receiving data is configured to prevent these actions, changes to namespace content on the sending system are replicated.
+
+Replicated directories
+
+You select directories for replication when you create the replication link. You can select additional directories or deselect directories by modifying the link at a later time. A replication
+
+link can include, at most, 256 directories. Directories can be created in the default namespace on both of the systems involved in a replication link, so the two systems can have directories with the same name. You cannot
+
+replicate a directory created on one of the systems if a locally created directory with the same name already exists on the other system.
+
+The one exception to this is the directory used for email archiving through SMTP. You can replicate the email directory if the email directory name is the same on both systems.
+
+Replicated changes

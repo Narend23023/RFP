@@ -1,0 +1,101 @@
+Note: When mounting the namespace, do not specify the rsize and wsize options. Omitting these options allows HCP to use the optimal values based on system configuration. NFS return codes
+
+The list below describes the possible return codes for NFS requests against a namespace.
+
+EACCES
+
+The requested operation is not allowed. Reasons for this return code include attempts to:
+
+Rename an object Rename a directory that contains one or more objects
+
+Overwrite an object Modify the content of an object
+
+Add a file (other than a file containing custom metadata), directory, or symbolic link anywhere in the metadata structure Delete a metafile or metadirectory EAGAIN
+
+HCP tried to read the requested object from another system in the replication topology, and the data either could not be read or was not yet available.
+
+EIO
+
+The requested operation is not allowed. This code is returned in response to attempts to:
+
+Shorten the retention period of an object
+
+Create a hard link ENOTEMPTY
+
+For an rm request to delete a directory, the specified directory cannot be deleted because it is not empty.
+
+EROFS
+
+For an rm request to delete an object, the specified object cannot be deleted because it is under retention.
+
+NFS examples
+
+The following sections show examples of using NFS to access a namespace. Each example shows both a Unix command and Python code that implements the same command.
+
+These examples assume that the data directory is mounted at datamount and the metadata metadirectory is mounted at metadatamount.
+
+Example: Storing an object
+
+This example stores an object named wind.jpg in the existing images directory by copying a file of the same name from the local file system. Unix command
+
+cp wind.jpg /datamount/images/wind.jpg
+
+Python code
+
+import shutil
+
+shutil.copy("wind.jpg", "/datamount/images/wind.jpg")
+
+Example: Changing a retention setting
+
+This example extends the retention period for the wind.jpg object by one year. If this object is still open due to lazy close, changing the retention setting closes it. Unix command
+
+echo +1y > /metadatamount/images/wind.jpg/retention.txt
+
+Python code
+
+retention_value = "+1y"
+
+retention_fh = file("/datamount/images/wind.jpg/retention.txt") try:
+
+retention_fh.write(retention_value) finally:
+
+retention_fh.close()
+
+Example: Using atime to set retention
+
+This example changes the value of the POSIX atime attribute for the wind.jpg object. If the namespace is configured to synchronize atime values with retention settings and the object has a retention setting that specifies a date or time in the future, this also changes the retention setting for the object. Unix command
+
+touch -a -t 201505171200 /datamount/images/wind.jpg
+
+Python code
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+800/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+import os mTime = os.path.getmtime("/datamount/images/wind.jpg") aTime = 1431878400 #12:00 May 17th 2015 os.utime("/datamount/images/wind.jpg", (aTime, mTime))
+
+Example: Creating a symbolic link
+
+This example creates a symbolic link named big_dipper that references an object named ursa_major.jpg.
+
+Unix command
+
+ln -s /datamount/images/constellations/ursa_major.jpg /datamount/constellations/common_names/big_dipper Python code
+
+import os
+
+os.symlink("/datamount/images/constellations/ursa_major.jpg", "/datamount/constellations/common_names/big_dipper"
+
+Example Retrieving an object
+
+This example retrieves the object named wind.jpg from a namespace and stores the resulting file in the retrieved_files directory.
+
+Unix command cp /datamount/images/wind.jpg retrieved_files/wind.jpg
+
+Python code

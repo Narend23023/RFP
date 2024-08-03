@@ -1,0 +1,67 @@
+Note: Grafana may display empty graphs if there is no data or if the datasource is not correctly configured.
+
+4. Import the template, that you downloaded, into Grafana.
+
+For more information about importing dashboard templates in Grafana, see "Import dashboard" in the Grafana documentation at: https://grafana.com/docs/grafana/latest/setup-grafana/installation/
+
+5. Configure Grafana dashboard.
+
+For more information about configuring Grafana dashboards, see "Configuring Dashboards" in the Grafana documentation at: https://grafana.com/docs/grafana/latest/dashboards/use-dashboards/.
+
+6. Visualize Prometheus data in Grafana.
+
+For more information about visualizing data using Prometheus, see "Grafana support" in the Prometheus documentation at: https://prometheus.io/docs/visualization/grafana.
+
+Resetting alert rule settings When you reset alert rule settings, HCP removes all alert rules and resets the configuration to default settings.
+
+To reset alert rule settings, you need an administrator or security role.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus > Alert Rules . 2. Click Reset .
+
+3. Select the I Understand check box, and then click Reset Settings.
+
+Controlling access to the Prometheus by IP address
+
+You can use the IP Filter page to allow or deny access to Prometheus from specific IP addresses.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus > IP Filter. 2. (Optional) Specify IP addresses to be allowed access to the Prometheus. To do this: a. Click the Allow tab. b. Follow the instructions in Adding an entry to an Allow or Deny list.
+
+3. (Optional) Specify IP addresses to be denied access to the Prometheus. To do this:
+
+a. Click the Deny tab. b. Follow the instructions in Removing entries from an Allow or Deny list. 4. To specify how HCP should handle IP addresses that appear in both or neither of the Allow and Deny lists, select or deselect the Allow request when same IP is used in both
+
+lists option.
+
+Changes to this option take effect immediately.
+
+Adding an entry to an Allow or Deny list
+
+Changes you make to either list of IP addresses take effect immediately.
+
+1. In the field above the list, type the entry you want. Each entry in an Allow or Deny list can be one of:
+
+An IP address A comma-separated list of IP addresses A range of IP addresses specified as ip-address/subnet-mask (for example, 192.168.100.197/255.255.255.0) or in CIDR format (for example, 192.168.100.0/24)
+
+The CIDR entry that matches all IP addresses is 0.0.0.0/0.
+
+2. Click Add.
+
+Removing entries from an Allow or Deny list
+
+Changes you make to either list of IP addresses take effect immediately.
+
+1. To remove a single entry, click the delete control ( ) for that entry.
+
+2. To remove all entries, click Delete All.
+
+Disabling Prometheus
+
+Disabling Prometheus removes the current configuration settings, disables Alertmanager, and halts collection of HCP performance metrics.
+
+To disable Prometheus on HCP nodes, you need an administrator or security role. CAUTION: Disabling Prometheus deletes all monitoring data that has been collected.
+
+1. From the System Management Console main menu, select Monitoring > Prometheus. 2. To disable Prometheus, clear the Enable Prometheus option. 3. Click Update Settings. 4. Select the I Understand check box, and then click Update Settings.
+
+HCP performance metrics collected by Prometheus
+
+Performance metrics provide information about the different operations of an HCP component. Prometheus server and Alertmanager provides high availability by running on two storage nodes in the cluster: the node with the highest IP address and the node with the second highest IP address. If one of these nodes become unavailable, Prometheus server switches to the other node. If both the nodes become unavailable, you cannot collect or view metrics until one of the nodes become available again.

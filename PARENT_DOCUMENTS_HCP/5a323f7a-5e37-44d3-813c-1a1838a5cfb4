@@ -1,0 +1,109 @@
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+Optional headers
+
+x-amz-acl
+
+Adds a canned ACL to the bucket.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+567/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+This header is used only to add a canned ACL to a bucket. If you’re using individual x-amz-grant- headers to add the ACL, the x-amz-acl header is invalid.
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. x-amz-grant-full-control
+
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid.
+
+x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid. x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid.
+
+x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid. x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to create a bucket. Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to store an object, the value of this header is always 0 (zero).
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Location
+
+Specifies the name of the bucket created by the request.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to create a bucket.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK One of these:
+
+The bucket was successfully created. A bucket with the specified name already exists and is owned by you.
+
+400
+
+Bad Request
+
+Possible reasons include:

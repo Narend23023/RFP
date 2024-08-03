@@ -1,0 +1,115 @@
+retentionMode="enterprise"
+
+defaultShredValue="false" defaultIndexValue="true"
+
+defaultRetentionValue="0" hashScheme="SHA-256"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+783/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+dpl="2"
+
+> <description><![CDATA[ Finance department ]]></description>
+
+</namespace>
+
+</namespaces>
+
+Listing retention classes
+
+You use the HTTP GET method to list the retention classes defined for a namespace.
+
+Request header
+
+GET /proc/retentionClasses HTTP/1.1
+
+Response headers
+
+This operation does not return any request-specific response headers. Response body
+
+Element
+
+Attribute
+
+Description
+
+retentionClasses
+
+namespaceName
+
+Name of the namespace
+
+retentionClass
+
+name
+
+Name of the retention class..
+
+retentionClass
+
+value
+
+Value of the retention class.
+
+retentionClass
+
+autoDelete
+
+Boolean. Whether or not objects in the namespace are automatically deleted. retentionClass
+
+description
+
+Provides the description of the retention class.
+
+Status codes
+
+If you request information about a namespace to which you do not have access, HCP returns an HTTP 401 (Unauthorized) error code.
+
+Example: Listing retention classes for a namespace
+
+Here’s a sample HTTP GET request that retrieves XML describing the retention classes defined for the finance namespace owned by the europe tenant in the hcp.example.com system. The example saves the results in a file named finance.europe.retentionclasses.xml. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/proc/retentionClasses" >
+
+finance.europe.retentionclasses.xml
+
+Request in Python using PycURL
+
+import pycurl
+
+filehandle = open("finance.europe.retentionclasses.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /proc/retentionClasses")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+GET /proc/retentionClasses HTTP/1.1
+
+Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1334326410
+
+Content-Length: 1186 Response body
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="/static/xsl/proc-retention-classes.xsl"?> <retentionClasses xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/proc-retention-classes.xsd" namespaceName="finance">
+
+<retentionClass name="Temporary"
+
+value="0"

@@ -1,0 +1,49 @@
+In a fully connected active/active replication topology, multiple HCP systems are connected by active/active links, where:
+
+Each system in the topology is connected to each other system in the topology by an active/active link The same HCP tenants and namespaces and default-namespace directories are replicated on each link
+
+Because each system can participate in at most five active/active links, a fully connected active/active replication topology can have up to six systems.
+
+Configuring a fully connected active/active replication topology
+
+To configure a fully connected active/active replication topology: 1. Create an active/active link between each pair of systems to be included in the topology. 2. For each system that has locally created tenants, namespaces, and directories you want to replicate, add those items to each of the links connected to that system. 3. After those tenants, namespaces, and directories have been replicated, add them to each of the other links in the topology.
+
+Fully connected active/active replication topology as erasure coding topology
+
+A fully connected active/active replication topology can be used as the basis for an erasure coding topology. When you add a tenant to the erasure coding topology, if the tenant is not already being replicated on the links in the fully connected active/active topology, HCP automatically adds that tenant to all the links in the fully connected active/active topology.
+
+What this looks like
+
+The following figure shows a fully connected active/active replication topology that includes four systems (A, B, C, and D). https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+325/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+In this figure:
+
+Two of three HCP tenants created locally in system A are being replicated throughout the topology. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication.
+
+Two tenants created locally in system D are being replicated throughout the topology. In the first tenant, two namespaces are selected for replication. In the second tenant, one of three namespaces is selected for replication. Uses
+
+The fully connected active/active replication topology is an alternative to the active/active ring topology for maintaining the same namespaces on multiple HCP systems in a storage cloud.
+
+A fully connected topology provides better protection from system unavailability and nonfunctioning replication links than a ring topology provides. The network of links in a fully
+
+connected topology ensures that each system has multiple paths to each other system, thereby preventing individual systems from becoming isolated from the rest.
+
+For example, suppose that the following conditions are true:
+
+Namespace NS1 is being replicated in a replication topology that includes systems A, B, C, and D The service plan associated with NS1 includes a metadata-only storage tier on A and B Object O1 is metadata-only on both A and B
+
+With a ring topology, if the replication links between B and C and between C and D are broken, system C is isolated. Because no path connects system D to system C, system D cannot retrieve data for O1 from the only other system that has the data (for example, in a situation in which read from remote is required). Given the same circumstances with a fully connected topology, system D can still read data for O1 from system C by using the links between D and A and between A and C.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+326/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

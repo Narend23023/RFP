@@ -1,0 +1,45 @@
+Optional. One or more response headers that customers can access from their applications, for example, from a JavaScript XMLHttpRequest object. You add one ExposeHeader element in the rule for each header. This element restricts the response headers that are accessible by the client. Type: String Ancestor: CORSRule CORS configuration template
+
+Here is a sample XML template for setting a CORS rules configuration.
+
+<CORSConfiguration> <CORSRule> <Id>Optional: Unique string value that identifies the rule</Id> <AllowedOrigin>Origin that you want to allow cross-origin requests from</AllowedOrigin> <AllowedOrigin>A single wildcard is allowed</AllowedOrigin>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+282/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help <AllowedMethod>HTTP method</AllowedMethod> <AllowedMethod>HTTP method</AllowedMethod> <MaxAgeSeconds>Optional: Time, in seconds, the browser can cache the preflight OPTIONS response for a resource</MaxAgeSeconds> <AllowedHeader>Optional: Header that you want the browser to send. A single wildcard is allowed.</AllowedHeader> <AllowedHeader>...</AllowedHeader> <!-- Optional --> <ExposeHeader>Optional: Response header that you want accessible from the browser </ExposeHeader> <ExposeHeader>...</ExposeHeader> <!-- Optional --> </CORSRule> <CORSRule> ... </CORSRule> <CORSRule> ... </CORSRule> </CORSConfiguration>
+
+Configuring CORS rules for a namespace
+
+You can use the Tenant Management Console to configure CORS settings for a namespace.
+
+To view a tenant, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. On the Namespaces page, click the right arrow next to the namespace for which you want to configure CORS settings. The namespace Overview panel is displayed.
+
+3. Click the Security tab.
+
+The Security panel opens to the CORS tab on the left.
+
+4. In the CORS Configuration field, enter the CORS settings to use for the namespace. 5. Click Update Settings.
+
+A message is displayed above the CORS Configuration field indicating whether the update was successful.
+
+Your configuration is saved and persists in HCP. Notice that the HCP software added the following XML header at the top of the CORS configuration:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+Configuring namespace access protocols
+
+HCP supports the REST, S3 compatible, WebDAV, CIFS, NFS, and SMTP protocols for access to namespaces. You use these protocols to add, view, modify, and delete namespace content. Additionally, you can use the S3 compatible API to create, view or change the versioning status of, and delete namespaces.
+
+Each protocol is configured separately for each namespace. Any given protocol can be enabled on some namespaces and disabled on others unless protocol optimization is configured for cloud-only protocols.
+
+This section of the help provides instructions for enabling and configuring each of the supported protocols. Namespace access protocol configuration
+
+Users and applications have access to the content stored in namespaces through these industry-standard protocols: REST, S3 compatible API, WebDAV, CIFS, NFS, and SMTP. By default, when a namespace is created, the REST API is enabled. The other protocols are initially disabled. For any namespace access to occur, at least one protocol must be enabled.
+
+For enhanced security, keep unused namespace access protocols disabled.

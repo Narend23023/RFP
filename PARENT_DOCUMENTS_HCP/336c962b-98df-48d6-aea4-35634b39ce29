@@ -1,0 +1,63 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=2071
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Property</td>
+      <td>Data type</td>
+      <td>Description</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>optimizedFor</td>
+      <td>String</td>
+      <td>For an HCP namespace, specifies whether the\nnamespace is optimized for cloud protocols only or\noptimized for all namespace access protocols. Valid\nvalues are:\nCLOUD\nOptimizes the namespace for cloud protocols\nonly\nALL\nOptimizes the namespace for all namespace\naccess protocols\nThe default is specified by the namespace defaults for\nthe tenant.\nThese values are not case sensitive.</td>
+      <td>This property is optional on a PUT request.\nYou can set this property to on a POST request only ALL\nif the namespace already does not allow erasure coding\nor the property is set to in allowErasureCoding false\nthe same request.\nThis property is not valid for the default namespace</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>owner</td>
+      <td>String</td>
+      <td>For an HCP namespace, specifies the namespace\nowner. Valid values are:\nIf the owner has an HCP user account, the\nusername for that account.\nIf the owner has an AD user account, the account\nusername along with the name of the AD domain\nin which the account is defined, in this format:\nusername@ad-domain-name\nIf the namespace doesn’t have an owner, this property\nhas no value.</td>
+      <td>This property is optional on a PUT request.\nIf this property is included on a PUT or POST request\nwith a value that identifies an AD user account, the\nrequest must also include the ownerType property with a\nvalue of EXTERNAL.\nIn response to a GET request, if the owner is an AD user\nand HCP cannot communicate with AD or cannot find\nthe user account in AD, the value of this property is the\nsecurity ID (SID) for the AD user account.\nThis property is not valid for the default namespace.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ownerType</td>
+      <td>String</td>
+      <td>For an HCP namespace, specifies the type of the user\naccount that identifies the object owner. Valid values are:\nLOCAL\nThe user account is defined in HCP.\nEXTERNAL\nThe user account is defined in AD.\nThe default is LOCAL.\nThese values are not case sensitive.\nIf the namespace doesn’t have an owner, this property\nhas no value.</td>
+      <td>This property is optional on a PUT request.\nYou can specify a value for this property on a PUT or\nPOST request only if you specify a value for the owner\nproperty in the same request.\nThis property is not valid for the default namespace.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>readFromReplica</td>
+      <td>Boolean</td>
+      <td>Specifies whether read from replica is enabled for the\nnamespace.\nValid values are:\n— Read from replica is enabled. •true\n— Read from replica is disabled. •false\nOn a request, the default is if PUT true\nreplicationEnabled is set to in the same request; true\notherwise, the default is false.</td>
+      <td>This property is optional on a PUT request. You can set\nthe value of this property to on a PUT request only true\nif, for an HCP namespace, the replicationEnabled\nproperty is set to in the same request or, for the true\ndefault namespace, the HCP system supports\nreplication.\nOn a POST request, you can set the value for this\nproperty to for an HCP namespace only if the true\nnamespace is already selected for replication or the\nreplicationEnabled property is set to in the same true\nrequest. You can set the value for this property to true\nfor the default namespace only if the HCP system\nsupports replication.\nThis property is not returned by any GET request for an\nHCP namespace that is not selected for replication. This\nproperty is not returned by any GET request for the\ndefault namespace if the HCP system does not support\nreplication.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>replicationEnabled</td>
+      <td>Boolean</td>
+      <td>For an HCP namespace, specifies whether the\nnamespace is selected for replication. Valid values are:\n— The namespace is selected for replication. •true\n— The namespace is not selected for replication. •false\nThe default is the replication setting specified by the\nnamespace defaults for the tenant.</td>
+      <td>This property is optional on a request. PUT\nYou can set the value of this property to only if true\nreplication is enabled for the owning tenant.\nIf the HCP system does not support replication, this\nproperty is not returned by any request. GET\nThis property is not valid for the default namespace. If\nthe HCP system supports replication, replication is\nautomatically enabled for that namespace.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

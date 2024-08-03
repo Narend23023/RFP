@@ -1,0 +1,99 @@
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2020.ppt"
+
+Request in Python using PycURL
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+766/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+import pycurl curl = pycurl.Curl()
+
+theHeader = ["Transfer-Encoding: chunked"] curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", theHeader])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2020.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) theFields = "retention=R+1y&shred=true&index=false"
+
+theHeader = ["Transfer-Encoding: chunked"] curl.setopt(pycurl.POSTFIELDS, theFields) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+POST /rest/quarterly_rpts/Q1_2020.ppt HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 37
+
+Content-Type: application/x-www-form-urlencoded Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com Content-Length: 0
+
+Working with annotations
+
+Storing an annotation
+
+You use the HTTP PUT method to store or replace an annotation for an existing object. Some namespaces are configured to require custom metadata to be well-formed XML. In this
+
+case, HCP rejects an annotation that is not well-formed XML and returns an HTTP 400 (Bad Request) error code.
+
+An annotation is stored as a single unit. You can add it or replace it in its entirely, but you cannot add to or change an existing annotation. If you store an annotation with the same
+
+name as an existing annotation, the new metadata replaces the existing metadata.
+
+In addition to storing an annotation for an existing object, you can use a single request to store object data and an annotation together. Access permission
+
+To store an annotation, you need write permission.
+
+Usage consideration
+
+A PUT to store an annotation may fail in either of these cases:
+
+The XML has a large number of different elements and attributes. In this case, the request returns an HTTP 400 (Bad Request) error code.
+
+To prevent failures, try restructuring the XML to have fewer different elements and attributes. For example, try concatenating multiple element values, such as the different parts of an address, to create a new value for a single element.
+
+If you cannot restructure the XML to prevent failures, ask your tenant administrator about reconfiguring the namespace to prevent HCP from checking custom metadata XML.
+
+A large number of clients try to store custom metadata for multiple objects at the same time. In this case, the request returns an HTTP 409 (Conflict) error code.
+
+To prevent failures, limit the number of concurrent requests from clients to the namespace. Request header
+
+PUT /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter. type
+
+Yes
+
+Use the value custom-metadata.
+
+Response headers

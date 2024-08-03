@@ -1,0 +1,47 @@
+moved back onto the applicable storage tier, the Protection service doesn’t mark the copy that’s currently on that storage tier for deletion.
+
+On primary storage, if two copies of the data for an object are stored on the same node, the Protection service creates a new copy on a different node and marks the extra one in the first location for deletion. On primary running storage, primary spindown storage, or NFS storage, if a logical volume has a copy of the secondary metadata for an object but no copy of the object data with that metadata, the Protection service creates a replacement copy of the object data on that volume.
+
+If replication is in effect and the Protection service cannot find a copy of the object data on the current system, it can repair the object by using a copy from another HCP system in the replication topology.
+
+To repair a chunk for an erasure-coded object, the Protection service recalculates the chunk either by using a full copy of the object data, if one exists on another system in the replication topology, or by using the chunks for the object on all the other systems in the replication topology.
+
+For an object that’s stored on primary running storage or primary spindown storage, if fewer than the required number of copies of the object data are accessible on the nodes in a protection set, the Protection service first tries to increase the number of copies stored on those nodes. If the Protection service cannot create all the required copies of the object data on the nodes in the protection set (for example, because a node is unavailable), the service tries to put the required number of copies on the nodes in a different protection set. If the service cannot put all required copies of the object data on nodes in the same protection set, the service stores the copies on different nodes in different protection sets. Unavailable and irreparable objects
+
+When the Protection service cannot repair a violation, it marks the object as either unavailable or irreparable:
+
+An object is unavailable if all of these are true:
+
+At least one copy of the object data is unavailable due to a node, logical volume, or extended storage device being unavailable. None of the available copies of the object data are good. Either the namespace that contains the object is not being replicated, or all copies of the object data on other systems in the replication topology are either inaccessible or not good.
+
+An object is irreparable if all of these are true: All of the primary storage volumes, NFS volumes, and extended storage devices on which copies of the object data are stored are available. None of the copies of the object data are good. Either the namespace that contains the object is not being replicated, or all copies of the object data on other systems in the replication topology are either inaccessible or not good. Protection service triggers
+
+In addition to running according to the service schedule, the Protection service runs in response to certain events. In these cases, the service does a full run (that is, it examines every object in the repository regardless of the schedule and regardless of whether the object data is stored on primary running storage, primary spindown storage, or extended storage).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+121/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Events that trigger a Protection service run are:
+
+Node shutdown
+
+When a node becomes unavailable, HCP triggers the Protection service after waiting 90 minutes to ensure that the node is not just temporarily unavailable. Logical-volume failure
+
+When HCP determines that a local logical volume is broken, it triggers the Protection service after waiting one minute to ensure that the volume is not just temporarily unavailable.
+
+Node removal
+
+When a node is removed from the HCP system, HCP triggers the Protection service after waiting ten minutes to ensure that the node removal is permanent.
+
+Note: When the Protection service is disabled, its scheduled runs are canceled. However, the Protection service still runs in response to the triggers listed above unless all of these
+
+conditions are true:
+
+None of the tenants or namespaces on the HCP system are being replicated. All existing service plans are configured to set the ingest tier DPL to (1) one.
+
+If the HCP system is configured to use spindown storage, all existing service plans set the primary spindown storage tier DPL to 1 (one). HCP S Series Balancing service

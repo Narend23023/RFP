@@ -1,0 +1,79 @@
+To clear your selections and start over, click Cancel.
+
+Retire Hardware Nodes:
+
+a. Select Retire Specific Hardware Nodes. b. Select the nodes from which you want to migrate the data.
+
+To clear your selections and start over, click Cancel.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+117/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+3. Click Next.
+
+The Configuration panel displays step two of the migration configuration (Review configuration summary and confirm). The Configuration Summary section in this panel
+
+indicates whether the migration configuration is acceptable.
+
+Note: When you click Next, HCP checks that the system is in a valid state to perform the migration. This check can take up to 90 seconds. If the configuration is not acceptable, you can click view details in the Configuration Summary section to display the specific reasons why. You can also click Configuration Report to download the configuration summary and details to a file. The default name for this file is Configuration-Report.txt. You can send this file to your SAN storage
+
+administrator, who can then correct the problems.
+
+The Configuration Details section in the step-two panel lists the devices or nodes selected for migration. It also shows the number of LUNs currently selected for migration out of the total number of LUNs for each node. As in the step-1 panel, you can view details about the selected LUNs. In this case, the details have an additional column, Migration Status, that indicates whether the data on the LUN can (Ready) or cannot (Not Ready) be successfully migrated. To change the migration configuration, click Modify Configuration. The Configuration panel redisplays step 1, which shows your current selections.
+
+To restart the migration configuration, click Cancel. The Configuration panel redisplays step 1 with all selections cleared.
+
+4. Optionally, add a description of the data migration and/or change the performance level for the Migration service:
+
+To add a description:
+
+a. Click Add description. b. In the text box that opens, type a description of the migration. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters,
+
+including white space.
+
+To change the performance level, in the Performance Level field, select Low, Medium, or High. The higher the performance level, the greater the load on the HCP system.
+
+5. Click Start Migration.
+
+The Migration service begins preparing for the data migration, and the Migration page switches to the Overview panel.
+
+Monitoring a data migration To monitor a data migration, you use the Overview pane on the Migration page. This page shows information about the current data migration and the last completed or canceled
+
+data migration.
+
+Information about the current data migration
+
+The top of the Overview pane displays information about the current data migration and the Migration service. The current status of the Migration service:
+
+Not Migrating
+
+The Migration service is not running. No migration is in progress.
+
+Starting Migration
+
+The Migration service is preparing for the data migration. This includes determining the number of objects to be migrated and the size of the data to be migrated. It also includes changing the HCP system configuration to prevent data from being written to the selected devices. Migrating
+
+The Migration service is actively migrating data off the selected devices.
+
+Paused
+
+A data migration is in progress, but the Migration service is not actively migrating data at this time.
+
+Completing Migration
+
+The Migration service is verifying that the migration was successful and waiting while HCP rebalances metadata. Migrated
+
+The Migration service has finished migrating data off the selected devices and is no longer running.
+
+If the Overview panel displays a Migration Report link, click the link to download the migration report to a file. The default name for this file is Migration-number-
+
+Report.txt, where number is the number automatically assigned to the migration when the copying process started.
+
+Be sure to review the migration report before having your authorized service provider finalize the migration.
+
+The estimated amount of time remaining to complete the current data migration. The amount of time the Migration service has been running. This value does not include any time during which the service was paused. The time the Migration service started.

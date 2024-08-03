@@ -1,0 +1,111 @@
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to delete multiple objects has either of these formats:
+
+With the bucket name included in the hostname:
+
+POST /?delete HTTP/1.1
+
+With the bucket name following the hostname:
+
+POST /bucket-name?delete HTTP/1.1
+
+Required headers
+
+The list below describes the headers you can use in a request to delete multiple objects. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-MD5
+
+Directs HCP to check the integrity of the data it receives by comparing a Base64-encoded MD5 hash of that data to the value specified by this header. The valid value for this header is the Base64-encoded MD5 hash of the data in the request body. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Optional headers
+
+Content-Length
+
+Specifies the size, in bytes, of the data being uploaded.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. x-hcp-privileged
+
+If you have privileged permission and the bucket allows it, this enables a privileged delete on an object that is under retention. The valid value for this header is a text string of up to 1,024 characters long, which can contain any valid UTF-8 characters, including white space. Request body
+
+The list below describes the XML elements in the request body to delete multiple objects. The elements are listed in alphabetical order.
+
+Delete
+
+Root element.
+
+Key
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+634/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Child of the Object element. The Key element specifies the name of the object to delete.
+
+Object
+
+Child of the Delete element. The Object element specifies the delete request for an object. Quiet
+
+Child of the Delete element. The Quiet element, when its value is set to true, enables quiet mode for the request.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to delete multiple objects.
+
+Content-Length
+
+The size, in bytes, of the response body if HCP can determine the size before formulating the response. If the response does not include a response body, the value of the Content-Length header is 0 (zero). Content-Type
+
+The Internet media type of the response body if HCP can determine the Internet media type. If HCP cannot determine the Internet media type, the value of this header is app lication/octet-stream.
+
+Date

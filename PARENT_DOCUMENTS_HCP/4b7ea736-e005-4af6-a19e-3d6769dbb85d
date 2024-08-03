@@ -1,0 +1,65 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Retention information returned through HTTP
+When you use HTTP to retrieve metadata for an object, the returned header information includes four retention-related values, as shown below.
+X-HCP-Retention
+One of:
+The retention setting expressed as a number of seconds since January 1, 1970, at 00:00:00 UTC
+One of the special values 0, -1, or -2
+X-HCP-RetentionString
+One of:
+The retention period end time expressed as a datetime value in ISO 8601 format or time in seconds since January 1, 1970
+One of the special values Deletion Allowed, Deletion Prohibited, or Initial Unspecified
+X-HCP-RetentionClass
+The retention class of the object or an empty string if the object is not assigned to a retention class. The information is returned in this format:
+(retention-class-name, retention-class-value)
+If the retention class is deleted, is retention-class-value undefined.
+X-HCP-RetentionHold
+A value of or that indicates whether the object is on hold. true false
+retention.txt settings for an object
+The table below shows the possible retention settings in the retention.txt metafile for an object.<br>
+                       <b>Bounding box:</b> x1=185, y1=1220, x2=1516, y2=2123
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0\nDeletion Allowed</td>
+      <td>0\nDeletion Allowed\nHold</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0\nDeletion Allowed (retention-class-name, 0)</td>
+      <td>0\nDeletion Allowed (retention-class-name, 0)\nHold</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1\nDeletion Prohibited</td>
+      <td>-1\nDeletion Prohibited\nHold</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1\nDeletion Prohibited (retention-class-name, -1)</td>
+      <td>-1\nDeletion Prohibited (retention-class-name, -1)\nHold</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2\nInitial Unspecified</td>
+      <td>-2\nInitial Unspecified\nHold</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-2\nInitial Unspecified (retention-class-name, -2)</td>
+      <td>-2\nInitial Unspecified (retention-class-name, -2)</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

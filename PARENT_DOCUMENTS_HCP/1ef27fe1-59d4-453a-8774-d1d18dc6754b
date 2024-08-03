@@ -1,0 +1,85 @@
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. x-amz-abort-date
+
+Specifies the date and time when the multipart upload will be automatically aborted if it has not already been completed. The date and time are expressed in this format:
+
+DDD, ddMMMyyyyhh:mm:ss GMT
+
+For example:
+
+Sat, 25 Mar 2017 17:19:26 GMT
+
+Response body
+
+HCP returns the list of parts of a multipart upload in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to list the parts of a multipart upload. The elements are listed in alphabetical order. Bucket
+
+Child of the ListPartsResult element. The Bucket element specifies the name of the bucket where the multipart upload is being performed.
+
+DisplayName
+
+Child of the Initiator or Owner element. If the multipart upload initiator or object owner is identified by an HCP user account, the value of the DisplayName element is the user name for that account. If the multipart upload initiator or object owner is identified by an AD user account, the value of the DisplayName element is the user name of that account followed by an at sign (@) and the AD domain name. ETag
+
+Child of the Part element. The ETag element specifies the ETag of the applicable part.
+
+ID
+
+Child of the Initiator or Owner element. If the multipart upload initiator or object owner is identified by an HCP user account, the value of the ID element is the user ID for that account. If the multipart upload initiator or object owner is identified by an AD user account, the value of the ID element is the SID for that account. Initiator
+
+Child of the ListPartsResult element and container for the DisplayName and ID elements. The Initiator element identifies the user who initiated the multipart upload.
+
+IsTruncated
+
+Child of the ListPartsResult element. The IsTruncated element indicates whether the returned part listing includes the last part that satisfies the request criteria. Possible values are: true
+
+The returned listing includes the last part that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last part that satisfies the request criteria.
+
+Key
+
+Child of the ListPartsResult element. The Key element specifies the name of the object being created by the multipart upload.
+
+LastModified
+
+Child of the Part element. The LastModified element specifies the date and time when the applicable part was last modified, in Greenwich Mean Time (GMT).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+650/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The date and time are expressed in this format:
+
+yyyy-MM-ddTHH:mm:ss.SSSZ For example:
+
+2020-02-18T19:46:03.856Z
+
+ListPartsResult
+
+Root element.
+
+MaxParts
+
+Child of the ListPartsResult element. The MaxParts element specifies the value of the max-parts query parameter included in the request. If the request did not include the max-parts query parameter, the value of the MaxParts element is 1000. NextPartNumberMarker
+
+Child of the ListPartsResult element. The NextPartNumberMarker element specifies the number of the last part included in the returned part listing. If the returned listing doesn't include any parts, the value of the NextPartNumberMarker element is 0 (zero). If the returned listing is truncated, you can use the value of the NextPartNumberMarker element as the value of the part-number-marker query parameter in a new request to retrieve the next set of parts that satisfy the request criteria. Owner
+
+Child of the ListPartsResult element and container for the DisplayName and ID elements. The Owner element identifies the user who will own the object created by the multipart upload.
+
+Part

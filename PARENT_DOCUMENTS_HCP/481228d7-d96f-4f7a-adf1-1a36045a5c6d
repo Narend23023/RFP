@@ -1,0 +1,73 @@
+Invalid: retentionString:[+2013-07-01T00:00:00 TO 2013-07-31T00:00:00] When querying for a range of values, you can replace a value with an asterisk (*) to specify an unlimited range. For example, this query expression finds objects with a size equal to or greater than two thousand bytes:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+842/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+size:[2000 TO *]
+
+This query expression finds objects with change times before 9:00 AM, March 1, 2012 in the local time zone of the HCP system:
+
+changeTimeString:[* TO 2012-03-01T09:00:00} Wildcard characters in property-based searches
+
+You can use the question mark (?) and asterisk (*) wildcard characters when specifying values for these object properties:
+
+customMetadataContent hash
+
+hashScheme retentionClass
+
+objectPath utf8Name
+
+content properties
+
+For example, this query expression finds objects assigned to any retention class starting with HlthReg, such as HlthReg-107 or HlthReg-224: retentionClass:HlthReg*
+
+The question mark and asterisk characters do not function as wildcards when included within double quotation marks (").
+
+Wildcards are not valid at the beginning of a property value. For example, the query expression on the first line is valid; the query expression on the second line is not: Valid: utf8Name:princ*
+
+Invalid: utf8Name:*cipal
+
+Query expression considerations
+
+These considerations apply to query expressions, whether they contain property-based criteria, text-based criteria, or a combination of both:
+
+If the query expression consists of a single criterion without a Boolean operator, objects in the result set must meet the criterion. For example, this query expression finds objects with custom metadata that contains the string accounting: customMetadataContent:accounting
+
+The expression above is equivalent to this expression that uses the plus sign (+): +customMetadataContent:accounting
+
+If a query expression consists of multiple criteria without Boolean operators, objects in the result set must meet at least one of the criteria. For example, this query expression
+
+finds objects that have a retention setting of Deletion Allowed or are on hold or will be shredded on deletion:
+
+retention:0 hold:true shred:true
+
+The greater the number of criteria an object meets, the higher the object is in the default sort order. For example, with this query expression, objects that match all three
+
+criteria are sorted higher than those that match only two, and those that match only two are sorted higher than those that match only one:
+
+retention:0 hold:true shred:true
+
+If a plus sign precedes some search criteria but not others, the criteria that are not preceded by a plus sign have no effect on which objects are returned. For example, this query expression finds objects that have a utf8Name property with the value Q1_2012.ppt, regardless of whether they are in the finance namespace owned by the europe tenant:
+
++utf8Name:"Q1_2012.ppt" namespace:"finance.europe"
+
+Objects that match the namespace criterion are sorted higher in the result set than those that do not match it.
+
+If a minus sign precedes some search criteria but not others and no criteria have plus signs, the query expression finds objects that do not match the criteria preceded by the
+
+minus signs and do match at least one of the criteria without a Boolean operator. For example, this query expression finds objects that are not in the finance namespace owned by the europe tenant and can be deleted.
+
+namespace:"finance.europe" retention:0
+
+This query finds objects that are not in the finance namespace owned by the tenant named europe and either can be deleted or can be indexed (or both):
+
+namespace:"finance.europe" retention:0 index:1 If a Boolean operator precedes an opening parenthesis, that operator applies to the entire set of criteria inside the parentheses, not the individual criteria. For example, this query expression finds objects that are on hold or have a retention setting of Deletion Prohibited:
+
++(hold:true retention:"-1")
+
+These characters have special meaning when specified in query expressions:

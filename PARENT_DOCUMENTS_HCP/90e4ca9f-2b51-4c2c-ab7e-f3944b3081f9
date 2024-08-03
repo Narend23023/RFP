@@ -1,0 +1,93 @@
+A delete of a multipart object counts as a single delete operation. The count of delete and purge operations does note include automatic deletions of replaced parts, parts of aborted multipart uploads, or unused parts of completed multipart uploads. multipartObjects
+
+Long
+
+The total number of multipart objects currently stored in the given namespace or in all the namespaces owned by the given tenant.
+
+This is a point-in-time statistic.
+
+mulltipartObject Parts
+
+Long
+
+The total number of parts of multipart objects currently stored in the given namespace or in all the namespaces owned by the given tenant.
+
+This is a point-in-time statistic. mulltipartObject Bytes
+
+Long
+
+The total number of bytes of object data in all the parts of multipart objects currently stored in the given namespace or in all the namespaces owned by the given tenant.
+
+This is a point-in-time statistic.
+
+multipartUploads
+
+Long
+
+The total number of multipart uploads that are currently in progress in the given namespace or in all the namespaces owned by the given tenant.
+
+This is a point-in-time statistic. multipartUpload Parts
+
+Long
+
+This is a point-in-time statistic.
+
+The total number of successfully uploaded parts of multipart uploads that are currently in progress in the given namespace or in all the namespaces owned by the given tenant.
+
+This number does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads. multipartUpload Bytes
+
+Long
+
+This is a point-in-time statistic.
+
+The total number of bytes of object data in all the successfully uploaded parts of multipart uploads that are currently in progress in the given namespace or in all the namespaces owned by the given tenant.
+
+This number does not include bytes of data in replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads.
+
+deleted String
+
+One of:
+
+false
+
+The namespace or tenant currently exists.
+
+included
+
+For a tenant only, the statistics in the set include values for one or more namespaces that were subsequently deleted.
+
+valid
+
+Boolean
+
+The status of the set of statistics in the line. Possible values are:
+
+true
+
+HCP successfully collected all statistics in the set. false
+
+The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to one or more nodes
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+448/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+being unavailable during that time, to a network failure, or to other hardware issues. Example
+
+Here’s an XML example of the chargebackData data type that shows the properties for a namespace:
+
+<chargebackData> <bytesIn>134243721</bytesIn> <bytesOut>87561</bytesOut> <deleted>false</deleted> <deletes>0</deletes> <endTime>2017-02-18T13:59:59-0500</endTime> <ingestedVolume>134243721</ingestedVolume> <multipartObjectBytes>93213889</multipartObjectBytes> <multipartObjectParts>7</multipartObjectParts> <multipartObjects>2</multipartObjects>
+
+<multipartUploadBytes>0</multipartUploadBytes> <multipartUploadParts>0</multipartUploadParts> <multipartUploads>0</multipartUploads> <namespaceName>finance</namespaceName> <objectCount>6</objectCount> <reads>1</reads> <startTime>2017-02-18T13:00:00-0500</startTime> <storageCapacityUsed>134270976</storageCapacityUsed> <systemName>hcp.example.com</systemName> <tenantName>europe</tenantName> <valid>true</valid> <writes>11</writes> </chargebackData> chargebackReport

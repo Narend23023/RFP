@@ -1,0 +1,95 @@
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. x-hcp-retentionhold
+
+Specifies whether the object is on hold. A Boolean value of true or false is returned.
+
+Status codes
+
+The following table describes HTTP status codes that can be returned in response to a request to check the existence of an object, object version, or folder.
+
+Code
+
+Meaning
+
+Description
+
+200 OK
+
+Possible reasons include:
+
+The specified object, object version or folder exists. The application tries to get the labeled holds on an object with an HCP version earlier than 9.1.
+
+304
+
+Not Modified
+
+One of these:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+611/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The request included an If-None-Match header, and the ETag for the specified object or object version matched a value specified by the header. The request included an If-Modified-Since header, and the specified object or object version was not modified after the date and time specified by the header.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have read permission for the specified bucket or object. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found
+
+One of these:
+
+The specified object, object version, or folder does not exist. The specified bucket does not exist.
+
+409 Conflict
+
+Possible reason includes that the object data is currently being written to HCP.
+
+412
+
+Precondition Failed
+
+One of these:
+
+The request included an If-Match header, and the ETag for the specified object or object version does not match any of the values specified by the header. The request included an If-Unmodified-Since header, and the specified object or object version was modified after the date and time specified by the header.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Checking the existence of an object
+
+Here is a sample HEAD request that checks the existence of an object named sales_quotas_2020.pdf in the finance bucket. Versioning is disabled on the bucket. Because the user has data access permission on the bucket, labeled holds are returned in a JSON format string. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com/sales_quotas_2020.pdf"
+
+Request headers
+
+HEAD /sales_quotas_2020.pdf HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 18 September 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:LDa147ALd+O5Q02LjkGRrXwSGAc= Response headers
+
+HTTP/1.1 200 OK Date: Fri, 18 September 2020 17:19:26 GMT ETag: "62e82b6d3ef16070a8d75ab55c42b80d" Accept-Ranges: bytes Last-Modified: Fri, 03 Jan 2020 14:28:48 GMT Content-Type: application/pdf X-HCP-Retention: 0 X-HCP-LabelRetentionHold: true X-HCP-LabelRetentionHold-Labels: '[{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}, {"id":"UniqueLabelHold-3","hold":true}]' Content-Length: 23166 Example: Retrieving custom metadata for an object version

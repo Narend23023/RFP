@@ -1,0 +1,123 @@
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt?retention=C+Reg-107 HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 678400 Content-Type:text/plain
+
+Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com
+
+ETag: "9c604138ffb0f308a8552a3752e5a1be" Location: /rest/quarterly_rpts/Q1_2012.ppt
+
+X-HCP-VersionId: 80238663473089 X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1C... X-HCP-Time: 1334829227 Content-Length: 0
+
+Modifying object metadata
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+764/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+You use the HTTP POST method to change the metadata for existing objects in a namespace. The request changes only the metadata that it explicitly specifies. All other metadata remains unchanged.
+
+You can modify metadata only for the current version of an object. You cannot modify metadata for an old version.
+
+If the request to change metadata specifies a symbolic link, HCP changes the metadata on the object that’s the target of the link. Access permission
+
+To modify object metadata, you need write permission.
+
+To specify a hold parameter, you also need privileged permission for the namespace.
+
+To specify an owner parameter, you need change owner permission for the namespace.
+
+Request header
+
+POST /rest/directory/file HTTP/1.1
+
+These considerations apply to requests to change object metadata:
+
+You cannot change the hold and retention settings in the same request. You cannot change the shred setting from true to false. Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+Content-Type
+
+No
+
+Specifies the media type of the resource. This header sends a string along with the file to specify its format.
+
+domain
+
+Specifies the Active Directory domain that contains the user account specified by the owner query parameter.
+
+hold
+
+No
+
+Places an object on hold or specifies that it's not on hold. Either true or false.
+
+index
+
+No
+
+Specifies whether the object should be indexed for search. Either true or false.
+
+label_hold
+
+No
+
+Specifies whether to place an object on labeled hold and if true, specifies a JSON format array containing pairs of one or more unique labeled hold IDs and an associated hold value. id
+
+Unique identifier string for the labeled hold. The maximum ID size is 64 characters.
+
+hold
+
+Specifies whether the object is on labeled hold using this id. Either true or false.
+
+Example
+
+label_hold=[{"id":"MY-HOLD-ID1","hold":true}, {"id":"MY-HOLD-ID2","hold":true}]
+
+owner
+
+No
+
+Specifies the user that owns the object. One of:
+
+The name of a user account that’s defined in HCP The name of an AD user account that HCP recognizes. This can be either the user principal name
+
+or the Security Accounts Manager (SAM) account name for the AD user account.
+
+If you specify an AD user account, you also need to specify the domain parameter. An empty string
+
+Specifying an empty string causes the object to have no owner.
+
+retention
+
+No
+
+Specifies the retention setting for the object. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you

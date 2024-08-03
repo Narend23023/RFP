@@ -1,0 +1,143 @@
+namespace A namespace name along with the name of the owning
+
+tenant, in this format:
+
+(child)
+
+namespace-name.tenant-name
+
+replication
+
+One of:
+
+Specifies whether to filter the returned operation records based on whether the object is flagged as a replication collision.
+
+Collsion
+
+true
+
+Return operation records only for objects that are
+
+HCP returns deletion and purge records only for objects that were flagged as replication
+
+flagged as replication collisions.
+
+collisions at the time they were deleted or purged. false
+
+Return operation records only for objects that are not flagged as replication collisions.
+
+If you omit this entry, HCP returns operation records for objects regardless of whether
+
+they are flagged as replication collisions.
+
+transactions
+
+N/A
+
+Specifies the operation types for which to query. This entry contains up to five transact ion entries, each specifying a different operation type.
+
+If you omit this entry, HCP returns records only for create, delete, and purge operations. transaction(child)
+
+One of:
+
+Specifies a type of operation for which to return records. This entry is a child entry of the transactions entry.
+
+create delete
+
+HCP returns prune and disposition records only when you explicitly request them.
+
+dispose
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+849/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Entry
+
+Valid values
+
+Description
+
+prune
+
+Objects in the default namespace don’t have prune or purge operation types. purge
+
+Paged queries with operation-based requests
+
+To use a paged query with operation-based query requests:
+
+Optionally, specify a count entry in each request body. If you omit this entry, HCP returns ten thousand operation records per request. For each request after the first, specify a lastResult entry containing the values of the urlName, changeTimeMilliseconds, and version properties in the last record returned in response to the previous request. After each request, check the value of the code property of the status entry to determine whether the result set contains the last object that meets the criteria:
+
+If the value is INCOMPLETE, more results remain. Request another page. If the value is COMPLETE, the result set includes the last object that meets the query criteria. Object properties
+
+The table below describes the object properties that you can specify in these contexts:
+
+objectProperties entry sort entry Query entry
+
+In the sort and objectProperties entries, you specify only the object property name. In query expressions, you specify both the property name and one or more values for the property.
+
+The properties listed below are also returned in response bodies. The verbose and objectProperties request entries determine which properties are returned. Object property
+
+Data type
+
+Description
+
+Query expression example
+
+accessTime
+
+Long
+
+The value of the POSIX atime attribute for the object, in seconds since January 1, 1970 at 00:00:00 UTC.
+
+accessTime: [1312156800 TO 1312243200]
+
+accessTime String1
+
+Datetime
+
+The value of the POSIX atime attribute for the object, in ISO 8601 format: accessTimeString: [2012-03-01
+
+YYYY-MM-DDThh:mm:ssZ
+
+T00:00:00 TO 2012-03-01
+
+Z represents the offset from UTC, in this format:
+
+T23:59:59]
+
+(+|-)hhmm
+
+The UTC offset is optional. If you omit it, the time is in the zone of the
+
+HCP system.
+
+For example, 2011-11-16T14:27:20-0500 represents the 20th second into 2:27 PM, November 16, 2011, EST. acl2
+
+Boolean
+
+An indication of whether the object has an ACL. Valid values are:
+
+acl:true
+
+true
+
+The object has an ACL.
+
+false
+
+The object does not have an ACL.
+
+This value is always false for objects in the default namespace.
+
+aclGrant
+
+String
+
+ACL content.
+
+aclGrant:"Ww,USER, europe,rsilver"

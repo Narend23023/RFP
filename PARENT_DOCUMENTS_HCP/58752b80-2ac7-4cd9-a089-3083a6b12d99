@@ -1,0 +1,95 @@
+690/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Operation
+
+REST
+
+WebDAV
+
+CIFS
+
+NFS
+
+Read through a symbolic link to an object
+
+✓
+
+✓
+
+✓
+
+✓ Delete a symbolic link
+
+✓
+
+✓
+
+✓
+
+✓
+
+List the namespaces accessible to you
+
+✓
+
+List namespace statistics
+
+✓
+
+List namespace permissions for the user
+
+✓
+
+List the retention classes available in the namespace
+
+✓
+
+These considerations apply to symbolic links:
+
+If you use CIFS to create a symbolic link, you can read through the link only with CIFS. You cannot use CIFS to read through a symbolic link created with NFS. REST API and WebDAV support for reading through symbolic links is limited to retrieving object data. Other REST API and WebDAV operations on symbolic links may produce unexpected results.
+
+Tip: You can use the HCP Search Console to delete, purge, hold, release, change ownership, or modify ACLs on multiple objects with a single operation.
+
+Prohibited operations
+
+HCP never lets you:
+
+Rename an object. Rename a nonempty directory. Overwrite a successfully stored object. However, if versioning is enabled, you can write new versions of an object using the REST or S3 compatible API. Modify the fixed-content portion of an object. Delete a directory that contains one or more objects. Shorten the retention period of an object. Store a file (other than a file containing custom metadata), directory, or symbolic link anywhere in the metadata structure. Delete a metafile (other than a metafile containing custom metadata) or metadirectory. Create a hard link. Object representation
+
+HCP represents objects differently depending on the protocol you’re using:
+
+With the REST API, HCP represents each object as a URL. With WebDAV, CIFS, and NFS, the HCP file system (HCP-FS) represents objects using the familiar file and directory structure.
+
+This chapter describes how HCP represents objects through the protocols, including descriptions of the files and directories HCP-FS uses to represent object data and object metadata. Object representation with the REST API
+
+With the REST API, HCP represents each object as a URL. The root of the object path in the URL is always rest.
+
+Here’s an example of the URL for an object named wind.jpg in the images directory in a namespace named climate in a tenant named geo in an HCP system with the domain name hcp.example.com: http://climate.geo.hcp.example.com/rest/images/wind.jpg
+
+Users and applications represent system metadata by using query parameters appended to the URLs. HCP returns system metadata in response headers.
+
+Object representation with WebDAV, CIFS, and NFS
+
+For WebDAV, CIFS, and NFS, HCP includes the HCP file system
+
+(HCP-FS), a standard POSIX file system that represents each object as a set of files. One of these files has the same name as the object. This file contains the fixed-content data. When downloaded or opened, this file has the same content as the originally stored item.
+
+The other files HCP-FS presents contain object metadata. These files, most of which are plain text, are called metafiles. They are in directories called metadirectories.
+
+HCP-FS presents a directory structure with separate branches for files that contain object data and for those that contain object metadata. The structure of the metadata branch parallels that of the data branch. HCP-FS doesn’t present any metafiles for symbolic links.
+
+Root directories
+
+HCP-FS presents the data files and metafiles for objects in a namespace under two root directories:
+
+data
+
+heads the directory structure containing the data files for all objects. You create the structure under data when you store data and create directories in the namespace. Each data file and directory in this structure has the same name as the object or directory it represents. All object and directory names are user-supplied, with the exception of names for email objects and directories.
+
+metadata
+
+heads the directory structure containing all the metafiles and metadirectories for objects and directories. This structure parallels the file and directory structure under data, excluding symbolic links. HCP-FS creates this structure automatically as you store data and create directories in the namespace.

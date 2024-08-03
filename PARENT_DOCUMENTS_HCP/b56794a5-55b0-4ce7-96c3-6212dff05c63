@@ -1,0 +1,99 @@
+curl -k -i -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/groupAccounts?verbose=true& prettyprint" >systemLevelGroups.xml
+
+Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <groupAccounts> <groupname>Admins@dev.hcp.example.com</groupname> <groupname>Admins@finance.hcp.example.com</groupname> <groupname>Admins@sales.hcp.example.com</groupname> </groupAccounts>
+
+Example: Retrieving system-level group account information
+
+Here is a sample GET request that retrieves the system-level group account information for the groupname Admins@dev.hcp.example.com. The request writes the group account information to a file named systemLevelGroup-Admins-dev-hcp-ex.xml. The request is made with a system-level user account that includes the monitor role. Request with cURL command line
+
+curl -k -i -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/groupAccounts/ Admins@dev.hcp.example.com?verbose=true&prettyprint" > systemLevelGroup-Admins-dev-hcp-ex.xml
+
+Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <groupAccount> <allowNamespaceManagement>false</allowNamespaceManagement> <externalGroupID>S-1-2-34-123456789-1234567890-1234567890- 1234<externalGroupID> <groupname>Admins@dev.hcp.example.com</groupname> <roles> <role>SEARCH</role> <role>MONITOR</role> <role>SERVICE</role> <role>COMPLIANCE</role> <roles> </groupAccount> System-level user account resources
+
+The system-level user account resources let you retrieve a list of the system-level user accounts, retrieve information about a system-level user account, and change the password for a locally authenticated system-level user account. The table below provides information about these resources. .../userAccounts
+
+Data Type
+
+Method Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the system- level user accounts.
+
+System-level user account with the monitor, administrator, or security role
+
+The listed user accounts are identified by the account username.
+
+In XML, the element that identifies each user account is username. The root element for the list of user accounts is userAccounts.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+430/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data Type
+
+Method Use
+
+Access
+
+Notes
+
+In JSON, the name in the name/value pair that lists the user accounts is user name. .../userAccounts/username
+
+Data Type Method Use
+
+Access
+
+Notes
+
+userAccount GET
+
+Retrieve information about a system-level user account.
+
+System-level user account with the monitor, administrator, or security role
+
+N/A
+
+HEAD
+
+Check for the existence of a user account.
+
+System-level user account with the monitor, administrator, or security role N/A
+
+POST
+
+Change the password for a locally authenticated system-level user account.
+
+System-level user account with the security role
+
+The required query parameter for changing user account passwords is password=password.
+
+.../userAccounts/username/changePassword
+
+Data Type
+
+Method Use
+
+Access
+
+updatePasswordRequest POST
+
+Change the password for a locally authenticated system-level user account.
+
+System-level user account with the security role
+
+Example: Retrieving system-level user accounts

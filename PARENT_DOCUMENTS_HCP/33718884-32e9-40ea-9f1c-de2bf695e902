@@ -1,0 +1,85 @@
+To copy an object, you need read permission for the bucket containing the source object or for the source object itself, and write permission for the target bucket.
+
+By default, a copy operation copies the current version of the source object specified in the request. If versioning is enabled for the source bucket, you can use the versionId query parameter with the source object specification to copy a specific version of the object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 618/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If the version identified by the versionId parameter is a delete marker, HCP returns a 404 (Service Unavailable) status code. If the current version of the source object is a delete marker and you do not specify a version ID, HCP returns a 404 (Not Found) status code.
+
+HCP does not copy version IDs with objects. The object created by a copy operation has its own version ID.
+
+HCP also does not copy ACLs with objects. However, in the copy request, you can specify an ACL for the target object. To do this, you need to use ACL headers. You cannot use an ACL request body when copying an object. If the ACL you specify in a request to copy an object is invalid, HCP returns a 400 (Bad Request) or 501 (Not Implemented) status code and does not copy the object. By default, HCP copies any custom metadata for the source object to the target object. However, in the copy request, you can specify replacement custom metadata to be used for the target object. To apply this custom metadata to the target object, you need to include the x-amz-metadata-directive header with a value of REPLACE in the copy request.
+
+If you are an authenticated user, when you copy an object, you become the owner of the target object. If you are accessing the bucket anonymously, the target object has no owner.
+
+In response to a request to copy an object, HCP returns an XML response body containing the ETag and last modification date of the target object. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to copy an object has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /target-object-name HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /target-bucket-name/target-object-name HTTP/1.1
+
+Required headers
+
+The next list describes the headers you can use in a request to copy an object. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-Type
+
+Specifies the Internet media type of the data being copied. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg).
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name

@@ -1,0 +1,33 @@
+The domain names resolved by DNS are divided into zones, where each zone is defined by a set of related hostnames. A corporate domain, for example, is associated with a zone.
+
+Each domain you define in HCP is a subdomain of a higher-level domain. In the DNS, you need an HCP domain definition for each combination of network and domain you define in HCP. The IP addresses for each HCP domain in the DNS make up a zone within the zone for the applicable higher-level domain.
+
+For example, suppose that you configure HCP to define two domains, hcpma.example.com and hcp-ca.example.com. Suppose also that you configure HCP to define three user- defined networks, net1, net2, and net3,and you configure these three networks to associate net1 and net2 with domain hcp-ma.example.com and associate net3 with domain hcpca.example.com. In this case, you need to add three zones to the DNS, one for each of these domain and network combinations: Domain name: hcp-ma.example.com Node IP addresses defined for network net1 Domain name: hcp-ma.example.com Node IP addresses defined for network net2
+
+Domain name: hcp-ca.example.com Node IP addresses defined for nodes in network net3 Secondary zones and stub zones
+
+In the DNS, you configure each HCP domain as a secondary zone or as a stub zone. A DNS server in which a given HCP domain is configured as a secondary zone maintains a full copy of the HCP DNS information for that domain and can, therefore, satisfy requests for resolution of the HCP domain name by itself. You might use secondary zones, for example, if the firewall that HCP sits behind is configured to allow client requests for DNS name resolution to go only to a corporate DNS server.
+
+A DNS server in which a given HCP domain is configured as a stub zone gets only partial DNS information for that domain from HCP. Stub zones minimize zone replication and are less resource intensive for the DNS server.
+
+If you enable hidden primary or notify for a network, the HCP domain for that network must be configured as a secondary zone, not a stub zone, on each DNS server specified in the network configuration. Secondary zone and stub zone definitions are basically the same. Each definition lists the IP addresses of primary name servers for a domain but does not include individual records for those servers. Those records are stored on the primary name servers themselves. The DNS servers get the individual name server records from the primary name servers listed in the zone definition.
+
+For each network defined in HCP, HCP automatically generates name server records for all storage nodes that have IP addresses in that network. Each of those storage nodes stores a copy of these records, thereby making each storage node eligible to be a primary name server for the applicable domain.
+
+Before HCP can accept client requests that identify the system by a domain name, you need to register some or all of the eligible nodes as primary name servers for the applicable HCP secondary zone or stub zone. You register a node by listing its IP addresses in the secondary zone or stub zone definition. For any given HCP domain, all storage nodes with IP addresses defined for the applicable network can act as name servers for the HCP DNS manager, regardless of whether they’re registered as primary name servers. However, for HCP to be accessible over that network, at least one registered node must be running. Therefore, you need to register a sufficient number of nodes for each network to minimize the risk that all registered nodes for a given network will fail at the same time.
+
+Tip: If HCP has a small number of storage nodes, consider registering them all as primary name servers. The more nodes you register, the more distributed the DNS queries will be.
+
+When defining a secondary zone or stub zone for an HCP domain, you specify a fully qualified domain name for the HCP system. This is the name of the domain associated with the network that is defined in HCP.
+
+Configuring an HCP secondary zone or stub zone in Windows You can use either the GUI or a command line to configure a secondary zone or stub zone in Windows. The following sections present the GUI configuration procedure for Windows.
+
+For information about which Windows servers are supported, check the HCP release notes for the version of HCP that you have installed.
+
+Configuring an HCP secondary zone in Windows
+
+1. Open the DNS Manager
+
+a. In the Windows Control Panel, double-click Administrative Tools. b. In the Administrative Tools window, double-click DNS.
+
+The DNS Manager window shows the hierarchy of zones currently defined in the DNS.

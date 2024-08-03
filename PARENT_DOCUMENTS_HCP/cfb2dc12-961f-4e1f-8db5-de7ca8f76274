@@ -1,0 +1,31 @@
+An erasure coding topology can include at most one thousand tenants. You cannot add default-namespace directories to an erasure coding topology. You cannot add or remove tenants from a retiring or retired erasure coding topology. You can use the System Management Console for any system in an erasure coding topology to add tenants to that topology. You choose tenants to add to an erasure coding topology from a list of tenant candidates. This list includes only tenants for which all of these are true: Replication is enabled for the tenant. The tenant exists on at least one system in the topology. For at least one such system, either:
+
+The tenant is not on any links in which that system participates. The tenant is on one or more links in which that system participates, and each of those links is in an active, retiring, or retired topology.
+
+If, for every such system, the tenant is on one or more links that are not in an active, retiring, or retired topology, the tenant is not included in the candidate list. In this case, to have HCP include the tenant in the candidate list, for at least one of the systems, remove the tenant from all links not in an active, retiring, or retired topology.
+
+You cannot add a listed tenant candidate to an erasure coding topology if either of these is true:
+
+A different tenant with the same name exists on one or more other systems in the topology. To add a tenant with a name conflict to the topology, you first need to either rename that tenant or rename the other tenants that have the same name.
+
+The tenant is on a link that's not in the topology, and both of these are true:
+
+One or both of the systems involved in the link are in the topology. The link is not in an active, retiring, or retired topology.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+354/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+To add a tenant with a link conflict to the topology, you first need to remove the tenant from all the links that satisfy the above criteria for at least one system in the topology. In the tenant candidate list, tenants with a name conflict or link conflict are accompanied by an icon ( the issue. When you add a tenant to an erasure coding topology, namespaces owned by the tenant use erasure-coded protection only if they are configured to allow erasure coding. Namespaces that are not configured this way use whole-object protection. If you have administrative access to a tenant:
+
+) indicating that an issue exists. The hover text for the icon identifies
+
+You can use the System Management Console to select namespaces for replication by starting from a replication link that includes the owning tenant You can use the Tenant Management Console to select namespaces for replication and, at the same time, configure them to be cloud optimized and to allow erasure coding When you add tenants to an erasure coding topology, the process of including those tenants on the all the replication links in the topology can take up to five minutes. When you add a tenant to an erasure coding topology, replication of that tenant is automatically paused on all links for which all of these are true:
+
+The tenant is on the link. The link is not in the topology. One or both of the systems involved in the link are in the topology.
+
+When you remove a tenant from an erasure coding topology, the tenant remains on all the links in the underlying replication topology, but the tenant's namespaces that allow erasure coding change from using erasure-coded protection to using whole-object protection. The effect of this change is the same as the effect of retiring an erasure coding topology. You cannot remove a tenant from a retiring erasure coding topology if any objects in any of the tenant's namespaces still contain objects that were erasure coded according to that topology. You can add and remove tenants in an erasure coding topology while one or more systems in the topology are unreachable from other systems in the topology. If conflicting changes are made during this period (for example, the same tenant is added on two different systems and then removed on one of those systems), the most recent change is the one that takes effect when communication between the systems is restored. While a system in an erasure coding topology is being upgraded, you cannot use that system to add or remove tenants in that topology.

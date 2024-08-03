@@ -1,0 +1,33 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+588/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<VersionId>87288784288321</VersionId> <IsLatest>false</IsLatest> <LastModified>2020-02-12T20:14:06.519Z</LastModified> <ETag>"74d824cd5076a1361da128ee18e5a42b"</ETag> <Size>92127</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> </ListVersionsResult>
+
+Example: Request for next three items
+
+The request for the next three items uses these query parameters:
+
+versions
+
+Lists item versions. key-marker=mktg/campaign_GoGetEm_expenses.xls version-id-marker=87288784288321
+
+Starts the listing with the item that follows version 87288784288321 of mktg/campaign_GoGetEm_expenses.xls. The version ID and item name are the values of the NextVe rsionIdMarker and NextKeyMarker elements from the previous response body, respectively. max-keys=3
+
+Lists at most three items.
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?versions &key-marker=mktg/campaign_GoGetEm_expenses.xls &version-id-marker=87288784288321&max-keys=3" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET /?versions&key-marker=mktg/campaign_GoGetEm_expenses.xls &version-id-marker=87288784288321&max-keys=3 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Thu, 23 Feb 2017 17:20:01 +0000 Authorization: AWS bGdyZWVu:eYSJshWGcAf7i51jbpl/ZQqqJYM= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Thu, 23 Feb 2017 17:20:01 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListVersionsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix></Prefix> <KeyMarker>mktg/campaign_GoGetEm_expenses.xls</KeyMarker> <VersionIdMarker>87288784288321</VersionIdMarker> <NextKeyMarker>quarterly_rpts/</NextKeyMarker> <NextVersionIdMarker>87288727467201</NextVersionIdMarker> <MaxKeys>3</MaxKeys>

@@ -1,0 +1,53 @@
+The total number of these items waiting to be shredded: objects, parts of multipart objects, replaced parts of multipart uploads, parts of aborted multipart uploads, unused parts of completed multipart uploads, and transient parts created during the processing of certain multipart upload operations
+
+Total bytes to be shredded
+
+The total number of bytes of object and part data and metadata waiting to be shredded
+
+These statistics include all objects and parts marked for shredding for which the primary metadata has not yet been deleted.
+
+The panel also shows the current shredding settings.
+
+Changing shredding settings
+
+Depending on the system load, the HCP system can develop a backlog of objects and parts to be shredded. If the system load from other activities is light, you can increase the rate at which shredding occurs. If the load is heavy, you can lower the shredding rate. To change the settings for the Shredding service:
+
+1. On the Shredding page in the System Management Console, set the options you want:
+
+To change the shredding rate, in the Shredding Rate field, select Low, Medium, or High. The higher the shredding rate, the greater the load on the HCP system. To enable or disable sending log messages about shredded objects and parts to syslog servers, select or deselect, respectively, Log shredded objects and object parts to syslog.
+
+2. Click Submit. Duplicate elimination and shredding
+
+Objects merged by the Duplicate Elimination service do not necessarily have the same shred settings.
+
+When merged objects with different shred settings are deleted:
+
+If the last object deleted is not marked for shredding, the merged data is not shredded.
+
+If the last object deleted is marked for shredding, the merged data is shredded. Erasure coding and shredding
+
+For an object that's subject to both erasure coding and shredding:
+
+Each time a full copy of the data for the object is reduced to a chunk, the full copy must be shredded Each time a chunk for the object is restored to a full copy of the object data, the chunk must be shredded
+
+As a result, shredding objects that are subject to erasure coding can put a significant load on all the systems in the replication topology across which the objects are erasure coded.
+
+To minimize the load that the combination of erasure coding and shredding can put on an HCP system, take one of these actions:
+
+At the system level, do not enable erasure coding as an option for implementing replicaton. If you enable erasure coding as the replication method for all cloud-optimized namespaces, tell tenant administrators not to set shredding as the default for deleted objects in cloud-optimized namespaces that are selected for replication. If you allow tenant administrators to select erasure coding for their namespaces, tell the administrators not to do both of these for any given namespace:
+
+Set shredding as the default for deleted objects Allow erasure coding
+
+Shredding service trigger
+
+The Shredding service is event driven only, not scheduled. It is triggered by the deletion of an object that’s marked for shredding. The delete operation can be invoked by a user or application or by the Garbage Collection service. Storage Tiering service
+
+Each namespace has a service plan that defines both a storage tiering strategy and a data protection strategy for the objects in that namespace. At any given point in the lifecycle of an object, its storage tiering strategy specifies the types of storage on which copies of that object must be stored, and its data protection strategy specifies the number of object copies that must be stored on each type of storage.
+
+The Storage Tiering service performs these functions according to rules specified in service plans:
+
+Moving copies of the objects in a given namespace among all of the storage tiers that are defined for that namespace by its service plan Creating and deleting copies of objects in a given namespace on each storage tier that is defined for that namespace to ensure that each tier always contains the correct number of copies of each object Changing objects stored on primary running storage to be metadata-only or restoring data to metadata-only objects For the purpose of storage tiering, HCP treats these as individual objects:
+
+Parts of multipart objects. These parts are tiered based on the time of completion of the multipart upload that created the object. Chunks for erasure-coded objects. These chunks are tiered based on the object ingest time. Chunks for erasure-coded parts of multipart objects. These chunks are tiered based on the time of completion of the multipart upload that created the object.
+
+The Storage Tiering service does not tier parts of in-progress multipart uploads.

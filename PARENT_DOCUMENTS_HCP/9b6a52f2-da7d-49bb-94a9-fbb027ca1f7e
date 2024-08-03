@@ -1,0 +1,55 @@
+The header can include AWS Signature Version 2 authorization information. Header authentication supports only AWS local user account credentials. Use a header with a value in the format Authorization: AWS all_users: for anonymous access, or Authorization: AWS access-key:signature for authenticated access. Note: Active Directory, SPNEGO, cookie, and HCP authentication are not supported. In-form authentication
+
+The POST form can contain authentication-related fields. In-form authentication supports only AWS local user account credentials. All authorization-related form fields must be presented for in-form authentication to succeed. If both V2 and V4 authentication form fields are presented, V2 authentication information is used. Security policy validation
+
+A policy is included in the request. Required if in-form authentication is used. If the policy is missing, HCP returns a status of 400.
+
+For a namespace that does not permit anonymous access (that is, a non-public bucket), either header or in-form authentication is required. (Both can be provided.) Security policies
+
+The POST security policy is part of the authentication of a POST object upload request. The policy consists of base-64 encoded JSON code which is submitted as a form field in the request.
+
+If a form contains fields that don't meet the policy's requirements, the request is rejected with the status 403. Example
+
+Here's an example of a POST policy using AWS Signature Version 4 conditions:
+
+{ "expiration": "2020-11-02T123:01:00.000Z", "conditions": [ {"bucket": "Finance"}, ["starts-with", "$key", "user/user1/"], {"acl": "public-read"}, {"success_action_redirect": "http://www.company.com/success"}, {"x-amz-meta-uuid": "14365123651274"}, {"x-amz-credential": "AKIAIOSFODNN7EXAMPLE/20151229/us-east-1/s3/aws4_request"}, {"x-amz-algorithm": "AWS4-HMAC-SHA256"}, {"x-amz-date": "20201102T000000Z" } ]
+
+}
+
+A security policy always contains the elements expiration and conditions. The example policy uses two condition matching types, exact matching and starts-with matching. The following sections describe these elements. Expiration
+
+The element expiration specifies the expiration date and time of the security policy in ISO8601 GMT date format. For example, 2019-08-10T12:00:00.000Z specifies that the POST policy is not valid after midnight GMT on August 10, 2019.
+
+For AWS Signature Version 4 authentication, if the field x-amz-date contains an expired date, the policy is considered expired.
+
+Condition matching
+
+The table below describes condition matching types that you can use to specify POST security policy conditions. You must specify at least one condition for each field that you specify. You can create more complex matching criteria by specifying multiple conditions for a given form field. If there are multiple conditions for a field, then all the conditions must match. Exact Matches
+
+The form field value must match the value specified. This example indicates that the ACL must be set to public-read:
+
+{"acl": "public-read" }
+
+This example is an alternate way to indicate that the ACL must be set to public-read:
+
+[ "eq", "$acl", "public-read" ]
+
+Starts With
+
+The value must start with the specified value. This example indicates that the object key must start with user/user1: ["starts-with", "$key", "user/user1/"]
+
+Matching Any Content
+
+To configure the POST security policy to allow any content within a form field, use starts-with with an empty value (""). This example allows any value for
+
+success_action_redirect:
+
+["starts-with", "$success_action_redirect", ""]
+
+Specifying Ranges
+
+For form fields that accept a range, separate the upper and lower limit with a comma. This example allows a file size from 1 to 10 MB:
+
+["content-length-range", 1048579, 10485760] Conditions
+
+The conditions in a POST policy are an array of objects, any of which you can use to validate the request. You can use these conditions to restrict what is allowed in the request. For example, the policy conditions in the preceding example require the following conditions:

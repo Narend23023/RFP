@@ -1,0 +1,193 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+270/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For example: 2010-10-07 14:00:00
+
+storageCapacity Used
+
+Type: Point in time The total number of bytes occupied by stored data in the given namespace or in any of the namespaces owned by the given tenant. This includes object data, metadata, and any redundant data required to satisfy the applicable service plan. Used storage capacity includes storage occupied by the parts of in-progress multipart uploads that have already been written to HCP. Used storage does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads. systemName
+
+The HCP domain name used for access to the content of namespaces owned by the given tenant
+
+tenantName
+
+Either:
+
+The name of the tenant that owns the namespace to which the set of statistics in the line applies The name of the tenant to which the set of statistics in the line applies
+
+valid
+
+The status of the set of statistics in the line. Possible values are: true
+
+HCP successfully collected all statistics in the set.
+
+false
+
+The statistics in the set do not reflect all the activity that occurred during the reporting interval. This may be due, for example, to a network failure or to other hardware issues.
+
+writes
+
+Type: Dynamic The total number of write operations successfully performed in the given namespace or in any of the namespaces owned by the given tenant during the reporting interval. Each upload of a part for a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Sample chargeback report
+
+Here's an example of a daily chargeback report, where the report was requested for February 17, 2017, through February 18, 2017. The report shows statistics for the europe tenant, which owns the finance and hr namespaces. The report is shown as it would appear in a spreadsheet. systemName
+
+tenantName namespaceName startTime endTime objectCount
+
+IngestedVolume storageCapacityUsed bytesIn
+
+bytesOut reads writes deletes multipa
+
+hcp.example.com europe
+
+finance
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+6
+
+134243721
+
+134270976
+
+123986263 87561
+
+1
+
+10
+
+0
+
+2
+
+hcp.example.com europe finance
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+15
+
+186496747
+
+186548224
+
+52253026
+
+0
+
+0
+
+12
+
+0
+
+3
+
+hcp.example.com europe
+
+hr
+
+2/17/2017
+
+2/17/2017
+
+7
+
+9609368
+
+9621504
+
+9609368
+
+0
+
+0
+
+7
+
+0
+
+0
+
+0:00:00
+
+23:59:59
+
+hcp.example.com europe
+
+hr
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+15
+
+19707387
+
+19730432
+
+10098019
+
+0
+
+0
+
+8
+
+0
+
+0
+
+hcp.example.com europe
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+13
+
+143853089
+
+143892480
+
+133595631 87561
+
+1
+
+17
+
+0
+
+2
+
+hcp.example.com europe
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+30
+
+206204134
+
+206278656
+
+62351045
+
+0
+
+0
+
+20
+
+0
+
+3 Chargeback page graphs

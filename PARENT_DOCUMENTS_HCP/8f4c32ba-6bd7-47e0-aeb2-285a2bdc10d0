@@ -1,0 +1,57 @@
+This facility is integrated with HCP and works internally to perform searches and return results to the Search Console. The metadata query engine is also used by the metadata query API. Note: When working with the metadata query engine, the Search Console is called the Metadata Query Engine Console.
+
+The search facility is selected at the HCP system level. If you do not select the search facility, the HCP system does not support use of the Search Console to search namespaces.
+
+The search facility maintains its own index of objects in each search-enabled namespace and uses this index for fast retrieval of search results. The search facility automatically update their indexes to account for new and deleted objects and changes to object metadata.
+
+Note: Not all namespaces support search. To find out whether a namespace is search-enabled, see your tenant administrator. Object representation
+
+HCP represents objects differently based on the namespace access protocol the client is using.
+
+Object representation with HTTP
+
+With HTTP, HCP represents each object as a URL. The root of the object path in the URL is always rest.
+
+Here’s an example of the URL for an object named wind.jpg in the images directory in a namespace named climate in a tenant named geo in an HCP system named hcp.example.com: http://climate.geo.hcp.example.com/rest/images/wind.jpg
+
+Users and applications represent system metadata and identify custom metadata by using query parameters appended to the URLs. HCP returns system metadata in HTTP response headers and returns custom metadata in the format in which it was originally specified. Object representation with the S3 compatible API
+
+With the S3 compatible API, HCP represents each object as a URL. The exact format of this URL depends on how the application used to access the object handles user authentication.
+
+The S3 compatible API does not have the concept of directories. Slashes in object names are simply part of the name and are not directory separators. Thus, objects with the S3 compatible API do not have paths.
+
+Here’s an example of one of the possible URLs for an object named
+
+images/wind.jpg in a namespace named climate in a tenant named geo in an HCP system named hcp.example.com: http://climate.geo.hcp.example.com/hs3/images/wind.jpg
+
+Users and applications represent system and custom metadata by using HTTP request headers. HCP returns system and custom metadata in HTTP response headers. Object representation with other namespace access protocols
+
+For namespace access protocols other than the HTTP and S3 compatible APIs, HCP includes a standard POSIX file system called HCP-FS that represents each object as a set of files. One of these files has the same name as the object. This file contains the fixed-content data. When downloaded or opened, this file has the same content as the originally stored item.
+
+The other files that HCP-FS presents contain object metadata. These files, most of which are plain text, are called metafiles.
+
+All files containing fixed-content data are in a directory hierarchy headed by data. All metafiles are in a directory hierarchy headed by metadata.
+
+With this view of objects as conventional files and directories, HCP supports routine file-level calls and enables users and applications to find fixed-content data in familiar ways. Tenant and namespace properties
+
+Tenants and namespaces have certain properties that affect how they operate. Some of these properties are set when the tenant or namespace is created. Others are set after creation. Some can be modified after they are initially set; others cannot. Namespace quota
+
+The namespace quota for a tenant is the number of namespaces HCP reserves for the tenant out of the total number of namespaces the system can have. At any given time, the
+
+tenant can own only as many namespaces as specified by this quota.
+
+The namespace quota is set when the tenant is created. HCP system-level administrators can change this quota at any time. However, the quota cannot be set lower than the
+
+number of namespaces the tenant currently owns.
+
+Storage quotas
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+236/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Both tenants and namespaces have hard and soft storage quotas:

@@ -1,0 +1,123 @@
+"Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://anytown-general-hospital.hcp.example.com:9090/mapi/" + "tenants/anytown-general-hospital/contentClasses") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+GET /mapi/tenants/anytown-general-hospital/contentClasses?prettyprint HTTP/1.1 Host: anytown-general-hospital.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Accept: application/xml
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 143 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <contentClasses> <name>Appointment</name> <name>DICOM</name> </contentClasses>
+
+Erasure coding topology resources
+
+Erasure coding topology resources let you create, specify tenants for, modify, retire, and delete erasure coding topologies. The table below provides information about these resources. Table. .../services/erasureCoding/ecTopologies
+
+Data type Method Use
+
+Access
+
+Notes
+
+ecTopology PUT
+
+Create an erasure coding topology
+
+System-level user account with the administrator role
+
+List
+
+GET
+
+Retrieve a list of the existing erasure coding topologies
+
+System-level user account with the monitor or administrator role
+
+The listed erasure coding topologies are identified by erasure coding topology name.
+
+In XML, the element that identifies each erasure coding topology is name. The root element for the list of erasure coding topologies is ecTopologies.
+
+In JSON, the name in the name/value pair that lists the erasure coding topologies is name. Table. .../services/erasureCoding/ecTopologies/ec-topology-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+ecTopology
+
+GET
+
+Retrieve information about an erasure coding topology
+
+System-level user account with the monitor or administrator role
+
+N/A
+
+HEAD
+
+Check for the existence of an erasure coding topology
+
+System-level user account with the monitor or administrator role ecTopology
+
+POST
+
+Modify or retire an erasure coding topology
+
+System-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete an erasure coding topology
+
+System-level user account with the administrator role
+
+Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenantCandidates Data type
+
+Method Use
+
+Access
+
+tenant Candidates
+
+GET
+
+Retrieve a list of the tenants that are eligible to be added to an erasure coding topology
+
+System-level user account with the monitor or administrator role
+
+Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenantConflictingCandidates
+
+Data type
+
+Method Use
+
+Access
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+Notes
+
+Notes
+
+394/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method Use
+
+Access
+
+tenant Candidates
+
+GET
+
+Retrieve a list of tenants that are not eligible to be added to an erasure coding topology due to name or link conflicts

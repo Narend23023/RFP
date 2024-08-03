@@ -1,0 +1,43 @@
+The link name. Optionally, a description of the link. The link type. This can be active/active, outbound (for an active/passive link you’re creating on the primary system), or inbound (for an active/passive link you’re creating on the replica). Whether HCP should compress and/or encrypt data before transmitting it to the other system. For an active/active link, these settings apply to data being replicated in both directions on the link. Whether priority should be given to objects with the oldest changes, regardless of namespace, or processing should be balanced across namespaces. For an active/active link, this setting applies to both systems involved in the link. The identity of the other system you want to participate in the link. You can identify the other system either by domain name or by the IP addresses of storage nodes in that system. The port on which the other system will listen for transmissions from the system where you’re creating the link. Typically, you accept the default of 5748. If the system where you’re creating the link uses network address translation (NAT):
+
+The domain name or IP addresses the other system should use to communicate with the system where you’re creating the link The port on which the system where you’re creating the link will listen for transmissions from the other system
+
+Note: If either or both of the systems involved in a link use a NAT, the NAT or NATs must be configured for port forwarding.
+
+When you create a link, the automatic failover and failback properties default to disabled. You cannot modify these properties during link creation.
+
+Considerations for creating a replication link
+
+There are several considerations when you create a replication link.
+
+You cannot create a replication link between a release 9.x HCP system and a system earlier than release 8.0. You can create a replication link only after you have installed the required SSL certificates.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+340/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help You can create multiple replication links between the same two systems. However, the links cannot include the same HCP tenants and default-namespace directories. Also, only one of the links can be used in an erasure coding topology. If you do not want HCP tenant-level users to see replication details, you should clear the option that allows this behavior before you create the replication link.
+
+Creating a replication link
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the replication Links page, click Create Link. The link creation wizard opens.
+
+3. On the wizard Name page:
+
+a. In the Name field, type a name for the link.
+
+Link names must be from one through 64 characters long and can contain any valid UTF‑8 characters, including white space. Link names are not case sensitive. Link names must be unique within a replication topology.
+
+b. (Optional) n the Description field, type a description for the link. The description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+4. Click Next. 5. On the wizard Settings page: In the Link Type section:
+
+To create an active/active link, select Active/Active. To create an active/passive link for which the system where you’re creating the link is the primary system, select Outbound. To create an active/passive link for which the system where you’re creating the link is the replica, select Inbound. In the Data Transfer section:
+
+Optionally, to compress data before it’s transmitted from one system to the other, select Compress data.
+
+Compressing data increases network throughput but also increases processing time. Therefore, because compression applies to all transmitted data, you should enable compression only if most of the data being replicated is compressible.
+
+To enable or disable the encryption of data before it’s transmitted from one system to the other, select or deselect Encrypt data.

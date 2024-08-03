@@ -1,0 +1,49 @@
+You specify a set of properties when you create a tenant.
+
+You can specify the following tenant properties:
+
+A name for the tenant. This name determines the URL for the tenant.
+
+When naming tenants, keep in mind that each tenant name must be unique within an HCP system. For example, you cannot create a tenant named finance for each of two different customers. You could, however, create a tenant named cust1-finance for Customer 1 and another tenant named cust2-finance for Customer 2.
+
+Also, keep in mind that you cannot replicate a tenant to another HCP system that already has a different tenant with the same name.
+
+You can change the tenant name at any time after you create the tenant, except while the CIFS or NFS protocol is enabled for any of the tenant's namespaces. However, keep in mind that when you change the tenant name, you are also changing the URLs for the tenant and its namespaces. Be sure to notify the tenant contact when you change the name of a tenant.
+
+Optionally, a description of the tenant. For example, you can use a description to specify the name of the organization for which you’re creating the tenant.
+
+You can change this description at any time after you create the tenant.
+
+In an HCP system that uses virtual networking and has the management network enabled at the System Management Console, a management network for the tenant. Clients use this network to access the Tenant Management Console and HCP management API for the tenant. Clients use the domain name associated with this network when sending access requests to the management interfaces (Tenant Management Console and HCP management API) for the tenant.
+
+You need to ensure that requests for access to the Tenant Management Console and HCP management API for the tenant are routable from the clients to the HCP system over the management network that you specify. If the tenant is configured to allow system-level users to manage it, those users can access its Tenant Management Console directly from the System Management Console even if the tenant management network is not [hcp_system].
+
+You can select a different management network for a tenant at any time. However, when you change the management network, you also change:
+
+The IP addresses used to route access requests from clients to the management interfaces (Tenant Management Console and HCP management interface) for the
+
+tenant The management network domain name included in the tenant URL.
+
+Be sure to notify the tenant contact when you select a different management network for a tenant.
+
+In an HCP system that utilizes virtual networking, a data access network is provided for the tenant. Clients use this network to access the contents of namespaces that the
+
+tenant owns. Clients use the domain name associated with this network when sending namespace data access requests to the tenant. You need to ensure that requests for access to the contents of the namespaces that the tenant owns are routable from the clients to the HCP system over the data access network that you specify.
+
+You can select a different data access network for a tenant at any time. However, when you change the data access network, you also change:
+
+The IP addresses used to route namespace data access requests from clients to the tenant The domain name included in the URLs for the namespaces that the tenant owns
+
+Changing the IP addresses and domain name used to access the namespaces that a tenant owns causes all CIFS and NFS mounts of those namespaces to be disconnected from HCP.
+
+Be sure to notify the tenant contact when you select a different data access network for a tenant.
+
+A hard quota for the tenant. This is the total amount of storage available to the tenant. The tenant allocates this storage to the namespaces it owns by setting a hard quota for each namespace.
+
+You can allocate more total space to your tenants than is actually available for storing objects. HCP warns you when the space used by all tenants is approaching the system storage capacity.
+
+You can change this quota at any time after you create the tenant. However, you cannot specify a quota that is less than the total amount of storage that the tenant has already allocated to its namespaces.
+
+HCP checks the amount of data stored in a namespace against the namespace hard quota hourly. If large amounts of data are added rapidly to a namespace, the namespace can store substantially more data than its hard quota allows.
+
+Each namespace managed by a tenant can exceed its hard quota in this way. As a result, the total amount of storage used by all namespaces owned by a tenant can exceed the hard quota for that tenant.

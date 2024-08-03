@@ -1,0 +1,113 @@
+Note: The value of the x-amz-abort-date header returned in response to an S3 compatible request to list the parts of a multipart upload is the date on which the multipart upload will be automatically aborted, as determined by the current automatic abort time setting. Data access permission masks
+
+A data access permission mask determines which of these operations are allowed in a namespace:
+
+Read
+
+Lets users:
+
+View and retrieve objects, including object metadata (system metadata, custom metadata, and ACLs) View and retrieve previous versions of objects List annotations for objects List directory contents Write
+
+Lets users:
+
+Add objects to the namespace. Modify system metadata. For users to modify the hold status of objects, privileged operations must also be allowed. Add and replace custom metadata. Add, replace, and delete ACLs. Change object owners.
+
+Delete
+
+Lets users delete objects and custom metadata from the namespace. Purge
+
+Lets users delete all versions of an object with a single operation. For users to perform purge operations, delete operations must also be allowed.
+
+Privileged
+
+Lets users:
+
+Delete or purge objects that are under retention. For users to perform privileged delete operations, delete operations must also be allowed. For users to perform privileged purge operations, delete and purge operations must also be allowed. Hold and release objects. For users to perform hold and release operations, write operations must also be allowed.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+240/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Search
+
+Lets users use the HCP metadata query API and the HCP Search Console to query or search the namespace. For users to query or search a namespace, read operations must also be allowed.
+
+Data access permission masks are set at the system, tenant, and namespace levels: The system-level mask applies across all namespaces (that is, systemwide). The tenant-level mask is set individually for each tenant. This mask applies only to the namespaces owned by that tenant. The namespace-level mask is set individually for each namespace and applies only to that namespace.
+
+The effective permissions for a tenant are the operations allowed by both the system-level and tenant-level permission masks. That is, to be in effect for a tenant, a permission must be included in the system-level permission mask and in the tenant-level permission mask.
+
+The effective permissions for a namespace are the operations that are allowed by the masks at all three levels. That is, to be in effect for a namespace, a permission must be included in the system-level permission mask, the tenant-level permission mask, and the namespace-level permission mask.
+
+The table below shows an example of the effective permissions for a namespace given a set of data access permission masks. Permission Mask
+
+Permissions
+
+Read
+
+Write
+
+Delete
+
+Purge
+
+Priv. delete
+
+Search
+
+Systemwide permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Tenant permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Namespace permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Effective permission mask
+
+✓
+
+✓
+
+✓
+
+A tenant initially has all permissions in its data access permission mask. When you create a namespace, it also has all permissions in its data access permission mask.
+
+HCP system-level administrators can change the systemwide permission mask at any time. You can change the tenant and namespace permission masks at any time.
+
+You can make a namespace effectively read-only be removing all operations except read from its data access permission mask. Minimum data access permissions
+
+The configuration of a namespace can include minimum data access permissions for all users (that is, authenticated users and users that access the namespace anonymously) and for authenticated users only. When accessing the namespace:
+
+Authenticated users have all the data access permissions associated with the applicable user account or group accounts and all the minimum data access permissions for authenticated users. Additionally:

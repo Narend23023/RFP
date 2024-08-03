@@ -1,0 +1,41 @@
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above.
+
+Optional headers
+
+Content-Type
+
+Specifies the Internet media type of the data being copied. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg). x-amz-copy-source-if-match
+
+Specifies one or more values for comparison with the ETag of the specified source object or object version. If the ETag matches one of the specified values, HCP continues processing the request. If the ETag doesn’t match any of the specified values, HCP returns a 412 (Precondition Failed) status code and does not upload the part. To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. All ETags match an asterisk in an x-amz-copy-source-if-ma tch header. x-amz-copy-source-if-modified-since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified source object or object version was last modified. If the modification date and time is later than the specified date and time, HCP continues processing the request. If the modification date and time is equal to or earlier than the specified date and time, HCP returns a 412 (Precondition Failed) status code and does not upload the part. To specify the date and time for this header, use one of these formats: DDD,ddMMMyyyyHH:mm:ss(+0000|GMT)
+
+For example: Tue, 07 Feb 2017 14:27:05 +0000
+
+DDDD,dd-MMM-yyyyHH:mm:ss(+0000|GMT)
+
+For example: Tuesday, 07-Feb-17 14:27:05 +0000
+
+DDDMMMdHH:mm:ssyyyy
+
+For example: Tue Feb 7 14:27:05 2017
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+645/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+x-amz-copy-source-if-none-match
+
+Specifies one or more values for comparison with the ETag of the specified source object or object version. If the ETag doesn’t match any of the specified values, HCP continues processing the request. If the ETag matches any of the specified values, HCP returns a 412 (Precondition Failed) status code and does not upload the part.
+
+To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. No ETags match an asterisk in an x-amz-copy-source-if-m atch header. x-amz-copy-source-if-unmodified-since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified source object or object version was last modified. If the modification date and time is equal to or earlier than the specified date and time, HCP continues processing the request. If the modification date and time is later than the specified date and time, HCP returns a 412 (Precondition Failed) status code and does not upload the part. For valid values for this header, see the description of the x-amz-copy-source-if-modified-since header above. x-amz-copy-source-range

@@ -1,0 +1,113 @@
+Your user permissions.
+
+userEffectivePermissions
+
+The permissions that result from the combination of the namespace permissions and your user permissions. This is the logical AND of the permissions specified for the system, tenant, and namespace and your user permissions.
+
+Status codes
+
+If you request information about a namespace to which you do not have access, HCP returns an HTTP 401 (Unauthorized) error code. Example: Listing permissions for a namespace and user
+
+Here’s a sample HTTP GET request that retrieves namespace and user permissions for:
+
+The finance namespace owned by the europe tenant in the hcp.example.com system.
+
+The pdgrey user account. (The account is identified by the Authorization header). Request with curl command line
+
+curl -k -H "Authorization: HCP cGRncmV5:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/proc/permissions"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+cGRncmV5:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /proc/permissions") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+785/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers
+
+GET /proc/permissions HTTP/1.1 Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 1286
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1334326410
+
+Content-Length: 880
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="/static/xsl/proc-permissions.xsl"?> <permissions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/proc-permissions.xsd" namespaceName="finance">
+
+<namespacePermissions browse="true"
+
+read="true" write="true"
+
+changeOwner="true" delete="true"
+
+privileged="true" purge="true"
+
+search="false"/>
+
+<namespaceEffectivePermissions browse="true"
+
+read="true" write="true" changeOwner="true" delete="true"
+
+privileged="true" purge="false"
+
+search="false"/> <userPermissions
+
+browse="true" read="true"
+
+write="true" changeOwner="true"
+
+delete="true" privileged="false"
+
+purge="true" search="true"/>
+
+<userEffectivePermissions
+
+browse="true" read="true"
+
+write="true" changeOwner="true" delete="true" privileged="false"
+
+purge="false" search="false"/>
+
+</permissions>
+
+Listing namespace statistics
+
+You use the HTTP GET method to list statistics for a namespace. The values returned include information such as the total and used capacity of the namespace and the number of
+
+objects with annotations. Request header
+
+GET /proc/statistics HTTP/1.1
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+namespaceName
+
+The namespace name.
+
+totalCapacityBytes

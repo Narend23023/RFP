@@ -1,0 +1,67 @@
+This is the Base64-encoded username for the HCP user account you want to use for authenticated access to HCP.
+
+Secret key
+
+This is the MD5-hashed password for the above HCP user account.
+
+s3curl setup
+
+The examples in this book use s3curl, which is a freely available open-source tool that you can install on your client computer. You can download s3curl from http://aws.amazon.com/code/128.
+
+After installing s3curl, you need to configure it to work in your environment.
+
+Specifying an access key and secret key
+
+To specify the access key and secret key for an HCP user account, create a file named .s3curl in your home directory. In this file, provide the necessary information in this format:
+
+%awsSecretAccessKeys = ( # HCP accounts account-name => { id => 'access-key', key => 'secret-key', }, );
+
+account-name is the name to use in the id parameter in your s3curl commands.
+
+For example:
+
+%awsSecretAccessKeys = ( # HCP accounts lgreen => { id => 'bGdyZWVu', key => '35dc4c4aa08fe0deab7e292e00eb8e97', }, );
+
+To specify the access key and secret key for additional user accounts, repeat this portion of the file for each account:
+
+account-name => { id => 'access-key', key => 'secret-key', },
+
+Here’s a sample .s3curl file that specifies the access key and secret key for each of two user accounts:
+
+%awsSecretAccessKeys = ( # Hitachi Vantara account lgreen => { id => 'bGdyZWVu', key => '35dc4c4aa08fe0deab7e292e00eb8e97', }, mwhite => { id => 'bXdoaXRl',
+
+key => 'ad49ce36d0cec9634ef63b24151be0fb', }, );
+
+Specifying a tenant
+
+In an S3 compatible request, you specify the tenant you’re using as the service point in the s3curl.pl file, which is in the s3curl directory. In this file, find the line that begins like this: my @endpoints = (
+
+Between the opening parenthesis shown above and the first closing parenthesis that follows it, add the tenant URL in this format:
+
+'tenant-name.hcp-domain-name',
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+682/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example:
+
+my @endpoints = ('europe.hcp.example.com',);
+
+To specify additional tenants, follow this example: my @endpoints = ('europe.hcp.example.com', 'america.hcp.example.com', 'africa.hcp.example.com',);
+
+Sample Java application
+
+This section of the Help contains a sample Java application that uses the Hitachi API for Amazon S3 and the Amazon S3 SDK to perform a series of operations in HCP.
+
+Assumptions
+
+The application makes these assumptions:
+
+The HCPsystem has a tenant named europe. The tenant has a user account with username lgreen and password p4ssw0rd. The sample application uses the credentials for this account to access HCP. By default, versioning is disabled for new buckets. The local file system has folders named input and output that are located in the current working folder for the application. The input folder contains two files, Q4_2019.ppt and Q3_2019.ppt.
+
+What the application does

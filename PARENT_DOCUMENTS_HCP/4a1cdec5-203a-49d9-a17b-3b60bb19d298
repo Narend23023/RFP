@@ -1,0 +1,73 @@
+The initial forward slash (/) is required with a directory path.
+
+Here are some examples:
+
+Either of these excludes all objects and parts in the corporate/mktg/graphics directory, as well as all objects and parts in all subdirectories of that directory, recursively: /corporate/mktg/graphics/*
+
+/corporate/mktg/graphics/*.*
+
+This excludes all objects and parts with names ending in .jpg:
+
+.jpg
+
+This excludes all objects and parts that have names ending in .ppt and that are in the /corporate/hr/benefits directory or any of its subdirectories, recursively:
+
+/corporate/hr/benefits/*.ppt
+
+This excludes all objects and parts that have names matching 21*_*.* (for example, 2198_John_Doe.doc) and that are in the corporate/hr/employees directory or any of its subdirectories, recursively: /corporate/hr/employees/21*_*.* Content Verification service
+
+When an object is created, HCP uses cryptographic hash algorithms to calculate various hash values for it. These values, which are generated based on the object data, system
+
+metadata, and custom metadata are stored with the primary metadata for the object.
+
+One of the hash values that is generated only from the object data is also stored with the secondary metadata for the object. The cryptographic hash algorithm HCP uses to calculate this hash value is namespace dependent. It is set when the namespace is created. After set, it cannot be changed.
+
+Users and applications can see, but not modify, hash values generated from object data and annotations. They cannot see any other hash values.
+
+For the purpose of content verification, HCP treats the following items as individual objects:
+
+Parts of multipart objects Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects The Content Verification service ensures the integrity of each object by:
+
+Checking that the object data, system metadata, and custom metadata still match the stored cryptographic hash values Ensuring that certain secondary metadata other than the hash value matches the primary metadata for the object
+
+Note: The Content Verification service does not do a data check for objects that are stored in namespaces that use service plans with HCP S Series storage as the ingest tier, or for
+
+objects that are stored on extended storage.
+
+The Content Verification service runs according to the active service schedule.
+
+During HCP content verification, HCP attempts to repair any files that HCP S Series Nodes report as being irreparable. Cryptographic hash algorithms
+
+HCP supports these cryptographic hash algorithms for selection at the namespace level:
+
+MD5
+
+SHA-1 SHA-256 SHA-384 SHA-512 RIPEMD-160
+
+The more complex the hash algorithm, the greater the impact on performance when objects are stored or when services run.
+
+Content Verification service processing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+111/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Content Verification service has two main functions: detecting corrupted data and discrepancies in metadata, and repairing that data and metadata.
+
+Detecting content verification violations
+
+To detect corrupted data, the Content Verification service regenerates the cryptographic hash values for each object. After regenerating the hash values, the Content Verification service checks that these regenerated values match the corresponding values in the primary metadata. The Content Verification service detects metadata discrepancies by checking that certain secondary metadata for each object matches the primary metadata for the object.
+
+A violation occurs when either of the conditions described above is not true. Violations of the second type are not reported in the system log. Note:
+
+When an object is stored through the CIFS or NFS protocol, its primary metadata does not initially include cryptographic hash values that are based on the object data. HCP waits several minutes to ensure that the object content is complete before calculating these values. Large objects stored through these protocols may take longer to get hash values than smaller objects do.
+
+If the Content Verification service encounters primary metadata without hash values, it adds the regenerated values to it.
+
+Repairing content verification violations
+
+If the Content Verification service finds a discrepancy between the cryptographic hash values it regenerates for the object and the corresponding hash value in the primary metadata,

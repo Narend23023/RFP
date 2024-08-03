@@ -1,0 +1,135 @@
+The following table shows an example of the effective permissions for a namespace given a set of data access permission masks. Permission Mask
+
+Permissions
+
+Read
+
+Write
+
+Delete
+
+Purge
+
+Priv. delete
+
+Systemwide permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+Tenant permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Namespace permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+Effective permission mask
+
+✓
+
+✓
+
+✓
+
+What an individual user can do in a namespace is also limited by the permissions the user has from the applicable user or group accounts and, for HCP namespaces, the minimum data access permissions for the namespace.
+
+The Permissions page in the HCP System Management Console lets you set the systemwide permission mask. You can change this mask at any time.
+
+Tip: Before changing the systemwide permission mask, you should notify your tenant contacts.
+
+To display the Permissions page, in the top-level menu of the System Management Console, select Security > Permissions.
+
+To view the Permissions page, you need the monitor or administrator role. To set the systemwide permission mask, you need the administrator role.
+
+Setting the systemwide permission mask for an HCP system
+
+To view the Permissions page, you need the monitor or administrator role. To set the systemwide permission mask, you need the administrator role.
+
+1. On the Permissions page, select the permissions you want to include in the systemwide permission mask:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Search
+
+✓
+
+✓
+
+141/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Read
+
+Lets users:
+
+Read and retrieve objects, including object metadata (system metadata, custom metadata, and ACLs)
+
+List directory contents View namespace information
+
+Write
+
+Lets users:
+
+Add objects to a namespace.
+
+Modify system metadata. For the default namespace, this includes holding and releasing objects. For HCP namespaces, these operations also require privileged permission. Add or replace custom metadata. Add or replace ACLs.
+
+Change object owners. View namespace information Delete
+
+Lets users:
+
+Delete objects, custom metadata, and ACLs from a namespace
+
+View namespace information
+
+Purge
+
+Lets users:
+
+Delete all versions of an object with a single operation. For users to perform purge operations, delete operations must also be allowed.
+
+View namespace information.
+
+Selecting Purge automatically selects Delete. Privileged
+
+Lets users:
+
+Delete or purge objects that are under retention. For users to perform privileged delete operations, delete operations must also be allowed. For users to
+
+perform privileged purge operations, delete and purge operations must also be allowed. Hold and release objects in HCP namespaces. For users to perform hold and release operations in these namespaces, write operations must also be allowed. View namespace information. Search
+
+Lets users use the HCP metadata query API and the HCP System Management Console to query or search namespaces. For users to query or search a namespace,
+
+read operations must also be allowed.
+
+Selecting Search automatically selects Read.
+
+2. Click Update Settings. System monitoring
+
+HCP maintains a system log in which it records messages about events that happen within the system. You can view this log in the HCP System Management Console. You also have the option of sending system log messages to syslog servers, SNMP managers, and/or email addresses. Additionally, you can use SNMP to view and, when allowed, change HCP system settings.
+
+The System Management Console lets you monitor CPU, memory, logical-volume, and network usage. You can use the information presented to analyze trends in the use of these resources and to decide when you need to take action to ensure that HCP uses its resources effectively.
+
+To track system capacity and bandwidth usage at the tenant and namespace levels, you can generate chargeback reports. These reports can be used as input to billing applications. You can configure HCP to push information to Hitachi Device Manager (HDvM) so you can monitor and manage HCP along with your other Hitachi storage systems from a single console. The following sections:

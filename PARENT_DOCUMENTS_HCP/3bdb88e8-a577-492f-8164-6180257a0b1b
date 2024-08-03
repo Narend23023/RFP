@@ -1,0 +1,49 @@
+node can have multiple internal drives that can connect to SAN storage. Each virtual node emulates a server that has only internal drives.
+
+The physical storage that is managed by the nodes in the HCP system is called primary storage. By default, primary storage consists entirely of running storage, which is storage on
+
+continuously spinning disks. However, an HCP with SAN-attached storage system can be configured to use SAN storage that includes both running storage and spindown storage,
+
+which is storage on disks that can be spun up or spun down, as needed. If primary spindown storage is enabled on an HCP with SAN-attached storage system, you can configure
+
+HCP to use that storage for tiering purposes. You can also add S Series Nodes to your HCP system. These nodes can be used as an alternative to primary running storage or for tiering purposes. The number of objects you can
+
+write to an S Series Node is limited to the total storage capacity of the node. If you want more storage capacity, you need to purchase more S Series Nodes. The HCP system
+
+communicates with the S Series Nodes through the S3 compatible and management APIs.
+
+You can also configure any HCP system to use extended storage for tiering purposes. Extended storage is additional storage that is managed by devices outside of the HCP system.
+
+Unless you are writing directly to HCP S Series storage, HCP initially stores each object in a repository on primary running storage. By default, throughout the lifecycle of an object, HCP continues to store all copies of the data and metadata for that object only on primary running storage. However, you can configure HCP to offload object content from primary running storage and store that content on primary spindown storage, HCP S Series storage, or any of the supported types of extended storage that you have configured HCP to access and use.
+
+Using primary spindown storage to store object content that is accessed infrequently saves energy, thereby reducing the cost of storage. While all copies of the data, custom
+
+metadata, ACL, and secondary metadata for an object can be moved onto primary spindown storage, all copies of the primary metadata for an object must always remain on primary
+
+running storage. Similarly, while all the data for an object can be written directly to S Series storage or later moved off primary running storage and stored on HCP S Series or
+
+extended storage, at least one copy of the system metadata, custom metadata, and ACL for that object must always remain on primary running storage.
+
+HCP moves object content from primary running storage onto one or more other types of storage according to rules specified in service plans. Each namespace has a service plan that defines one or more tiers of storage that can be used to store objects in that namespace. For each object in a namespace, at any point in
+
+the object lifecycle, the service plan specifies the criteria that determine which storage tiers must be used to store copies of that object and the number of copies of that object that
+
+must be stored on each tier.
+
+You can set the HCP initial storage tier, called the ingest tier, to either primary running storage or to HCP S Series storage. When a service plan is first created, it defines only the
+
+ingest tier, so HCP stores all objects in a given namespace on the designated ingest tier throughout the entire object lifecycle.
+
+Primary running storage is designed to provide both high data availability and high performance for object data storage and retrieval operations. To optimize data storage price/performance for the objects in a namespace, you can configure the service plan for that namespace to define a storage tiering strategy that specifies multiple storage tiers. About storage components
+
+HCP uses storage components to represent the storage available to it for storing objects.
+
+A storage component is a set of one or more access points (buckets, containers, or mount points) that share a common endpoint. An endpoint is either a specific type of HCP
+
+storage (primary running or primary spindown) or a specific externally addressable storage device or storage service such as an S Series Node or Amazon S3. Each storage
+
+component has a specific set of data availability, price, and performance characteristics.
+
+HCP uses storage components to provide you with an interface to:
+
+Configure HCP to provide the information that HCP needs to access specific extended storage devices and cloud storage service endpoints.

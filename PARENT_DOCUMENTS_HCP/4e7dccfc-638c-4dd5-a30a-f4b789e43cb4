@@ -1,0 +1,107 @@
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to delete a bucket.
+
+Code
+
+Meaning
+
+Description
+
+204
+
+No Content
+
+HCP successfully deleted the bucket.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You are not the bucket owner. The S3 compatible API is currently disabled for the specified bucket. The tenant does not currently support use of the S3 compatible API for deleting buckets.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+409
+
+Conflict
+
+The specified bucket is not empty.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Deleting a bucket
+
+Here’s a sample DELETE request that deletes the bucket named sales-mktg. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://sales-mktg.europe.hcp.example.com"
+
+Request headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+602/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+DELETE / HTTP/1.1 Host: sales-mktg.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:2nVpI9dSOakB9JZtEyx81RCZTKw= Response headers
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Working with objects
+
+With the Hitachi API for Amazon S3, you can perform operations on individual objects.
+
+Storing an object
+
+You use the HTTP PUT method to store an object in a bucket. To store an object, you need write permission for the bucket.
+
+For a request to store an object, the request body consists of the data in a specified file. This data becomes the object content.
+
+When you store an object, you specify a name for it. The object name does not need to be the same as the name of the file containing the original data.
+
+If versioning is enabled and you try to store an object with the same name as an existing object, HCP creates a new version of the object. If versioning is disabled and you try to store an object with the same name as an existing object, HCP returns a 409 (Conflict) status code and does not store the object. You can add custom metadata to an object in the same request as you use to store the object. To do this, you use x-amz-meta- headers.
+
+You can specify an ACL for an object in the same request as you use to store the object. To do this, you use an ACL header. You cannot use an ACL request body when storing an object.
+
+If the ACL you specify in a request to store an object is invalid, HCP returns a 400 (Bad Request) or 501 (Not Implemented) status code and does not store the object.
+
+If you are an authenticated user, when you store an object, you become the object owner. If you are accessing the bucket anonymously, the new object has no owner. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to store an object has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /object-name HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /bucket-name/object-name HTTP/1.1
+
+Required headers

@@ -1,0 +1,59 @@
+13. Under Directory Usage:
+
+Select Balanced to configure the namespace for balanced directory usage. Select Unbalanced to configure the namespace for unstructured data usage.
+
+14. Under Retention Type, select either S3 Object Lock or HCP Retention to set the retention type for the namespace.
+
+The HCP Retention Mode option is present only if the Retention Mode Selection is enabled. You can enable S3 Object Lock only if versioning is enabled on the tenant. Note: When configuring namespaces that use S3 Object Lock, you cannot use existing retention related namespace configuration options that conflict with S3 Object Lock. For example, retention period values that Amazon S3 does not support, initial unspecified, event-based retention, and retention classes are not allowed. 15. Under Search:
+
+Select On to enable search for the namespace.
+
+Select Off to disable search.
+
+The Search option is present only if the tenant is allowed to create namespaces with search enabled.
+
+16. In the Service Plan field, either type the name of an existing service plan or click the arrow control ( ).
+
+If you click the arrow control:
+
+a. In the Service Plans window, select the service plan you want. b. Click Apply Service Plan.
+
+The Service Plan field is present only if the tenant is allowed to associate service plans with namespaces.
+
+17. Under Versioning:
+
+Select On to enable object versioning in the namespace.
+
+Select Off to disable object versioning in the namespace.
+
+The Versioning option is present only if the tenant is allowed to create namespaces with versioning enabled. When you select On, you can also enable version pruning and delete markers. a. In the Versioning Options section, select the Prune versions older than ... days option. b. In the option field, type the number of days old versions of objects must remain in the namespace before they are pruned.
+
+Valid values are integers from zero through 36,500 (that is, 100 years). A value of zero means prune immediately. If version pruning is enabled for a namespace, you can apply a backup policy to keep milestone versions for specified periods of time. You cannot delete versions that are under retention. The milestone versioning policy can apply to an object only when it is outside the retention policy of that object.
+
+c. In the Versioning Options section, select the Enable delete markers option.
+
+This option allows you to use the delete markers in Amazon S3 using Hitachi API for Amazon S3 and REST API. After you enable versioning and delete markers, you cannot disable them. When you delete an object in a version-enabled namespace, a delete marker is created. The delete marker then becomes the current version. The object behaves as if it is deleted. However, it automatically maintains previous versions of the object. The delete marker has the following characteristics:
+
+Like in any other versioned object, the delete marker has a version ID associated with it. Using an S3 DELETE request, you can delete the delete marker by specifying the version ID of the marker. Using a GET bucket version request, you can retrieve a delete marker version ID.
+
+For non-versioned namespaces, allow object overwrites if desired. See Allowing object overwrites.
+
+18. Click Create Namespace.
+
+If Versioning is set to On but Prune versions is not selected, a confirming message appears.
+
+19. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 20. Click Update Settings. Configuring a namespace
+
+Changing the namespace name
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+275/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can change the name of a namespace any time, except while the S3 compatible, CIFS, or NFS protocol is enabled for the namespace. However, when you change the name, the URL for the namespace may change as well.
+
+When you change the name of a namespace, AD single sign-on is automatically disabled for the REST API for that namespace. You can reenable it any time after the name change (as long as HCP can communicate with AD).

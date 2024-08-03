@@ -1,0 +1,77 @@
+Grants permissions to all users
+
+authenticated
+
+Grants permissions to all authenticated users
+
+all_users authenticated
+
+To grant permissions to one of these special groups, specify group in the type entry and omit the domain entry.
+
+HCP returns an HTTP 400 (Bad Request) error code if a user or group is specified in more than one name entry. type
+
+One of:
+
+Specifies the type of the value specified in the name entry.
+
+user
+
+The name entry specifies an HCP or Active Directory user account
+
+HCP returns an HTTP 400 (Bad Request) error code if the value of the type entry doesn’t correspond to the value of the name entry.
+
+group
+
+The name entry specifies an Active Directory group, all_users, or authenticated domain
+
+The name of an Active Directory domain
+
+Specifies the Active Directory domain that contains the user account or group specified in the name entry.
+
+This entry is required if the name entry specifies an Active Directory user account or group.
+
+permissions
+
+N/A
+
+Container for any combination of permission entries. permission
+
+Any of:
+
+Child of permissions entry. Specifies the permissions granted to the user or group specified in the name entry.
+
+READ WRITE READ_ACL WRITE_ACL DELETE
+
+ACL examples
+
+This section contains examples of an ACL in both XML and JSON formats. This ACL grants:
+
+Read permission to all users Write permission to the AD user lgreen that is defined in the ad.example.com domain Write and delete permission to HCP user pdgrey XML format
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <accessControlList> <grant> <grantee> <name>all_users</name> <type>group</type> </grantee> <permissions> <permission>READ</permission> </permissions> </grant> <grant> <grantee>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+707/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<name>lgreen</name> <type>user</type> <domain>ad.example.com</domain> </grantee> <permissions> <permission>WRITE</permission> </permissions> </grant> <grant> <grantee> <name>pdgrey</name> <type>user</type> </grantee> <permissions> <permission>WRITE</permission>
+
+<permission>DELETE</permission> </permissions> </grant> </accessControlList> JSON format
+
+{ "grant": [{ "grantee": { "name":"all_users", "type":"group" }, "permissions": { "permission":["READ"] }
+
+}] "grant": [{ "grantee": { "name":"lgreen", "type":"user", "domain":"ad.example.com" }, "permissions": { "permission":["WRITE"] } }] "grant": [{ "grantee": { "name":"pdgrey", "type":"user" }, "permissions": { "permission":["WRITE","DELETE"]
+
+} }] } ETags
+
+An ETag is an identifier for the content of an object. HCP generates an ETag for each object or version stored in a namespace. HCP returns the ETag for an object or version in an ETag header in the response to a GET, HEAD, or PUT request for that object or version. If HCP has not yet generated the ETag for an object or version, the ETag header is not
+
+included in the response.
+
+You can use ETags in conditional operations. For example, you could use an If-None-Match header to store a new version of an object only if the content of that new version does not match the content of the current version.
+
+Replication collision handling

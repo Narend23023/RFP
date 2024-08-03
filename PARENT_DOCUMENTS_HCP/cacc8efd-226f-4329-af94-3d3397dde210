@@ -1,0 +1,75 @@
+false
+
+The item version is an old version of the item.
+
+IsTruncated
+
+Child of the ListBucketResult or ListVersionsResult element. The IsTruncated element indicates whether the returned bucket listing includes the last item that satisfies the request criteria. Possible values are: true
+
+The returned listing includes the last item that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last item that satisfies the request criteria.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+585/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Key
+
+Child of the Contents, Version, or DeleteMarker element. The Key element specifies the name of an item or item version in the bucket listing. For a delete marker, the value of the Key element is the name of the object or object version that was deleted. KeyMarker
+
+Child of the ListVersionsResult element. The KeyMarker element specifies the value of the key-marker query parameter included in the request. If the request did not include the key-marker query parameter, the response body includes KeyMarker as an empty element.
+
+LastModified
+
+Child of the Contents, Version, or DeleteMarker element. The LastModified element specifies the date and time when the applicable item or item version was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+ListBucketResult
+
+Root element for a listing of current items.
+
+ListVersionsResult
+
+Root element for a version listing.
+
+Marker
+
+Child of the ListBucketResult element. The Marker element specifies the value of the marker query parameter included in the request. If the request did not include the marker query parameter, the response body includes Marker as an empty element. MaxKeys
+
+Child of the ListBucketResult or ListVersionsResult element. The MaxKeys element specifies the value of the max-keys query parameter included in the request. If the request did not include the max-keys query parameter, the value of the MaxKeys element is 1000.
+
+Name
+
+Child of the ListBucketResult or ListVersionsResult element. The Name element specifies the name of the applicable bucket. NextMarker
+
+Child of the ListBucketResult element. If the returned listing is truncated, you can use the NextMarker element as the value of the marker query parameter in a new request to retrieve the next set of items that satisfy the request criteria. The NextMarker element is returned only if you have specified a delimiter request parameter. NextKeyMarker
+
+Child of the ListVersionsResult element. The NextKeyMarker element specifies the name of the last item included in the returned bucket listing. This element is included in the response body only when the value of the IsTruncated element is true. If the returned listing is truncated, you can use the value of the NextKeyMarker element as the value of the key-marker query parameter in a new request to retrieve the next set of items that satisfy the request criteria. NextVersionIdMarker
+
+Child of the ListVersionsResult element. The NextVersionIdMarker element specifies the version ID of the last item included in the returned bucket listing. This element is included in the response body only when the value of the IsTruncated element is true. If the returned listing is truncated, you can use the value of the NextVersionIdMarker element as the value of the version-id-marker query parameter in a new request to retrieve the next set of items that satisfy the request criteria. Owner
+
+Child of the Contents, Version, or DeleteMarker element and container for the DisplayName and ID elements. The Owner element identifies the owner of the applicable item.
+
+Prefix
+
+One of these:
+
+Child of the ListBucketResult or ListVersionsResult element.
+
+In this case, the Prefix element specifies the value of the prefix query parameter included in the request. If the request did not include the prefix query parameter, the response body includes Prefix as an empty element. Child of the CommonPrefixes element.
+
+In this case, the Prefix element specifies a common prefix.
+
+Size

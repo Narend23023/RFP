@@ -1,0 +1,51 @@
+If you want to run the sample application, you may need to modify the sample input JSON files to conform to your HCP system.
+
+Required libraries
+
+To run the sample application presented in this appendix, you need to have these Java libraries installed: HttpClient 4.0 (httpclient-4.0.jar) HttpCore 4.0 (httpcore-4.0.1.jar) Commons Logging 1.1 (commons-logging-1.1.jar)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+531/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+You can download the first two of these libraries from: http://hc.apache.org/downloads.cgi
+
+You can download the third one from: http://commons.apache.org/logging/download_logging.cgi Input JSON files
+
+The sample Java application uses the JSON files shown in the following sections.
+
+JSON file for creating the HCP tenant
+
+Here’s the content of the JSON file that creates an HCP tenant named Finance. The name of the file is FinanceTenant.json. For the username and password of the initial user account for this tenant, the sample application specifies lgreen and start123, respectively.
+
+{ "name" : "Finance", "systemVisibleDescription" : "Created for the Finance department at Example Company by Robin Silver", "hardQuota" : "100.00 GB", "softQuota" : 90, "namespaceQuota" : "5", "authenticationTypes" : { "authenticationType" : ["EXTERNAL", "LOCAL"] }, "complianceConfigurationEnabled" : true, "versioningConfigurationEnabled" : true, "searchConfigurationEnabled" : true, "replicationConfigurationEnabled" : true, "tags" : { "tag" : [ "Example Company", "pdgrey" ] }, "servicePlanSelectionEnabled" : false, "servicePlan" : "Short-Term-Activity" } JSON file for modifying the initial user account
+
+Here’s the content of the JSON file that adds the administrator role to the lgreen user account. The name of the file is lgreen-UAroles.json.
+
+{ "roles" : { "role" : [ "SECURITY", "ADMINISTRATOR" ] } }
+
+JSON file for creating the user account with the compliance and monitor roles
+
+Here’s the content of the JSON file that creates a user account with the monitor and compliance roles. The name of the file is mwhite-UA.json. For the username and password for this account, the sample application specifies mwhite and start123, respectively.
+
+{ "username" : "mwhite", "fullName" : "Morgan White", "description" : "Compliance officer.", "localAuthentication" : true, "forcePasswordChange" : false, "enabled" : true, "roles" : { "role" : [ "COMPLIANCE", "MONITOR" ] } }
+
+JSON file for configuring the Tenant Management Console Here’s the content of the JSON file that configures the Tenant Management Console for the Finance tenant. The name of the file is FinanceMgmtConsole.json.
+
+{ "ipSettings" : { "allowAddresses" : { "ipAddress" : [ "192.168.103.18", "192.168.103.24", "192.168.103.25" ] }, "denyAddresses" : { "ipAddress" : [ ] }, "allowIfInBothLists" : false }, "minimumPasswordLength" : 6, "forcePasswordChangeDays" : 45,
+
+"disableAfterAttempts" : 3, "disableAfterInactiveDays" : 30, "logoutOnInactive" : 20, "loginMessage" : "Welcome to the Finance Tenant" }
+
+JSON file for modifying the tenant
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+532/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

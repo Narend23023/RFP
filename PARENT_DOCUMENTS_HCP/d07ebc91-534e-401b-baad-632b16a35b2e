@@ -1,0 +1,135 @@
+If copy operations are causing a client to time out, consider increasing the client timeout interval.
+
+Note: Depending on the replication configuration, copy operations may be slow, thereby increasing the likelihood of client timeouts. Access permission
+
+To copy an object or version, you need read permission for the source namespace and write permission for the target namespace.
+
+Request header
+
+PUT /rest/directory/file HTTP/1.1
+
+The PUT request to copy an object or version of an object has these elements:
+
+If you’re accessing the target namespace as an authenticated user, an Authorization header An X-HCP-CopySource header in this format: X-HCP-CopySource: source-namespace-name.source-tenant-name/source-object-path
+
+The value of the X-HCP-CopySource header must be URL-encoded.
+
+A URL specifying the location in which to store the object
+
+Note: If the X-HCP-CopySource header identifies a directory, HCP creates an empty directory with the path specified in the target URL, assuming the specified path does not already exist. Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+720/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+version
+
+No
+
+One of: Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash.
+
+For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object.
+
+If you specify a valid range, HCP returns the requested amount of data with a status code of
+
+200.
+
+deleted No
+
+By default, the GET request to retrieve object versions does not include delete records. To retrieve a listing that
+
+includes delete records, specify this URL query parameter:
+
+deleted=true
+
+You can also specify deleted=false, which results in the default behavior.
+
+forceEtag
+
+No
+
+To force HCP to generate an ETag for an object that does not yet have one, specify a forceEtag URL query parameter with a value of true. Response headers
+
+This option does not return any request-specific HCP-specific headers.
+
+The request to copy an object returns an ETag header.
+
+ETag
+
+The ETag of the object or version enclosed in double quotation marks ("). This header is returned only if the object has an ETag.
+
+Response body
+
+Not applicable. Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+201
+
+Created
+
+HCP successfully copied the object. If versioning is enabled and an object with the same name already exists, HCP created a new version of the object.
+
+304 Not Modified
+
+One of:
+
+A request to copy an object specified an X-HCP-Copy-Source-If-None-Match header, and the ETag of the source object matches the value in the header. A request to copy an object specified X-HCP-Copy-Source-If-Modified-Since header, and the source object change time is at or before the time specified in the header. A request to store a new version of an existing object specified an If-Modified-Since header, and the change time of the current version is at or before the time specified in the header.
+
+400 Bad Request
+
+The request was not valid. These are some, but not all, of the possible reasons:
+
+The URL in the request is not well-formed.
+
+Either the source or target namespace does not exist. The target namespace has custom metadata XML checking enabled, and the copied object includes custom metadata
+
+that is not well-formed XML.

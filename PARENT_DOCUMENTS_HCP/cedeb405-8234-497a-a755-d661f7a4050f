@@ -1,0 +1,77 @@
+You can set the Replication Verification service to run once or to run continuously, or you can disable the service so that it doesn't run at all.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, take one of these actions:
+
+To run the Replication Verification service once, select Run Replication Verification service. Then select Run once. To run the Replication Verification service continuously, select Run Replication Verification service. Then select Run continuously. To disable the Replication Verification service, deselect Run Replication Verification service.
+
+4. Click Update Settings.
+
+Changing link connectivity failure reporting In the HCP System Management Console, you can set how long you want the HCP system to wait after a failed replication link connection before reporting the link connectivity failure.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication 2. On the left side of the Replication page, click Settings.. 3. On the replication Settings page, locate the option to Report link connectivity failure after n seconds. 4. In the field represented by n in the above step, type the number of seconds you want HCP to wait before reporting a replication link connectivity failure. Valid values are integers greater than or equal to zero. On new installations of HCP, n is set to 0.
+
+5. Click Update Settings.
+
+Managing failover and failback When one system involved in an active/active link fails or when the primary system for an active/passive link fails, you can fail over the link to the other system involved in the link. Failing over the link stops replication on the link and, if DNS failover is enabled, allows client requests that target the failed system to be redirected to the healthy system.
+
+If a system failure results in a replication link being broken (for example, due to the system being rebuilt after a catastrophic failure), you need to restore the link before replication can restart or data recovery can occur on that link. This applies regardless of the link type and, for an active/passive link, regardless of whether the failed system is the primary system or the replica. To restart replication after failing over a link, you need to fail back the link. Failing back the link restarts replication on the link and returns the HCP systems involved to normal operation. For an active/passive link, failing back includes recovering data from the replica to the primary system.
+
+Failover can be automated for both active/active and active/passive links. Failback can be partially automated for active/passive links.
+
+This section of the Help provides instructions and considerations for managing failover and failback manually.
+
+To fail over a replication link, restore a link, or recover replicated data, you need the administrator role.
+
+Note: You can also use the HCP management API to manage failover and failback of replication links.
+
+Failover and failback workflows
+
+Three failover and failback scenarios are possible, depending on which of these HCP systems fails:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 373/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+One of the systems involved in an active/active link The primary system for an active/passive link The replica for an active/passive link
+
+This section of the Help describes the basic workflows for these scenarios.
+
+System failure workflow with an active/active link
+
+The table below outlines what happens when one of the systems involved in an active/active link fails, where the system that fails is system A and the system that remains healthy is system B. Step
+
+What you do
+
+What happens
+
+System A fails
+
+1
+
+On system B, fail over the link
+
+If DNS failover is enabled, system B broadcasts new DNS configuration
+
+2
+
+If DNS failover is disabled, direct clients to write only to system B
+
+System A comes back online
+
+3
+
+If system A has been rebuilt:
+
+On system A, upload the replication SSL server certificate from system B On system B, upload the replication SSL server certificate from system A
+
+4
+
+On system B, update the link configuration as needed
+
+5
+
+If the link is broken, on system B, send a request to restore the link
+
+Replication link is recreated

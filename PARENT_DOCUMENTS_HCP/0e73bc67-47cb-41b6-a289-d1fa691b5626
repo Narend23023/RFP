@@ -1,0 +1,37 @@
+Erasure coding topology replacement process
+
+When replacing an erasure coding topology, you don't need to wait for the old topology to finish retiring before you create the new topology. During the replacement process, the Geo-distributed Erasure Coding service on each system in the retiring topology determines what to do with each object affected by that topology based on: The current state of the object on the system (full copy or chunk). The state the object should be in with the new topology. (Until you create the new topology, the object is subject to whole-object protection.)
+
+The requirement that the object always be protected against a single system failure.
+
+During the topology replacement process, the Geo-distributed Erasure Coding service on any given system in the retiring topology can take any of these actions on an object:
+
+If the system is part of the new topology:
+
+Reduce a full copy of the object data to the chunk for the new topology Replace an existing chunk for the object with the chunk for the new topology Restore an existing chunk for the object to a full copy of the object data and, some time later, reduce the full copy to the chunk for the new topology Restore an existing chunk for the object to a full copy of the object data and, if the object is smaller than the minimum size for erasure coding with the new topology, leave the full copy as is Make no change if the existing full copy of the object data or chunk for the object is the same as it should be with the new topology
+
+If the system is not part of the new topology but should contain data for the object, restore an existing chunk for the object to a full copy of the object data Regardless of whether the system is part of the new topology:
+
+Delete the existing chunk or full copy of the object data if the system should not contain data for the object (that is, the object should be metadata-only). Completely delete the object (that is, delete both the data and metadata for the object). During the topology replacement process, the Geo-distributed Erasure Coding service deletes an object only on detecting that the object has been deleted on another system in the retiring topology. The service can delete the object even if replication is paused on the link over which the service detected the deletion.
+
+For systems that are in both the retiring and new topologies, you cannot predict on which systems the service will try to restore chunks to full copies of object data. Therefore, to facilitate the topology replacement, you should ensure that each system in the topology you're retiring has significantly more free space than the space required for the addition of a full copy of the data for the largest object that was erasure coded.
+
+Systems in the retiring topology that are not also in the new topology must have enough free space to accommodate full copies of the object data for all erasure-coded objects that are not supposed to be metadata-only. During the topology replacement process, the number of erasure-coded objects for the retiring topology only decreases on each system. However, the total number of erasure-coded objects on each system can increase or decrease unpredictably until the topology replacement is complete.
+
+Considerations for replacing an erasure coding topology
+
+You can replace an erasure coding topology with a topology that includes some but not all of the HCP systems in the old topology. When you add a tenant in the old topology to the new topology, replication of that tenant is automatically paused on each link where:
+
+The link is not in the new topology
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+352/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+One or both of the systems involved in the link are in the new topology Although replication of the tenant is paused on those links, the tenant, its replicated namespaces, and the objects in those namespaces still exist on systems in the old topology that are not in the new topology.
+
+In this situation, you may want to sever the relationship between the tenant on systems in the new topology and the tenant on systems that are not in the new topology. Severing this relationship lets you:

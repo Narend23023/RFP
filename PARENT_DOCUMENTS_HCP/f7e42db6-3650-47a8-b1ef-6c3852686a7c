@@ -1,0 +1,65 @@
+Some WebDAV operations, such as a GET request on a very large directory, can take a long time to complete.
+
+During such an operation, HCP does not communicate back to the client. As a result, the connection may time out on the client.
+
+If an operation may take a long time, you should adjust the connection timeout setting on the client before making the request. Persistent connections with WebDAV
+
+HCP supports persistent connections with WebDAV. Following a request for an operation, HCP keeps the connection open for 60 seconds, so a subsequent request can use the same connection.
+
+Persistent connections enhance performance because they avoid the overhead of opening and closing multiple connections. In conjunction with persistent connections, using
+
+multiple threads so that operations can run concurrently provides still better performance.
+
+If the persistent connection timeout period is too short, ask your tenant administrator about having it changed.
+
+Note: With persistent connections, if a single node has more than 254 concurrent open connections, those above the first 254 may have to wait as long as ten minutes to be
+
+serviced. This includes connections where the HCP domain name resolved to the target node. To avoid this issue, either don’t use persistent connections or ensure that no more than 254 threads are working against a single node at any given time.
+
+Multithreading with WebDAV
+
+HCP lets multiple threads access a namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple directories.
+
+HCP has a limit of 255 concurrent WebDAV connections per node, with another 20 queued. Note: REST, S3 compatible and WebDAV APIs share the same connection pool.
+
+CIFS
+
+This section of the Help contains information on using the CIFS namespace access protocol.
+
+Using CIFS
+
+CIFS is one of the industry-standard protocols HCP supports for namespace access. To access a namespace through CIFS, you can write applications that use any standard CIFS
+
+client library, or you can use the Windows GUI or a Command Prompt window to access the namespace directly.
+
+Using the CIFS protocol, you can store, view, retrieve, and delete objects. You can also change certain system metadata for existing objects.
+
+For you to access a namespace through CIFS, this protocol must be enabled in the namespace configuration, and the namespace configuration must have the Browse, Read, and
+
+Write Minimum Data Access Permissions enabled. If you cannot use the CIFS protocol to access the namespace, contact your namespace administrator.
+
+This chapter explains how to use CIFS for namespace access. Namespace access with CIFS
+
+You access a namespace through CIFS by mapping the namespace to a network drive or by adding the namespace as a network place on a CIFS client. You can map or add the namespace as a whole, either root directory (data or metadata), or any specific data directory or metadirectory. Additionally, you can have multiple directories mapped or added at the same time.
+
+Once mapped or added, the namespace appears to be part of the local file system, and you can perform any of the operations HCP supports for CIFS. On a Windows client, this includes dragging and dropping files and directories to the namespace and, likewise, objects and directories from the namespace.
+
+When mapping or adding the namespace, you can use either the domain name of the HCP system or the IP address of a node in the system. Here are the supported formats: \\cifs.hcp-domain-name\tenant-name_namespace-name[\data|metadata]
+
+\\namespace-name.tenant-name.hcp-domain-name \tenant-name_namespace-name[\data|metadata]
+
+\\node-ip-address\tenant-name_namespace-name[\data|metadata]
+
+Examples:
+
+\\cifs.hcp.example.com\europe_finance
+
+\\cifs.hcp.example.com\europe_finance\data\presentations \\cifs.hcp.example.com\europe_finance\metadata
+
+\\finance.europe.hcp.example.com\europe_finance\data
+
+\\192.168.210.16\europe_finance\data\presentations\images
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+796/907

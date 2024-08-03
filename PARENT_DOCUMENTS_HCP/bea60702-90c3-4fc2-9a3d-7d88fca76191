@@ -1,0 +1,75 @@
+When generating a chargeback report, you use query parameters on the resource URL in the GET request to specify the reporting interval and the time period you want the report to cover. HCP keeps chargeback statistics for 180 days. As a result, chargeback reports cannot report statistics from more that 180 days in the past.
+
+Note: If you upgraded HCP less than 180 days ago from a release that does not support chargeback reports, the earliest available statistics are from the time the upgrade was completed.
+
+The response to a chargebackReport GET request can be formatted as XML, JSON, or CSV. Query parameters
+
+You use query parameters appended to the request URL to specify the time period and reporting interval for a chargeback report. These parameters are all optional. Default values are used for any you omit.
+
+Parameter type
+
+Parameter name
+
+Accepted values
+
+Notes
+
+Time period start=start-time
+
+Use the ISO 8601 format
+
+With a reporting interval of hour or total, if you specify a start time that is not on an hour break,
+
+If you specify both a start time and an end time, the start time must be earlier than the end time.
+
+the first reporting interval in the report is the hour that includes the specified start time. For example, if you specify a start time of 9:45:00, the first reporting interval in the report starts at 9:00:00. With a reporting interval of day, if you specify a start time that is not on a day break, the first reporting interval in the report is the day that includes the specified start time. For example, if you specify a start time of 9:45:00 on October 6th,
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+449/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter type
+
+Parameter name
+
+Accepted values
+
+Notes the first reporting interval in the report starts at 00:00:00 on October 6th. If you specify a start time that is earlier than the time of the earliest available chargeback statistics or if you omit the start parameter, the first reporting interval in the report is the interval that includes the earliest available statistics. end=end-time
+
+Use the ISO 8601 format
+
+If you specify both a start time and an end time, the start time must be earlier than the end time.
+
+With a reporting interval of hour or total, the last reporting interval in the report is the hour that includes the specified end time. For example, if you specify an end time of 9:00:00, the last reporting interval in the report ends at 9:59:59. With a reporting interval of day, the last reporting interval in the report is the day that includes the specified end time. For example, if you specify an end time of 00:00:00 on October 6th, the last reporting interval in the report ends at 23:59:59 on October 6th. If you specify an end time that is later than the current time or if you omit the end parameter, the last reporting interval in the report is the interval that includes the current time. The point-in-time statistics reported for this interval are the statistics at the current time. The dynamic statistics are the statistics accumulated so far for the interval.
+
+Reporting interval granularity
+
+hour
+
+day
+
+The reporting interval is one hour.
+
+The reporting interval is one day.
+
+The statistics reported for the current reporting interval, if included in the chargeback report, may not reflect some reads and writes that have already occurred during the current hour. After the hour is past, however, the statistics for that hour are complete. total
+
+The reporting interval is the time period defined by the start and end times for the report. In this case, the report contains a single set of chargeback statistics.
+
+The default is total.
+
+These values are not case sensitive.
+
+Query parameter examples
+
+To get hourly statistics for the entire day of February 18, 2017:
+
+start=2017-02-18T00:00:00-0500&end=2017-02-18T23:59:59-0500 &granularity=hour
+
+To get daily statistics for the week starting February 19, 2017:
+
+start=2017-02-19T00:00:00-0500&end=2017-02-25T23:59:59-0500 &granularity=day

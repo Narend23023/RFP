@@ -1,0 +1,55 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+664/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Console, as described next.
+
+CORS rules can be configured at the namespace level or tenant level.
+
+To configure CORS rules for a namespace, use one of these interfaces: Tenant Management Console S3 compatible API HCP management API
+
+To configure CORS rules at the tenant level to server as the default for all namespaces owned by a tenant, use one of these interfaces:
+
+System Management Console
+
+HCP management API
+
+Setting CORS rules at the tenant level supports deployments in which a large number of HCP namespaces support the same CORS configuration.
+
+If a namespace managed by the tenant does not have a CORS configuration, the namespace inherits the tenant-level configuration. If a namespace has its own CORS configuration, the namespace-level configuration overrides the tenant-level configuration. HCP permissions for CORS configuration
+
+Users with the administrator or monitor role can read CORS settings at the namespace level or tenant level. Users with the administrator role can also modify CORS settings at the namespace level or tenant level.
+
+The HCP software makes the following distinction between system-level users and tenant-level users. Typically, system-level users do not have tenant management capabilities. However, there is a configuration that grants system-level users tenant-management capabilities. In such instances, system-level users are allowed to configure CORS rules with the Tenant Management Console or HCP management API under the same read/write permissions described above. Hitachi API for Amazon S3
+
+The S3 compatible API makes the following distinction. When a system-level user has the administrator role and Allow system-level users to manage this tenant and search its namespaces in the Tenant Management Console is enabled:
+
+The system-level user can perform namespace-level configuration operations with the HCP Authentication header. The system-level user cannot perform namespace-level configuration operations with the Amazon Web Services (AWS) Authorization header (AWS Signature Version 2 or AWS Signature Version 4). Request header and elements
+
+A CORS rules configuration uses the request header and elements described in the next tables. Some of the request elements are optional.
+
+Request header for a CORS rules configuration
+
+Content-MD5
+
+The base64-encoded 128-bit MD5 digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. Request elements for CORS rules configuration
+
+CORSConfiguration
+
+Container for CORSRules elements. Type: Container Children: CORSRules Ancestor: None A CORS rules configuration in HCP can have any number of CORSRule, AllowedMethod, AllowedOrigin, and AllowedHeader elements. However, the maximum size of the CORS configuration cannot exceed 2.5 MB. CORSRule
+
+A set of origins and methods that you want to allow to access a resource. Type: Container Children: AllowedMethod, AllowedOrigin, AllowedHeader, MaxAgeSeconds, ExposeHeader Ancestor: CORSConfiguration
+
+Id
+
+Optional A unique identifier for the rule. The Id value assists you in finding a rule in the CORS configuration. Type: String Ancestor: CORSRule AllowedMethod
+
+HTTP methods that you want to allow the origin to execute. Each CORSRule must identify at least one origin and one method. Type: Enum (GET, PUT, HEAD, POST, DELETE) Ancestor: CORSRule AllowedOrigin
+
+Origins that you want to allow cross-origin requests from. Each CORSRule must identify at least one origin and one method. The origin value can include at most one wildcard character "*", for example, http://*.example.com. Alternatively, you can specify the wildcard character by itself to enable all origins to send cross-origin requests. Type: String Ancestor: CORSRule
+
+AllowedHeader Optional List of headers that are allowed in a preflight OPTIONS request through the Access-Control-Request-Headers header. This element can contain at most one wildcard character "*". Each header name in the Access-Control-Request-Headers header must have a corresponding entry in the CORSRule. The server will send only the allowed headers that were requested in a response. Type: String Ancestor: CORSRule MaxAgeSeconds

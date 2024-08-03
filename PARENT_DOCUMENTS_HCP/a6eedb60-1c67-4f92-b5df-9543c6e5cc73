@@ -1,0 +1,61 @@
+The Allow erasure coding option is present only if the tenant can manage erasure coding for namespaces. When you select Allow erasure coding, if the Cloud Optimized setting is currently set to Off, the setting automatically changes to On.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+289/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+8. Under Cloud Optimized: Select On to optimize the namespace for cloud protocols only. Select Off to optimize the namespace for all protocols.
+
+When you select Off while Allow erasure coding is selected, that option is automatically deselected.
+
+Select System default to use the system-level default protocol optimization setting that's current when you create a namespace.
+
+The Cloud Optimized option is present only if the tenant is allowed to create namespaces with replication enabled.
+
+9. Under Directory usage:
+
+Select Balanced to configure the namespace for balanced directory usage. Select Unbalanced to configure the namespace for unstructured data usage. It is applicable only for cloud-optimized namespaces. Select System default to use the system-level default directory usage setting that's current when you create a namespace.
+
+10. Under HCP Retention Type, change the selection. Select S3 Object Lock to configure the namespace for S3 Object Lock. If you choose S3 Object Lock, versioning, delete markers, and cloud-optimized protocols must be enabled. Select HCP Retention to configure the namespace for HCP Retention.
+
+11. (Optional) Under HCP Retention Mode, change the selection.
+
+Select Enterprise to configure the namespace for enterprise mode The default is enterprise mode. Select Compliance to configure the namespace for compliance mode.
+
+Note: This option is visible only if you have selected HCP Retention. The HCP Retention Mode option is present only if the tenant is allowed to create namespaces in compliance mode.
+
+12. (Optional) Under Search, change the selection.
+
+The default is Off. The Search option is present only if the tenant is allows to create namespaces with search enabled.
+
+13. (Optional) In the Service Plan field, type the name of or select a different service plan. The default is the Default service plan. The Service Plan field is present only if the tenant is allowed to associate service plans with namespaces.
+
+14. (Optional) Under Versioning, change the selection.
+
+The default is Off. The Versioning option and the pruning options below are present only if the tenant is allowed to create namespaces with versioning enabled.
+
+15. (Optional) Change the selection for the Prune versions older than ... days option.
+
+By default, this option is unselected. If you select this option, in the option field, type the number of days old versions of objects must remain in the namespace before they are pruned. Valid values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+16. Click Update Settings.
+
+If the version pruning option is unselected, a confirming message appears. 17. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 18. Click Update Settings.
+
+Setting the maximum number of namespaces per user
+
+You can limit the number of namespaces that can be owned by a single user. By default, this limit is 100. You can change the limit at any time.
+
+Changing this limit does not affect current namespace ownership. For example, if a user owns seven namespaces and you change the limit to five, that user still owns those seven namespaces even though that exceeds the new limit. However, the user cannot own any additional namespaces, and if namespaces are taken away from the user, the limit of five applies.
+
+To view the limit on namespace ownership, you need the monitor or administrator role. To change the limit on namespace ownership, you need the administrator role. 1. In the top-level menu of the Tenant Management Console, select Configuration > Miscellaneous. 2. In the Maximum Number of Namespaces per User field, type the new limit. Valid values are integers in the range zero through 10,000.
+
+3. Click Update Settings.
+
+Monitoring a namespace
+
+While the namespace Overview panel in the Tenant Management Console gives you a view of a namespace as a whole, these namespace views of the tenant log let you monitor namespace activity on a more detailed level:

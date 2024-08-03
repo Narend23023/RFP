@@ -1,0 +1,183 @@
+A replication topology is a configuration of HCP systems that are related to each other through replication. Typically, the systems in a replication topology are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection).
+
+You can read from namespaces on all systems where those namespaces are replicated. The replication topology, which is configured at the system level, determines the systems on which you can write to namespaces.
+
+Replication has several purposes, including: If a system in a replication topology becomes unavailable (for example, due to network issues), another system in the topology can provide continued data availability. If a system in a replication topology suffers irreparable damage, another system in the topology can serve as a source for disaster recovery. If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+689/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help If an object cannot be read from one system in a replication topology (for example, because a node is unavailable), HCP can try to read it from another system in the topology. Whether HCP tries to do this depends on the namespace configuration. If a system in a replication topology is unavailable, HTTP-based requests to that system can be automatically serviced by another system in the topology. Whether HCP tries to do this depends on the namespace configuration. Operations
+
+You use namespace access protocols to perform operations in a namespace. The operations you can perform depend on the protocol you’re using.
+
+Operation restrictions
+
+The operations you can perform in a namespace are subject to these restrictions:
+
+The namespace access protocol must support the operation. If the namespace protocol requires client authentication, you need to provide valid user credentials. The namespace access protocol must be configured to allow access to the namespace from your client IP address. Both the effective namespace permission mask and your permissions must allow the operation.
+
+Supported operations
+
+The table below lists the operations HCP supports and indicates which protocols you can use to perform those operations. Some operations relate to specific types of metadata. Operation
+
+REST
+
+WebDAV
+
+CIFS
+
+NFS
+
+Write data from files or memory to a namespace to create an object
+
+✓
+
+✓
+
+✓
+
+✓
+
+Transmit data to and from HCP in gzip-compressed format
+
+✓
+
+Check for object existence
+
+✓
+
+✓
+
+View the content of an object
+
+✓
+
+✓
+
+✓
+
+✓ Copy an object
+
+✓
+
+✓
+
+✓
+
+✓
+
+Store new versions of existing objects
+
+✓
+
+Append to existing objects
+
+✓
+
+✓
+
+Delete an object that’s not under retention
+
+✓
+
+✓
+
+✓
+
+✓
+
+Delete an object that’s under retention if the namespace configuration allows it
+
+✓
+
+View object metadata
+
+✓
+
+✓
+
+✓
+
+✓
+
+View a metafile
+
+✓
+
+✓
+
+✓
+
+Override default index, retention, and shred settings when storing an object ✓
+
+Change the retention setting for an object
+
+✓
+
+✓
+
+✓
+
+✓
+
+Hold or release an object
+
+✓
+
+✓
+
+Enable shredding for an object
+
+✓
+
+✓
+
+✓
+
+✓
+
+Change the index setting for an object
+
+✓
+
+✓
+
+✓
+
+✓
+
+Change object ownership (not related to POSIX UID)
+
+✓
+
+Change the POSIX UID and GID for an object
+
+✓
+
+✓
+
+Change the POSIX permission settings for an object
+
+✓
+
+✓
+
+Change the POSIX atime or mtime value for an object
+
+✓
+
+✓
+
+Store, replace, or delete an annotation for an object
+
+✓
+
+Store, replace, or delete the default annotation for an object
+
+✓
+
+✓

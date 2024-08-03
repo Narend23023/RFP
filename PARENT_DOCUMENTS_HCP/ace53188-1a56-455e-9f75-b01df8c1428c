@@ -1,0 +1,31 @@
+System.out.println("Uploading first object to HCP from a file\n"); String firstObjectName = objectNamePrefix + "Q4_2019.ppt"; hs3Client.putObject(new PutObjectRequest( bucketName, firstObjectName, new FileInputStream( firstFileName), metadata)); // Write a second object without metadata. Also collect its ETag for // later usage. System.out.println("Uploading second object to HCP from a file\n"); String secondObjectName = objectNamePrefix + "Q3_2019.ppt"; PutObjectResult result = hs3Client.putObject( new PutObjectRequest( bucketName, secondObjectName,
+
+new File( "input/Q3_2019.ppt"))); String secondObjectEtag = result.getETag();
+
+/* * List objects in the bucket with prefix quarterly_rpts/Q. * The bucket listing is limited to 1,000 items per request. * Be sure to check whether the returned listing has been * truncated. If it has, retrieve additional results by using * the AmazonS3.listNextBatchOfObjects(...) operation. */ System.out.println("Objects:"); ObjectListing objectListing = hs3Client.listObjects( new ListObjectsRequest() .withBucketName(bucketName) .withPrefix(objectNamePrefix + "Q")); for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) { System.out.println(" * " + objectSummary.getKey() + " " + "(size = " + objectSummary.getSize() + ")"); } System.out.println();
+
+/* * Download an object. When you download an object, you get all * the object metadata and a stream from which to read the object * content. */ System.out.println("Downloading the first object\n"); S3Object firstObject = hs3Client.getObject( new GetObjectRequest(bucketName, firstObjectName));
+
+// Write the content to a file named Q4_2019.ppt in the // output folder.
+
+S3ObjectInputStream responseStream = firstObject.getObjectContent(); FileOutputStream dataFile = new FileOutputStream("output/Q4_2019.ppt");
+
+// Keep reading bytes until the end of stream is reached.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+685/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+byte buffer[] = new byte[2048]; int readSize; while (-1 != (readSize = responseStream.read(buffer))) { dataFile.write(buffer, 0, readSize); } dataFile.close();
+
+/* * Add an ACL to the first object to give full control to the user * with the username rsilver. HCP will look up the user ID based * on the username. */ AccessControlList objectACL = hs3Client.getObjectAcl(bucketName, firstObjectName); objectACL.grantPermission(new EmailAddressGrantee("rsilver"), Permission.FullControl); hs3Client.setObjectAcl(bucketName, firstObjectName, objectACL);
+
+/* * Perform a conditional download of object. This will get the * object only if it doesn't match the ETag we received when * storing the object. */ System.out.println("Checking the second object"); GetObjectRequest conditionalRequest = new GetObjectRequest(bucketName, secondObjectName) .withNonmatchingETagConstraint(secondObjectEtag); S3Object conditionalObject = hs3Client.getObject(conditionalRequest); if (null == conditionalObject) { System.out.println(" The object did not change; not " + "downloaded.\n"); } else { // The object has changed, download it to a new file. System.out.println(
+
+" The object changed; downloading new revision\n");
+
+S3ObjectInputStream refreshResponseStream = conditionalObject.getObjectContent(); FileOutputStream dataFile2 = new FileOutputStream( "output/Q3_2019_Rev2.ppt");

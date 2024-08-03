@@ -1,0 +1,71 @@
+2. In the Roles section, select or deselect roles as applicable. 3. Click Update Group.
+
+Deleting a group account
+
+You can delete a group account at any time. Deleting a group account has no effect on the corresponding group in AD.
+
+When you delete a group account, AD users in the corresponding AD group immediately lose the roles granted by that group account.
+
+When a group is deleted in AD, the corresponding HCP group account is not automatically deleted. However, the name of the group account changes to the SID of the deleted AD group. HCP group accounts that correspond to deleted AD groups serve no purpose and should be deleted. Note:
+
+The System Management Console may not immediately reflect the change to the HCP group account name. To force the displayed name to change, you can clear the AD cache.
+
+However, this also affects any AD users currently using HCP interfaces.
+
+To view group accounts, you need the monitor, administrator, or security role. To create and manage group accounts, you need the security role.
+
+1. In the list of group accounts on the Groups page in the System Management Console, click the delete control (
+
+) for the group account you want to delete.
+
+2. In response to the confirming message, click Delete.
+
+Changing user account and login settings
+
+Several system settings affect user accounts and logins to the HCP System Management Console and Search Console (for the default namespace only). To view and change these
+
+settings, you use the Console Security page in the System Management Console. To display the Console Security page, in the top-level menu of the System Management Console, select Security > Console Security.
+
+Note: To view and change user account and login settings, you need the security role.
+
+User account and login settings control:
+
+The minimum password length for locally authenticated HCP user accounts is six. The password should not contain commonly used phrases (for example, letmegetin). As a
+
+best practice, we recommend that you use a mix of uppercase and lowercase letters, numbers, and special characters. The password must contain at least one character
+
+from the following four requirements: Uppercase letters (A-Z)
+
+Lowercase letters (a-z) Numbers (0-9)
+
+Special characters (~!@#$%^&*()-_+={}[]|\:;"'<>,.?/)
+
+The password should not contain usernames or a part of a username.
+
+If an HCP user account is locked out due to failed login attempts, it is unlocked automatically after five minutes.
+
+The HCP keeps a history of your passwords and does not allow you to reuse last five passwords.
+
+The number of days after which locally authenticated users are automatically forced to change their passwords. Valid values are integers in the range one through 999,999.
+
+The default is 180 days. Password expiration affects the use of only the System Management Console, Tenant Management Console, Search Console, and HCP management API. Users with expired passwords can continue to use those passwords with the HCP metadata query API. Password changes affect all HCP interfaces. For security, the HCP automatically disables user accounts that have been inactive for 180 days and that users are logged out after 10 minutes of inactivity.
+
+The consecutive number of times a locally authenticated or RADIUS-authenticated user can enter an incorrect password before the user account is automatically disabled.
+
+Valid values are integers in the range zero through 999. The default is five. A value of zero means accounts are never disabled due to failed login attempts.
+
+After a user account is automatically disabled, you need to reenable it manually to allow the user to log in again.
+
+If the last locally authenticated user account with the security role is disabled due to failed login attempts, it is reenabled automatically after one hour. The number of days an HCP user account can remain inactive before it’s automatically disabled. Valid values are integers in the range zero through 999. The default is 180
+
+days. A value of zero means accounts are never automatically disabled due to inactivity.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+24/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The last locally authenticated user account with the security role is never automatically disabled due to inactivity.

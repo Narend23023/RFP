@@ -1,0 +1,61 @@
+must be stored on each tier.
+
+You can set the HCP initial storage tier, called the ingest tier, to either primary running storage or to HCP S Series storage. When a service plan is first created, it defines only the
+
+ingest tier, so HCP stores all objects in a given namespace on the designated ingest tier throughout the entire object lifecycle.
+
+Primary running storage is designed to provide both high data availability and high performance for object data storage and retrieval operations. To optimize data storage price/performance for the objects in a namespace, you can configure the service plan for that namespace to define a storage tiering strategy that specifies multiple storage tiers. About storage components
+
+HCP uses storage components to represent the storage available to it for storing objects.
+
+A storage component is a set of one or more access points (buckets, containers, or mount points) that share a common endpoint. An endpoint is either a specific type of HCP
+
+storage (primary running or primary spindown) or a specific externally addressable storage device or storage service such as an S Series Node or Amazon S3. Each storage
+
+component has a specific set of data availability, price, and performance characteristics.
+
+HCP uses storage components to provide you with an interface to:
+
+Configure HCP to provide the information that HCP needs to access specific extended storage devices and cloud storage service endpoints.
+
+Configure HCP to monitor, manage, and use all of the storage that is represented by one or more storage components of the same type as a single storage pool. Monitor the health, availability, capacity, and usage of the storage that is represented by each component (primary running storage, primary spindown storage, HCP S Series storage, and each extended storage device and cloud service endpoint) and appropriately provision storage.
+
+Retire HCP S Series or extended storage that is represented by a single storage component, or retire all of the storage that is represented by the components in a single storage pool.
+
+Primary storage components
+
+Every HCP system has a preconfigured storage component for each type of primary storage that the system is configured to use. The primary running storage component
+
+represents all continuously spinning disks that are currently managed by the HCP nodes. For HCP with SAN-attached storage systems with spindown storage, the primary spindown storage component represents all spindown-capable disks that are currently managed by the HCP nodes.
+
+In the System Management Console, you can use the Storage page to perform the following actions:
+
+View information about the current hardware configuration, health status, availability, capacity, and use of the storage that is represented by each primary storage component.
+
+View current and historical storage usage statistics for each primary storage component.
+
+View a comparison of the current and historical storage capacity usage statistics for all components that are defined on the HCP system, including the two primary storage components. Monitor the health and use of each type of primary storage.
+
+Determine when you need to add primary storage or replace storage devices that are used for primary running storage or primary spindown storage.
+
+Note: You cannot modify a primary storage component for the purpose of adding, retiring, or upgrading primary running storage or primary spindown storage. To add primary storage
+
+to an HCP system either to increase primary storage capacity or to replace one or more retired storage devices, contact your authorized HCP service provider for help.
+
+On a HCP with internal storage or HCP with SAN-attached storage system, you can use either the Storage page or the Migration page in the System Management Console to retire one or more primary storage devices. When you retire primary storage, HCP automatically updates each primary storage component, as needed, to reflect the changes in the total
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 37/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+storage capacity and the total number of disks represented by each primary storage component.
+
+HCP S Series storage components
+
+HCP can use HCP S Series Nodes as an alternative to primary storage or for tiering purposes.
+
+To connect the S Series Nodes to the HCP system, you need to add them to the HCP system on the Hardware page of the System Management Console.
+
+You can configure HCP to write directly to S Series Nodes by changing the ingest tier of a service plan. This does not remove the need for primary storage. Primary running storage

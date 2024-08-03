@@ -1,0 +1,73 @@
+When you specify IP addresses, your application must take responsibility for balancing the load among the nodes. In this case, you risk trying to connect (or reconnect) to a node that is not available. However, using explicit IP addresses to connect to specific nodes can sometimes have advantages over using hostnames.
+
+These considerations apply when deciding which method to use: If the client uses a hosts file to map HCP hostnames to IP addresses, the client system has full responsibility for converting any hostnames to IP addresses. Therefore, HCP cannot spread the load or prevent attempts to connect to unavailable nodes. If the client caches DNS information, connecting by hostname may result in the same node being used repeatedly. When you access the HCP system by hostname, HCP ensures that requests are distributed among the nodes, but it does not ensure that the resulting loads on the nodes are evenly balanced. When multiple applications access the HCP system by hostname concurrently, HCP is less likely to spread the load evenly across the nodes than with a single application.
+
+Note: When using hostnames, you can ping the HCP system periodically to check whether you’re getting connections to different nodes.
+
+Generating templates for resource creation When you use the HCP management API to create a resource, the best way to ensure that the request body includes the applicable properties is to use a template. You can generate your own template by submitting a GET request for an existing resource of the same type. In the request, include the verbose=false query parameter on the resource URL (or omit the verbose parameter to accept the default of false).
+
+With a nonverbose GET request HCP returns only properties whose values you can set. This enables you to use the response body as a template for the request body for creating additional resources of the same type. In most cases, in response to a nonverbose GET request, HCP returns all the properties required for creating a resource of the same type and none of the properties that are invalid on a PUT request. The only exception is for namespaces, where the response body does not include the versioningSettings property. To complete the template for namespaces, you need to add this property.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+529/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Modifying resources
+
+1. Submit a GET request for the resource you want to modify.
+
+In the request, include the verbose=false query parameter on the resource URL (or omit the verbose parameter to accept the default of false). This ensures that the response body includes only the properties whose values you can set. 2. In the response body from the GET request, change property values as needed. 3. Submit the POST request for the resource, using the entire modified response body as the request body.
+
+By modifying a resource in this way, you ensure that all the property values are set as expected. A possible drawback to this method is that someone else can modify the resource in between your GET and POST requests. In this case, the values in your POST request will overwrite any modifications. However, this may, in fact, be the result you want.
+
+Session cookie encoding
+
+In the response to a client request, HCP includes a cookie that contains encoded session information.
+
+HCP supports two formats for encoding the session cookie:
+
+RFC2109
+
+HCP used only this format in releases 5.0 and earlier.
+
+RFC6265
+
+HCP has used this format by default in all releases since 5.0. You can use the X-HCP-CookieCompatibility request header to specify the format HCP should use to encode the session cookie. Valid values for this header are RFC2109 and RFC6265.
+
+The X-HCP-CookieCompatibility header is:
+
+Optional and typically not used for RFC6265 Required for RFC2109
+
+HTTP status codes for the HCP management API
+
+This table below explains the possible status codes for HCP management API requests. Code
+
+Meaning
+
+Methods
+
+Description
+
+200
+
+OK
+
+All
+
+HCP successfully created, retrieved, checked the existence of, modified, or deleted a resource.
+
+302
+
+Found
+
+HEAD
+
+Either the specified resource does not exist, or the specified resource exists, but the user account identified by the Authorization header or hcp-api-auth cookie doesn’t have permission to access the resource.
+
+400 Bad Request
+
+All

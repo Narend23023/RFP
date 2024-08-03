@@ -1,0 +1,53 @@
+You use the encoding-type query parameter to request the S3 compatible API to encode the response. You can also use this query parameter to specify the encoding method to use. The key for an object can contain any Unicode character. Some characters, such as those with an ASCII value from 0 to 10, cannot be parsed by XML 1.0 parsers. For these characters, you can add the encoding-type query parameter to request the S3 compatible API to encode the keys in the response. The encoding-type parameter name is case sensitive. fetch-owner
+
+You use the fetch-owner query parameter to retrieve owner information. When you specify the fetch-owner query parameter to true, the S3 compatible API returns the owner information in the response. The S3 compatible API no longer returns owner information by default in the response. To include owner information in the response, you need to set the fetch-owner query parameter to true. The fetch-owner parameter name is case sensitive. list-type
+
+You use the list-type query parameter in order to use version 2 of the S3 compatible API. The value for this query parameter must always be set to 2 if you want to use version 2 of S3 compatible API requests. If any value other than 2 is specified for this query parameter, version 1 of the S3 compatible API is used by default. The list-type parameter name is case sensitive. max-keys
+
+By default, a bucket listing can include at most one thousand items. However, you can use the max-keys query parameter in a bucket listing request to specify a smaller maximum number of items. If more than the maximum number of items satisfy the criteria for a request, you can use query parameters to retrieve the parts in groups. Valid values for the max-keys query parameter are integers in the range 0 (zero) through 2,147,483,647. If you specify an integer greater than one thousand, the returned bucket listing includes only the first one thousand items that satisfy the request criteria (or fewer if fewer than one thousand items satisfy the criteria). The max-keys parameter name is case sensitive. prefix
+
+You use the prefix query parameter to request a bucket listing that contains only items with names that begin with a specified character string (the prefix) and, if applicable, common prefixes that begin that prefix. The list of items does not include in-progress multipart uploads or common prefixes that are exclusively for multipart uploads. The character string you specify for the prefix query parameter can contain any valid UTF-8 characters, including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The prefix parameter name and the character string you specify are both case sensitive. start-after
+
+You use the start-after query parameter to specify that you want the S3 compatible API to return key names after a specific object key. The start-after query parameter that you specify is always returned in the response, regardless of whether the specified value is valid. The start-after query parameter is valid only in the first request. If the response is truncated, you can use the continuation-token query parameter to list the next set of objects. The S3 compatible API lists objects in UTF-8 character encoding in lexicographical order. The start-after parameter name and the character string you specify are both case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to list the contents of a bucket. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000

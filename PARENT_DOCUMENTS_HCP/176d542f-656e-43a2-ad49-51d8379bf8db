@@ -1,0 +1,71 @@
+2. To install a certificate that was created outside HCP, in the New Certificate section of the Domains and Certificates page, select Install PKCS12 certificate.
+
+The Install PKCS12 certificate section opens.
+
+3. Select the file containing the certificate that you want to install and enter the password for the certificate.
+
+a. In the PKCS12 Certificate field, click Browse and select the file containing the PKCS12 object. b. In the PKCS12 Password field, type the password for the PKCS12 object. Controlling access to the System Management Console
+
+The Console Security page in the HCP System Management Console lets you control access to the Console from specified IP addresses. To display this page, in the top-level menu of the Console, select Security > Console Security.
+
+Note: To view and modify information on the Console Security page, you need the security role.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+132/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Valid IP address list entries
+
+You can specify each IP address list entry in the Allow and Deny lists in one of the following formats:
+
+A single IP address A range of IPv4 addresses specified as ip-address/subnet-mask (for example, 192.168.100.197/255.255.255.0) or in CIDR format (for example, 192.168.100.0/24) A range of IPv6 addresses specified in CIDR format (for example, 2001:0db8::/32) The CIDR entry that matches all IPv4 addresses is 0.0.0.0/0. The CIDR entry that matches all IPv6 addresses is 0::0/0.
+
+IP address list handling
+
+IP addresses can be included in one, both, or neither of the Allow and Deny lists. To specify how HCP should handle access requests from IP addresses that are either included in
+
+both lists or excluded from both lists, select or clear the Allow request when same IP address is used in both lists option. The following table describes the effects of selecting and clearing this option. List entries
+
+Allow requests when same IP address is used in both lists
+
+Selected
+
+Cleared
+
+All IP addresses have access.
+
+No IP addresses have access.
+
+Allow list: empty Denylist: empty
+
+All IP addresses have access.
+
+Only IP addresses in the Allow list have access.
+
+Allow list: at least one
+
+entry Deny list: empty Allowlist: empty Deny list: at least one entry
+
+All IP addresses not in the Deny list have access. IP addresses in the Deny do not.
+
+No IP addresses have access.
+
+Allowlist: at least one entry Deny list: at least one entry
+
+IP addresses appearing in both or neither of the lists have access.
+
+IP addresses appearing in both or neither of the lists do not have access.
+
+Controlling access to HCP through the management API
+
+You configure HCP to enable and disable the HCP management API and to control access to the API at both the system level and the tenant level.
+
+To allow system-level users to access the management API for the HCP system to create, modify, and delete tenants and manage replication, the API must be enabled at the system
+
+level. To allow tenant-level and system-level users with administrative access to a specific HCP tenant to access the management API for that tenant, the API must be enabled at both the system and tenant levels. You can access the HCP management API using a system-level URL (that is, a URL that starts https://admin...) only if at least one of your client IP addresses is allowed to access the management API for the HCP system. You can access the HCP management API using a tenant-level URL (that is, a URL that starts https://tenant-name...) only if at least one of your client IP addresses is allowed to access the management API for the HCP tenant specified in the URL.
+
+You use the Management API page in the HCP System Management Console to enable the HCP management API at the system level and to configure HCP to control access to the management API for the HCP system. To display this page, in the top-level menu of the System Management Console, select Security > MAPI.

@@ -1,0 +1,37 @@
+7. Click Update Schedule.
+
+Suspending and resuming activity on an individual link You can suspend and resume replication or recovery activity on individual replication links. When you suspend activity on a link, HCP stops all send activity on the link. You might suspend activity on a link, for example, before making changes to system hardware or to the network over which the two systems involved in the link communicate with each other.
+
+While send activity is suspended on a link, the applicable HCP tenants and namespaces and default-namespace directories on each system remain read-write or read-only, as applicable. Additionally, the link continues to support other functions such as read from remote and repair from remote.
+
+Resuming activity on a link restarts all send activity on the link. After suspending activity on a link, you need to resume activity manually. Suspending activity on a link in an erasure coding topology prevents each system involved in the link from sending full copies of object data and chunks for objects to the other system over that link. Link suspensions, therefore, may prevent newly ingested objects from being protected. Suspending a link does not prevent full copies of object data from being reduced to chunks on the systems involved in the link.
+
+The Replication service periodically checkpoints its progress. When you suspend activity on a link, no special checkpoint occurs. When you resume link activity, therefore, processing starts from the last checkpoint before the suspension. 1. In the top-level menu of the System Management Console for either system involved in the link, select Services > Replication. 2. On the replication Links page, click the link on which you want you want to suspend or resume activity. 3. On the replication link details page, click Link. 4. In the replication Link panel, click the Management tab. 5. In the link Management panel, click Suspend or Resume, as applicable.
+
+Pausing and resuming replication or recovery of a tenant
+
+You can pause and resume replication or recovery of an individual tenant on a replication link. Pausing replication or recovery of a tenant on a link causes the Replication service on the sending system to stop all send activity for the tenant on that link. With an active/active link, the Replication service on both systems involved in the link stops all send activity for the tenant on the link. Resuming replication or recovery of a tenant on a link restarts all send activity for that tenant on that link. After pausing replication or recovery of a tenant on a link, you need to resume replication or recovery manually.
+
+You might pause replication of some tenants on a link, for example, to give more processing time to other tenants with greater replication backlogs. While replication or recovery of a tenant is paused on a link, the two systems involved in the link can still use the link to read from each other the objects in the tenant's replicated namespaces.
+
+Replication or recovery of a tenant can also be paused automatically due to certain events. After replication or recovery of a tenant is paused automatically, you need to resume replication or recovery manually. However, you cannot do this until the issue that caused replication or recovery to be paused is resolved.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 366/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Pausing replication or recovery of a tenant on a link in an erasure coding topology prevents each system involved in the link from sending full copies of object data and chunks for objects in the tenant's namespaces to the other system over that link. Pausing replication or recovery of a tenant, therefore, may prevent newly ingested objects in those namespaces from being protected.
+
+Pausing replication or recovery of a tenant on a link does not prevent full copies of object data in the tenant's namespaces from being reduced to chunks on the systems involved in that link.
+
+The Replication service periodically checkpoints its progress. When you pause replication or recovery of a tenant, no special checkpoint occurs. When you resume processing, therefore, processing starts from the last checkpoint before the pause.
+
+Pausing and resuming tenant replication or recovery 1. In the top-level menu of the HCP System Management Console, select Services > Replication.
+
+2. On the replication Links page, click the link for which you want to pause or resume replication or recovery. 3. On the replication link details page, click Status. 4. In the link Status panel, click the Tenants tab.
+
+5. In the list of tenants, click the pause control (
+
+) or resume control (

@@ -1,0 +1,69 @@
+c. Change to the directory to which you want to write the file containing the exported certificate. d. Enter the following command to export the certificate:
+
+certutil -ca.cert cert-name.cer
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+220/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this command, cert-name is the name (minus the .cer extension) of the file that will contain the exported certificate. If the export is successful, the window displays the contents of the certificate followed by this message:
+
+CertUtil: -ca.cert command complete successfully. If you don’t see this message, make sure the applicable AD domain has a domain controller that is configured with the CA role and that you ran this command on the domain controller that has the CA role installed.
+
+After verifying, try the procedure again, starting from Step 9 in Create the SSL certificate.
+
+e. Copy the file containing the exported certificate to the Windows client from which you plan to access the HCP System Management Console.
+
+3. (Optional) Create an AD group. For Active Directory to work with HCP, the HCP computer account must have certain permissions. The HCP computer account may either inherit its HCP management permissions from an AD group created specifically for this purpose or from the Domain Computers group. If you are creating a new AD group to configure HCP management permissions:
+
+a. On the Windows server from which you can access AD, click the Start button and select Administrative Tools > Active Director Users and Computers. The Active Directory Users and Computers window opens.
+
+b. On the View menu, select Advanced Features. c. Under ad-domain-name, right-click the OU or CN in which you want to create the AD group and select New > Group from the drop-down menu.
+
+The New Object - Group window opens.
+
+d. In the Group name field, type a name for the new group (for example, "HCP Admins").
+
+Then click the OK button.
+
+e. In the left panel of the Active Director Users and Computers window, double-click the OU or CN in which you created the new group.
+
+The middle panel of the Active Director Users and Computers window lists the items in the OU or CN, including the group you just created. f. Right-click the new group and select Properties from the drop-down menu.
+
+The Properties window opens.
+
+g. Click the Security tab. h. With SELF selected in the Group or user names list, select the box for Write in the Allow column under Permissions for SELF.
+
+Then click the OK button.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+221/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+4. Give permissions to the new AD group or to the Domain Computers group.
+
+To grant the HCP computer account HCP management permissions, you need to assign the necessary permissions either to the AD group you created or to the Domain
+
+Computers group. HCP management permissions allow the HCP computer account to create computer accounts and manage computer account properties for each node in the system. To assign permissions to the AD group or to the Domain Computers group: a. In the left panel of the Active Director Users and Computers window, right-click the OU or CN in which you want HCP computer accounts to be created and select
+
+Properties from the dropdown menu. The Properties window opens.
+
+b. Click the Security tab. c. On the Security tab, click the Advanced button. The Advanced Security Settings window opens. d. Click the Add button.
+
+The Permission Entry for HCP window opens.
+
+e. Click the Select a Principle link.
+
+The Select User, Computer, Service Account, or Group window opens.
+
+f. In the Enter object name to select field, type the name of the AD group you created in the previous step, or type Domain Computers if you decided not to create an
+
+AD group for HCP management in the previous step. Then click the OK button. The Permission Entry window opens.
+
+g. In the Permission Entry window:

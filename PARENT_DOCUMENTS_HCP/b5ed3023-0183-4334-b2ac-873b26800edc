@@ -1,0 +1,79 @@
+"shred":false, "retentionString":"Deletion Allowed",
+
+"retentionClass":"", "retention":"0",
+
+"replicated":true, "permissions":"256"
+
+"owner":"USER,midwest,rblack" "operation":"CREATED",
+
+"namespace":"sales.midwest", "ingestTimeString":"2012-03-10T14:55:33-0500",
+
+"ingestTime":1331409333, "index":true,
+
+"hold":false,
+
+"hashScheme":"SHA-256", "hash":"SHA-256 C67EF26C0E5EDB102A2DEF74EF02A8DF5A4F16BF4D...",
+
+"gid":0, "objectPath":"/customers/widgetco/orders/C346527",
+
+"dpl":2, "customMetadata":false,
+
+"changeTimeString":"2012-03-10T14:55:33-0500", "changeTimeMilliseconds":"1331409333948.00",
+
+"accessTimeString":"2012-03-10T14:55:33-0500", "accessTime":1331409333, "acl":false}, .
+
+. .
+
+], "status":{"results":7,"message":"","code":"COMPLETE"}
+
+} }
+
+Example: Retrieving metadata for changed objects
+
+Here’s a sample metadata query API request that uses a JSON body specified directly in the cURL command line and Python code to retrieve operation records for objects that:
+
+Are in the finance namespace, which is owned by the europe tenant
+
+Were modified during 2019
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+871/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The start entry specifies 12:00:00.00 a.m. on January 1, 2019, and the end entry specifies 12:00:00.00 a.m. on January 1, 2020.
+
+The response body is XML. The information returned for each operation record that meets the query criteria consists of the object URL, version ID, operation, and change time. Request with cURL command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "Content-Type: application/json" -H "Accept: application/xml" -d '{"operation":{"systemMetadata":{"changeTime": {"start":1293840000000,"end":1325376000000},"namespaces": {"namespace":["finance.europe"]}}}}' "https://europe.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl()
+
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/json", "Accept: application/xml"])
+
+# Set the request body
+
+theFields = '{"operation":{"systemMetadata":{"changeTime": \ {"start":1293840000000,"end":1325376000000},"namespaces": \
+
+{"namespace":["finance.europe"]}}}}' curl.setopt(pycurl.POSTFIELDS, theFields) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+POST /query HTTP/1.1 Host: europe.hcp.example.com

@@ -1,0 +1,59 @@
+The part you are trying to upload is too big for the amount of space left in the bucket.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+643/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+If this error persists, contact your tenant administrator.
+
+Example: Uploading a part
+
+Here’s a sample PUT request that uploads a part of the multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. The data for the part is in a file named /file-parts-temp/RulesAndRegs-Acctg-1.
+
+The example shows the response headers HCP returns while versioning is enabled for the bucket and while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=/file-parts-temp/RulesAndRegs-Acctg-1 -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105&partNumber=1"
+
+Request headers
+
+PUT /acctg/RulesAndRegulations.pdf?uploadId=94837746087105&partNumber=1 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:oVRZgtbngViycDs+I2p2NP5Y3zY=
+
+Response headers with versioning enabled
+
+HTTP/1.1 200 OK Date: Fri, 16 Dec 2016 15:29:28 GMT ETag: "4a01f8acf3353b0a7e1c03a0e34f63e4" x-amz-version-id: 94841738807809 x-amz-server-side-encryption: None Content-Length: 0
+
+Response headers with versioning disabled
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "4a01f8acf3353b0a7e1c03a0e34f63e4"
+
+x-amz-server-side-encryption: None Content-Length: 0
+
+Uploading a part of a multipart object by copying
+
+You can upload a part of a multipart upload by copying all or part of the data for an existing object. To do this, you use the HTTP PUT method with the uploadId and partNumber query parameters and the x-amz-copy-source header. The bucket where you upload the part must be the same bucket as the one where the multipart upload was initiated.
+
+You use the x-amz-copy-source header to specify the object you're copying (the source object) and the bucket that contains that object (the source bucket). The source bucket can be the same bucket as the one to which you're uploading the part. Alternatively, the source bucket can be a different bucket that's owned by the same tenant. To upload a part by copying, you must be an authenticated user. You need to use the same user account as the account used in the request to initiate the multipart upload. Additionally, you need write permission for the bucket where you're uploading the part and read permission for the source bucket or for the source object itself.
+
+You use the uploadId query parameter to specify the upload ID of the multipart upload for which you're uploading the part. If the upload ID you specify doesn't match the upload ID of an in-progress multipart upload or isn't associated with the object specified in the request, HCP returns a 404 (Not Found) status code and does not upload the part.

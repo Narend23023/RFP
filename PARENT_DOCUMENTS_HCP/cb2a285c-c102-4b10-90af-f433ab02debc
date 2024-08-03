@@ -1,0 +1,113 @@
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body. COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements.
+
+Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date
+
+Specify the date and time until which an object must be retained. The date and time must be in YYYY-MM-DDTHH:MM:SSZ format, where YYYY represents the year, MM represents the month, DD represents the day, T represents the time separator, HH represents the hour in 24-hour format, MM represents the minute, SS represents the second and Z represents the time zone. Example x-amz-object-lock-retain-until-date: 2023-03-30T00:00:00Z
+
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot overwrite or delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example
+
+s3curl.pl --id=hds -- -k -v "https://domainname.com/n1/test3.txt?legal-hold" -X PUT -d "<LegalHold><Status>ON</Status></LegalHold>
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value.
+
+x-hcp-retentionhold
+
+Specifies whether the object is on hold. Either true or false is returned. Status codes
+
+The next table describes HTTP status codes that can be returned in response to a request to retrieve an object.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully processed the request.
+
+Note: If the number of bytes returned does not equal the value of the Content-Length response header, try the request again later.
+
+204 No Content
+
+One of these:
+
+The current version of the specified object is a delete marker or a delete record. The request did not specify a version ID or specified an invalid version ID. The object does not exist.
+
+206
+
+Partial Content
+
+HCP successfully retrieved the data in the byte range specified by the Range header.
+
+304 Not Modified
+
+One of these:
+
+The request included an If-None-Match header, and the ETag for the specified object or object version matched a value specified by the header. The request included an If-Modified-Since header, and the specified object or object version was not modified after the date and time specified by the header.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+628/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have read permission for the specified bucket or object. The S3 compatible API is currently disabled for the specified bucket. The object exists, but the HCP system does not have the object data. Retry the request, targeting a different system in the replication topology. The object is in the process of being deleted.
+
+404 Not Found
+
+One of these:
+
+The specified object or object version does not exist. The current version of the specified object is a delete marker or delete record. The specified item is a folder. The specified bucket does not exist.
+
+409
+
+Conflict
+
+Possible reasons include that the object data is currently being written to HCP.
+
+412 Precondition Failed
+
+One of these:
+
+The request included an If-Match header, and the ETag for the specified object or object version does not match any of the values specified by the header. The request included an If-Unmodified-Since header, and the specified object or object version was modified after the date and time specified by the header.
+
+416 Requested Range Not Satisfiable

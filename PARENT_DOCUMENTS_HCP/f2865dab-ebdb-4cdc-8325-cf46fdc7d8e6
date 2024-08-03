@@ -1,0 +1,101 @@
+The body of an ACL consists of entries in XML or JSON format.
+
+XML format
+
+The XML ACL body has the format shown below. Elements at each hierarchical level can be in any order.
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <accessControlList> <grant> <grantee> <type>(user|group)</type>
+
+<name>(hcp-username |active-directory-username |active-directory-group |all_users |authenticated) </name> If the name entry specifies an Active Directory user or group, include the domain element <domain>active-directory-domain</domain> </grantee> <permissions> Any combination of the following <permission>READ</permission> <permission>READ_ACL</permission> <permission>WRITE</permission> <permission>WRITE_ACL</permission> <permission>DELETE</permission> </permissions> </grant>
+
+Up to 999 additional grant elements </accessControlList> JSON format
+
+The JSON ACL body has the format shown below. Entries at each hierarchical level can be in any order.
+
+{ "grant": [{
+
+"grantee": { "type":"(user|group)", "name":"(hcp-username |active-directory-username |active-directory-group |all_users |authenticated)"[,] If the name entry specifies an Active Directory user or group, include the domain entry "domain":"active-directory-domain" }, "permissions": { "permission":[["READ"[,]|"READ_ACL"[,]|"WRITE"[,] |"WRITE_ACL"[,]|"DELETE"]]
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+706/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+} }] Up to 999 additional grant entries } ACL contents
+
+XML has a single top-level accessControlList element. JSON has a corresponding unnamed top-level object. All ACLs must contain this entry in their body. The top-level entry contains the entries listed in the table below.
+
+Entry
+
+Valid values
+
+Description
+
+grant
+
+N/A
+
+Container for grantee and permissions entries. Identifies one user or one group of users and the permissions granted to that user or group.
+
+An ACL can contain up to one thousand grant entries. grantee
+
+N/A
+
+Child of grant entry. Container for name, type, and domain entries.
+
+name
+
+One of:
+
+Specifies the user or group of users to which the ACL grants permissions.
+
+The username of a user that’s defined in HCP. The username of an Active Directory user account. This can be either the user principal name or the Security Accounts Manager (SAM) account name for the AD user account. The name of an Active Directory group.
+
+HCP has two special groups that you can specify in an ACL: all_users
+
+Grants permissions to all users
+
+authenticated
+
+Grants permissions to all authenticated users
+
+all_users authenticated
+
+To grant permissions to one of these special groups, specify group in the type entry and omit the domain entry.
+
+HCP returns an HTTP 400 (Bad Request) error code if a user or group is specified in more than one name entry. type
+
+One of:
+
+Specifies the type of the value specified in the name entry.
+
+user
+
+The name entry specifies an HCP or Active Directory user account
+
+HCP returns an HTTP 400 (Bad Request) error code if the value of the type entry doesn’t correspond to the value of the name entry.
+
+group
+
+The name entry specifies an Active Directory group, all_users, or authenticated domain
+
+The name of an Active Directory domain
+
+Specifies the Active Directory domain that contains the user account or group specified in the name entry.
+
+This entry is required if the name entry specifies an Active Directory user account or group.
+
+permissions
+
+N/A
+
+Container for any combination of permission entries. permission
+
+Any of:
+
+Child of permissions entry. Specifies the permissions granted to the user or group specified in the name entry.
+
+READ WRITE READ_ACL WRITE_ACL DELETE

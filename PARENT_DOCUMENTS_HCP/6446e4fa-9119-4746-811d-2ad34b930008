@@ -1,0 +1,81 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+One of the systems involved in an active/active link
+The primary system for an active/passive link
+The replica for an active/passive link
+This section of the Help describes the basic workflows for these scenarios.
+System failure workflow with an active/active link
+The table below outlines what happens when one of the systems involved in an active/active link fails, where the system that fails is system A and the system that remains healthy is
+system B.<br>
+                       <b>Bounding box:</b> x1=185, y1=333, x2=1516, y2=845
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Step</td>
+      <td>What you do</td>
+      <td>What happens</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>System A fails</td>
+      <td>System A fails</td>
+      <td>System A fails</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>On system B, fail over the link</td>
+      <td>If DNS failover is enabled, system B broadcasts new DNS configuration</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>If DNS failover is disabled, direct clients to write only to system B</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>System A comes back online</td>
+      <td>System A comes back online</td>
+      <td>System A comes back online</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>If system A has been rebuilt:\nOn system A, upload the replication SSL server certificate from\nsystem B\nOn system B, upload the replication SSL server certificate from\nsystem A</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4</td>
+      <td>On system B, update the link configuration as needed</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>5</td>
+      <td>If the link is broken, on system B, send a request to restore the link</td>
+      <td>Replication link is recreated</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6</td>
+      <td>On system B, fail back the link</td>
+      <td>System A and system B broadcast original DNS configurations; replication\nrestarts in both directions on the link</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

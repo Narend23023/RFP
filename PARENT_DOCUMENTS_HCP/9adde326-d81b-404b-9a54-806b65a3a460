@@ -1,0 +1,97 @@
+The returned listing includes the last multipart upload that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last multipart upload that satisfies the request criteria.
+
+Key
+
+Child of the Upload element. The Key element specifies the name of the object to be created by the applicable multipart upload. KeyMarker
+
+Child of the ListMultipartUploadsResult element. The KeyMarker element specifies the value of the key-marker query parameter included in the request. If the request did not include the key-marker query parameter, the response body includes KeyMarker as an empty element.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+598/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+ListMultipartUploadsResult Root element.
+
+MaxUploads
+
+Child of the ListMultipartUploadsResult element. The MaxUploads element specifies the value of the max-uploads query parameter included in the request. If the request did not include the max-uploads query parameter, the value of the MaxUploads element is 1000. NextKeyMarker
+
+Child of the ListMultipartUploadsResult element. The NextKeyMarker element specifies the object name for the last multipart upload included in the returned listing. This element is included in the response body only when the value of the IsTruncated element is true. If the returned listing is truncated, you can use the value of the NextKeyMarker element as the value of the key-marker query parameter in a new request to retrieve the next set of multipart uploads that satisfy the request criteria. NextUploadIdMarker
+
+Child of the ListMultipartUploadsResult element. The NextUploadIdMarker element specifies the upload ID of the last multipart upload included in the returned listing. This element is included in the response body only when the value of the IsTruncated element is true. If the returned listing is truncated, you can use the value of the NextUploadIdMarker element as the value of the upload-id-marker query parameter in a new request to retrieve the next set of multipart uploads that satisfy the request criteria. Owner
+
+Child of the Upload element and container for the DisplayName and ID elements. The Owner element identifies the user who will own the object created by the applicable multipart upload.
+
+Prefix
+
+One of these:
+
+Child of the ListMultipartUploadsResult.
+
+In this case, the Prefix element specifies the value of the prefix query parameter included in the request. If the request did not include the prefix query parameter, the response body includes Prefix as an empty element. Child of the CommonPrefixes element.
+
+In this case, the Prefix element specifies a common prefix.
+
+StorageClass
+
+Child of the Upload element. The value of the StorageClass element is always STANDARD.
+
+Upload
+
+Child of the ListMultipartUploadsResult and container for the elements that describe a multipart upload. The response body contains one Upload element for each multipart upload in the returned listing. UploadId
+
+Child of the Upload element. The UploadId element specifies the upload ID of the applicable multipart upload.
+
+UploadIdMarker
+
+Child of the ListMultipartUploadsResult element. The UploadIdMarker element specifies the value of the upload-id-marker query parameter included in the request. If the request did not include the upload-id-marker query parameter, the response body does not include the KeyMarker element. Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to list the in-progress multipart uploads in a bucket.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the requested multipart upload listing.
+
+400
+
+Bad Request
+
+Possible reasons include that a query parameter has an invalid value.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to list the in-progress multipart uploads in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found
+
+The specified bucket does not exist.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable

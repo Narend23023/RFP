@@ -1,0 +1,31 @@
+You can choose whether to allow the metadata query engine to index custom metadata. If you allow this, tenant administrators can choose whether to index custom metadata in each of their namespaces. If you disallow custom metadata indexing, custom metadata cannot be indexed in any namespaces. By default, when custom metadata indexing is enabled for a namespace, the metadata query engine indexes the content properties for that namespace and not the full text of custom metadata. If the namespace doesn’t have any associated content properties, no custom metadata is indexed.
+
+Tenant administrators can choose to have the metadata query engine index the full text of custom metadata. If they enable this option, the metadata query engine indexes both content properties, if any exist, and the full text of custom metadata.
+
+Custom metadata can take up a significant amount of the space in the metadata query engine index. Disallowing custom metadata indexing can save space but also means that searches based on custom metadata do not find any objects.
+
+If you disable custom metadata indexing after it has been enabled, the custom metadata that has already been indexed is not removed from the index. Index size
+
+HCP stores the metadata query engine index on predetermined logical volumes on storage nodes. Depending on the type of system (HCP with internal storage, HCP with SAN- attached storage, or VM) and volume configuration, the index shares or does not share the space on these volumes with object data:
+
+In HCP with internal storage or VM systems, one logical volume on each node is index enabled and can store both the index and object data (that is, it’s a shared volume). In HCP with SAN-attached storage systems without an all-SSD configuration, logical volumes with numbers in the range of 64 through 95 store only the index. Furthermore, one additional volume on each node is a shared volume. Note: In HCP G10 and G11 all-SSD HCP with SAN-attached storage configurations, logical volumes with numbers in the range of 64 through 95 are not supported. In the System Management Console, you specify the maximum amount of space the index can occupy on shared volumes as a percent of the total space on those volumes. You can increase or decrease this percent at any time. However, you cannot decrease it to less than the percent of space already used for the index on those volumes.
+
+HCP does not reserve the amount of space you specify as the maximum for the index on shared volumes. As a result, as additional data is stored, the space available for the index on those volumes may actually be less than the maximum amount of space allowed. HCP notifies you when the size of the index reaches 50 percent of the combination of the space on the index-only volumes with either the maximum amount of space allowed for the index on the shared volumes or the actual space available on the shared volumes, whichever is less. At this point, HCP can no longer optimize the space used by the index. As a result, the index grows faster, and responses to metadata query engine API requests become slower, as do responses to searches in the Search Console when that Console is
+
+using the metadata query engine.
+
+When the size of the index reaches 100 percent of the same combination, indexing is disabled. To start indexing again, you must increase the maximum index size and then
+
+reenable indexing. If sufficient space is not available to increase the maximum size, you must add index-enabled storage to the HCP system so that the index can continue to grow. The System Management Console can show the following information about storage usage on the index-enabled logical volumes:
+
+The total amount of storage space allowed for the index across all shared volumes in the system. This includes both used and unused space. The total amount of storage space on all index-only volumes in the system. This includes both used and unused space. The amount of space currently occupied by the index on all index-enabled volumes (that is, both index-only volumes and shared volumes).
+
+The total amount of space currently occupied by other data on all shared volumes. The total amount of space currently available for storing more of the index across all index-only and shared volumes in the system.
+
+Objects that cannot be indexed
+
+HCP reports objects that the metadata query engine cannot index in the applicable tenant-level log. The short description of the logged event is
+
+Object indexing failed. Metadata query engine management From the HCP System Management Console, you can:
+
+Enable or disable the ability to use the metadata query API. Disabling the use of the metadata query API has no effect on the use of the metadata query engine with the Search Console. Enable or disable the indexing of new objects and metadata changes across all namespaces. Enable or disable indexing of custom metadata.

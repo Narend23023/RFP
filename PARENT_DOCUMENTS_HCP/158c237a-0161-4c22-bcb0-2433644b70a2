@@ -1,0 +1,29 @@
+Detecting protection violations
+
+To detect protection violations, the Protection service checks that for each object in a given namespace, at any given point in the object lifecycle:
+
+The total number of existing copies of object data is equal to the total number of copies of object data that are currently required to exist on all of the storage tiers defined for the namespace by its service plan If copies of the object data are stored on primary running storage or primary spindown storage:
+
+Each copy of the object data is stored on a different node All copies of the object data are stored in the same protection set Each copy of the object data is accessible
+
+A violation occurs when any one of these conditions is not true.
+
+Repairing protection violations The Protection service can repair certain protection violations for an object, usually by relying on other good copies of the object data stored in the HCP repository.
+
+For each object in a given namespace, at any given point in the object lifecycle:
+
+If the total number of existing copies of the object data is less than the total required number of copies that’s specified in the namespace service plan (for example, because of a logical volume failure on primary running storage), then on each storage tier that’s defined for the namespace, the Protection service creates the number of copies of the object data that’s required to bring the object into compliance with the namespace service plan.
+
+If one or more copies of the object data are supposed to be stored on a tier that’s currently inaccessible (for example, due to a failed network connection), but rehydration is enabled for that tier, the Protection service creates an extra copy of the object data on primary running storage. For objects stored on primary storage, if the repository contains fewer than the required number of copies of the object data for a set of duplicate-eliminated objects, then for each object, the Protection service creates enough additional copies of the object data on primary storage to:
+
+Satisfy the ingest tier DPL and, if applicable, the primary spindown storage tier DPL specified in the service plan for the namespace that contains the object Comply with the protection set requirements for the applicable ingest tier and primary spindown storage tier DPL settings
+
+The Duplicate Elimination service then merges the object data again the next time it runs. If the total number of existing copies of the object data is greater than the total required number of copies that’s specified in the namespace service plan, then the Protection service deletes the correct number of copies of the object data from each storage tier in order to bring the object into compliance with the namespace service plan.
+
+An object can have an extra copy of its data if the object was rehydrated after a read from primary spindown storage (if it’s used) or from any extended storage tier that’s defined for the namespace that contains the object. Copies of objects on primary running storage that are supposed to be metadata-only can have data if they were rehydrated after a read from a remote system. The Protection service marks rehydrated object data for deletion only after the rehydration keep time has expired and only if another copy of the data exists. The Protection service may determine that it should mark object data on primary spindown storage or on extended storage for deletion when a rehydrated copy of that data exists on primary running storage. In this case, before marking the copy on primary spindown storage or extended storage for deletion, the Protection service checks the service plan for the applicable namespace to determine whether the object is supposed to be moved back onto the applicable storage tier. If the object is supposed to be
+
+moved back onto the applicable storage tier, the Protection service doesn’t mark the copy that’s currently on that storage tier for deletion.
+
+On primary storage, if two copies of the data for an object are stored on the same node, the Protection service creates a new copy on a different node and marks the extra one in the first location for deletion. On primary running storage, primary spindown storage, or NFS storage, if a logical volume has a copy of the secondary metadata for an object but no copy of the object data with that metadata, the Protection service creates a replacement copy of the object data on that volume.
+
+If replication is in effect and the Protection service cannot find a copy of the object data on the current system, it can repair the object by using a copy from another HCP system in the replication topology.

@@ -1,0 +1,45 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+211/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note:
+
+During failover, all spindown volumes on the node taking over are spun up. During failback, all spindown volumes on both nodes are spun up. Zero-copy failover does not apply to external storage volumes. If a node becomes unavailable, the external storage volumes it manages also become unavailable. System Management Console information on failover
+
+During failover, the logical volumes associated with the node that became unavailable first appear as initialized
+
+on the Hardware page in the HCP System Management Console. After the peer takes over a logical volume, the icon moves from the row for the unavailable node to the row for the peer, where it once again shows as available.
+
+While any logical volumes are in a failed-over state, this daily access failover alert appears in the alerts section on the Overview page. Data outages during failover
+
+While a logical volume is failing over, the data stored on it is temporarily unavailable. If the node that managed the volume became unavailable because you shut it down from the System Management Console, the data outage lasts less than 5 minutes.
+
+If the node became unavailable for some other reason (for example, all physical paths between the node and the storage array broke, or the node itself failed), the data outage can last significantly longer. Factors that affect how long it lasts include:
+
+The number of logical volumes involved The size of the logical volumes The number of objects stored on the logical volumes The amount of data storage activity occurring when the node became unavailable Data outages during node restart
+
+When you restart a node from the System Management Console, its storage fails over to its peer during the shutdown part of the restart. The failover process finishes before the node completes its shutdown processing. The data outage caused by the failover lasts less than 5 minutes.
+
+When the node comes back up, the failback process extends the startup processing by about 15 to 30 seconds. The data outage caused by the failback also lasts less than 5 minutes. Data protection mechanism
+
+Zero-copy failover uses a data protection mechanism that prevents the two nodes in a peer group from accidentally overwriting each other’s storage. This mechanism needs to be accessible on all storage paths. It is used any time a node in the pair needs to mount or unmount a storage volume. This occurs when:
+
+A node starts A node stops A node takes over storage management from its peer (failover) A node releases control of storage it’s managing (failback)
+
+To ensure access to the data protection mechanism, both paths between the node and the storage array must be available during these transitions. If either path is not available, the node makes itself unavailable to guarantee the safety of the data.
+
+If a path outage occurs, you should find and repair the cause of the outage before trying to start or stop any affected node. Failover and physical path outages
+
+When one physical path between a node and the storage array breaks, processing continues normally. If the second path for that node breaks while the first one is still broken, the node becomes unavailable, and failover occurs.
+
+To return the node to service and fail back the logical volumes, you need to fix both paths before you reboot the node. The node will not return to service while either path is broken.
+
+If a node managing failed-over storage has a path outage while its peer is still unavailable, processing continues normally. However, if the peer returns to service and takes back its storage, the node with the path outage then becomes unavailable, and failover occurs in the other direction. That is:
+
+1. Node A fails. 2. Node A storage fails over to node B. 3. Node B has a path outage. 4. Node A returns to service. 5. Node A storage fails back to node A. 6. Node B becomes unavailable. 7. Node B storage fails over to node A. SNMP MIB support
+
+You can use SNMP with HCP to view and modify system settings and receive notifications of certain types of events. HCP comes with a MIB, defined in the HCP-MIB.txt file, that includes fields and traps specific to the system. HCP also supports many of the standard Linux-based MIBs available with SNMP.

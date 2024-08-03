@@ -1,0 +1,79 @@
+Content Platform System Management Help
+
+a. Type ok to filter the list to show the nodes that have a status of ok. b. Type unavailable to filter the list to show the nodes that have a status of unavailable.
+
+3. Click the find control (
+
+). About the All Zone Definitions pages
+
+The Networks > All Zone Definitions page lists the zone definitions of all network domains used for each network defined on the system. If you have a network alias, the zone
+
+definition displayed is the DNS zone definition that HCP uses for the network that the alias points to. About the Advanced Setting panel
+
+The Networks > Advanced Settings page is used for enabling network creation, configuring network versions for your nodes, and enabling the management network if the system is
+
+configured for the management network.
+
+Enabling IPv4 and IPv6 addresses
+
+IPv4 addresses are automatically permitted on all nodes in your networks.
+
+You can permit IPv6 addresses on all nodes in your networks. On the Networks > Advanced Settings page, select Enable IPv6.
+
+Disabling IPv6 addresses
+
+IPv4 addresses are automatically permitted on all nodes in your networks.
+
+You can enable or disable IPv6 addresses on all nodes in your networks.
+
+On the Networks > Advanced Settings page, clear the Enable IPv6 checkbox.
+
+Enabling and configuring the management network
+
+Allowing management network configuration lets users with the system administrator role to segregate system management traffic to the [hcp_management] network.
+
+1. On the Networks > Advanced Settings page, select Allow Management Network Configuration. Note:
+
+If the Allow Management Network Configuration is visible but grayed out on the Advanced Settings page, it means that [hcp_management] network is enabled. If you want to disable Allow Management Network Configuration, you first need to set the [hcp_management] Network status to disable.
+
+2. Click Update Settings.
+
+3. On the Networks > Network View page, confirm that the [hcp_management] network is listed. 4. Click the [hcp_management] network, then click the IP Configuration tab.
+
+5. Assign the management network IP, gateway, netmask, and subnet information.
+
+Make sure the subnet is different from your front-end and back-end networks.
+
+6. Click the Settings tab.
+
+7. For Network status, select Enable. 8. Click Update Settings.
+
+To permit users with the system administrator role to create networks, on the Networks > Advanced Settings page, select Enable virtual network management.
+
+These networks can be created with the Create Network wizard from the Networks > Network View page. Virtual network management also permits a system administrator to use the network per storage component tiering.
+
+Creating a network
+
+You use the Create Network wizard on the Networks > Network View page to create a new network on the HCP system. In order to use the wizard, a system administrator needs to
+
+have enabled Virtual network management.
+
+When you create a new network with the wizard:
+
+The network is enabled by default, but it is initially empty. To make the new network usable, you need to modify the initial network configuration to assign IP addresses to one
+
+or more nodes. The network is configured to use the default downstream DNS configuration settings: hidden primary is disabled, notify is disabled, and the refresh rate is set to three hours.
+
+1. Click Create Network above the network list to open the Create Network wizard. 2. On the Settings page in the wizard:
+
+a. In the Network Name field, type a unique name for the network. User-defined network names: Must be from one through 63 characters long. Can contain only characters that are valid in DNS hostnames. In English, valid hostnames can contain only alphanumeric characters and hyphens (-).
+
+Cannot start or end with a hyphen. Cannot contain white space. Are not case-sensitive.
+
+Additionally, the following words are reserved and cannot be used as network names: none, [hcp_system], and [hcp_backend].
+
+b. Optionally, in the Description field, type a description of the network. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters,
+
+including white space. c. Take one of these actions:
+
+To create an untagged network, select Make untagged network. This option is hidden if an untagged network already exists. To create a tagged network, in the VLAN ID field, type a VLAN ID for the network. Valid values are integers in the range one through 4,094.

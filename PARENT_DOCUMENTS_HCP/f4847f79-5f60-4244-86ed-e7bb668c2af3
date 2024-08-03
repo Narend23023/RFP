@@ -1,0 +1,87 @@
+Example: Retiring an erasure coding topology
+
+Here's a sample POST request that retires an erasure coding topology named ex-corp-4. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -d "<ecTopology/>"
+
+H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ ecTopologies/ex-corp-4?retire"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://admin.hcp-us.example.com:9090/mapi/services/" + "erasureCoding/ecTopologies/ex-corp-4?retire") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+POST /mapi/services/erasureCoding/ecTopologies/ex-corp-4?retire HTTP/1.1 Host: admin.hcp-us.example.com:9090 Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97 Accept: */* Content-Length: 13 Content-Type: application/x-www-form-urlencoded Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+400/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Content-Length: 0
+
+Health check report resources
+
+Health check report resources let you prepare, download, cancel, and retrieve the status of HCP health check reports. .../healthCheckReport
+
+Data type
+
+Method Use
+
+Access
+
+healthCheckDownloadStatus GET
+
+Retrieve the status of the health check reports download in progress.
+
+System-level user with the administrator or service role
+
+.../healthCheckReport/prepare
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+healthCheckPrepare POST
+
+Post a system request to prepare the health check reports. System-level user with the administrator or service role
+
+Health check reports can be prepared only on nodes that are running and available.
+
+.../healthCheckReport/download
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+healthCheckDownload POST
+
+Post a system request to start the health check reports download. System-level user with the administrator or service role
+
+The health check reports archive can be downloaded at any time after the health check reports are successfully prepared.
+
+.../healthCheckReport/cancel
+
+This resource has no data types.
+
+Example: Preparing health check reports for download
+
+Here is a sample POST request that prepares health check reports for download. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -iX POST -d @HealthCheckPrepare.xml -k -H "Content-type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/healthCheckReport/prepare"
+
+Request headers

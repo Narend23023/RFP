@@ -1,0 +1,129 @@
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant.
+
+Possible values are:
+
+Integers in the range 1 (one) through the current number of namespaces available for allocation. The number of available namespaces is equal to 10,000 minus the number of namespaces currently allocated to HCP tenants, minus the number of namespaces currently owned by HCP tenants without a quota, minus one for the default namespace, if it exists. If any tenants are above quota, the number of excess namespaces is also subtracted from the number of available namespaces. None
+
+replicationConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant is eligible for replication. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+true
+
+false
+
+The tenant is eligible for replication.
+
+This property is not valid for the default tenant. If the HCP system supports replication, directories in the default namespace are automatically eligible for replication.
+
+The tenant is not eligible for replication.
+
+searchConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant can enable and disable search for the namespaces it owns. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant.
+
+true
+
+The tenant can enable and disable search for its namespaces. false
+
+The tenant cannot enable or disable search for its
+
+namespaces.
+
+snmpLoggingEnabled
+
+Boolean
+
+Specifies whether tenant log messages are sent to the SNMP managers specified at the HCP system level. Valid values are:
+
+true
+
+Tenant log messages are sent to SNMP
+
+managers.
+
+false
+
+Tenant log messages are not sent to SNMP managers.
+
+The default is false.
+
+softQuota
+
+Integer
+
+For an HCP tenant, specifies the percentage point at which HCP notifies the tenant that free storage space is
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+522/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+running low.
+
+This property is not valid for the default tenant.
+
+Possible values are integers in the range zero through 100.
+
+syslogLoggingEnabled Boolean
+
+Specifies whether tenant log messages are sent to the syslog servers specified at the HCP system level. Valid
+
+values are:
+
+true
+
+Tenant log messages are sent to syslog servers.
+
+false
+
+Tenant log messages are not sent to syslog servers.
+
+The default is false.
+
+tenantVisibleDescription
+
+String
+
+Specifies the tenant-level description of the tenant. This description is optional. The default is no description.
+
+To remove a tenant-level description from an existing tenant, specify the tenantVisibleDescription property with no value.
+
+versioningConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant's namespaces can have versioning enabled. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant.
+
+true
+
+The tenant's namespaces can have versioning enabled. false
+
+The tenant's namespaces cannot have versioning enabled.
+
+Example
+
+Here’s an XML example of the tenant data type that describes the tenants resource; the properties shown are those that are returned in response to a verbose GET request for an HCP tenant where the request is made using a tenant-level user account that includes the administrator role:

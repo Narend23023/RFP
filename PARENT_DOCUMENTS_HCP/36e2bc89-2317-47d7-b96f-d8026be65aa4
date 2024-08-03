@@ -1,0 +1,99 @@
+hold, this value is either true or false. retention, this value is one of: initialUnspecified
+
+For objects with a retention setting of Initial Unspecified
+
+neverDeletable
+
+For objects with a retention setting of Deletion Prohibited
+
+expired
+
+For objects with a retention setting that is Deletion Allowed or a specific date in the past
+
+not expired
+
+For objects with a retention setting that is a specific date in the future
+
+retentionClass, this value is the name of a retention class for an object in the result set. namespace, this value identifies a namespace that contains an object in the result set. The value has this format: namespace-name.tenant-name
+
+content-property-name, this value is a value of the named content property that occurs in the result set.
+
+HTTP status codes
+
+The table below describes the possible HTTP status codes for metadata query API requests.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully processed the query.
+
+400 Bad Request
+
+The request syntax is invalid. Possible reasons for this error include:
+
+The query request contains an invalid URL query parameter.
+
+The query request body contains invalid XML or JSON (for example, an invalid entry name). The query request body contains an invalid entry value, such as a malformed version ID or invalid
+
+directory path. One of the sort, facet, query, or objectProperties request entries contains an invalid object property. The request contains a Content-Encoding header that specifies gzip, but the request body is not in
+
+gzip-compressed format. The cURL -d option is specified instead of the --data-binary option with a request body in gzip-
+
+compressed format For object-based queries, the query request entry specifies a query expression that is not in UTF-8 format. For operation-based queries, the query request specifies a namespace that does not exist. For object-based queries, HCP has insufficient memory to process and return query results. To avoid this error, take one or more of these actions:
+
+Specify more precise query criteria to return fewer results. Omit the sort request entry. Omit the facets request entry.
+
+If more information about the error is available, the response includes the HCP-specific X-HCP-ErrorMess age HTTP header.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+859/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+403
+
+Forbidden
+
+One of: The request does not include an Authorization header or hcp-ns-auth cookie. The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The Authorization header or hcp-ns-auth cookie specifies credentials for a system-level user account that is not configured to allow use of the metadata query API. The Authorization header or hcp-ns-auth cookie specifies credentials for a system-level user account, but the URL specifies an HCP tenant that has not granted administrative access to
+
+system-level users. For operation-based queries, the Authorization header or hcp-ns-auth cookie specifies credentials for a tenant-level user, but the query specifies a namespace for which that user account does not have search permission. For operation-based queries, the Authorization header or hcp-ns-auth cookie specifies credentials for a system-level user account that is configured to allow use of the metadata query API and the URL specifies admin, but the request body specifies a namespace in a tenant that has not granted administrative access to system-level users. The tenant specified in the URL does not exist.
+
+If more information about the error is available, the response includes the HCP-specific X-HCP-ErrorMess age HTTP header.
+
+406 Not Acceptable
+
+One of:
+
+The request does not have an Accept header, or the Accept header does not specify application/xml or application/json.
+
+The request has an Accept-Encoding header that does not specify gzip or *.
+
+413
+
+Request Entity Too Large
+
+Request body exceeds the 8k limit.
+
+415
+
+Unsupported Media Type One of:
+
+The request does not have a Content-Type header, or the Content-Type header does not specify application/xml or application/json. The request has a Content-Encoding header with a value other than gzip.
+
+500

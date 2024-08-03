@@ -1,0 +1,77 @@
+Required if using V4 authentication and policy is sent with request (AWS Signature Version 4 authentication only field) Specifies the credentials that you used to calculate the signature. It provides access key ID and scope information identifying the region and service for which the signature is valid. This should be the same scope you used to calculate the signing key. Use this format: access-key-id/date/aws-region/aws-service/aws4_request
+
+For example:
+
+AKIAIOSFODNN7EXAMPLE/20191024/us-east-1/s3/aws4_request
+
+For Amazon S3, the aws-service string is s3.
+
+Optional form fields
+
+acl
+
+Adds a canned ACL to the resulting object when the upload is completed. The default is private.
+
+Content-Encoding
+
+REST-specific header. You can use the values in a policy; they are otherwise treated as follows: If value is gzip and file is gzipped, HCP decodes the file. Expires
+
+REST-specific headers. You can use the values in a policy; they are otherwise treated as follows: If present, HCP returns the value in the response header.
+
+success_action_ redirect redirect
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+661/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Specifies a URL to which the client is redirected upon successful upload. If not specified, HCP returns the empty document type specified in the field success_action_status. If HCP cannot interpret the URL, it acts as if the field is not present. If the upload fails, HCP displays an error and does not redirect the user to a URL. Note: The field redirect is deprecated. success_action_status
+
+If you don't specify success_action_redirect, this status code is returned to the client when the upload succeeds. Accepts the values 200, 201, or 204 (the default). If set to 200 or 204, HCP returns an empty document with a 200 or 204 status code. If set to 201, HCP returns an XML document with a 201 status code. If not set or set to an invalid value, HCP returns an empty document with a 204 status code. Note: Some versions of Adobe Flash Player do not properly handle HTTP responses with an empty body. To support uploads through Adobe Flash, set to 201. x-amz-meta-*
+
+Adds customer metadata, stored as key-value pairs, to the resulting object when the upload is completed.
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value
+
+x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false. Response headers
+
+The list below describes the headers returned in response to a successful POST object upload request.
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Location
+
+Specifies the URL to which the client is redirected if the upload is successful.
+
+x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption. x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+Response body
+
+If success_action_code is set to 201, HCP returns information about the object that results from a successful upload request in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to complete a POST object upload. The elements are listed in alphabetical order. Bucket
+
+Child of the PostResponse element. The Bucket element specifies the bucket where the object was created.
+
+ETag

@@ -1,0 +1,77 @@
+condition for a tenant until ten minutes after the tenant was added to the topology. HCP cannot find one or more replication links that are included in the erasure coding topology.
+
+To view text describing the condition that's causing the alert, hover over the alert icon. Understanding erasure coding topology details
+
+The list of erasure coding topologies on the EC Topologies page shows the current status of each active, retiring, or retired erasure coding topology. To further monitor the status of a topology and to manage the topology, click the name of the topology in the list.
+
+The page that opens shows details about the erasure coding topology in a Status section, HCP Systems section, and Overview panel, each of which is described below. The additional panels you can access on this page are: Tenants panel
+
+Shows the tenants that are included in the topology and the tenants that are eligible to be included in the topology.
+
+Settings panel
+
+Shows the erasure coding topology properties and lets you change those properties.
+
+Management panel
+
+Lets you retire and delete the erasure coding topology. Status section
+
+The Status section on the details page for an erasure coding topology shows:
+
+Topology state
+
+The current state of the topology. The topology state can be Active, Retiring, or Retired.
+
+Protection status
+
+The current status of the erasure coding topology with respect to how well-protected erasure-coded objects are. The protection status can be: Healthy
+
+All of these are true:
+
+All systems in the topology are available. The loss of a link in the topology would not cause any system to become unavailable. The suspension of activity on a link in the topology would not prevent any system from receiving data or chunks for newly ingested objects.
+
+Data or chunks for newly ingested objects are being distributed to all systems in the topology. Full copies of object data will be reduced to chunks when the applicable erasure coding delay expires. Objects that were erasure coded according to the topology are protected. Vulnerable
+
+One or both of these are true:
+
+The loss of a link in the topology would cause a system in the topology to become unavailable. The suspension of activity on a link in the topology would prevent a system in the topology from receiving data or chunks for newly ingested objects.
+
+Data or chunks for newly ingested objects are being distributed to all systems in the topology. Full copies of object data will be reduced to chunks when the applicable erasure coding delay expires. Objects that were erasure coded according to the topology are protected. Broken
+
+One or more systems in the topology are unavailable. Data or chunks for newly ingested objects are being distributed to the systems that are available to the ingest system. However, full copies of object data won't be reduced to chunks until all systems in the topology are available, regardless of the erasure coding delay.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+357/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Objects that were erasure coded according to the topology are not protected and may not be available.
+
+Retiring
+
+Both of these are true:
+
+The topology is in the process of retiring. One or more systems in the topology still have chunks for objects that were erasure coded according to the topology. Retired
+
+Both of these are true:
+
+The topology has finished retiring. No systems in the topology have chunks for objects that were erasure coded according to the topology.
+
+Unknown
+
+HCP cannot determine the protection status.
+
+Read status
+
+The current status of the erasure coding topology with respect to the ability to read erasure-coded objects. Note: For the purpose of determining read status, HCP treats suspended links as broken links. However, if a suspended link is not actually broken, the systems involved in the link can still use the link to read data from each other. The read status can be: Healthy
+
+Both of these are true:
+
+The loss of a link in the topology would not cause the inability to read erasure-coded objects. A system in the topology becoming unavailable would not cause the inability to read erasure-coded objects.
+
+The data for objects that were erasure coded according to the topology can be reconstructed or restored as needed. Vulnerable
+
+All of these are true:

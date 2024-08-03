@@ -1,0 +1,105 @@
+X-HCP-ContentLength
+
+The size of the annotation, in bytes. This header is returned only if the request specifies a compressed response. X-HCP-Hash
+
+The cryptographic hash algorithm HCP uses, along with the cryptographic hash value stored for the object, in this format:
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is the same as the data you sent. To perform the verification, compare this value with a hash value that you generate from the original data. The
+
+X-HCP-Hash
+
+header is not returned for multipart objects.
+
+X-HCP-Size
+
+The size of the object data, in bytes.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. X-HCP-Type
+
+The object entity type.
+
+Response body
+
+The body of the HTTP response contains the annotation.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the annotation.
+
+204 No Content
+
+The specified object does not the specified annotation.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find an object or version at the specified URL. The specified object or version does
+
+not exist, or the request specified the current version of an object that has been deleted. The URL path contains a symbolic link to a directory anywhere other than in the last component.
+
+406 Not Acceptable
+
+The request has an Accept-Encoding header that does not include gzip or *.
+
+503
+
+Service Unavailable
+
+The request contains the nowait query parameter, and HCP determined that the request would have taken a significant amount of time to return the annotation.
+
+Example: Retrieving an annotation for an object
+
+Here’s a sample HTTP GET request that retrieves the account_info annotation for an object named Q1_2012.ppt in the quarterly_rpts directory. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt
+
+?type=custom-metadata&annotation=account_info" > Q1_2012.ppt.custom-metadata.xml
+
+Request in Python using PycURL
+
+import pycurl filehandle = open("Q1_2012.ppt.custom-metadata.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \
+
+&annotation=account_info") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+773/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.close()
+
+filehandle.close() Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata&annotation=
+
+account_info HTTP/1.1 Host: finance.europe.hcp.example.com

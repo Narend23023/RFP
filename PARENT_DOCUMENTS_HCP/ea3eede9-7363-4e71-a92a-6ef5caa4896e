@@ -1,0 +1,41 @@
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+External volume volume-id on node node-number - volume-status The external storage volume has a status other than available. For information about the cause, check the HCP system log. If the status is broken, check the export configuration and verify that the NFS server is running. If the configuration is correct and the NFS server is running, ensure that the device is functioning properly and that the network connecting HCP to the device is healthy. If the status is unavailable and does not change to available or broken within a short amount of time, try remounting the volume. If this alert persists, contact your authorized HCP service provider for help. Networks page alerts
+
+The System Management Console uses warning and error icons for alerts that appear on the Networks page.
+
+The icon used to indicate a error condition is a white triangle containing an red exclamation point. When this icon appears in a table row, that row is highlighted in red.
+
+The icon used to indicate an warning condition is a white triangle containing a orange exclamation point. When this icon appears in a table row, that row is highlighted in orange.
+
+The warning and error alerts that appear on the Networks page are described in separate sections below.
+
+Networks page error condition alerts
+
+Error condition alerts that appear on the Networks page are listed alphabetically by their hover text.
+
+Network has no node IP addresses The network is empty; that is, no nodes have any IP addresses defined for the network. Clients cannot access the HCP system over an empty network. Configure the network to assign IP addresses to one or more nodes. Each node must have a separate IP address on each subnet defined for the network.
+
+Network not functioning properly
+
+The network is experiencing problems on one or more nodes. Possible causes for this error condition alert include: One or more physical network connections to one or more nodes are not working. Check the Storage Node page for each node to see which network interfaces show errors. Then correct any problems with the applicable physical networks. If the networks appear to be working properly, contact your authorized HCP service provider. The network interface for the network is missing in one or more nodes. Restart the network. If the problem persists, contact your authorized HCP service provider. One or more nodes have network interfaces for the network but do not have IP addresses in the network. Restart the network. If the problem persists, contact your authorized HCP service provider.
+
+Networks page warning alerts
+
+Warning condition alerts that appear on the Networks page are listed alphabetically by their hover text.
+
+Network disabled The network has been manually disabled by a system administrator. Clients cannot access the HCP system over a disabled network and tenants and namespaces cannot be replicated over a disabled network. Check the Tenants page to determine whether the disabled network is assigned to any tenants. Also check the replication Settings page to determine whether the disabled network is selected as the replication network. If the network is assigned to one or more tenants, take one of these actions:
+
+On the Tenants page, reconfigure the affected tenants to use only enabled networks for data and management access. On the Networks page, click the gear icon next to the disabled network to display the network Settings panel. Then select the option to enable the network and click Update Settings.
+
+If the network is selected as the replication network, take one of these actions: On the replication Settings page, select a different network for replication. On the Networks page, click the gear icon next to the disabled network to display the network Settings panel. Then select the option to enable the network and click Update Settings.
+
+If the network is not assigned to any tenants, and is not used for replication, no action is required. You can use the Networks page to reconfigure, reenable, or delete the network at any time without affecting access to the HCP system. IP mode mismatch
+
+The system-level front-end network IP mode is Dual, but the [hcp_system] network is configured to use only IPv4 addresses or only IPv6 addresses. Submit a request to your authorized service provider to set the system-level IP mode and set the [hcp_system] network IP mode, to provide support only for the type(s) of IP address you want to configure for user-defined networks.
+
+Network has only one node IP address
+
+The network is degraded; that is, only one node has IP addresses defined for the network. A degraded network presents a single point of failure for clients accessing HCP over that network. Reconfigure the network to assign IP addresses to one or more additional nodes.

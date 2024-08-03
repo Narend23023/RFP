@@ -1,0 +1,49 @@
+Id
+
+Optional A unique identifier for the rule. The Id value assists you in finding a rule in the CORS configuration. Type: String Ancestor: CORSRule AllowedMethod
+
+HTTP methods that you want to allow the origin to execute. Each CORSRule must identify at least one origin and one method. Type: Enum (GET, PUT, HEAD, POST, DELETE) Ancestor: CORSRule AllowedOrigin
+
+Origins that you want to allow cross-origin requests from. Each CORSRule must identify at least one origin and one method. The origin value can include at most one wildcard character "*", for example, http://*.example.com. Alternatively, you can specify the wildcard character by itself to enable all origins to send cross-origin requests. Type: String Ancestor: CORSRule
+
+AllowedHeader Optional List of headers that are allowed in a preflight OPTIONS request through the Access-Control-Request-Headers header. This element can contain at most one wildcard character "*". Each header name in the Access-Control-Request-Headers header must have a corresponding entry in the CORSRule. The server will send only the allowed headers that were requested in a response. Type: String Ancestor: CORSRule MaxAgeSeconds
+
+Optional Maximum time, in seconds, that the browser can cache a preflight OPTIONS response for a specified resource. By caching the response, the browser does not have to send preflight requests to the server within the MaxAgeSeconds time window if repeated requests (same origin, HTTP method, and resource) are issued.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+665/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+A CORSRule can have at most one MaxAgeSeconds element. Type: Integer (seconds)
+
+Ancestor: CORSRule
+
+ExposeHeader Optional One or more response headers that customers can access from their applications, for example, from a JavaScript XMLHttpRequest object. You add one ExposeHeader element in the rule for each header. This element restricts the response headers that are accessible by the client. Type: String Ancestor: CORSRule
+
+Example: PUT bucket request The following PUT bucket request adds a CORS subresource to a bucket (namespace) named finance.
+
+Note: Each S3 compatible request must be authenticated by the S3 gateway. You do this by using the HTTP Authorization request header with either a signature string, an AWS Version 2 or Version 4 authentication string, or by anonymous access. Request headers
+
+PUT /?cors HTTP/1.1 Host:finance.europe.hcp.example.com x-amz-date: Tue, 14 May 2019 17:54:50 GMT Content-MD5: 8dYiLewFWZyGgV2Q5FNI4W== Authorization: SignatureString
+
+Request body
+
+<CORSConfiguration> <CORSRule> <AllowedOrigin>http://www.example.com</AllowedOrigin> <AllowedMethod>PUT</AllowedMethod> <AllowedMethod>POST</AllowedMethod> <AllowedMethod>DELETE</AllowedMethod> <AllowedHeader>*</AllowedHeader>
+
+<MaxAgeSeconds>3000</MaxAgeSec> <ExposeHeader>ETag</ExposeHeader> </CORSRule> <CORSRule> <AllowedOrigin>*</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedHeader>*</AllowedHeader> <MaxAgeSeconds>3000</MaxAgeSeconds> </CORSRule> </CORSConfiguration> Response headers
+
+HTTP/1.1 200 OK Date: Tue, 14 May 2019 17:54:50 GMT Server: HCP
+
+Example: GET bucket request
+
+The following GET bucket request returns a CORS subresource from a bucket (namespace) named finance.
+
+Note: Each S3 compatible request must be authenticated by the S3 gateway. You do this by using the HTTP Authorization request header with either a signature string, an AWS Version 2 or Version 4 authentication string, or by anonymous access. Request headers
+
+GET /?cors HTTP/1.1 Host:finance.europe.hcp.example.com Date: Tue, 14 May 2019 2 17:54:50 GMT Authorization: SignatureString
+
+Response headers

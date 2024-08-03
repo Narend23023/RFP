@@ -1,0 +1,53 @@
+Setting the maximum number of namespaces per user
+
+You can limit the number of namespaces that can be owned by a single user. By default, this limit is 100. You can change the limit at any time.
+
+Changing this limit does not affect current namespace ownership. For example, if a user owns seven namespaces and you change the limit to five, that user still owns those seven namespaces even though that exceeds the new limit. However, the user cannot own any additional namespaces, and if namespaces are taken away from the user, the limit of five applies.
+
+To view the limit on namespace ownership, you need the monitor or administrator role. To change the limit on namespace ownership, you need the administrator role. 1. In the top-level menu of the Tenant Management Console, select Configuration > Miscellaneous. 2. In the Maximum Number of Namespaces per User field, type the new limit. Valid values are integers in the range zero through 10,000.
+
+3. Click Update Settings.
+
+Monitoring a namespace
+
+While the namespace Overview panel in the Tenant Management Console gives you a view of a namespace as a whole, these namespace views of the tenant log let you monitor namespace activity on a more detailed level:
+
+The namespace-level all-events view shows all log messages for a given namespace. The namespace-level compliance view shows all log messages about events that require the compliance role for a given namespace.
+
+Although unlikely, if HCP finds a broken object it cannot repair, it reports the event in the tenant log. In the Tenant Management Console, you can see a list of the irreparable, unavailable, and nonreplicating objects in any given namespace. When you click this option, the Search box appears.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+290/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For Node Number, you can specify one node or All. For Event ID, enter a single event ID or multiple IDs separated by a comma (for example, 3005,2606). When finished, click Search. You can clear searched events when they are no longer needed.
+
+Viewing the complete namespace event log
+
+The namespace All Events panel lists all namespace-specific log messages. By default, the panel displays ten messages at a time in reverse chronological order.
+
+To view the namespace All Events panel, you need the monitor, administrator, or compliance role. However, only users with the compliance role can see messages about events that require the compliance role. 1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Monitoring. 4. On the left side of the Monitoring panel, click All Events.
+
+Viewing the namespace compliance log
+
+The namespace Compliance Events panel lists all namespace-specific log messages about events that require the compliance role. This includes all retention class activity and privileged delete operations. By default, the panel displays ten messages at a time in reverse chronological order.
+
+To view the namespace Compliance panel, you need the compliance role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want.
+
+3. In the row of tabs below the namespace name, click Monitoring. 4. On the left side of the Monitoring panel, click Compliance Events. Working with unavailable objects
+
+HCP keeps track of objects that are unavailable. You can view a list of these objects for any given namespace in the Tenant Management Console.
+
+To view the Unavailable Objects panel, you need the monitor or administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Monitoring. 4. On the left side of the Monitoring panel, click Unavailable Objects.
+
+For each object it lists, the Unavailable Objects panel shows the date that the HCP system discovered the unavailable object, the name of the object, and the reason why it is unavailable.
+
+If an object subsequently becomes available again, the object is removed from the list.

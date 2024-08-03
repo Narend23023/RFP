@@ -1,0 +1,49 @@
+) for that entry in the RADIUS server list.
+
+Deleting a RADIUS server
+
+To add, view, test, and manage connections to RADIUS servers, you need the security role.
+
+1. On the RADIUS page in the System Management Console, click the delete control ( 2. In response to the confirm message, click Delete.
+
+) for the RADIUS server IP address or host name you want to delete.
+
+Configuring a key management server Key management server
+
+A key management server (KM server) is used to administer the full life cycle of HCP cryptographic keys. The KM server controls the generation, usage, storage, archival, and deletion of encryption keys. HCP authenticates with your KM server by using certificates that you install or generate to create a connection with KM server.
+
+HCP supports using one or more KM servers to manage encryption keys. Best practices recommend that you use multiple KM servers for key management because it allows the servers to work together to provide failover and increased availability.
+
+Observe the following guidelines when using KM servers:
+
+Make sure each namespace that uses encryption has access to the network where you configured the KM server.
+
+Make sure your network firewall settings allow the clusters to communicate through the port used for KMIP communications. The default is port number is 5696.
+
+You can host up to 8 KM servers on an HCP system. HCP system supports 8 active KM servers at any given time.
+
+The security of encrypted data on an HCP system depends on keeping encryption keys secure. Encryption keys are encrypted using a Key Encryption Key (KEK). HCP delegates the storage and protection of KEKs to an external key manager. Authenticating HCP and KM server using SSL
+
+Mutual authentication allows HCP and KM server to authenticate each other prior to establishing a secure SSL or TLS connection. The connection begins with an SSL/TLS handshake between HCP and KM server to establish the connection details.
+
+The handshake starts when the KM server connects to HCP and requests a secure connection. KM server sends HCP a server certificate and then HCP uses the root certificate to authenticate the identity the certificate claims to represent. HCP sends KM server a client certificate and then the KM server uses the information on the server to authenticate the identity the certificate claims to represent.
+
+You can use any of the following options to establish trust between HCP and the KM server: Client certificate from KM server: You can create a new certificate on the KM server. You can also register new client using a certificate signed by an external CA. For detailed instructions, see your KM server product documentation. A certificate returned for an HCP-generated CSR: For more information, see Creating a CSR
+
+Domain certificate: If you have an existing domain certificate, you can use it to register your HCP client.
+
+CAUTION: The client certificate on the KM server must remain current and not expired. If the client certificate expires or is not current, the HCP system will not be able to access the KM server.
+
+Attention: To view or create certificates, you need the security role. Depending on the type of KM server (vendor, software version), you might need to perform additional configuration tasks. For more information about preparing the necessary services to accept connections from the storage system, see the documentation for your key management server. Certificate types
+
+Certificates are commonly used for both encryption and identification of the parties. The HCP system and KM server uses certificates for authentication. The exchange of certificates verifies access to the encryption keys that are stored on the KM server. The authentication of the HCP system ensures that the KM server provides access to keys only to a trusted source. The authentication of the KM server ensures that the HCP system can trust the server to access and store keys. Root certificate is a self-signed certificate defined by IETF RFC 5280 and issued by a root CA. The SSL ecosystem is based on a trust relationship called the chain of trust. When HCP validates a certificate, it compares the certificate issuer with the list of trusted CAs. Client certificate is a digital certificate used by client systems to prove their identity and make authenticated requests to a remote server. The KM server can validate the digital signature by using the client's public key (in the client certificate).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+138/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Creating a CSR

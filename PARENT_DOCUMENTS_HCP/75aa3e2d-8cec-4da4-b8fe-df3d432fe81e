@@ -1,0 +1,125 @@
+/rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \
+
+&annotation=account_info") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+773/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.close()
+
+filehandle.close() Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata&annotation=
+
+account_info HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1336490468
+
+X-HCP-SoftwareVersion: 7.0.0.16 ETag: "9c604138ffb0f308a8552a3752e5a1be" Content-Type: text/xml Content-Length: 287
+
+X-HCP-Type: annotation X-HCP-Size: 119459
+
+X-HCP-ChangeTimeMilliseconds: 1335347627362.00 X-HCP-ChangeTimeString: 2012-04-25T05:53:47-0400
+
+X-HCP-Hash: SHA-256 42C605FBFFCD7CEAC36BE62F294374F94503D1DC1793736...
+
+Response body
+
+<?xml version="1.0" ?>
+
+<quarterly_rpt> <preparation> <prepared_by>Lee Green</prepared_by> <department>Accounting</department>
+
+<title>Budget Director</title> </preparation>
+
+<presentation_date>04-18-2012</presentation_date>
+
+<slide_count>23</slide_count> </quarterly_rpt>
+
+Deleting annotations
+
+You use the HTTP DELETE request to delete an annotation for an object. You cannot delete annotations for old versions of an object. Access permission
+
+To delete an annotation, you need delete permission.
+
+Request header
+
+DELETE /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value custom-metadata. annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter.
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully deleted the annotation.
+
+204
+
+No Content
+
+The specified object does not have the specified annotation.
+
+400
+
+Bad Request
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user doesn’t have delete permission.

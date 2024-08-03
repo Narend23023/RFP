@@ -1,0 +1,67 @@
+Every service plan defines primary running storage as the initial storage tier, called the ingest tier. The default storage tiering strategy specifies only that tier.
+
+Primary running storage is designed to provide both high data availability and high performance for object data storage and retrieval operations. To optimize data storage
+
+price/performance for the objects in a namespace, you can configure the service plan for that namespace to define a storage tiering strategy that specifies multiple storage tiers. Storage Tiering service
+
+HCP uses the Storage Tiering service to maintain the correct number of copies of each object in a namespace on the storage tiers that are defined by the storage tiering strategy for that namespace. When the number of object copies on a storage tier goes below the number of object copies specified for that tier in the applicable service plan,
+
+the Storage Tiering service automatically creates a new copy of that object on that tier. When the number of copies of an object on a storage tier goes above the number of object copies specified for that tier in the applicable service plan, the Storage Tiering service automatically deletes all unnecessary copies of that object from that tier. Primary spindown storage
+
+On a HCP with SAN-attached storage system, HCP can be configured to use primary spindown storage, which is primary storage that consists of disks that can be spun
+
+down when not being accessed, for tiering purposes. You can then configure the service plan for any given namespace to define primary spindown storage as a storage tier for the objects in that namespace. Using primary spindown storage to store object data that’s accessed infrequently saves energy, thereby reducing the cost of storage.
+
+HCP moves object data between primary running storage, primary spindown storage, and other types of storage that are used for tiering purposes according to rules that are
+
+specified in storage tiering strategies defined by service plans. HCP S Series storage
+
+HCP can be configured to use S Series storage, which is storage on external HCP S Series Nodes that are separate from the HCP system. S Series Nodes are used for
+
+tiering purposes, and the HCP system communicates with them through the S3 compatible API and management API.
+
+Extended storage
+
+HCP can be configured to use extended storage, which is storage that’s managed by devices outside of the HCP system, for tiering purposes. HCP supports the following types of extended storage: NFS
+
+Volumes that are stored on extended storage devices and are accessed using NFS mount points
+
+Amazon S3
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+9/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Cloud storage that is accessed using an Amazon Web Services user account
+
+Google Cloud
+
+Cloud storage that is accessed using a Google Cloud Platform user account Microsoft Azure
+
+Cloud storage that is accessed using a Microsoft Azure user account
+
+S3 compatible
+
+Any physical storage device or cloud storage service accessed using a protocol that is compatible with the Amazon S3 API ThinkOn cloud
+
+S3 compatible cloud storage that is accessed using a ThinkOn cloud user account
+
+Moving object data from primary storage to extended storage frees up HCP system storage space so that you can ingest additional objects.
+
+Note: While all of the data for an object can be moved off primary running storage and stored only on extended storage, at least one copy of the system metadata, custom metadata, and ACL for that object must always remain on primary running storage.
+
+In addition, you can optimize data storage price/performance for the objects in a namespace by configuring the service plan for that namespace to define a storage tiering
+
+strategy that defines storage tiers for multiple types of extended storage.
+
+HCP moves object data between primary running storage, primary spindown storage (if it is used), and one or more types of extended storage according to rules specified in the storage tiering strategies defined by service plans. Erasure-coded protection
+
+Erasure-coded protection is a method of geo-protection where the data for each object in a replicated namespace is subject to erasure coding. With erasure coding, the data
+
+is encoded and broken into multiple chunks that are then stored across multiple HCP systems. All but one chunk contains object data. The other chunk contains parity for the object data.
+
+With erasure-coded protection, each system stores one data or parity chunk for any given erasure-coded object. The size of each chunk for an object is the size of the object

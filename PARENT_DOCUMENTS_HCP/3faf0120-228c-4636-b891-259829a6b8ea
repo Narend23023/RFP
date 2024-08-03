@@ -1,0 +1,47 @@
+Information about pending objects and object parts is not available for an outbound link during data recovery or for an inbound link during replication. This information is also not available for the default tenant.
+
+Data pending For an active/active link, an outbound active/passive link during replication, or an inbound active/passive link during data recovery, the approximate amount of data currently waiting to be sent to the remote system in the tenant's namespaces. Information about pending data is not available for an outbound link during data recovery or for an inbound link during replication. This information is also not available for the default tenant. Controlling the Tenant Management Console replication display
+
+For HCP tenants that are on at least one replication link, you control whether the Tenant Management Console displays information about the status of replication of the tenant and
+
+its namespaces. The Tenant Management Console for the default tenant always displays this information.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, take either of these actions:
+
+To have the Tenant Management Console display replication status information for all HCP tenants, select Allow tenants to monitor replication of their namespaces. To have the Tenant Management Console hide replication status information for all HCP tenants, deselect Allow tenants to monitor replication of their namespaces.
+
+4. Click Update Settings. System Management Console alerts
+
+The Overview page in the HCP System Management Console has a section in which it displays alerts about abnormal conditions. Each alert consists of an icon and accompanying text that identifies the problem. Each alert also has text that’s displayed when you hover over the icon.
+
+The list below describes the alerts that relate to replication. The alerts are listed alphabetically by their hover text.
+
+Erasure coding error
+
+One or more of these conditions exist:
+
+The protection status of the active erasure coding topology is broken.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+363/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help The read status of an erasure coding topology is broken. One or more tenants added to an erasure coding topology have not been added to one or more replication links in the topology. HCP does not report this condition for a tenant until ten minutes after the tenant was added to the topology. HCP cannot find one or more replication links that are included in an erasure coding topology.
+
+Erasure coding warning
+
+One or more of these conditions exist:
+
+The protection status of the active erasure coding topology is vulnerable. The read status of an erasure coding topology is vulnerable. Replication is paused for one or more tenants on one or more replication links in the active erasure coding topology. The Geo-distributed Erasure Coding service is not in the active service schedule. New erasure coding activity is limited. The Geo-distributed Erasure Coding service is disabled. New erasure coding activity is limited. Expired replication certificates
+
+One or more trusted replication server certificates have expired. Replication with the systems from which the applicable certificates were obtained has stopped. When the other system in any of the applicable replication pairs installs a new SSL server certificate, download that certificate and upload it to this system as a trusted replication server certificate. For ease of maintenance, delete expired certificates from the list of trusted replication server certificates. Front-end connection error
+
+All front-end connections to one or more nodes in the local system are unavailable. If the system is currently a source for replication, some objects and object parts will not be replicated. If the system is a replication target, replication performance is degraded.
+
+Nonreplicating objects
+
+One or more nonreplicating objects or object parts have been detected. These objects and object parts cannot be replicated until they are repaired. If the objects and object parts cannot be repaired, they are never replicated. If the system has nonreplicating objects or object parts that are irreparable, contact your authorized service provider for help.
+
+Partial network assigned to replication The network selected for replication is a partial network. The load from replication activity is not being fully distributed across the nodes in the system. Check the replication Settings page to see which network is selected for replication. Then either assign IP addresses in those networks to all nodes, or select a different network for replication. Remote storage almost full

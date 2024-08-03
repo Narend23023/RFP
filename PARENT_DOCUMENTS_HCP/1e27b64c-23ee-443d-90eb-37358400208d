@@ -1,0 +1,105 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+604/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+id
+
+Unique label name. The maximum label size is 64 characters.
+
+hold Either true or false.
+
+Example
+
+x-hcp-labelretentionhold [{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}]
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. This is supported only on namespaces that are configured to use the HCP retention mode. x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false. This is supported only on namespaces that are configured to use the HCP retention mode.
+
+Response headers
+
+The next list describes the headers returned in response to a successful request to store an object. Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to store an object, the value of this header is always 0 (zero).
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an object, copying an object, and retrieving an object. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Status codes
+
+The next table describes HTTP status codes that can be returned in response to a request to store an object.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+Possible reasons include:
+
+HCP successfully stored the object. The application attempts to set a labeled hold on an object with an HCP version earlier than 9.1. The application puts the same labeled hold ID on the same object multiple times. The application attempts to remove a nonexistent labeled hold ID from an object.
+
+400 Bad Request
+
+Possible reasons include:
+
+An ACL grant header specifies an invalid grantee. The value specified by the Content-MD5 header does not match the Base64-encoded MD5 hash of the data HCP received. The labeled hold ID length exceeds 64 characters. A label hold ID must have at least one character. The request contains over 100 labeled holds. The active labeled hold limit exceeds 100 labels. A request cannot specify the same labeled hold ID as both active and inactive. The request must specify the labeled hold id and hold values. To use the labeled hold feature, an online upgrade is required to HCP 9.1 or later.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to store objects in the specified bucket. An object with the specified name already exists in the specified bucket, and versioning is enabled for that bucket, but the existing object is under retention or on hold. The application tried to delete an object on labeled hold. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+Possible reasons include:
+
+The specified bucket or object does not exist.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+605/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The specified object ID is invalid or the object does not exist.
+
+409 Conflict
+
+One of these:

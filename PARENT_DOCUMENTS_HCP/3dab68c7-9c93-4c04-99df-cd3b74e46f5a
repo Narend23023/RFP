@@ -1,0 +1,47 @@
+The top of each time period also displays the performance level for that period. Additionally, each time period is color coded in the schedule grid to indicate the performance level so you can easily see which levels are assigned to which periods:
+
+Low:
+
+(light green)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+365/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Medium: High: Custom: Off:
+
+(green) (dark green) (blue) (gray)
+
+While a schedule is overridden, the words Schedule Overridden appear on the schedule grid.
+
+You cannot set a schedule to off for the entire week. Instead, to disable activity on a replication link for an extended period of time, suspend activity on the link.
+
+Modifying a replication schedule
+
+By default, the schedules for an active/active link and the schedule for an active/passive link specify a performance level of medium for the entire week. 1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the replication Links page, click the link with the schdule you want to modify. 3. On the replication link details page, click Schedule. 4. In the link Schedule panel, click the Local or Remote tab, as applicable. 5. In the Local or Remote panel, as applicable, take any of these actions as many times as needed to set the schedule you want: a. Hover over All to display the list of performance levels. b. Click the performance level you want. To set the performance level for an individual day:
+
+a. Hover over the name of the day to display the list of performance levels. b. Click the performance level you want.
+
+To set the performance level for a single hour or a range of hours:
+
+a. Either click an hour, or click and drag from one hour to another in the same day. The Set Performance Level window opens.
+
+b. (Optional) Select different start and end times in the Start time and End time fields, respectively. c. In the Level field, select the performance level you want. d. Click Submit.
+
+6. Click Update Schedule.
+
+Overriding a replication schedule
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the replication Links page, click the link with the schedule you want to override. 3. On the replication link details page, click Schedule . 4. In the Schedule panel, click the Local or Remote tab, as applicable. 5. In the Local or Remote panel, as applicable, click Schedule Override. 6. In the Schedule Override section: a. Select Override schedule. b. Under Performance Level, select the performance level you want.
+
+7. Click Update Schedule.
+
+Suspending and resuming activity on an individual link You can suspend and resume replication or recovery activity on individual replication links. When you suspend activity on a link, HCP stops all send activity on the link. You might suspend activity on a link, for example, before making changes to system hardware or to the network over which the two systems involved in the link communicate with each other.
+
+While send activity is suspended on a link, the applicable HCP tenants and namespaces and default-namespace directories on each system remain read-write or read-only, as applicable. Additionally, the link continues to support other functions such as read from remote and repair from remote.
+
+Resuming activity on a link restarts all send activity on the link. After suspending activity on a link, you need to resume activity manually. Suspending activity on a link in an erasure coding topology prevents each system involved in the link from sending full copies of object data and chunks for objects to the other system over that link. Link suspensions, therefore, may prevent newly ingested objects from being protected. Suspending a link does not prevent full copies of object data from being reduced to chunks on the systems involved in the link.

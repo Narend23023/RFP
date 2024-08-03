@@ -1,0 +1,109 @@
+When you view an object on a Windows client, CIFS translates the POSIX permission settings used in the namespace into settings Windows understands. The list below shows how
+
+CIFS maps POSIX permissions to Windows permissions.
+
+r--
+
+Read
+
+w-
+
+Write
+
+--x
+
+None
+
+rw-
+
+Read
+
+Write r-x
+
+Read
+
+Execute
+
+wx
+
+None
+
+rwx
+
+Read Write
+
+Read and Execute Modify
+
+Full control-
+
+---
+
+None
+
+Creating an empty directory with atime synchronization in effect
+
+When you use Windows Explorer to create a new directory, Windows automatically names it New Folder. This is also true for directories you create in a namespace.
+
+Normally, you can rename an empty directory in a namespace. However, if atime synchronization is in effect, you cannot do this. As a result, the name of the new directory remains New Folder.
+
+CIFS lazy close
+
+When writing a file to a namespace, CIFS can cause a flush at any time. After each flush or write, HCP waits a short amount of time for the next one. If no write occurs within that time, HCP considers the resulting object to be complete and closes it. This event is called lazy close.
+
+If you set retention on an object during the lazy close period, HCP closes the object immediately. The object becomes WORM, and retention applies, even if the object contains no data. However, if the directory that contains the object and its corresponding metadirectory are shared on two different nodes in the HCP system, setting retention during the lazy close period does not close the object.
+
+Using CIFS with objects open for write
+
+These considerations apply to objects that are open for write through any protocol:
+
+While an object is open for write through one IP address, you cannot open it for write through any other IP address.
+
+You can read an object that is open for write from any IP address, even though the object data may be incomplete. A read against the node hosting the write may return more data than a read against any other node.
+
+While an object is open for write, you cannot delete it. Note: Depending on the timing, the delete request may result in a busy error. In that case, wait one or two seconds and then try the request again.
+
+While an object that’s open for write has no data:
+
+It is not WORM It may or may not have a cryptographic hash value It is not subject to retention
+
+It cannot have custom metadata
+
+It is not indexed
+
+Failed CIFS write operations
+
+A CIFS write operation is considered to have failed if the target node failed while the object was open for write. Also, in some circumstances, a write operation is considered to have
+
+failed if another node or other hardware failed while the object was open for write.
+
+A CIFS write operation is not considered to have failed if the TCP connection broke. This is because HCP doesn’t see the failure. In this case, lazy close applies, and the object is considered complete.
+
+Objects left by failed CIFS write operations:
+
+May have none, some, or all of their data If partially written, may or may not have a cryptographic hash value
+
+If the failure was on the HCP side, remain open and:
+
+Are not WORM
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 798/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Cannot have annotations Are not indexed
+
+Are not replicated
+
+If the failure was on the client side, are WORM after the lazy close
+
+If a write operation fails, delete the object and try the write operation again.
+
+Note: If the object is WORM, any retention setting applies. In this case, you may not be able to delete the object.
+
+Storing zero-sized files with CIFS
+
+When you store a zero-sized file with CIFS, the resulting object has no data. After lazy close occurs, the object becomes WORM and is treated like any other object in the namespace.
+
+Out-of-order writes with CIFS

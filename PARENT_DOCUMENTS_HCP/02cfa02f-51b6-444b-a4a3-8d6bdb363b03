@@ -1,0 +1,41 @@
+Search not only for objects currently in the repository but also for information about objects that have been deleted. For namespaces that support versioning, operation- based queries can return both current and old versions of objects. Criteria for operation-based queries can include object status (for example, created or deleted), change time, index setting, and location.
+
+The metadata query API returns object metadata only, not object data. The metadata is returned either in XML format, with each object represented by a separate element, or in JSON format, with each object represented by a separate name/value pair. For queries that return large numbers of objects, you can use paged requests. HCP Search Console
+
+The HCP Search Console is an easy-to-use web application that lets you search for and manage objects based on specified criteria. For example, you can search for objects that were stored before a certain date or that are larger than a specified size. You can then delete the objects listed in the search results or prevent those objects from being deleted. Similar to the metadata query API, the Search Console returns only object metadata, not object data.
+
+By offering a structured environment for performing searches, the Search Console facilitates e-discovery, namespace analysis, and other activities that require the user to examine the contents of namespaces. From the Search Console, you can:
+
+Open objects Perform bulk operations on objects Export search results in standard file formats for use as input to other applications Publish feeds to make search results available to web users
+
+The Search Console works with HCP metadata query engine: The HCP metadata query engine
+
+This facility is integrated with HCP and works internally to perform searches and return results to the Search Console. The metadata query engine is also used by the metadata query API. Note: When working with the metadata query engine, the Search Console is called the Metadata Query Engine Console.
+
+The search facility is selected at the HCP system level. If no facility is selected, the HCP system does not support use of the Search Console to search namespaces.
+
+The search facility maintains its own index of objects in each search-enabled namespace and uses this index for fast retrieval of search results. The search facilities automatically update their indexes to account for new and deleted objects and changes to object metadata. User accounts
+
+To use the S3 compatible API to create and manage buckets, you need a user account that’s configured to allow you to take those actions. To work with objects in a bucket, you may
+
+or may not need a user account. This depends on how the S3 compatible API is configured for the bucket.
+
+By default, when you create a bucket, both the S3 compatible API and the REST API are configured to require users to have user accounts in order to work with objects in that bucket. You cannot use the the S3 compatible API to change this configuration. However, tenant administrators can change this configuration for the buckets you create.
+
+A user account can be either an account created by a tenant administrator in HCP or, if the tenant is configured to support Active Directory® (AD) authentication, an AD user account that HCP recognizes. (With an AD user account, you cannot create buckets.) When you use the S3 compatible API with a user account, you provide credentials that are based on the username and password for your account. HCP checks these credentials to ensure that they are valid. The process of checking credentials is called user authentication. If the credentials you supply are valid, you are an authenticated user.
+
+When you use the S3 compatible API without a user account, you are an anonymous user.
+
+Note: If the S3 compatible API is not working for you, the reason may be either that the tenant is not configured to support the API or that your user account is not configured to allow the operation you’re trying to perform. To resolve the problem, contact your tenant administrator. S3 Object Lock Permissions
+
+S3 Object Lock permissions allow you to manage retention and legal hold settings for objects in your namespace. These permissions apply only to the S3 protocol. This list describes the available permissions and their associated operations. BypassGovernanceRetention
+
+Allows a user to override or remove governance mode retention settings for objects protected by S3 Object Lock. With governance mode, you protect objects against being deleted by most users. However, you can still grant some users permission to alter the retention settings or delete the object.
+
+GetBucketObjectLockConfiguration
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+543/907
+
+6/25/24, 11:34 AM

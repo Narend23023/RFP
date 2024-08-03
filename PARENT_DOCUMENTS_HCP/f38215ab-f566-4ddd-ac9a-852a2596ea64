@@ -1,0 +1,115 @@
+success_action_status
+
+If you don't specify a value for success_action_redirect, this element specifies the status code returned to the client when the upload succeeds. x-amz-algorithm
+
+(AWS Signature Version 4 authentication only field) Specifies the signing algorithm that must be used during signature calculation. The value is AWS4-HMAC-SHA256.
+
+x-amz-credential
+
+(AWS Signature Version 4 authentication only field) Specifies the credentials that you used to calculate the signature. Required if you include a POST policy document with the request. Use this format: access_key_id/date/aws_region/aws_service/aws4_request
+
+For Amazon S3, the value of aws_service is s3. For example:
+
+AKIAIOSFODNN7EXAMPLE/20191024/us-east-1/s3/aws4_request
+
+x-amz-date
+
+(AWS Signature Version 4 authentication only field) Specifies a date value in ISO8601 format. Required if you include a POST policy document with the request. For example:
+
+20191024T000000Z x-amz-meta-*
+
+User-specified metadata.
+
+x-amz-*
+
+Other x-amz- headers.
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value.
+
+x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false. x-ignore-*
+
+Users can specify additional form fields with this header that should be ignored.
+
+Character escaping
+
+The table below describes characters that must be escaped within a security policy.
+
+Escape sequence
+
+Description
+
+\\
+
+Backslash
+
+\b
+
+Backspace
+
+\f
+
+Form feed
+
+\n
+
+New line
+
+\r
+
+Carriage return \t
+
+Horizontal tab
+
+\v
+
+Vertical tab
+
+\unnnn All Unicode characters
+
+Executing a POST object upload
+
+When you execute a POST object upload, you specify a name for the object you're creating.
+
+In the upload request, you can specify custom metadata to be added to the object when the upload is completed. To do this, you use the field x-amz-meta- within the post form.
+
+In the upload request, you can specify an ACL to be added to the object when the upload is completed. To do this, you use the field acl within the post form.
+
+If the ACL you specify in a request to execute an upload is invalid, HCP returns the status code 400 (Bad Request) or 501 (Not Implemented) and does not execute the upload.
+
+When you complete an upload, you become the owner of the resulting object.
+
+Required headers
+
+The list below describes the headers you can use in a request to execute a POST object upload.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+660/907
+
+6/25/24, 11:34 AM Content Platform System Management Help
+
+Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format: bucket-name.tenant-name.hcp-domain-name
+
+Optional headers
+
+x-amz-server-side-encryption
+
+Requests that the response headers include x-amz-server-side-encryption, which indicates whether objects stored in HCP are encrypted. The value of the x-amz-serv er-side-encryption request header can be any character string. Data is only encrypted when Encryption for Primary Running Storage is configured.
+
+Required form fields
+
+The content of a POST object upload request contains a form with fields that are passed to HCP as the contents of a Content-Disposition header. The list below describes the fields you can use in a POST object upload. AWSAccessKeyId

@@ -1,0 +1,65 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+412/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.INFILESIZE, os.path.getsize("AR-http.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+POST /mapi/tenants/finance/namespaces/accounts-receivable/protocols/http HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 285
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0 Network resources
+
+Network resources let you activate advanced DNS configuration mode and view the current DNS configuration setting. The table below provides information about these resources.
+
+.../network
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+Network settings
+
+GET
+
+Retrieves the current downstream DNS mode. System-level user account with the monitor or administrator role
+
+POST Modifies the current downstream DNS mode setting for the
+
+System-level user account with the administrator role
+
+given network.
+
+Valid values for this setting are:
+
+ADVANCED BASIC
+
+Example: Enabling advanced downstream DNS configuration
+
+Here’s a sample POST request that sets the downstream DNS mode to advanced. The DNS mode is specified in an XML file named network.xml. The request is made using a system-level user account that has the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <networkSettings>
+
+<downstreamDNSMode>ADVANCED</downstreamDNSMode> </networkSettings> Request with cURL command line
+
+curl -k -i -d @network.xml -H "Content-Type: application/xml" -H "Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda" "https://admin.hcp.example.com:9090/mapi/network"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("network.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", / "Authorization: HCP YWRtaW4=:e00cf25ad42683b3df678c61f42c6bda"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/network"
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("network.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 413/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers

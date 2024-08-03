@@ -1,0 +1,77 @@
+). General log messages are all messages that do not have a type of security or compliance.
+
+Whether to send email about log messages with a type of security (
+
+).
+
+Whether to send email about log messages with a type of compliance (
+
+).
+
+Email recipients receive email only about log messages that have all the selected properties.
+
+Adding, modifying, and deleting rows in the recipients list
+
+To add, modify, and/or delete rows in the recipients list, on the Email page:
+
+1. Take one or more of these actions:
+
+To add a row:
+
+a. Optionally, in the Recipients field, type a comma-separated list of one or more well-formed email addresses. b. Click Add.
+
+A new row appears in the recipients list with importance set to Major, severity set to Error, and only general selected as the type. The row is highlighted in green. To remove the new row, click the delete control (
+
+) for the row.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+178/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+To modify a row:
+
+Optionally, in the Address field, type additional well-formed email addresses and/or modify or delete existing addresses. This field must contain at least one well-formed email address and no incorrectly formed addresses.
+
+Optionally, change the properties based on which HCP sends email to the specified addresses.
+
+If you deselect all the types, no email is sent to the specified addresses.
+
+To delete a row, click the delete control ( ) for the row.
+
+The row turns red. To undo the deletion, click again on the delete control.
+
+2. Click Update Settings at the bottom of the page.
+
+Monitoring resources
+
+You use the Resources page in the HCP System Management Console to monitor the use of system resources. The information on this page can help you determine the causes of system issues such as slowed responses to client read and write requests or abnormal conditions reported in the system log.
+
+The Resources page uses graphs to show statistics about the use of these resources over time: CPU
+
+Local logical volumes Memory Front-end, back-end, and, if it is enabled, management networks
+
+The graphs let you analyze trends across individual storage nodes and compare node performance to the performance of the system as a whole. The graphs are coordinated with each other, allowing you to easily view the use of multiple resources during the same time period. Additionally, the Resources page can display the HCP system log, so you can correlate resource usage with system events.
+
+The graphs let you analyze trends across individual storage nodes and compare node performance to the performance of the system as a whole. The graphs are coordinated with each other, allowing you to easily view the use of multiple resources during the same time period. Additionally, the Resources page can display the HCP system log, so you can correlate resource usage with system events. To display the Resources page, in the top-level menu of the System Management Console, select Monitoring > Resources.
+
+Note: To view the Resources page, you need the monitor or administrator role.
+
+About the resource usage graphs
+
+HCP uses System Activity Reporter (SAR) data as the basis for resource usage reporting. SAR is a utility that runs on each node in the HCP system. Every ten minutes, SAR records statistics representing the average use of various resources in the node during the past ten-minute interval. The graphs on the Resources page in the System Management Console show these statistics for a subset of those resources.
+
+For the CPU, memory, and network resources, the graphs can show either the average of the SAR statistics across all storage nodes or this average along with the SAR statistics for an individual storage node. For the logical volume resource, the graphs can show can show the SAR statistics only for an individual logical volume. CPU
+
+CPU statistics provide information about the processing load on the HCP system. HCP reports CPU statistics in these graphs:
+
+CPU Usage
+
+This graph shows both the percent of CPU capacity used by the operating system kernel (OS in the graph legend) and the percent of CPU capacity used by HCP processes (HCP in the graph legend). CPU IO Wait
+
+This graph shows the percent of CPU capacity spent waiting to access logical volumes that are in use by other processes.
+
+These two statistics together equal the total processing load on the system.

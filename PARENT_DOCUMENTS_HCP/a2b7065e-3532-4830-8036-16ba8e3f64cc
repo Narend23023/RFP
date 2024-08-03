@@ -1,0 +1,51 @@
+Content Platform System Management Help
+
+Rekeying, rotating and replacing keys
+
+The crypto period and the amount of data that a key can protect are predetermined or system-defined. However, if a key is compromised, you can use Replace Keys option on the HCP to rotate all the encryption keys on the KM server.
+
+Rekeying is one of the methods to preserve account permanence. HCP automatically rekeys the cryptographic keys before the crypto period expires. For example, if the system defined crypto period is 18 months and a key is no longer used for ingesting in the first 6 months, HCP generates a new key. After next 12 months, all the objects using this key are rekeyed with the currently active key. Rekeying requires an active key.
+
+Key rotation happens automatically if one or more of the following conditions are true: The crypto period expires (for example, after a system-defined period of time has passed). Reached the maximum size of the data that you can encrypt with the encryption key (for example, a predetermined amount of data has been encrypted by a given key). Important:
+
+Compression/Encryption service handles key encryption life cycle. Disabling this service on HCP system will impact essential KM server functionalities or prevent features such as
+
+key rotation, key replacement from functioning correctly. Therefore the Compression/Encryption service should not be disabled.
+
+Note: If you select Replace Keys, the Compression/Encryption service automatically re-encrypt DEK with a new KEK.
+
+Destroying keys
+
+If sensitive data is compromised in its encrypted state, you can change the key state to compromised on the KM server. Alternatively, you can choose Replace Keys on the KM server to replace the keys. When the objects requiring keys are re-keyed, HCP destroys the keys automatically.
+
+Compromised or deactivated key alerts
+
+HCP detects and deactivates keys on the KM Server when a key is either compromised or when its crypto period expires. When a key is either deactivated or compromised, the System Management Console displays an alert until the key is replaced. The Compression/Encryption service replaces the deactivated or compromised key and clears the alerts on the System Management Console. HCP automatically replaces the keys before the crypto period expires. To manually deactivate all the keys, use the Replace Keys option on the KM Server management page on HCP.
+
+Note: If there is a performance problem with the Compression/Encryption service, HCP will be slow to replace keys. However, to temporarily improve the performance, you may clear all the three rewrite options on the Compression/Encryption Settings page.
+
+Prioritizing and scheduling Compression/Encryption services
+
+The priority of the Compression/Encryption service is set to low by default. However, the system administrator or the security administrator can increase the priority. Increasing the priority of the Compression/Encryption service improves the time taken to address the service requirements of the objects. A Compression/Encryption service runs as scheduled in the calendar. By default, the service runs only on Saturdays and Sundays. You can increase or decrease the frequency of running the Compression/Encryption service by creating a new schedule.
+
+The system administrator or the security administrator can manually initiate the Compression/Encryption service from the Overview tab of the System Management Console. When a service is initiated from the System Management Console, that service will run at high priority. Important: Manually initiating a service may stop other services and may degrade overall system performance.
+
+Adding a key management server
+
+Obtain the root certificate of your KM server. Obtain the client certificate for your KM server using one of the following options: Generate client certificate from your KM server. Use the certificate returned for an HCP-generated CSR.
+
+Use HCP's domain certificate.
+
+1. In the top-level menu of the HCP System Management Console, select Security > Key Management. 2. On the left side of the Key Management page, click the Servers tab.
+
+3. On the key management page in the System Management Console, click Add KM Server. An Add KM Server wizard opens.
+
+4. In the Name page:
+
+a. In the Name field, type the name of the KM server.
+
+b. In the Description field, type the description for the KM server. Then click Next.
+
+5. In the Configuration page:
+
+a. In the Hostname field, type the hostname. b. In the Port field, type the port number. c. In the Client Certificate section, click Browse and then select the client certificate.

@@ -1,0 +1,86 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=2124
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Entry</td>
+      <td>Valid values</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>(+|-)hhmm\nFor example, 2011-11-16T14:27:20-0500\nrepresents the start of the 20th second into 2:27\nPM, November 16, 2011, EST.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>end(child)</td>
+      <td>One of:\nMilliseconds since January 1, 1970, 00:00:00 UTC\nAn ISO 8601 datetime value in this format:\nyyyy-MM-ddThh:mm:ssZ\n•\n•</td>
+      <td>Requests operation records for objects with change times before the specified date and\ntime. This entry is a child entry of the entry. changeTime\nThe default value is one minute before the time HCP received the request.\nIn the ISO 8601 format, you cannot specify a millisecond value. The time corresponds to\nzero milliseconds into the specified second.\nIf you specify a value that is less than one minute before the current time, ensure that all\nwrites finished at least one minute ago so that you get results for the most recent\noperations.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>directories</td>
+      <td>N/A</td>
+      <td>Specifies the directories to query. This entry contains zero or more entries. directory\nIf you omit this entry, HCP returns operation records for objects in all directories in the\nspecified namespaces.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>directory(child)</td>
+      <td>The path to the directory containing the objects for which\nto retrieve operation records.\nStart the path with a forward slash (/) followed by the\nname of a directory immediately below\nDo not include rest, data, or fcfs_data. rest, dat\nin the path. a, or fcfs_data</td>
+      <td>Specifies a directory to query. This entry is a child of the entry. directories\nIf you query multiple namespaces, HCP returns operation records for the directory\ncontents in each namespace in which the directory occurs.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>indexable</td>
+      <td>One of:\ntrue\nReturn operation records only for objects with an\nindex setting of true.\nfalse\nReturn operation records only for objects with\nindex setting of false.</td>
+      <td>Specifies whether to filter the returned operation records based on the object index\nsetting.\nHCP returns deletion and purge records only for objects that had the specified setting at\nthe time they were deleted or purged.\nIf you omit this entry, HCP returns operation records for objects regardless of their index\nsettings.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>namespaces</td>
+      <td>N/A</td>
+      <td>Specifies the namespaces to query. This entry contains zero or more entries. namespace\nIf the URL in the request starts with you can omit this entry. The URL itself default,\nlimits the query to the default namespace.\nIf you omit this entry and the URL starts with HCP returns operation records for admin,\nthe default namespace and the namespaces owned by each tenant that has granted\nsystem-level users administrative access to itself.\nIf you omit this entry and the URL starts with a tenant name, HCP returns operation\nrecords for the tenant's namespaces that the user has permission to search.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>namespace\n(child)</td>
+      <td>A namespace name along with the name of the owning\ntenant, in this format:\nnamespace-name.tenant-name</td>
+      <td>Specifies a namespace to query. This entry is a child of the entry. namespaces</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>replication\nCollsion</td>
+      <td>One of:\ntrue\nReturn operation records only for objects that are\nflagged as replication collisions.\nfalse\nReturn operation records only for objects that are\nnot flagged as replication collisions.</td>
+      <td>Specifies whether to filter the returned operation records based on whether the object is\nflagged as a replication collision.\nHCP returns deletion and purge records only for objects that were flagged as replication\ncollisions at the time they were deleted or purged.\nIf you omit this entry, HCP returns operation records for objects regardless of whether\nthey are flagged as replication collisions.</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>transactions</td>
+      <td>N/A</td>
+      <td>Specifies the operation types for which to query. This entry contains up to five transact\nentries, each specifying a different operation type. ion\nIf you omit this entry, HCP returns records only for create, delete, and purge operations.</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>transaction(child)</td>
+      <td>One of:\ncreate\ndelete\ndispose</td>
+      <td>Specifies a type of operation for which to return records. This entry is a child entry of the\nentry. transactions\nHCP returns prune and disposition records only when you explicitly request them.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

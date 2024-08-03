@@ -1,0 +1,35 @@
+2001:0db8::104; }; };
+
+Tip: You can use the Zone Definition link on the Replication page to show the zone definition for a user-defined network that’s selected for replication.
+
+Viewing the DNS zone definitions for all existing networks
+
+To display the DNS zone definitions for all network domains defined on the HCP system, go to the Networks > All Zone Definitions page.
+
+The Networks > All Zone Definitions page shows the DNS zone definitions that HCP uses for all existing network domains.
+
+Considerations for modifying properties of networks and network aliases
+
+The following considerations apply to modifying properties of networks and network aliases: You can modify only the configurable properties of a network or network alias. You cannot modify any property that has a value that’s generated or derived by HCP. You cannot change the name of a network while that network is associated with a tenant or referenced by an alias. You cannot change the name of an alias while that alias is
+
+associated with a tenant. You cannot change a network to an alias or an alias to a network. When you take any of these actions for a network, communication on that network is temporarily disrupted:
+
+Modify the VLAN ID or MTU. However, in the case of MTU, applications may not notice the disruption. Modify the IPv4 gateway or netmask (if defined)
+
+Modify the primary or secondary IPv6 gateway or IPv6 address prefix length (if defined) Add or remove all settings for the secondary IPv6 configuration, including the gateway, prefix length, and node IP addresses Disable support for IPv4 addresses, which automatically removes all IPv4 configuration settings, including the gateway, subnet mask, and node IP addresses. (Removing all these settings automatically disables support for IPv4 addresses.) Disable support for IPv6 addresses, which automatically removes all IPv6 configuration settings, including the gateway, prefix length, and node IP addresses for the
+
+primary IPv6 subnet and, if defined, for the secondary IPv6 subnet. (Removing all these settings automatically disables support for IPv6 addresses.) Add or remove the IP address assignments for one or more nodes
+
+The following considerations apply to modifying the IP Configuration settings for a network:
+
+The [hcp_system] network IP mode determines the IP modes that are supported for user-defined networks: You can configure a network to use a specific type of IP address (IPv4 or IPv6) only if the [hcp_system] network is also configured to use that type of IP address. However, If the [hcp_system] network is configured to use both IPv4 and IPv6 addresses, you can configure a network to use only IPv4 addresses, only IPv6 addresses, or both types of IP addresses.
+
+If the [hcp_system] network is configured to use IPv6 addresses, you can configure a network to use a primary IPv6 subnet and, optionally, a secondary IPv6 subnet. The number of IPv6 subnets that are defined for the [hcp_system] network does not affect the number of IPv6 gateways that can be defined for a user-defined network.
+
+To configure a network to use an IPv4 subnet, you need to define both the gateway and the subnet mask for that IPv4 subnet.
+
+You can assign IPv4 addresses to nodes for a network only if an IPv4 subnet is defined for that network. All IPv4 addresses defined for a network must be on the IPv4 subnet defined for that network.
+
+To configure a network to use an IPv6 subnet (whether it’s a primary or secondary IPv6 subnet), you need to define both the gateway and the prefix length for that subnet. A secondary IPv6 subnet can be defined for a network only if a primary IPv6 subnet is also defined for that network.
+
+When hidden primary or notify is enabled for a network, if you configure that network to use a secondary IPv6 subnet, you also need to review and, if necessary, modify the list of downstream DNS server IP addresses configured for that network to ensure that each IPv6 address either is on the secondary IPv6 subnet or is routable from the primary IPv6 gateway that’s defined for the network. You can assign primary IPv6 addresses to nodes for a network only if a primary IPv6 subnet is defined for that network. All primary IPv6 addresses defined for a

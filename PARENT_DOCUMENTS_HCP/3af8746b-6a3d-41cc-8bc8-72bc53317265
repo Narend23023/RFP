@@ -1,0 +1,59 @@
+In HCP, each AD group is identified by both the group name and the name of the AD domain in which the group is defined (for example, hcp-admin@ad.example.com). The HCP group account created from an AD group has the same name as the AD group, including the domain name. Internally, however, the HCP group account is associated with the security ID (SID) of the AD group.
+
+You can create an HCP group account from any group defined in the AD forest that HCP uses for user authentication. The only exceptions are predefined groups such as Administrators that have the same SID in all domains.
+
+You can use a single operation to both create new group accounts and change the roles and data access permissions associated with existing group accounts. In this case, all the accounts involved end up with the same roles and permissions. 1. On the Groups page in the Tenant Management Console, click Add Active Directory Groups.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+257/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Find and Select Groups section lists all the AD groups HCP knows about. Groups for which HCP group accounts already exist for the tenant are marked with a checkmark ( ).
+
+2. (Optional) Filter the list of AD groups.
+
+a. In the Find and Select Groups field, type a text string to use as a filter for the list of AD groups from which you can create HCP group accounts.
+
+This string can be up to 64 characters long and can contain any valid UTF-8 characters, including white space. It is not case sensitive. b. Click the find control (
+
+).
+
+). c. To redisplay the entire list of AD groups after filtering it, click the clear filter control ( 3. For each AD group from which you want to create an HCP group account, click the add control (
+
+) to select the group.
+
+For each AD group with an existing HCP group account for which you want to change the associated roles, click the add control ( To select all the groups in the list, click Select All. To deselect a selected group, click the remove control ( To deselect all the selected groups, click Clear. The selected group rows turns green. ) for the group.
+
+) to select the group.
+
+4. In the Assign Roles to Selected Groups section, select the roles you want to associate with all the new group accounts you’re creating and all the existing group accounts for
+
+which you’re changing the associated roles. You can select any number of roles, including none.
+
+5. (Optional) If you have the administrator role, select Allow namespace management.
+
+This option is selected automatically and cannot be deselected if the account being created has the administrator role.
+
+6. (Optional) If you have the administrator role, click Assign Namespace Permissions. Then associate data access permissions with the group accounts 7. Click Add Groups.
+
+Modifying a group account
+
+You can change the roles associated with group accounts at any time. You can do this for an individual group account, as described below, or for multiple group accounts in a single operation. 1. In the list of group accounts on the Groups page in the Tenant Management Console, click the name of the group account you want to modify. 2. In the Roles section, select or deselect roles as applicable.
+
+3. Click Update Settings in the Roles section.
+
+Deleting a group account
+
+You can delete a group account at any time. Deleting a group account has no effect on the corresponding group in AD.
+
+When you delete a group account, AD users in the corresponding AD group immediately lose the roles and data access permissions granted by that group account.
+
+If no existing HCP user account has the security role, you cannot delete the last group account with the security role.
+
+When a group is deleted in AD, the corresponding HCP group account is not automatically deleted. However, the name of the group account changes to the SID of the deleted AD group. HCP group accounts that correspond to deleted AD groups serve no purpose and should be deleted. Note: The Tenant Management Console may not immediately reflect the change to the HCP group account name.
+
+1. In the list of group accounts on the Groups page in the Tenant Management Console, click the delete control ( 2. In response to the confirming message, click Delete.

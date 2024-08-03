@@ -1,0 +1,95 @@
+Objects that were erasure coded according to the topology are not protected and may not be available.
+
+Retiring
+
+Both of these are true:
+
+The topology is in the process of retiring. One or more systems in the topology still have chunks for objects that were erasure coded according to the topology. Retired
+
+Both of these are true:
+
+The topology has finished retiring. No systems in the topology have chunks for objects that were erasure coded according to the topology.
+
+Unknown
+
+HCP cannot determine the protection status.
+
+Read status
+
+The current status of the erasure coding topology with respect to the ability to read erasure-coded objects. Note: For the purpose of determining read status, HCP treats suspended links as broken links. However, if a suspended link is not actually broken, the systems involved in the link can still use the link to read data from each other. The read status can be: Healthy
+
+Both of these are true:
+
+The loss of a link in the topology would not cause the inability to read erasure-coded objects. A system in the topology becoming unavailable would not cause the inability to read erasure-coded objects.
+
+The data for objects that were erasure coded according to the topology can be reconstructed or restored as needed. Vulnerable
+
+All of these are true:
+
+The data for objects that were erasure coded according to the topology can be reconstructed or restored as needed. The loss of a link in the topology would cause the inability to read erasure-coded objects. A system in the topology becoming unavailable would cause the inability to read erasure-coded objects. Broken
+
+Two or more systems in the topology are unavailable. The data for objects that were erasure coded according to the topology cannot be reconstructed or restored unless the unavailability of all or all but one of those systems is due to links with suspended send activity.
+
+Retired
+
+The topology has finished retiring. No systems in the topology have chunks for objects that were erasure coded according to the topology. Unknown
+
+HCP cannot determine the read status.
+
+Protection level
+
+x+y, where x is the number of data chunks and y is the number of parity chunks for each object that was erasure coded according to the topology.
+
+Erasure-coded objects and object parts on this system
+
+The number of erasure-coded objects and erasure-coded parts of multipart objects on the current HCP system that were erasure coded according to the topology. An object or part is counted as erasure coded if a chunk for it is stored on the system. Parts of multipart objects are erasure coded independently of each other. HCP Systems section
+
+The HCP Systems section on the details page for an erasure coding topology contains a diagram of the topology and a numbered list of the systems in the topology.
+
+The lines between the numbered systems in the topology diagram represent the replication links in the topology. The color of each line indicates the last known status of the applicable link:
+
+Gray means healthy. Orange means not replicating. Red means unhealthy. Overview panel
+
+The Overview panel on the details page for an erasure coding topology contains a list of the replication links in the topology. For each link, the section shows:
+
+Name
+
+The link name.
+
+HCP System, HCP System
+
+The HCP systems involved in the link.
+
+Status
+
+The last known status of the link. This status indicates the general health of the link. If the link is not directly connected to the current HCP system, the link status may be out of date. The link status can be: Healthy
+
+The status displayed when the specific status of the link is one of these:
+
+Synchronizing data Scheduled off period
+
+Not replicating
+
+The status displayed when the specific status of the link is one of these:
+
+Suspended by user Remote storage full, link suspended Local storage full, link suspended Failed over
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+358/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Unhealthy
+
+The status displayed when the specific status of the link is one of these:
+
+High error rate Stalled link Unrecognized link Broken link
+
+Unknown
+
+HCP cannot determine the specific status of the link.
+
+Alerts

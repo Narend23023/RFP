@@ -1,0 +1,53 @@
+413 Request Entity Too Large
+
+The source object you are trying to copy is too big for the amount of space left in the target bucket.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+The request includes the x-amz-acl header with an invalid value.
+
+503 Service Unavailable
+
+Possible reasons include:
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Conditionally copying an object from one bucket to another
+
+Here is a sample PUT request that conditionally copies the current version of an object named campaigns/GoGetEm.xls from the sales-mktg bucket to the finance bucket, where the target object that results from the copy operation is named mktg/campaign_GoGetEm_expenses.xls. The request is being made while versioning is enabled for both the source and target buckets. For the purpose of this example, assume that mktg/campaign_GoGetEm_expenses.xls already exists in the target bucket with an ETag of 7ad452af1e2f61b33a865c4362be5921. The request directs HCP to perform the copy operation only if the ETag of the source object doesn't match the ETag of the most recent version of the target object. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/sales-mktg/campaigns/GoGetEm.xls -- -k "https://finance.europe.hcp.example.com/mktg/campaign_GoGetEm_expenses.xls" -H "x-amz-copy-source-if-none-match:7ad452af1e2f61b33a865c4362be5921" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+PUT /mktg/campaign_GoGetEm_expenses.xls HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:oBVRqkcjktavqo6z1m+chHhRmmI=
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+622/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+x-amz-copy-source: /sales-mktg/campaigns/GoGetEm.xls x-amz-copy-source-if-none-match:7ad452af1e2f61b33a865c4362be5921 x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-version-id: 87288825190337 ETag: "6ed7faad1e0661c03ad65a4317d4a94c" x-amz-copy-source-version-id: 87388217426433 Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.402Z</LastModified> <ETag>"6ed7faad1e0661c03ad65a4317d4a94c"</ETag> </CopyObjectResult>
+
+Example: Recovering an old version of an object

@@ -1,0 +1,87 @@
+400 Bad Request All
+
+The request was not valid. These are some, but not all, of the possible reasons:
+
+The URL in the request is not well-formed.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter. A GET request has both a type=whole-object query parameter and a Range request header. A PUT or POST request has a Content-Encoding header that specifies gzip, but the content is not in gzip-compressed format. The X-HCP-CopySource header in a PUT request to copy an object identifies a symbolic link to an object. A PUT request has a type=whole-object query parameter but does not have an X-HCP-Size header or the X-HCP-Size header value is greater than the content length.
+
+HCP has custom metadata XML checking enabled, and a PUT request includes an annotation that is not well-formed XML.
+
+For a PUT request that is trying to store an ACL:
+
+The ACL includes invalid entries or values or is not well-formed XM L or
+
+JSON. ACLs are not enabled for the namespace. The ACL contains more than one thousand ACEs. The ACL specifies an AD user or group, but the namespace does not
+
+support AD authentication.
+
+The request is trying to change the owner of an object to an AD user, but the
+
+namespace does not support AD authentication. The request is trying to change the retention setting from a retention class to an
+
+explicit setting, such as a datetime value. The request is trying to change the retention setting and the hold setting at the
+
+same time. The specified object has ten annotations and the request is trying to add an annotation.
+
+The request is trying to change the retention setting for an object on hold. The request is trying to change the shred setting from true to false. A request other than GET, HEAD, or PUT for an object or version includes a conditional header such as If-Match. The request includes an If-Match or If-None-Match header and the object does not yet have an ETag. A request to copy an object includes an X-HCP-CopySource-If-Match or X-HCP -CopySource-If-None-Match header and does not include a ForceEtag=true query parameter, and the source object does not yet have an ETag. A DELETE request includes a conditional header.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+819/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description 401
+
+Unauthorized
+
+GET for namespace information
+
+The user does not have access to the namespace for which information is being requested.
+
+403
+
+Forbidden
+
+All
+
+The requested operation was not allowed. These are some, but not all, of the possible reasons:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires authentication, and the request does not include an Authorization header or hcp-ns-auth cookie. The user doesn’t have permission to perform the requested operation. The namespace does not exist.
+
+The data access port for HTTP or HTTPS, as applicable, is disabled. For a DELETE request to delete an object, the object is under retention.
+
+For a DELETE request to delete a directory, the directory is not empty. For a DELETE request to delete an annotation, the object is under retention, and
+
+the namespace does not allow deleting annotations for objects under retention. For a PUT request to add a version of an existing object, the object is under
+
+retention. For a PUT request to add or replace an annotation for an object that is under
+
+retention, the namespace does not allow the operation for objects under retention. If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+404
+
+Not Found
+
+DELETE
+
+One of:
+
+GET
+
+For all methods, HCP could not find the specified object, version, or directory.
+
+HEAD
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory. POST

@@ -1,0 +1,47 @@
+Important: Do not remove a deleted item from a replication link until after the deletion has been replicated. If you deselect a namespace from replication, any further action on that namespace, including deletion of the namespace, is not replicated. This enables a situation in which the owning tenant can end up with more namespaces than are allowed by its namespace quota and/or using more storage than is allowed by its hard quota.
+
+For example, consider the following scenario for a tenant has reached its namespace quota of five:
+
+1. The tenant is selected for replication on an active/passive link, along with all five of its namespaces.
+
+The tenant now has five namespaces on both the primary system and the replica.
+
+2. One of the namespaces is removed from the replication link. 3. On the primary system, the tenant empties and deletes the removed namespace.
+
+The tenant now has four namespaces on the primary system and five namespaces on the replica.
+
+4. On the primary system, the tenant creates a new namespace.
+
+The tenant now has five namespaces on the primary system and five namespaces on the replica, but the namespaces on the two systems are not the same ones.
+
+5. The new namespace is added to the replication link.
+
+The tenant now has five namespaces on the primary system and six namespaces on the replica.
+
+A namespace can contain metadata-only objects on one or more HCP systems in a replication topology. If such a system is involved in only one replication link that includes the tenant that owns the namespace, the following actions can result in the data for those metadata-only objects becoming inaccessible from that system, possibly permanently:
+
+You remove the tenant that owns the namespace from the link. In this case, to make the data accessible again: If the link is active/active, add the tenant back into the link. If the link is active/passive, either change the link to active/active, or create a new active/active link between the same two systems. Then add the tenant back to the changed link or to the new link, as applicable.
+
+You deselect the namespace from replication. In this case, to make the data accessible again, reselect the namespace.
+
+The tenant that owns the namespace is included on the first link in a replication chain, the namespace with the metadata-only objects is on the third HCP system in the chain, and you remove the first link from the link to the third system. In this case, to make the data accessible again: 1. If the first link in the chain is active/passive, change the link to active/active. 2. Either change the link to the third system to active/active, or create a new active/active link between the second and third systems in the chain. 3. Add the tenant back to the changed link to the third system or to the new link, as applicable.
+
+The namespace with the metadata-only objects is on the third HCP system in a replication chain, and you remove the tenant that owns the namespace from the first replication link in the chain. In this case, to make the data accessible again:
+
+1. Create a new active/active link between the first and second systems in the replication chain. 2. Add the tenant to the new link.
+
+HCP displays a warning about metadata-only objects when you submit a request to delete an active/passive link or to remove a tenant from an active/passive link while any of the namespaces being replicated on the link contain metadata-only objects. You can add an HCP tenant to a replication link on one of the systems involved in the link even if the management and data access networks associated with that tenant aren’t defined on the other system involved in the link. However, if these networks are not defined on the other system, the tenant and its namespaces will be inaccessible on that system.
+
+If a network associated with a tenant is undefined in a given system, the tenant list on the Tenants page in the System Management Console for that system shows this alert for the tenant:
+
+Specifying link content
+
+1. In the top-level menu of the HCP System Management Console for either system involved in the link, select Services > Replication.
+
+2. On the replication Links page, click the link for which you want to specify content. 3. On the replication link details page, click Content.
+
+Specifying link content for an active/active link
+
+Adding HCP tenants in an active/active link
+
+The link content Tenants panel for an active/active link has these sections:

@@ -1,0 +1,53 @@
+To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. No ETags match an asterisk in an x-amz-copy-source-if-m atch header. x-amz-copy-source-if-unmodified-since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified source object or object version was last modified. If the modification date and time is equal to or earlier than the specified date and time, HCP continues processing the request. If the modification date and time is later than the specified date and time, HCP returns a 412 (Precondition Failed) status code and does not upload the part. For valid values for this header, see the description of the x-amz-copy-source-if-modified-since header above. x-amz-copy-source-range
+
+To upload a part by copying only part of the data for the source object, you use the x-amz-copy-source-range request header. The value of the x-amz-copy-source-rang e header is the range of bytes you want to copy. The first byte of the data for an object is in position 0 (zero), so a range of one to five specifies the second through sixth bytes, not the first through fifth. To specify a byte range in an x-amz-copy-source-range header, use this format: bytes=start-position-end-position
+
+These considerations apply to x-amz-copy-source-range header values:
+
+If you specify a valid range in which the start position is less than the size of the source object data, HCP uploads the part and returns a 200 (OK) status code. If you specify a valid range in which the start position is greater than or equal to the size of the source object data, HCP returns a 400 (Bad Request) status code and does not upload a part. If you specify an invalid range (for example, a range in which the start position is greater than the end position, HCP returns a 400 (Bad Request) status code and
+
+does not upload a part. Response headers
+
+The list below describes the headers returned in response to a successful request to upload a part of a multipart upload by copying.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to upload a part by copying, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an object, copying an object, and retrieving an object. Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. x-amz-copy-source-version-id
+
+Specifies the version ID of the source object. This header is returned only while versioning is enabled for the source bucket. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Response body
+
+HCP returns information about the part of a multipart upload that results from a successful upload part copy request in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to upload a part by copying. The elements are listed in alphabetical order. CopyPartResult
+
+Root element.
+
+ETag

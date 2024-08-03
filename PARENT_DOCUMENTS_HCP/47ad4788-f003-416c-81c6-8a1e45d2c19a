@@ -1,0 +1,39 @@
+The data access permissions associated with the applicable user account or group accounts The applicable minimum data access permissions specified in the namespace configuration The object ACL
+
+When not enforcing ACLs, HCP allows only the operations permitted by the first two items above.
+
+You can change the specification of whether HCP should enforce ACLs at any time while the use of ACLs is enabled. Replication
+
+Replication is a process that supports configurations in which selected tenants and namespaces are maintained on two or more HCP systems and the objects in those namespaces are managed across those systems. This cross-system management helps ensure that data is well-protected against the unavailability or catastrophic failure of a system.
+
+In addition to replicating objects, HCP replicates tenant and namespace configuration, user and group accounts, retention classes, content classes, all compliance log messages, and most other tenant log messages.
+
+A replication topology is a configuration of HCP systems that are related to each other through replication. Typically, the systems in a replication topology are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection). Clients can read from namespaces on all systems where those namespaces are replicated. The replication topology, which is configured at the system level, determines the systems on which clients can write to namespaces. Replication benefits
+
+Replication has several purposes:
+
+If a system in a replication topology becomes unavailable (for example, due to network issues), another system in the topology can provide continued data availability. If a system in a replication topology suffers irreparable damage, another system in the topology can serve as a source for disaster recovery. If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. If an enterprise has several satellite offices, an HCP system at a central facility can consolidate data from the HCP systems at those outlying locations. If an object cannot be read from one system in a replication topology (for example, because a node is unavailable), HCP can try to read it from another system in the
+
+topology. HCP tries to do this only if: The namespace that contains the object is being replicated. The namespace has the read-from-remote-system feature enabled. The object has already been replicated. Users can check object metadata to determine whether an object has been replicated.
+
+If a system in a replication topology is unavailable, requests to that system that come through the REST, S3 compatible API can be automatically serviced by another system in the topology without the client needing to modify the target URL. The other system can service a request only if:
+
+The namespace named in the URL is replicated on the other system The namespace named in the URL is configured to accept requests redirected from other HCP systems The HCP systems involved use DNS for system addressing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+242/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Replication implementation Replication is implemented at the tenant and namespace level. When creating a tenant, the HCP system administrator specifies whether the tenant is eligible to be replicated. HCP
+
+system administrators can change this setting from not allowing replication to allowing it. However, they cannot do the reverse.
+
+If the tenant is eligible for replication, you can choose whether to include each namespace in the replication of the tenant. You can change this setting for a namespace at any time.
+
+If allowed by the tenant configuration, for each cloud-optimized namespace replicated with the tenant, you can specify whether HCP is allowed to use erasure coding to implement replication of the objects in that namespace. Erasure coding improves storage efficiency. However, read performance may be better for replicated namespaces that do not allow erasure coding. System administrators can change a tenant from not being able to choose whether namespaces allow erasure coding to being able to do this. After this change occurs:
+
+Preexisting cloud-optimized namespaces with replication enabled are automatically reconfigured to allow erasure coding. When you enable cloud optimization for a preexisting namespace that had replication enabled but was not cloud optimized, the namespace is automatically configured to allow erasure coding.

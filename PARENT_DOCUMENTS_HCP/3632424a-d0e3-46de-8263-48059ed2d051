@@ -1,0 +1,149 @@
+namespace
+
+retentionMode
+
+Specifies the retention mode for the namespace. Values are either compliance or ente rprise.
+
+namespace
+
+defaultShredValue
+
+Boolean. Specifies whether or not the objects in the namespace are shredded after deletion.
+
+namespace
+
+defaultIndexValue
+
+Boolean. Specifies whether or not the objects in the namespace are indexed.
+
+namespace
+
+defaultRetentionValue
+
+Specifies the retention value for the namespace.
+
+namespace
+
+hashScheme
+
+Specifies the hash algorithm of the namespace.
+
+namespace
+
+dpl
+
+Specifies the data protection level of the namespace. namespace
+
+description
+
+Provides the description of the namespace.
+
+Status codes
+
+This operation does not have any request-specific status codes.
+
+Example: Retrieving settings for an individual namespace
+
+Here’s a sample HTTP GET request that returns the settings for the finance namespace owned by the europe tenant in the hcp.example.com system and that can be accessed by
+
+the user identified by the Authorization header. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/proc?single=true"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/proc?single=true") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+GET /proc HTTP/1.1 Host: /finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-Time: 1334326410 Content-Length: 1275
+
+Response body
+
+<namespaces xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/proc-namespaces.xsd"
+
+tenantHostName="europe.hcp.example.com" httpScheme="https">
+
+<namespace name="finance" nameIDNA="finance" versioningEnabled="true" searchEnabled="true"
+
+retentionMode="enterprise"
+
+defaultShredValue="false" defaultIndexValue="true"
+
+defaultRetentionValue="0" hashScheme="SHA-256"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+783/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+dpl="2"
+
+> <description><![CDATA[ Finance department ]]></description>
+
+</namespace>
+
+</namespaces>
+
+Listing retention classes
+
+You use the HTTP GET method to list the retention classes defined for a namespace.
+
+Request header
+
+GET /proc/retentionClasses HTTP/1.1
+
+Response headers
+
+This operation does not return any request-specific response headers. Response body
+
+Element
+
+Attribute
+
+Description
+
+retentionClasses
+
+namespaceName
+
+Name of the namespace
+
+retentionClass
+
+name
+
+Name of the retention class..
+
+retentionClass
+
+value
+
+Value of the retention class.
+
+retentionClass
+
+autoDelete
+
+Boolean. Whether or not objects in the namespace are automatically deleted. retentionClass
+
+description

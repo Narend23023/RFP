@@ -1,0 +1,53 @@
+The other files HCP-FS presents contain object metadata. These files, most of which are plain text, are called metafiles. They are in directories called metadirectories.
+
+HCP-FS presents a directory structure with separate branches for files that contain object data and for those that contain object metadata. The structure of the metadata branch parallels that of the data branch. HCP-FS doesn’t present any metafiles for symbolic links.
+
+Root directories
+
+HCP-FS presents the data files and metafiles for objects in a namespace under two root directories:
+
+data
+
+heads the directory structure containing the data files for all objects. You create the structure under data when you store data and create directories in the namespace. Each data file and directory in this structure has the same name as the object or directory it represents. All object and directory names are user-supplied, with the exception of names for email objects and directories.
+
+metadata
+
+heads the directory structure containing all the metafiles and metadirectories for objects and directories. This structure parallels the file and directory structure under data, excluding symbolic links. HCP-FS creates this structure automatically as you store data and create directories in the namespace.
+
+You cannot change the name of either of these root directories. Sample data structure
+
+When you view the contents of a namespace, HCP-FS shows each directory and data file under data. The figure below shows a sample directory structure headed by data. It contains one subdirectory, named images. images contains three data files named earth.jpg, wind.jpg, and fire.jpg. These files represent the content of the objects named earth.jpg,
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+691/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+wind.jpg, and fire.jpg, respectively.
+
+All the data files and directories presented by HCP-FS represent objects that users have stored in the namespace, with one exception. The data directory has a system-generated subdirectory named .lost+found, which is where HCP puts broken objects in the unlikely event it finds any. If you see objects in this directory, tell your tenant administrator. Metadirectories
+
+Each data file for an object has a corresponding metadirectory with the same name. The location of this metadirectory mirrors the location of the data file. For example, the wind.jpg data file is in the images directory, and the wind.jpg metadirectory is in the images metadirectory. The entire metadirectory structure is under the metadata metadirectory.
+
+The figure below shows the metadirectory structure that corresponds to the data files in the images directory. Metafiles
+
+HCP-FS presents individual metafiles for each piece of HCP-specific object metadata except owner. It doesn’t present individual metafiles for POSIX metadata. However, it does present one additional metafile that summarizes both the HCP-specific and POSIX metadata for an object. Metafiles contain either plain text or XML, so you can read them easily.
+
+You can view and retrieve metafiles through the WebDAV, CIFS, and NFS protocols. You can also use these protocols to overwrite metafiles that contain the HCP-specific metadata you can change. By overwriting a metafile, you change the metadata for the corresponding object.
+
+If an object has a default annotation or an ACL, HCP presents it as a metafile. HCP does not show other annotations as metafiles. You can add, replace, or delete the default annotation only with the REST API and WebDAV protocol. You can add, replace, or delete other annotations and ACLs only with the REST API. For backward compatibility, HCP-FS also presents a metafile named tpof.txt. This metafile is superseded by dpl.txt.
+
+HCP-FS presents these metafiles for objects:
+
+created.txt
+
+Contains the date the object was added to the namespace. This metafile contains two lines:
+
+The first line is the date expressed as the number of seconds since January 1, 1970. The second line is the date in this ISO 8601 format: yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm

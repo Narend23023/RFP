@@ -1,0 +1,153 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+One of the systems involved in an active/active link The primary system for an active/passive link The replica for an active/passive link
+
+This section of the Help describes the basic workflows for these scenarios.
+
+System failure workflow with an active/active link
+
+The table below outlines what happens when one of the systems involved in an active/active link fails, where the system that fails is system A and the system that remains healthy is system B. Step
+
+What you do
+
+What happens
+
+System A fails
+
+1
+
+On system B, fail over the link
+
+If DNS failover is enabled, system B broadcasts new DNS configuration
+
+2
+
+If DNS failover is disabled, direct clients to write only to system B
+
+System A comes back online
+
+3
+
+If system A has been rebuilt:
+
+On system A, upload the replication SSL server certificate from system B On system B, upload the replication SSL server certificate from system A
+
+4
+
+On system B, update the link configuration as needed
+
+5
+
+If the link is broken, on system B, send a request to restore the link
+
+Replication link is recreated
+
+6
+
+On system B, fail back the link
+
+System A and system B broadcast original DNS configurations; replication restarts in both directions on the link Primary system failure workflow
+
+The table below outlines what happens when the primary system for an active/passive link fails.
+
+Step
+
+What you do
+
+What happens
+
+Primary system fails
+
+1 On the replica, fail over the link
+
+Applicable tenants and directories on the replica become read-write; applicable tenants and directories on the primary system either remain read-write or become read-only depending on whether the two systems can communicate with each other; if DNS failover is enabled, the replica broadcasts new DNS configuration
+
+2
+
+If DNS failover is disabled, direct clients to write only to the replica
+
+Primary system comes back online
+
+3
+
+If the primary system has been rebuilt:
+
+On the primary system, upload the replication SSL server certificate from the replica On the replica, upload the replication SSL server certificate from the primary system
+
+4
+
+On the replica, update the link configuration as needed
+
+5
+
+If the link is broken, on the replica, send a request to restore the link
+
+Replication link is recreated
+
+6
+
+On the replica, begin data recovery Applicable tenants and directories on the replica remain read-write; applicable tenants and directories on the primary system remain or become read-only; data recovery from the replica to the primary system begins
+
+7
+
+Wait for data recovery to come close to being up to date
+
+8
+
+On the replica, complete data recovery
+
+Applicable tenants and directories on the replica become read-only; applicable tenants and directories on the primary system remain read-only; data recovery from the replica to the primary system continues to completion Data recovery finishes
+
+9
+
+Nothing
+
+Applicable tenants and directories on the replica remain read-only; applicable tenants and directories on the primary system become read- write; the primary system and the replica broadcast original DNS
+
+configurations; replication from the primary system to the replica restarts
+
+10
+
+If DNS failover is disabled, after you see this message in the system log, direct clients to write only to the primary system: Replication data recovery completed Replica failure workflow
+
+The table below outlines what happens when the replica for an active/passive link fails.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+374/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Step
+
+What you do
+
+What happens
+
+Replica fails
+
+1
+
+On the primary system, suspend activity on the link
+
+Replica comes back online
+
+2
+
+If the replica has been rebuilt:
+
+On the replica, upload the replication SSL server certificate from the primary system On the primary system, upload the replication SSL server certificate from the replica
+
+3
+
+On the primary system, update the link configuration as needed
+
+4
+
+If the link is broken, on the primary system, send a request to restore the link
+
+Replication link is recreated; applicable tenants and directories on the primary system remain read-write; applicable tenants and directories on the replica are read-only

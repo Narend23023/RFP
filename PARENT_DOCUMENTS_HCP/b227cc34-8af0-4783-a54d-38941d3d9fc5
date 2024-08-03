@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK Date: Thu, 23 Feb 2017 17:20:01 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListVersionsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix></Prefix> <KeyMarker>mktg/campaign_GoGetEm_expenses.xls</KeyMarker> <VersionIdMarker>87288784288321</VersionIdMarker> <NextKeyMarker>quarterly_rpts/</NextKeyMarker> <NextVersionIdMarker>87288727467201</NextVersionIdMarker> <MaxKeys>3</MaxKeys>
+
+<IsTruncated>true</IsTruncated> <Version> <Key>mktg/campaign_GoGetEm_expenses.xls</Key> <VersionId>87288825190337</VersionId> <IsLatest>true</IsLatest> <LastModified>2020-02-13T17:44:53.000Z</LastModified> <ETag>"6ed7faad1e0661c03ad65a4317d4a94c"</ETag> <Size>94328</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> <Version> <Key>mktg/campaign_LiveIt_expenses.xls</Key> <VersionId>87288785222273</VersionId> <IsLatest>true</IsLatest> <LastModified>2019-11-5T14:32:29.110Z</LastModified> <ETag>"7ad452af1e2f61b33a865c4362be5921"</ETag> <Size>81578</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+589/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+</Owner> <StorageClass>STANDARD</StorageClass> </Version> <Version>
+
+<Key>quarterly_rpts/</Key> <VersionId>87288727467201</VersionId> <IsLatest>true</IsLatest> <LastModified>2019-07-23T18:26:24.675Z</LastModified> <ETag>"d41d8cd98f00b204e9800998ecf8427e"</ETag> <Size>0</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> </ListVersionsResult>
+
+Example: Listing the versions of an individual object Here’s a sample GET request for a bucket listing that lists all the versions of the object named AcctgBestPractices.doc and includes one delete marker, indicating that one version was deleted. The request uses these query parameters:
+
+versions
+
+Lists item versions
+
+prefix=AcctgBestPractices.doc
+
+Lists only items that start with AcctgBestPractices.doc Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?versions &prefix=AcctgBestPractices.doc" -H "x-hcp-pretty-print: true"
+
+Request headers

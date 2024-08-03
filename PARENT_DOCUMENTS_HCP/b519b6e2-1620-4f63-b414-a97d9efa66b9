@@ -1,0 +1,41 @@
+The Storage Tiering service makes an object metadata-only only when all of these conditions are true:
+
+The service plan for the namespace that contains the object defines a metadata-only storage tier. The object is on the storage tier that immediately precedes the metadata-only tier defined in the namespace service plan, and the object meets the transition criteria specified
+
+for the metadata-only storage tier. A copy of the data for the object exists on at least one other HCP system in the replication topology in which the current system participates. (This is possible because service plans with the same name can have different definitions on different systems.)
+
+When all these conditions are true, the Storage Tiering service deletes all copies of the data for the object from the preceding storage tier. If the preceding storage tier is not the
+
+ingest tier, the Storage Tiering service also deletes any copies of the object data that exist on the ingest tier. After deleting all copies of the data for the object, the Storage Tiering service creates or deletes copies of the object metadata on primary running storage, as necessary, to satisfy the primary running storage MPL that’s specified for the metadata-only storage tier.
+
+For the purpose of making objects metadata-only, the Storage Tiering service treats each part of a multipart object as a separate object. The applicable number of copies of the metadata for the part are stored on primary running storage, and no data for the part is stored on any storage tier. Erasure-coded objects are never made metadata-only on any system in the applicable erasure coding topology. If an erasure-coded object is due to move to a metadata-only storage tier, the chunk for the object remains on the previous tier.
+
+On the other hand, an object that is subject to erasure coding but not yet erasure coded can be made metadata-only on a system if all of these are true:
+
+The system does not have a chunk for the object. The erasure coding delay has not yet expired for the object.
+
+The object is due to be made metadata-only on that system. At least one other available system in the erasure coding topology has a full copy of the object data.
+
+If rehydration is enabled for a metadata-only storage tier, when rehydrating a replicated object that’s been read from the ingest tier on a remote system, the Storage Tiering service rehydrates all copies of that object on the ingest tier of the local system. When replicating an object in a namespace to a system on which objects in that namespace can be made metadata-only, HCP replicates only the object metadata if the object is
+
+larger than one MB. If the object is smaller than one MB, HCP replicates both the data and metadata.
+
+Here’s a scenario that shows how allowing metadata-only objects can be used to advantage:
+
+You have a many-to-one replication topology in which the HCP systems at the outlying sites are much smaller than the central HCP system to which they all replicate. To optimize the use of storage on the outlying systems, you allow the namespaces on those systems to have metadata-only objects while requiring the central system to have
+
+the object data. The outlying systems respond to client requests for object data by reading the data from the central system.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+60/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+In this scenario, the replication topology should include a disaster recovery system (that is, a replica of the central system) to protect against data loss in case of a catastrophic failure of the central system.
+
+Important: HCP does not prevent you from removing a namespace from a replication topology even if the namespace contains metadata-only objects on one or more systems in that topology. This can result in data for objects in that namespace being permanently inaccessible from those systems. In most cases, HCP warns you if the modification you’re making
+
+to a replication link would cause this condition to occur. Rehydration
+
+HCP reads objects most efficiently from the ingest tier, which can be either primary running storage or HCP S Series storage, on the system that’s the target of the read request. If

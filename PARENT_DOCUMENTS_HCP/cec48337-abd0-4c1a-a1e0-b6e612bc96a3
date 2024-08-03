@@ -1,0 +1,137 @@
+dpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan function.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+486/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Date Type
+
+Description
+
+Notes
+
+This property is ignored on a POST request. In response to a GET request, the value of this property is always Dyn amic. effectiveDpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan function.
+
+This property is not valid on a POST request and is returned only by a verbose GET request. In response to a verbose GET request, the value of this property is always Dynamic.
+
+enterpriseMode
+
+Boolean
+
+Specifies the default retention mode for new HCP namespaces. Valid values are: true
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode, these activities are not allowed.
+
+The namespace is in enterprise mode.
+
+false
+
+The namespace is in compliance mode.
+
+The default is true.
+
+This property is valid on a POST request and returned by a GET request only if the tenant for which you’re specifying namespace defaults is allowed to set the retention mode for its namespaces. hardQuota
+
+String
+
+Specifies the default hard quota for new HCP namespaces.
+
+The hard quota is the total amount of space allocated to the namespace. This is the space available for storing objects, including object data, metadata, and the redundant data required to satisfy the namespace service plan.
+
+Valid values are decimal numbers with up to two places after the period, followed by a space, followed by MB, GB, or TB (for example, 1.25 TB). The minimum value is 1 (one) for GB and .01 for TB. The maximum value is equal to the hard quota for the tenant. The default is 50 GB. hashScheme
+
+String
+
+Specifies the default cryptographic hash algorithm for new HCP namespaces. Valid values are:
+
+MD5 SHA-1 SHA-256 SHA-384 SHA-512
+
+RIPEMD-160
+
+These values are case sensitive.
+
+The default is SHA-256.
+
+multipartUploadAuto AbortDays
+
+Long
+
+Specifies the default number of days multipart uploads can remain incomplete before they are automatically aborted. Valid values are integers in the range zero through 180. The default is 30.
+
+A value of zero means multipart uploads are never automatically aborted. retentionType
+
+String
+
+Specifies the retention type to be applied to all objects in the namespace. Valid values are:
+
+HCP
+
+When you set the retentionType to S3 Object Lock in a MAPI request for a namespace, versioning, delete markers, and cloud-optimized protocols are automatically enabled. You do not need to set these parameters HCP retention type
+
+explicitly.
+
+S3
+
+S3 Object Lock
+
+Default value is HCP retention.
+
+optimizedFor
+
+String
+
+Specifies whether new namespaces are cloud optimized by default. Valid values are:
+
+ALL
+
+You can set this property to ALL or DEFAULT on a POST request only if new namespaces already disallow erasure coding by default or the allowErasureCoding property is set to false in the same request.
+
+The namespace is optimized for all namespace access protocols. CLOUD
+
+The namespace is optimized for cloud protocols only.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+487/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Date Type
+
+Description
+
+Notes
+
+DEFAULT
+
+The protocol optimization setting for the namespace is determined by the system-level setting for this property.
+
+The default is DEFAULT.
+
+These values are not case sensitive.
+
+replicationEnabled Boolean
+
+Specifies the default replication setting for new HCP namespaces. Valid values are:
+
+This property is valid on a POST request and returned by a GET request only if replication is enabled for the tenant for which you’re specifying namespace defaults.
+
+true

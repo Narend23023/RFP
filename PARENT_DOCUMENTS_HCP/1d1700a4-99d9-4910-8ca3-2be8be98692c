@@ -1,0 +1,77 @@
+collected for it are complete.
+
+To generate a chargeback report, you need the monitor or administrator role.
+
+1. In the top-level menu of the HCP System Management Console, click Storage. 2. On the left side of the Storage page, click Reports.
+
+3. On the Reports page:
+
+a. In the Report For field, select Component, Pool, Service Plan, or Everything to choose what you want to report on.
+
+Then, in the field next to the Report For field, if you selected Component, Pool, or Service Plan, select the specific component, pool, or service plan you want, or
+
+select All to report on all components, pools, or service plans.
+
+b. In the Reporting Interval field, select Hour, Day, or Total to generate an hourly, daily, or total report. c. In the Start Date field, take one of these actions to specify the start date for the report period:
+
+Click the calendar icon (
+
+) to display a calendar. In the calendar, use the arrows at the top to navigate to the month containing the date you want. Then click
+
+the date. Type the date in the text field in mm/dd/yyyy format.
+
+d. In the End Date field, specify the end date for the report period by selecting the date from the calendar or typing the date in the field.
+
+4. Click Download Report. 5. Select the option to open or save the report file.
+
+By default, the name of the report file is report.csv. Storage report content
+
+The first line of a storage report contains identifiers for the values in the subsequent lines. The table below describes each of these values.
+
+Identifier
+
+Value
+
+bytesRead
+
+For a storage component or storage pool, the total number of bytes of data read from storage represented by the component or pool during the reporting
+
+interval, where the requested object was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of bytes of data read from HCP S Series and extended storage, where the requested object was on that storage because of the service plan and was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system. bytesWritten
+
+For a storage component or storage pool, the number of bytes of data written to storage represented by the component or pool during the reporting interval, where the writes targeted the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of bytes of data written to HCP S Series and extended storage because of the service plan during the reporting interval, where
+
+the writes targeted the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For HCP S Series storage, this number includes:
+
+Bytes written both with the targeted storage included in the ingest tier and with the targeted storage included in a non-ingest tier.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+72/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Identifier
+
+Value
+
+Bytes written for all parts of multipart uploads regardless of whether the upload of the part has finished, the part was subsequently replaced, the
+
+multipart upload was aborted, or the part was not used in the completed multipart upload.
+
+deleted
+
+One of the following:
+
+true — The namespace or tenant was deleted after the statistics in the set were collected.
+
+false — The namespace or tenant currently exists. included — For a tenant or the HCP system, the statistics in the set include values for one or more namespaces that were subsequently deleted. deletes
+
+For a storage component or storage pool, the number of successful delete operations that targeted storage represented by the component or pool during the reporting interval, where the deleted object was in the given namespace, any of the namespaces owned by the given tenant, or any of the HCP namespaces in the HCP system.
+
+For a service plan, the number of successful delete operations that targeted HCP S Series and extended storage because of the service plan during the

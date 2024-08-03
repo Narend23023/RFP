@@ -1,0 +1,95 @@
+For object-based queries, a container for the query expression.
+
+For operation-based queries, a specification of the time period that the query covers. The results include only operation records for objects with change times during this
+
+period.
+
+resultSet
+
+A container for the set of object entries representing the objects or operation records that match the query. status
+
+Information about the response, including the number of returned records and whether the response completes the query results.
+
+contentProperties
+
+(object-based queries only) For queries that contained a contentProperties entry with a value of true, a list of the available content properties. facets
+
+(object-based queries only)
+
+Summary information about property values that appear in the result set. This entry is returned only if the query request included the facets entry.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+857/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+query entry
+
+The query entry contains the entry and properties described in the list below. expression
+
+(entry, object-based queries only) A container for value of the query request entry.
+
+start
+
+(property, operation-based queries only) The value of the start request property, in milliseconds since January 1, 1970, at 00:00:00 UTC. If you omitted the start entry in the request, this value is 0 (zero). end
+
+(property, operation-based queries only) The value of the end request property, in milliseconds since January 1, 1970, at 00:00:00 UTC. If you omitted the end entry in the request, this value is one minute before the time HCP received the request.
+
+resultSet entry
+
+The resultSet entry has one child object entry for each object or operation record that matches the query criteria.
+
+Note: The metadata query API does not return results for open objects (that is, objects that are still being written or were never closed). object entry
+
+In XML, the object entries are child elements of the resultSet entry. In JSON, the object entries are unnamed objects in the resultSet entry.
+
+The information that the object entry provides depends on the type of the query request:
+
+For object-based queries, each object entry provides information about an individual object. For operation-based queries, each object entry provides information about an individual create, delete, dispose, prune, or purge operation and the object affected by the operation.
+
+The object entry always contains these object properties: changeTimeMilliseconds operation
+
+urlName version
+
+The object entry can contain other object properties depending on the value of the verbose request entry or the value of the objectProperties request entry.
+
+status entry
+
+The status entry has the properties listed below.
+
+code
+
+An indication of whether all results have been returned: COMPLETE
+
+All results have been returned. This value is returned if the response includes all results or if the response includes the last result for a paged query.
+
+INCOMPLETE
+
+Not all results have been returned. This value is returned if any of these apply:
+
+The count request entry is smaller than the number of objects or operation records that meet the query criteria. For object-based queries, the count request entry is not specified and more than one hundred objects meet the query criteria. For operation-based queries, the count request entry is not specified and more than ten thousand operation records meet the query criteria. The response is incomplete due to an error encountered in executing the query.
+
+You can retrieve additional results by resubmitting the request with an offset entry (for object-based queries) or a lastResult entry (for operation-based queries). message
+
+Always an empty string.
+
+results
+
+The number of results returned.
+
+totalResults
+
+For object-based queries, the total number of indexed objects that meet the query criteria. This property is not returned for operation-based queries.
+
+contentProperties entry
+
+If the request included a contentProperties entry with a value of true, the result has a contentProperties entry containing zero or more contentProperty entries. Each conte ntProperty entry contains the entries listed below. expression
+
+The expression that specifies how HCP locates the property value in the custom metadata XML.
+
+format
+
+The pattern used to parse a number or date value in the XML custom metadata. For example, the format used for dollar values for a content property with a type of float

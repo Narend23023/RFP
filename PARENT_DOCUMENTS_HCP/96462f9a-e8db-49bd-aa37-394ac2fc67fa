@@ -1,0 +1,45 @@
+Erasure-coded objects cannot be read from that system. For a system in the active erasure coding topology, other systems in that topology cannot send full copies of object data or chunks for objects to that system. As a
+
+result, the topology protection status is broken on all systems in the topology. You cannot change which HCP tenants and namespaces, default-namespace directories, and inbound links are included in the links in which the system participates. An alert indicating that all links are shut down appears on the Overview page in the System Management Console for the system where the links are shut down. A message indicating that all links are shut down appears at the top of the Replication page in the System Management Console for the system where the links are shut down.
+
+You may want to shut down replication links, for example, if you need to temporarily dedicate as much network bandwidth as possible to applications that are unrelated to HCP. Additionally, your authorized HCP service provider may ask you to shut down all links for certain system upgrade scenarios.
+
+When you shut down all replication links, you are required to specify a reason for the action. To restart activity on replication links after you’ve shut them down, you need to reestablish the links. Reestablishing the links returns each link to the state it was in before you shut down the links. If a link was active when you shut down all links, it becomes active again when you reestablish the links. If a link was suspended when you shut down all links, it remains suspended when you reestablish the links.
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, take either of these actions:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+370/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+To shut down all replication links: a. Click Shut Down All Links. The Shut Down All Replication Links window appears.
+
+b. In the Reason field, type the reason why you’re shutting down all links. This text can be up to 1,024 characters long and can contain any valid UTF-8
+
+characters, including white space.
+
+c. Click Shut Down All Links.
+
+To reestablish all replication links, click Reestablish All Links.
+
+Selecting the network for replication
+
+In an HCP system that uses virtual networking, you can define multiple networks and then select the networks to use for various purposes, including replication. The network you select for replication on a given system is used for both incoming and outgoing replication traffic. Networking infrastructure
+
+Different HCP systems can use different networks for the purpose of replication. When you select a replication network for a given system, you need to ensure that your networking infrastructure is configured to allow communications to be routed between that system and all other systems with which that system participates in a replication link. IP mode
+
+The two systems involved in a replication link must be able to use the same IP mode to communicate with each other. That is, either both networks must be configured with IPv4 addresses, or both networks must be configured with IPv6 addresses.
+
+One or both of the networks involved can have both IPv4 and IPv6 addresses. If the replication networks for the two systems involved in a replication link have both types of addresses, HCP uses the IP addresses for the first mode in which it can establish communication between the two systems, with preference given to IPv6.
+
+Within a replication topology, different pairs of systems can use different IP modes for communication. The figure below shows a replication chain in which different IP modes are
+
+used for communication over each link.
+
+In the topology shown above: System A replicates to system B on link AB. System B replicates to system C on link BC. The replication network for system A has only IPv6 IP addresses. The replication network for system B has both IPv4 IP address and IPv6 addresses. The replication network for system C has only IPv4 IP addresses. System A and system B use IPv6 addresses to communicate with each other. System B and system C use IPv4 addresses to communicate with each other. Loss of connectivity
+
+You can select a different network for replication at any time. Selecting a different replication network on any given system can result in loss of connectivity to other systems with which that system is directly involved in replication.

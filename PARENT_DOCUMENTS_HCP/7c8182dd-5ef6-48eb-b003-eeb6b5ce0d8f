@@ -1,0 +1,89 @@
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid.
+
+x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid. x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid.
+
+x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid. x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid.
+
+x-amz-meta-
+
+Adds custom metadata to the target object.
+
+x-amz-metadata-directive
+
+Tells HCP whether to use the custom metadata, if any, for the source object or object version as the custom metadata for the target object or to use the custom metadata, if any, specified in the copy request. Valid values are: COPY
+
+Use the custom metadata for the source object or object version.
+
+REPLACE
+
+Use the custom metadata specified in the copy request.
+
+These values are case sensitive.
+
+The default is COPY. x-amz-server-side-encryption
+
+Requests that the response headers include x-amz-server-side-encryption, which indicates whether objects stored in HCP are encrypted. The value of the x-amz-serv er-side-encryption request header can be any character string.
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+620/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. x-hcp-labelretentionhold
+
+Specifies whether to place one or more labeled holds on the object and the associated labeled hold IDs. The values passed with this header are in a JSON format string containing one or more id and hold-value pairs.
+
+id
+
+Unique label name. The maximum label size is 64 characters. hold
+
+Either true or false.
+
+Examples
+
+Place two labeled holds on the object.
+
+x-hcp-labelretentionhold [{"id":"LabelHold-1","hold":true}, {"id":"LabelHold-2","hold":true}]
+
+Remove a labeled hold from the object.
+
+x-hcp-labelretentionhold [{"id":"LabelHold-2","hold":false}]
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to copy an object.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to copy an object, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:

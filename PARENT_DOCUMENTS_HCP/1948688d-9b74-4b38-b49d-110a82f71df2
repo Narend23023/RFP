@@ -1,0 +1,109 @@
+Note: This increase in upgrade time occurs only on an HCP v9.6.3 upgrade. It will not be repeated if S Series or cloud Storage is added after upgrading to HCP v9.6.3 or if an HCP system is upgraded from v9.6.3 to a later version. Note: During an online upgrade, data outages might occur as each node is upgraded. Whether data users are affected by an outage depends on the ingest tier Data Protection Level (DPL) setting specified in the service plan that's assigned to the applicable namespace. No data is lost during a data outage, but users may experience some data-access interruptions.
+
+When upgrading to this release from a version prior to HCP version 9.6, the boot partition on the OS disk gets resized from 199 MB to 499 MB, while the swap partition size is reduced to 3.7 GB.
+
+After upgrading to this release, new password requirement rules apply to a newly created password when the Install user account’s password is changed next time. The password must be 14 characters or longer, and must include characters from 4 groups of characters. For more information, see the installation manual. In VM environments, the OS disk can now be either 64 GB or 32 GB. New installations should utilize 64 GB OS disk, but any existing system with 32 GB OS disk can be upgraded to this release.
+
+Upgrades to HCP version 9.4.0 or later will fail if any of the namespaces have HSwift protocol enabled. Disable HSwift protocol on the relevant namespaces before upgrading. Support for HSwift protocol has ended with HCP 9.3.0.
+
+Upgrades to version 9.2.1 or later will fail if any service plans exist that have SMTP enabled and use direct write to HCP S Series Nodes as the primary ingest tier. Please modify these service plans before upgrading to version 9.2.1 or later. For more information, please contact your authorized HCP service provider.
+
+You can upgrade an HCP system to version 9.x only from version 8.x. You cannot downgrade HCP to an earlier version. You must have at least 32 GB of RAM per node to use new software features introduced in HCP version 9.x. While you can upgrade an HCP system to version 9.x with a minimum of 12 GB of RAM per node and receive the patches and bug fixes associated with the upgrade, the system cannot use the new software features in the release. Inadequate RAM causes performance degradation and can negatively affect system stability. If you have less than 32 GB RAM per node and would like to upgrade to this release, contact your Hitachi Vantara account team.
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+6
+
+Supported limits
+
+HCP Data Migrator is no longer supported starting with HCP version 9.4.0. HCP Data Migrator was deprecated as of HCP release 9.2.1.
+
+Supported limits
+
+HCP supports the limits listed in the following tables. Hardware
+
+Table 1 Hardware support limits
+
+Hardware
+
+Support limit
+
+Maximum number of general access, G Series Access Nodes
+
+80
+
+Maximum number of HCP S Series Nodes
+
+80
+
+KMIP server
+
+Table 2 KMIP server limits
+
+Hardware
+
+Support limit
+
+Maximum number of KMIP servers
+
+8
+
+Logical storage volumes
+
+Table 3 SAN-attached (SAIN) HDD systems Logical volume
+
+Support limit
+
+Maximum number of SAN logical storage volumes per storage node
+
+63
+
+Maximum logical volume size for SAN LUNs
+
+15.999 TB
+
+Table 4 Internal storage (RAIN) HDD systems
+
+Internal storage
+
+Support limit
+
+Maximum number of logical storage volumes per storage node RAIN 4
+
+Maximum logical volume size on internal drives HDD capacity dependent
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+7
+
+Supported limits
+
+Table 5 All-SSD systems (internal storage or SAN-attached)
+
+Internal storage
+
+Support limit
+
+Number of SSDs per storage node
+
+12 (front-cage only)
+
+Maximum logical volume size on internal drives SSD capacity dependent
+
+Maximum number of SAN logical storage volumes per storage node (when SAN is attached to system)
+
+63
+
+Maximum logical volume size for SAN LUNs (when SAN is attached to system)
+
+15.999 TB
+
+Table 6 HCP VM systems — VMware ESXi
+
+HCP VM systems — VMware ESXi
+
+Support limit

@@ -1,0 +1,49 @@
+need to upload them again. Multiple multipart uploads for objects with the same name
+
+Regardless of the bucket versioning status, you can initiate multiple concurrent multipart uploads with the same object name in a single bucket. These multipart uploads are distinguished by upload ID. Because you specify both the upload ID and the object name in each request to upload a part, each part you upload applies to only one of the multipart uploads.
+
+If versioning is enabled for the bucket, each multipart upload with the same object name, when completed, creates a separate version of the object. The order of the versions is determined by the order in which the multipart uploads are completed. The oldest version is the one resulting from the multipart upload that was completed first. The most recent version is the one resulting from the multipart upload that was completed last. If versioning is disabled for the bucket, the object stored is the one resulting from the multipart upload that was completed first. Each subsequent completion of a multipart upload for the same object results in a 409 (Conflict) status code, and the resulting object is not stored. The parts of a multipart upload that cannot be completed remain in HCP until the multipart upload is aborted.
+
+Multipart uploads for objects under retention or on hold
+
+You cannot store a new version of an object that's under retention or on hold. However, HCP does not check the retention or hold status of the existing object until you submit the request to complete the multipart upload. If the object is under retention or on hold when you submit the complete request, the request fails with a 403 (Forbidden) status code. Before you initiate a multipart upload to store a new version of an object, you should use the REST API to check the retention and hold status of the existing object. Because this status can change, you may also want to check the retention and hold status of the existing object periodically while the multipart upload is in progress. If the object is put under retention or on hold while the multipart upload is in progress, you can abort the multipart upload.
+
+Multipart uploads and replicated buckets
+
+All requests related to a given multipart upload must be sent to the same HCP system. That is, even if the bucket on which you initiate the multipart upload is replicated on other HCP systems, requests to upload parts for, list parts for, complete, or abort that multipart upload must be sent to the system on which you initiated the multipart upload.
+
+Initiating a multipart upload
+
+You use the HTTP POST method with the uploads query parameter to initiate a multipart upload in a bucket. To initiate a multipart upload, you must be an authenticated user. Additionally, you need write permission for the target bucket.
+
+When you initiate a multipart upload, you specify a name for the object you're creating.
+
+In initiate the multipart upload request, you can specify custom metadata to be added to the object when the multipart upload is completed. To do this, you use x-amz-meta- headers.
+
+In the initiate multipart upload request, you can specify an ACL to be added to the object when the multipart upload is completed. To do this, you need to use ACL headers. You cannot use an ACL request body when initiating a multipart upload.
+
+If the ACL you specify in a request to initiate a multipart upload is invalid, HCP returns a 400 (Bad Request) or 501 (Not Implemented) status code and does not initiate the multipart upload.
+
+You cannot change the custom metadata or ACL for a multipart object until the multipart upload used to create the object has been completed. When you complete a multipart upload, you become the owner of the resulting object.
+
+Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to initiate a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+638/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+POST /object-name?uploads HTTP/1.1 With the bucket name following the hostname: POST /bucket-name/object-name?uploads HTTP/1.1
+
+The uploads query parameter is case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to initiate a multipart upload.

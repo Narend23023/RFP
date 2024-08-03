@@ -1,0 +1,203 @@
+For example, this GET request filters the list of namespaces for the Finance tenant by names beginning with the string accounts: curl -k -i -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces ?filterType=name&filterString=accounts&prettyprint"
+
+These considerations apply to filtering resource lists:
+
+The filterType and filterString parameters are valid only with the namespaces, userAccounts, and dataAccessPermissions resources. If a GET request includes the filterType parameter but does not include the filterString parameter, HCP returns the complete list of items of the applicable type. You can page, sort, and filter resource lists in the same request. Replication resources
+
+Replication resources let you configure, monitor, and manage replication. The table below provides information about these resources.
+
+.../services/replication
+
+Data type Method Use
+
+Access
+
+GET
+
+Retrieve Replication service settings
+
+System-level user account with the monitor or administrator role replication
+
+Service
+
+POST Modify Replication service settings or perform an action on the Replication service System-level user account with the administrator role
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+417/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+.../services/replication/certificates
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes Certificates
+
+GET
+
+Retrieves a list of replication certificates
+
+System-level user account with the monitor or administrator role
+
+N/A
+
+PUT
+
+Uploads a new replication certificate
+
+System-level user account with the administrator role
+
+.../services/replication/certificates/certificate-id
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+Text
+
+GET
+
+Retrieve information about a replication certificate
+
+System-level user account with the monitor or administrator role
+
+N/A
+
+DELETE
+
+Delete a replication certificate
+
+System-level user account with the administrator role
+
+.../services/replication/certificates/server
+
+Data type Method Use
+
+Access
+
+Notes
+
+Text
+
+GET
+
+Downloads the replication server certificate and saves it on your computer as a server_certifica te.txt file
+
+System-level user account with the administrator role
+
+.../services/replication/links
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+link
+
+PUT
+
+Create a replication link System-level user account with the administrator role
+
+List
+
+GET
+
+Retrieve a list of the replication links in which the HCP system being queried participates
+
+System-level user account with the monitor or administrator role
+
+The listed replication links are identified by link name.
+
+In XML, the element that identifies each link is name. The root element for the list of links is links.
+
+In JSON, the name in the name/value pair that lists the links is name. .../services/replication/links/link-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+link
+
+GET
+
+Retrieve information about a replication link
+
+System-level user account with the monitor or administrator role
+
+N/A
+
+HEAD
+
+Check for the existence of a replication link
+
+System-level user account with the monitor or administrator role link
+
+POST
+
+Modify or perform an action on a replication link
+
+System-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete a replication link
+
+System-level user account with the administrator role
+
+.../services/replication/links/link-name/content
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes content
+
+GET
+
+Retrieve a list of the items included in a replication link
+
+System-level user account with the monitor or administrator role
+
+.../services/replication/links/link-name/content/defaultNamespaceDirectories
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+List
+
+GET

@@ -1,0 +1,59 @@
+// Register the HTTPS scheme. Scheme https = new Scheme("https", sslSocketFactory, 9090); schemeRegistry.register(https);
+
+// Specify any HTTP parameters you want.
+
+HttpParams params = new BasicHttpParams(); params.setIntParameter("http.connection.timeout", 60000); // This manages a thread-safe pool of connections that are created on // first request, then persisted and leased out to subsequent requests. // By default, HCP closes a connection after ten minutes. To change // this setting, contact your authorized HCP service provider. ClientConnectionManager connMgr = new ThreadSafeClientConnManager( params, schemeRegistry);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+539/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+ConnPerRouteBean connPerRoute = new ConnPerRouteBean(20);
+
+// HCP recommended settings: max connections per node = 20; // total max connections = 200 ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute); ConnManagerParams.setMaxTotalConnections(params, 200);
+
+// Ensure that the connection manager does not block indefinitely in the // connection request operation. ConnManagerParams.setTimeout(params, 2000); // milleseconds // Create the HTTP client. httpClient = new DefaultHttpClient(connMgr, params);
+
+} catch (NoSuchAlgorithmException e1) { throw new HCPNotInitializedException(e1.getMessage());
+
+} catch (KeyManagementException e1) { throw new HCPNotInitializedException(e1.getMessage()); } }
+
+private static final String HEX_DIGITS[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"}; private static String encodeBytes(byte[] bytes) { if (bytes == null || bytes.length == 0) { return ""; }
+
+StringBuffer out = new StringBuffer(bytes.length * 2);
+
+byte ch; for (int i = 0; i < bytes.length; i++) { ch = (byte) (bytes[i] & 0xF0); ch = (byte) (ch >>> 4);
+
+ch = (byte) (ch & 0x0F); out.append(HEX_DIGITS[(int) ch]); ch = (byte) (bytes[i] & 0x0F); out.append(HEX_DIGITS[(int) ch]); }
+
+return out.toString(); }
+
+protected String toMD5Digest(String sInStr) { StringBuffer mOutDigest = new StringBuffer("");
+
+try { MessageDigest pMD = MessageDigest.getInstance("MD5"); byte pDigest[] = pMD.digest(sInStr.getBytes());
+
+// Convert to string.
+
+for(int i=0; i < pDigest.length; i++) { mOutDigest.append(Integer.toHexString(0xFF & pDigest[i])); } } catch (Exception e) { System.err.println("Error: " + e.getMessage()); e.printStackTrace(); }
+
+return mOutDigest.toString(); }
+
+} /* Simple trust manager implementation. */
+
+class MyX509TrustManager implements X509TrustManager { private X509TrustManager standardTrustManager = null;
+
+public MyX509TrustManager() { }
+
+public MyX509TrustManager(KeyStore keystore) throws NoSuchAlgorithmException, KeyStoreException { super(); TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()); factory.init(keystore);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+540/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

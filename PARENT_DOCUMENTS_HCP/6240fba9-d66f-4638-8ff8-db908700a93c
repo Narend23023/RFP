@@ -1,0 +1,67 @@
+To use the Search Console, you need one of these:
+
+A tenant-level user account that is defined in HCP If HCP is configured to support Active Directory® (AD), an AD user account that is recognized at the tenant level A system-level user account that is defined in HCP and has the search role
+
+An AD user account that is recognized at the system level and has the search role
+
+When you log into the Search Console with a tenant-level user account that’s defined in HCP or an AD account recognized at the tenant level, you access the Console for a specific HCP tenant. You can search only searchable namespaces owned by that tenant. Your user account specifies which of those namespaces you have permission to search. If you don’t
+
+have permission to search a given namespace, search results don’t include any objects from that namespace. When you log into the Search Console with a system-level user account that’s defined in HCP or an AD user account recognized at the system level, you can search the default
+
+namespace and you may also be able to search the searchable namespaces belonging to one or more HCP tenants. This depends on the configuration of those tenants. Search Console URL
+
+Tenant-level users and system-level users specify different URLs to access the Search Console. In either case, access to the Console requires the use of SSL security with HTTP
+
+(HTTPS).
+
+Note: If you inadvertently use http instead of https in the URL, the browser prompts you to open or save a file. Cancel out of the prompt and try again, this time using https. Search Console URL for tenant-level users
+
+To access the Search Console with a tenant-level user account, you use a URL with this format:
+
+https://tenant-url-name.hcp-domain-name:8888
+
+For example, to access the Search Console for the tenant named Finance in the HCP system named hcp.example.com, you use this URL: https://finance.hcp.example.com:8888
+
+Typically, HCP relies on DNS for hostname resolution. If this is not the case, you need to provide a mapping of the tenant hostname to an IP address for the HCP system. You specify this mapping in the c:\windows\system32\drivers\etc\hosts file (Windows®), the /etc/hosts file (Unix), or the /private/etc/hosts file (Mac OS® X) on the client.
+
+Each line in a hosts file is a mapping of a hostname to an IP address. So, for example, if one of the IP addresses for the HCP system is 192.168.210.16, you would add this line to
+
+the hosts file on the client to enable access to the Search Console for the Finance tenant: 192.168.210.16 finance.hcp.example.com
+
+For the IP addresses for the HCP system, see your HCP tenant administrator.
+
+Search Console sessions
+
+A Search Console session begins when you take one of these actions:
+
+Log into the Console using an HCP user account.
+
+Access a Console page while logged in to Windows with an AD user account that HCP recognizes. This is called single sign-on.
+
+For single sign-on to work, your web browser must be configured to support it.
+
+Log into the Console using a recognized AD user account other than the one with which you’re currently logged in to Windows.
+
+A session ends when you log out.
+
+During a session, if you don’t take any action for a certain amount of time, the Console automatically logs you out if you explicitly logged in or, in the case of single sign-on, returns
+
+you to the Simple Search page. The exact amount of idle time allowed is determined by the tenant configuration. Logging into the Search Console
+
+1. Open a web browser window.
+
+2. In the address field, enter the URL for the Search Console.
+
+One of these happens:
+
+If all of these are true, you are automatically logged in to the Search Console, and the Simple Search page appears:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+878/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The tenant is configured to support AD authentication. Your web browser is configured to support single sign-on with AD.

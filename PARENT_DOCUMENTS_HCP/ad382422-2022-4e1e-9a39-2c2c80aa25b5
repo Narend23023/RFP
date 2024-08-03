@@ -1,0 +1,63 @@
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HTTPHEADER, ["If-Unmodified-Since: Mon, 05 Nov
+
+2012 14:00:00 GMT"]) curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2012.ppt")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d If-Unmodified-Since: Mon, 05 Nov 2012 14:00:00
+
+Content-Length: 678400 Response headers
+
+HTTP/1.1 201 Created
+
+X-HCP-ServicedBySystem: hcp.example.com ETag: 78821a05d282822e4abec190c061ba78
+
+Location: /rest/quarterly_rpts/Q1_2012.ppt X-HCP-VersionId: 79885459513089
+
+X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1... X-HCP-Time: 1358245832
+
+Content-Length: 0
+
+Example: Conditionally retrieving all object data
+
+Here’s a sample HTTP GET request that retrieves an object named
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+754/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Q1_2012.ppt in the quarterly_rpts directory if the ETag of the object data does not match the ETag of version of the object that was previously retrieved from HCP. This technique prevents downloading a copy of an object that’s already available. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H 'If-None-Match: "d158a5494cf76bf2cbbe40a7aa674543"'
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt" > Q1_2012.ppt
+
+Request in Python using PycURL
+
+import pycurl filehandle = open("Q1_2012.ppt", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "If-None-Match: d158a5494cf76bf2cbbe40a7aa674543"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1

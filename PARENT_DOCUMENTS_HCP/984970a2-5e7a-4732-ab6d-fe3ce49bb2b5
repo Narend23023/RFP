@@ -1,0 +1,73 @@
+object properties to return for each operation record. @param startTimeMillis: The starting timestamp in milliseconds of
+
+the query window. Default is 0 (zero). @param endTimeMillis: The ending timestamp in milliseconds of the
+
+query window. Default is one minute before time of request. """ self.queryArguments['operation']['count'] = count self.queryArguments['operation']['objectProperties'] = objectProperties
+
+self.queryArguments['operation']['verbose'] = verbose self.queryArguments['operation']['systemMetadata']['directories'] =
+
+directories self.queryArguments['operation']['systemMetadata']['namespaces'] =
+
+namespaces self.queryArguments['operation']['systemMetadata']['transactions'] = transactions
+
+self.queryArguments['operation']['systemMetadata']['changeTime'] ['start'] = startTimeMillis
+
+self.queryArguments['operation']['systemMetadata']['changeTime'] ['end'] = endTimeMillis
+
+def issueQuery(self):
+
+""" Issue an operation-based query request. """ self.curl.setopt(pycurl.POSTFIELDS, json.dumps(self.queryArguments))
+
+cout = StringIO.StringIO() self.curl.setopt(pycurl.WRITEFUNCTION, cout.write)
+
+print("Performing query with the following arguments: %s"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+873/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+% json.dumps(self.queryArguments)) self.curl.perform()
+
+responseCode = self.curl.getinfo(pycurl.RESPONSE_CODE) if responseCode == 200:
+
+queryResult = eval(cout.getvalue()) if queryResult['queryResult']['status']['code'] == "COMPLETE": self.complete = True cout.close()
+
+return queryResult
+
+else: raise Exception("Error: Expected result code 200, but received %s"
+
+% responseCode)
+
+def setLastResult(self, lastResult): """ Sets the last result we received as the starting point for the
+
+next query we issue. @param lastResult: The dictionary containing the last result
+
+returned by the previous query. """ self.queryArguments['operation']['lastResult'] = dict() self.queryArguments['operation']['lastResult']['urlName'] = lastResult['urlName']
+
+self.queryArguments['operation']['lastResult'] ['changeTimeMilliseconds'] = lastResult['changeTimeMilliseconds']
+
+self.queryArguments['operation']['lastResult']['version'] = str(lastResult['version'])
+
+def closeConnection(self): """ Cleanup the curl connection after we are finished with it. """ self.curl.close()
+
+if __name__ == '__main__': authToken = "bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+hostName = "clusterName.com" urlName = "https://admin.%s/query" % hostName
+
+resultsPerQuery = 50 objectUrls = []
+
+queryTool = OperationBasedQueryTool() queryTool.setConnectionInfo(authToken, hostName, urlName)
+
+queryTool.setQueryParameters(resultsPerQuery, "false", {'directory':['/customers/widgetco/orders']}, {'namespace':['Default.Default']}, {'transaction':['create']})
+
+try: while not queryTool.complete:
+
+queryResults = queryTool.issueQuery()
+
+for result in queryResults['queryResult']['resultSet']: objectUrls.append(result['urlName'])
+
+resultCount = len(queryResults['queryResult']['resultSet']) queryTool.setLastResult(queryResults['queryResult']['resultSet']

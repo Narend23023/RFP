@@ -1,0 +1,55 @@
+Before configuring AD support in HCP:
+
+Create an AD group in the target domain. Give the group permission to add members to itself. Then give the group these permissions in the specified OU: Read all properties on descendant computer objects Write all properties on descendant computer objects Change password on descendant computer objects Reset password on descendant computer objects Delete on descendant computer objects Create computer objects in this object and all descendant objects Delete computer objects in this object and all descendant objects
+
+Create an AD user account and add it to only that group. This is the user to specify as the domain user in the AD configuration in HCP.
+
+If HCP is not joined to AD, you can still prepopulate the domain controller filter list. Allow a new computer account for use in querying AD for groups to be created automatically. Do not create this account ahead of time. If you have more than one HCP system for which you are enabling support for AD, specify a computer account name that’s unique among those systems. By default, for the OU in which computer accounts will be created, HCP uses CN=Computers. For the computer account, HCP uses HCPSrv-hcp-name (for example, HCPSrv-hcp), where hcp-name is the first segment of the domain name associated with the [hcp_system] network. Required permissions for Active Directory Domain
+
+When HCP joins a domain, it creates an HCP Computer account by authenticating with the user account created by the Active Directory domain admin. The HCP Computer Account is used in all Active Directory operations unless the HCP needs to rejoin the domain. Using the HCP Computer Account for authentication, HCP then joins each of the HCP nodes to the domain through Samba which is required for CIFS authentication of legacy applications.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+216/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Once HCP has successfully joined the domain, the HCP Computer Account will update SPNs and add new nodes to the domain if physical nodes are added to the HCP system. HCP will automatically change the password of the HCP Computer Account every 30 days.
+
+The following permissions are required by HCP to join the Active Directory Domain: For the HCP Admins SELF group you need read and write permissions. They are required to add the computer object to the group OU permissions. Create Computer objects and Delete Computer objects permissions are required to create the HCP Computer Account.
+
+Change Password and Reset Password permissions are required to reset the password of the HCP Computer Account. Read All Properties, Write All Properties, and Delete permissions are required to create and update SPNs. Configuring Active Directory to support HCP
+
+To enable SSL secured LDAP communication between HCP and AD, you need to create an SSL certificate on each domain controller in AD used by HCP. Installing a valid certificate on a domain controller automatically enables SSL connections for both LDAP and global catalog traffic.
+
+If you don’t want to secure communication, skip Step 1.
+
+To create SSL certificates for communication between HCP and AD, you need to create a certificate on every domain controller that communicates with HCP.
+
+To create the SSL certificate, do the following:
+
+1. (Optional) Create the SSL certificate.
+
+a. On the Windows server, click Start. b. In the Search programs and files field, enter: mmc The Console1 - [Console Root] window opens. c. On the File menu, select Add/Remove Snap-in.
+
+The Add or Remove Snap-ins window opens.
+
+d. In the Available snap-ins list, select Certificates, then click Add.
+
+The Certificates snap-in window opens.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+217/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help e. Select Computer account, then click Next.
+
+The Select Computer window opens.
+
+f. Click Finish.
+
+Certificates (Local Computer) appears in the Selected snap-ins list in the Add or Remove Snap-ins window.

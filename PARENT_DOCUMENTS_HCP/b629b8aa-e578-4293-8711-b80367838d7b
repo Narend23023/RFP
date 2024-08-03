@@ -1,0 +1,187 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> If you don’t specify a format for a content property with the datetime data type, the metadata query engine indexes only values that match patterns such as MM/dd/yyyy, MM-dd-
+yyyy, yyyy-MM-dd, or yyyy-MM-dd'T'HH:mm:ssZ.
+Multivalued content properties
+A content property is defined as either single-valued or multivalued:
+If you define a content property as single-valued, the metadata query engine indexes only the first occurrence of it for any given object, regardless of how many times it
+occurs in the custom metadata XML for that object.
+If you define a content property as multivalued, the metadata query engine indexes all occurrences of it in the custom metadata XML for an object.
+For example, based on the sample custom metadata XML, you would define as multivalued a content property that extracts the value of the specialty element.
+With the metadata query API, users can sort query results based on single-valued content properties but not on multivalued properties.
+Content properties extracted from sample XML
+When working with content properties in the Tenant Management Console, you can supply sample well-formed XML and have HCP extract content properties from that XML. You
+can then select which of those properties you want to add to a content class.
+HCP extracts only content properties for XPath expressions that follow a straight path from the root element. These conventions apply to the content property definitions:
+The XPath expression always starts from the root element.
+The name of a content property that extracts an element value is the name of the element preceded by the name of the parent element.
+The name of a content property that extracts an attribute value is the name of the attribute preceded by the name of the element the attribute applies to.
+Content property names that would exceed 25 characters in length are truncated to 25 characters, starting from the beginning.
+The definitions do not include formats.
+The definitions are listed alphabetically by XPath expression.
+When adding extracted content properties to a content class, you can change any parts of their definitions.
+The table below shows the definitions of the content properties HCP extracts from the sample custom metadata XML.<br>
+                       <b>Bounding box:</b> x1=185, y1=1244, x2=1516, y2=2031
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>XPath expression</td>
+      <td>Name</td>
+      <td>Data type</td>
+      <td>Multivalued</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/dicom_image/doctor/address/address1</td>
+      <td>addressAddress1</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/dicom_image/doctor/address/address2</td>
+      <td>addressAddress2</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/dicom_image/doctor/address/city</td>
+      <td>addressCity</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/dicom_image/doctor/address/state</td>
+      <td>addressState</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>/dicom_image/doctor/address/zip</td>
+      <td>addressZip</td>
+      <td>Integer</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>/dicom_image/doctor/name</td>
+      <td>doctorName</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>/dicom_image/doctor/office</td>
+      <td>doctorOffice</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>/dicom_image/doctor/specialties/specialty</td>
+      <td>specialtiesSpecialty</td>
+      <td>String</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>/dicom_image/doctor/specialties/specialty/@primary</td>
+      <td>specialtyPrimary</td>
+      <td>Boolean</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>/dicom_image/followup_needed</td>
+      <td>icom_imageFollowup_needed</td>
+      <td>Boolean</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>/dicom_image/image/@type</td>
+      <td>imageType</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>/dicom_image/image/date</td>
+      <td>imageDate</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>/dicom_image/image/technician</td>
+      <td>imageTechnician</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>/dicom_image/patient/address/address1</td>
+      <td>addressAddress1</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>/dicom_image/patient/address/address2</td>
+      <td>addressAddress2</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>/dicom_image/patient/address/city</td>
+      <td>addressCity</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>/dicom_image/patient/address/state</td>
+      <td>addressState</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>/dicom_image/patient/address/zip</td>
+      <td>addressZip</td>
+      <td>Integer</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>/dicom_image/patient/id</td>
+      <td>patientId</td>
+      <td>Integer</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>/dicom_image/patient/name</td>
+      <td>patientName</td>
+      <td>String</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

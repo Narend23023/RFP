@@ -1,0 +1,159 @@
+This property is required on a PUT request.
+
+should communicate with each other.
+
+description
+
+String
+
+This property is optional on a PUT request.
+
+Specifies a description of the replication link. This description is optional. The default is no description.
+
+To remove a description from an existing link, specify the description property with no value. encryption
+
+Boolean
+
+This property is optional on a PUT request.
+
+Specifies whether HCP should encrypt data before transmitting it to the other system involved in the replication link. For an active/active link, this setting applies to data being replicated in both directions on the link.
+
+Valid values are: true
+
+HCP should encrypt data.
+
+false
+
+HCP should not encrypt data.
+
+The default is false.
+
+failoverSettings
+
+Specifies the automatic failover and failback settings for the replication link.
+
+This property is optional on a PUT request.
+
+failover
+
+Settings
+
+id
+
+String
+
+Specifies the system-supplied unique ID for the replication link. HCP generates this ID automatically when you create a link.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request. name
+
+String
+
+This property is required on a PUT request.
+
+Specifies the name of the replication link. Link names must be from one through 64 characters long and can contain any valid UTF-8 characters, including white space. Link names are not case sensitive.
+
+Link names must be unique within a replication topology. priority
+
+String
+
+This property is optional on a PUT request.
+
+Specifies whether priority should be given to objects with the oldest changes, regardless of namespace, or processing should be balanced across namespaces. For an active/active link, this setting applies to both systems involved in the link.
+
+Valid values are: FAIR
+
+Balance processing across namespaces.
+
+OLDEST_FIRST
+
+Give priority to objects with the oldest changes.
+
+The default is OLDEST_FIRST.
+
+These values are not case-sensitive.
+
+statistics
+
+statistics
+
+Specifies information about activity on the replication link.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request. status
+
+String
+
+Specifies the general state of the replication link. Possible values are:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+GOOD
+
+The link is healthy. WARNING
+
+The link is healthy, but normal replication is not occurring on the link.
+
+BAD
+
+The link is unhealthy.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+473/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type Description
+
+Notes
+
+statusMessage String
+
+Specifies text describing the current state of the replication link. Possible values are:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+Synchronizing data Sending data Receiving data Recovering data Completing recovery Scheduled off period Suspended by user Pending remote reply Pending Failed over Remote storage full, link suspended
+
+Local storage full, link suspended High error rate Stalled link Broken link
+
+suspended Boolean
+
+Specifies whether the replication link is currently suspended. Possible values are:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+true
+
+The link is suspended
+
+false
+
+The link is not suspended.
+
+type
+
+String
+
+Specifies the replication link type. Valid values are:
+
+This property is required on a PUT request. ACTIVE_ACTIVE
+
+The link is an active/active link.
+
+OUTBOUND
+
+You can change the value of this property from OUTBOUND or INBOUND to ACTIVE_ACTIVE. You cannot change the value from:
+
+The link is an outbound active/passive link.
+
+INBOUND
+
+ACTIVE_ACTIVE to OUTBOUND or INBOUND
+
+The link is an inbound active/passive link.
+
+OUTBOUND to INBOUND

@@ -1,0 +1,55 @@
+Each search facility maintains an index of objects. The index maintained by the metadata query engine resides in HCP.
+
+The metadata query engine index is based on system metadata, custom metadata that is well-formed XML, and ACLs.
+
+Indexing is enabled on a per-namespace basis. If a namespace is not indexed, searches do not return any results for objects in the namespace.
+
+Indexing of custom metadata is also enabled on a per-namespace basis. If indexing of custom metadata is disabled for a namespace, the index associated with the metadata query engine does not include custom metadata for objects in the namespace.
+
+HCP namespaces can be configured to store multiple versions of objects. Each index, however, includes only the most current version of an object. To maintain its index, each search facility periodically checks indexable namespaces for new objects and for objects with metadata that has changed since the last check. When it finds new or changed information, it updates its index. The amount of time a search facility takes to update its index depends on the amount of information to be indexed.
+
+Note: If an index update includes a large amount of information, new objects or objects with changed metadata may be unavailable to searches until the update is complete.
+
+Metadata query engine indexing of custom metadata can be configured as follows:
+
+Specific content properties can be indexed.
+
+Specific annotations in a namespace can be excluded from indexing. Indexing can be enabled or disabled for the full text of custom metadata. Content properties
+
+Custom metadata in a namespace can be indexed based content properties. A content property is a named construct used to extract an element or attribute value from custom metadata that's well-formed XML. Each content property has a data type that determines how the property values are treated by the metadata query engine. Additionally, a content
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+877/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+property is defined as either single-valued or multivalued. A multivalued property can extract the values of multiple occurrences of the same element or attribute from the XML.
+
+Content properties are grouped into content classes, and each namespace can be associated with a set of content classes. The content properties that belong to a content class associated with the namespace are indexed for the namespace. Content classes are defined at the tenant level, so multiple namespaces can be associated with the same content class.
+
+For example, if the namespace Personnel is associated with the content class MedInfo, and the content property DrName is a member of the content class, the query engine will use the DrName content property to index the custom metadata in the Personnel namespace. Index settings
+
+Each object has an index setting that the metadata query engine uses to determine whether to index custom metadata for the object. The metadata query engine always indexes
+
+object metadata and ACLs regardless of the index setting on an object.
+
+Searchable namespaces
+
+For a namespace to be searchable in the Search Console:
+
+The namespace must be indexed by the active search facility. The namespace must be configured to allow searches. This property of a namespace is separate from whether the namespace is indexed. Using the Search Console
+
+To use the Search Console, you need one of these:
+
+A tenant-level user account that is defined in HCP If HCP is configured to support Active Directory® (AD), an AD user account that is recognized at the tenant level A system-level user account that is defined in HCP and has the search role
+
+An AD user account that is recognized at the system level and has the search role
+
+When you log into the Search Console with a tenant-level user account that’s defined in HCP or an AD account recognized at the tenant level, you access the Console for a specific HCP tenant. You can search only searchable namespaces owned by that tenant. Your user account specifies which of those namespaces you have permission to search. If you don’t
+
+have permission to search a given namespace, search results don’t include any objects from that namespace. When you log into the Search Console with a system-level user account that’s defined in HCP or an AD user account recognized at the system level, you can search the default
+
+namespace and you may also be able to search the searchable namespaces belonging to one or more HCP tenants. This depends on the configuration of those tenants. Search Console URL

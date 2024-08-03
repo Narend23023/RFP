@@ -1,0 +1,45 @@
+// Configure the REST API for the Accounts-Receivable namespace, using http.json // as input. String namespaceName = "Accounts-Receivable"; f = new File("/home/rsilver/MAPI/http.json"); adapter.modifyNamespaceHTTP(namespaceName, tenantName, f);
+
+// Configure the REST API for the Accounts-Payable namespace, using http.json // as input. String namespaceName = "Accounts-Payable"; f = new File("/home/rsilver/MAPI/http.json"); adapter.modifyNamespaceHTTP(namespaceName, tenantName, f);
+
+// Create a user account with no roles, using pblack-UA.json as input
+
+// and specifying start123 as the account password. f = new File("/home/rsilver/MAPI/pblack-UA.json"); adapter.createTenantUserAccount(tenantName, "start123", f); // Modify the user account, using pblack-UAperms.json as input. String userAcctName = "pblack" f = new File("/home/rsilver/MAPI/pblack-UAperms.json"); adapter.changeDataUserAccountPerms(userAcctName, tenantName, f);
+
+// Create a retention class, using RC-FN-Std-42.json as input. f = new File("/home/rsilver/MAPI/RC-FN-Std-42.json"); adapter.createRetentionClass(namespaceName, tenantName, f);
+
+} catch (HCPNotInitializedException e) { e.printStackTrace(); } finally { if(adapter != null) { adapter.shutdownHttpClient();
+
+} } }
+
+/** * Constructor - initializes the HTTP client. */ public MAPISample() throws HCPNotInitializedException{ initHttpClient(); }
+
+/** * When done with this adapter, shut it down. */ public void shutdownHttpClient() { httpClient.getConnectionManager().shutdown(); }
+
+/** * Initialize the HCP system access settings. * @param hcpSystemAddr * @param username * @param password */
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 536/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+public void setUpSystemInfo(String hcpSystemAddr, String username,
+
+String password) { // This is the root for management API commands. In general, these values // should be retrieved from configuration settings. this.hcpSystemAddr = hcpSystemAddr;
+
+// The management API requires HTTPS and port 9090. protocol = "https"; port = 9090;
+
+// Calculate the authentication token for management API access to HCP. BASE64Encoder base64Encoder = new BASE64Encoder(); uname64 = base64Encoder.encode(username.getBytes()); encodedPassword = toMD5Digest(password); }
+
+public void modifylUserAccount(String tenantName, String username, File jsonInputFile) {
+
+String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/userAccounts/" + username; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void createTenantUserAccount(String tenantName, String password, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/userAccounts";
+
+List<NameValuePair> metadata = new ArrayList<NameValuePair>(); metadata.add(new BasicNameValuePair("password", password)); String queryString = URLEncodedUtils.format(metadata, "UTF-8");
+
+this.executeRequest(RequestType.PUT, addr, path, queryString, jsonInputFile); }
+
+public void configureTenantSecurity(String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/consoleSecurity"; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }

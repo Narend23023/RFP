@@ -1,0 +1,85 @@
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.example.hcp.com \ /rest/quarterly_rpts/Q1_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+
+args = {'privileged':'true', 'purge':'true', 'reason':'Purged per Compliance Dept. order AD&943'}
+
+params = urllib.urlencode(args) curl.setopt(pycurl.POSTFIELDS, params)
+
+curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers DELETE /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 90
+
+Content-Type: application/x-www-form-urlencoded
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334425187 Content-Length: 0
+
+Conditional operations
+
+Conditional operations let you tell HCP to perform an operation only if the current object or specified version meets certain conditions. A conditional operation can use an ETag or a datetime value. HCP compares the value that you provide in the header with the corresponding value for the object or version and performs the requested action only if the specified
+
+condition is met.
+
+Here are two typical uses for conditional operations:
+
+Managing a local object cache. You can reduce the load on HCP and your network by maintaining a local cache of frequently used objects. When the local application
+
+requires an object, it can send a conditional GET request to HCP to retrieve a new version only if the object has changed. Managing storage by multiple users or applications. An application that updates an object can use a conditional PUT request that tells HCP to store the new version only if the ETag of the existing version equals the ETag of the last known version of the object. Otherwise, the application gets an error return, and can handle the data conflict appropriately. This technique can be useful in cases where several users might update the same object.
+
+You can specify conditions in GET, HEAD, and PUT requests for objects and versions. You cannot use them in DELETE requests for these items. Doing so results in an HTTP 400 (Bad Request) error code.
+
+Note: HCP ignores conditional headers in GET, HEAD, and PUT requests for annotations, ACLs, directories, and symbolic links and in POST requests for system metadata. It
+
+returns an HTTP 400 (Bad Request) error code in response to a conditional DELETE request for any of these items.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+752/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers You use the headers described in the table below to specify conditional operations.
+
+Header
+
+Value
+
+Description
+
+If-Match
+
+One of:
+
+Perform the operation only if the ETag of the object or version is identical to one of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object exists. asterisk (*)
+
+If-None-Match
+
+One of:
+
+Perform the operation only if the ETag of the object or version is not equal to any of the specified ETag values.
+
+Comma-separated list of ETag values
+
+For an asterisk, perform the operation if the object doesn’t exist.
+
+asterisk (*)
+
+If-Modified-Since
+
+Datetime value

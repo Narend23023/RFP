@@ -1,0 +1,37 @@
+582/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+A listing that includes versions of objects may include delete markers. A delete marker indicates that a version of the object was deleted.
+
+A delete marker version is returned in a GET bucket versions response just like any other object version.
+
+A bucket listing is returned in an XML response body. In the response body, items in the bucket listing occur in ascending alphanumeric order by item name. If the listing includes multiple versions of an object, those versions are listed in ascending chronological order by last-modified time. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list the contents of a bucket of a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /[?[versions][query-parameters]] HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name[?[versions][query-parameters]] HTTP/1.1
+
+The versions query parameter is not case sensitive.
+
+query-parameters can be none, one, or more of: delimiter
+
+You use the delimiter query parameter to request a bucket listing that includes a list of common prefixes, where a prefix is the name of an item up through the first occurrence of the character string specified by the delimiter parameter. Each common prefix is listed only once regardless of the number of items with matching names. The items with matching names are not included elsewhere in the listing. The returned listing also contains items with names that do not include the character string specified by the delimiter parameter. In the listing, all the named items are listed first, followed by all the common prefixes. The items and common prefixes included in a listing are subject to any other criteria specified in the request. Both the items and the common prefixes count toward the maximum number of items that can be included in the bucket listing. The list of items does not include in-progress multipart uploads. The list of common prefixes does not include common prefixes that are exclusively for multipart uploads. The character string you specify for the delimiter query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The delimiter parameter name and the character string you specify are both case sensitive. encoding-type
+
+You use the encoding-type query parameter to request the S3 compatible API to encode the response. You can also use this query parameter to specify the encoding method to use. The key for an object can contain any Unicode character. Some characters, such as those with an ASCII value from 0 to 10, cannot be parsed by XML 1.0 parsers. For these characters, you can add the encoding-type query parameter to request the S3 compatible API to encode the keys in the response. The encoding-type parameter name is case sensitive. prefix
+
+You use the prefix query parameter to request a bucket listing that contains only items with names that begin with a specified character string (the prefix) and, if applicable, common prefixes that begin that prefix. For example, the bucket listing returned in response to a GET request with the prefix=sales query parameter contains only these items: sales/ sales/budget_proposals/ sales/budget_proposals/BudgProp-2020 sales_quotas_2020.pdf
+
+The list of items does not include in-progress multipart uploads or common prefixes that are exclusively for multipart uploads. The character string you specify for the prefix query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks.
+
+The prefix parameter name and the character string you specify are both case sensitive. max-keys
+
+By default, a bucket listing can include at most one thousand items. However, you can use the max-keys query parameter in a bucket listing request to specify a smaller maximum number of items. If more than the maximum number of items satisfy the criteria for a request, you can use query parameters to retrieve the parts in groups. For example, the bucket listing returned in response to a GET request with the max-keys=6 query parameter contains these items:

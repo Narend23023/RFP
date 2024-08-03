@@ -1,0 +1,115 @@
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Location
+
+Specifies the URL to which the client is redirected if the upload is successful.
+
+x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption. x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+Response body
+
+If success_action_code is set to 201, HCP returns information about the object that results from a successful upload request in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to complete a POST object upload. The elements are listed in alphabetical order. Bucket
+
+Child of the PostResponse element. The Bucket element specifies the bucket where the object was created.
+
+ETag
+
+Child of the PostResponse element. The ETag or entity tag element specifies the MD5 hash of the object. The element reflects the contents of an object, not its metadata. You can do a conditional GET operation by combining the ETag tag with an If-Modified tag. Key
+
+Child of the PostResponse element. The Key element specifies the name of the object.
+
+Location
+
+Child of the PostResponse element. The Location element specifies the complete URL for the object.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to complete a POST object upload. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully processed the request.
+
+201
+
+OK
+
+HCP successfully processed the request. Returns an XML document with a 201 status code. Recommended for uploads through Adobe Flash.
+
+204
+
+OK
+
+HCP successfully processed the request. (Default success response.)
+
+400 Bad Request
+
+Possible reasons include:
+
+The request does not include a Content-Type header. The security policy is missing or malformed.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can complete an upload. The credentials provided with the request are invalid.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+662/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The credentials provided with the request do not match the credentials used to initiate the upload. You do not have permission to complete uploads in the specified bucket. The S3 compatible API is currently disabled for the specified bucket. The request uses HCP, AD, SPENEGO, or cookie authentication.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: POST object upload
+
+Here’s a sample POST object upload request that initiates an object upload for an object named acctg/Checklist.txt in the bucket named finance with AWS Signature Version 2 in- form authentication. Request headers and form
+
+<html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> </head> <body>

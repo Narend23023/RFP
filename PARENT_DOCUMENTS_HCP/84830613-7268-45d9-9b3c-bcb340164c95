@@ -1,0 +1,135 @@
+Request in Python using PycURL
+
+import pycurl
+
+import StringIO cin = StringIO.StringIO()
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=acl") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HEADER, 1) curl.setopt(pycurl.NOBODY, 1)
+
+curl.setopt(pycurl.WRITEFUNCTION, cin.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) print cin.getvalue()
+
+curl.close()
+
+Request headers
+
+HEAD /rest/quarterly_rpts/Q1_2012.ppt?type=acl HTTP/1.1 Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1335016427
+
+X-HCP-SoftwareVersion: 7.0.0.16 X-HCP-ACL: true
+
+Content-Type: application/xml Content-Length: 317
+
+Retrieving ACLs for objects and versions
+
+You use the HTTP GET method to retrieve an ACL for an object or version of an object. The ACL can be returned in either XML or JSON format. Access permission
+
+To retrieve an ACL for an object, you need read ACL permission.
+
+Request header
+
+GET /rest/directory/file?type=acl HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type Yes
+
+Use the value acl.
+
+version
+
+No
+
+One of:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+778/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object. If you specify a valid range, HCP returns the requested amount of data with a status code of 200. Response headers
+
+This operation returns Content-Length and Content-Type headers with information about the ACL. If the request specifies a gzip-compressed response, HCP returns a Content- Encoding header with a value of gzip.
+
+This operation does not return any request-specific headers.
+
+Response body
+
+If an object has an ACL, the body of the HTTP response contains the ACL in XML or JSON.
+
+If an object does not have an ACL, the body of the HTTP response contains: In XML:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<accessControlList/>
+
+In JSON:
+
+{"grant":[]}
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the ACL.

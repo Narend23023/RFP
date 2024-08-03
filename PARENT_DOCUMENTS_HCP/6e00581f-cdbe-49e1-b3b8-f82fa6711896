@@ -1,0 +1,73 @@
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid.
+
+x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid. x-amz-meta-
+
+Adds custom metadata to the object.
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body.
+
+COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements. Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date
+
+Specify the date and time until which an object must be retained. The date and time must be in YYYY-MM-DDTHH:MM:SSZ format, where YYYY represents the year, MM represents the month, DD represents the day, T represents the time separator, HH represents the hour in 24-hour format, MM represents the minute, SS represents the second and Z represents the time zone. Example x-amz-object-lock-retain-until-date: 2023-03-30T00:00:00Z
+
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example
+
+x-amz-object-lock-legal-hold: ON
+
+x-amz-server-side-encryption
+
+Requests that the response headers include x-amz-server-side-encryption, which indicates whether objects stored in HCP are encrypted. The value of the x-amz-server-si de-encryption request header can be any character string. When you store an object, you can use the x-amz-server-side-encryption request header to determine whether objects stored in HCP are encrypted. If stored objects are encrypted, the response headers include x-amz-server-side-encryption with a value representing the encryption algorithm and key length HCP is using. If stored objects are not encrypted, the value of the x-amz-server-side-encryption response header is None. x-hcp-labelretentionhold
+
+Specifies whether to place one or more labeled holds on the object and the associated labeled hold IDs. The values passed with this header are in a JSON format string containing one or more id and hold value pairs. This is supported only on namespaces that are configured to use the HCP retention mode.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+604/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+id
+
+Unique label name. The maximum label size is 64 characters.
+
+hold Either true or false.
+
+Example
+
+x-hcp-labelretentionhold [{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}]
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. This is supported only on namespaces that are configured to use the HCP retention mode. x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false. This is supported only on namespaces that are configured to use the HCP retention mode.
+
+Response headers
+
+The next list describes the headers returned in response to a successful request to store an object. Content-length

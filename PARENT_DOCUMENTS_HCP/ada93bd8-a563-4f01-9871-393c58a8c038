@@ -1,0 +1,51 @@
+Here’s a scenario that shows how allowing metadata-only objects can be used to advantage:
+
+You have a many-to-one replication topology in which the HCP systems at the outlying sites are much smaller than the central HCP system to which they all replicate. To optimize
+
+the use of storage on the outlying systems, you allow the namespaces on those systems to have metadata-only objects while requiring the central system to have the object data. The outlying systems respond to client requests for object data by reading the data from the central system. In this scenario, the replication topology should include a disaster recovery system (that is, a replica of the central system) to protect against data loss in case of a catastrophic failure of the central system.
+
+Important: HCP does not prevent you from removing a namespace from a replication topology even if the namespace contains metadata-only objects on one or more systems in that
+
+topology. This can result in data for objects in that namespace being permanently inaccessible from those systems. In most cases, HCP warns you if the modification you’re making to a replication link would cause this condition to occur. Storage Tiering service processing
+
+The Storage Tiering service processes one object at a time. For each object, the service checks the applicable service plan to determine the storage tiers on which copies of the
+
+object data should be stored, the number of copies of the object data that should be stored on each tier, and the number of copies of the object metadata that should be stored on primary running storage. The Storage Tiering service then checks to see whether the object data has been read from a storage tier for which rehydration is enabled. Finally, the Storage Tiering service checks to see whether the object data has been read from a remote system because that object is metadata-only on the local system, and if so, the service checks to see whether rehydration is enabled for the metadata-only tier on which the object resides.
+
+For each object in a namespace, if all of these conditions are true, the storage plan takes no action on that object: The object is stored on the correct storage tier. The correct number of copies of the object data exist on the current storage tier. The correct number of copies of the object metadata exist on primary running storage. If the object is on a storage tier for which rehydration is enabled, the correct number of rehydrated copies of the object exist on the ingest tier.
+
+If one or more of the above conditions is not true, the Storage Tiering service takes the applicable actions to bring the object into compliance with the namespace service plan.
+
+Understanding storage tiering statistics
+
+The Storage page in the HCP System Management Console displays graphs and statistics that provide information about the use of primary running storage, primary spindown
+
+storage, and each type of extended storage that’s used to store objects in a repository. The Storage page also provides information about metadata-only objects. Note: To view the Storage page, you need the monitor or administrator role. To modify the configuration of extended storage or to create, modify, or delete service plans, you need the administrator role.
+
+To display the Storage page, in the System Management Console, click Storage. System security
+
+Through the HCP System Management Console, you can set various options that affect HCP system security.
+
+In addition to creating and managing user and group accounts and login settings, you can:
+
+Specify whether HCP nodes should respond to ping requests Allow or disallow SSH access to HCP nodes
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+127/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+View current Support access credentials Apply exclusive Hitachi Vantara Support access credentials Create domains and associate SSL server certificates with them
+
+Allow or deny access to the System Management Console from specific IP addresses Control the use of the HCP management API by users with system-level user accounts Allow or deny access to the Search Console for the default tenant from specific IP addresses Configure support for Windows Active Directory or Windows workgroups Clear the Active Directory cache Set up connections to RADIUS servers Set the system-wide permission mask for access to namespaces
+
+Setting network security
+
+The Network Security page in the HCP System Management Console lets you enable or disable the following services on HCP nodes:
+
+Ping
+
+Checks network connectivity to HCP nodes. SSH login by authorized service and Support representatives Facilitates troubleshooting when you request support. Node Status

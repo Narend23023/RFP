@@ -1,0 +1,141 @@
+</volume> <volume> <id>example091</id>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+491/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <blocksRead>0.0</blocksRead> <blocksWritten>200.33</blocksWritten> <diskUtilization>0.13</diskUtilization> <transferSpeed>2.45</transferSpeed> <totalBytes>10217599</totalBytes> <freeBytes>37887380</freeBytes> <totalInodes>10443212</totalInodes> <freeInodes>40083820</freeInodes> </volume>
+
+</volumes> </node> <node> . . . . </node> </nodes> </nodeStatistics> protocols
+
+The protocols data type describes the protocols resource for default namespaces.
+
+Note: For HCPnamespaces, the protocols resource is superseded by the .../protocols/http resource, which has a data type of httpProtocol.
+
+Properties
+
+The table below describes the properties included in the protocols data type. Property
+
+Data type
+
+Description
+
+httpEnabled
+
+Boolean
+
+Specifies whether the HTTP protocol is enabled for the namespace. Valid values are:
+
+true
+
+HTTP is enabled.
+
+false
+
+HTTP is disabled.
+
+The default is false.
+
+httpsEnabled
+
+Boolean
+
+Specifies whether the HTTPS protocol is enabled for the namespace. Valid values are: true
+
+HTTPS is enabled.
+
+false
+
+HTTPS is disabled.
+
+The default is true.
+
+ipSettings
+
+ipSettings
+
+Specifies which IP addresses can and cannot access the namespace through the HTTP and HTTPS protocols.
+
+Example
+
+Here’s an XML example of the protocols data type:
+
+<protocols> <httpEnabled>false</httpEnabled> <httpsEnabled>true</httpsEnabled> <ipSettings> <allowAddresses> <ipAddress>192.168.140.10</ipAddress> <ipAddress>192.168.140.14</ipAddress> <ipAddress>192.168.140.15</ipAddress> <ipAddress>192.168.149.0/24</ipAddress>
+
+</allowAddresses> <allowIfInBothLists>false</allowIfInBothLists> <denyAddresses> <ipAddress>192.168.149.5</ipAddress> </denyAddresses> </ipSettings> </protocols> recipient
+
+The recipient data type describes the recipient property of the recipients data type.
+
+Properties
+
+The table below describes the properties included in the recipient data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+492/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+address
+
+String
+
+Specifies a comma-separated list of well-formed email addresses for notification about messages added to the tenant log.
+
+This property is required on a POST request. importance
+
+String
+
+Specifies whether HCP should send email only about important log messages to the specified email addresses or send email about all log messages. Valid values are:
+
+ALL
+
+Send email about all log messages.
+
+MAJOR
+
+Send email only about important log messages.
+
+The default is MAJOR.
+
+These values are not case sensitive. severity
+
+String
+
+Specifies the severity level of the log messages about which to send email. Valid values are:
+
+NOTICE
+
+Send email about log messages with a severity level of notice, warning, or error.
+
+WARNING
+
+Send email about log messages with a severity level of warning or error.
+
+ERROR
+
+Send email only about log messages with a severity level of error.
+
+The default is ERROR.
+
+These values are not case sensitive. type
+
+String
+
+Specifies the types of log messages about which to send email. Valid values are comma-separated lists of one or more of:
+
+GENERAL
+
+Send email about log messages that do not have a type of security or compliance.

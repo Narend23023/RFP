@@ -1,0 +1,147 @@
+Response body
+
+If the user doesn’t have permissions for any of the tenant's namespaces, the namespaces element is empty.
+
+Element
+
+Attribute
+
+Description
+
+namespaces
+
+tenantHostName Domain and subdomain of the tenant host.
+
+namespaces
+
+httpScheme
+
+Type of http connection to the tenant. Either http or https.
+
+namespace
+
+name
+
+Name of the namespace
+
+namespace
+
+nameIDNA
+
+URL of the namespace
+
+namespace
+
+versioningEnabled
+
+Boolean. Specifies if versioning is enabled for the namespace. namespace
+
+searchEnabled
+
+Boolean. Specifies if search is enabled for the namespace.
+
+namespace
+
+retentionMode
+
+Specifies the retention mode for the namespace. Values are either compliance or ente rprise.
+
+namespace
+
+defaultShredValue
+
+Boolean. Specifies whether or not the objects in the namespace are shredded after deletion.
+
+namespace
+
+defaultIndexValue
+
+Boolean. Specifies whether or not the objects in the namespace are indexed.
+
+namespace
+
+defaultRetentionValue
+
+Specifies the retention value for the namespace.
+
+namespace
+
+hashScheme
+
+Specifies the hash algorithm of the namespace.
+
+namespace
+
+dpl
+
+Specifies the data protection level of the namespace. namespace
+
+description
+
+Provides the description of the namespace.
+
+Status codes
+
+This operation does not have any request-specific status codes.
+
+Example: Listing accessible namespaces
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+781/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Here’s a sample HTTP GET request that returns information about the namespaces that are owned by the europe tenant in the hcp.example.com system and that can be accessed
+
+by the user identified by the Authorization header. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/proc"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/proc") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close()
+
+Request headers
+
+GET /proc HTTP/1.1 Host: /finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-Time: 1334326410 Content-Length: 1275
+
+Response body
+
+<namespaces xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/proc-namespaces.xsd"
+
+tenantHostName="europe.hcp.example.com" httpScheme="https">
+
+<namespace name="finance" nameIDNA="finance" versioningEnabled="true"
+
+searchEnabled="true" retentionMode="enterprise"
+
+defaultShredValue="false" defaultIndexValue="true"
+
+defaultRetentionValue="0" hashScheme="SHA-256"
+
+dpl="2" >
+
+<description><![CDATA[ Finance department
+
+]]></description> </namespace>

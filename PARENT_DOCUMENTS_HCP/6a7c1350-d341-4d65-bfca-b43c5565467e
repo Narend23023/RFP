@@ -1,0 +1,187 @@
+String
+
+One or more comma-delimited annotation names. Annotation names
+
+are case-sensitive.
+
+custom Metadata Content
+
+String
+
+Custom metadata content.
+
+This property can be used only in queries. It cannot be used in sort or objectProperties properties.
+
+dpl
+
+Integer
+
+The DPL for the namespace that contains the object. gid3
+
+Integer
+
+The POSIX group ID.
+
+hash4
+
+String
+
+The cryptographic hash algorithm used to compute the hash value of
+
+the object, followed by a space and the hash value of the object.
+
+In query expressions, the values you specify for both the hash
+
+algorithm and the hash value are case sensitive. You need to use uppercase letters when specifying these values.
+
+When using wildcard characters with this object property, instead of a
+
+space, separate the hash algorithm and the hash value with a wildcard
+
+character. In this case, do not enclose the value for this property in quotation marks.
+
+If you do not specify wildcard characters in the value for this property,
+
+you need to enclose the entire value for this property in double quotation marks. hashScheme4
+
+String
+
+The cryptographic hash algorithm the namespace uses.
+
+In query expressions, the values you specify for this property are case
+
+sensitive. Do not enclose these values in quotation marks.
+
+hold2
+
+Boolean
+
+An indication of whether the object is currently on hold. Valid values
+
+are: true
+
+The object is on hold.
+
+false
+
+The object is not on hold.
+
+index2
+
+Boolean
+
+An indication of which parts of the object are indexed. Valid values
+
+are:
+
+true
+
+All metadata, including any custom metadata and ACL, is indexed.
+
+false
+
+Only system metadata and ACLs are indexed.
+
+ingestTime
+
+Long
+
+The time at which HCP stored the object, in seconds since January 1,
+
+1970, at 00:00:00 UTC. ingestTime String1
+
+Datetime
+
+The time at which HCP stored the object, in ISO 8601 format:
+
+YYYY-MM-DDThh:mm:ssZ
+
+For more information about this format, see the description of the acc essTimeString property.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Query expression example
+
+T00:00:00 TO
+
+2012-03-21 T23:59:59] customMetadata:true
+
+customMetadata
+
+Annotation:inventory
+
+customMetadata
+
+Content:city.Bath. city
+
+dpl:2
+
+N/A
+
+hash:"SHA-256 9B6D4..."
+
+hashScheme:SHA-256
+
+hold:false
+
+index:true
+
+ingestTime:[130947840 TO 1312156800]
+
+ingestTimeString:
+
+[2012-03-01 T00:00:00
+
+TO 2012-03-01 T23:59:59]
+
+851/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object property
+
+Data type
+
+Description
+
+namespace2
+
+String
+
+The name of the namespace that contains the object, in this format: namespace-name.tenant-name
+
+In query expressions, the values you specify for this property are not case sensitive.
+
+objectPath4
+
+String
+
+The path to the object following rest, data, or fcfs_data, beginning with
+
+a forward slash (/).
+
+In query expressions, the values you specify for this property are not case sensitive and do not need to begin with a forward slash (/). operation3
+
+String
+
+The type of operation the result represents.
+
+Possible values in a response body are:
+
+CREATED
+
+DELETED DISPOSED
+
+PRUNED PURGED
+
+NOT_FOUND
+
+PRUNED and PURGED do not apply to objects in the default
+
+namespace.
+
+Results for object-based queries have either the CREATED or NOT_FOUND operation type. NOT_FOUND means that the object
+
+has been deleted from the repository but has not yet been removed

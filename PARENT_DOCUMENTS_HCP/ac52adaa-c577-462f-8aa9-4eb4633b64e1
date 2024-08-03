@@ -1,0 +1,67 @@
+quarterly_rpts directory.
+
+The cat command appends the contents of the Q2_2020-custom-metadata.xml file to the contents of the Q2_2020.ppt file. The result is piped to a curl command that sends the data to HCP and saves the content of Q2_2020-custom-metadata.xml in an annotation named report_data. Unix command line
+
+cat Q2_2020.ppt Q2_2020-custom-metadata.xml | curl -k -iT - -H "X-HCP-Size: `stat -c %s Q2_2020.ppt`"
+
+H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt ?type=whole-object&annotation=report_data" Request headers
+
+PUT /rest/quarterly_rpts/Q2_2020.ppt?type=whole-object&annotaton=report_data HTTP/1.1
+
+Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+X-HCP-Size: 678685 Content-Length: 678900
+
+Response headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+717/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com ETag: "9c604138ffb0f308a8552a3752e5a1be" Location: /rest/quarterly_rpts/Q2_2020.ppt
+
+X-HCP-VersionId: 79885459513089 X-HCP-VersionCreateTimeMilliseconds: 1494364634616
+
+X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1... X-HCP-CustomMetadataHash: SHA-256 86212A6692A79D5B185EE63A4DA76BBC... X-HCP-Time: 1334862493 Content-Length: 0
+
+Sending object or version data with an annotation (Java)
+
+Here is the partial implementation of a Java class named WholeIO. The implementation shows the WriteToHCP method, which uses a single HTTP PUT request to store data and an annotation for an object (or version).
+
+This example assumes that the applicable imports are included in the full class implementation. public class WholeIO {
+
+.
+
+. .
+
+void WriteToHCP() throws Exception { /*
+
+Set up the PUT request to store both object data and an * annotation.
+
+This method assumes that the HTTP client has already been * initialized.
+
+/ HttpPut httpRequest = new HttpPut(sHCPURLFilePath + "?type=whole-object");
+
+// Construct the Whole I/O Sequenced Stream with the object data // and annotation. FileInputStream dataFileStream = new FileInputStream(sBaseFileName);
+
+FileInputStream customMetadataStream = new FileInputStream(sBaseFileName + ".cm");
+
+SequenceInputStream wholeIOStream = new SequenceInputStream(
+
+dataFileStream, customMetadataStream);
+
+// Point the HttpRequest to the input stream. httpRequest.setEntity(new InputStreamEntity(wholeIOStream, -1));
+
+// Put the size of the data object data into the X-HCP-Size header. httpRequest.setHeader("X-HCP-Size", String.valueOf(dataFileStream.available()));
+
+// Create the HTTP Authorization Header.
+
+httpRequest.setHeader(HCPUtils.HTTP_AUTH_HEADER, "HCP " + sEncodedUserName + ":" + sEncodedPassword);
+
+/*
+
+Now execute the PUT request.

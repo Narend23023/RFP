@@ -1,0 +1,43 @@
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/zip Content-Disposition: attachment; filename=HCPLogs-admin.hcp.example.com-n17-sp20170321-1225.zip Accept-Ranges: none Transfer-Encoding: chunked
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+405/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Retrieving the log download status
+
+Here’s a sample GET request that retrieves the log download status. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -i -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True) curl.setopt(pycurl.CUSTOMREQUEST, "GET") curl.setopt(pycurl.HTTPHEADER, ["Accept: application/xml", \ "Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/logs?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, False) curl.setopt(pycurl.SSL_VERIFYHOST, False) curl.perform() curl.close()
+
+Request headers
+
+GET /mapi/logs HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 282 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <logDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <started>true</started> <error>false</error> <content>SERVICE</content> </logDownloadStatus>
+
+Example: Canceling a log download
+
+Here’s a sample POST request that clears the log download status. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -X POST -k -i -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs?cancel"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/logs?cancel") curl.setopt(pycurl.SSL_VERIFYPEER, False) curl.setopt(pycurl.SSL_VERIFYHOST, False) curl.perform() curl.close() Request headers
+
+POST /mapi/logs?cancel HTTP/1.1

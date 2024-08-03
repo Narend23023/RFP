@@ -1,0 +1,93 @@
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to store objects in the specified bucket. An object with the specified name already exists in the specified bucket, and versioning is enabled for that bucket, but the existing object is under retention or on hold. The application tried to delete an object on labeled hold. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+Possible reasons include:
+
+The specified bucket or object does not exist.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+605/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The specified object ID is invalid or the object does not exist.
+
+409 Conflict
+
+One of these:
+
+An object with the specified name already exists in the specified bucket, and versioning is disabled for the bucket. A folder with the specified name already exists in the specified bucket.
+
+411
+
+Length Required
+
+Either the request does not include a Content-Length header, or the request includes a Content-Length header with no value.
+
+413 Request Entity Too Large
+
+The object you are trying to store is too big for the amount of remaining space in the bucket.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+The request includes the x-amz-acl header with an invalid value.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Storing an object
+
+Here is a sample PUT request that stores an object named quarterly_rpts/Q4_2019.ppt in the finance bucket. In this example, the retention value of the object is set to five days past the time when the object was stored.
+
+The example also shows the response headers HCP returns while versioning is enabled for the bucket and while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=/quarterly_rpts/Q4_2019.ppt -- -k
+
+"https://finance.europe.hcp.example.com/quarterly_rpts/Q4_2019.ppt" -H "x-hcp-retention: A+5d"
+
+Request headers
+
+PUT /quarterly_rpts/Q4_2019.ppt HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Date: Fri, 20 Jan 2017 17:19:26 +0000 Authorization: AWS bGdyZWVu:HbkRBWvyO3YQO55Bm0VS3RMatvg= Content-Length: 235813 x-hcp-retention: A+5d
+
+Response headers with versioning enabled
+
+HTTP/1.1 200 OK Date: Fri, 20 Jan 2017 17:19:26 GMT x-amz-version-id: 87288727469825 ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Content-Length: 0 Response headers with versioning disabled
+
+HTTP/1.1 200 OK Date: Fri, 20 Jan 2017 17:19:26 GMT ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Content-Length: 0
+
+Storing an object with a labeled hold
+
+Here is a sample PUT request that stores and places a labeled hold on an object named quarterly_rpts/Q4_2019.ppt in the finance bucket.
+
+The user ID, lgreen, has privileged data access permission. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=/quarterly_rpts/Q4_2019.ppt -- -v -k "https://finance.europe.hcp.example.com/quarterly_rpts/Q4_2019.ppt"

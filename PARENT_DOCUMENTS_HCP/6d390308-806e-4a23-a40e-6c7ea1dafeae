@@ -1,0 +1,55 @@
+When data recovery is complete, T2 becomes read-write on B and remains read-only on D. Replication resumes on link BD.
+
+Reenabling user accounts disabled on the replica
+
+For HCP tenants on an active/passive link, tenant-level user accounts are replicated and are available for use on the replica. If an account becomes disabled on the replica due to consecutive failed login attempts, it cannot be reenabled on the replica because the tenant is read-only.
+
+1. In the top-level menu of the Tenant Management Console for the applicable HCP tenant on the primary system, select Security > Users. 2. In the list of user accounts on the Users page, click the user account you want to modify. 3. Click Update Settings. 4. Wait for the updated account to be replicated.
+
+When the account is replicated, it becomes enabled on the replica.
+
+Setting advanced replication options
+
+To perform the activities listed, you need the service role.
+
+Changing the custom performance level
+
+At any given time, a sending system on a replication link has a performance level that’s set in accordance with a schedule or a schedule override. The performance level controls the number of replication threads that can run on each node in the system for that link. For the low, medium, and high performance levels, the numbers of threads are one, five, and ten, respectively. For the custom performance level, the default number of threads is 25, but you can change this number.
+
+The performance level is a maximum. On any given node, fewer threads can be running than the number indicated by the performance level. If a system is sending data on more than one link, the maximum number of threads per node on that system is the total allowed by all those links.
+
+The number of threads for the custom performance level is a systemwide setting that applies to all links in which the system participates.
+
+To perform the activities in this procedure, you need the service role. If a sending system is already using the custom performance level when you change the number of threads, you need to suspend and resume the link for the change to take effect.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+379/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+1. In the top-level menu of the HCP System Management Console, select Configuration > Miscellaneous. 2. In the Replication Threads for Custom Performance Level field, type the new number of threads for the custom performance level.
+
+Valid values are integers in the range one through 25. 3. Click Update Settings.
+
+Changing the broken-link reporting interval
+
+HCP supports the use of SNMP for reporting certain events and conditions. When this capability is enabled, HCP reports broken links on a periodic basis. That is, while a link is broken, HCP sends an SNMP notification about the broken link every n minutes. By default, n equals 60. You can change this value.
+
+1. In the top-level menu of the HCP System Management Console, select Configuration > Miscellaneous. 2. In the SNMP Broken-link Reporting Interval field, type the number of minutes you want HCP to wait between SNMP notifications about broken links. Valid values are integers greater than or equal to one.
+
+3. Click Update Settings. HCP Management API Reference
+
+Introduction to the HCP management API
+
+The Hitachi Content Platform (HCP) management API is a RESTful HTTP interface to a subset of the administrative functions of an HCP system. Using this API, you can manage tenants, namespaces, retention classes, content classes, and tenant-level user and group accounts (HCP tenants only).
+
+Each entity you can manage is referred to as a resource. Each resource has properties that provide information about it. Note:
+
+Most of the examples in this book use cURL and Python with PycURL, a Python interface that uses the libcurl library. cURL and PycURL are both freely available open- source software. You can download them from http://curl.haxx.se. In version 7.12.1 of PycURL, the PUT method was deprecated and replaced with UPLOAD. The Python examples in this book show UPLOAD but work equally well with PUT.
+
+What you can do with the management API
+
+The HCP management API lets you work with tenants, namespaces, retention classes, content classes, and tenant-level user and group accounts. For tenants, you can:

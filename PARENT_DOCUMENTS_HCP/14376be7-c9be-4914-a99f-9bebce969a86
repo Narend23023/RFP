@@ -1,0 +1,73 @@
+Criteria that query for a range of values for a single property can have either of these formats:
+
+For a range that includes the start and end values: property:[start-valueTOend-value]
+
+In this format, the square brackets are required.
+
+For example, this query expression finds objects that were ingested from 0800 through 0900 UTC on March 1, 2012, inclusive:
+
+ingestTimeString:[2012-03-01T08:00:00-0000 TO 2012-03-01T09:00:00-0000]
+
+For a range that does not include the start or end values: property:{start-valueTOend-value}
+
+In this format, the curly braces are required.
+
+For example, this query expression finds objects that have names that occur alphabetically between Brown_Lee.xls and Green_Chris.xls, exclusive of those values: utf8Name:{Brown_Lee.xls TO Green_Chris.xls}
+
+Note: utf8Name property values are case sensitive and are ordered according to the positions of characters in the UTF-8 character table.
+
+You can mix square brackets and curly braces in an expression. For example, this query expression finds objects that were ingested from 0800 to 0900 UTC on March 1, 2012,
+
+including objects that were ingested at 0800 but excluding objects that were ingested at 0900:
+
+ingestTimeString:[2012-03-01T08:00:00-0000 TO 2012-03-01T09:00:00-0000}
+
+When querying for a range of property values, you can precede the whole criterion with a Boolean operator but you cannot precede an individual value with a Boolean operator. For
+
+example, the query expression on the first line below is valid; the criterion on the second line is not:
+
+Valid: +retentionString:[2013-07-01T00:00:00 TO 2013-07-31T00:00:00] Invalid: retentionString:[+2013-07-01T00:00:00 TO 2013-07-31T00:00:00] When querying for a range of values, you can replace a value with an asterisk (*) to specify an unlimited range. For example, this query expression finds objects with a size equal to or greater than two thousand bytes:
+
+size:[2000 TO *]
+
+This query expression finds objects with change times before 9:00 AM, March 1, 2012 in the local time zone of the HCP system:
+
+changeTimeString:[* TO 2012-03-01T09:00:00] Wildcard characters
+
+You can use the question mark (?) and asterisk (*) wildcard characters when specifying values for these object properties:
+
+customMetadataContent
+
+hash
+
+hashScheme retentionClass
+
+objectPath utf8Name
+
+Content properties
+
+For example, this criterion finds objects assigned to any retention class starting with HlthReg, such as HlthReg-107 or HlthReg-224: retentionClass:HlthReg*
+
+Query expression considerations
+
+The metadata query engine interprets query expressions as follows:
+
+If the query expression consists of a single criterion without a Boolean operator, objects in the result set must meet the criterion. For example, this query expression finds objects with custom metadata that contains the string accounting: customMetadataContent:accounting
+
+The expression above is equivalent to this expression that uses the plus sign (+):
+
++customMetadataContent:accounting
+
+If a query expression consists of multiple criteria without Boolean operators, objects in the result set must meet at least one of the criteria. For example, this query expression finds objects that have a retention setting of Deletion Allowed or are on hold or will be shredded on deletion:
+
+retention:0 hold:true shred:true
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+903/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The greater the number of criteria an object meets, the higher the object is in the default sort order. For example, with this query expression, objects that match all three criteria are sorted higher than those that match only two, and those that match only two are sorted higher than those that match only one:

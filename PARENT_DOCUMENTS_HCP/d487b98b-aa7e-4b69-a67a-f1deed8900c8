@@ -1,0 +1,89 @@
+The following considerations apply to specifying URLs in REST API requests against a namespace. URL length
+
+For all HTTP methods except POST, the portion of a URL after rest, excluding any appended parameters, is limited to 4,095 bytes. If a REST API request includes a URL that violates that limit, HCP returns an HTTP 414 (Request URI Too Large) error code.
+
+URL character case
+
+All elements of a URL except http, https, and the hostname are case sensitive.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+712/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object names with non-ASCII, nonprintable characters
+
+When you store an object or directory with non-ASCII, nonprintable characters in its name, those characters are percent-encoded in the name displayed back to you.
+
+Regardless of how the name is displayed, the object or directory is stored with its original name, and you can access it either by its original name or by the name with the percent- encoded characters. Percent-encoding for special characters
+
+Some characters have special meaning when used in a URL and may be interpreted incorrectly when used for other purposes. To avoid ambiguity, percent-encode the special characters listed in the table below.
+
+Percent-encoded values are not case sensitive.
+
+Character Percent-encoded values
+
+Space
+
+%20
+
+Tab
+
+%09
+
+New line
+
+%0A
+
+Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C Quotation marks with URLs in command lines
+
+When using a command-line tool to access the namespace through the REST API, you work in a Unix, Mac OS® X, or Windows shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters also often indicates that a process should be put in the background.
+
+To avoid the possibility of the Unix, Mac OS X, or Windows shell misinterpreting special characters in a URL, always enclose the entire URL in double quotation marks.
+
+Authenticating namespace access
+
+If a namespace requires authenticated client access, you need to pass a username and password in every REST API request. If a namespace does not require authenticated client access, you can optionally pass a username and password in a REST API request or you can omit them to access the namespace anonymously. Note: If the namespace you are trying to access is configured to support Active Directory (AD) single sign-on, anonymous access requests to that namespace or objects in that namespace will fail.
+
+To access the namespace as an authenticated user, you need a user account that’s defined in HCP. If HCP is configured to support Active Directory® (AD), applications can also use an AD user account that HCP recognizes to access a namespace through the REST API.
+
+HCP also accepts AD authentication provided through the SPNEGO protocol or through the AD authentication header. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.
+
+If you specify a username in a REST API request, that username must identify a user account that has the permissions needed to perform the requested operation.
+
+Regardless of whether the namespace requires client authentication, if you provide credentials in a REST API request, they must be valid. If you provide invalid credentials, HCP responds with an HTTP 403 (Forbidden) error code.
+
+To provide credentials in a REST API request, you specify an authentication token in an HTTP Authorization request header.
+
+HCP also accepts credentials provided in an hcp-ns-auth cookie. However, this method of providing credentials is being deprecated and should not be used in new applications. If you use both an Authorization header and an hcp-ns-auth cookie, HCP uses the header for authentication and ignores the cookie. HCP authentication through the REST API
+
+To authenticate with HCP through the REST API, construct an authentication token from a system-level user account or a tenant-level user account, and then submit it using a request header with all requests. Successful authentication requires encoding your account information. Authentication token

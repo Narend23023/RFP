@@ -1,0 +1,101 @@
+Name
+
+The link name.
+
+HCP System, HCP System
+
+The HCP systems involved in the link.
+
+Status
+
+The last known status of the link. This status indicates the general health of the link. If the link is not directly connected to the current HCP system, the link status may be out of date. The link status can be: Healthy
+
+The status displayed when the specific status of the link is one of these:
+
+Synchronizing data Scheduled off period
+
+Not replicating
+
+The status displayed when the specific status of the link is one of these:
+
+Suspended by user Remote storage full, link suspended Local storage full, link suspended Failed over
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+358/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Unhealthy
+
+The status displayed when the specific status of the link is one of these:
+
+High error rate Stalled link Unrecognized link Broken link
+
+Unknown
+
+HCP cannot determine the specific status of the link.
+
+Alerts
+
+If issues exist with the link, one or both of these icons:
+
+This icon is displayed while replication is paused for one or more tenants on the link.
+
+This icon is displayed under these conditions:
+
+One or more tenants added to the erasure coding topology have not been added to the link. HCP does not report this condition for a tenant until ten minutes after the tenant was added to the topology.
+
+This condition is reported only on the systems involved in the link.
+
+HCP cannot find the link.
+
+This condition is reported only on the system where HCP cannot find the link. A link that cannot be found on one of the systems involved in the link is typically reported as broken on the other system involved in the link.
+
+To view text describing the condition that's causing the alert, hover over the alert icon.
+
+Monitoring replication You can monitor the status of each currently configured replication link, as well as replication and recovery activity on the link, in the HCP System Management Console for either system involved in the link. By periodically reviewing link activity, you can decide whether to change the replication rate in the link configuration to accommodate other loads on system performance. You can also determine whether you need to add more storage capacity to either system.
+
+Under normal circumstances, the Replication service works without any intervention required. System Management Console alerts inform you of conditions, such as network connection problems, that may require action on your part to allow the service to continue processing.
+
+For HCP tenants, you can control whether information about replication activity is displayed in the Tenant Management Console. For the default tenant, this information is always displayed. This section of the Help describes the information available to you for the links you’ve created.
+
+To monitor replication, you need the monitor or administrator role.
+
+You can also use the HCP management API to monitor replication links.
+
+Understanding the replication link list
+
+The replication Links page in the HCP System Management Console lists the currently defined replication links in which the current system participates. To display this page, in the top-level menu of the HCP System Management Console, select Services > Replication.
+
+For each listed link, the replication Links page shows: Name
+
+The link name.
+
+Type
+
+The link type. The link type can be Active/Active, Outbound, or Inbound.
+
+If the link is part of an erasure coding topology, the link type is followed by this icon: Status
+
+The link status, represented by an icon and text. The icon indicates the general health of the link. The text specifies the status of the link. The possible icons are:
+
+The link is healthy. The statuses that can accompany this icon are:
+
+Synchronizing data
+
+On either system for an active/active link, the local system is sending data to the other system involved in the link.
+
+Sending data
+
+On the primary system for an active/passive link during replication, the primary system is sending data to the replica.
+
+Receiving data
+
+On the replica for an active/passive link during replication, the primary system is sending data to the replica.
+
+The link is healthy, but normal replication is not occurring on the link. The statuses that can accompany this icon are:
+
+Recovering data

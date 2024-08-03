@@ -1,0 +1,41 @@
+Replication and Active Directory authentication
+
+An HCP system can be configured to support Windows® Active Directory® (AD) for user authentication. Part of this configuration is the specification of an AD domain. The domain determines the AD groups from which HCP group accounts can be created.
+
+If HCP is configured to support AD, HCP tenants can be configured to allow access by users authenticated by AD. For this access to work, the AD user must belong to one or more AD groups for which corresponding group accounts are defined for the tenant.
+
+For the same AD users to be able to access a given tenant on both systems involved in a replication link, the group accounts on each system must correspond to the same AD groups as they do on the other system. To make this happen, support for AD must be enabled on both systems, and either of these must be true: The same domain is specified in the AD configuration on both systems. The domain specified in the AD configuration on one system is trusted by the domain specified in the AD configuration on the other system.
+
+Similarly, for the same AD users to be able to access the default namespace on two systems involved in a replication link, the system-level group accounts on each system must correspond to the same AD groups as they do on the other system. Replication and RADIUS authentication
+
+An HCP system can be configured to support RADIUS for user authentication. If HCP is configured this way, HCP tenants can be configured to allow access by RADIUS- authenticated users. Also, if HCP is configured this way, RADIUS-authenticated users with system-level user accounts can access the default namespace.
+
+For the same RADIUS-authenticated users to have access to both systems involved in a replication link, the HCP RADIUS configuration on the two systems must specify the same RADIUS servers. Replication topologies
+
+An HCP system can have up to five outbound links and up to 20 inbound links. An active/active link counts as both an outbound link and an inbound link. The ability for a single system to participate in multiple links enables HCP to support various replication topologies.
+
+Replication can occur:
+
+In two directions on a single link between two HCP systems (active/active replication) In one direction on a single link between two HCP systems (active/passive replication) From multiple HCP systems to a single HCP system (many-to-one replication) From one HCP system to a second HCP system and from that second system to a third HCP system, such that the same HCP tenants and namespaces and default- namespace directories that are replicated to the second system are then replicated to the third system (chained replication) From one HCP system to multiple other HCP systems (one-to-many replication) These configurations can be combined to form complex replication topologies.
+
+Note: A replication topology can include one or more HCP systems where the occurrences of a given namespace can contain metadata-only objects. If the service plan associated with the namespace does not include a metadata-only storage tier on only one system in the topology and the topology is being used for production purposes, the topology should include a disaster recovery system where the service plan associated with the namespace also does not include a metadata-only storage tier. Simple active/active replication
+
+In an simple active/active replication topology, two HCP systems replicate the same HCP tenants and namespaces and default-namespace directories to each other over an active/active link. The items being replicated can be created originally on either system. The items are read-write on the system in which they were created and, after being
+
+replicated, are also read-write on the other system.
+
+With active/active replication, client requests can be directed to either system. All changes made on each system, including both configuration changes and changes to namespace
+
+content, are replicated to the other system.
+
+What this looks like
+
+The following figure shows a simple active/active replication topology in which two HCP systems (A and B) are replicating to each other.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+323/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this figure:

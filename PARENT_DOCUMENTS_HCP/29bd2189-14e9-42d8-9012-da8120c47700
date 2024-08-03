@@ -1,0 +1,109 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+530/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+and no group accounts have the security role.
+
+For a tenant-level request, the HCP management API is not enabled for the tenant. Use the Tenant Management Console for the applicable tenant to enable the API.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+404 Not Found
+
+All
+
+The resource identified by the URL does not exist.
+
+405
+
+Method Not Allowed
+
+The requested operation is not valid for the resource identified by the URL.
+
+PUT
+
+POST
+
+DELETE
+
+409
+
+Conflict
+
+PUT
+
+For a PUT request, HCP could not create the resource because it already exists.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+414 Request URI Too Large
+
+All
+
+The portion of the URL following rest is longer than 4,095 bytes.
+
+415
+
+Unsupported Media Type
+
+All
+
+Either the management API does not support the Internet media type specified by the Co ntent-Type or Accept header, or the request includes a request body but no Content- Type header.
+
+500 Internal Server Error
+
+All
+
+An internal error occurred. If this happens repeatedly, contact your authorized HCP service provider for help.
+
+503
+
+Service Unavailable
+
+All
+
+HCP is temporarily unable to handle the request. Possible reasons include:
+
+HCP is currently unavailable due to system overload, maintenance, or upgrade. Try the request again in a little while. The HCP system is currently being upgraded.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header. Sample Java application
+
+This section of the Help contains a sample Java® application that uses the HCP management API to define various resources in an HCP system. It also shows the content of the JSON files that serve as input to the application.
+
+What the application does
+
+The sample Java application shown in this appendix uses the HCP management API to:
+
+1. Give the initial tenant-level user account the administrator role 2. Create a tenant-level user account with the monitor and compliance roles 3. Configure the Tenant Management Console 4. Enable syslog logging for the tenant and system-level administrative access to the tenant 5. Create two namespaces 6. Enable disposition for one of the namespaces 7. Configure the REST API for both namespaces 8. Create a tenant-level user account with no roles 9. Grant data access permissions to the user account with no roles
+
+10. Create one retention class Assumptions
+
+The sample Java application assumes:
+
+That the system against which you’re running the application is named hcp-ma.example.com The existence of a system-level HCP user account with the username rsilver and the password p4ssw0rd That all input files are located in the /home/rsilver/MAPI directory The existence of a service plan named Short-Term-Activity That HCP is configured to support Active Directory The existence of another HCP system named hcp-ca.example.com That the system against which you’re running the application and the system named hcp-ca.example.com have exchanged replication SSL server certificates with each other
+
+If you want to run the sample application, you may need to modify the sample input JSON files to conform to your HCP system.
+
+Required libraries
+
+To run the sample application presented in this appendix, you need to have these Java libraries installed: HttpClient 4.0 (httpclient-4.0.jar) HttpCore 4.0 (httpcore-4.0.1.jar) Commons Logging 1.1 (commons-logging-1.1.jar)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+531/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

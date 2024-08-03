@@ -1,0 +1,101 @@
+erasure coding. S Series Nodes also use several internal processes to continuously check the integrity of the stored data and the storage media.
+
+You can use S Series Nodes as an alternative to primary running storage or as a tiering platform. This is configurable. HCP uses the S Series Node S3 compatible API to write,
+
+retrieve, and otherwise manage objects in an S Series Node. A single HCP system can seamlessly write data across multiple S Series Nodes, thereby enabling scalability in both capacity and performance.
+
+Additionally, for tiering purposes, HCP can use extended storage. Extended storage is storage that's managed entirely outside of the HCP system.
+
+Each node has its own set of logical volumes. Logical volumes on storage managed by HCP are local storage volumes. Logical volumes can also be NFS volumes (also called
+
+external volumes). These are volumes that are stored on extended storage and are accessed using NFS mount points. General nodes
+
+General nodes are the core components of an HCP system. These nodes manage the objects that reside in HCP system storage. To ensure data integrity and continuous availability
+
+in case of a hardware or software failure, HCP uses RAID technology for its primary storage and can also be configured to store the data and metadata for each object in multiple locations.
+
+Each storage node runs all the HCP software. The nodes work together to serve both as a repository manager and as a gateway that enables access to the data in the repository.
+
+All runtime operations are distributed among the storage nodes, thereby ensuring reliability and performance as capacity grows. If a node fails, the HCP system adapts by redirecting
+
+processing to other nodes, so the stored data remains available to users. Linear scalability
+
+A repository can accumulate a great deal of data over time. To accommodate more data, you can add nodes and storage to HCP. HCP capacity can grow smoothly from hundreds of
+
+gigabytes to terabytes to petabytes.
+
+Because HCP uses a distributed processing scheme, primary storage in the HCP system can scale linearly as the repository grows in size and in the number of clients that have
+
+access to it. When you install HCP on new nodes, the system automatically integrates those nodes into the overall workflow, without manual intervention. HCP architecture
+
+HCP hardware consists of:
+
+Servers
+
+Internal and/or SAN storage
+
+Networking components such as cables and switches Additional infrastructure items such as racks and power distribution units
+
+HCP uses back-end, front-end and optionally management networks, if the HCP hardware is configured to support it. The isolated back-end network connects the HCP nodes to
+
+each other through two redundant back-end Ethernet switches. Each node has a pair of bonded Ethernet ports that are used to connect the node to these switches.
+
+Each storage node is configured with an additional pair of bonded Ethernet ports that allows external applications to access the system. The recommended configuration options
+
+are:
+
+Two independent Ethernet switches that connect the ports to the front-end network
+
+One Ethernet switch, with both HCP and the switch configured for active-active bonding
+
+For VM systems, this hardware configuration applies to the physical environment in which HCP VM runs.
+
+HCP with internal storage system architecture https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+5/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The following figure shows the architecture of an HCP system that uses internal storage. This system has four storage nodes, two back-end switches (on the left), and two front-end
+
+switches (on the right).
+
+The table below describes the cables in this figure. Cable
+
+Connects from
+
+Connects to
+
+Red and blue Ethernet
+
+Back-end NICs in each node
+
+Back-end switches
+
+Green and yellow Ethernet
+
+Front-end NICs in each node
+
+Front-end switches
+
+Purple Ethernet
+
+Back-end switches
+
+Each other
+
+Black power
+
+Each node
+
+Two PDUs
+
+Each back-end switch
+
+One PDU
+
+HCP with SAN-attached storage system architecture
+
+The following figure shows the architecture of an HCP system that uses a Fibre Channel SAN storage system. This system has four storage nodes, two modular storage trays, two

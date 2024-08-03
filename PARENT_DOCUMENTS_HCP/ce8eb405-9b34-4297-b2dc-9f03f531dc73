@@ -1,0 +1,81 @@
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an
+
+object, copying an object, and retrieving an object. Last-Modified
+
+Specifies the date and time when the object or object version was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format:
+
+DDD, dd MMM yyyy HH:mm:ss GMT For example:
+
+Tue, 17 Feb 2017 19:46:03 GMT
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+x-amz-meta-
+
+For objects and object versions only, specifies a custom metadata property/value pair. The response headers include one x-amz-meta- header for each applicable pair.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+627/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+x-amz-missing-meta
+
+For objects and object versions only, indicates that the .metapairs annotation for the object or object version does not contain valid XML, that the first line in the annotation does not begin with the metapairs element. This header is returned only when applicable. The value is always 1 (one). x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+x-hcp-labelretentionhold
+
+Specifies whether the object is on labeled hold. Either true or false is returned.
+
+For a user without privileged data access permission, the response header returns true or false indicating whether there are one or more labeled holds. For a user with privileged data access permission:
+
+If the response header returns true, an additional header, x-hcp-labelretentionhold-labels, is returned. If the response header returns false, the x-hcp-labelretentionhold-labels header is not returned.
+
+x-hcp-labelretentionhold-labels
+
+If the object is on labeled hold (x-hcp-labelretentionhold:true) and the user has privileged data access and read permission on the bucket, this header is returned with a JSON format string specifying all labeled holds. Example
+
+x-hcp-labelretentionhold-labels: [{"id":"UniqueLabelHold-1","hold": true}, [{"id":"UniqueLabelHold-2","hold": true },[{"id":"UniqueLabelHold-3","hold": true }]
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body. COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements.
+
+Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date
+
+Specify the date and time until which an object must be retained. The date and time must be in YYYY-MM-DDTHH:MM:SSZ format, where YYYY represents the year, MM represents the month, DD represents the day, T represents the time separator, HH represents the hour in 24-hour format, MM represents the minute, SS represents the second and Z represents the time zone. Example x-amz-object-lock-retain-until-date: 2023-03-30T00:00:00Z
+
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot overwrite or delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example

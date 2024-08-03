@@ -1,0 +1,71 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+263/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Viewing the complete tenant event log
+
+The All Events panel on the Tenant Events page lists all messages recorded for the tenant and its namespaces. By default, the panel displays ten messages at a time in reverse chronological order. Another way to manage the list of events displayed for the tenant is by using the Search option on the Tenant Events page. This option allows you to view All Events, Security Events, and Compliance Events based on a user-specified date range, event ID, or node.
+
+To view the tenant All Events panel, you need the monitor, administrator, security, or compliance role. However, only users with the compliance role can see messages about events that require the compliance role. Only users with the security role can see messages about attempts to log into the Tenant Management Console with an invalid username.
+
+1. In the top-level menu of the Tenant Management Console, select Monitoring > Tenant Events. 2. On the left side of the Tenant Events page, click All Events.
+
+Viewing the tenant security log The Security Events panel on the Tenant Events page lists all messages about attempts to log into the Tenant Management Console with an invalid username. By default, the panel displays ten messages at a time in reverse chronological order.
+
+To view the tenant Security Events panel, you need the security role.
+
+1. In the top-level menu of the Tenant Management Console, select Monitoring > Tenant Events. 2. On the left side of the Tenant Events page, click Security Events.
+
+Viewing the tenant compliance log
+
+The Compliance Events panel on the Tenant Events page lists all messages about events that require the compliance role across all the tenant's namespaces. This includes all retention class activity and privileged delete operations. By default, the panel displays ten messages at a time in reverse chronological order.
+
+To view the tenant Compliance Events panel, you need the compliance role. 1. In the top-level menu of the Tenant Management Console, select Monitoring > Tenant Events. 2. On the left side of the Tenant Events page, click Compliance Events.
+
+Understanding log messages
+
+Each message displayed in a view of the tenant log includes this information about an event: The username of the event initiator:
+
+For user-initiated events, this is the username currently associated with the user account used by the user who initiated the event. These considerations apply:
+
+For an HCP user account, if the account has been deleted, the username is followed by the letter D in parentheses. For an AD user account, if the account has been deleted or if HCP currently cannot contact AD, the username for the message is blank.
+
+For system-initiated events, the username is [internal]. For events initiated by HCP service or support personnel by means other than the Tenant Management Console, the username is [service].
+
+Additionally, when the tenant is being replicated, messages for events initiated by a user who accessed the Tenant Management Console directly from the HCP System Management Console have a username of [remote admin] in the log messages on systems to which the tenant is replicated.
+
+The severity of the event. Possible values are: Notice
+
+The event is normal and requires no special action. Events of this severity are informational only. Examples are:
+
+Namespace created
+
+Privileged delete requested
+
+Warning
+
+The event is out of the ordinary and may require manual intervention. Examples are:
+
+Namespace over soft quota User account failed login Error
+
+The event is serious and most likely requires manual intervention. Examples are:
+
+HCP found an irreparable object Object did not replicate
+
+The date and time at which the event occurred, shown in the time zone of the HCP system.
+
+A short description of the event.
+
+To view more details about an event, click anywhere in the row containing the event message. To hide the details, click again in the row.
+
+The details displayed for an event are:
+
+The user ID of the event initiator For user-initiated events, the port through which HCP received the event request For user initiated events, the IP address from which the event request was sent The message ID The full text of the event message
+
+Managing the message list
+
+You can take the following actions in any of the views of the tenant log:

@@ -1,0 +1,57 @@
+attempts to correct it. Time
+
+The time of the most recent change to the service status, shown for the time zone that’s used for the HCP system time. The service was enforced until the specified time. For
+
+example, if the Protection service finishes at 10:00 PM on March 9, 2011 and the status of the service is Completed, the Time column displays:
+
+10:00 PM 03/09/2011
+
+The only exception to this is while a service is waiting for its first run. During this time, the Time column shows the current time. Major events
+
+The Major Events section on the Overview page lists log messages, reasons for the message, and suggested actions about major events that have occurred since the HCP system
+
+was installed (for example, the addition or failure of a node). The list of messages in this section is a subset of the messages in the HCP system log. You can view all the messages in the system log in the All Events panel on the System Events page.
+
+By default, the messages in the Major Events section are listed ten at a time in reverse chronological order. System graphs
+
+The System section on the Overview page contains two graphs: Objects and Ingested Volume. It also indicates the system type and the location of the storage volumes.
+
+In an External SAN HCP system, the data volumes reside on the SAN storage attached to the HCP system. The system metadata in this type of system is located on internal drives. However, the storage information in the graph includes only the storage on the external SAN. If there are any HCP S Series Nodes attached to this system, storage graphs display them as HCP S Series Nodes.
+
+In an Internal HCP system, the data and metadata reside on internal drives, without an external SAN storage. It can also be an HCP S Series Node attached to this system indicated
+
+by HCP S Series Node storage graphs in the display.
+
+A VM appear as an Internal HCP system on this page. The storage is virtualized through ESXi or KVM. To identify where each logical volume of the HCP system resides and for
+
+more information, see the documentation of the respective virtualization solution provider.
+
+Objects graph
+
+The Objects graph shows the total number of objects that were stored in the repository during the past 30 days (or since HCP was installed if that was less than 30 days ago). The
+
+number shown reflects the number of objects stored in all namespaces.
+
+Each version of an object counts as a separate object. However, the object count does not include object versions that are delete markers or delete records. When you delete an object from a versioning-enabled namespace, a delete marker is created to indicate that the object has been deleted. A delete marker has a version ID but does not have any data or metadata. For more information on delete markers and delete records please see the Enabling delete markers section in Versioning.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+26/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Each multipart object counts as a single object. Objects that are in the process of being created by multipart uploads are not included in the object count.
+
+While either of the two search facilities is selected for use with the Search Console, the Objects graph also shows the total number of indexed objects in the repository during the past 30 days. For any point in time for which the indexed object count is shown, the count reflects the index maintained by the search facility that was selected for the Search Console at that time.
+
+The x-axis in the Objects graph marks the passage of time. The y-axis measures the number of objects. As the number of objects increases, the intervals on the y-axis get larger.
+
+The graph heading indicates the current measurement unit (for example, thousands or millions).
+
+To see the number of objects in the repository at a given point in time, hover over the top edge of the colored portion of the graph at the time you want. Ingested Volume graph
+
+The Ingested Volume graph shows the total size of the ingested data and custom metadata during the past 30 days (or since HCP was installed if that was less than 30 days ago).
+
+This value is the total size of the data and custom metadata before they were added to the repository. The value tells you how much data and custom metadata has been stored, not the amount of storage used.

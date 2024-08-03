@@ -1,0 +1,161 @@
+Properties
+
+The table below describes the properties included in the contactInfo data type. All of these properties are optional. The property values can contain any valid UTF-8 characters, including white space. Property name
+
+Data type
+
+Description
+
+Notes
+
+address1
+
+String
+
+Specifies the first line of an address for the tenant contact
+
+address2
+
+String
+
+Specifies the second line of an address for the tenant contact
+
+city
+
+String
+
+Specifies the city for the tenant contact
+
+countryOrRegion
+
+String
+
+Specifies the country for the tenant contact emailAddress
+
+String
+
+Specifies a valid email address for the tenant contact
+
+extension
+
+String
+
+Specifies a telephone number extension for the tenant contact
+
+firstName
+
+String
+
+Specifies the first name of the tenant contact
+
+lastName
+
+String
+
+Specifies the last name of the tenant contact
+
+primaryPhone String
+
+Specifies a telephone number for the tenant contact
+
+Do not include a telephone number extension. Use the extension property for that.
+
+state
+
+String
+
+Specifies the state or province for the tenant contact
+
+zipOrPostalCode
+
+String
+
+Specifies the postal code for the tenant contact Example
+
+Here’s an XML example of the contactInfo data type:
+
+<contactinfo> <address1>Exmple Co., Finance Dept.</address1> <address2>10 Main St.</address2> <city>Anytown</city> <countryOrRegion>USA</countryOrRegion> <emailAddress>lgreen@example.com</emailAddress> <extension>123</extension> <firstName>Lee</firstName> <lastName>Green</lastName> <zipOrPostalCode>12345</zipOrPostalCode> <primaryPhone>555-555-5555</primaryPhone> <state>MA</state> </contactinfo>
+
+content
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+455/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The content data type describes the content, localCandidates, and remoteCandidates resources for replication links.
+
+content data type properties
+
+The following table describes the properties included in the content data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+defaultNamespace
+
+List
+
+Lists the default-namespace directories that are candidates for or included in the replication link, as applicable.
+
+This property is returned by a GET request only if the default tenant exists.
+
+Directories
+
+The listed directories are identified by directory name.
+
+In XML, the element that identifies each directory is name. In JSON, the name in the name/value pair that lists the directories is name. chainedLinks
+
+List
+
+For an active/passive link, lists the chained links that are candidates for or included in the replication link, as applicable.
+
+This property is not returned by any GET request for the candidates for or content of an active/active link.
+
+The listed chained links are identified by link name.
+
+In XML, the element that identifies each chained link is name. In JSON, the
+
+name in the name/value pair that lists the chained links is name. tenants
+
+List
+
+Lists the HCP tenants that are candidates for or included in the
+
+replication link, as applicable.
+
+The listed tenants are identified by tenant name.
+
+In XML, the element that identifies each tenant is name. In JSON, the name in the name/value pair that lists the tenants is name.
+
+Example
+
+Here’s an XML example of the content data type:
+
+<content> <defaultNamespaceDirectories> <name>brochures_2017</name> </defaultNamespaceDirectories> <chainedLinks/> <tenants> <name>Finance</name> <name>HR</name> <name>Sales-Mktg</name> </tenants> </content> contentClass
+
+The contentClass data type describes the contentClasses resource for tenants.
+
+Properties
+
+The table below describes the properties included in the contentClass data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+contentProperties
+
+content
+
+Specifies the set of content properties in the content class.

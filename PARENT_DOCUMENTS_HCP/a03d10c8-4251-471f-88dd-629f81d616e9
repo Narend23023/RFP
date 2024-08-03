@@ -1,0 +1,113 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <multipartUploadAutoAbortDays>30</multipartUploadAutoAbortDays> <name>Accounts-Receivable</name> <optimizedFor>CLOUD</optimizedFor> <owner>pblack</owner> <ownerType>LOCAL</ownerType> <readFromReplica>true</readFromReplica> <replicationEnabled>true</replicationEnabled> <replicationTimestamp>2017-02-27T06:45:52-0500</replicationTimestamp> <searchEnabled>true</searchEnabled> <servicePlan>Short-Term-Activity</servicePlan> <serviceRemoteSystemRequests>true</serviceRemoteSystemRequests> <softQuota>75</softQuota> <s3UnversionedOverwrite>false</s3UnversionedOverwrite> <tags>
+
+<tag>Billing</tag> <tag>lgreen</tag> </tags> <id>0e774b8d-8936-4df4-a352-b68766b5c287</id> <authAndAnonymousMinimumPermissions> <permission>BROWSE</permission> <permission>READ</permission> </authAndAnonymousMinimumPermissions> </namespace> namespaceDefaults
+
+The namespaceDefaults data type describes the namespaceDefaults resource.
+
+Properties
+
+The table below describes the properties included in the namespaceDefaults data type.
+
+Property
+
+Date Type
+
+Description
+
+Notes
+
+allowErasureCoding
+
+Boolean
+
+Specifies the default setting for whether new namespaces allow erasure coding. Valid values are:
+
+This property is valid on a POST request only if the tenant for which you’re specifying namespace defaults is allowed
+
+to manage erasure coding for its namespaces. true
+
+false
+
+The namespace allows erasure coding.
+
+The namespace does not allow erasure coding.
+
+You can set the value of this property to true on a POST request only if cloud optimization is already set as the default for new namespaces or if the optimizedFor property is set to true in the same request.
+
+The default is false.
+
+This property is returned by a GET request only if the tenant for which you’re specifying namespace defaults is allowed to manage erasure coding for its namespaces. description
+
+String
+
+Specifies the default description for new HCP namespaces. This description is optional. The default is no description.
+
+To remove a description from the namespace defaults,
+
+specify the description property with no value.
+
+directoryUsage
+
+String
+
+Specifies whether new cloud-optimized namespaces are balanced/unbalanced by default. Valid values are: Balanced
+
+The directory usage is configured for balanced mode. A well distributed directory structure is required to avoid hot spotting and ensure optimal
+
+performance.
+
+Unbalanced
+
+The directory usage is configured for unbalanced mode. Optimal performance is not dependent upon a directory structure. Default
+
+The directory usage setting for the namespace is determined by the system-level setting for this property.
+
+The default value is Default. The values are not case sensitive.
+
+dpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan function.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+486/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Date Type
+
+Description
+
+Notes
+
+This property is ignored on a POST request. In response to a GET request, the value of this property is always Dyn amic. effectiveDpl
+
+String
+
+Deprecated. Namespace DPL is now a service plan function.
+
+This property is not valid on a POST request and is returned only by a verbose GET request. In response to a verbose GET request, the value of this property is always Dynamic.
+
+enterpriseMode
+
+Boolean
+
+Specifies the default retention mode for new HCP namespaces. Valid values are: true
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode, these activities are not allowed.
+
+The namespace is in enterprise mode.
+
+false
+
+The namespace is in compliance mode.
+
+The default is true.

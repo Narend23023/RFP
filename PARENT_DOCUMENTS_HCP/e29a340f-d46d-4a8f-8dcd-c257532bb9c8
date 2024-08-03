@@ -1,0 +1,123 @@
+The count request entry is smaller than the number of objects or operation records that meet the query criteria. For object-based queries, the count request entry is not specified and more than one hundred objects meet the query criteria. For operation-based queries, the count request entry is not specified and more than ten thousand operation records meet the query criteria. The response is incomplete due to an error encountered in executing the query.
+
+You can retrieve additional results by resubmitting the request with an offset entry (for object-based queries) or a lastResult entry (for operation-based queries). message
+
+Always an empty string.
+
+results
+
+The number of results returned.
+
+totalResults
+
+For object-based queries, the total number of indexed objects that meet the query criteria. This property is not returned for operation-based queries.
+
+contentProperties entry
+
+If the request included a contentProperties entry with a value of true, the result has a contentProperties entry containing zero or more contentProperty entries. Each conte ntProperty entry contains the entries listed below. expression
+
+The expression that specifies how HCP locates the property value in the custom metadata XML.
+
+format
+
+The pattern used to parse a number or date value in the XML custom metadata. For example, the format used for dollar values for a content property with a type of float
+
+might be $#,##0.00. This entry is included for integer, float, and date types only.
+
+multivalued
+
+An indication of whether the property can have multiple values. name
+
+The content property name.
+
+type
+
+The content property data type. One of:
+
+BOOLEAN DATE
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+858/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+FLOAT
+
+INTEGER TOKENIZED (full-text searchable string) STRING
+
+facets entry
+
+The facets response entry has one or more child facet entries, as described below.
+
+facet
+
+Child of the facets entry. This entry contains the property property and one or more frequency entries.
+
+property
+
+(property)
+
+Property of the facet entry. The value for this property is one of: hold
+
+namespace retention
+
+retentionClass content-property-name
+
+frequency
+
+(child) Child of the facet entry. This entry contains the count and value properties. This entry is returned only for property values that appear in the result set. frequency entries are listed in descending order based on the value of the count property. A query response can contain a maximum of one hundred frequency entries. count
+
+(property) The number of objects in the result set with the property value identified by the value property.
+
+value
+
+(property)
+
+An object property value that applies to one or more objects in the result set. The value of this property depends on the property value of the parent facet entry. When the value of the parent facet entry property property is:
+
+hold, this value is either true or false. retention, this value is one of: initialUnspecified
+
+For objects with a retention setting of Initial Unspecified
+
+neverDeletable
+
+For objects with a retention setting of Deletion Prohibited
+
+expired
+
+For objects with a retention setting that is Deletion Allowed or a specific date in the past
+
+not expired
+
+For objects with a retention setting that is a specific date in the future
+
+retentionClass, this value is the name of a retention class for an object in the result set. namespace, this value identifies a namespace that contains an object in the result set. The value has this format: namespace-name.tenant-name
+
+content-property-name, this value is a value of the named content property that occurs in the result set.
+
+HTTP status codes
+
+The table below describes the possible HTTP status codes for metadata query API requests.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully processed the query.
+
+400 Bad Request
+
+The request syntax is invalid. Possible reasons for this error include:
+
+The query request contains an invalid URL query parameter.
+
+The query request body contains invalid XML or JSON (for example, an invalid entry name). The query request body contains an invalid entry value, such as a malformed version ID or invalid

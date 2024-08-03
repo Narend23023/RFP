@@ -1,0 +1,53 @@
+HCP does not replicate service plans. This means that replicated tenants or namespaces can be associated with the same service plan name on the two systems involved in a replication link, but the service plan configuration settings on the two systems can be entirely different. For example, a service plan named External Storage can tier to Amazon
+
+storage from system A and to HCP S Series storage on system B. You need to configure the service plans on each system in the replication topology. If you do not configure the service plans, the replicated namespaces and tenants use the Default service plan settings.
+
+Working with service plans
+
+Each namespace has a service plan that defines both a storage tiering strategy and a data protection strategy for the objects in that namespace. At any point in the lifecycle of an object, its storage tiering strategy specifies the types of storage on which copies of that object must be stored, and its data protection strategy specifies the number of object copies
+
+that must be stored on each type of storage.
+
+A service plan is a named specification of HCP service behavior that determines how HCP manages the storage of the data and metadata for objects in a given namespace. For
+
+example, the service plan for a namespace could specify that the Storage Tiering service should move objects from primary running storage to primary spindown storage 30 days after they’re stored and specify that the Protection service should ensure that HCP maintains two copies of the data for each object that exists on primary spindown storage. Service plans enable you to tailor a storage tiering strategy and a data protection strategy for each tenant and its namespaces based on specific storage usage patterns or business needs.
+
+You can create any number of service plans on an HCP system and configure each plan to use up to four different storage tiers, including the ingest tier (primary running storage or HCP S Series storage). You can then offer a wide variety of service plans to tenant administrators in order to meet the business needs of each tenant.
+
+You can use the Storage page in the System Management Console to create, modify, retire, and delete service plans. You can also use the Storage page to monitor the usage of all primary spindown storage and extended storage tiers that are defined by any given service plan.
+
+To display the Storage page, in the top-level menu of the System Management Console, click Storage. Note:
+
+To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire,
+
+and delete service plans, you need the administrator role.
+
+Creating a service plan
+
+To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire, and delete service plans, you need the administrator role.
+
+1. On the left side of the Storage page, click the Service Plans tab.
+
+2. At the top of the Service Plans panel, click Create Service Plan. The Create Service Plan wizard opens.
+
+3. On the Name page, use the applicable fields to specify a name for the new service plan and, optionally, a description for the service plan and then click Next.
+
+A service plan name must be up to 64 characters long, can contain only alphanumeric characters, hyphens (-), and underscores (_), and is not case sensitive.
+
+A service plan description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+4. On the Import page, you can import an existing service plan configuration and create a new service plan with it. If you want to import an existing service plan configuration
+
+into the new service plan you’re creating, check the box next the existing service plan you want to import and then click Next. When you import an existing service plan configuration, the storage tiers that are configured for that plan are automatically defined in the new plan. You can use the imported service plan configuration as a starting point to configure each of the tiers you want to define in the service plan.
+
+If you want to import the configuration for an existing service plan into the new service plan you’re creating, check the box next the existing service plan you want to import.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+62/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+5. Click Next.

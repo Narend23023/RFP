@@ -1,0 +1,83 @@
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Response header
+
+The list below describes the headers returned in response to a successful request to abort a multipart upload.
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+657/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to complete a multipart upload.
+
+Code
+
+Meaning
+
+Description
+
+204
+
+No Content
+
+HCP successfully aborted the multipart upload.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can abort a multipart upload. The credentials provided with the request are invalid. The credentials provided with the request do not match the credentials used to initiate the multipart upload or the credentials for the owner of the bucket where the multipart upload is being performed. You do not have permission to abort multipart uploads in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+One of these:
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was already aborted or completed. The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Aborting a multipart upload
+
+Here’s a sample DELETE request that aborts a multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94874755807297"
+
+Request headers
+
+DELETE /acctg/RulesAndRegulations.pdf?uploadId=94874755807297 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:KxEygWb4ay0jHtOrIljBE5lGmls= Response headers
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Working with POST object uploads
+
+With the Hitachi API for Amazon S3, you can accept objects uploaded directly to HCP from web browser forms (that is, a POST form request). This process is called a POST object upload.
+
+This section of the Help starts with general information about and considerations for working with POST object uploads.

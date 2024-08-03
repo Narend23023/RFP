@@ -1,0 +1,125 @@
+The retentionClass data type describes the retentionClasses resource.
+
+Properties
+
+The table below describes the properties included in the retentionClass data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+allowDisposition
+
+Boolean
+
+Specifies whether HCP automatically
+
+This property is required on a PUT request
+
+deletes expired objects in the retention class. Valid values are:
+
+when the value of the retention class is an offset. It is ignored if the value is not an offset. true
+
+false
+
+Automatically delete expired objects.
+
+Do not automatically delete expired objects.
+
+This property is required on a POST request when the retention class value is being changed to an offset from another type of value.
+
+description
+
+String
+
+Specifies a description of the retention class. This description is optional. The default is no description.
+
+To remove a description from an existing retention class, specify the description property with no value. name
+
+String
+
+Specifies the name of the retention class. Retention class names must be from one through 64 characters long, can contain only alphanumeric characters, hyphens (-), and underscores (_), and are not case sensitive.
+
+This property is required on a PUT request. It is not valid on a POST request and is returned only by a verbose GET request.
+
+The retention class name must be unique for the namespace. Different namespaces can have retention classes with the same name. value
+
+String
+
+Specifies the retention class value. Valid values are special values and offsets.
+
+This property is required on a PUT request.
+
+Example
+
+Here’s an XML example of the retentionClass data type:
+
+<retentionClass> <description>Implements Finance department standard #42 - keep for 10 years.</description> <value>A+10y</value> <allowDisposition>true</allowDisposition> <name>FN-Std-42</name> </retentionClass> schedule
+
+The schedule data type describes the schedule resource for replication links.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+499/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+schedule data type properties
+
+The following table describes the properties included in the schedule data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+local
+
+local
+
+Specifies the schedule for the replication link on the local system.
+
+This property is not valid on a POST request for an inbound active/passive link.
+
+remote
+
+remote
+
+Specifies the schedule for the replication link on the remote system.
+
+This property is not valid on a POST request for an outbound active/passive link. Example
+
+Here’s an XML example of the schedule data type:
+
+<schedule> <local> <scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel>
+
+</transition> <transition> <time>Sun:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> <transition> <time>Sat:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sat:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> </local> <remote> <scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Mon:00</time> <performanceLevel>MEDIUM</performanceLevel> </transition> </remote> </schedule>
+
+searchSecurity
+
+The searchSecurity data type describes the searchSecurity resource for tenants.
+
+Properties
+
+The table below describes the property included in the searchSecurity data type. Property
+
+Data type
+
+Description
+
+ipSettings
+
+ipSettings
+
+Specifies which IP addresses can and cannot access the Search Console for the tenant.
+
+Example
+
+Here’s an XML example of the searchSecurity data type:

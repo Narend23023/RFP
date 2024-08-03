@@ -1,0 +1,41 @@
+When you create a bucket or list the buckets you own, HCP does not require the use of SSL security with the S3 compatible request; that is, you can start the URL in the request with either HTTP or HTTPS. Whether the use of SSL security with other S3 compatible requests is required, optional, or not supported depends on the configuration of the S3 compatible API for the target bucket.
+
+By default, the use of SSL security is optional for requests for operations other than creating a bucket or listing the buckets you own. You cannot use the S3 compatible API to change this configuration. However, tenant administrators can use other HCP interfaces to reconfigure the S3 compatible API to require or not support the use of SSL security.
+
+Using an IP address in a URL Normally, you let HCP choose the node on which to process an S3 compatible API request. You can, however, use an IP address in the request URL to access the system on a specific node. To do this, you replace the fully qualified hostname in the URL with the IP address of an HCP node.
+
+When you use an IP address in a URL, you also need to specify the fully qualified hostname in an HTTP Host request header.
+
+Here’s an example of an s3curl command that uses a URL with an IP address and a Host header that identifies the finance bucket: ./s3curl.pl --id=lgreen --put=Q4_2019.ppt -- -k -H "Host: finance.europe.hcp.example.com" "https://192.168.210.16/quarterly_rpts/Q4_2019.ppt"
+
+Here’s a command that does the same thing as the command above but uses the format in which the bucket name follows the URL: ./s3curl.pl --id=lgreen --put=Q4_2019.ppt -- -k -H "Host: europe.hcp.example.com" "https://192.168.210.16/finance/quarterly_rpts/Q4_2019.ppt"
+
+Using a hosts file
+
+Typically, HCP is included as a subdomain in your DNS. If this is not the case, for access to the system, you need to use the tenant domain name in the URL and use a hosts file to define mappings of one or more node IP addresses to that domain name.
+
+The location of the hosts file depends on the client operating system:
+
+On Windows, by default: c:\windows\system32\drivers\etc\hosts On Unix: /etc/hosts On Mac OS® X: /private/etc/hosts
+
+Note: If HCP is not included in your DNS, the tenant domain name is a dummy domain name that follows the conventions for well-formed DNS names. Hostname mappings
+
+Each entry in a hosts file is a mapping of an IP address to a hostname. For an HCP tenant, the hostname must be the fully qualified domain name (FQDN) for the tenant.
+
+Each hosts file entry you create for access to a tenant must include:
+
+An IP address of a node in the HCP system The FQDN of the tenant domain
+
+For example, if the tenant domain name is finance.hcp.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you could add either or both of these lines to the hosts file on the client: 192.168.210.16 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the system through the management API.
+
+Sample hosts file
+
+Here’s a sample hosts file that contains mappings for the Finance tenant for nodes with both IPv4 and IPv6 addresses: 192.168.210.16 finance.hcp.example.com

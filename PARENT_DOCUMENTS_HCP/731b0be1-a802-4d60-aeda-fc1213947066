@@ -1,0 +1,111 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+474/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<errors>0</errors> <errorsPerSecond>0.0</errorsPerSecond> <objectsVerified>402200</objectsVerified> <objectsReplicatedAfterVerification>0</objectsReplicatedAfterVerification> </statistics> <status>GOOD</status> <statusMessage>Synchronizing data</statusMessage> <suspended>false</suspended> <type>ACTIVE_ACTIVE</type> </link>
+
+Query parameters for replication link actions
+
+To perform actions on replication links, you use these query parameters:
+
+suspend
+
+Suspend activity on the link.
+
+resume
+
+Resume activity on a suspended link.
+
+failOver
+
+Fail over the link to the remote system. failBack
+
+For an active/active link, fail back the link.
+
+beginRecover
+
+For an active/passive link, begin data recovery.
+
+completeRecovery
+
+For an active/passive link, complete data recovery.
+
+restore
+
+Restore the link to the remote system.
+
+You use these query parameters with a POST request against the link resource. You cannot include a request body with this request.
+
+Here’s a sample POST request that suspends activity on the replication link named MA-CA: curl -k -iX POST -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"
+
+"https://admin.hcp-ma.example.com:9090/mapi/services/replication/links/MA-CA ?suspend"
+
+local (data type for replication link failoverSettings local property)
+
+The local data type in this section describes the local property of the failoverSettings data type that describes the failoverSettings property of the replication link resource. Replication link failoverSettings local data type properties
+
+The following table describes the properties included in the local data type that describes the local property of the failoverSettings data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+autoCompleteRecovery Boolean
+
+This property is optional on a PUT request to create
+
+For an active/passive link, specifies whether the complete recovery phase starts automatically while data is being recovered from the local system to the remote system for the replication link. Valid values are:
+
+an active/passive link. It is not valid on a PUT or POST request for an active/active link and is not returned by any GET request for an active/active link. true
+
+The complete recovery phase starts automatically.
+
+false
+
+The complete recovery phase does not start automatically.
+
+The default is false.
+
+autoCompleteRecovery
+
+Minutes Integer
+
+For an active/passive link, specifies the number of minutes the up-to-date-as-of time for the replication link must be less than before HCP automatically starts the complete recovery phase while data is being recovered from the local system to the remote system for the link. Valid values are integers in the range one through 9,999. The default
+
+This property is optional on a PUT request to create an active/passive link. It is not valid on a PUT or POST request for an active/active link and is not returned by any GET request for an active/active link.
+
+is 120.
+
+The up-to-date-as-of time is the difference between:
+
+The date and time before which configuration changes and changes to namespace content are guaranteed to have been sent to the remote system The current date and time
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+475/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Property name
+
+Data type
+
+Description
+
+Notes
+
+autoFailover
+
+Boolean
+
+Specifies whether the replication link automatically fails over to the local system after a loss of connectivity to the remote system for the link. Valid values are:
+
+This property is optional on a PUT request to create a replication link. true

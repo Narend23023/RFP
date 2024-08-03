@@ -1,0 +1,33 @@
+Bidirectional active/passive chained replication
+
+In a bidirectional active/passive chained replication topology, three HCP systems participate in two active/passive replication chains, with each chain going in a different direction. That is, given three HCP systems A, B, and C:
+
+In one chain, system A replicates to system B, which replicates to system C. In the other chain, system C replicates to system B, which replicates to system A.
+
+What this looks like The following figure shows a bidirectional active/passive chained replication topology in which the replication chains are A → B → C and C → B → A.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+331/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this figure:
+
+From system A, Tenant-1 and Tenant-2 are being replicated to system B. In both tenants, all namespaces are selected for replication. From system C, Tenant-3 is being replicated to system B. This tenant has three namespaces, all of which are selected for replication. From system B:
+
+The tenants and namespaces created by replication from system A (that is, Tenant-1 and Tenant-2 and their namespaces) are being replicated to system C because the link from A to B is included in the link from B to C. The tenant and namespaces created by replication from system C (that is, Tenant-3 and its namespaces) are being replicated to system A because the link from C to B in included in the link from B to A. Uses
+
+A bidirectional active/passive chained replication topology lets clients write to selected HCP tenants, namespaces, and default-namespace directories on three different systems while reading from all those tenants, namespaces, and directories on all those systems. In this example, data centers are in New York, Los Angeles, and Tokyo, and:
+
+The HCP system in New York has a locally created HCP tenant named Tenant-1 The HCP system in Los Angeles has a locally created HCP tenant named Tenant-2 The HCP system in Tokyo has a locally created HCP tenant named Tenant-3 At each data center, a locally running application needs write access to the namespaces owned by the locally created tenant Clients at all three locations need read access to the namespaces owned by all three HCP tenants
+
+To meet these needs, you could: Create an active/passive link (Link-1) from the New York system to the Los Angeles system that includes Tenant-1, which is writable in New York. The New York system sends Tenant-1 to the Los Angeles system, where the tenant is in read-only mode. Create an active/passive link (Link-2) from the Los Angeles system to the Tokyo system that includes Link-1 and Tenant-2, which is writable in Los Angeles. The Los Angeles system sends both Tenant-1 and Tenant-2 to the Tokyo system, where the tenants are in read-only mode. Create an active/passive (Link-3) from the Tokyo system to the Los Angeles system that includes Tenant-3, which is writable in Tokyo. The Tokyo system sends Tenant-3 to
+
+the Los Angeles system, where the tenant is in read-only mode. Create an active/passive link (Link-4) from the Los Angeles system to the New York system that includes Link-3 and Tenant-2. The Los Angeles system sends both Tenant-3 and Tenant-2 to the New York system, where the tenants are in read-only mode. Bidirectional active/passive replication with disaster recovery support
+
+You can combine the bidirectional and one-to-many replication topologies to create a configuration in which each of two systems replicates its locally created HCP tenants and
+
+namespaces and default-namespace directories to both the other system and a third system. This third system then provides each of the first two systems with both additional assurance of continuous data availability and disaster recovery functionality.
+
+For example, HCP systems A and B each replicate their locally created HCP tenants and namespaces and default-namespace directories to each other, and a third system, C, provides disaster recovery functionality for each of those systems. To create this combined topology:

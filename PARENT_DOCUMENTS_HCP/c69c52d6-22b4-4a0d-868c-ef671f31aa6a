@@ -1,0 +1,49 @@
+If you’re modifying settings in the HTTP(S) panel and you leave the Password field empty, the previously set password remains in effect.
+
+e. In the Confirm Password field, type the password again.
+
+Tip: Be sure to tell WebDAV users the username and password you specify.
+
+f. (Optional) Enable WebDAV users to store dead properties as custom metadata by selecting Use custom metadata to store WebDAV properties.
+
+5. Click Update Settings.
+
+If you selected Enable HTTP and also selected Enable REST API, Enable Hitachi API for Amazon S3, or Enable WebDAV API, a confirming message appears.
+
+6. Click Update Settings.
+
+Set the IP addresses to be allowed or denied access
+
+The HTTP(S) panel has two sections for enabling and configuring the REST, S3 compatible, and WebDAV APIs. This procedure is for the Allow/Deny section. Optionally, in the Allow/Deny section, specify IP addresses to be allowed or denied access to the namespace through the REST, S3 compatible, and WebDAV APIs. To specify how HCP should handle IP addresses that appear in both or neither of the Allow and Deny lists, select or deselect Allow request when same IP is used in both lists. Changes to this option take effect immediately.
+
+Configuring the CIFS protocol
+
+With the CIFS protocol, users and applications can add, view, and delete objects and modify object metadata through familiar directory structures. CIFS protocol configuration
+
+You use the CIFS panel to enable and configure the CIFS protocol for a namespace. To display this panel, on the left side of the Protocols panel, click CIFS.
+
+The top of the CIFS panel shows the string to use to identify the namespace when mapping it to a network drive or adding it as a network place on a CIFS client.
+
+The CIFS panel lets you: Enable the CIFS protocol. Specify whether the CIFS protocol requires user authentication for access to the namespace. HCP uses Active Directory to authenticate CIFS users. This authentication is possible only if the tenant is configured to support AD authentication. Note: If the HCP system does not support Active Directory and CIFS is enabled for the namespace, the namespace is exposed as a share in the Windows workgroup specified in the HCP system configuration. However, if the CIFS protocol is configured to require authentication, the namespace cannot be accessed through the workgroup. Specify the client IP addresses that have access to the namespace through CIFS. Change CIFS case sensitivity
+
+When you reconfigure the CIFS protocol while it’s already enabled, the changes you make don’t affect current CIFS mounts of the namespace. To force the changes to take effect, you can take either of these actions: Disable and then reenable the protocol. This causes all CIFS clients to lose their connections to the namespace. When they reconnect, the changes will be in effect. Direct all clients with current CIFS mounts to disconnect from the namespace and then to either reboot or wait five minutes for cached connections to be released before reconnecting. CIFS case sensitivity
+
+The Windows operating system is case preserving but not case sensitive. The HCP CIFS implementation, by default, is both case preserving and case sensitive. One result of this
+
+discrepancy is that Windows applications that do not observe differences in case may not be able to access HCP objects by name.
+
+For example, suppose a Windows application adds a file named File.txt to the namespace by using the CIFS protocol. CIFS preserves case, so the namespace then contains an
+
+object named File.txt. Now suppose the application tries to retrieve that object using the name file.txt. CIFS is case sensitive, so it passes the request to HCP with only the name file.txt. It doesn’t include any case variations on the name, such as File.TXT, FILE.txt, or File.txt. As a result, HCP cannot find the object.
+
+If you have Windows applications that ignore case, you may want HCP to ignore case as well. You can change the CIFS protocol configuration in either of two ways to meet this need:
+
+Make CIFS case forcing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+287/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

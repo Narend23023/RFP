@@ -1,0 +1,29 @@
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-version-id: 87288825190337 ETag: "6ed7faad1e0661c03ad65a4317d4a94c" x-amz-copy-source-version-id: 87388217426433 Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.402Z</LastModified> <ETag>"6ed7faad1e0661c03ad65a4317d4a94c"</ETag> </CopyObjectResult>
+
+Example: Recovering an old version of an object
+
+Here is a sample PUT request that copies an old version of an object to the same object, thereby creating a new current version from the old version. The object in question is named AcctgBestPractices.doc and is in the finance bucket. The version ID of the version being copied is 87288808614529. The request is being made while versioning is enabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/finance/ AcctgBestPractices.doc?versionId=87288808614529 -- -k "https://finance.europe.hcp.example.com/AcctgBestPractices.doc" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+PUT /AcctgBestPractices.doc HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:AZ/GOgJJXFh7K1pr59bIlwRUrc0= x-amz-copy-source: /finance/AcctgBestPractices.doc?versionId=87288808614529 x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT x-amz-version-id: 87288815588289 ETag: "764f38262c6e581f678e1ac9b0211ae8" x-amz-copy-source-version-id: 87288808614529 Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"764f38262c6e581f678e1ac9b0211ae8"</ETag> </CopyObjectResult>
+
+Example: Replacing custom metadata for an existing object
+
+Here is a sample PUT request that replaces the existing custom metadata for the object named hum_res/budget_proposals/BudgProp-2020 in the finance bucket with new custom metadata. The request is being made while versioning is disabled for the bucket, so the custom metadata is replaced on the current version of the object. No new version is created. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/finance/hum_res/budget_proposals/BudgProp-2020 -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/ BudgProp-2020" -H "x-amz-meta-author: Robin Silver"
+
+H "x-amz-meta-department: Human Resources" -H "x-amz-metadata-directive: REPLACE" -H "x-hcp-pretty-print: true" Request headers

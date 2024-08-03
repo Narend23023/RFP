@@ -1,0 +1,47 @@
+Note: If you do not see the Restore Link button, wait a few minutes and then refresh the Replication page. Before displaying this button, HCP must recognize that the other system is available, has the necessary SSL certificates installed, and is unaware of the existing link.
+
+After you restore a link, the Restore Link button remains active. This state enables you to repeat the restore procedure if the system that failed needs to be rebuilt again before you fail back or begin recovery on the link. Although the button is still active, you can proceed to the next part of the recovery procedure.
+
+Failing back an active/active link 1. In the top-level menu of the HCP System Management Console for the system you failed over to, select Services > Replication. 2. On the replication Links page, click the link you want to fail back. 3. On the replication link details page, click Link. 4. In the replication Link panel, click the Failover tab. 5. In the link Failover panel, click Fail Back.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+375/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Recovering the data after a primary system failure
+
+1. In the top-level menu of the HCP System Management Console for the replica, select Services > Replication. 2. On the replication Links page, click the link on which you want to recover data. 3. On the replication link details page, click Link. 4. In the replication Link panel, click the Failover tab. 5. In the link Failover panel, click Begin Recovery. Note: After uploading new trusted replication server certificates, you may need to wait more than ten minutes for the Begin Recovery button to become active.
+
+The applicable HCP tenants and default-namespace directories become read-only on the primary system, and the Replication service starts copying the applicable objects and configuration information from the replica to the primary system. As with replication from the primary system to the replica, the service starts with the objects with the oldest metadata changes either across all namespaces or within each namespace, depending on the link configuration.
+
+Note: If the primary system cannot communicate with Active Directory and either of these is true for a tenant, recovery of that tenant is automatically paused:
+
+The tenant to be recovered supports AD authentication. A namespace owned by the tenant supports AD single sign-on.
+
+When communication between the primary system and AD is restored, you can resume recovery of the tenant. 6. Monitor the recovery process by periodically reviewing the information in the status Overview and status Tenants panels for the link. 7. When data recovery is almost synchronized with current tenant and namespace activities on the replica, return to the Failover panel for the link.
+
+Synchronization is nearing completion when the up-to-date-as-of time for the link is close to zero. Note: As long as clients continue writing to the replica, synchronization won’t reach one hundred percent. Synchronization doesn’t need to be completely up to date for you to start the complete recovery phase.
+
+8. In the link Failover panel, click Complete Recovery.
+
+The applicable tenants and directories on the replica immediately become read-only. The tenants and directories on both systems then remain read-only until the Replication service finishes the data recovery. The amount of time this takes depends on how much data is left to recover. When recovery is complete, the tenants and directories on the primary system become read-write, those on the replica remain read-only, and the Replication service on the primary system starts copying objects to the replica again.
+
+Tip:
+
+You can schedule completion of the data recovery process for a time when client usage of the repository is low. If, before final recovery is complete, you need to allow clients to write to the applicable tenants and directories on the replica again, click Cancel Final Recovery in the link Failover panel. The recovery process continues, but the applicable tenants and directories become read-write on the replica and remain read-only on the primary
+
+system until you click Complete Recovery again.
+
+9. If DNS failover is disabled:
+
+a. Wait for this message to appear in the system log:
+
+Replication data recovery completed
+
+b. Tell the applicable tenant administrators to redirect all client access requests to the primary system. Failover and failback considerations
+
+These basic rules apply to replication, failover, and failback on replication links, regardless of the replication topology:

@@ -1,0 +1,81 @@
+If you specify certain invalid dates, HCP automatically adjusts the value to make a real date. For example, if you specify a default retention setting of 2017-11-33T00:00:00-0500, which is three days past the end of November, objects added to the namespace get a retention setting of 2017-12-03T00:00:00-0500. statistics (data type for replication link statistics property)
+
+The statistics data type in this section describes the statistics property of the link data type.
+
+Replication link statistics data type properties
+
+The following table describes the properties included in the statistics data type that describes the statistics property of the link data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+516/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description bytesPending
+
+Long
+
+Specifies the approximate amount of data currently waiting to be replicated from the local system to the remote system for the replication link, in bytes. This value is the sum of the amounts of data waiting to be sent in each HCP namespace included in the link. This value does not include data in the default namespace.
+
+If the local system is the replica for an active/passive link, the value of this property during replication is zero. If the local system is the primary system for an active/passive link, the value of
+
+this property during data recovery is zero. bytesPendingRemote
+
+Long
+
+Specifies the approximate amount of data currently waiting to be replicated from the remote system for the replication link to the local system, in bytes. This value is the sum of the amounts of data waiting to be sent in each HCP namespace included in the link. This value does not include data in the default namespace.
+
+For an active/passive link, the value of this property is always zero. bytesPerSecond
+
+Double
+
+Specifies the current rate of data transmission on the replication link, in bytes per second.
+
+For an active/active link, the value of this property is the rate of data transmission from the local system to the remote system. For an active/passive link, the value of this property is the rate of data transmission during replication or recovery, whichever is happening at the time. In any case, the data transmission rate is cumulative for all the HCP namespaces and default-namespace directories included in the link.
+
+bytesReplicated Long
+
+Specifies the total number of bytes of data replicated from the local system to the remote system for the replication link since the link was created.
+
+errors
+
+Long
+
+Specifies the total number of errors that have occurred during replication or recovery from the local system to the remote system for the replication link since the link was created. errorsPerSecond
+
+Double
+
+Specifies the current rate of errors on the replication link per second.
+
+For an active/active link, the value of this property is the error rate for replication from the local system to the remote system for the link. For an active/passive link, the value of this property is the error rate during replication or recovery, whichever is happening at the time.
+
+objectsPending Long
+
+Specifies the approximate number of objects currently waiting to be replicated from the local system to the remote system for the replication link. This value is the sum of the numbers of objects waiting to be sent in each HCP namespace included in the link. This value does not include objects in the default namespace.
+
+If the local system is the replica for an active/passive link, the value of this property during replication is zero. If the local system is the primary system for an active/passive link, the value of this property during data recovery is zero. objectsPendingRemote
+
+Long
+
+Specifies the approximate number of objects currently waiting to be replicated from the remote system for the replication link to the local system. This value is the sum of the numbers of objects waiting to be sent in each HCP namespace included in the link. This value does not include objects in the default namespace.
+
+For an active/passive link, the value of this property is always zero.
+
+objectsReplicated Long
+
+Specifies the total number of objects replicated from the local system to the remote system for the replication link since the link was created.
+
+objectsReplicatedAfterVerification Long
+
+Specifies the number of objects replicated by the Replication Verification service.
+
+objectsVerified
+
+Long

@@ -1,0 +1,109 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+All variables within the form are expanded before validating the security policy. Therefore, all condition matching is executed against the expanded form fields. For example, suppose
+that you want to restrict your object key name to a specific prefix In this case, you set the key form field to Your POST policy should be (user/user1). user/user1/${filename}. [
+(do not enter "starts-with", "$key", "user/user1/" ] [ "starts-with", "$key", "user/user1/${filename}" ]).
+The list below describes supported conditions.
+acl
+Specifies the ACL value that must be used in the submitted form.
+bucket
+Specifies the acceptable bucket name.
+content-length-range
+Specifies the minimum and maximum allowable size for the uploaded content.
+If the object is compressed and the value of content-encoding is the size limit is applied to the size of the uncompressed object. gzip,
+key
+Specifies the acceptable key name or a prefix of the uploaded object.
+success_action_ redirect
+redirect
+Specifies the URL to which the client is redirected upon successful upload.
+success_action_status
+If you don't specify a value for this element specifies the status code returned to the client when the upload succeeds. success_action_redirect,
+x-amz-algorithm
+(AWS Signature Version 4 authentication only field)
+Specifies the signing algorithm that must be used during signature calculation. The value is AWS4-HMAC-SHA256.
+x-amz-credential
+(AWS Signature Version 4 authentication only field)
+Specifies the credentials that you used to calculate the signature. Required if you include a POST policy document with the request. Use this format:
+access_key_id/date/aws_region/aws_service/aws4_request
+For Amazon S3, the value of is aws_service s3.
+For example:
+AKIAIOSFODNN7EXAMPLE/20191024/us-east-1/s3/aws4_request
+x-amz-date
+(AWS Signature Version 4 authentication only field)
+Specifies a date value in ISO8601 format. Required if you include a POST policy document with the request.
+For example:
+20191024T000000Z
+x-amz-meta-*
+User-specified metadata.
+x-amz-*
+Other x-amz- headers.
+x-hcp-retention
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value.
+x-hcp-retentionhold
+Specifies whether the object is on hold. This value can be either or true false.
+x-ignore-*
+Users can specify additional form fields with this header that should be ignored.
+Character escaping
+The table below describes characters that must be escaped within a security policy.<br>
+                       <b>Bounding box:</b> x1=185, y1=1401, x2=1516, y2=1738
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Escape sequence</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>\\</td>
+      <td>Backslash</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>\b</td>
+      <td>Backspace</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>\f</td>
+      <td>Form feed</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>\n</td>
+      <td>New line</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>\r</td>
+      <td>Carriage return</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>\t</td>
+      <td>Horizontal tab</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>\v</td>
+      <td>Vertical tab</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>\unnnn</td>
+      <td>All Unicode characters</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

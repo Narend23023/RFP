@@ -1,0 +1,35 @@
+Each HCP system has a default service plan that’s automatically created and configured during the HCP software installation. The default service plan is applied to each tenant and
+
+namespace for which another service plan is not explicitly selected.
+
+For any given HCP system, the ingest tier DPL setting that’s initially configured for the default service plan is used as the default ingest tier DPL setting for each new service plan
+
+that’s created on the HCP system. When you create a new service plan, you can choose to use the default ingest tier DPL setting or select a different setting. You can also modify any service plan, including the default service plan, to change the ingest tier DPL setting. However, changing the ingest tier DPL setting used for the default service plan does not
+
+change the default ingest tier DPL setting that’s used for new service plans. Typically, the default ingest tier DPL setting used for service plans created on an HCP system is the optimal setting for the type of physical storage that the HCP system uses. For HCP with internal storage systems, the default ingest tier DPL is two. For HCP with SAN-attached storage systems, for which SAN arrays provide a high level of data protection, and
+
+for VM systems, for which the virtual environment provides node failover capabilities, the default ingest tier DPL is one.
+
+The default ingest tier DPL setting used for all service plans that are created on an HCP system is the optimal setting for the type of storage used by that system. However, the
+
+optimal ingest tier DPL setting that’s configured for the service plan that’s assigned to a specific tenant or namespace is subject to considerations such as whether the tenant or namespace is being replicated and whether the HCP system owner or the tenant administrator has any particular data protection needs. On HCP with internal storage systems, by default, service plans can be configured to set the ingest tier DPL to two, three, or four. To enable HCP with internal storage system administrators to configure service plans to set the ingest tier DPL to one, contact your authorized HCP service provider.
+
+Storage tier properties specified in service plans
+
+For each storage tier, including the ingest tier, that’s defined for a given namespace, the service plan specifies:
+
+The storage pools that are used to store copies of object data or chunks for erasure-coded objects on the tier. Each storage pool consists of one or more storage components. Each storage component represents a type of primary storage (running or spindown), HCP S Series storage, an extended storage device, or a cloud storage
+
+service endpoint. For each object that’s stored on the tier, the number of copies of the object data or of the chunk for an erasure-coded object that HCP must maintain on each storage pool (that is, the DPL). For each object that’s stored on the tier, the number of copies of the object metadata that HCP must maintain on the ingest tier (that is, the MPL). The transition criteria for each tier except for the ingest tier. The transition criteria for a storage tier are the rules that determine when one or more copies of each object in the
+
+namespace must be stored on the tier:
+
+The object age (number of days since ingest) at which one or more copies of the object data must be moved from the previous tier to this tier.
+
+The age of an object created by a multipart upload is counted from the time the multipart upload was completed.
+
+For service plans that define exactly two tiers, including the ingest tier, whether a threshold will be applied to the second tier, and if so, the percentage of ingest tier storage capacity that must be used (the threshold) before object data can be moved to the second storage tier. For HCP systems with replication enabled, whether objects must be fully replicated before they can be transitioned from the previous tier onto this tier. If replication is disabled for the HCP system, this transition criterion does not appear in the HCP System Management Console.
+
+For a namespace that’s currently being replicated to another system, whether the copies of the object that are stored on the tier are to be made metadata-only.
+
+Regardless of the transition criteria that are specified for a metadata-only tier, objects are moved to such a tier only after they are replicated. When a replicated object is

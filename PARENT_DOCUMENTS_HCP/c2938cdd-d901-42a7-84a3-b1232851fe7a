@@ -1,0 +1,37 @@
+Uploading a part of a multipart upload by copying a large amount of data from another object can take some time. If a client times out because an upload part copy operation is taking too long, HCP continues the operation in the background.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+637/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Because the connection to the client is broken, HCP cannot report the completion of the upload part copy operation to the client. To see whether the operation has finished successfully, use a GET request with the multipart upload ID to list the parts of the multipart upload. If the operation finished successfully, the part appears in the list. If the operation is still in progress or has failed, the part does not appear in the list.
+
+If upload part copy operations are causing a client to time out, consider increasing the client timeout interval. Creation date and time for multipart objects
+
+The creation date and time for the object resulting from a multipart upload is the time when the multipart upload was completed, regardless of the amount of time that has elapsed since the multipart upload was initiated.
+
+Retention setting for multipart objects
+
+The retention setting for the object resulting from a multipart upload is calculated based on the time when the multipart upload was completed, regardless of the amount of time that has elapsed since the multipart upload was initiated.
+
+For example, suppose the bucket default retention setting for new objects is 10 days. If a multipart upload in the bucket is completed on September 9th, the resulting object will be under retention until September 19th, regardless of when the multipart upload was initiated. Retention is not set for the individual parts of an in-progress multipart upload. Replaced parts and parts not used in completed multipart uploads are automatically deleted regardless of the retention setting for the completed multipart object.
+
+Multipart uploads and versioning
+
+If versioning is enabled for a bucket, you can use multipart uploads to store new versions of objects in the bucket. However, HCP does not check whether versioning is enabled until you submit the request to complete a multipart upload. If versioning is disabled and an object with the same name already exists when you submit the complete request, the request fails with a 409 (Conflict) status code.
+
+If versioning is disabled for a bucket and you are concerned about object conflicts, before you initiate a multipart upload for an object, you can check the bucket for an existing object with the same name.
+
+Tip: If a request to complete a multipart upload fails because versioning is disabled for the bucket and an object with the same name already exists, you can delete the existing object and then submit the complete request again with the same request body. A failed request to complete a multipart upload has no effect on the uploaded parts, so you don't
+
+need to upload them again. Multiple multipart uploads for objects with the same name
+
+Regardless of the bucket versioning status, you can initiate multiple concurrent multipart uploads with the same object name in a single bucket. These multipart uploads are distinguished by upload ID. Because you specify both the upload ID and the object name in each request to upload a part, each part you upload applies to only one of the multipart uploads.
+
+If versioning is enabled for the bucket, each multipart upload with the same object name, when completed, creates a separate version of the object. The order of the versions is determined by the order in which the multipart uploads are completed. The oldest version is the one resulting from the multipart upload that was completed first. The most recent version is the one resulting from the multipart upload that was completed last. If versioning is disabled for the bucket, the object stored is the one resulting from the multipart upload that was completed first. Each subsequent completion of a multipart upload for the same object results in a 409 (Conflict) status code, and the resulting object is not stored. The parts of a multipart upload that cannot be completed remain in HCP until the multipart upload is aborted.
+
+Multipart uploads for objects under retention or on hold

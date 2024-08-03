@@ -1,0 +1,51 @@
+Erasure coding topology replacement procedure
+
+When replacing an erasure coding topology, use this procedure to ensure that the replacement process occurs in the most efficient manner:
+
+1. Disable the Geo-distributed Erasure Coding service on each system in the topology you're replacing. Doing this will prevent the service from restoring chunks for objects to full copies that will later need to be reduced to chunks. Note: Services can be disabled from the system Overview page in the System Management Console. To disable services, you need the service role.
+
+2. Disable the Storage Tiering service on each system in the topology you're replacing.
+
+Doing this will prevent the service from tiering full copies of object data that will later need to be reduced to chunks.
+
+3. If all of the following are true for any given namespace on any given system, ensure that the service plan associated with that namespace keeps all objects in the namespace on a metadata-only storage tier on that system:
+
+The system will be included in the new erasure coding topology. The namespace has erasure coding allowed, and the tenant that owns the namespace will be included in the new topology.
+
+You want each object in the namespace to use whole-object protection until the erasure coding delay specified by the new topology expires. You want objects in the namespace to be metadata-only on the system while they are subject to whole-object protection.
+
+With whole-object protection, HCP does not store data for objects on metadata-only storage tiers. However, if an object should be on a metadata-only storage tier on
+
+all the systems in the topology, one system in the topology will store data for that object.
+
+Keeping objects on a metadata-only storage tier on one or more systems will prevent full copies of object data from being distributed to those systems: Between the retirement of the existing topology and the creation of the new topology Before the expiration of the erasure coding delay for the new topology
+
+Note: To keep objects protected during the replacement procedure, ensure that the service plan associated with each applicable namespace does not include a metadata- only storage tier on at least two of the systems in the topology you're replacing. To distribute the storage load, on any given system, configure the applicable service plans such that some include a metadata-only storage tier and some do not.
+
+4. Retire the existing erasure coding topology.
+
+Newly ingested objects are now replicated using whole-object protection. Objects that are already erasure coded remain erasure coded.
+
+5. Create any new replication links you need for the new erasure coding topology.
+
+Do not add tenants to the new links at this point. The tenants will be added to the links automatically when you add the tenants to the new topology. 6. Create the new erasure coding topology and then add tenants to it.
+
+The tenants you add are automatically added to any replication links in the topology that do not already include them. The tenants you add to the new erasure coding topology may already be included on links not in the topology, where one of the systems involved in the link is in the topology.
+
+When this is the case, replication or recovery of those tenants is automatically paused on those links.
+
+7. Reenable the Geo-distributed Erasure Coding service.
+
+The service starts processing objects again.
+
+8. Reenable the Storage Tiering service.
+
+The service starts tiering object chunks that are the result of the new erasure coding topology. 9. When the state of the retiring erasure coding topology changes to retired, delete that topology.
+
+Considerations for creating an erasure coding topology
+
+These considerations apply to creating an erasure coding topology:
+
+Before you can create an erasure coding topology: All the HCP systems to be included in the erasure coding topology must be at release 8.0 or later. All the HCP systems to be included in the erasure coding topology must be available. The underlying replication topology must already exist. Each system in the underlying replication topology must be able to recognize each other system in the topology through a path of one or more active/active replication links. However, these links do not need to be the links you include in the erasure coding topology.
+
+All replication links to be included in an erasure coding topology must be active/active. You can create an erasure coding topology from any HCP system to be included in the topology. You cannot create an erasure coding topology from a system that will not be part of the topology.

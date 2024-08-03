@@ -1,0 +1,51 @@
+Modifying a service plan
+
+You can use the Service Plans panel on the Storage page to view and modify the configuration of any existing service plan. At any time, you can modify any service plan to:
+
+Change the service plan name or description. If you change the name, the original name remains associated with any applicable tenants and namespaces. The result is that
+
+these tenants and namespaces are associated with an undefined service plan, and HCP uses the Default service plan for them. If you subsequently create a new service plan with the original name, the plan then applies to those tenants and namespaces.
+
+Change the ingest tier. Add one or more new storage tiers to the storage tiering strategy defined in the service plan. Delete one or more existing storage tiers from the plan.
+
+Change any configuration settings used for any storage tier defined in the service plan. If you change the storage tiering strategy or the data protection strategy defined in a service plan, objects that complied with the original service plan requirements might not
+
+be in compliance with the new ones. The next time the Storage Tiering service processes such an object, the service moves, copies, deletes, or changes the object as needed to comply with the new storage tiering strategy and/or the new data protection plan.
+
+Change the encryption settings to either use local encryption or a specific KM Server for encryption. Assign the service plan to one or more tenants.
+
+Note: If you assign a service plan to an existing tenant, that service plan replaces the one that was previously in effect for the tenant. Similar to a change in the configuration for an existing service plan for a namespace, if you change the service plan that’s assigned to a tenant, the new storage tiering strategy and data protection strategy do not take effect until the next time the Storage Tiering service runs.
+
+Modifying basic configuration settings for a service plan
+
+You can modify the basic configuration settings for any service plan to change either the name or the description that’s used for the service plan.
+
+To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire, and delete service plans, you need the administrator role.
+
+1. On the left side of the Storage page, click the Service Plans tab. 2. On the Service Plans panel, click the table row that corresponds to the service plan for which you want to configure a new storage tier. 3. At the top of the panel that opens, click the Settings tab. 4. On the Settings panel, you can change the Encrypt Cloud Pools settings.
+
+If you are upgrading from an older version, the default encryption settings will be based on the earlier encryption settings cloud storage pools:
+
+If all the cloud storage pools are encrypted, the default is All. If some cloud storage pools are encrypted, the default is Selected.
+
+If none of the cloud storage pools is encrypted, the default is None
+
+a. To not to use encryption, select None.
+
+b. To use a KM Server, select All and then select the KM server from the dropdown. c. To retire the service plan, select Retired.
+
+5. At the bottom of the page, click Update Settings.
+
+Adding a storage tier to a service plan
+
+You configure any storage plan to define up to four different storage tiers, including the ingest tier. To view existing service plans and monitor storage usage for storage tiers defined for one or more service plans, you need the monitor or administrator role. To create, modify, retire,
+
+and delete service plans, you need the administrator role.
+
+1. On the left side of the Storage page, click the Service Plans tab. 2. On the Service Plans panel, click the service plan for which you want to configure a new storage tier.
+
+3. At the top of the panel that opens, click the Tiers tab. 4. On the Tiers panel, click Add Tier. The Add Tier wizard opens.
+
+5. On the Transition page in the wizard, use the appropriate fields to set these transition criteria:
+
+The object age (number of days since ingest) at which one or more copies of the object data must be moved from the previous tier onto this tier. For service plans that define two tiers only, including the ingest tier, select whether a threshold will be applied to the second tier. If it is applied, the percentage of primary running storage capacity that must be used (the threshold) before object data can be moved to the second storage tier.

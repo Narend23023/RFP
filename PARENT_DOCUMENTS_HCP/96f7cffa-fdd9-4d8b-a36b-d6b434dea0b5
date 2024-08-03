@@ -1,0 +1,59 @@
+Content Platform System Management Help In HCP, logical network configurations are referred to simply as networks. Each network has a name, an IP mode (IPv4, IPv6, or Dual), one or more subnets defined for the network, IP addresses defined on each subnet for none, some, or all of the nodes in the HCP system, and some other settings.
+
+You can create and configure user-defined networks for communication with HCP over the front-end network. In order to create networks the Virtual network management must be enabled. You can then configure the system to use the specific networks for specific functions.
+
+You can also create network aliases for user-defined networks. Aliases are pointers to actual networks.
+
+At any given time, the total number of user-defined networks and network aliases together cannot exceed 200. Front-end network usage
+
+The [hcp_system] network is always used for:
+
+Access to the HCP System Management Console
+
+Access to the Tenant Management Console for the default tenant Access to the HCP management API using a system-level URL
+
+Syslog functions at the system and tenant levels SNMP functions at the system and tenant levels Access to the default namespace using the namespace access protocols
+
+Access to the HCP metadata query API using a system-level URL Access to the HCP Search Console using a system-level URL
+
+Communication between HCP and Active Directory for configuration and for user authentication at the system and tenant levels Communication between HCP and RADIUS servers for user authentication at the system and tenant levels
+
+For HCP with SAN-attached storage systems, communication between HCP and the storage systems Communication between HCP and any external storage components configured for the system Communication between HCP and Hitachi Tiered Storage Manager Communication between HCP and Hitachi Device Manager(HDvM) Communication between HCP and Hitachi Remote Ops® Access to the HCP system through interfaces reserved for authorized service providers
+
+You can choose to use [hcp_system] or any user-defined network for the following purposes:
+
+Management of a given HCP tenant, including:
+
+Access to the Tenant Management Console for the tenant Access to the HCP management API using a URL for the tenant
+
+You select the network for this purpose when you create or modify the tenant.
+
+Access to the namespaces owned by a given HCP tenant, including access through: Namespace access protocols
+
+Namespace Browser HCP metadata query API using a URL for the tenant
+
+HCP Search Console using a URL for the tenant Communication with other HCP systems in a replication topology.
+
+You can use the same network for multiple purposes. If you don’t choose a network for a purpose, HCP uses [hcp_system] by default.
+
+When you select a network for a given purpose, you need to ensure that your networking infrastructure is configured to allow client requests for that purpose to be routed to that network. HCP responds to each client request on the same network as the one on which the request arrived. Therefore, clients do not need to be on the same subnet as the network
+
+they are using to access the system, but they do need to be configured to use at least one IPv4 or IPv6 address that is routable from that network. Network properties
+
+A user-defined network has the following properties:
+
+A name Optionally, a description
+
+Optionally, a VLAN ID A domain
+
+A maximum transmission unit (MTU). The MTU is the largest packet size supported for data sent on the network.
+
+The MTU for a network can be 1,500 or, if supported by the networking infrastructure, 9,000. The larger MTU reduces overhead and increases network throughput.
+
+Whether the network is enabled or disabled. If a network is disabled, HCP does not accept communications routed on that network.
+
+When first created, networks are enabled by default.
+
+A total number of tenant references. This is the number of tenants that are configured to use the network for management, data access, or both. HCP derives this number
+
+from the tenant configurations defined on the system. If the network is assigned to one or more tenants, a list of tenant references. This list contains the names of the tenants that are configured to use the network and the purpose for which each tenant uses the network (management, data access, or both). HCP obtains this information from the tenant configurations defined on the system. A total number of alias references. This is the number of network aliases that are defined for the network. HCP derives this number from the network alias configurations defined on the system.

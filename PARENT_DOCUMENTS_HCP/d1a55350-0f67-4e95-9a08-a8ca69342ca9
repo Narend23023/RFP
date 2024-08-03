@@ -1,0 +1,59 @@
+Using a hosts file
+
+Typically, HCP is included as a subdomain in your DNS. If this is not the case, for access to the system, you need to use the tenant domain name in the URL and use a hosts file to define mappings of one or more node IP addresses to that domain name.
+
+The location of the hosts file depends on the client operating system: On Windows, by default: c:\windows\system32\drivers\etc\hosts
+
+On Unix: /etc/hosts On Mac OS® X: /private/etc/hosts
+
+Note: If HCP is not included in your DNS, the tenant domain name is a dummy domain name that follows the conventions for well-formed DNS names.
+
+Hostname mappings
+
+Each entry in a hosts file is a mapping of an IP address to a hostname. For an HCP tenant, the hostname must be the fully qualified domain name (FQDN) for the tenant.
+
+Each hosts file entry you create for access to a tenant must include: An IP address of a node in the HCP system
+
+The FQDN of the tenant domain
+
+For example, if the tenant domain name is finance.hcp.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you
+
+could add either or both of these lines to the hosts file on the client: 192.168.210.16 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name
+
+depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the system through the management API.
+
+Sample hosts file
+
+Here’s a sample hosts file that contains mappings for the Finance tenant for nodes with both IPv4 and IPv6 addresses: 192.168.210.16 finance.hcp.example.com 192.168.210.17 finance.hcp.example.com
+
+192.168.210.18 finance.hcp.example.com 192.168.210.19 finance.hcp.example.com
+
+2001:0db8::101 finance.hcp.example.com 2001:0db8::102 finance.hcp.example.com
+
+2001:0db8::103 finance.hcp.example.com 2001:0db8::104 finance.hcp.example.com Object naming considerations
+
+When naming objects, directories, and symbolic links, keep these considerations in mind:
+
+The name of each item must conform to POSIX naming conventions. In particular:
+
+Object names are case sensitive.
+
+Object names can include nonprinting characters, such as spaces and line breaks. All characters are valid except the NULL character (ASCII 0 (zero)) and the forward slash (ASCII 47 (/)), which is the separator character in directory paths.
+
+Object names cannot consist of a single period (.) or a single forward slash (/). The client operating system, in conjunction with HCP, ensures that object specifications are converted, as needed, to conform to POSIX requirements (for example,
+
+when using CIFS, backslashes (\) are converted to forward slashes (/)).
+
+.directory-metadata is a reserved name. The maximum length for the combined directory path and name of an object, symbolic link, or metafile, starting below rest, data, or metadata, including separators, is 4,095
+
+bytes. For CIFS and NFS, the maximum length of an individual item name is 255 bytes. This applies not only to naming new objects but also to retrieving existing objects.
+
+Therefore, an object stored through HTTP or WebDAV with a longer name may not be accessible through CIFS or NFS. Some character-set encoding schemes, such as UTF-8, can require more than one byte to encode a single character. As a result, such encoding can invisibly increase the

@@ -1,0 +1,57 @@
+integer
+
+The exact time that the timestamp request was issued in milliseconds.
+
+metricsTimestamp
+
+integer
+
+The exact time that the metrics were collected in milliseconds.
+
+Example: Retrieving node status
+
+Here's a sample request that retrieves a return status code and node metrics for a node in the system. In this example, the target node IP address is 192.168.210.16 and the requested output format is JSON. Request with cURL command line
+
+curl -i http://192.168.210.16/node_status?type=metrics&format=json
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Response body in JSON
+
+curl -i http://<node-ip>/node_status?type=metrics&format=json curl -i -H "Accept: application/json" http://<node-ip>/node_status?type=metrics Response status code: 200 Response body:
+
+{ "httpConnections" : "1",
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+186/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+"cpuUser" : "0.47", "cpuSystem" : "0.58",
+
+"iowait" : "0.04", "swapout" : "0.00", "volume" : [ { "id" : "archive033", "blocksRead" : "0.00", "blocksWrite" : "0.27", "diskUtilization" : "0.00" }, { "id" : "archive034",
+
+"blocksRead" : "0.00", "blocksWrite" : "0.20", "diskUtilization" : "0.00" } ], "frontendBytesRead" : "0.08", "frontendBytesWrite" : "1.36", "backendBytesRead" : "0.75", "backendBytesWrite" : "0.71", "requestTimestamp" : "1510870948196", "metricsTimestamp" : "1510870801000"
+
+} Configuring the Hitachi Device Manager connection
+
+With HCP with SAN-attached storage systems only, HCP can push information to Hitachi Device Manager (HDvM), so you can monitor and manage HCP along with your other Hitachi storage systems from a single console. You use the HDvM page in the HCP System Management Console to configure and test the connection between HCP and HDvM.
+
+HCP supports IPv4 and IPv6 network connections to HDvM servers. However, HDvM support for IPv6 network connections varies based on the HDvM server operating system. For information about requirements for HDvM servers that support IPv6 networks, see the applicable Hitachi Command Suite documentation.
+
+You can configure HCP to automatically push the information. You can also manually request a push at any time.
+
+To display the HDvM page, in the top-level menu of the System Management Console, select Monitoring > HDvM. To view the HDvM page, you need the monitor or administrator role. To configure the HDvM connection, you need the administrator role.
+
+The HDvM page shows the date and time HCP last pushed information to HDvM and the HDvM response to that action. If the last attempt to push information was unsuccessful, the panel also shows the time of and response to the last successful push.
+
+Note: A response message of “Partial update” may be the result of a transient error (for example, a LUN scan that hasn’t finished yet). If you see this message, wait a few minutes. Then request the information push again. If you see this message repeatedly, contact your authorized HCP service provider for help.
+
+For information about using HDvM, see the applicable HDvM documentation.
+
+Configuring HCP to work with HDvM

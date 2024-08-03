@@ -1,0 +1,109 @@
+Description
+
+description
+
+String
+
+Specifies the description of the service plan.
+
+name
+
+String
+
+Specifies the name of the service plan.
+
+Example
+
+Here’s an XML example of the availableServicePlan data type:
+
+<availableServicePlan> <name>Platinum</name> <description>Most highly available, best performance -- suitable for data that will be frequently accessed or modified throughout its life</description> </availableServicePlan> certificate
+
+The certificate data type retrieves information about current and past replication certificates.
+
+certificate data type properties
+
+The following table describes the property included in the certificate data type.
+
+Property name Data type Description
+
+id
+
+String
+
+Specifies the system-supplied unique ID for the replication certificate. HCP generates this ID automatically when the certificate is generated.
+
+subjectDN
+
+String
+
+Specifies the distinguished name of the certificate and its specified attributes
+
+validOn
+
+Date
+
+Specifies the certificate activation date.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+445/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name Data type Description
+
+expiresOn
+
+Date
+
+Specifies the certificate expiration date.
+
+Example
+
+Here's an XML example of the certificate data type:
+
+<certificate> <expiresOn>2021-12-12T15:35:10-0500</expiresOn> <id>server</id> <subjectDN>CN=*.example.com, OU=HCP, O=Hitachi, L=Waltham, ST=Massachusetts, C=US</subjectDN> <validOn>2016-12-12T15:35:10-0500</validOn> </certificate> certificates
+
+The certificates data type describes the certificates resource.
+
+certificates data type properties
+
+The following table describes the property included in the certificates data type.
+
+Property name
+
+Data type
+
+Description
+
+certificate
+
+certificate
+
+Specifies information about individual certificates. Example
+
+Here's an XML example of the certificates data type:
+
+<certificates> <certificate> <expiresOn>2021-12-12T15:35:10-0500</expiresOn> <id>server</id> <subjectDN>CN=*.example.com, OU=HCP, O=Hitachi, L=Waltham, ST=Massachusetts, C=US</subjectDN> <validOn>2016-12-12T15:35:10-0500</validOn> </certificate> </certificates> chargebackData
+
+The chargebackData data type describes the chargebackData property of the chargebackReport data type. The chargebackReport data type is used to generate chargeback reports.
+
+Most of the properties in the chargebackData data type represent statistics that describe the usage of a given namespace or of all the namespaces owned by a given tenant. In a chargeback report, each set of these statistics applies to one namespace or tenant during a given reporting interval (for example, one hour or one day).
+
+Chargeback statistics either reflect a point in time or are dynamic. Point-in-time statistics are measurements taken at the end of a reporting interval, such as the used storage capacity for a namespace at the end of an hour. Dynamic statistics are measurements, such as the number of reads or writes to a namespace, that are accumulated over time. HCP accumulates dynamic statistics on an hourly basis, starting at the beginning of each hour. So, for example, if the reporting interval is an hour, one statistic might represent the number of successful writes to a namespace that occurred between 11:00:00 and 11:59:59. If the reporting interval is a day, each reported dynamic statistic is the sum of the hourly values for the day, where the day starts at 00:00:00 and ends at 23:59:59. Properties
+
+The table below describes the properties included in the chargebackData data type. When the output format for a chargebackReport resource is CSV, the properties included in the chargebackData data type are ordered. This table lists the properties in the order in which they appear in a CSV response body. Property name
+
+Data type
+
+Description
+
+Notes
+
+systemName
+
+String
+
+One of:

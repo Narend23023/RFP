@@ -1,0 +1,77 @@
+If the persistent connection timeout period is too short, ask your tenant administrator about having it changed.
+
+Note: With persistent connections, if a single IP address has more than 254 concurrent open connections, those above the first 254 may have to wait as long as ten minutes to be
+
+serviced. This includes connections where the request explicitly targeted the IP address, as well as connections where the HCP hostname resolved to the target IP address. To avoid this issue, either don’t use persistent connections or ensure that no more than 254 threads are working against a single node at any time. Connection failure handling
+
+You should retry a REST API request if either of these happens:
+
+The client cannot establish an HTTP connection to the HCP system. The connection breaks while HCP is processing a request. In this case, the most likely cause is that the node processing the request became unavailable.
+
+When retrying the request:
+
+If the original request used the hostname of the HCP system in the URL, repeat the request in the same way. If the original request used an IP address, retry the request using either a different IP address or the hostname of the system.
+
+If the connection breaks while HCP is processing a GET request, you may not know whether the returned data is all or only some of the object data. In this case, you can check the
+
+number of returned bytes against the content length returned in the HTTP Content-Length response header. If the numbers match, the returned data is complete. Multithreading with the REST API
+
+HCP lets multiple threads access a namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple
+
+directories.
+
+HCP has a limit of 255 concurrent HTTP connections per node, with another 20 queued. The REST, S3 compatible, and WebDAV APIs share the same connection pool.
+
+Tip: For better performance, consider limiting the number of concurrent read threads per node to 200 and concurrent write threads per node to 50 for small objects. For large objects, consider using fewer threads. HTTP 500 and 503 status code considerations
+
+When HCP returns an HTTP 500 (Internal Server Error) or 503 (Service Unavailable) error code, applications should try the request again. If necessary, retry the request multiple
+
+times with a gradually increasing delay between each attempt.
+
+Session cookie encoding
+
+In the response to a client request, HCP includes a cookie that contains encoded session information.
+
+HCP supports two formats for encoding the session cookie:
+
+RFC2109
+
+HCP used only this format in releases 5.0 and earlier.
+
+RFC6265
+
+HCP has used this format by default in all releases since 5.0.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+788/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+You can use the X-HCP-CookieCompatibility request header to specify the format HCP should use to encode the session cookie. Valid values for this header are RFC2109 and RFC6265. The X-HCP-CookieCompatibility header is:
+
+Optional and typically not used for RFC6265
+
+Required for RFC2109
+
+WebDAV
+
+This section of the Help contains information on using the WebDAV namespace access protocol.
+
+Using WebDAV
+
+WebDAV is one of the industry-standard protocols HCP supports for namespace access. To access a namespace through WebDAV, you can write applications that use any standard
+
+WebDAV client library, or you can use a command-line tool, such as cadaver, which supports WebDAV.
+
+Using the WebDAV protocol, you can store, view, retrieve, and delete objects. You can also add and delete custom metadata, as well as change certain system metadata for existing objects.
+
+Note: Using WebDAV, you can store and retrieve the default annotation only. It cannot access other annotations.
+
+HCP is compliant with WebDAV level 2, as specified by RFCs 2518 and 4918.
+
+To access a namespace through WebDAV, this protocol must be enabled in the namespace configuration. If you cannot use the WebDAV protocol to access the namespace, contact your tenant administrator.
+
+The WebDAV examples use cadaver open-source software, which you can download from https://pkgs.org/download/cadaver.

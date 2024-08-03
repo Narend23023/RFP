@@ -1,0 +1,43 @@
+With the REST, S3 compatible, or CIFS protocol configured to support both authenticated and anonymous access:
+
+If a user presents credentials, HCP tries to authenticate the user. If the credentials are valid, HCP continues processing the request. If the credentials are invalid, HCP rejects the request. With REST and CIFS, if a user does not present credentials, HCP continues processing the request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+285/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help With the S3 compatible API, if a user presents the clear-text username all_users, HCP continues processing the request. If the user does not present either credentials or all_users, HCP rejects the request.
+
+Configuring the REST, S3 compatible, and WebDAV APIs
+
+With the REST and S3 compatible APIs, users and applications can add, view, and delete objects and modify object metadata through a RESTful API. With the WebDAV API, users and applications can perform these activities through familiar directory structures. REST, S3 compatible, and WebDav API configuration
+
+You use the HTTP(S) panel to enable and configure the REST, S3 compatible, and WebDAV APIs for a namespace. To display this panel, on the left side of the Protocols panel, click
+
+HTTP(S).
+
+Although you use a single panel to enable these protocols, you enable or disable them independently of each other.
+
+Before you can enable the S3 compatible API for a namespace, ACLs must be enabled for the namespace.
+
+The top of the HTTP(S) panel shows the URL for access to the namespace through the REST API. If the HTTPS port is open or if neither the HTTPS or HTTP port is open, this URL starts with https. If only the HTTP port is open, the URL starts with http. Note: Certain countries prohibit the export of encryption technology. HCP systems shipped to restricted countries have the HTTPS option on the namespace protocols page disabled. If you do not see the checkbox to enable HTTPS and you are in a country where SSL encryption is permitted, please contact your HCP system administrator.
+
+The HTTP(S) panel lets you:
+
+Enable the REST API. Enable the S3 compatible API. Enable the WebDAV API. Specify whether the REST, S3 compatible, and WebDAV APIs require the use of SSL security. Specify whether the REST, S3 compatible APIs require user authentication for access to the namespace. If the tenant supports user authentication with Active Directory, specify whether HCP supports AD single sign-on for REST and S3 compatible APIs access to the namespace. This affects the Namespace Browser, HCP Search Console, and other HTTP-based applications that support Integrated Windows authentication. Specify whether the WebDAV API requires basic authentication for access to the namespace. If WebDAV basic authentication is enabled, specify the username and password against which HCP authenticates WebDAV access to the namespace.
+
+The username and password you specify for WebDAV basic authentication has no relationship to HCP or AD user accounts.
+
+Tip: Be sure to give WebDAV users the specified username and password.
+
+Specify whether WebDAV dead properties can be stored as custom metadata. If they can be, they are stored in the annotation named default. Specify the client IP addresses that have access to the namespace through the REST, S3 compatible, and WebDAV APIs.
+
+By default, when a namespace is first created, the REST API is enabled with authentication required. If the HCP system supports the use of SSL for data access, the REST API also requires the use of SSL security by default. Considerations for the S3 compatible API
+
+The following considerations apply to using the S3 compatible API:
+
+You can enable the S3 compatible API for a namespace only while ACLs are enabled for the namespace. For users and applications to be able to perform most bucket-level operations with the S3 compatible API, the HCP management API must be enabled for the tenant. For a user or application to be able to create and manage namespaces with the S3 compatible API, the applicable user or group account must have the allow namespace management property enabled. Only cloud-optimized namespaces support the use of multipart uploads with the S3 compatible API.
+
+Enabling REST, S3 compatible, and WebDAV access to a namespace

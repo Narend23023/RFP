@@ -1,0 +1,87 @@
+If an extended storage tier contains multiple storage pools, HCP evenly distributes object data that is stored on that tier across all of those pools. For this reason, each extended
+
+storage pool that is configured for a given storage tier should be configured to use the same compression setting (enabled or disabled). If you change the encryption or compression setting for a given HCP S Series or extended storage pool, the change affects only the data that is stored after you make the change.
+
+HCP does not change the data that is already stored on the storage that is used for the pool. As a result, an HCP S Series or extended storage pool may contain both encrypted and
+
+unencrypted data and both compressed and uncompressed data at the same time.
+
+Downloading an encryption key
+
+You use the Storage Certificates & Keys page of the System Management Console to download an encryption key.
+
+1. In the System Management Console, click the Storage tab at the top of the page. The Storage Overview page opens.
+
+2. On the side pane, click the Certificates & Keys tab. The Storage Certificates & Keys page opens.
+
+3. In the Encryption Keys pane, click the Download Key (
+
+) next to the key that you want to download.
+
+For an encryption key, the download requires you to specify a password. HCP uses this password to encrypt the key before downloading it. The Download Encryption Key dialog box opens.
+
+4. In the Secret Key password field, type a password for the key. The password can contain any valid UTF-8 characters, including white space.
+
+5. In the Confirm Password field, type the password again. Then click Download. 6. Save the key file.
+
+Uploading an encryption key
+
+You use the Storage Certificates & Keys page of the System Management Console to upload a storage encryption key. This operation is available only if the cluster does not contain
+
+any objects. The operation is used for disaster recovery.
+
+1. In the System Management Console, click the Storage tab at the top of the page. The Storage Overview page opens.
+
+2. On the side pane, click the Certificates & Keys tab.
+
+The Storage Certificates & Keys page opens.
+
+3. In the Encryption Keys pane, click Upload Key. The Upload Key dialog box opens.
+
+a. In the Secret Key Password field, enter the password for the key.
+
+b. For the Key File field, click Browse and select the PGP private key file that you want to upload. c. Click Upload Key.
+
+The dialog box closes. At the top of the Storage Certificates & Keys page, a success or error message appears. Working with HCP S Series storage components
+
+HCP uses HCP S Series storage components to:
+
+Monitor the general health, read permissions, and write permissions of the storage
+
+Manage node settings
+
+Add buckets and accounts
+
+Suspend or abandon the HCP S Series storage
+
+Configure advanced settings
+
+Add an S Series Node to your HCP system
+
+When you add an HCP S Series Node to your HCP system, HCP automatically creates a storage component, a storage pool (if an HCP S Series storage pool does not already
+
+exist), and a bucket. A user account is also created. The user account is granted permission to manage buckets and storage pools. Bucket creation
+
+The bucket that HCP creates when you add an S Series Node is available only to that HCP system. The name of this bucket is:
+
+hcpsrv-hcp-system-name
+
+If a bucket with that name already exists, which can happen if the S Series Node is added to the HCP system a second time, HCP creates a new bucket named: hcpsrv-hcp-system-name0
+
+Subsequently, each time HCP automatically creates a new bucket on the S Series Node, HCP either increments the numeric suffix on the bucket name by one or reuses an earlier
+
+name from a deleted HCP software-created bucket.
+
+User account creation
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+40/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The user account that HCP creates when you add an S Series Node is:
+
+hcpsrv-hcp-system-name

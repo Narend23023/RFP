@@ -1,0 +1,65 @@
+include delete markers or delete records. When you delete an object from a versioning-enabled namespace, a delete marker is created to indicate that the object has been deleted. A delete marker has a version ID but does not have any data or metadata. For more information on delete markers and delete records please see Enabling delete markers section in Versioning.
+
+Multipart objects are each counted as a single object. Objects that are in the process of being created by a multipart upload are not included in the object count. Indexed
+
+The total number of indexed objects currently stored in all the tenant's namespaces. This item appears only if the tenant has the search feature and a search facility is currently selected for use with the Search Console.
+
+Erasure coded
+
+The total number of erasure-coded objects in all the tenant's namespaces. An object is counted as erasure coded if a chunk for it is stored on the current system.
+
+Each multipart object counts as one object even though the parts of a multipart object are erasure coded independently of each other. Storage section
+
+For HCP tenants only, the Overview panel includes a Storage section. This section shows:
+
+Quota
+
+The total amount of storage available to the tenant for allocation to its namespaces. Used
+
+The total amount of storage currently used by all the tenant's namespaces to store object data, system and custom metadata, and any redundant data required to satisfy data protection level and metadata protection level settings in service plans.
+
+Used storage includes storage occupied by the parts of in-progress multipart uploads that have already been written to the repository. Used storage does not include replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads.
+
+Note: The size of the data for an object created by a completed multipart upload may be slightly less than the total size of the parts before the multipart upload was completed.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+90/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Available
+
+The amount of unused storage still available to the tenant. Creating a tenant
+
+The information you provide when creating the default tenant differs from the information you provide for HCP tenants. This is because:
+
+When you create the default tenant, HCP automatically creates the default namespace as well HCP administers storage usage differently for the default tenant
+
+This section contains separate procedures for creating the two types of tenants.
+
+Note: To create an HCP tenant or the default tenant and namespace, you need the administrator role.
+
+You can create the default tenant and namespace only if allowed to do so by the system configuration.
+
+Creating an HCP tenant
+
+You create HCP tenants in the System Management Console. After an HCP tenant exists, tenant administrators can use the Tenant Management Console to create namespaces for the tenant. HCP tenant properties
+
+You specify a set of properties when you create a tenant.
+
+You can specify the following tenant properties:
+
+A name for the tenant. This name determines the URL for the tenant.
+
+When naming tenants, keep in mind that each tenant name must be unique within an HCP system. For example, you cannot create a tenant named finance for each of two different customers. You could, however, create a tenant named cust1-finance for Customer 1 and another tenant named cust2-finance for Customer 2.
+
+Also, keep in mind that you cannot replicate a tenant to another HCP system that already has a different tenant with the same name.
+
+You can change the tenant name at any time after you create the tenant, except while the CIFS or NFS protocol is enabled for any of the tenant's namespaces. However, keep in mind that when you change the tenant name, you are also changing the URLs for the tenant and its namespaces. Be sure to notify the tenant contact when you change the name of a tenant.
+
+Optionally, a description of the tenant. For example, you can use a description to specify the name of the organization for which you’re creating the tenant.
+
+You can change this description at any time after you create the tenant.

@@ -1,0 +1,77 @@
+If the target of the request is an object, you use a URL in either of these formats:
+
+http[s]://bucket-name.tenant-name.hcp-domain-name/hs3/object-name http[s]://tenant-name.hcp-domain-name/hs3/bucket-name/object-name
+
+In the first format above, the bucket name is part of the hostname. In the second format, the bucket name follows the hostname and hs3 interface identifier.
+
+Here’s are examples in which the tenant name is europe, the bucket name is finance, and the object name is Q4_2019.ppt: https://finance.europe.hcp.example.com/hs3/Q4_2019.ppt https://europe.hcp.example.com/hs3/finance/Q4_2019.ppt
+
+In these formats, the hs3 interface identifier is case sensitive and must be all lowercase.
+
+Note: Do not use the hs3 interface identifier when using AWS authentication.
+
+HCP authentication
+
+To provide credentials for HCP authentication, you use the Authorization request header with a value in the format shown below: Authorization: HCP access-key:secret-key
+
+In this format:
+
+access-key
+
+The Base64-encoded username for your user account.
+
+secret-key The MD5-hashed password for your user account.
+
+Here’s an example of an Authorization header for HCP authentication:
+
+Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97
+
+With HCP authentication, the Authorization header for requesting anonymous access looks like this:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+681/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Authorization: HCP all_users:
+
+Using third-party tools with the Hitachi API for Amazon S3
+
+The Hitachi API for Amazon S3 is compatible with many third-party tools that support Amazon S3. These tools generally require some setup before you can use them.
+
+This section of the Help describes the information you need to set up third-party tools to work with the S3 compatible API. It also contains specific instructions for setting up s3curl to work with the S3 compatible API. General setup information for third-party tools
+
+Typically, when configuring a third-party tool to work with the S3 compatible API, you need to provide this information:
+
+Service point
+
+This is the fully qualified hostname of the tenant in the context of which you plan to create and manage buckets and the objects in them. For example, if the tenant name is europe and the HCP system domain name is hcp.example.com, you specify the service point like this: europe.hcp.example.com
+
+Access key
+
+This is the Base64-encoded username for the HCP user account you want to use for authenticated access to HCP.
+
+Secret key
+
+This is the MD5-hashed password for the above HCP user account.
+
+s3curl setup
+
+The examples in this book use s3curl, which is a freely available open-source tool that you can install on your client computer. You can download s3curl from http://aws.amazon.com/code/128.
+
+After installing s3curl, you need to configure it to work in your environment.
+
+Specifying an access key and secret key
+
+To specify the access key and secret key for an HCP user account, create a file named .s3curl in your home directory. In this file, provide the necessary information in this format:
+
+%awsSecretAccessKeys = ( # HCP accounts account-name => { id => 'access-key', key => 'secret-key', }, );
+
+account-name is the name to use in the id parameter in your s3curl commands.
+
+For example:
+
+%awsSecretAccessKeys = ( # HCP accounts lgreen => { id => 'bGdyZWVu', key => '35dc4c4aa08fe0deab7e292e00eb8e97', }, );

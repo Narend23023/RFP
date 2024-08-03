@@ -1,0 +1,59 @@
+Changing the protocol optimization for a namespace
+
+A namespace can be optimized for all namespace access protocols or for cloud protocols only. Optimization for all protocols is required if clients will be using the WebDAV, CIFS, NFS, or SMTP protocol to access the namespace. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+283/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Optimization only for cloud protocols increases the ingest rate for the namespace but also configures the namespace to ingest objects exclusively through the cloud protocols (REST and the S3 compatible API). This setting is recommended if clients will be using only cloud protocols to access the namespace.
+
+Only cloud-optimized namespaces can allow erasure coding. Also, only cloud-optimized namespaces support multipart uploads with the S3 compatible API.
+
+You can change the protocol optimization setting for a namespace from optimized only for cloud protocols to optimized for all protocols only if all of these are true:
+
+The namespace does not contain any objects.
+
+The namespace does not allow erasure coding. The namespace is not configured for unbalanced directories. The namespace is not configured to use S3 Object Lock. You can change the protocol optimization setting from optimized for all protocols to optimized only for cloud protocols only if the namespace doesn't have any noncloud protocols enabled.
+
+A system administrator can change a tenant from not being able to choose whether namespaces allow erasure coding to being able to do this. After this change occurs, when you enable cloud optimization for a preexisting namespace that was not cloud optimized and that did not allow erasure coding, the namespace is automatically configured to allow erasure coding.
+
+Note: You cannot make protocol optimization changes while an HCP system upgrade is in progress.
+
+To view the protocol optimization setting for a namespace, you need the monitor or administrator role.
+
+To change the protocol optimization setting for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the namespace, click the Settings tab. 4. In the namespace left-hand navigation bar, click Optimization. 5. In the Optimization panel, select Optimized for all protocols or Optimized for cloud protocols only. 6. Click Update Settings. If you selected Optimized for cloud protocols only, a confirming message appears.
+
+7. In the field in the message window, type YES (this is case sensitive) to confirm that you understand the consequences of your action. 8. Click Update Settings.
+
+IP addresses for namespace access
+
+For each namespace access protocol, you have the option of allowing access only from specific IP addresses. For all but NFS, you can also deny access to the namespace from specific IP addresses.
+
+Tip: For enhanced security, restrict access to namespaces to as few IP addresses as possible. The Tenant Management Console panels for the namespace access protocols each contain an Allow list and, except for the NFS panel, a Deny list. Each list has an associated field in which you type entries for it.
+
+Add entries in Allow and Deny lists
+
+Changes you make to either list of IP addresses take effect immediately.
+
+1. In the field above the list, type the entry you want. 2. Click Add. Remove entries in Allow and Deny lists
+
+To remove a single entry, click the delete control (
+
+) for that entry.
+
+To remove all entries, click Delete All.
+
+Changes you make to either list of IP addresses take effect immediately.
+
+Valid Allow and Deny list entries
+
+Each entry in an Allow or Deny list can be one of: An IP address A comma-separated list of IP addresses
+
+A range of IP addresses specified as ip-address/subnet-mask (for example, 192.168.100.197/255.255.255.0) or in CIDR format (for example, 192.168.100.0/24)
+
+The CIDR entry that matches all IP addresses is 0.0.0.0/0. Allow and Deny list handling

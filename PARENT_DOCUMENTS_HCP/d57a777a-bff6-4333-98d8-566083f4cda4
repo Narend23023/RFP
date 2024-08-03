@@ -1,0 +1,77 @@
+This chapter provides instructions for performing simple searches. It explains the rules for specifying the search criteria and the options that determine whether objects are included in the search results. It also includes several examples.
+
+Once you have the results of a simple search, you can filter and export them. You can also save the search criteria as a reusable query.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+879/907
+
+6/25/24, 11:34 AM Content Platform System Management Help
+
+Note: When the metadata query engine is active, the Simple Search page is called the Simple Query page and simple searches are called simple queries.
+
+About simple searches
+
+Simple queries compare the specified text to the names of objects and, depending on how indexing is configured, the content of custom metadata that is well-formed XML.
+
+To perform a simple search, you use the Simple Search page of the Search Console. On this page, you can type one or more separate words or phrases (called search terms) and select one of three kinds of comparison:
+
+Any of these words
+
+returns objects that match at least one of the specified search terms.
+
+All of these words
+
+returns objects that match every one of the specified search terms.
+
+This exact phrase
+
+returns objects that match a single word or phrase exactly as specified, including any white space embedded in it.
+
+You can use wildcard characters to generate more matches for your search terms. With any and all, you can also create Boolean criteria for more complex text-based searches. Search terms
+
+For any and all searches, you can specify any number of search terms separated by spaces. For exact searches, all the text you enter is taken as one term, including any embedded spaces. Additionally, for exact searches, any number of consecutive embedded spaces in the term equals any number of consecutive spaces in the matching text.
+
+Note: When comparing search terms to object content, the active search facility treats each portion of a word split by a line break, with or without a hyphen, as a separate word
+
+Search terms are not case sensitive.
+
+You can perform a simple search without specifying any search terms. Such a search returns all the indexed objects in each searchable namespace.
+
+Here are sample terms for a simple search: executive officer
+
+Here’s what a search with these terms returns:
+
+For an any search, all objects that contain at least one occurrence of the word executive or the word officer For an all search, all objects that contain at least one occurrence of the word executive and at least one occurrence of the word officer For an exact search, all objects that contain at least one occurrence of executive followed by officer with white space or special characters between the two words Metadata query engine search terms
+
+When you perform simple queries while the metadata query engine is active, you need to specify search terms that are complete alphabetic or complete numeric values. For
+
+example, a simple query that contains the search term 2012 finds the object named Q1_2012.ppt. A simple query that contains the search term 12 does not find this object.
+
+The metadata query engine treats strings of all-alphabetic characters and strings of all-numeric characters as search terms and treats all other characters as search term separators,
+
+both in the text you enter and in text being searched. Therefore, test123 is treated as two search terms, test and 123. Similarly, left-handed is treated as two separate search terms, left and handed. Therefore, an any search for test matches test123 and an any search for left matches left-handed. The metadata query engine treats multiple strings that contains all-alphabetic characters as multiple search terms. If multiple strings are enclosed inside brackets and those strings
+
+are separated by any special characters, these special characters will be used as search term separators. For example, the term (left-handed) inside brackets, is treated as two search terms - left and handed.
+
+The search string (left-handed) matches these strings:
+
+Both words left and handed. Either word left or handed.
+
+Examples that match these strings:
+
+left-xxxx left xxxx
+
+xxxx-left xxxx left
+
+handed-xxxx handed xxxx
+
+xxxx-handed xxxx handed
+
+left xxx handed
+
+Examples that does not match these strings:
+
+lefth andled
+
+lef thanded lefth-andled lef-thanded

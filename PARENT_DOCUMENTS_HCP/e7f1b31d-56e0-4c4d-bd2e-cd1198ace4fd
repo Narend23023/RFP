@@ -1,0 +1,49 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+423/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<name>Sales-Mktg</name> </tenants>
+
+</content>
+
+Example: Adding an HCP tenant to a replication link
+
+Here’s a sample PUT request that adds the tenant named Finance to the replication link named MA-CA. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp-ma.example.com:9090/mapi/services/replication/links/ MA-CA/content/tenants/Finance"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL,
+
+"https://admin.hcp-ma.example.com:9090/mapi/" + "services/replication/links/4-3/content/tenants/LisaTenant-2") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "PUT") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() Request headers
+
+PUT /mapi/services/replication/links/MA-CA/content/tenants/Finance HTTP/1.1 Host: admin.hcap-ma.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Setting the schedule for a replication link
+
+Here’s the a sample POST request that sets the local and remote schedules for an active/active link named MA-CA. The new schedule is in an XML file named schedule_MA- CA.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<schedule> <local> <scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sun:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> <transition> <time>Sat:00</time>
+
+<performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Sat:06</time> <performanceLevel>MEDIUM</performanceLevel> </transition> </local> <remote> <scheduleOverride>NONE</scheduleOverride> <transition> <time>Sun:00</time> <performanceLevel>HIGH</performanceLevel> </transition> <transition> <time>Mon:00</time> <performanceLevel>MEDIUM</performanceLevel> </transition> </remote>
+
+</schedule>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+424/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

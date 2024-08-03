@@ -1,0 +1,55 @@
+Shows the number of bytes of data read from HCP S Series and extended storage, where the data was on that storage due to the service plan.
+
+Reads (operations)
+
+Shows the number of read operations that successfully retrieved data from HCP S Series and extended storage, where the data was on that storage because of the service plan.
+
+Each read of a part of a multipart object counts as a separate read operation. About storage reports
+
+Storage reports contain statistics about the use of HCP S Series, extended storage, and service plans over time. These reports are a good source of information for storage
+
+analysis, enabling you to monitor storage usage patterns at either the component, pool, or service plan level.
+
+Each storage report covers one of these: A single storage component, single storage pool, or single service plan
+
+All storage components, all storage pools, or all service plans All storage components, storage pools, and service plans
+
+Storage reports do not include statistics for components and pools representing primary storage.
+
+You generate storage reports from the HCP System Management Console. For each report, you specify the start and end dates of the report period, which is the time period covered
+
+by the report. You also specify the reporting interval, which determines whether HCP generates hourly, daily, or total values for the report period.
+
+Storage reports contain aggregated namespace statistics for each tenant that's defined on the HCP system, including the default tenant. For example, for a given tenant and a given storage component, the number of read operations shown for a specific reporting interval is the total number of read operations that: Targeted storage represented by the component Occurred during the reporting interval
+
+Targeted objects in the tenant's namespaces
+
+Storage reports also contain aggregated tenant statistics for the HCP system as a whole. Additionally, for an HCP tenant that has granted system-level administrative access to itself, storage reports contain statistics for the individual namespaces owned by that tenant.
+
+HCP generates storage reports in CSV format. Each line in a report contains the values for one namespace, for one tenant, or for the entire HCP system during a specific reporting interval (that is, during a specific hour, during a specific day, or during the entire report period).
+
+Generating a storage report
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+71/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help When generating a storage report, you need to specify what the report is for, the report period, and the reporting interval. A report can be for one or all components, pools, or service plans or for all components, pools, and service plans.
+
+To specify the report period, you select start and end dates. The report period starts at 12:00:00 a.m. on the start date (shown as 00:00:00) and ends at 11:59:59 p.m. on the end date.
+
+The earliest start date you can specify is either 30 days earlier than the current date or the date when the HCP system was installed (if the system was installed less than 30 days
+
+ago). The latest end date you can specify is the current date.
+
+You can use the same date as the start date and the end date for a report period. In this case, the report period starts at 12:00:00 a.m. on the specified date and ends at 11:59:59 p.m. on that date.
+
+The reporting interval you select determines whether the report contains hourly, daily, or total statistics:
+
+An hourly report contains one set of statistics for each hour in the report period for which statistics are available.
+
+If the report period starts on the day when the HCP system was installed, the first set of statistics in the report covers the time the system first came online through the end of the last minute in that hour. For example, if the system came online at 2:30:20 p.m. on July 25th and the report period starts on July 25th, the first set of statistics in the report covers 2:30:20 p.m. through 2:59:59 p.m. on July 25th.
+
+If the report period ends on the current day, the last set of statistics in the report covers the time from the start of the current hour to the time when you requested the report.

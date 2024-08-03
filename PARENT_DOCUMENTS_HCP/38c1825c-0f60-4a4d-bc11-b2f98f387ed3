@@ -1,0 +1,77 @@
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user doesn’t have write permission. The object is under retention, and the namespace does not allow adding or replacing annotations for objects under retention.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP-specific X-HCP-Err orMessage header.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find an object or version at the specified URL. The specified object or version does not exist, or the request specified the current version of an object that has been deleted.
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+413 File Too Large
+
+The request is trying to store a non-default annotation that is larger than one MB or a default annotation
+
+that is larger than one GB. The maximum size of the default annotation is one GB, and the maximum size for all other annotations is one MB
+
+415
+
+Unsupported Media Type
+
+The request has a Content-Encoding header with a value other than gzip.
+
+Example: Storing an annotation for an object
+
+Here’s a sample HTTP PUT request that stores an annotation named report_data containing XML specified in the Q1_2012.custom-metadata.xml file for an existing object named
+
+Q1_2012.ppt. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+iT Q1_2012.custom-metadata.xml "https://finance.europe.hcp.example.com/ rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata &annotation=report_data"
+
+Request in Python using PycURL
+
+import pycurl
+
+import os filehandle = open("Q1_2012.custom-metadata.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \ &annotation=report_data")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+768/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.setopt(pycurl.INFILESIZE,
+
+os.path.getsize("Q1_2012.custom-metadata.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata&annotation=report_data HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 317 Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com

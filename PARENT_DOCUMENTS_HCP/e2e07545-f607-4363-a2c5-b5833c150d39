@@ -1,0 +1,135 @@
+object data. Retry the request, targeting a different system in the replication topology.
+
+For a PUT request to copy an object or version, the source object is in the process of being deleted.
+
+For a PUT request to copy an object or version, the source object exists, but the HCP system does not have the source object data. Retry the request, targeting a different system in the replication topology.
+
+412
+
+Precondition Failed
+
+GET, HEAD, or PUT with If-
+
+One of:
+
+Match or If-Unmodified- Since header
+
+The request specified an If-Match header, and the ETag of the requested object or version does not match the value in the header.
+
+PUT with
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+820/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+If-None-Match, X-HCP-Copy-Source-If- Match, or
+
+A PUT request specified an If-None-Match header, and the ETag of the requested object or version matches the value in the header. The request specified an If-Unmodified-Since header, and the object change time is after the time specified in the header.
+
+X-HCP-Copy-Source-If- Unmodified-Since header
+
+413
+
+File Too Large
+
+PUT
+
+One of:
+
+Not enough space is available to store the object. Try the request again after
+
+objects or versions are deleted from the namespace or the namespace capacity is increased.
+
+The request is trying to save an object that is larger than two TB. HCP cannot store objects larger than two TB.
+
+The request is trying to store a default annotation that is larger than one GB or any other annotation that is larger than one MB.
+
+414 Request URI Too Large
+
+All
+
+The portion of the URL following rest is longer than 4,095 bytes.
+
+415
+
+Unsupported Media Type
+
+POST
+
+One of:
+
+The request has a Content-Encoding header with a value other than gzip. For a PUT request for an ACL, the request has a Content-Type header with a value other than application/xml or application/json.
+
+416 Requested Range Not Satisfiable
+
+GET with a Range header
+
+One of:
+
+The specified start position is greater than the size of the requested data.
+
+The size of the specified range is zero.
+
+500
+
+Internal Server Error
+
+All
+
+An internal error occurred. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error happens repeatedly, please contact your tenant administrator.
+
+503 Service Unavailable
+
+All
+
+One of:
+
+The request includes a Content-Length header with a value larger than the length of the message body For a GET request to retrieve object data or an annotation, the request specifies the nowait query parameter, and HCP determined that the request would have taken a significant amount of time to return the data.
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade.
+
+In the last two cases, try the request again, gradually increasing the delay between each successive attempt. If the error persists, please contact your tenant administrator.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header. REST API non-HTTP response headers
+
+The headers returned by HCP in response to REST API requests are either standard HTTP response headers or HCP-specific response headers. The following table describes the HCP-specific response headers.
+
+Header
+
+Methods
+
+Description
+
+X-HCP-ACL
+
+HEAD for an object, version, or ACLs
+
+A true or false value indicating whether the object has an ACL. GET for objects and object versions
+
+X-HCP-ChangeTimeMilliseconds
+
+GET or HEAD for an object,
+
+The change time for the object or annotation, in milliseconds since
+
+version, or annotation
+
+January 1, 1970, at 00:00:00 UTC, followed by an integer that’s unique for the change time
+
+X-HCP-ChangeTimeString
+
+GET or HEAD for objects, object versions, and annotations

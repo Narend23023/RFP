@@ -1,0 +1,41 @@
+For a GET request for an object larger than 512,000 bytes, by default, HCP does not calculate the ETag. In this case:
+
+The response does not return an ETag header. If the request has an If-Match or If-None-Match header, HCP returns a 400 error response with a message explaining the cause.
+
+For a PUT request to copy an object, HCP handles the source object the same way it handles the object in a GET request. For source objects of 512,000 bytes or less, HCP calculates and saves the ETag and uses it to processes any X-HCP-CopySource-If-Match or X-HCP-CopySource-If-None-Match header. For larger source objects, using these headers results in a 400 error response. For a PUT or HEAD request, including for the target of a PUT request to copy an object, HCP does not generate the ETag for an existing object. If a PUT or HEAD request has an If-Match or If-None-Match header and specifies an object that does not yet have an ETag, HCP returns a 400 error.
+
+If you get an error because an object does not have an ETag, you can force HCP to calculate the missing ETag by including a forceEtag query parameter with a value of true in either of these requests:
+
+A GET request. In this case, HCP processes any If-Match or If-None-Match header and includes an ETag header when it returns an object. A PUT request to copy an object. In this case, HCP processes any X-HCP-CopySource-If-Match or X-HCP-CopySource-If-None-Match header and can copy the specified object if the condition is met.
+
+Once HCP has generated an object ETag, you can use conditional headers in GET, PUT, and HEAD requests for the object.
+
+Example: Conditionally storing a new version Here’s a sample HTTP PUT request that stores a new version of an object named Q3_2012.ppt in the quarterly_rpts directory if the current version of the object has not been
+
+modified since 9:00 a.m., EST on Monday, November 5, 2012.
+
+Request with curl command line
+
+curl -k -iT Q1_2012.ppt -H "If-Unmodified-Since: Mon, 05 Nov 2012 14:00:00 GMT" -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt"
+
+Request in Python using PycURL
+
+import pycurl import os
+
+filehandle = open("Q3_2012.ppt", 'rb') curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q3_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HTTPHEADER, ["If-Unmodified-Since: Mon, 05 Nov
+
+2012 14:00:00 GMT"]) curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2012.ppt")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com

@@ -1,0 +1,49 @@
+With HTTP, you can view some POSIX metadata on objects, but you cannot change it. With WebDAV, you can view all POSIX metadata on objects, directories, and symbolic links, but you cannot change it. With CIFS and NFS, you can view all POSIX metadata on objects, directories, and symbolic links, and you can change some of it.
+
+A request to change POSIX metadata on a symbolic link changes the metadata on the object that’s the target of the link. Such a request does not change the metadata on the link itself.
+
+The POSIX metadata that HCP maintains for items in a namespace (that is, objects, directories, and symbolic links) depends on the protocol through which the item was added:
+
+For items added through NFS, HCP maintains these attributes for each item: A user ID and group ID. A POSIX permissions value.
+
+For all items, HCP maintains atime, ctime, and mtime attributes.
+
+Note: Metafiles also have POSIX metadata. With the WebDAV, CIFS, and NFS protocols, you can view the POSIX metadata for metafiles but you cannot explicitly change it.
+
+For example, if you specify an mtime value for an object in a WebDAV command, the mtime values of the corresponding metadirectories equal the specified value. However, the mti me values for the metafiles in these directories reflect the time the request executed. (The atime values of the metafiles equal any specified atime value.) POSIX time attributes
+
+HCP maintains these POSIX time attributes for all items:
+
+atime
+
+access time The time the item was initially added to the namespace. You can change the value of this attribute. For objects, this has no effect unless the atime attribute is synchronized with HCP retention settings. HCP does not automatically update the value of this attribute except when atime synchronization is in effect. ctime
+
+change time The time of the last change to the item metadata. The initial value of this attribute is the time the item was added to the namespace. HCP automatically updates the value each time the item metadata changes. You cannot change the value of this attribute.
+
+mtime
+
+modify time The time the item was initially added to the namespace. You can change the value of this attribute. However, this has no effect on the item. HCP does not automatically update the value of this attribute.
+
+POSIX ownership and permissions
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+702/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For items stored through NFS, HCP maintains these POSIX metadata values:
+
+A user ID (UID), which represents the owner, and a group ID (GID), which represents the owning group. UIDs and GIDs are integers greater than or equal to zero.
+
+UIDs are not related to HCP-specific object ownership. A POSIX permissions value, which is made up of three sets of POSIX permissions — one for the user identified by the POSIX user ID, one for the group identified by the POSIX group ID, and one for all others. A set of permissions is any combination of read, write, or execute, including none.
+
+POSIX permission values determine the actions users can perform on an item when accessing it on a CIFS or NFS client: For an object:
+
+Read permission lets users view and retrieve the object content. Write permission has no effect. Note: Even if an object has write permission, its data is secure because WORM semantics prevent it from being modified. Execute permission, which applies only to objects created for executable files, lets users execute the object. For a directory:
+
+Read permission lets users see which objects are in the directory. Write permission lets users add and delete objects in the directory or rename empty subdirectories. Execute permission lets users traverse the directory to get to known objects in it, but it does not let users read the directory. Viewing POSIX permissions
+
+You can view POSIX permission values through the WebDAV, CIFS, and NFS protocols.

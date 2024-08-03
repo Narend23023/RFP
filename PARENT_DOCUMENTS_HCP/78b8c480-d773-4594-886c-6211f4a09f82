@@ -1,0 +1,87 @@
+When mapping or adding the namespace, you can use either the domain name of the HCP system or the IP address of a node in the system. Here are the supported formats: \\cifs.hcp-domain-name\tenant-name_namespace-name[\data|metadata]
+
+\\namespace-name.tenant-name.hcp-domain-name \tenant-name_namespace-name[\data|metadata]
+
+\\node-ip-address\tenant-name_namespace-name[\data|metadata]
+
+Examples:
+
+\\cifs.hcp.example.com\europe_finance
+
+\\cifs.hcp.example.com\europe_finance\data\presentations \\cifs.hcp.example.com\europe_finance\metadata
+
+\\finance.europe.hcp.example.com\europe_finance\data
+
+\\192.168.210.16\europe_finance\data\presentations\images
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+796/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Note: When logged in to a CIFS client as an AD user, you can see all the namespaces and directories that have been mapped to network drives or added as network places. However, you can take action only in those namespaces for which you have permissions. CIFS return codes
+
+The list below describes the possible return codes for CIFS requests against a namespace.
+
+NT_STATUS_ACCESS_DENIED
+
+The requested operation is not allowed. Reasons for this return code include attempts to:
+
+Rename an object Rename a directory that contains one or more objects
+
+Overwrite an object Modify the content of an object
+
+Delete an object that’s under retention Delete a directory that contains one or more objects
+
+Add a file (other than a file containing custom metadata), directory, or symbolic link anywhere in the metadata structure Delete a metafile or metadirectory
+
+Create a hard link NT_STATUS_IO_DEVICE_ERROR
+
+The requested operation would shorten the retention period of the specified object, which is not allowed.
+
+NT_STATUS_RETRY
+
+HCP tried to read the requested object from another system in the replication topology, and the data either could not be read or was not yet available. CIFS examples
+
+The following sections show examples of using CIFS to access a namespace. Each example shows both a Windows command and Python code that implements the same command.
+
+These examples assume that the data directory is mapped to the X: drive and the metadata metadirectory is mapped to the Y: drive.
+
+Example: Storing an object
+
+This example stores an object named wind.jpg in the existing images directory by copying a file of the same name from the local file system.
+
+Windows command copy wind.jpg x:\images
+
+Python code
+
+import shutil shutil.copy("wind.jpg", "x:\\images\\wind.jpg")
+
+Example: Changing a retention setting
+
+This example extends the retention period for the wind.jpg object by one year. If this object is still open due to lazy close, changing the retention setting closes it.
+
+Windows command echo +1y > y:\images\wind.jpg\retention.txt
+
+Python code
+
+retention_value = "+1y" retention_fh = file("y:\\images\\wind.jpg\\retention.txt")
+
+try: retention_fh.write(retention_value)
+
+finally: retention_fh.close()
+
+Example: Retrieving an object
+
+This example retrieves the object named wind.jpg from the namespace and stores the resulting file with the same name in the existing RetrievedFiles directory.
+
+Windows command copy x:\images\wind.jpg RetrievedFiles
+
+Python code
+
+import shutil shutil.copy("x:\\images\\wind.jpg", "RetrievedFiles\\wind.jpg") CIFS usage considerations
+
+This chapter presents considerations that affect the use of the CIFS protocol for namespace access.

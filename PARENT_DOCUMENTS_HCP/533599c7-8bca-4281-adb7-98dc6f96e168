@@ -1,0 +1,165 @@
+[2012-03-01 T00:00:00
+
+TO 2012-03-01 T23:59:59]
+
+851/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object property
+
+Data type
+
+Description
+
+namespace2
+
+String
+
+The name of the namespace that contains the object, in this format: namespace-name.tenant-name
+
+In query expressions, the values you specify for this property are not case sensitive.
+
+objectPath4
+
+String
+
+The path to the object following rest, data, or fcfs_data, beginning with
+
+a forward slash (/).
+
+In query expressions, the values you specify for this property are not case sensitive and do not need to begin with a forward slash (/). operation3
+
+String
+
+The type of operation the result represents.
+
+Possible values in a response body are:
+
+CREATED
+
+DELETED DISPOSED
+
+PRUNED PURGED
+
+NOT_FOUND
+
+PRUNED and PURGED do not apply to objects in the default
+
+namespace.
+
+Results for object-based queries have either the CREATED or NOT_FOUND operation type. NOT_FOUND means that the object
+
+has been deleted from the repository but has not yet been removed
+
+from the index. The NOT_FOUND operation type is returned only for queries that specify true in the verbose entry. owner2
+
+String
+
+For objects in HCP namespaces, the user that owns the object. Valid values are:
+
+For objects that have an owner:
+
+USER,location,username
+
+For objects with no owner:
+
+GROUP,location,all_users
+
+For objects that existed before the HCP system was upgraded
+
+from a pre-5.0 release and that have not subsequently been assigned an owner: nobody
+
+In these values:
+
+location is the location in which the user account for the object
+
+owner is defined. This can be:
+
+The name of an HCP tenant
+
+The internal ID of an HCP tenant An Active Directory domain preceded by an at sign (@)
+
+Internal IDs of HCP tenants are not returned in query results.
+
+For objects with no owner, location is the name of the tenant that owns the namespace in which the object is stored.
+
+username is the name of the user that owns the object. This
+
+can be:
+
+The username of a user account that’s defined in HCP.
+
+The username of an Active Directory user account. This can be either the user principal name or the Security Accounts Manager (SAM) account name for the user account.
+
+This property is not returned for objects in the default namespace.
+
+If the Authorization header or hcp-ns-auth cookie identifies a tenant-level user, you can specify this criterion in a query expression to find all objects owned by that user: owner:USER
+
+owner2 (continued)
+
+String
+
+These considerations apply when you specify the owner property in a query expression:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Query expression example
+
+namespace:
+
+finance.europe
+
+objectPath:"/Corporate/Empl oyees/45_Jane_Doe.xls"
+
+N/A
+
+owner:"USER,europe,pdgrey"
+
+852/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object property
+
+Data type
+
+Description
+
+The entire value must be enclosed in double quotation marks. USER, GROUP, and nobody are case sensitive. The location values you specify are not case sensitive. The username values you specify, except for all_users, are not case sensitive. permissions3
+
+Integer
+
+The octal value of the POSIX permissions for the object.
+
+replicated3
+
+Boolean
+
+An indication of whether the object has been replicated. Possible
+
+values in a response body are:
+
+true
+
+The object, including the current version and all metadata, has
+
+been replicated.
+
+false
+
+The object has not been replicated. replication Collision
+
+Boolean
+
+An indication of whether the object is flagged as a replication collision. Valid values are:
+
+true
+
+The object is flagged as a replication collision.
+
+false

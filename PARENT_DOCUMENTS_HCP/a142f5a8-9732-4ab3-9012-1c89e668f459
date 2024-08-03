@@ -1,0 +1,51 @@
+A user-defined network has the following properties:
+
+A name Optionally, a description
+
+Optionally, a VLAN ID A domain
+
+A maximum transmission unit (MTU). The MTU is the largest packet size supported for data sent on the network.
+
+The MTU for a network can be 1,500 or, if supported by the networking infrastructure, 9,000. The larger MTU reduces overhead and increases network throughput.
+
+Whether the network is enabled or disabled. If a network is disabled, HCP does not accept communications routed on that network.
+
+When first created, networks are enabled by default.
+
+A total number of tenant references. This is the number of tenants that are configured to use the network for management, data access, or both. HCP derives this number
+
+from the tenant configurations defined on the system. If the network is assigned to one or more tenants, a list of tenant references. This list contains the names of the tenants that are configured to use the network and the purpose for which each tenant uses the network (management, data access, or both). HCP obtains this information from the tenant configurations defined on the system. A total number of alias references. This is the number of network aliases that are defined for the network. HCP derives this number from the network alias configurations defined on the system.
+
+If one or more aliases are defined for the network, a list of alias references. This list contains the names of the network aliases that are defined for the network. HCP obtains this information from the network alias configurations defined on the system.
+
+Whether HCP should hide the IP addresses of its primary name servers from clients using the network and allow client access to HCP over the network only through specified downstream DNS servers. Whether HCP should notify specified downstream DNS servers about changes to the zone definition for the network. The rate at which the downstream DNS servers should query HCP for updates to the zone definition for the network domain. If the [hcp_system] network is also configured to use a specific type of IP address, a user-defined network can have that IP address.
+
+Whether the network supports IPv4 addresses, IPv6 addresses, or both:
+
+If the network supports IPv4 addresses, the network has these properties:
+
+An IPv4 gateway. This is the IPv4 address from which system-initiated communications are sent over the network. An IPv4 subnet mask.
+
+An IPv4 subnet. HCP derives the IPv4 subnet for the network from the IPv4 gateway and subnet mask that you specify. Optionally, assignments of IPv4 addresses to storage nodes. The IPv4 addresses for a given network must all be on the IPv4 subnet defined for that network. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+75/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: If a node has any IP addresses assigned to it for a given network, that node must have an IP address assigned to it on each IPv4 and IPv6 subnet
+
+defined for the network.
+
+If the network supports IPv6 addresses, it has primary IPv6 address settings and, optionally, secondary IPv6 address settings. For each type of IPv6 address settings, the
+
+network has these properties:
+
+An IPv6 gateway. This is the IPv6 address from which system-initiated communications are sent over the network.
+
+Note: Each IPv6 gateway defined for the network can be a global address, a unique local address (ULA), or a link local address (LLA). However, if two IPv6 gateways are defined for the network, you cannot use ULAs for both gateways, and the two gateways must be on separate, non-overlapping IPv6 subnets. An IPv6 address prefix length. An IPv6 subnet. HCP derives the IPv6 subnet for the network from the IPv6 gateway and IPv6 address prefix length that you specify. Optionally, assignments of IPv6 addresses to storage nodes. The IPv6 addresses for the network must all be on the IPv6 subnet defined for that network.
+
+Each network, including the [hcp_system] and [hcp_backend], must use separate, non-overlapping subnets for IPv4 addresses, primary IPv6 addresses, and secondary IPv6 addresses.
+
+A zone definition. This is the DNS zone definition that is currently used for the network domain. HCP automatically creates and maintains a DNS zone definition for each network defined on the system.

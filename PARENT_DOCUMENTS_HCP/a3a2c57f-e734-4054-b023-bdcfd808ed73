@@ -1,0 +1,71 @@
+The cryptographic hash value for an object is a form of fingerprint. HCP uses a cryptographic hash algorithm to calculate this value from the object data. HCP then uses this hash value to check that object data remains unchanged.
+
+You can view this value, but you cannot change it.
+
+With HTTP, cryptographic hash values are returned by the X-HCP-Hash response header. With the WebDAV, CIFS, and NFS protocols, you view this value in the hash.txt metafile.
+
+HCP does not generate cryptographic hash values for multipart objects. Therefore, the X-HCP-Hash header is not returned for these objects. Object ingest time and change time
+
+Objects in a namespace have both an ingest time and a change time.
+
+The ingest time is the time when the object or version of the object was first added to the namespace or was deleted. The change time is the time of the most recent of these events:
+
+The object was closed after being added to the namespace. The object was deleted. Any metadata, including custom metadata or an ACL, was changed. The object was recovered from a replica. An attempt by the HCP search facility to index the object failed. When this happens, the change time for the object is set to two weeks in the future, at which time the HCP search facility tries again to index it.
+
+Even if an object has not changed since ingestion, the ingest time and change time may not be identical. This is because the ingest time is set when HCP opens the object for write and the change time is set when HCP closes the object after ingestion is complete. The change time for an object is the same as the POSIX ctime attribute value.
+
+With HTTP, ingest times are returned by the X-HCP-IngestTime header in response to GET and HEAD requests for objects. Change times are returned by the X-HCP-ChangeTimeS tring and X-HCP-ChangeTimeMilliseconds response headers for the same requests. You can also view ingest and change times for objects in listings of directory contents.
+
+With the WebDAV, CIFS, and NFS protocols, you view ingest time in the created.txt metafile and change time in the core-metadata.xml metafile. Retention
+
+Objects have a retention property that determines how long the object must remain in the namespace before it can be deleted. This time can range from allowing the object to be deleted at any time to preventing the object from ever being deleted. While an object cannot be deleted due to retention, it is said to be under retention.
+
+If an object is immediately placed under retention when it is stored, it is stored with no POSIX write permissions. When an existing object is placed under retention, its POSIX write permissions are removed. Object retention settings
+
+Each object in a namespace has a retention setting. Additionally, the namespace is configured with a default retention setting. When an object is stored in the namespace, the object inherits the namespace retention setting. Using HTTP, you can override the default setting by specifying a different setting when you store the object.
+
+Note: If the default retention setting is in the past, new objects that would otherwise get that setting are added with a setting of Deletion Allowed (0).
+
+Every object, including objects assigned to retention classes, has a specific retention setting that specifies when (or whether) the retention period for the object ends. HCP represents the retention setting in numeric and text formats, as shown in the following table. Numeric value
+
+Text value
+
+Meaning
+
+0
+
+Deletion Allowed
+
+The object can be deleted at any time.
+
+1
+
+Deletion Prohibited
+
+The object cannot be deleted, except by a privileged delete, and the retention setting cannot be changed.
+
+2 Initial Unspecified
+
+The object does not yet have a retention setting. An object that has this value cannot be deleted, except by a privileged delete. You can change this retention setting to any other setting.
+
+An integer number of seconds since January 1, 1970, at
+
+A datetime value
+
+The object cannot be deleted, except by a privileged delete, until the specified date and time.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+694/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Numeric value
+
+Text value
+
+Meaning
+
+00:00:00 UTC

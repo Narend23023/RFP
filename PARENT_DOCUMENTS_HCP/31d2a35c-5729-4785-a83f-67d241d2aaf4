@@ -1,0 +1,47 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+135/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help If you did not create an AD group, deselect Add HCP Computer Account to groups of Domain User. This prevents the HCP Computer account from inheriting the permissions associated with the specified domain user. If this checkbox is deselected, appropriate permissions need to be manually assigned to the HCP Computer account.
+
+Optionally, select Non-Hierarchical Realm Configuration if you have multiple trees in your AD forest. This permits authentication from any domain in the forest, and is necessary if they have different domain names. Optionally, select Enable Authenticated CIFS Support if you want to require authentication for data access via CIFS in your namespaces. Authenticated CIFS support is disabled by default for new AD joins. If you selected Enable Authenticated CIFS Support, the Use NTLMv2 authentication option appears. Optionally, deselect Use NTLMv2 authentication to use NTLM for secure communication with AD when configuring the computer accounts for the HCP nodes. In release 7.2.1 of HCP or later, new AD connections are created with
+
+the Use NTLMv2 authentication option enabled. Optionally, select Use reverse DNS if you want to join AD without requiring PTR records for domain controllers. Select the Single Sign-On Support to determine how much control you want HCP to have over generating Service Principal Names (SPNs) for tenants and namespaces. The possible values are: None
+
+HCP does not generate SPNs for new tenants namespaces and does not warn if SPNs are missing.
+
+Warning
+
+HCP does not generate SPNs for new tenants and namespaces but does warn if SPNs are missing. Full
+
+HCP generates SPNs for new tenants and namespaces and warns if SPNs are missing.
+
+SPNs are used for single sign-on. If you're not using single sign-on, you do not need to have HCP generate SPNs.
+
+In the Trusted Forests field, type a comma-separated list of root domains of all trusted forests. This lets the HCP Computer Account authenticate with multiple forests.
+
+7. Click Update Settings.
+
+This update may take a few minutes to finish.
+
+Tip: You can verify that AD support has been enabled by logging out of the System Management Console and checking that the Log In page now has a Domain field below the Password field.
+
+8. Optionally, in the Domain Filtering panel, click Add New Domain. Then:
+
+In the Domain Name field, type the name of the domain. In the Domain Controllers field, type the name of the domain controller or controllers. Click Add Domain. Optionally, to associate another domain controller with a domain: a. Select an existing domain from the table in the Domain Filtering panel. b. In the Domain Controllers field, type the name of the domain controller or comma-separated list of controllers. c. Click Add New Domain Controllers.
+
+Domain controller filters are always added as a pairing of a domain and a domain controller or controllers. Each time you add one of these filters to the domain controller filter list, a one-time validation occurs. If a domain or domain controller fails the validation process, the filter is not added to the domain controller filter list. You can also manually invoke validation on the domain controller filter's entries by clicking the Validate button.
+
+9. Click Update Settings.
+
+This update may take few minutes to finish.
+
+Configuring support for Windows workgroups
+
+You can enable and configure HCP support for Windows workgroups. 1. Log in to the HCP System Management Console with a user account that has the Security role. 2. Navigate to the Security > Active Directory page. 3. Select the Windows workgroup option. 4. In the Windows Workgroup field, type the name of the Windows workgroup in which you want HCP to automatically expose CIFS-enabled namespaces. The workgroup name can be up to 15 characters long.
+
+5. Click Update Settings. Refreshing the Active Directory status
+
+Tenants and Namespaces can exist without Service Principal Names. HCP creates a table of unassigned Tenants and Namespaces under the Status panel of the Active Directory page under Security.

@@ -1,0 +1,45 @@
+Clients use network domain names in the URLs that provide access to the HCP system. By associating different domains with different networks, you can brand the system for different customers. For example, the networks you associate with the tenants you create for Customer-1 could all have the domain named object-store.cust1.com.
+
+Assigning different domains to different networks enhances network security because each domain uses a separate certificate to authenticate access requests. If two different networks have two different domains assigned to them, a client cannot use the same credentials to access HCP over both networks. In addition, when a client request uses a
+
+domain name for access to HCP, the client making that request has visibility only into the networks that use the specified domain. Thus, a client can retrieve IP addresses only for the networks that it’s authorized to use to access the HCP system. Downstream DNS configuration settings for networks
+
+At any time after you create a network, you can change its downstream DNS configuration settings to:
+
+Enable hidden primary for one or more downstream DNS servers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+76/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Enable notify for one or more downstream DNS servers Change the DNS refresh rate for all the downstream DNS servers
+
+A downstream DNS server is a DNS server through which client requests are routed to HCP. An upstream DNS server is a DNS server to which HCP routes the outbound communications it initiates (for example, for sending log messages to syslog servers or for communicating with Active Directory). The downstream and upstream DNS servers can
+
+be the same servers. Hidden primary
+
+Hidden primary is an HCP DNS configuration that’s used to hide the IP addresses of the HCP nodes configured as primary name servers from users accessing HCP over a specific network. In a hidden primary configuration, the specified downstream DNS servers become the authoritative primary for the zone defined for the network domain. Additionally, in the zone definition that HCP sends, the name server records contain the IP addresses of the downstream DNS servers, and not the IP addresses of the HCP nodes configured as primary name servers.
+
+Notify
+
+Notify is a network configuration option that, when enabled for a network, tells HCP to notify only the specified downstream DNS servers whenever any of the network properties changes (including the description). In response to this notification, each specified DNS server sends a request to HCP to get the updated zone definition for the network domain.
+
+Zone definitions with hidden primary or notify enabled
+
+When hidden primary or notify is enabled for a network, the domain associated with that network must be defined as a secondary zone, and not as a stub zone, on the specified
+
+downstream DNS servers. If a network domain is defined as a stub zone and:
+
+You enable hidden primary for the network, client requests routed to any of the specified DNS servers fail You enable notify for the network, the specified DNS servers do not receive the notify messages If a stub zone is already defined for a domain associated with a network, and you plan to enable hidden primary or notify for that network, change the DNS zone definition type for the domain to secondary before you modify the network.
+
+When hidden primary or notify is enabled for a network that’s configured to use a secondary IPv6 subnet, each IPv6 address that’s specified in the downstream DNS server list must either be on the secondary IPv6 subnet or be routable from the primary IPv6 gateway that’s defined for the network. Refresh rate
+
+The refresh rate for a network is the frequency with which the downstream DNS servers poll HCP to check whether the zone definition for the network domain has changed. If the definition has changed, the servers then ask HCP for the updated definition.
+
+The refresh rate always applies to all the downstream DNS servers that have a zone definition for the network domain and is used regardless of whether that zone definition has a type of secondary or stub.
+
+By default, the refresh rate is three hours. If you enable notify and specify all the applicable DNS servers, consider increasing the refresh rate to a much higher value.

@@ -1,0 +1,45 @@
+After CORS rules are configured for an HCP namespace, web applications can request access to the namespace resources by using either the Hitachi API for Amazon S3 or the
+
+REST API.
+
+The Amazon S3 and REST gateways perform CORS rules validation on incoming object requests against an HCP bucket. When a CORS compliant HCP server receives a bucket request from a browser, the server evaluates the request headers against the CORS rules configuration for the bucket. The first CORS rule for the bucket that matches the request is the rule that is applied for creating the server response headers.
+
+For security reasons, requests that fail authentication are not validated. In the web browser, these failed authentication requests result in CORS errors. Runtime request headers
+
+Request headers are automatically set when a web browser issues an HTTP request to an HCP server.
+
+The following list describes the runtime request headers sent by a browser depending on the request type (simple or preflight).
+
+Origin
+
+Request type: Simple, Preflight Origin of the cross-domain request. For example, http://www.example.com Access-Control-Request-Method
+
+Request type: Preflight HTTP method to be used when the request is made.
+
+Access-Control-Request-Headers
+
+Request type: Preflight Headers used when the request is made. The format for the headers is a comma-separated list. If any of the headers are not contained in a CORS rule, the preflight request and CORS access to the server are denied, and the subsequent request is not issued. Runtime response headers
+
+In response to a CORS simple or preflighted request from the browser, the HCP server responds with the corresponding CORS headers.
+
+The following list describes the CORS response headers. Access-Control-Allow-Origin
+
+Request type: Simple, Preflight This response header indicates whether the response can be shared with the requesting code from the origin. If no applicable CORS rule is defined on the server, the Access-Control-Allow-Origin header is not defined in the response, which causes the browser to deny access to the resource. A '*' wildcard character by itself means that the resource is public and available to everyone. Using '*' as the value of this header with credentials will result in an error. For more information, see the Access-Control-Allow-Credentials response header description in this table.
+
+Access-Control-Allow-Headers Request type: Preflight Returned by the server in response to a preflight request that includes the Access-Control-Request-Headers header to indicate which HTTP headers can be used during the actual request. Only returned for the OPTIONS request, not for the preflighted API call. Access-Control-Allow-Methods Request type: Preflight Returned by the server in response to a preflight request to specify the HTTP method or methods allowed when the actual request is made. Only returned for the OPTIONS request, not for the preflighted API call.
+
+Access-Control-Expose-Headers
+
+Request type: Simple, Preflight Optional Headers that browsers are allowed to access. By default, only six simple response headers are exposed:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+667/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+cache-control content-language content-type expires last-modified pragma
+
+Only returned for the OPTIONS request, not for the preflighted API call. Access-Control-Max-Age: delta-seconds

@@ -1,0 +1,87 @@
+(+0000|GMT)
+
+Host: hostname.hcp-domain-name
+
+x-amz-copy-source:
+
+/bucket-name/source-object-name
+
+[?versionId=source-object-version-id]
+
+[Content-Type: internet-media-type]
+
+[x-amz-copy-source-if-match:
+
+"value"[, "value"]...]
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+680/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+API method
+
+Description and permission
+
+Query parameters
+
+Request headers
+
+[x-amz-copy-source-if-modified-since: datetime-value]
+
+[x-amz-copy-source-if-none-match:
+
+"value"[, "value"]...]
+
+[x-amz-copy-source-if-unmodified-since:
+
+datetime-value]
+
+[x-amz-copy-source-range:
+
+start-position-end-position]
+
+Alternative authentication method
+
+As an alternative to the AWS method of authentication, you can use the HCP method. You might choose to do this, for example, if you’re writing an application that uses both the S3 compatible API and the REST API. With the REST API, HCP supports only its own authentication method.
+
+With HCP authentication, the format of the URLs you use in S3 compatible requests differs from the format used with AWS authentication.
+
+This this section of the Help describes the URLs you can use in S3 compatible requests when using HCP authentication. It also explains how to provide credentials or request anonymous access with this authentication method. URLs with HCP authentication
+
+The format you use for the URL in an S3 compatible request depends on whether the target of the request and the authentication method being used. In an S3 compatible request that uses HCP authentication:
+
+If the target of the request is a tenant, you use a URL in this format: http[s]://tenant-name.hcp-domain-name/hs3
+
+Here’s an example in which the tenant name is europe:
+
+https://europe.hcp.example.com/hs3
+
+If the target of the request is a bucket, you use a URL in either of these formats:
+
+http[s]://bucket-name.tenant-name.hcp-domain name/hs3
+
+http[s]://tenant-name.hcp-domain-name/hs3/bucket-name
+
+In the first format above, the bucket name is part of the hostname. In the second format, the bucket name follows the hostname and hs3 interface identifier.
+
+Here’s are examples in which the tenant name is europe and the bucket name is finance: https://finance.europe.hcp.example.com/hs3 https://europe.hcp.example.com/hs3/finance
+
+If the target of the request is an object, you use a URL in either of these formats:
+
+http[s]://bucket-name.tenant-name.hcp-domain-name/hs3/object-name http[s]://tenant-name.hcp-domain-name/hs3/bucket-name/object-name
+
+In the first format above, the bucket name is part of the hostname. In the second format, the bucket name follows the hostname and hs3 interface identifier.
+
+Here’s are examples in which the tenant name is europe, the bucket name is finance, and the object name is Q4_2019.ppt: https://finance.europe.hcp.example.com/hs3/Q4_2019.ppt https://europe.hcp.example.com/hs3/finance/Q4_2019.ppt
+
+In these formats, the hs3 interface identifier is case sensitive and must be all lowercase.
+
+Note: Do not use the hs3 interface identifier when using AWS authentication.
+
+HCP authentication
+
+To provide credentials for HCP authentication, you use the Authorization request header with a value in the format shown below: Authorization: HCP access-key:secret-key

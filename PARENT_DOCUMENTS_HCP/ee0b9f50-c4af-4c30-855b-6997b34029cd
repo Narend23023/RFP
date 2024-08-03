@@ -1,0 +1,55 @@
+274/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can reuse namespace names that are not currently in use. So, for example, if you delete a namespace, you can give a new namespace the same name as the deleted namespace had.
+
+4. (Optional) Specify an owner for the namespace:
+
+If the owner has an HCP user account, select Local. Then type the username for the account in the Namespace Owner field. If the owner has an AD user account, select Active Directory. Then, in the Namespace Owner field, type the account username along with the name of the AD domain in which the account is defined, in this format: username@ad-domain-name.
+
+5. (Optional) In the Description field, type a description of the namespace. The description can be up through 1,024 characters long and can contain any valid UTF-8 characters, including white space. However, it must not include special characters such as \n (carriage return) and \r (line feed).
+
+6. In the Hash Algorithm field, select the cryptographic hash algorithm for the namespace. 7. In the Hard Quota field, type the number of gigabytes or terabytes of storage to allocate to the namespace and select either GB or TB to indicate the measurement unit. Valid values are decimal numbers with up to two places after the period. The minimum is 1 (one) for GB and .01 for TB. The maximum value is the amount of space the tenant still has available to allocate to its namespaces. Tip: To the right of the Hard Quota field, the panel shows the amount of space the tenant has already allocated to its namespaces and the amount of space it still has available to allocate. 8. In the Soft Quota field, type the percent at which you want HCP to notify the tenant that free storage space for the namespace is running low.
+
+Valid values are integers in the range ten through 95.
+
+9. (Optional) Associate tags with the namespace:
+
+a. Click Tags. b. In the field in the Tags section, type a text string to be used as a tag.
+
+Tags must be from one through 64 characters long, can contain any valid UTF-8 characters except commas (,), and are not case sensitive. White space is allowed. c. Click Add Tag.
+
+10. Under Replication:
+
+Select On to replicate the namespace along with the tenant. Select Off to exclude it from replication.
+
+The Replication option is present only if the tenant is allowed to create namespaces with replication enabled.
+
+Note: Depending on current replication requirements, if the tenant is being replicated, this option may be selected automatically. In this case, you cannot deselect it. 11. (Optional) If you selected On for Replication, select Allow erasure coding to allow HCP to use erasure coding to implement replication of the objects in the namespace.
+
+The Allow erasure coding option is present only while Replication is On and only if the tenant is allowed to manage erasure coding for namespaces. When you select Allow erasure coding, the Cloud Optimized option is automatically set to On.
+
+12. Under Cloud Optimized:
+
+Select On to optimize the namespace for cloud protocols only. Select Off to optimize the namespace for all protocols. The Cloud Optimized option is present only if the tenant is allowed to create namespaces with replication enabled. When you select Off while Allow erasure coding is selected, that option is automatically deselected.
+
+13. Under Directory Usage:
+
+Select Balanced to configure the namespace for balanced directory usage. Select Unbalanced to configure the namespace for unstructured data usage.
+
+14. Under Retention Type, select either S3 Object Lock or HCP Retention to set the retention type for the namespace.
+
+The HCP Retention Mode option is present only if the Retention Mode Selection is enabled. You can enable S3 Object Lock only if versioning is enabled on the tenant. Note: When configuring namespaces that use S3 Object Lock, you cannot use existing retention related namespace configuration options that conflict with S3 Object Lock. For example, retention period values that Amazon S3 does not support, initial unspecified, event-based retention, and retention classes are not allowed. 15. Under Search:
+
+Select On to enable search for the namespace.
+
+Select Off to disable search.
+
+The Search option is present only if the tenant is allowed to create namespaces with search enabled.
+
+16. In the Service Plan field, either type the name of an existing service plan or click the arrow control ( ).
+
+If you click the arrow control:

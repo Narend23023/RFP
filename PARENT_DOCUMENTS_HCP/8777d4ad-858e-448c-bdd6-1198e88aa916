@@ -1,0 +1,47 @@
+Response headers with versioning enabled
+
+HTTP/1.1 200 OK Date: Fri, 20 Jan 2017 17:19:26 GMT x-amz-version-id: 87288727469825 ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Content-Length: 0 Response headers with versioning disabled
+
+HTTP/1.1 200 OK Date: Fri, 20 Jan 2017 17:19:26 GMT ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Content-Length: 0
+
+Storing an object with a labeled hold
+
+Here is a sample PUT request that stores and places a labeled hold on an object named quarterly_rpts/Q4_2019.ppt in the finance bucket.
+
+The user ID, lgreen, has privileged data access permission. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=/quarterly_rpts/Q4_2019.ppt -- -v -k "https://finance.europe.hcp.example.com/quarterly_rpts/Q4_2019.ppt"
+
+H 'x-hcp-labelretentionhold: [{"id":"UniqueLabelHold-1","hold":true}]'
+
+Request headers
+
+PUT /quarterly_rpts/Q4_2019.ppt HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri,12 Jun 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:HbkRBWvyO3YQO55Bm0VS3RMatvg= X-HCP-Retention: 0 X-HCP-RetentionHold: true X-HCP-LabelRetentionHold: true Content-Length: 235813
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+606/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 12 Jun 2020 17:19:26 GMT ETag: "617e8ef649d40cda1f7f3ca81c97a06a" Content-Length: 0
+
+Example: Storing an object with custom metadata and an ACL
+
+Here is a sample PUT request that stores an object named hum_res/budget_proposals/BudgProp-2020 in the finance bucket, for which versioning is disabled. The object is stored with custom metadata specified by three x-amz-meta- headers and a canned ACL specified by the x-amz-acl header. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=/hum_res/budget_proposals/BudgProp-2020 -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/ BudgProp-2020" -H "x-amz-meta-author: P.D. Grey" -H "x-amz-meta-author: Morgan White" -H "x-amz-meta-author: Paris Black" -H "x-amz-acl: authenticated-read" Request headers
+
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Wed, 16 Nov 2016 23:29:17 +0000 Authorization: AWS bGdyZWVu:FiWxioJHDGMLyP0WkCuqUpRqr2w= x-amz-meta-author: P .D. Grey x-amz-meta-author: Morgan White
+
+x-amz-meta-author: Paris Black x-amz-acl: authenticated-read Content-Length: 881932 Response headers
+
+HTTP/1.1 200 OK
+
+Date: Wed, 16 Nov 2016 23:29:17 GMT ETag: "76216527ff2f6219f7c29251a619c8db" Content-Length: 0
+
+Creating a folder

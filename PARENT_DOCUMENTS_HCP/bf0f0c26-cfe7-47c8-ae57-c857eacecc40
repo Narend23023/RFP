@@ -1,0 +1,57 @@
+1. Click Create Network above the network list to open the Create Network wizard. 2. On the Settings page in the wizard:
+
+a. In the Network Name field, type a unique name for the network. User-defined network names: Must be from one through 63 characters long. Can contain only characters that are valid in DNS hostnames. In English, valid hostnames can contain only alphanumeric characters and hyphens (-).
+
+Cannot start or end with a hyphen. Cannot contain white space. Are not case-sensitive.
+
+Additionally, the following words are reserved and cannot be used as network names: none, [hcp_system], and [hcp_backend].
+
+b. Optionally, in the Description field, type a description of the network. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters,
+
+including white space. c. Take one of these actions:
+
+To create an untagged network, select Make untagged network. This option is hidden if an untagged network already exists. To create a tagged network, in the VLAN ID field, type a VLAN ID for the network. Valid values are integers in the range one through 4,094.
+
+The VLAN ID field is grayed while Make untagged network is selected.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+81/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+d. In the MTU field, select 1500 or 9000. If an untagged network exists, the MTU that you select cannot be larger than the MTU for the untagged network. If you’re creating an untagged network and an
+
+existing network has an MTU of 9,000, the network you’re creating must have an MTU of 9,000.
+
+e. In the Domain field, select a domain for the network. The dropdown list does not include domains that have only a certificate signing request (CSR) and no SSL server certificates.
+
+3. Click Next.
+
+4. On the IP Configuration page in the Create Network wizard, take one of these actions:
+
+If HCP is configured to support only one type of IP address, the wizard automatically selects the supported IP mode for the new network and displays the fields that you need to use to specify IPv4 or IPv6 configuration settings for the network. If the wizard displays the IPv4 Configuration section or the IPv6 Configuration section,
+
+go to step 5.
+
+If HCP is configured to support both IPv4 and IPv6 addresses, and the [hcp_system] network is configured to use both IPv4 and IPv6 addresses, you can configure
+
+the network to use either or both types of IP addresses.
+
+If the wizard displays the IP Mode section, and does not display any warning messages, select one or both options to set the IP mode for the network:
+
+To configure the network to use only IPv4 addresses, select only IPv4. When you select this option, the wizard displays the IPv4 Configuration section. To configure the network to use only IPv6 addresses, select only IPv6. When you select this option, the wizard displays the IPv6 Configuration section. To configure the network to use both IPv4 and IPv6 addresses, select both options.
+
+If HCP is configured to support both IPv4 and IPv6 addresses, but the [hcp_system] network is configured to use only one type of IP address, you need to configure the new network to use only the type of IP address that the [hcp_system] network uses.
+
+If the wizard displays the IP Mode section, but it also displays a warning message to inform you that the [hcp_system] network is configured to use only one type of IP address, select only the option that corresponds to that type of IP address.
+
+Note: If the wizard displays this warning message, only the supported IP Mode option is selectable. However, you still need to select this option before you can
+
+continue specifying configuration settings for the new network. 5. Take either or both of these actions:
+
+If the HCP system supports only IPv4 addresses or if you selected IPv4 in step 4 above, in the IPv4 Configuration section:
+
+In the Gateway field, type the IP address of the gateway that you want to use for the IPv4 subnet. In the Subnet Mask field, type the subnet mask that you want to use for the IPv4 subnet.

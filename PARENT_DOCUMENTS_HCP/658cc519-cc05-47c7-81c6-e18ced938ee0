@@ -1,0 +1,65 @@
+are used to access the same type of storage.
+
+Each storage tier typically consists of only one storage pool, but a tier can be configured to use multiple storage pools. To store objects on a given tier, HCP uses all of the storage
+
+that’s accessed using the storage components that are contained in the storage pools that are configured for the storage tier. Therefore, the capacity of a given storage pool is the
+
+total amount of space that’s associated with all the physical storage devices or all of the cloud storage service endpoints represented by the storage components in the pool. You can
+
+add storage components to a pool at any time, thereby increasing the capacity of the pool. You should size extended storage pools to accommodate the amount of data you expect to be written to them. In making this calculation, you need to account for multiple
+
+namespaces using the same service plan as well as for multiple service plans specifying the same target storage pool. Primary storage pools
+
+Every HCP system has a pre-configured storage pool for each type of primary storage that the system is configured to use. The primary running storage pool contains the pre-
+
+configured primary running storage component, which represents all continuously spinning disks that are currently managed by the HCP nodes. For HCP with SAN-attached storage
+
+systems with spindown storage, the primary spindown storage pool contains the pre-configured primary spindown storage component, which represents all spindown-capable disks
+
+that are currently managed by the HCP nodes.
+
+In the System Management Console, you can use the Storage page to view information about the current hardware configuration, health status, availability, capacity, and usage of the storage that’s represented by each primary storage pool. You can also use the Storage page to view current and historical storage usage statistics for each individual primary storage pool, and you can view a comparison of the current and
+
+historical storage capacity usage statistics for all storage pools that are defined on the HCP system, including the two primary storage pools.
+
+You can use the information that you can view on the Storage page to monitor the health and usage of each type of primary storage and determine when you need to add primary
+
+storage to an HCP system or replace storage devices that are used for primary running storage or primary spindown storage. Note:
+
+You cannot modify a primary storage pool in order to add, retire, or upgrade primary running storage or primary spindown storage.
+
+To add primary storage to an HCP system either to increase primary storage capacity or to replace one or more retired storage devices, contact your authorized HCP service provider for help.
+
+On a HCP with internal storage or HCP with SAN-attached storage system, you can use either the Storage page or the Migration page in the System Management Console to retire
+
+one or more primary storage devices. When you retire primary storage, HCP automatically updates each primary storage pool as necessary to reflect the changes in the total storage capacity and in the total number of disks represented by each primary storage pool. HCP S Series storage pools
+
+HCP S Series Nodes use storage pools to group buckets together. A storage pool can contain multiple buckets from different S Series Nodes, but a bucket cannot belong to multiple storage pools.
+
+If you add an S Series Node to the HCP system, a storage pool needs to already exist or be created. To create a storage pool you must specify the following information:
+
+The storage pool name.
+
+Whether you want HCP to compress object data that’s stored on the storage that’s allocated to the buckets in the storage pool.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+38/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Whether you want HCP to encrypt object data that’s stored on the storage that’s allocated to the buckets in the storage pool. If encryption is disabled for the system, this
+
+option is not visible.
+
+For each bucket you want to include in the storage pool:
+
+The account to which the bucket is assigned The name of the bucket
+
+Note: At any given time, a bucket can be included in only one storage pool.
+
+Each bucket you add to a new storage pool must be empty or have only HCP data in it.
+
+A storage pool is compliant only if all of the buckets in the pool are associated with compliant storage components.

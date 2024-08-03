@@ -1,0 +1,65 @@
+H "X-HCP-CopySource: default.europe/quarterly_rpts/Q1_2012.ppt" -H "X-HCP-CopySource-If-Modified-Since: Tue, Jan 1 2013 05:00:00 GMT" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+722/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL
+
+import pycurl import os headers = ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "X-HCP-CopySource: default.europe/quarterly_rpts/ \
+
+Q1_2012.ppt", "X-HCP-CopySource-If-Modified-Since:
+
+Tue, Jan 1 2013 05:00:00 GMT" curl = pycurl.Curl()
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q1_2012.ppt") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HTTPHEADER, headers) curl.setopt(pycurl.PUT, 1)
+
+curl.setopt(pycurl.INFILESIZE, 0 curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d X-HCP-CopySource: default.europe/quarterly_rpts/Q1_2012.ppt
+
+X-HCP-If-Modified-Since: Tue, Jan 01 2013 05:00:00 GMT"
+
+Content-Length: 678400
+
+Response headers
+
+HTTP/1.1 200 Created X-HCP-ServicedBySystem: hcp.example.com
+
+Location: /rest/quarterly_rpts/Q1_2012.ppt
+
+ETag: "9c604138ffb0f308a8552a3752e5a1be" X-HCP-VersionId: 86675191823873
+
+X-HCP-Hash: SHA-256 E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934C... X-HCP-Time: 1354299872 Content-Length: 0
+
+Checking the existence of an object or multiple versions of an object
+
+You use the HTTP HEAD method to check whether an object, a version of an object, or a range of versions of an object exists in a namespace. These requests also retrieve the
+
+metadata for the object without retrieving the object data. The metadata is returned in HTTP response headers.
+
+An HTTP 200 (OK) status code indicates that the requested object or object versions exist. An HTTP 404 (Not Found) status code indicates that the specified URL does not identify the object or its versions. Even if versioning is currently disabled, the method returns a 200 code and metadata if the requested version exists.
+
+Using HEAD with a symbolic link verifies the existence of the object that is the target of the link. Access permission
+
+To verify the existence of an object or multiple object versions, you need browse permission.
+
+Request header
+
+HEAD /rest/directory/file?version=@version_num HTTP/1.1
+
+The HEAD request to verify the existence of an object or multiple versions has these elements:
+
+If you are accessing the namespace as an authenticated user, an Authorization header The URL of the object or symbolic link Parameter

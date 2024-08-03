@@ -1,0 +1,109 @@
+The uploadId and partNumber query parameters are not case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to upload a part of a multipart upload.
+
+Authorization
+
+Specifies user credentials or requests anonymous access. Content-Length
+
+Specifies the size, in bytes, of the data being uploaded.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above.
+
+Optional headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+642/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Content-MD5
+
+Directs HCP to check the integrity of the data it receives by comparing a Base64-encoded MD5 hash of that data to the value specified by this header. The valid value for this header is the Base64-encoded MD5 hash of the data in the request body. Content-Type
+
+Specifies the Internet media type of the data being uploaded. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg).
+
+Expect
+
+Tells the application not to send the request body if the request headers are rejected. The only valid value is 100-continue. This value is not case sensitive. Response headers
+
+The list below describes the headers returned in response to a successful request to upload a part of a multipart upload.
+
+Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to upload a part of a multipart upload, the value of this header is always 0 (zero). Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the object. ETags are useful for making object-level operations conditional based on the object content. Operations that can be made conditional are checking the existence of an object, copying an object, and retrieving an object. x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption.
+
+x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket. Status codes

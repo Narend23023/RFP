@@ -1,0 +1,73 @@
+HCP nodes
+
+The core hardware for an HCP system consists of servers that are networked together. These servers are called nodes.
+
+When you access an HCP system, your point of access is an individual node. To identify the system, however, you can use either the domain name of the system or the IP address of an individual node. When you use the domain name, HCP selects the access node for you. This helps ensure an even distribution of the processing load. Permissions
+
+To access a namespace and take action in it, clients must have the necessary permissions. The list below describes the possible permissions and the operations they allow.
+
+Browse
+
+List directory contents. Check for directory existence.
+
+Read
+
+Retrieve objects and system metadata. Check for object existence.
+
+List annotations. Check for and retrieve annotations.
+
+Read operations also require browse permission. Read ACL
+
+Check for and retrieve ACLs.
+
+Write
+
+Store objects. Create directories. Modify system metadata. Add and replace annotations.
+
+Write ACL
+
+Add, replace, and delete ACLs.
+
+Delete
+
+Delete objects, empty directories, annotations, and ACLs.
+
+Purge
+
+Delete objects and their old versions (also requires delete permission). Privileged
+
+Delete or purge objects regardless of retention (also requires delete or purge permissions). Place objects on hold or release objects from hold (also requires write permission).
+
+Change owner
+
+Change object owners.
+
+Search
+
+Search for objects (also requires browse and read permissions).
+
+Note: When using the CIFS protocol with a Windows client, you need both read and write permissions to store objects. Data access permission mask
+
+The operations allowed in a namespace are determined by a data access permission mask for the namespace. Data access permission masks are set at the system, tenant, and namespace levels.
+
+The effective permissions for a namespace are the operations that are allowed by the mask at all three levels. That is, to be in effect for a namespace, a permission must be included in the system-level permission mask, the tenant-level permission mask, and the namespace-level permission mask. User permissions
+
+To perform an operation in a namespace, the operation must be allowed by the effective permission mask and by your user permissions. The permissions for what you can do in a namespace come from your user account (if you’re an authenticated user), the namespace configuration, and, for individual objects, the object ACL.
+
+Note: ACLs are enabled on a per-namespace basis. In namespaces where ACLs are enabled, the namespace can be configured to either enforce or ignore the permissions granted
+
+by ACL. To find out the ACLs settings for a namespace, contact your tenant administrator. Replication
+
+Replication is a process that supports configurations in which selected tenants and namespaces are maintained on two or more HCP systems and the objects in those namespaces are managed across those systems. This cross-system management helps ensure that data is well-protected against the unavailability or catastrophic failure of a system.
+
+A replication topology is a configuration of HCP systems that are related to each other through replication. Typically, the systems in a replication topology are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection).
+
+You can read from namespaces on all systems where those namespaces are replicated. The replication topology, which is configured at the system level, determines the systems on which you can write to namespaces.
+
+Replication has several purposes, including: If a system in a replication topology becomes unavailable (for example, due to network issues), another system in the topology can provide continued data availability. If a system in a replication topology suffers irreparable damage, another system in the topology can serve as a source for disaster recovery. If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+689/907
+
+6/25/24, 11:34 AM

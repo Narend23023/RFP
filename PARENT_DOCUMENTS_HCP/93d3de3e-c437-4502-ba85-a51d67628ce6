@@ -1,0 +1,79 @@
+For each system log message about an event, HCP sends the information shown in the following table to the specified SNMP managers.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+168/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Information
+
+Field in HCP-MIB
+
+Data type
+
+Severity of the event
+
+hcpAdminLogEventSeverity
+
+INTEGER. Possible values are: 3 - Error 4 - Warning 5 - Notice
+
+Date time the event occurred
+
+hcpAdminLogEventTimestamp
+
+DateAndTime
+
+Message ID
+
+hcpAdminLogEventType
+
+Integer32
+
+Full message text
+
+hcpAdminLogEventMessage
+
+LongDisplayString (up to 1,024 bytes)
+
+You can choose the severity level of the log messages to be sent. You can also choose whether or not to send messages about security events (that is, attempts to log into the System Management Console with an invalid user name) and compliance events. Compliance events happen at the namespace level, so these messages are sent to the SNMP
+
+managers only if SNMP logging is enabled at the tenant level.
+
+Note: System log messages are not guaranteed to arrive at the SNMP managers to which they’re sent. This is because the SNMP protocol uses UDP for data transmission.
+
+Some HCP startup events occur before the internal SNMP server starts. Therefore, messages about these startup events are not sent to SNMP managers. Enabling and configuring SNMP
+
+You use the SNMP page in the HCP System Management Console to enable and configure SNMP for HCP. You also use this page to test the connections to the SNMP managers that you specify.
+
+To display the SNMP page, in the top-level menu of the System Management Console, select Monitoring > SNMP.
+
+Note: To view the SNMP page, you need the monitor, administrator, security, or compliance role. To configure SNMP for HCP and test connections to SNMP managers, you need the administrator or security role. Enabling SNMP for HCP
+
+You can enable SNMP for HCP by going to the SNMP page.
+
+To view the SNMP page, you need the monitor, administrator, security, or compliance role. To configure SNMP for HCP and test connections to SNMP managers, you need the administrator or security role.
+
+1. Specify SNMP settings.
+
+a. To enable all uses of SNMP with HCP, select Enable SNMP at snmp.hcp-domain-name. b. Optionally, select Allow writes/updates of HCP settings through SNMP to allow users to change the HCP system configuration through SNMP.
+
+This option applies only when SNMP is enabled.
+
+c. To indicate the version of SNMP you want to use, select either Use version 1 or 2c or Use version 3.
+
+SNMP version 1 does not support fields with the Counter64 data type. In the HCP MIB, several fields have that data type. When you use SNMP version 1 to retrieve
+
+system information, it will not return values for those fields. d. To secure access to HCP through SNMP, for SNMP version 1 or 2c, type the name of a community in the Community field.
+
+Community names can contain can be from 1 through 63 characters long and are case-sensitive.
+
+e. To secure access to HCP through SNMP for SNMP version 3, in the New Password field, type a password to go with the system-supplied name in the Username field.
+
+Passwords must be at least eight characters long and can contain any valid UTF-8 characters, including white space; however, the recommended usage is to limit the password to only ASCII characters. Passwords are-case sensitive.
+
+If you’re modifying the SNMP settings and you leave the New Password field empty, the previously set password remains in effect.
+
+In the Confirm Password field, type the password again.

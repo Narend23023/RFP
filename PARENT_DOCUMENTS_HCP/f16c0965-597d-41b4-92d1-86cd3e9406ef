@@ -1,0 +1,69 @@
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked.
+
+Response body
+
+The response body returned in response to a request to list the contents of a bucket differs depending on whether request is for the current (or only) versions of objects or for object versions.
+
+The list below describes the XML elements in the two formats of the response body returned in response to a request to list the contents of a bucket. The elements are listed in alphabetical order. CommonPrefixes
+
+Child of the ListBucketResult or ListVersionsResult element and container for the Prefix element. The response body contains one CommonPrefixes element for each common prefix in the bucket listing.
+
+Contents
+
+Child of the ListBucketResult element and container for the elements that describe a current item in the bucket. The response body contains one Contents element for each item that satisfies the request criteria. DeleteMarker
+
+Child of the ListVersionsResult element and container for the elements that describe a delete marker. The response body contains one DeleteMarker element for each delete marker that satisfies the request criteria.
+
+Delimiter
+
+Child of the ListBucketResult or ListVersionsResult element. The Delimiter element specifies the value of the delimiter query parameter included in the request. If the request did not include the delimiter query parameter, the response body does not include the Delimiter element. DisplayName
+
+Child of the Owner element. If the item owner is identified by an HCP user account, the value of the DisplayName element is the user name for that account. If the item owner is identified by an AD user account, the value of the DisplayName element is the user name of that account followed by an at sign (@) and the AD domain name. If the item has no owner, the value of the DisplayName element is nobody. For folders, the value of the DisplayName element is always nobody. ETag
+
+Child of the Contents or Version element. The ETag element specifies the ETag of the applicable item or item version. The response body includes ETag elements for the listed folders. However, because they have no content, all folders have the same value for this element.
+
+ID
+
+Child of the Owner element. If the item owner is identified by an HCP user account, the value of the ID element is the user ID for that account. If the item owner is identified by an AD user account, the value of the ID element is the SID for that account. If the item has no owner, the value of the ID element is nobody. For folders, the value of the ID element is always nobody. IsLatest
+
+Child of the Version or DeleteMarker element. The IsLatest element indicates whether the item version is the current version of the item. Possible values are:
+
+true
+
+The item version is the current version of the item.
+
+false
+
+The item version is an old version of the item.
+
+IsTruncated
+
+Child of the ListBucketResult or ListVersionsResult element. The IsTruncated element indicates whether the returned bucket listing includes the last item that satisfies the request criteria. Possible values are: true
+
+The returned listing includes the last item that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last item that satisfies the request criteria.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+585/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Key
+
+Child of the Contents, Version, or DeleteMarker element. The Key element specifies the name of an item or item version in the bucket listing. For a delete marker, the value of the Key element is the name of the object or object version that was deleted. KeyMarker
+
+Child of the ListVersionsResult element. The KeyMarker element specifies the value of the key-marker query parameter included in the request. If the request did not include the key-marker query parameter, the response body includes KeyMarker as an empty element.
+
+LastModified

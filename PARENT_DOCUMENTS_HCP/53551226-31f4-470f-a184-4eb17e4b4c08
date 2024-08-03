@@ -1,0 +1,57 @@
+// Convert to string.
+
+for(int i=0; i < pDigest.length; i++) { mOutDigest.append(Integer.toHexString(0xFF & pDigest[i])); } } catch (Exception e) { System.err.println("Error: " + e.getMessage()); e.printStackTrace(); }
+
+return mOutDigest.toString(); }
+
+} /* Simple trust manager implementation. */
+
+class MyX509TrustManager implements X509TrustManager { private X509TrustManager standardTrustManager = null;
+
+public MyX509TrustManager() { }
+
+public MyX509TrustManager(KeyStore keystore) throws NoSuchAlgorithmException, KeyStoreException { super(); TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()); factory.init(keystore);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+540/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+TrustManager[] trustmanagers = factory.getTrustManagers(); if (trustmanagers.length == 0) { throw new NoSuchAlgorithmException("no trust manager found"); } this.standardTrustManager = (X509TrustManager)trustmanagers[0]; }
+
+public void checkClientTrusted(X509Certificate[] certificates,String authType) throws CertificateException { standardTrustManager.checkClientTrusted(certificates,authType); } public void checkServerTrusted(X509Certificate[] certificates,String authType) throws CertificateException { if ((certificates != null) && (certificates.length == 1)) {
+
+certificates[0].checkValidity(); } else { standardTrustManager.checkServerTrusted(certificates,authType); } }
+
+public X509Certificate[] getAcceptedIssuers() { return this.standardTrustManager.getAcceptedIssuers(); }
+
+} Management API XML schema
+
+HCP uses an XML schema to validate the XML in management API request bodies and to generate the XML in management API response bodies. To retrieve this schema from the HCP system, you use a URL with this format:
+
+https://(tenant-name).hcp-domain-name:9090/static/mapi-9_3_0.xsd.xsd
+
+To retrieve the schema, you need a tenant-level user account with the administrator role.
+
+Here’s a sample curl command that retrieves the management API schema and writes it to a file named mapi_schema.xsd:
+
+curl -k -i -H "Accept: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/static/mapi-9_3_0.xsd" > mapi_schema.xsd Using the Hitachi API for Amazon S3
+
+Introduction to Hitachi Content Platform
+
+Hitachi Content Platform (HCP) is a robust storage system designed to support large, growing repositories of fixed-content data. HCP stores objects that include both data and metadata that describes that data. Objects exist in buckets, which are logical partitions of the repository.
+
+HCP provides access to the repository through a variety of industry-standard protocols, as well as through various HCP-specific interfaces. One of these interfaces is the Hitachi API for Amazon S3, a RESTful, HTTP-based API that is compatible with Amazon S3. About Hitachi Content Platform
+
+Hitachi Content Platform is a combination of hardware and software that provides an object-based data storage environment. An HCP repository stores all types of data, from simple text files to medical images to multigigabyte database images.
+
+HCP provides easy access to the repository for adding, retrieving, and deleting data. HCP uses write-once, read-many (WORM) storage technology and a variety of policies and
+
+internal processes to ensure the integrity and availability of the stored data. Object-based storage
+
+HCP stores objects in a repository. Each object permanently associates data HCP receives (for example, a document, an image, or a movie) with information about that data, called metadata.
+
+An object encapsulates:

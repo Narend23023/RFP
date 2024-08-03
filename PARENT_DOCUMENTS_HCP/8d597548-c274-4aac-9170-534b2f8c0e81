@@ -1,0 +1,71 @@
+before which the object cannot be deleted.
+
+Deletion Allowed
+
+which means that the object can be deleted at any time.
+
+Deletion Prohibited
+
+which means that the object can never be deleted.
+
+Initial Unspecified
+
+which means that the object has not yet been assigned one of the other possible retention settings. Objects with a setting of Initial Unspecified cannot be deleted. A retention class
+
+which prevents an object from being deleted before a certain amount of time past its creation date. The specific amount of time is part of the retention class definition.
+
+A hold setting. An object is either on hold or not. An object that is on hold cannot be deleted through any mechanism under any circumstances. Objects can be placed on hold
+
+or released from hold at any time.
+
+Users and applications can see and modify retention policy settings.
+
+Note: If the namespace is in enterprise mode, the privileged delete function can be used to delete objects regardless of their retention setting, except when the objects are on hold.
+
+Shredding policy
+
+The shredding policy determines whether objects are shredded by the Shredding service when they’re deleted. Each object has its own shredding policy setting that indicates whether or not the object should be shredded. This setting is part of the object metadata. Users and applications can see and modify shredding policy settings.
+
+Indexing policy
+
+The indexing policy determines how the metadata query engine indexes objects. Each object has its own indexing policy setting that indicates whether the metadata query engine should index custom metadata for that object. This setting is part of the object metadata.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+103/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: For any given object, if custom metadata indexing is disabled for the HCP system or for the namespace that contains the object, the metadata query engine does not index custom metadata for that object, regardless of its indexing policy setting. Every object has an individual indexing policy setting defined as part of its system metadata. HCP ignores this setting for an object when custom metadata indexing is disabled for its namespace. However, metadata query API requests can always use the individual indexing policy setting as a namespace search criterion. Additionally, third-party applications can use this setting for their own purposes. Versioning policy
+
+The versioning policy determines whether HCP can create multiple versions of objects. The policy is set at the namespace level and applies only to HCP namespaces.
+
+The versioning policy consists of two settings:
+
+A versioning setting, which is either on or off. When versioning is on, an attempt to store an object that already exists in the target namespace results in the creation of a new version of the object. When versioning is off, an attempt to store such an object results in an error. A version pruning setting. This setting is the amount of time HCP should wait after a version is created before automatically deleting it. HCP automatically deletes only old versions of objects and never automatically deletes the most recent version.
+
+If the effective permission mask for the namespace prohibits deletions, HCP does not automatically prune object versions. Custom metadata XML checking policy
+
+The custom metadata XML checking policy determines whether HCP allows custom metadata to be added to a namespace if it is not well-formed XML. This policy is set at the
+
+namespace level.
+
+The XML checking policy can have a setting of enabled or disabled:
+
+Enabled
+
+When custom metadata is added to or replaced in a namespace, HCP checks whether it’s well-formed XML. If the XML is not well-formed, HCP rejects it. Disabled
+
+HCP accepts any data submitted as custom metadata.
+
+XML checking applies only when custom metadata is added to or replaced in a namespace. It does not apply to custom metadata already in the namespace.
+
+HCP services
+
+HCP services are responsible for optimizing the use of system resources and maintaining the integrity and availability of the stored data.
+
+Each HCP service performs a specific function that contributes to the overall health and viability of the system. Services generally run without user intervention either according to a schedule or in response to certain events.
+
+Using the HCP System Management Console, you can set the service schedule and control certain aspects of some services. You can also monitor the progress of certain services

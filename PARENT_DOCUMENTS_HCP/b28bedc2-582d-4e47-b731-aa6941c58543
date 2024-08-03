@@ -1,0 +1,105 @@
+This parameter is required when you create a tenant. The user name you specify is also used as the full name for the user account.
+
+password
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+523/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+This parameter is required when you create a tenant.
+
+forcePasswordChange
+
+This parameter is optional when you create a tenant. The default is false.
+
+The user account that’s created:
+
+Is enabled Is locally authenticated Has only the security role Has no data access permissions Has no description
+
+The username, password, and forcePasswordChange query parameters are valid only when you create an HCP tenant and only if you enable local authentication for the tenant in the same request. They are not valid on a request to modify a tenant.
+
+Creating an initial group account To create the tenant with an initial group account, you use the initialSecurityGroup query parameter. The value of this parameter must be the name or SID of an AD group defined in the AD forest supported by HCP. You can specify the name in either of these formats:
+
+group-name
+
+group-name@ad-domain-name
+
+If you omit the domain name, HCP uses the AD domain specified in the system configuration.
+
+Be sure to use the second format if a group with the specified name exists in more than one domain in the AD forest or if the group name looks like a SID.
+
+The group account that’s created:
+
+Has only the security role Has no data access permissions
+
+The initialSecurityGroup query parameter is valid only when you create an HCP tenant and only if you enable AD authentication for the tenant in the same request. It is not valid on a request to modify a tenant. Default tenant query parameters
+
+When you create the default tenant, HCP automatically creates the default namespace. To provide information about this namespace, you use these query parameters, which correspond to namespace properties with the same name:
+
+enterpriseMode
+
+This parameter is required when you create the default tenant. hashScheme
+
+This parameter is required when you create the default tenant.
+
+searchEnabled
+
+This parameter is optional when you create the default tenant. The default is false. (By default, if you specify searchEnabled=true, search indexing is enabled. Otherwise, search indexing is disabled by default.) servicePlan
+
+This parameter is optional when you create the default tenant. The default is Default.
+
+These query parameters are valid only when you create the default tenant. They are not valid on requests to modify the tenant.
+
+tenantCandidate
+
+The tenantCandidate data type describes the tenantCandidates property of the tenantCandidates and tenantConflictingCandidates resources for erasure coding topologies. tenantCandidate data type properties
+
+The following table describes the properties included in the tenantCandidate data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+hcpSystems
+
+List
+
+Lists the HCP systems on which the tenant exists. Each system is identified by the fully qualified name of the domain associated with the [hcp_system] network on that system.
+
+This property is returned only by a verbose GET request.
+
+In XML, the element that identifies each system is name. In JSON, the name in the name/value pair that lists the systems is name. name
+
+String
+
+Specifies the name of the tenant.
+
+uuid
+
+String
+
+Specifies the unique ID for the tenant.
+
+This property is returned only by a verbose GET request.
+
+Example
+
+Here's an XML example of the tenantCandidate data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<tenantCandidate> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>finance</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+524/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

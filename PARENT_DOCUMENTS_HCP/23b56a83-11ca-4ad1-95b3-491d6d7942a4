@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<retentionClass> <name>FN-Std-42</name> <description>Implements Finance department standard #42 - keep for 10 years.</description> <value>A+10y</value> <allowDisposition>true</allowDisposition> </retentionClass> Request with cURL command line
+
+curl -k -iT RC-FN-Std-42.xml -H "Content-Type: application/xml" -H "Authorization: HCP bXdoaXRl:ad49ce36d0cec9634ef63b24151be0fb" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable/retentionClasses"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+426/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("RC-FN-Std-42.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bXdoaXRl:ad49ce36d0cec9634ef63b24151be0fb"]) curl.setopt(pycurl.URL, "https://finance.hcp.example.com:9090/mapi/tenants/finance/" + "namespaces/accounts-receivable/retentionClasses") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("RC-FN-Std-42.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers
+
+PUT /mapi/tenants/finance/namespaces/accounts-receivable/retentionClasses HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bXdoaXRl:ad49ce36d0cec9634ef63b24151be0fb
+
+Content-Type: application/xml Content-Length: 275
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Retrieving a list of retention classes
+
+Here’s a sample GET request that retrieves a list of the retention classes defined for the Accounts-Receivable namespace. The request writes the list of retention classes to a file named AR-retclasses.xml. The request is made using a tenant-level user account that includes the compliance role. Request with cURL command line
+
+curl -k -H "Accept: application/xml" -H "Authorization: HCP bXdoaXRl:ad49ce36d0cec9634ef63b24151be0fb" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable/retentionClasses?prettyprint" > AR-retclasses.xml
+
+Request in Python using PycURL

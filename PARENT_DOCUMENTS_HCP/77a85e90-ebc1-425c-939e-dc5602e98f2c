@@ -1,0 +1,77 @@
+If-Unmodified-Since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified item was last modified. If the modification date and time is equal to or earlier than the specified date and time, HCP continues processing the request. If the modification date and time is later than the specified date and time, HCP returns a 412 (Precondition Failed) status code. For valid values, see the description of the If-Modified-Since header above. Response headers
+
+The next list describes the headers returned in response to a successful request to check the existence an object, object version, or folder.
+
+Accept-Ranges
+
+Indicates that HCP can accept requests for part of the object data, specified as a range of bytes. The value of this header is always bytes. Content-length
+
+Specifies the size, in bytes, of the object, object version, or folder. For a delete marker the size is 0.
+
+Content-Type
+
+Specifies the Internet media type of the object or object version, or folder. This is one of, in order of precedence:
+
+The Internet media type specified by the response-content-type request parameter. The Internet media type specified in the Content-Type header when the object was stored. An Internet media type determined by HCP based on the object name. application/octet-stream if HCP cannot determine the Internet media type. For a folder, the value of the Content-Type header is always application/octet-s tream. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+ETag
+
+Specifies the ETag for the specified object, object version, or folder. For a delete marker, this is the ETag of the object or object version that was deleted. Unlike objects, delete markers do not have ETags.
+
+Last-Modified
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+610/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Specifies the date and time when the object, object version, or folder was last modified, in Greenwich Mean Time (GMT).
+
+The date and time are expressed in this format: DDD, dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Tue, 07 Feb 2017 19:46:03 GMT
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+x-amz-delete-marker
+
+This header is returned only for delete markers and only if versioning is enabled for the bucket. The value is always true. x-amz-meta-
+
+For objects and object versions only, specifies a custom metadata property/value pair. The response headers include one x-amz-meta- header for each applicable pair.
+
+x-amz-missing-meta
+
+For objects and object versions only, indicates that the .metapairs annotation for the object or object version does not contain valid XML, that the first line in the annotation does not begin with the metapairs element. This header is returned only when applicable. The value is always 1 (one). x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body. COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements.
+
+Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date

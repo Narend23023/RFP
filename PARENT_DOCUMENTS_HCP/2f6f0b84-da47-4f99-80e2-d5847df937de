@@ -1,0 +1,75 @@
+The description can be up through 1,024 characters long and can contain any valid UTF-8 characters, including white space. 5. Click Submit.
+
+Changing the namespace storage quotas
+
+You can change both the hard quota and soft quota for a namespace at any time.
+
+To change namespace quotas, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces.
+
+2. In the list of namespaces, click the modify quotas control ( 3. In the Modify Namespace Quota window, take either or both of these actions:
+
+) for the namespace whose quotas you want to change.
+
+In the Hard Quota field, type the number of gigabytes or terabytes of storage to allocate to the namespace and select either GB or TB to indicate the measurement unit. Valid values are integers greater than or equal to one. In the Soft Quota field, type a new soft quota for the namespace. Valid values are integers in the range ten through 95.
+
+4. Click Update Quota.
+
+Changing the namespace owner
+
+You can change or remove the owner of a namespace at any time. To change or remove the owner of a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In top right corner of the namespace Overview panel, click the Assign Owner link or the name of the current namespace owner, whichever is shown.
+
+4. In the Modify Namespace Owner window that appears, type the name of the new owner in the New Namespace Owner field.
+
+Optionally, to remove the current owner of a namespace, leave the New Namespace Owner field empty.
+
+5. Click Update Owner.
+
+Changing the namespace tags
+
+You can change the tags associated with a namespace at any time.
+
+To view the tags associated with a namespace, you need the monitor or administrator role. To change the tags associated with a namespace, you need the administrator role. 1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Settings. 4. On the left side of the Settings panel, click Tags. 5. Associate a new tag with the namespace. a. In the field in the Tags section, type a text string to be used as a tag.
+
+Tags must be from one through 64 characters long, can contain any valid UTF-8 characters except commas (,), and are not case sensitive. White space is allowed.
+
+b. Click Add Tag.
+
+The row with the new tag is highlighted in green.
+
+6. (Optional) To remove a tag from the namespace, click the delete control (
+
+) for the tag.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+276/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The row with the tag turns red.
+
+7. Click Update Settings.
+
+Changing the default HCP retention settings When you create a namespace, its default HCP retention setting is Deletion Allowed. Once the namespace exists, you can change this setting at any time. Valid values for this setting are:
+
+An offset from the time the object is created.
+
+You specify an offset as numbers of years, months, and/or days. For example, you could specify an offset of two years. Then, an object added to the namespace on March 10, 2011, at 9:45 a.m. would expire on March 10, 2013, at 9:45 a.m.
+
+A retention class. One of these special values: Deletion Allowed
+
+The object can be deleted at any time.
+
+Deletion Prohibited
+
+The object can never be deleted by means of a normal delete operation. If the namespace is in enterprise mode, however, the object can be deleted by means of a privileged delete operation.
+
+After an object has this retention setting, its retention setting cannot be changed. Initial Unspecified
+
+The object cannot be deleted, but can have its retention setting changed to any other retention setting. This setting is useful for namespaces for which the only enabled namespace access protocol is SMTP.

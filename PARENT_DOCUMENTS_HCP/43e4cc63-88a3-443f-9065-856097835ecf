@@ -1,0 +1,25 @@
+The list of items does not include in-progress multipart uploads or common prefixes that are exclusively for multipart uploads. The character string you specify for the prefix query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks.
+
+The prefix parameter name and the character string you specify are both case sensitive. max-keys
+
+By default, a bucket listing can include at most one thousand items. However, you can use the max-keys query parameter in a bucket listing request to specify a smaller maximum number of items. If more than the maximum number of items satisfy the criteria for a request, you can use query parameters to retrieve the parts in groups. For example, the bucket listing returned in response to a GET request with the max-keys=6 query parameter contains these items:
+
+AcctgBestPractices.doc (current version) acctg/ acctg/AcctgRR-Summary acctg/budget_proposals/ acctg/budget_proposals/BudgProp-2020 hum_res/
+
+Valid values for the max-keys query parameter are integers in the range 0 (zero) through 2,147,483,647. If you specify an integer greater than one thousand, the returned bucket listing includes only the first one thousand items that satisfy the request criteria (or fewer if fewer than one thousand items satisfy the criteria). The max-keys parameter name is case sensitive. marker
+
+You use the marker query parameter to start the returned bucket listing with the first item with a name that comes alphanumerically after the character string specified by the marker parameter. For example, the bucket listing returned in response to a GET request with the marker=quarterly_rpts/ query parameter contains these items: quarterly_rpts/Q2_2019.ppt quarterly_rpts/Q3_2019.ppt quarterly_rpts/Q4_2019.ppt sales/ sales/budget_proposals/ sales/budget_proposals/BudgProp-2020 sales_quotas_2020.pdf
+
+When more than the requested number of items satisfy the criteria in a request for a bucket listing, HCP returns a partial listing. In this case, the response body includes the IsTruncated element with a value of true. You can request the next part of the listing by including the marker query parameter in a new request. As the parameter value, you specify either the name of the last item in the returned listing or the last common prefix in the returned listing, whichever is alphanumerically greater.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+583/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help If the string you specify as the value of the marker query parameter is the name of a folder and does not end with a forward slash (/), items that begin with that string followed by a forward slash are omitted from the listing. The character string you specify for the marker query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The marker parameter name and the character string you specify are both case sensitive. The marker parameter is ignored if specified in a GET request that includes the versions parameter. version-id-marker
+
+You use the version-id-marker parameter in conjunction with the key-marker parameter to start the returned bucket listing with the first item with:
+
+A name that’s equal to the character string specified by the key-marker parameter A version ID that’s greater than the value specified by the version-id-marker parameter

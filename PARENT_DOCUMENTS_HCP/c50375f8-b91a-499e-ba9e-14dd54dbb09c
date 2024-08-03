@@ -1,0 +1,59 @@
+The data type of the property values. For numeric and datetime data types, the format of the property values. An indication of whether the property is single-valued or multivalued. A multivalued property can have multiple values for any given object. The examples of content property definitions in the following sections are based on this sample custom metadata XML:
+
+<?xml version="1.0" ?> <dicom_image> <image type="MRI">
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+294/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help <date>09/27/2012</date> <technician>Morgan Grey</technician> </image> <doctor> <name>Lee Green</name> <office>ABC Oncology</office>
+
+<address> <address1>Anytown Medical Building</address1> <address2>1 Main Street</address2> <city>Anytown</city> <state>MA</state> <zip>02000</zip> </address> <specialties> <specialty primary="true">Oncology</specialty>
+
+<specialty>Internal Medicine</specialty> </specialties> </doctor> <patient> <id>243789</id> <name>Paris Black</name> <address> <address1>10 Elm Street</address1> <address2/>
+
+<city>Anytown</city> <state>MA</state> <zip>02000</zip> </address> </patient> <followup_needed>true</followup_needed> </dicom_image> Content property names
+
+When you define a content property, you specify a name for it. Content property names must be from one through 25 characters long, can contain only alphanumeric characters and underscores (_), and are case sensitive. White space is not allowed.
+
+Content property names should be intuitive for users of the metadata query API and Metadata Query Engine Console. For example, for the property that extracts the name of the doctor from the sample custom metadata, you should use a name like Doctor_Name rather than a name like dname. Content properties with the same name
+
+You can use the same name for multiple content properties as long as those properties have the same data type. For example, suppose the custom metadata for some objects includes a physician element instead of a doctor element, like this:
+
+<physician> <name>Lee Green</name> <office>ABC Oncology</office> <address> <address1>Anytown Medical Building</address1>
+
+<address2>1 Main Street</address2> <city>Anytown</city> <state>MA</state> <zip>02000</zip> </address> <specialties> <specialty primary="true">Oncology</specialty> <specialty>Internal Medicine</specialty> </specialties> </physician>
+
+You could define two content properties named Doctor_Name, one with an XPath expression that includes the doctor element, the other with an XPath expression that includes the physician element.
+
+Within a content class, content properties with the same name must have the same data type.
+
+Reserved words
+
+The following words are reserved and cannot be used as content property names: accessTime
+
+accessTimeString acl changeTimeMilliseconds changeTimeString customMetadata customMetadataAnnotation dpl gid hash hashScheme
+
+hold index ingestTime
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+295/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+ingestTimeString namespace objectPath operation owner
+
+permission replicated retention retentionClass retentionString shred size type uid urlName updateTime updateTimeString utf8Name version
+
+Content property expressions
+
+For each content property you create, you specify an XPath expression. An XPath expression is an instruction for navigating an XML document to find an element or attribute value.
+
+XPath expressions use the XPath language. HCP supports the full syntax of this language. The examples in this section illustrate only a small part of the XPath syntax.
+
+XPath expressions that find element values

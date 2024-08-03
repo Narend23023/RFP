@@ -1,0 +1,157 @@
+185/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Checking the status of your nodes
+
+You can use the node status command to check the status of a target node in your HCP system. Any user can perform the node status command. System-level users with the administrator role can enable and disable the node status API.
+
+The request to check the status of a node requires a URL specifying the front-end IP address of the target node. You enter the command in the following format: http://node-front-end-ip-address/node_status
+
+You can also request node metrics to be returned with the node HTTP status return code. To request node metrics, you additionally need to:
+
+Specify a type URL query parameter with a value of metrics. Specify the format URL query parameter with a value of xml or json.
+
+If you omit the format parameter, you are only returned a response status code. Request-specific return codes (node status)
+
+The following table describes the HTTP return status codes that can be returned from a node status request.
+
+Code HTTP status
+
+Description
+
+204
+
+OK
+
+Node is configured to return node status
+
+403
+
+Forbidden
+
+The HCP node status check returns a 403 forbidden message for the following reasons:
+
+The system administrator has not enabled node status through the System Management Console. The HCP system does not have a load balancer or the system administrator has not added the load balancer IP address to the Security Console Allow list.
+
+540
+
+System is in Read Only mode
+
+541
+
+Node is not available Response body (node status)
+
+The following table describes the properties included in the node status metrics.
+
+Property name
+
+Data type Description
+
+httpConnections
+
+integer
+
+The number of HTTP connections.
+
+cpuUser
+
+float
+
+The percentage of CPU capacity used by HCP processes.
+
+cpuSystem
+
+float
+
+The percentage of CPU capacity used by the operating system kernel. iowait
+
+float
+
+The percentage of CPU capacity spent waiting to access logical volumes that are in use by other processes.
+
+swapout
+
+float
+
+The average number of pages swapped out of memory per second.
+
+id
+
+float
+
+The volume name.
+
+blocksRead
+
+float
+
+The average number of blocks read from the logical volume per second. blocksWrite
+
+float
+
+The average number of blocks written to the logical volume per second.
+
+diskUtilization
+
+float
+
+The usage of the communication channel between the operating system and the logical volume as a percent of the channel bandwidth.
+
+frontendBytesRead
+
+float
+
+The average number of bytes read from the node per second over the front-end network. frontendBytesWrite
+
+float
+
+The average number of bytes written to the node per second over the front-end network.
+
+backendBytesRead
+
+float
+
+The average number of bytes read from the node per second over the back-end network.
+
+backendBytesWrite
+
+float
+
+The average number of bytes written to the node per second over the back-end network. requestTimestamp
+
+integer
+
+The exact time that the timestamp request was issued in milliseconds.
+
+metricsTimestamp
+
+integer
+
+The exact time that the metrics were collected in milliseconds.
+
+Example: Retrieving node status
+
+Here's a sample request that retrieves a return status code and node metrics for a node in the system. In this example, the target node IP address is 192.168.210.16 and the requested output format is JSON. Request with cURL command line
+
+curl -i http://192.168.210.16/node_status?type=metrics&format=json
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Response body in JSON
+
+curl -i http://<node-ip>/node_status?type=metrics&format=json curl -i -H "Accept: application/json" http://<node-ip>/node_status?type=metrics Response status code: 200 Response body:
+
+{ "httpConnections" : "1",
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+186/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

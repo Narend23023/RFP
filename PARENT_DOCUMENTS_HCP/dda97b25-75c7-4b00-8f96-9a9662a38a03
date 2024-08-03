@@ -1,0 +1,35 @@
+The example shows the response headers HCP returns while versioning is enabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=finance/AcctgBestPractices.doc -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105&partNumber=5" -H "x-amz-copy-source-range: bytes=2800000-9499999" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+PUT /acctg/RulesAndRegulations.pdf?uploadId=94837746087105&partNumber=5 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:a0wC/DuV+w2Agq6FagnIe6cShaU= x-amz-copy-source: finance/AcctgBestPractices.doc x-amz-copy-source-range: bytes=2800000-9499999 x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT ETag: "bbe438b2a0376f08dc37867a82ea87e6" x-amz-version-id: 94871138333377 x-amz-copy-source-version-id: 94860356828929 Content-Type: application/xml;charset=UTF-8 x-amz-server-side-encryption: None Transfer-Encoding: chunked
+
+Response body <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CopyPartResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.000Z</LastModified> <ETag>"bbe438b2a0376f08dc37867a82ea87e6"</ETag> </CopyPartResult>
+
+Listing the parts of a multipart upload
+
+You use the HTTP GET method with the uploadId query parameter to list the parts that have been uploaded for an in-progress multipart upload. An in-progress multipart upload is one that has been initiated but not yet completed or aborted. You cannot list the parts of a completed or aborted multipart upload.
+
+To list the parts of a multipart upload, you must be an authenticated user. You need to use either the same user account as the account used in the request to initiate the multipart upload or the user account for the owner of the bucket where the multipart upload was initiated. Additionally, you need read permission for the bucket.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+648/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help You use the uploadId query parameter to specify the upload ID of the multipart upload for which you're requesting the part listing. If the upload ID you specify doesn't match the upload ID of an in-progress multipart upload or isn't associated with the object specified in the request, HCP returns a 404 (Not Found) status code and does not return a part listing.
+
+A part listing is returned in an XML response body. The parts are listed in numeric order. For each part, the listing contains the part number, the date and time when the part was uploaded, the ETag for the part, and the size of the part.
+
+A part listing does not include parts that are in the process of being uploaded or parts that have been replaced. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list the parts of a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /object-name?uploadId=upload-id[&query-parameters]HTTP/1.1

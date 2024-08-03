@@ -1,0 +1,65 @@
+<MaxAgeSeconds>3000</MaxAgeSec> <ExposeHeader>ETag</ExposeHeader> </CORSRule> <CORSRule> <AllowedOrigin>*</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedHeader>*</AllowedHeader> <MaxAgeSeconds>3000</MaxAgeSeconds> </CORSRule> </CORSConfiguration> Response headers
+
+HTTP/1.1 200 OK Date: Tue, 14 May 2019 17:54:50 GMT Server: HCP
+
+Example: GET bucket request
+
+The following GET bucket request returns a CORS subresource from a bucket (namespace) named finance.
+
+Note: Each S3 compatible request must be authenticated by the S3 gateway. You do this by using the HTTP Authorization request header with either a signature string, an AWS Version 2 or Version 4 authentication string, or by anonymous access. Request headers
+
+GET /?cors HTTP/1.1 Host:finance.europe.hcp.example.com Date: Tue, 14 May 2019 2 17:54:50 GMT Authorization: SignatureString
+
+Response headers
+
+HTTP/1.1 200 OK Date: Tue, 14 May 2019 19:14:42 GMT
+
+Server: HCP Content-Length: 280
+
+Response body
+
+<CORSConfiguration> <CORSRule> <AllowedOrigin>http://www.example.com</AllowedOrigin> <AllowedMethod>PUT</AllowedMethod> <AllowedMethod>POST</AllowedMethod> <AllowedMethod>DELETE</AllowedMethod> <AllowedHeader>*</AllowedHeader> <MaxAgeSeconds>3000</MaxAgeSec> <ExposeHeader>ETag</ExposeHeader> </CORSRule>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+666/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<CORSRule>
+
+<AllowedOrigin>*</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedHeader>*</AllowedHeader> <MaxAgeSeconds>3000</MaxAgeSeconds> </CORSRule> </CORSConfiguration> Example: DELETE bucket request
+
+The following DELETE bucket request deletes a CORS subresource from a bucket (namespace) named finance.
+
+Note: Each S3 compatible request must be authenticated by the S3 gateway. You do this by using the HTTP Authorization request header with either a signature string, an AWS Version 2 or Version 4 authentication string, or by anonymous access. Request headers
+
+DELETE /?cors HTTP/1.1
+
+Host:finance.europe.hcp.example.com Date: Tue, 14 May 2019 19:14:42 GMT Authorization: SignatureString
+
+Response headers
+
+HTTP/1.1 204 No Content Date: Tue, 14 May 2019 19:14:42 GMT Server: HCP Content-Length: 0 CORS request validation
+
+After CORS rules are configured for an HCP namespace, web applications can request access to the namespace resources by using either the Hitachi API for Amazon S3 or the
+
+REST API.
+
+The Amazon S3 and REST gateways perform CORS rules validation on incoming object requests against an HCP bucket. When a CORS compliant HCP server receives a bucket request from a browser, the server evaluates the request headers against the CORS rules configuration for the bucket. The first CORS rule for the bucket that matches the request is the rule that is applied for creating the server response headers.
+
+For security reasons, requests that fail authentication are not validated. In the web browser, these failed authentication requests result in CORS errors. Runtime request headers
+
+Request headers are automatically set when a web browser issues an HTTP request to an HCP server.
+
+The following list describes the runtime request headers sent by a browser depending on the request type (simple or preflight).
+
+Origin
+
+Request type: Simple, Preflight Origin of the cross-domain request. For example, http://www.example.com Access-Control-Request-Method
+
+Request type: Preflight HTTP method to be used when the request is made.
+
+Access-Control-Request-Headers

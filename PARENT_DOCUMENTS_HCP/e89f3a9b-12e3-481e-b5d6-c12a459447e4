@@ -1,0 +1,133 @@
+transition data type properties
+
+The following table describes the properties included in the transition data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+performanceLevel String
+
+Specifies the performance level that applies to the replication link on the local or remote system, as applicable, starting at the day and time specified by the time property. Valid values are:
+
+This property is required for within occurrence of the transition property. LOW
+
+The performance level changes to low at the specified day and time.
+
+MEDIUM
+
+The performance level changes to medium at the specified day and time.
+
+HIGH
+
+The performance level changes to high at the specified day and time.
+
+CUSTOM
+
+The performance level changes to the custom setting at the specified day and time. OFF
+
+The local or remote system, as applicable, stops sending data on the link at the specified day and time.
+
+These values are not case-sensitive.
+
+You cannot set the schedule to OFF for the entire week. To stop replication on the link for the entire week, suspend the link.
+
+time
+
+Date
+
+Specifies a day and time at which the performance level for the replication link changes to the level specified by the performanceLevel property. Valid values are datetime values in this format:
+
+This property is required for within occurrence of the transition property. EE:hh
+
+In this format:
+
+EE is the three-letter day (for example, Mon). This value is case-sensitive. hh is the hour on a 24-hour clock. For midnight, use 00.
+
+Example
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+525/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Here’s an XML example of the transition data type: <transition> <time>Tue:18</time> <performanceLevel>HIGH</performanceLevel> </transition>
+
+updatePasswordRequest
+
+The updatePasswordRequest data type describes the request to change a password for a system-level user account or a tenant-level user account.
+
+Properties
+
+The table below describes the property included in the updatePasswordRequest data type. Property
+
+Data type
+
+Description
+
+newPassword
+
+String
+
+The new password that you want to set for the system-level user account or tenant-level user account.
+
+Example
+
+Here’s an XML example of the updatePasswordRequest data type:
+
+<updatePasswordRequest> <newPassword>End321!</newPassword> </updatePasswordRequest> userAccount (tenant level)
+
+The userAccount data type describes the userAccounts resource.
+
+When you create a user account, you use a query parameter to specify the password for the account. You use the same query parameter to change the password for a user account.
+
+Properties
+
+The table below describes the properties included in the userAccount data type. Property
+
+Data type
+
+Description
+
+Notes
+
+allowNamespace Management
+
+Boolean
+
+Specifies whether the user account has the allow namespace management property. Valid values are:
+
+This property is not valid on a PUT request. It is valid on a POST request only if the user making the request has the administrator role. true
+
+The user account has the allow namespace property.
+
+false
+
+The user account does not have the allow namespace management property.
+
+On a PUT request, the default is true if the roles property includes ADMINISTRATOR in the same request; otherwise, the default is false.
+
+On a POST request, adding ADMINISTRATOR to the roles for the user account automatically enables the allow namespace management property for the account.
+
+Users with the allow namespace management property can use the HCP management and S3 compatible APIs to:
+
+Create namespaces List, view and change the versioning status of, and delete namespaces they own description
+
+String
+
+Specifies the description of the user account. This description is optional. The default is no description.
+
+This property is valid on a POST request only if the user making the request has the security role.
+
+To remove a description from an existing user account, specify the description property with no value.
+
+enabled Boolean
+
+Specifies whether the user account is enabled. Valid values are:

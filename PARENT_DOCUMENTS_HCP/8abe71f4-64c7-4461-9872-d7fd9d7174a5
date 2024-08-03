@@ -1,0 +1,91 @@
+attribute-name.attribute-value...element-value.element-name"
+
+<![CDATA[customMetadataContent:"<element-name attribute-name=attribute-value...>element-value</element-name>"]]>
+
+The two formats are equivalent. The first format is simpler. The second format uses well-formed XML.
+
+When using the second format, enclose both the property and text string in the square brackets that mark the CDATA content, and enclose the text string in double quotation marks ("). The outer square brackets ([ ]) are also required, as are the outside angle brackets and exclamation mark.
+
+To query for the value of a specific element, specify every attribute and attribute value for the element, not just the element name and value.
+
+To query for the value of a specific attribute, regardless of which element it applies to, use this format: customMetadataContent:"attribute-name.attribute-value"
+
+You can use the asterisk (*) and question mark (?) wildcard characters when specifying customMetadataContent property values that are not in quotation marks.
+
+Here is some sample custom metadata that you might want to search:
+
+<?xml version="1.0" ?> <weather>
+
+<location>Boston</location> <date>20121130</date> <duration unit="secs">180</duration> <temp>
+
+<temp_high unit="deg_F">31</temp_high> <temp_low unit="deg_F">31</temp_low>
+
+</temp> <velocity>
+
+<velocity_high unit="mph">17</velocity_high>
+
+<velocity_low unit="mph">14</velocity_low> </velocity>
+
+<conditions>partly cloudy</conditions> </weather>
+
+Here are some examples of query expressions that use the customMetadataContent property to search the XML:
+
+This query expression finds objects that have custom metadata with an element name, element value, attribute name, or attribute value that contains Boston: customMetadataContent:Boston
+
+This query expression finds objects that have custom metadata that contains the location element with a value of Boston:
+
+customMetadataContent:"location.Boston.location"
+
+This query expression finds objects that have custom metadata that contains the velocity_high element with a value of 17 and the unit attribute with a value of mph: customMetadataContent:"velocity_high.unit.mph.17.velocity_high"
+
+This query expression returns objects that have custom metadata that contains the conditions element with a value of partly cloudy:
+
+customMetadataContent:"conditions.partly cloudy.conditions"
+
+This query expression finds objects that have custom metadata that contains the date element with a value of 20121130:
+
+<![CDATA[customMetadataContent:"<date>20121130</date>"]]>
+
+This query expression finds objects that have custom metadata that contains the temp_high element with a value of 31 and the unit attribute with a value of deg_F:
+
+<![CDATA[customMetadataContent:"<temp_high unit=deg_F>31 </temp_high>"]]>" aclGrant property
+
+To query for objects based on the content of ACLs, you specify the aclGrant property in a query expression. Valid values for this property have these formats:
+
+"permissions" "permissions,USER[,location,username]"
+
+"permissions,GROUP,location,(ad-group-name|all_users|authenticated)" In these formats:
+
+permissions
+
+One or more of these with no space between them:
+
+R
+
+Read_ACL
+
+r
+
+Read
+
+W
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+844/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Write_ACL
+
+w
+
+Write
+
+d
+
+Delete
+
+If you specify only permissions as the aclGrant property value, the query expression finds objects with ACLs that grant you the specified permissions to any user or group. USER

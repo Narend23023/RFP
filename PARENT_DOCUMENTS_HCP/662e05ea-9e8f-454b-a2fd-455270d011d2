@@ -1,0 +1,119 @@
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires authentication, and the request does not include an Authorization header or hcp-ns-auth cookie. The user doesn’t have permission to perform the requested operation. The namespace does not exist.
+
+The data access port for HTTP or HTTPS, as applicable, is disabled. For a DELETE request to delete an object, the object is under retention.
+
+For a DELETE request to delete a directory, the directory is not empty. For a DELETE request to delete an annotation, the object is under retention, and
+
+the namespace does not allow deleting annotations for objects under retention. For a PUT request to add a version of an existing object, the object is under
+
+retention. For a PUT request to add or replace an annotation for an object that is under
+
+retention, the namespace does not allow the operation for objects under retention. If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+404
+
+Not Found
+
+DELETE
+
+One of:
+
+GET
+
+For all methods, HCP could not find the specified object, version, or directory.
+
+HEAD
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory. POST
+
+For a GET request for a version or a PUT request to copy a version, the specified version is the current version of a deleted object.
+
+PUT of an annotation or ACL
+
+For a GET request to retrieve object or version data and an annotation concurrently, the requested object does not have an annotation with the specified name.
+
+GET of information about
+
+annotations
+
+406
+
+Not Acceptable
+
+GET
+
+One of:
+
+The request has an Accept-Encoding header that does not include gzip or *. For a GET request for an ACL, the request has a Content-Type header with a value other than application/xml or application/json.
+
+409
+
+Conflict
+
+DELETE One of:
+
+PUT
+
+For a DELETE request, HCP could not delete or purge the specified object or delete the directory, annotation, or ACL because it is currently being written to
+
+the namespace. For a PUT request, HCP could not add the object or directory because it already
+
+exists and versioning is not enabled. For a PUT request to store a version of an existing object, HCP could not add a
+
+new version of the object because another version is currently being added. For a PUT request to store an annotation, the object for which the annotation is
+
+being stored was ingested using CIFS or NFS, and the lazy close period for the
+
+object has not expired. For a PUT request that includes a conditional header, HCP is processing another
+
+PUT request for the object. A large number of clients are trying to store custom metadata or ACLs for multiple objects at the same time.
+
+410
+
+Gone
+
+GET
+
+Possible reasons include:
+
+PUT with X-HCP- CopySource
+
+For a GET request, the object is in the process of being deleted. For a GET request, the object exists, but the HCP system does not have the
+
+object data. Retry the request, targeting a different system in the replication topology.
+
+For a PUT request to copy an object or version, the source object is in the process of being deleted.
+
+For a PUT request to copy an object or version, the source object exists, but the HCP system does not have the source object data. Retry the request, targeting a different system in the replication topology.
+
+412
+
+Precondition Failed
+
+GET, HEAD, or PUT with If-
+
+One of:
+
+Match or If-Unmodified- Since header
+
+The request specified an If-Match header, and the ETag of the requested object or version does not match the value in the header.
+
+PUT with
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+820/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+If-None-Match, X-HCP-Copy-Source-If- Match, or

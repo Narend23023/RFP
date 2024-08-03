@@ -1,0 +1,47 @@
+Protection types for namespaces
+
+Protection types apply to individual namespaces. Only cloud-optimized namespaces support erasure-coded protection.
+
+When you create a replication-enabled tenant, you choose between:
+
+Allowing erasure-coded protection for all cloud-optimized namespaces owned by the tenant. Allowing the tenant administrator to allow erasure-coded protection for selected cloud-optimized namespaces.
+
+If the tenant administrator has granted system-level users access to the tenant, you also can allow erasure-coded protection for selected namespaces.
+
+Objects in a replicated namespace that allows erasure-coded protection are erasure coded only if the tenant that owns the namespace is included in an erasure coding topology. If the tenant is not in an erasure coding topology, the namespace uses whole-object protection. Objects in a replicated namespace that does not allow erasure-coded protection use whole-object protection, even if the tenant that owns the namespace is included in an erasure coding topology.
+
+Note: Regardless of protection type, namespaces obey the DPL specified by their associated service plans. That is, on any given system:
+
+A namespace that uses whole-object protection maintains DPL copies of the complete data for each object A namespace that uses erasure-coded protection maintains DPL copies of the chunk for each object Distribution methods for erasure-coded protection
+
+HCP supports two distribution methods for erasure-coded protection: chunk distribution and full-copy distribution.
+
+Chunk distribution
+
+With chunk distribution, after an object is ingested, the chunks for the object are calculated and distributed among the systems in the erasure coding topology. Only the system where the object was ingested has a full copy of the object data.
+
+After all of the chunks have been successfully distributed and a specified amount of time has elapsed, the HCP Geo-Distributed Erasure Coding service reduces the object on the ingest system to a chunk. The amount of time that the service waits before reducing an object to a chunk is called the erasure coding delay. Full-copy distribution
+
+With full-copy distribution, after an object is ingested, full copies of the object data are distributed to the systems in the erasure coding topology. After the erasure coding delay expires, the Geo-Distributed Erasure Coding service on each system reduces the full copy of the object data on that system to a chunk.
+
+Metadata-only considerations for objects subject to erasure coding
+
+For an erasure-coded object to be protected properly, each system in the erasure coding topology must have a chunk for the object. Therefore, even if the object should be metadata-only on one or more systems, those systems must each store a chunk for the object:
+
+With chunk distribution, each system receives a chunk for an erasure-coded object, regardless of whether the object should be metadata-only on that system.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+317/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+With full-copy distribution, each system receives a full copy of the object data unless the object should be metadata-only on that system. After the erasure coding delay
+
+expires, each system where the object should be metadata-only receives a chunk for the object, and the Geo-Distributed Erasure Coding service on each system with a full copy of the object data reduces that full copy to a chunk. Object counts
+
+An HCP system keeps track of the total number of objects stored on it and, separately, the number of erasure-coded objects stored on it:
+
+The total number of objects stored on a system includes whole objects, metadata-only objects, and objects that are subject to erasure coding, regardless of whether the system currently has a full copy of the object data or a chunk for the object. The number of erasure-coded objects stored on a system includes only objects for which the system currently has a chunk.
+
+HCP also tracks both of these object counts by tenant and namespace. You can view system-level and tenant-level object counts in the System Management Console, through the management API, and in system-level chargeback reports. For tenants to which you have administrative access, you can also view namespace-level object counts through the management API and in chargeback reports.

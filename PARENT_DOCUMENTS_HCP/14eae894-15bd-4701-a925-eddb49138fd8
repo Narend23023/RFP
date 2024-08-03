@@ -1,0 +1,69 @@
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked.
+
+Response body
+
+The list below describes the XML elements in the response body returned in response to a request to list the multipart uploads that are in progress in a bucket. The elements are listed in alphabetical order. Bucket
+
+Child of the ListMultipartUploadsResult element. The Bucket element specifies the name of the bucket targeted by the request.
+
+CommonPrefixes
+
+Child of the ListMultipartUploadsResult and container for the Prefix element. The response body contains one CommonPrefixes element for each common prefix in the multipart upload listing. Delimiter
+
+Child of the ListMultipartUploadsResult element. The Delimiter element specifies the value of the delimiter query parameter included in the request. If the request did not include the delimiter query parameter, the response body does not include the Delimiter element.
+
+DisplayName
+
+Child of the Initiator or Owner element. If the initiator or owner is identified by an HCP user account, the value of the DisplayName element is the username for that account. If the initiator or owner is identified by an AD user account, the value of the DisplayName element is the username of that account followed by an at sign (@) and the AD domain name. ID
+
+Child of the Initiator or Owner element. If the initiator or owner is identified by an HCP user account, the value of the ID element is the user ID for that account. If the initiator or owner is identified by an AD user account, the value of the ID element is the SID for that account.
+
+Initiated
+
+Child of the Upload element. The Initiated element specifies the date and time when the applicable multipart upload was initiated, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+Initiator
+
+Child of the Upload element and container for the DisplayName and ID elements. The Initiator element identifies the user who initiated the applicable multipart upload.
+
+IsTruncated
+
+Child of the ListMultipartUploadsResult element. The IsTruncated element indicates whether the returned listing includes the last multipart upload that satisfies the request criteria. Possible values are: true
+
+The returned listing includes the last multipart upload that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last multipart upload that satisfies the request criteria.
+
+Key
+
+Child of the Upload element. The Key element specifies the name of the object to be created by the applicable multipart upload. KeyMarker
+
+Child of the ListMultipartUploadsResult element. The KeyMarker element specifies the value of the key-marker query parameter included in the request. If the request did not include the key-marker query parameter, the response body includes KeyMarker as an empty element.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+598/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+ListMultipartUploadsResult Root element.
+
+MaxUploads
+
+Child of the ListMultipartUploadsResult element. The MaxUploads element specifies the value of the max-uploads query parameter included in the request. If the request did not include the max-uploads query parameter, the value of the MaxUploads element is 1000. NextKeyMarker

@@ -1,0 +1,95 @@
+// produce gzip-compressed content when read by the Apache HTTP client. GZIPCompressedInputStream compressedInputFile = new GZIPCompressedInputStream(new FileInputStream( sBaseFileName + ".toHCP"));
+
+// Point the HttpRequest to the input stream.
+
+httpRequest.setEntity(new InputStreamEntity(compressedInputFile, -1));
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+719/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+// Create the HCP Authorization header.
+
+httpRequest.setHeader("Authorization", "HCP " + sEncodedUserName + ":" + sEncodedPassword);
+
+/*
+
+Now execute the PUT request. */ HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+/* * Process the HTTP response.
+
+/
+
+// If the status code is anything but in the 200 range indicating // success, throw an exception.
+
+if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100)) {
+
+// Clean up after ourselves and release the HTTP connection to the // connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+throw new Exception("Unexpected HTTP status code: " + httpResponse.getStatusLine().getStatusCode() + " (" +
+
+httpResponse.getStatusLine().getReasonPhrase() + ")"); }
+
+// Clean up after ourselves and release the HTTP connection to the // connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+} .
+
+.
+
+. }
+
+Copying an object or version of an object
+
+You use the HTTP PUT method to copy an object or existing version of an object from one location to another. The copy operation has these characteristics:
+
+The source location can be any namespace, including the default namespace. The target location must be an HCP namespace within the source tenant and can include the source namespace.
+
+The name of the target object can differ from the name of the source object. The copied object inherits all its system metadata from the target namespace default values and does not have any ACL values. However, you can specify whether custom
+
+metadata is copied with the object data. When versioning is enabled, the target object gets a new version ID that differs from the source object version ID.
+
+You cannot store a new version of an object that is under retention or on hold in the target namespace. Copying a large object can take some time. If a client times out because a copy operation is taking too long, HCP continues the operation in the background.
+
+Because the connection to the client is broken, HCP cannot report the completion of the copy operation to the client. Until the operation is complete, HCP returns a 404 Not Found
+
+status code in response to HEAD requests for the object being created by the copy operation.
+
+After a copy operation finishes successfully, HCP returns information about the new object in response to HEAD requests for the object. If the operation does not succeed, HCP continues to return a 404 Not Found status code in response to HEAD requests for the object.
+
+If copy operations are causing a client to time out, consider increasing the client timeout interval.
+
+Note: Depending on the replication configuration, copy operations may be slow, thereby increasing the likelihood of client timeouts. Access permission
+
+To copy an object or version, you need read permission for the source namespace and write permission for the target namespace.
+
+Request header
+
+PUT /rest/directory/file HTTP/1.1
+
+The PUT request to copy an object or version of an object has these elements:
+
+If you’re accessing the target namespace as an authenticated user, an Authorization header An X-HCP-CopySource header in this format: X-HCP-CopySource: source-namespace-name.source-tenant-name/source-object-path
+
+The value of the X-HCP-CopySource header must be URL-encoded.
+
+A URL specifying the location in which to store the object
+
+Note: If the X-HCP-CopySource header identifies a directory, HCP creates an empty directory with the path specified in the target URL, assuming the specified path does not already exist. Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes

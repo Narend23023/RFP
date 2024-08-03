@@ -1,0 +1,81 @@
+The top of the NFS panel shows the string to use to identify the namespace when mounting it on an NFS client.
+
+The NFS panel lets you:
+
+Enable the NFS protocol.
+
+Specify default values for POSIX UIDs and GIDs. Specify the client IP addresses that have access to the namespace through NFS.
+
+Enabling NFS access to a namespace
+
+The NFS panel has two sections for enabling and configuring the NFS protocol. Settings section
+
+1. Select Enable NFS. 2. (Optional) In the UID field, type a different UID to be displayed for objects that don’t have an explicit POSIX UID. Valid values are integers greater than or equal to zero.
+
+3. (Optional) In the GID field, type a different GID to be displayed for objects that don’t have an explicit POSIX GID.
+
+Valid values are integers greater than or equal to zero.
+
+4. Click Update Settings.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+288/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Allowed IP Addresses section
+
+To set the IP addresses to be allowed access to the namespace through NFS, optionally, specify IP addresses in the Allowed IP Addresses section.
+
+Configuring the SMTP protocol
+
+With the SMTP protocol, HCP can automatically archive emails forwarded by email servers. SMTP protocol configuration
+
+HCP provides SMTP support for Microsoft® Exchange email servers. For information about which Microsoft Exchange email servers are qualified for use with the SMTP protocol, check the HCP release notes for the version of HCP that you have installed.
+
+You use the SMTP panel to enable and configure the SMTP protocol for a namespace. To display this panel, on the left side of the Protocols page, click SMTP.
+
+The top of the SMTP panel shows the string to use to identify the namespace when configuring Microsoft Exchange to archive email to the namespace.
+
+The SMTP panel lets you:
+
+Enable the SMTP protocol Specify the email server IP addresses that have access to the namespace through SMTP Specify where and in what format email objects are stored Specify whether to store email attachments separately
+
+The SMTP protocol always stores attachments along with the email they accompany. The metadata query engine index the attachments along with the email. You can choose to additionally store attachments separately from the email they accompany. With this option, searches return not only the original email with the attachments but also the attachments as separate objects.
+
+When attachments are stored only with the email they accompany, searches return only the email objects. You then need to retrieve the email objects and separate the attachments yourself.
+
+Storing attachments as separate objects can have a significant impact on performance and storage space.
+
+Enabling SMTP access to a namespace
+
+The SMTP panel has three sections for enabling and configuring the SMTP protocol. Settings section
+
+1. Select Enable SMTP. 2. Click Update Settings in the Settings section.
+
+Allow/Deny section
+
+Optionally, in the Allow/Deny section, specify IP addresses of email servers to be allowed or denied access to the namespace through SMTP.
+
+Emails section
+
+1. Click Emails. 2. In the Email Location field, type the path for the directory in which you want email objects stored.
+
+This is the full path starting after the root directory (that is, rest or data). Be sure to start and end the path with a forward slash (/), like this: /email/company_all/
+
+If any part of the specified directory path doesn’t exist, HCP creates it.
+
+3. In the Format field, select either .eml or .mbox.
+
+The one you choose depends on the application you use to read the stored email.
+
+4. To store email attachments separately from the emails they’re attached to, select Separate attachments from parent email.
+
+Important: Storing attachments separately from the email they accompany can have a significant impact on performance and storage space. Unless you have a specific reason to do so, do not enable this option. 5. Click Update Settings in the Emails section.
+
+Changing the default settings for namespace creation
+
+When you open the Create Namespace panel to create a namespace, the panel shows default settings for many of the namespace properties. You can change the defaults for these

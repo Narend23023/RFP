@@ -1,0 +1,45 @@
+Here’s a sample DELETE request that aborts a multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94874755807297"
+
+Request headers
+
+DELETE /acctg/RulesAndRegulations.pdf?uploadId=94874755807297 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:KxEygWb4ay0jHtOrIljBE5lGmls= Response headers
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Working with POST object uploads
+
+With the Hitachi API for Amazon S3, you can accept objects uploaded directly to HCP from web browser forms (that is, a POST form request). This process is called a POST object upload.
+
+This section of the Help starts with general information about and considerations for working with POST object uploads.
+
+About POST object uploads The POST request is an alternative to a PUT request. A POST object upload is the process of accepting objects from an HTTP form sent by a web browser. When a user submits the form, the browser uploads its contents, which can include data such as a text field or a file, to HCP. Any parameters are passed, not within the header as in a PUT request, but as form fields within the body of the request. The web page can be hosted on the same domain as HCP or a different domain. A user must have write access to a bucket to add an object to it. The POST request can upload a security policy with the request using form fields in the multipart/form-data encoded message body, so a bucket administrator can create preset conditions under which the upload is allowed. Because the request is authenticated without passing data through a secure intermediary node that protects credentials, POST object uploads can reduce latency. Because an object is uploaded in a single operation, an HTTP success response indicates that the entire object has been stored.
+
+POST object upload authentication
+
+A POST object upload request can be authenticated in these ways:
+
+Header authentication
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+658/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The header can include AWS Signature Version 2 authorization information. Header authentication supports only AWS local user account credentials. Use a header with a value in the format Authorization: AWS all_users: for anonymous access, or Authorization: AWS access-key:signature for authenticated access. Note: Active Directory, SPNEGO, cookie, and HCP authentication are not supported. In-form authentication
+
+The POST form can contain authentication-related fields. In-form authentication supports only AWS local user account credentials. All authorization-related form fields must be presented for in-form authentication to succeed. If both V2 and V4 authentication form fields are presented, V2 authentication information is used. Security policy validation
+
+A policy is included in the request. Required if in-form authentication is used. If the policy is missing, HCP returns a status of 400.
+
+For a namespace that does not permit anonymous access (that is, a non-public bucket), either header or in-form authentication is required. (Both can be provided.) Security policies
+
+The POST security policy is part of the authentication of a POST object upload request. The policy consists of base-64 encoded JSON code which is submitted as a form field in the request.
+
+If a form contains fields that don't meet the policy's requirements, the request is rejected with the status 403. Example
+
+Here's an example of a POST policy using AWS Signature Version 4 conditions:

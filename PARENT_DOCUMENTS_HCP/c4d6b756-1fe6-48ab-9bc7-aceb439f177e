@@ -1,0 +1,81 @@
+handed-xxxx
+
+Note:
+
+White space, "," and "-" are considered as special characters in a query string.
+
+The xxx in the examples indicates any number of characters. The above mentioned search behaviors work only if custom metadata has been ingested with Pretty Print XML (properly formatted XML). Directory paths and object names
+
+A search term can be any part or all of a directory path after rest or data (HCP namespaces) or fcfs_data (default namespace) with or without an object name. For example, these search terms will all return the corporate/HR/benefits_2 object:
+
+corporate/HR HR
+
+HR/benefits_2 benefits_2
+
+This search term, however, will not return the corporate/HR/benefits_2 object because it includes the rest directory: rest/corporate/HR/benefits_2
+
+Likewise, this search term will not return the corporate/HR/benefits_2 object because it includes the fcfs_data directory:
+
+fcfs_data/corporate/HR/benefits_2
+
+Multiple exact phrases
+
+To search for any or all of two or more exact phrases, you use quoted terms in an any or all search; for example:
+
+"executive officer" "wetland permit"
+
+Here’s what a search like this returns:
+
+For an any search, all objects that contain a least one occurrence of the phrase executive officer or the phrase wetland permit For an all search, all objects that contain at least one occurrence of the phrase executive officer and at least one occurrence of the phrase wetland permit
+
+Quotation marks are not meaningful in exact searches.
+
+While the metadata query engine is active, you may want to use quoted terms to make your queries more precise. Wildcards
+
+The wildcard characters that you can use in search terms and the ways in which you can use them differ depending on the active search facility.
+
+Wildcards with the metadata query engine
+
+While the metadata query engine is active, you can use two wildcard characters:
+
+The question mark (?), which represents a single character
+
+The asterisk (*), which represents any number of consecutive printable characters, including none
+
+With the metadata query engine, wildcard characters are valid at the end of a search term or within a search term. Wildcards are not valid at the beginning of a search term. That is,
+
+you cannot search for values that end with the text you specify. For example, the search terms in the first line below are valid; the one in the second line is not. Valid: 201? Valid: S*day Invalid: *day
+
+You can use multiple wildcards in a search term. Two asterisks next to each other are treated as a single asterisk. Asterisks with characters between them are treated as separate wildcards. For example, the search term below matches the path /Conflicts.txt:
+
+c**nflict*
+
+Similarly, in an all query, the search term below matches any path with at least two directories preceding the object in the path:
+
+/*/*/**
+
+Two question marks next to each other are treated as separate wild cards. For example, the search term below does not match the path /Conflicts.txt: c??nflict*
+
+The question mark and asterisk characters do not function as wildcards when specified within double quotation marks (") or in an exact query.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+881/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Wildcards between text that the metadata query engine considers to be separate search terms are not valid. For example, the search string below does not match the path test1.txt
+
+because the wildcard is between an alphabetic character and a numeric character:
+
+tes*1 Boolean criteria
+
+You can create any and all searches that are more complex by using Boolean operations in the search criteria. To specify these operations, you use the plus and minus signs:
+
+A plus sign (+) prefixed to a search term means returned objects must contain that term. A minus sign (-) prefixed to a search term means returned objects cannot contain that term.
+
+You can use plus signs and minus signs on multiple terms, with or without wildcards, and in any order. When used with a quoted term, the symbol comes before the opening quotation mark.
+
+Boolean criteria in any searches

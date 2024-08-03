@@ -1,0 +1,73 @@
+648/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help You use the uploadId query parameter to specify the upload ID of the multipart upload for which you're requesting the part listing. If the upload ID you specify doesn't match the upload ID of an in-progress multipart upload or isn't associated with the object specified in the request, HCP returns a 404 (Not Found) status code and does not return a part listing.
+
+A part listing is returned in an XML response body. The parts are listed in numeric order. For each part, the listing contains the part number, the date and time when the part was uploaded, the ETag for the part, and the size of the part.
+
+A part listing does not include parts that are in the process of being uploaded or parts that have been replaced. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list the parts of a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /object-name?uploadId=upload-id[&query-parameters]HTTP/1.1
+
+With the bucket name following the hostname: GET /bucket-name/object-name?uploadId=upload-id[&query-parameters]HTTP/1.1
+
+The uploadId query parameter is case sensitive.
+
+query-parameters can be none, one, or more of:
+
+encoding-type
+
+You use the encoding-type query parameter to request the S3 compatible API to encode the response. You can also use this query parameter to specify the encoding method to use. The key for an object can contain any Unicode character. Some characters, such as those with an ASCII value from 0 to 10, cannot be parsed by XML 1.0 parsers. For these characters, you can add the encoding-type query parameter to request the S3 compatible API to encode the keys in the response. The encoding-type parameter name is case sensitive. max-parts
+
+By default, a part listing for a multipart upload can include at most one thousand parts. However, you can use the max-parts query parameter to specify a smaller maximum number of parts to be included in the returned listing. If more than the maximum number of parts satisfy the criteria for a request, you can use query parameters to retrieve the parts in groups. Valid values for the max-parts query parameter are integers in the range zero through one thousand. If you specify an integer greater than one thousand, HCP returns a 400 (Invalid Argument) status code and does not return a part listing. The max-parts parameter name is case sensitive. part-number-marker
+
+By default, a part listing starts with the lowest-numbered part of the multipart upload. You can use the part-number-marker query parameter to request a listing that starts with a part with a higher number. When you include this query parameter in the request for a part listing, the returned listing starts with the part with the next higher number than the value you specified for the parameter. Valid values for the part-number-marker query parameter are integers in the range 0 (zero) through 10,000. The part-number-marker parameter name is case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to list the parts of a multipart upload. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time.
+
+The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000

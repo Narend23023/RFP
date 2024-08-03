@@ -1,0 +1,37 @@
+The finance bucket also contains in-progress multipart uploads for these objects:
+
+acctg/AcctgAtExampleCorp-Advanced.mov ndRegulations.pdf sales/RulesAnacctg/AcctgAtExampleCorp-Introduction.mov acctg/RulesAdRegulations.pdf Bucket and object properties
+
+Buckets and objects have various properties that affect what you can do with them and what happens when you take action on them. Some of these properties, such as versioning for a bucket, are visible through the S3 compatible API. Others, such as object retention, aren’t visible through the S3 compatible API but still affect that API.
+
+This section of the Help describes bucket and object properties that have an impact on the S3 compatible API. Bucket names
+
+When you create a bucket, you give it a name. HCP derives the hostname for the bucket from this name. The hostname is used in URLs for access to the bucket.
+
+In English, the name you specify for a bucket must be from three through 63 characters long and can contain only alphanumeric characters and hyphens (-) but cannot start or end with a hyphen. In other languages, because the derived hostname cannot be more than 63 characters long, the name you specify may be limited to fewer than 63 characters.
+
+Bucket names cannot contain white space or special characters other than hyphens.
+
+Bucket names are not case sensitive. However, if you will be accessing a bucket through an interface that does not automatically convert URLs to all lowercase, you should use lowercase for all letters in the bucket name.
+
+Bucket names cannot start with xn-- (that is, the characters x and n followed by two hyphens). The name you give a bucket must be unique for the tenant for which you create the bucket. Different tenants can have buckets with the same name.
+
+You can reuse bucket names that are not currently in use. So, for example, if you delete a bucket, you can give a new bucket the same name as the deleted bucket had.
+
+Tenant administrators can change the name of a bucket any time after you create the bucket. When the name of a bucket changes, the URL for the bucket may change as well. Object names
+
+When you create an object, you give it a name. Object names:
+
+Can contain any characters except the NULL character (ASCII 0 (zero)). This includes nonprinting characters such as spaces and line breaks. Are case sensitive. Can be up to 4,095 bytes long. Cannot consist of a single period (.) or a single forward slash (/).
+
+.directory-metadata is a reserved name. You cannot create an object with this name.
+
+You cannot directly change the name of an object. However, you can effectively rename an object by making a copy of it with a different name and then deleting the original. For the object with the new name to have the same ACL as the original object, you need to specify the ACL in the copy request. Forward slashes in object names
+
+When using the S3 compatible API, you can view objects as being in a flat space or in a structured space:
+
+In a flat space, objects are not grouped by any sort of structural elements, such as folders (also called directories), and forward slashes (/) in object names are simply part of those names. In a structured space, forward slashes in object names serve as folder separators, and objects can be grouped into folders.
+
+To support the structured view, when you use the S3 compatible API to store an object that has forward slashes in its name, HCP also creates folders and subfolders that conform to the pattern of those forward slashes. For example, if you store an object named quarterly_rpts/Q4_2019, HCP not only stores that object but also creates a folder named quarterly_rpts. HCP does not create duplicate folders. If, after storing the object named quarterly_rpts/Q4_2019, you store an object named quarterly_rpts/Q3_2019, the single quarterly_rpts folder appears to contain two objects: Q4_2019 and Q3_2019.
+
+Folders provide a method for organizing the objects you store in a bucket. By using meaningful names for the portions of object names from which HCP creates folders, you can more easily manage the contents of the bucket.

@@ -1,0 +1,77 @@
+In JSON, the name in the name/value pair that lists the chained links is name.
+
+This resource is not valid for active/active links. .../services/replication/links/link-name/remoteCandidates/tenants
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the HCP tenants on the other system involved in a replication link that are eligible to be included in the link
+
+System-level user account with the monitor or administrator role
+
+The listed tenants are identified by directory name.
+
+In XML, the element that identifies each tenant is name. The root element of the list of tenants is tenants.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+420/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+In JSON, the name in the name/value pair that lists the tenants is name.
+
+.../services/replication/links/link-name/schedule
+
+Data
+
+Method Use
+
+Access
+
+type
+
+schedule GET
+
+Retrieve the schedules for an active/active link or the schedule for an active/passive link System-level user account with the monitor or administrator role
+
+POST Modify the schedules for an active/active link or the schedule for an active/passive
+
+System-level user account with the administrator role
+
+link
+
+Example: Creating a replication link
+
+Here’s a sample PUT request that creates an active/active link named MA-CA between the local HCP system, hcp-ma.example.com, and a remote HCP system named hcp- ca.example.com. The link definition is in an XML file named MA-CA.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<link> <name>MA-CA</name> <description>Active/active link between systems in MA and CA</description> <type>ACTIVE_ACTIVE</type> <connection> <remoteHost>replication.admin.hcp-ca.example.com</remoteHost> </connection> <compression>false</compression> <encryption>false</encryption> <priority>OLDEST_FIRST</priority> <failoverSettings> <local> <autoFailover>true</autoFailover> <autoFailoverMinutes>60</autoFailoverMinutes> </local> <remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>60</autoFailoverMinutes> </remote> </failoverSettings> </link>
+
+Request with cURL command line
+
+curl -k -iT MA-CA.xml -H "Content-Type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp-ma.example.com:9090/mapi/services/replication/links"
+
+Request in Python using PycURL
+
+import pycurl

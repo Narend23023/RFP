@@ -1,0 +1,75 @@
+The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HCP-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+The specified source object or object version does not exist.
+
+The current version of the specified source object is a delete marker or delete record. Any component of the source or target URL except for the last component in the path is a symbolic link to a directory.
+
+409
+
+Conflict One of:
+
+HCP could not store the object in the namespace because the object already exists and versioning is not enabled.
+
+HCP could not store a new version of an existing object because another version is currently being added. HCP could not evaluate conditional headers because a version of the object is currently being added.
+
+410 Gone
+
+Possible reasons include:
+
+The source object exists, but the HCP system does not have the source object data. Retry the request, targeting a
+
+different system in the replication topology. The source object is in the process of being deleted.
+
+412
+
+Precondition Failed One of:
+
+A request to copy an object specified an X-HCP-Copy-Source-If-Match header, and the ETag of the source object does not match the value in the header. A request to copy an object specified an X-HCP-Copy-Source-If-Unmodified-Since header, and the source object change time is after the time specified in the header. A request to copy a new version of an object specified an If-Match header, and the ETag of the target object does not match the value in the header. A request to copy a new version of an object specified an If-None-Match header, and the ETag of the target object matches the value in the header. A request to copy a new version of an object specified an If-Unmodified-Since header, and the target object change time is after the time specified in the header.
+
+413 File Too Large
+
+Not enough space is available to store the object. Try the request again after objects or versions are deleted from the target namespace or the namespace capacity is increased.
+
+503
+
+Service Unavailable
+
+Possible reasons include:
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the
+
+request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Copying an object
+
+Here’s a sample HTTP PUT request that copies an object named Q1_2012.ppt from the default namespace if the source object has been modified since midnight, Tuesday, January 1, 2013 EST. The request stores the object, using the source object name, in the finance namespace. Request with curl command line
+
+curl -k -i -X PUT -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "X-HCP-CopySource: default.europe/quarterly_rpts/Q1_2012.ppt" -H "X-HCP-CopySource-If-Modified-Since: Tue, Jan 1 2013 05:00:00 GMT" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+722/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL
+
+import pycurl import os headers = ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "X-HCP-CopySource: default.europe/quarterly_rpts/ \
+
+Q1_2012.ppt", "X-HCP-CopySource-If-Modified-Since:
+
+Tue, Jan 1 2013 05:00:00 GMT" curl = pycurl.Curl()

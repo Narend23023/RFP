@@ -1,0 +1,43 @@
+A tenant can optionally grant HCP system-level users administrative access to itself. This enables those users to access the Tenant Management Console for that tenant and
+
+perform the same management and monitoring activities as the tenant-level users. Additionally, it enables system-level users to search the namespaces owned by that tenant and perform all allowed operations on the objects they find. General administrative information
+
+As an HCP tenant administrator, you are responsible for managing a tenant and the namespaces it owns. Your primary job is to ensure that users and applications have the access
+
+they need to those namespaces.
+
+The tool you use for this purpose is a web application called the Tenant Management Console. Depending on the permissions you have, you can use the Console to configure and monitor the tenant and its namespaces, as well as perform compliance activities. Tenant Management Console
+
+The Tenant Management Console is a tenant-specific web application that lets you manage tenants and namespaces. The Console shows you tenant and namespace status in real time, so you can effectively monitor activity and take action as needed.
+
+Using the Console, you can modify tenant and namespace settings and perform compliance activities. Changes you make through the Console take effect immediately.
+
+Access to the Tenant Management Console is available only through HTTP with SSL security (HTTPS). About the Console
+
+Console access
+
+To use the Tenant Management Console, you need either:
+
+A user account defined in HCP (either locally authenticated or RADIUS authenticated). If the tenant is configured to support Windows Active Directory (AD) authentication, an AD user account for a user that belongs to one or more AD groups for which corresponding group accounts are defined in HCP. In this book, such an Active Directory user account is referred to as a recognized AD user account.
+
+The HCP user account or group accounts specify what you have permission to do in the Console. The menu options, pages, and panels you see in the Console depend on your permissions.
+
+If an AD user belongs to multiple AD groups for which HCP group accounts exist, that user has all the permissions associated with all those group accounts. Console sessions
+
+A Tenant Management Console session begins when you take one of these actions:
+
+Log into the Console using an HCP user account or recognized AD user account. Access a Console page while logged in to Windows with a recognized AD user account. This is called single sign-on. With single sign-on, you don’t need to explicitly log into the Console.
+
+For single sign-on to work, your web browser must be configured to support it.
+
+A session ends when you log out. During a session, you can perform any actions for which you have permission.
+
+During a session, if you don’t take any action for a certain amount of time, the Console displays the Idle Timeout page. If you explicitly logged in to the session, the Console automatically logs you out and, when you click any tab on the Idle Timeout page, displays the login page. If you started the session by using single sign-on, when you click any tab, the Console displays the requested page. The exact amount of idle time allowed is configurable. If you’ve granted HCP system-level users administrative access to the tenant, they can access the Tenant Management Console directly from the HCP System Management Console. Doing so does not start a Tenant Management Console session. Rather, it continues the current System Management Console session, and the configured idle time for that Console applies. HCP management API
+
+HCP includes a RESTful HTTP interface to a subset of its administrative functions. Using this interface, called the management API, you can modify your tenant and create, modify, and delete namespaces, user and group accounts, and content classes for the tenant. Additionally, you can create, modify, and delete retention classes for the tenant's namespaces.
+
+You use the Tenant Management Console to enable the management API at the tenant level. For the API to be available, however, it must also be enabled at the system level.
+
+To use the management API, you need a user account that includes the applicable permissions for the actions you want to take. If the tenant is configured to support Active Directory authentication, applications can also use recognized AD user accounts to access HCP through the management API. To do this, however, an application must use the SPNEGO protocol or the AD authentication header to negotiate the AD user authentication itself. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559. To provide credentials using the Active Directory authorization header, you use this format: Authorization: ADAD-username:AD-password
+
+Tenant Management Console URL

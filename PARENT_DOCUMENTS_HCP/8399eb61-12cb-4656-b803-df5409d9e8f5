@@ -1,0 +1,77 @@
+Lets you list bucket contents.
+
+Read
+
+Lets you:
+
+View and retrieve objects in the bucket, including the system and custom metadata for objects View and retrieve previous versions of objects List annotations for objects
+
+Check the existence of objects
+
+Users with read permission also have browse permission. Read ACL
+
+Lets you view and retrieve bucket and object ACLs.
+
+Write
+
+Lets you:
+
+Add objects to the bucket Modify system metadata (except retention hold) for objects in the bucket Add or replace custom metadata for objects in the bucket
+
+Write ACL
+
+Lets you add, replace, and delete bucket and object ACLs. Change owner
+
+Lets you change the bucket owner and the owners of objects in the bucket.
+
+Delete
+
+Lets you delete objects, custom metadata, and bucket and object ACLs.
+
+Purge
+
+Lets you delete all versions of an object with a single operation. Users with purge permission also have delete permission.
+
+Privileged Lets you:
+
+Delete or purge objects that are under retention, provided that you also have delete or purge permission for the bucket Hold or release objects, provided that you also have write permission for the bucket
+
+Note: All holds (a single hold and all labeled holds) must be released on the object before it can be deleted, regardless of the retention setting. Search
+
+Lets you use the HCP metadata query API and the HCP Search Console to query or search the bucket for objects that meet specified criteria. Users with search permission also have read permission.
+
+If you have any data access permissions for a bucket, you can view information about that bucket through the REST API and Namespace Browser. Examples in this help
+
+This help contains instructions and examples for using the S3 compatible API to perform the operations listed in About the Hitachi API for Amazon S3. The examples use a command-line tool called s3curl. s3curl is freely available open-source software.
+
+After downloading s3curl, you need to configure it to work with HCP.
+
+The examples in this section of the help are based on a bucket named finance in which these objects are stored: AcctgBestPractices.doc
+
+(four versions stored and one deleted)
+
+acctg/AcctgRR-Summary acctg/budget_proposals/BudgProp-2020
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+544/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+hum_res/budget_proposals/BudgProp-2020 mktg/budget_proposals/BudgProp-2020 mktg/campaign_GoGetEm_expenses.xls
+
+(two versions stored) mktg/campaign_LiveIt_expenses.xls quarterly_rpts/Q2_2019.ppt quarterly_rpts/Q3_2019.ppt quarterly_rpts/Q4_2019.ppt sales/budget_proposals/BudgProp-2020 sales_quotas_2020.pdf
+
+The finance bucket also contains in-progress multipart uploads for these objects:
+
+acctg/AcctgAtExampleCorp-Advanced.mov ndRegulations.pdf sales/RulesAnacctg/AcctgAtExampleCorp-Introduction.mov acctg/RulesAdRegulations.pdf Bucket and object properties
+
+Buckets and objects have various properties that affect what you can do with them and what happens when you take action on them. Some of these properties, such as versioning for a bucket, are visible through the S3 compatible API. Others, such as object retention, aren’t visible through the S3 compatible API but still affect that API.
+
+This section of the Help describes bucket and object properties that have an impact on the S3 compatible API. Bucket names
+
+When you create a bucket, you give it a name. HCP derives the hostname for the bucket from this name. The hostname is used in URLs for access to the bucket.
+
+In English, the name you specify for a bucket must be from three through 63 characters long and can contain only alphanumeric characters and hyphens (-) but cannot start or end with a hyphen. In other languages, because the derived hostname cannot be more than 63 characters long, the name you specify may be limited to fewer than 63 characters.

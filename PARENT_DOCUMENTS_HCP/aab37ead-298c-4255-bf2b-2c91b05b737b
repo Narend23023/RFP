@@ -1,0 +1,91 @@
+430/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data Type
+
+Method Use
+
+Access
+
+Notes
+
+In JSON, the name in the name/value pair that lists the user accounts is user name. .../userAccounts/username
+
+Data Type Method Use
+
+Access
+
+Notes
+
+userAccount GET
+
+Retrieve information about a system-level user account.
+
+System-level user account with the monitor, administrator, or security role
+
+N/A
+
+HEAD
+
+Check for the existence of a user account.
+
+System-level user account with the monitor, administrator, or security role N/A
+
+POST
+
+Change the password for a locally authenticated system-level user account.
+
+System-level user account with the security role
+
+The required query parameter for changing user account passwords is password=password.
+
+.../userAccounts/username/changePassword
+
+Data Type
+
+Method Use
+
+Access
+
+updatePasswordRequest POST
+
+Change the password for a locally authenticated system-level user account.
+
+System-level user account with the security role
+
+Example: Retrieving system-level user accounts
+
+Here is a sample GET request that retrieves a list of system-level user accounts. The request writes the list of user accounts to a file named systemLevelUsers.xml. The request is made with a system-level user account that includes the monitor role. Request with cURL command line
+
+curl -k -i -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/userAccounts?verbose=true& prettyprint" > systemLevelUsers.xml
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <userAccounts> <username>lgreen</username> <username>mwhite</username> <username>pblack</username> </userAccounts>
+
+Example: Retrieving system-level user account information
+
+Here is a sample GET request that retrieves the system-level user account information for the username lgreen. The request writes the information to a file named systemLevelUser- lgreen.xml. The request is made with a system-level user account that includes the monitor role. Request with cURL command line
+
+curl -k -i -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/userAccounts/lgreen?verbose=true& prettyprint" >systemLevelUser-lgreen.xml Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <userAccount> <enabled>true</enabled> <localAuthentication>true</localAuthentication> <roles> <role>ADMINISTRATOR</role> <role>SEARCH</role> <role>MONITOR</role> <role>SECURITY</role> <role>SERVICE</role> <role>COMPLIANCE</role> </roles> <allowNamespaceManagement>true</allowNamespaceManagement>
+
+<description>Developer, Team Lead</description> <forcePasswordChange>false</forcePasswordChange> <fullName>Lee Green</fullName> <userGUID>eaa046e0-c17e-42fb-8840-ab5e05cf8876</userGUID> <userID>104</userID> <username>lgreen</username> </userAccount>
+
+Example: Changing a user account password with a query parameter
+
+Here’s a sample POST request that uses the password query parameter to change the password for the system-level user account with the username lgreen to End321!. The request is made using a system-level user account that includes the security role. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+431/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request with cURL command line

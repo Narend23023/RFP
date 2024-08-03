@@ -1,0 +1,93 @@
+Content-Type: application/xml Accept: application/xml
+
+Content-Length: 155 Response headers
+
+HTTP/1.1 200 OK Transfer-Encoding: chunked
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+869/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+XML response body
+
+To limit the example size, the XML below shows only two contentProperty entries in the response body. <?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/query-result-7.0.xsd">
+
+<query> <expression>namespace:medical.employees</expression>
+
+</query> <resultSet />
+
+<status totalResults="0"
+
+results="0" message=""
+
+code="COMPLETE" /> <contentProperties> <contentProperty> <name>DocDateOfBirth</name>
+
+<expression>/record/doctor/dob</expression>
+
+<type>DATE</type> <multivalued>false</multivalued>
+
+<format>MM/dd/yyy</format> </contentProperty>
+
+<contentProperty> <name>DocLastName</name>
+
+<expression>/record/doctor/name/lastName</expression> <type>STRING</type>
+
+<multivalued>false</multivalued> <format></format> </contentProperty> </contentProperties>
+
+</queryResult>
+
+Operation-based query examples
+
+This section contains examples of operation-based queries.
+
+Example: Retrieving all operation records for all existing and deleted objects in a directory
+
+Here’s a sample metadata query API request that retrieves operation records for all objects currently in or deleted from the sales namespace owned by the midwest tenant. The query uses an XML request body and requests results in JSON format.
+
+The verbose entry is set to true to request detailed information for all operation records in the result set.
+
+The response body includes records for all create, delete, and purge operations that occurred since the namespace was created up to one minute before the request was made at
+
+March 14, 2013 at 14:59:37 EST.
+
+Request body in the XML file named AllSales.xml <queryRequest>
+
+<operation> <count>-1</count>
+
+<systemMetadata> <namespaces>
+
+<namespace>sales.midwest</namespace> </namespaces>
+
+</systemMetadata> <verbose>true</verbose>
+
+</operation> </queryRequest>
+
+Request with cURL command line
+
+curl -i -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H "Content-Type: application/xml" -H "Accept: application/json"
+
+d @AllSales.xml "https://midwest.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL import pycurl
+
+import os curl = pycurl.Curl()
+
+# Set the URL, command, and headers
+
+curl.setopt(pycurl.URL, "https://midwest.hcp.example.com/" + "query?prettyprint")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1)
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d",
+
+"Content-Type: application/xml", "Accept: application/json"])
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+870/907

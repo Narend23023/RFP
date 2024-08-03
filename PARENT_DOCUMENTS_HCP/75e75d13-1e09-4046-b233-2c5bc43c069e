@@ -1,0 +1,61 @@
++utf8Name:"Q1_2012.ppt" namespace:"finance.europe"
+
+Objects that match the namespace criterion are sorted higher in the result set than those that do not match it.
+
+If a minus sign precedes some search criteria but not others and no criteria have plus signs, the query expression finds objects that do not match the criteria preceded by the
+
+minus signs and do match at least one of the criteria without a Boolean operator. For example, this query expression finds objects that are not in the finance namespace owned by the europe tenant and can be deleted.
+
+namespace:"finance.europe" retention:0
+
+This query finds objects that are not in the finance namespace owned by the tenant named europe and either can be deleted or can be indexed (or both):
+
+namespace:"finance.europe" retention:0 index:1 If a Boolean operator precedes an opening parenthesis, that operator applies to the entire set of criteria inside the parentheses, not the individual criteria. For example, this query expression finds objects that are on hold or have a retention setting of Deletion Prohibited:
+
++(hold:true retention:"-1")
+
+These characters have special meaning when specified in query expressions:
+
+? * + - ( ) [ ] { } " :
+
+To specify one of these characters in a query expression, precede the character with a backslash (\). To specify a backslash in a query expression, precede the backslash with another backslash. customMetadataContent property
+
+To search for objects based on the full-text content of custom metadata, you specify the customMetadataContent property in a query expression. Criteria that use this property find objects only in namespaces that have full-text indexing of custom metadata enabled.
+
+When custom metadata is indexed for full-text searching, the XML is treated as text, not as a structured document. Similarly, the customMetadataContent property value is treated as text.
+
+Tip: If you frequently search for values of a particular element or attribute, use a content property that corresponds to that element or attribute, as content property searches are more efficient than customMetadataContent searches. If the required content property does not exist, ask your tenant administrator to create one.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+843/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help To use the customMetadataContent property to query for any element name, attribute name, element value, or attribute value that matches a text string, use a query expression with this format:
+
+customMetadataContent:text-string
+
+If the text string consists of more than a single string of alphabetic or numeric characters, enclose the entire value in double quotation marks (").
+
+To query for a combination of elements and attribute names and values, use a query expression with either of these formats: customMetadataContent:"element-name.
+
+attribute-name.attribute-value...element-value.element-name"
+
+<![CDATA[customMetadataContent:"<element-name attribute-name=attribute-value...>element-value</element-name>"]]>
+
+The two formats are equivalent. The first format is simpler. The second format uses well-formed XML.
+
+When using the second format, enclose both the property and text string in the square brackets that mark the CDATA content, and enclose the text string in double quotation marks ("). The outer square brackets ([ ]) are also required, as are the outside angle brackets and exclamation mark.
+
+To query for the value of a specific element, specify every attribute and attribute value for the element, not just the element name and value.
+
+To query for the value of a specific attribute, regardless of which element it applies to, use this format: customMetadataContent:"attribute-name.attribute-value"
+
+You can use the asterisk (*) and question mark (?) wildcard characters when specifying customMetadataContent property values that are not in quotation marks.
+
+Here is some sample custom metadata that you might want to search:
+
+<?xml version="1.0" ?> <weather>
+
+<location>Boston</location> <date>20121130</date> <duration unit="secs">180</duration> <temp>

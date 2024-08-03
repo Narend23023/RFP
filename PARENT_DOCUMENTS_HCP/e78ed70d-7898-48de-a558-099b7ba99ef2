@@ -1,0 +1,51 @@
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The row with the tag turns red.
+
+7. Click Update Settings.
+
+Changing the default HCP retention settings When you create a namespace, its default HCP retention setting is Deletion Allowed. Once the namespace exists, you can change this setting at any time. Valid values for this setting are:
+
+An offset from the time the object is created.
+
+You specify an offset as numbers of years, months, and/or days. For example, you could specify an offset of two years. Then, an object added to the namespace on March 10, 2011, at 9:45 a.m. would expire on March 10, 2013, at 9:45 a.m.
+
+A retention class. One of these special values: Deletion Allowed
+
+The object can be deleted at any time.
+
+Deletion Prohibited
+
+The object can never be deleted by means of a normal delete operation. If the namespace is in enterprise mode, however, the object can be deleted by means of a privileged delete operation.
+
+After an object has this retention setting, its retention setting cannot be changed. Initial Unspecified
+
+The object cannot be deleted, but can have its retention setting changed to any other retention setting. This setting is useful for namespaces for which the only enabled namespace access protocol is SMTP.
+
+A fixed date in the future. In this case, the retention period for the object ends at the end of the specified day.
+
+Tip: If you specify a fixed date, remember to change the default retention setting again before that date occurs. Otherwise, the default retention setting reverts to Deletion Allowed when the specified date arrives.
+
+To view the default retention setting for a namespace, you need the monitor, administrator, or compliance role. To change the default retention setting for a namespace, you need the compliance role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Retention. 5. In the Default Retention Setting section in Retention panel, take one of these actions:
+
+To make the default retention setting an offset: In the Retention Method field, select Offset, and then enter values in Years, Months, and Days. Possible values are integers in the range zero through 9,999. To make the default retention setting a retention class: In the Retention Method field, select Retention Class, and then select the retention class you want. To make the default retention setting a special value: In the Retention Method field, select Special Value, and then select the special value you want.
+
+To make the default retention setting a fixed date: In the Retention Method field, select Fixed Date, and then either type a date or click the calendar control ( select a date. 6. Click Update Settings in the Default Retention Setting section.
+
+Changing the default shred setting
+
+When you create a namespace, its default shred setting is not to shred. Once the namespace exists, you can change this setting at any time.
+
+Once an object is marked for shredding, its shred setting cannot be changed.
+
+Note: If HCP is allowed to use erasure coding to implement replication of a namespace, setting the default shred setting to shred for that namespace can significantly increase the load on all systems in the replication topology.
+
+To view the default shred setting for a namespace, you need the monitor, administrator, or compliance role. To change the default shred setting for a namespace, you need the compliance role. 1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Shredding. 5. In the Shredding panel:. To enable secure deletion, select Shred on delete. To disable secure deletion, deselect Shred on delete .
+
+6. Click Update Settings.
+
+Allowing object overwrites

@@ -1,0 +1,105 @@
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \ &annotation=report_data")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata &annotation=report_data HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-ServicedBySystem: hcp.example.com X-RequestId: E62EFD408DBB7B8F X-HCP-Time: 1334829227
+
+Content-Length: 0
+
+Working with ACLs
+
+Storing an ACL
+
+You use the HTTP PUT method to store or replace an ACL for an existing object. ACLs can be specified in XML or JSON format. Unlike storing annotations, you can store an ACL for an object under retention.
+
+An ACL is stored as a single unit. You can add it or replace it in its entirely, but you cannot add to or change an existing ACL. If you store an ACL for an object that already has an
+
+ACL, the new ACL replaces the existing ACL.
+
+When you store an ACL for an object, the ACL is also stored for all old versions of that object.
+
+You can use the HCP Search Console to modify ACLs on multiple objects with a single operation. Access permission
+
+To store or replace an ACL for an object, you need write ACL permission.
+
+Usage consideration
+
+The PUT of an ACL may fail with an HTTP 409 (Conflict) error code if a large number of clients try to store ACLs for multiple objects at the same time. In this case, limit the number
+
+of concurrent requests from clients to the namespace.
+
+Request header
+
+PUT /rest/directory/file?type=acl HTTP/1.1
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+775/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name. file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value acl.
+
+Response headers
+
+This operation does not return any request-specific headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+201 Created
+
+HCP successfully stored the ACL.
+
+400
+
+Bad Request One of:
+
+The request is trying to store an ACL in a namespace for which ACLs are not enabled.
+
+The ACL is not well-formed XML or JSON. The ACL includes an invalid entry or an invalid value for an entry.
+
+The ACL does not include a required entry. The ACL specifies a user, group, or domain that doesn’t exist. The ACL specifies an AD user or group but doesn’t include the domain entry. The ACL specifies an AD user or group, but the namespace does not support Active Directory
+
+authentication. Multiple name entries include the same user or group. A user or group can be specified in only one name entry in an ACL. The permissions you have specified in the ACL exceed your user permissions.

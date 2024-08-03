@@ -1,0 +1,51 @@
+The namespaces resource, HCP returns a list of all the namespaces owned by the applicable tenant The userAccounts resource, HCP returns a list of all the user accounts defined for the applicable tenant The dataAccessPermissions resource, HCP returns a list of all the namespaces for which the applicable user account or group account has any permissions, along with the permissions granted for each of those namespaces
+
+With very large numbers of these items, such requests can overload or reduce the efficiency of the client. Additionally, if you’re interested in only a small number of the listed items, finding the information you want can be difficult.
+
+To manage the results of GET requests, you can use query parameters to page through, sort, and filter these resource lists.
+
+Paging through resource lists You can limit the number of items HCP returns in response to an individual GET request by specifying an offset into the applicable list and a count of the items to return. By issuing multiple such requests, you can retrieve the entire list, one manageable number of items at a time. This is called paging.
+
+To specify the offset and count, you use these query parameters in the GET request: offset=offset
+
+specifies the offset of the first item to include in the returned tenant or namespace list.
+
+count=count
+
+specifies the number of items to return.
+
+These considerations apply to paging through resource lists: The offset and count parameters are valid only with the namespaces, userAccounts, and dataAccessPermissions resources. The first item in the complete list is at offset zero. So, for example, to retrieve the first five items, you would specify offset=0 and count=5. To retrieve the sixth through tenth items, you would specify offset=5 and count=5. If you omit the offset parameter, the returned list starts with the item at offset zero. If you specify an offset that is greater than or equal to the number of items in the complete list, no items are returned. If you omit the count parameter, the returned list includes all items starting from the offset and continuing through the end of the complete list. If you specify a count that is greater than the number of items remaining in the complete list after the offset, the returned list includes all items starting from the offset and continuing through the end of the complete list. If an item is deleted while you are paging through the applicable list, the full list of items returned may be incomplete. For example, suppose a tenant has six namespaces (A, B, C, D, E, and F): 1. You issue a GET request for the namespaces resource with these query parameters: offset=0&count=3
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+416/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+HCP returns A, B, and C.
+
+2. Namespace B is deleted without your knowledge. The remaining namespaces are A, C, D, E, and F.
+
+3. You issue a second GET request for the namespaces resource with these query parameters: offset=3&count=3
+
+HCP returns E and F. It does not return D because D is now at offset two.
+
+You can page, sort, and filter resource lists in the same request.
+
+Tip: By default, resource lists are returned in an arbitrary order, and the order may not be the same if the request is issued more than once. To ensure that you get all the expected items when paging, specify a sort order in each request.
+
+Sorting resource lists
+
+You can retrieve a sorted list of items of a particular resource type by specifying the property you want to sort by and the sort order in the GET request. You can sort namespaces by name or by hard quota. You can sort user accounts by username.
+
+To specify a sort property and sort order, you use these query parameters in the GET request: sortType=property-name
+
+specifies the property you want to sort by. Valid values are:
+
+For the namespaces and dataAccessPermissions resources, name and hardQuota For the userAccounts resource, username
+
+This parameter is optional. For the namespaces and dataAccessPermissions resources, the default is name. sortOrder=(ascending|descending)
+
+specifies the order in which to sort the listed items. This parameter is optional. The default is ascending.

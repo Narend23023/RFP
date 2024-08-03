@@ -1,0 +1,37 @@
+other systems or received from other systems A graph of the history of the up-to-date-as-of time for replication of the namespace A graph of the history of the data transmission rate for replication of the namespace A graph of the history of the operation rate for replication of the namespace
+
+On an HCP system that’s sending data for the tenant to other systems, the panel also shows this information for the namespace:
+
+The approximate number of objects and parts of multipart objects currently waiting to be replicated The approximate amount of data currently waiting to be replicated Up-to-date-as-of time
+
+The Up to date as of section in the namespace replication panel contains a graph that shows the history of the up-to-date-as-of time for replication of the namespace. The section heading shows the current up-to-date-as-of time. If the graph is not currently visible, click Up to date as of to display it.
+
+The x‑axis in this graph marks the passage of time. It shows 30 days (or fewer if replication has been occurring for less than 30 days). The y-axis marks the up-to-date-as-of time in days, hours, or minutes. As the up-to-date-as-of time varies, the measurement unit for the y-axis grows or shrinks as needed (for example, from days to hours to minutes). The lower
+
+the up-to-date-as-of time, the closer replication is to being synchronized with current namespace activity. Data transmission rate
+
+The Transfer Rate section in the namespace replication panel contains a graph that shows the history of the rate of replication data transmissions for the namespace per second. The section heading shows the current data transmission rate. If the graph is not currently visible, click Transfer Rate to display it.
+
+The x‑axis in this graph marks the passage of time. It shows 30 days (or fewer if replication or recovery has been occurring for less than 30 days). The y-axis marks the data transmission rate in KB, MB, or GB. As the transmission rate varies, the measurement unit for the y-axis grows or shrinks as needed (for example, from KB to MB to GB). Operation rate
+
+The Operations per Second section in the namespace replication panel contains a graph that shows the history of the rate of replication operations for the namespace per second. The section heading shows the current operation rate. If the graph is not currently visible, click Operations per Second to display it.
+
+The x‑axis in this graph marks the passage of time. It shows 30 days (or fewer if replication or recovery has been occurring for less than 30 days). The y-axis marks the operation rate in tens, hundreds, or thousands. As the operation rate varies, the measurement unit on the y-axis grows or shrinks as needed (for example, from tens to hundreds to thousands).
+
+Selecting or deselecting namespaces for replication
+
+On the Replication page, at any time, you can change which namespaces are replicated with the tenant and, if allowed by the tenant configuration, specify whether those namespaces allow erasure coding. If you disable replication for a namespace that was already being replicated, replication of that namespace stops. If you subsequently enable replication for that namespace again, replication of the namespace starts again from where it stopped.
+
+When you reenable replication of a namespace that has already been replicated, all operations that occurred in that namespace while replication was not happening, including object deletions, are replicated to the other system. During this replication, conflicts can occur between changes made on different systems while the namespace was not being replicated.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 268/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If you disable replication for a namespace that has already been replicated and then delete the namespace on one or more systems, the namespace deletions are not replicated. If you then reenable replication for that namespace and the namespace still exists on one or more systems, the namespace is replicated back to the systems where you deleted it.
+
+You can also enable or disable replication for a namespace and specify whether the namespace allows erasure coding on the namespace Replication panel.
+
+Depending on the current status of replication, if the tenant is being replicated, you may not be able to disable replication for namespaces that are being replicated.

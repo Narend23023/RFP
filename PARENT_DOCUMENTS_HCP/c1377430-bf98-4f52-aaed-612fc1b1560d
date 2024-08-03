@@ -1,0 +1,63 @@
+GET /mapi/storage/licenses?prettyprint HTTP/1.1 Host: admin.hcp.example.com:9090 Accept: application/xml Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 356 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<licenses> <license> <activeCapacity>10000000000000</activeCapacity> <expirationDate>Jan 1, 2025</expirationDate> <extendedCapacity>0</extendedCapacity> <licenseType>Premium</licenseType> <serialNumber>12345</serialNumber> <uploadDate>Aug 14, 2020</uploadDate> </license> </licenses>
+
+Example: Uploading a new license
+
+Here’s a sample PUT request that uploads a storage license. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -i -k -H "Content-Type: text/html" -H "Authorization=HCP YWxscm9sZXM=:04ec9f614d89ff5c7126d32acb448382" -X PUT -d "450a4346cac1d4d49c719312caed27f4f582ba1024b342a0f10be7a7283e6f8acba69e5c" "https://admin.hcp.example.com:9090/mapi/storage/licenses"
+
+Request in Python using PycURL
+
+import pycurl import os readString = "450a4346cac1d4d49c719312caed27f4f582ba1024b342a0f10be7a7283e6f8acba69e5c", curl = pycurl.Curl() curl.setopt(curl.HTTPHEADER, ["Content-Type: text/html", "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/storage/licenses”) curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "PUT")
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+403/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help curl.setopt(pycurl.POSTFIELDS, readString) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+PUT /mapi/services/replication/links HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: text/html Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Log resources
+
+Log resources let you prepare, download, and monitor the download of the HCP internal logs.
+
+.../logs
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+LogDownloadStatus GET
+
+Retrieve the status of the log download in progress System-level user with the administrator, service, or monitor role.
+
+N/A
+
+POST Marks the logs with a supplied
+
+message
+
+System-level user with the administrator or service role.
+
+You supply the message at the end of the command. Use the plus (+) sign or %20 to make spaces between words.

@@ -1,0 +1,43 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+537/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+dataUserAcctName + "/dataAccessPermissions";
+
+List<NameValuePair> metadata = new ArrayList<NameValuePair>(); metadata.add(new BasicNameValuePair("debug", "true")); String queryString = URLEncodedUtils.format(metadata, "UTF-8");
+
+this.executeRequest(RequestType.POST, addr, path, queryString, jsonInputFile); } public void createRetentionClass(String namespaceName, String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/namespaces/" + namespaceName + "/retentionClasses";
+
+this.executeRequest(RequestType.PUT, addr, path, null, jsonInputFile); }
+
+/** * Execute the HTTP request to perform the applicable management API operation. * @param requestType * @param addr * @param path * @param queryString * @param jsonInputFile */ private void executeRequest(RequestType requestType, String addr, String path, String queryString, File jsonInputFile) {
+
+boolean success = false; try { // Set up the HTTP host. HttpHost httpHost = new HttpHost(addr, port, protocol);
+
+URI uri = URIUtils.createURI(protocol, addr, port, path, queryString, null);
+
+// JSON file. FileEntity fileEntity = new FileEntity( jsonInputFile, "application/json; charset=\"UTF-8\"");
+
+HttpRequest request; if(requestType == RequestType.PUT) { request = new HttpPut(uri); ((HttpPut)request).setEntity(fileEntity); } else { request = new HttpPost(uri); ((HttpPost)request).setEntity(fileEntity); }
+
+// Set up the authentication header. String header = "HCP " + uname64 + ":" + encodedPassword; request.setHeader("Authorization", header); // You should retry the request if the execute throws an IOException or // if HCP returns a server error. You should put the number of retry // attempts in a configuration file that can be changed depending on // network conditions. int retries = 3; while(retries > 0) { --retries; HttpResponse response = null; try { response = httpClient.execute(httpHost, request); if (response != null) { // Get back the status and log it. int statusCode = response.getStatusLine().getStatusCode(); System.out.println("Status code for PUT = " + statusCode);
+
+// PUT returns a 201 (Created) if it is successful. if(statusCode == 201) { success = true; }
+
+// Status codes below 500 are due to either a successful // PUT, an error by the client, or an authentication error. // Errors >= 500 are HCP server errors, so you should retry
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+538/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help // on those errors. if(statusCode < 500) { retries = 0; // Notify the user about the error. For descriptions of // the management API status codes, see Appendix A. } else { if(retries == 0) { // Notify your HCP system administrator about the // error. }
+
+// Wait two minutes; then try the request again. Thread.sleep(2*60*1000); } }
+
+} catch(IOException e) { // An IOException from the client means there was a transport // error and is likely a one-off I/O issue. Try the request // again. e.printStackTrace();

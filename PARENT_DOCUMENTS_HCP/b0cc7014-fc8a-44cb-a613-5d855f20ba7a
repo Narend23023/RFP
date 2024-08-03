@@ -1,0 +1,145 @@
+started
+
+Boolean
+
+Specifies whether the health check reports preparation phase has started.
+
+content
+
+String
+
+Specifies the type of download report.
+
+Example
+
+Here is an XML example of the healthCheckDownloadStatus data type:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+467/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<healthCheckDownloadStatus> <readyForStreaming>true</readyForStreaming> <streamingInProgress>false</streamingInProgress> <error>false</error> <started>true</started> <content>HCR</content> </healthCheckDownloadStatus> healthCheckPrepare
+
+The healthCheckPrepare data type describes the information needed to prepare the health check reports for the available HCP cluster nodes.
+
+healthCheckPrepare data type properties
+
+The following table describes the properties included in the healthCheckPrepare data type.
+
+Property Data type
+
+Description
+
+exactTime
+
+String
+
+(Optional) If this property is specified, the reports for each node will have a start date and time of startDate exactTime.
+
+Specifying this property ensures that if you download health check reports daily at the same time, the downloads will not include the same .tar archives on two consecutive days. collectCurrent Boolean
+
+(Optional) If this property is set to false, when data collection for the specified start and end dates is performed, data will not be collected for the current report.
+
+The default value is true.
+
+startDate
+
+String
+
+(Optional) Data collection start date for preparing the health check reports.
+
+The default value is today. endDate
+
+String
+
+(Optional) Data collection end date for preparing the health check reports.
+
+The default value is today if the exactTime property value is not specified; otherwise, the endDate is yesterday.
+
+Example
+
+Here is an XML example of the healthCheckPrepare data type:
+
+<healthCheckPrepare> <startDate>09/19/2020</startDate> <endDate>09/21/2020</endDate> <exactTime>04:00</exactTime> <collectCurrent>false</collectCurrent> </healthCheckPrepare> httpProtocol
+
+The httpProtocol data type describes the http resource for HCPnamespaces. This data type includes properties for the REST, S3 compatible, and WebDAV namespace access protocols.
+
+Properties
+
+The table below describes the properties included in the httpProtocol data type.
+
+Property
+
+Data type Description
+
+Notes
+
+hs3Enabled
+
+Boolean
+
+Specifies whether the Hitachi API for Amazon S3 is enabled for the namespace. Valid values are:
+
+This property can be set to true only if ACLs are enabled for the namespace.
+
+true
+
+The Hitachi API for Amazon S3 is enabled.
+
+false
+
+The Hitachi API for Amazon S3 is disabled.
+
+The default is false. hs3Requires Authentication Boolean
+
+Specifies whether user authentication is required or optional for access to the namespace through the Hitachi API for Amazon S3. Valid values are:
+
+true
+
+User authentication is required.
+
+false
+
+User authentication is optional.
+
+The default is true.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+468/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+httpActiveDirectorySSO Enabled
+
+Boolean
+
+Specifies whether HCP supports AD single sign-on for access to the namespace through the REST and S3 compatible APIs. Valid values are:
+
+This property is valid on a POST request only if the owning tenant supports AD authentication.
+
+true
+
+HCP supports AD single sign-on for access to the namespace through the REST and S3 compatible
+
+You can set the value of this property to true only while HTTP or HTTPS is enabled. Disabling both HTTP and HTTPS automatically disables this property. APIs.
+
+false
+
+HCP does not support AD single sign-on for access to the namespace through the REST and S3 compatible APIs.
+
+The default is true.

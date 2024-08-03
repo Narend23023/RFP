@@ -1,0 +1,59 @@
+</CORSConfiguration>
+
+Configuring CORS rules at the tenant-level
+
+You can use the System Management Console to configure the default CORS settings for all namespaces owned by a tenant.
+
+To view a tenant, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants. 2. On the Tenants page, in the Name column, click the right arrow next to the tenant for which you want to configure CORS settings. The tenant Overview panel is displayed.
+
+3. Click the Security tab.
+
+The Security panel opens to the CORS tab on the left.
+
+4. In the CORS Configuration field, enter the default CORS settings to use for all namespaces that are owned by the tenant. 5. Click Update Settings. You are returned to the Overview panel for the tenant. A message is displayed at the top of the page indicating whether the update was successful. If a success message is displayed, your configuration is saved and persists in HCP.
+
+6. To view, update, or delete the saved configuration, click Security to display the Security panel.
+
+CORS configuration
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+97/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <CORSConfiguration> <CORSRule> <AllowedOrigin>http://www.example.com</AllowedOrigin> <AllowedMethod>PUT</AllowedMethod>
+
+<AllowedHeader>*</AllowedHeader> <ExposeHeader>ETag</ExposeHeader> <MaxAgeSeconds>3000</MaxAgeSeconds> </CORSRule> <CORSRule>
+
+<AllowedOrigin>*</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedHeader>*</AllowedHeader> </CORSRule>
+
+...
+
+Notice that the HCP software added the following XML header at the top of the CORS configuration: <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+7. If a failure message is displayed, for example, if your configuration had a syntax error, return to the Security panel to make the necessary corrections. 8. Click Update Settings.
+
+You configured the default CORS settings for all namespaces owned by the tenant. Protocol optimization
+
+HCP namespace access protocols are categorized as either cloud protocols or noncloud protocols. The cloud protocols are the HTTP and S3 compatible. The noncloud protocols are WebDAV, CIFS, and NFS.
+
+Protocol optimization improves namespace ingest performance. You can optimize namespaces for all protocols, which provides balanced performance across both cloud protocols and noncloud protocols. Alternatively, you can optimize namespaces for cloud protocols only. Cloud-only optimization improves the ingest rate of namespaces using cloud protocols.
+
+Cloud protocols, themselves, are further optimized for improved ingest performance.
+
+A namespace that is optimized only for cloud protocols is said to be cloud optimized. Clients can use only cloud protocols to access cloud-optimized namespaces. For clients to use
+
+noncloud protocols to access a namespace, the namespace must be optimized for all protocols. Only cloud-optimized namespaces support multipart uploads and the management of multipart objects. Additionally, only cloud-optimized namespaces support erasure coding as their protection type.
+
+To benefit most from optimization, you should increase system memory. Results are most apparent on systems with high object and directory counts. If you want to upgrade system memory, contact your HCP sales representative.
+
+At the system level, the default configuration setting for new namespaces is optimize for all namespace access protocols. You can change this to optimize for cloud protocols only. You can also change all existing namespaces for which no noncloud protocols are enabled to be cloud-optimized.
+
+Note: You cannot make protocol optimization changes while an HCP system upgrade is in progress.
+
+Setting the default protocol optimization option and directory usage for new namespaces Namespaces can be optimized for cloud protocols only or for all protocols and can be configured for either balanced or unbalanced directory usage. You can specify the type of

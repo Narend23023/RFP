@@ -1,0 +1,43 @@
+Failover is a process that stops replication on a link and results in a situation in which, for read-write access:
+
+For an active/active link, applications should use only the HCP system to which the link was failed over For an active/passive link, applications should use only the replica
+
+Typically, you fail over a link when one of the systems involved in the link becomes unavailable. With an active/passive link, this system must be the primary system. You don’t need
+
+to fail over the link when the replica fails.
+
+You can fail over a link while both systems are available. You might do this, for example, if you need to shut down one of the systems for maintenance.
+
+Depending on the link configuration, failover either is a manual procedure or occurs automatically. When automatic failover is enabled for a link, the link fails over automatically after the applicable system is unavailable for a specified amount of time. You enable or disable automatic failover separately for each system involved in an active/active link. For an active/passive link, you enable or disable automatic failover only for the replica.
+
+Failback is the process that restarts replication on a link that has been failed over and returns the HCP systems involved in the link to normal operation. Typically, you fail back a link when an unavailable system becomes available again.
+
+If connectivity was lost between the two systems involved in a failed-over link, before failback can occur, connectivity must be restored. Connectivity exists when the network infrastructure through which the two systems communicate is healthy and the applicable SSL server certificates have been shared between the two systems.
+
+In a disaster recovery situation in which the system that became unavailable has been rebuilt, the link no longer exists on that system. In this case, before failback can occur, the link must be restored to the rebuilt system. With an active/active link, failback is a manual procedure. With an active/passive link, the failback procedure can be partially automated.
+
+Failover and failback with active/active links
+
+The effects of failing over and failing back an active/active link differ depending on whether DNS failover was enabled for the system that became unavailable. In all cases, however, when the link fails over, replication on that link stops. When the link fails back, normal replication restarts. Failover with an active/active link
+
+With an active/active link, failover can occur in either direction between the two systems involved in the link. While the link is failed over, the replicated HCP tenants and namespaces and default-namespace directories remain read-write on both systems. However, because failover normally occurs when one system is unavailable, to avoid wasting resources, neither system tries to read or repair objects from the other system.
+
+With DNS failover enabled, when an active/active link fails over from one of the HCP systems involved in the link (system A) to the other system involved in the link (system B), system B broadcasts a new configuration to the DNS. This new configuration causes client requests targeted to system A by domain name to be redirected to system B when the request is for an HCP namespace or default-namespace directory that was being replicated on the failed-over link. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+333/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: System B can service redirected namespace access requests only if the applicable namespace is configured to allow service by remote systems.
+
+If a client request targeted to system A is for an HCP namespace or default-namespace directory that was not being replicated on the failed-over link, the request is not redirected to system B. Client requests that target system A by IP address are also not redirected to system B.
+
+Client requests that use a domain name to target the Tenant Management Console for a replicated HCP tenant on system A are redirected to system B, but system B cannot process such requests. Instead, system B returns a 403 error code.
+
+While the link is failed over, system A does not broadcast any configuration information to the DNS. With DNS failover disabled, failing over an active/active link stops replication on the link but does not cause any other changes. Clients can still access system A by domain name (if system A is available).
+
+Failback with an active/active link
+
+Failing back an active/active link entails a single action, fail back. When an active/active link fails back:

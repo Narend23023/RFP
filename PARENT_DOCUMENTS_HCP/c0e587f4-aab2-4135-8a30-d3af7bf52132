@@ -1,0 +1,69 @@
+An access control list (ACL) grants permissions to perform operations on an individual object to specified users or groups of users. An ACL can be specified as either XML or JSON. You add, replace, or delete an ACL in its entirety. You cannot modify it in place.
+
+An ACL contains up to one thousand access control entries (ACEs). Each ACE specifies one user or one group of users and the permissions granted to that user or group. In the ACL body, an ACE is represented by the grant entry.
+
+Note: This book uses the term entry to refer to an XML element and the equivalent JSON object and the term property for an XML attribute or the equivalent JSON name/value pair.
+
+When you specify an ACL for an object, you can grant only the permissions you already have. That is, you cannot use an ACL to grant permissions that exceed your own.
+
+To add, replace, or delete an ACL, you use HTTP. With HTTP, you use a GET request to retrieve an ACL for an object. With WebDAV, CIFS, and NFS, you view the ACL for an object in the acl.xml metafile.
+
+HCP provides two predefined ACLs that you can specify when storing an object:
+
+all_read
+
+Allows any user, authenticated or anonymous, to view and retrieve the object auth_read
+
+Allows any authenticated user to view and retrieve the object
+
+The use of ACLs is enabled on a per-namespace basis. In namespaces where ACLs are enabled, the namespace can be configured to either enforce or ignore the permissions granted by ACLs. To find out the ACL settings for a namespace, contact your tenant administrator.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+705/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+ACL permissions
+
+The following describes the permissions that can be granted through an ACL. Read
+
+Retrieve objects and system metadata Check for object existence
+
+List annotations Check for and retrieve custom metadata
+
+Read_ACL
+
+Check for and retrieve ACLs
+
+Write
+
+Store objects Create directories Set and change system and custom metadata
+
+Write_ACL
+
+Set and change ACLs
+
+Delete
+
+Delete objects, custom metadata, and ACLs Note: With the CIFS or NFS protocol:
+
+If you are using an AD user account, when you try to delete an object for which you have been granted delete permission by an ACL, the delete operation fails if the object is located in the root data directory. To read or retrieve an object for which you have been granted read permission by an ACL, you also need browse permission for the namespace. ACL body
+
+The body of an ACL consists of entries in XML or JSON format.
+
+XML format
+
+The XML ACL body has the format shown below. Elements at each hierarchical level can be in any order.
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <accessControlList> <grant> <grantee> <type>(user|group)</type>
+
+<name>(hcp-username |active-directory-username |active-directory-group |all_users |authenticated) </name> If the name entry specifies an Active Directory user or group, include the domain element <domain>active-directory-domain</domain> </grantee> <permissions> Any combination of the following <permission>READ</permission> <permission>READ_ACL</permission> <permission>WRITE</permission> <permission>WRITE_ACL</permission> <permission>DELETE</permission> </permissions> </grant>
+
+Up to 999 additional grant elements </accessControlList> JSON format
+
+The JSON ACL body has the format shown below. Entries at each hierarchical level can be in any order.
+
+{ "grant": [{

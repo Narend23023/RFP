@@ -1,0 +1,109 @@
+returned content before the URLs are requested
+
+X-Download- Options noopen
+
+Prevents the browser from opening resources that are downloaded through links in the
+
+returned content
+
+X-Frame-Options
+
+SAMEORIGIN
+
+Prevents the browser from rendering the returned content in a frame on a page
+
+containing content not returned by the HCP system
+
+X-XSS-Protection
+
+1; mode=block
+
+Stops the browser from loading the returned content if the browser detects reflected cross-site scripting (XSS) in the response
+
+HCP can also return several standard HTTP response headers that are not described in the help, including Connection, Content-Disposition, Content-Encoding, and Content -Language. For more information about HTTP response headers, see the HTTP/1.1 standards, RFCs 7230 through 7237. Java classes for examples
+
+This section of the Help contains the implementation of these Java classes that are used in examples in this book.
+
+GZIPCompressedInputStream class
+
+o.IOException; import java.io.InputStream;
+
+import java.util.zip.CRC32; import java.util.zip.Deflater; import java.util.zip.DeflaterInputStream;
+
+public class GZIPCompressedInputStream extends DeflaterInputStream {
+
+/** * This static class is used to hijack the InputStream
+
+read(b, off, len) function to be able to compute the CRC32 * checksum of the content as it is read.
+
+/ static private class CRCWrappedInputStream extends InputStream { private InputStream inputStream;
+
+/**
+
+CRC32 of uncompressed data. */ protected CRC32 crc = new CRC32();
+
+/** * Construct the object with the InputStream provided.
+
+@param pInputStream - Any class derived from InputStream class. */ public CRCWrappedInputStream(InputStream pInputStream) { inputStream = pInputStream;
+
+crc.reset(); // Reset the CRC value.
+
+}
+
+/**
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+825/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+* Methods in this group are the InputStream equivalent methods * that just call the method on the InputStream provided during construction. */
+
+public int available() throws IOException { return inputStream.available(); };
+
+public void close() throws IOException { inputStream.close(); }; public void mark(int readlimit) { inputStream.mark(readlimit); };
+
+public boolean markSupported() { return inputStream.markSupported(); };
+
+public int read() throws IOException { return inputStream.read(); }; public int read(byte[] b) throws IOException
+
+{ return inputStream.read(b); }; public void reset() throws IOException { inputStream.reset(); };
+
+public long skip(long n) throws IOException { return inputStream.skip(n); };
+
+/*
+
+This function intercepts all read requests in order to
+
+calculate the CRC value that is stored in this object. */ public int read(byte b[], int off, int len) throws IOException { // Do the actual read from the input stream. int retval = inputStream.read(b, off, len);
+
+// If we successfully read something, compute the CRC value // of it. if (0 <= retval) { crc.update(b, off, retval);
+
+}
+
+// All done with the intercept. Return the value. return retval;
+
+};
+
+/* * Function to retrieve the CRC value computed thus far while the
+
+stream was processed.
+
+/ public long getCRCValue() { return crc.getValue(); }; } // End class CRCWrappedInputStream.
+
+/** * Create a new input stream with the default buffer size of
+
+512 bytes. * @param pInputStream - InputStream to read content for
+
+compression. * @throws IOException if an I/O error has occurred.
+
+/ public GZIPCompressedInputStream(InputStream pInputStream) throws IOException { this(pInputStream, 512);
+
+}
+
+/**
+
+Create a new input stream with the specified buffer size. * @param pInputStream - InputStream to read content for

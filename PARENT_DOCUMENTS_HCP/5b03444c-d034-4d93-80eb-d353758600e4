@@ -1,0 +1,61 @@
+You can use the tabs at the top of each panel to navigate between the three panels. To display a specific panel, click the corresponding tab.
+
+The next three sections list the network and network alias properties that are displayed on the Settings, IP Configuration, and Zone Definitions panels, respectively.
+
+Viewing the DNS zone definition for a network domain If you’re using DNS for domain name resolution, you need to add each domain you associate with a network to your DNS. If the domain for the network you’re using for replication is shared with other networks, you need to add this additional domain to the DNS: replication.admin.replicaton-network-domain-name
+
+You can use either the Networks > All Zone Definitions page or the Networks > Network View page to view the DNS zone definition that HCP uses for a network:
+
+Use the Networks > Network View page to view the DNS zone definition that HCP uses for a specific network.
+
+Use the Networks > All Zone Definitions page to view the DNS zone definitions that HCP uses for all existing networks.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+85/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The DNS zone definition for each network domain is displayed in the format used for DNS zone definitions on Unix DNS servers. To add a network domain to your DNS, you can copy its DNS zone definition directly from the HCP System Management Console into your DNS. If hidden primary or notify is enabled for a network, the domain associated with that network is defined as a secondary zone. Otherwise, the network domain is defined as a stub zone.
+
+Viewing the DNS zone definition for a specific network
+
+To display the DNS zone definition for the domain associated with a specific network:
+
+1. On the Networks > Network View page, in the network list, click the name of the network for which you want to display the DNS zone definition, or click the name of an alias
+
+that points to that network.
+
+2. At the top of the panel that opens, click the Zone Definitions tab.
+
+The Zone Definitions panel opens. This panel shows the secondary or stub zone definition that HCP uses for the network domain, formatted as shown in this example: # net5 Network for Customer-1
+
+zone "object-store.cust1.com" IN { type slave;
+
+file "/var/named/slave/object-store.cust1.com"; masters {
+
+192.168.10.101; 2001:0db8::101 ; 192.168.10.102;
+
+2001:0db8::102; 192.168.10.103;
+
+2001:0db8::103; 192.168.10.104;
+
+2001:0db8::104; }; };
+
+Tip: You can use the Zone Definition link on the Replication page to show the zone definition for a user-defined network that’s selected for replication.
+
+Viewing the DNS zone definitions for all existing networks
+
+To display the DNS zone definitions for all network domains defined on the HCP system, go to the Networks > All Zone Definitions page.
+
+The Networks > All Zone Definitions page shows the DNS zone definitions that HCP uses for all existing network domains.
+
+Considerations for modifying properties of networks and network aliases
+
+The following considerations apply to modifying properties of networks and network aliases: You can modify only the configurable properties of a network or network alias. You cannot modify any property that has a value that’s generated or derived by HCP. You cannot change the name of a network while that network is associated with a tenant or referenced by an alias. You cannot change the name of an alias while that alias is
+
+associated with a tenant. You cannot change a network to an alias or an alias to a network. When you take any of these actions for a network, communication on that network is temporarily disrupted:
+
+Modify the VLAN ID or MTU. However, in the case of MTU, applications may not notice the disruption. Modify the IPv4 gateway or netmask (if defined)

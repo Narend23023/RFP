@@ -1,0 +1,43 @@
+The service statistics resource lets you retrieve the statistical information of services used by your HCP system.
+
+Note: A best practice is to limit your HTTP GET requests for retrieving statistics and metrics to once per hour. Polling the system more frequently can lead to system instability. .../services/statistics
+
+Data type
+
+Method
+
+Use
+
+Access
+
+serviceStatistics
+
+GET
+
+Retrieve the statistics of services used by the HCP system
+
+System-level user with the administrator or monitor role.
+
+Example: Retrieving service statistics
+
+Here is a sample request that retrieves service statistics for a system. In this example, statistics are collected on a service that is running, a service that is ready to run, and a service that is currently disabled. Request with cURL command line
+
+curl -ik -H "Authorization: HCP ZGVa3b9c17d52107f34fhdb83c7a5" -H "Accept: application/xml" "https://admin.hcp.example.com:9090/mapi/services/sta tistics?prettyprint"
+
+Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <serviceStatistics>
+
+<requestTime>1524773822369</requestTime> <services> <service> <name>StorageTieringService</name> <state>RUNNING</state> <startTime>1564040581</startTime> <formattedStartTime>7/25/2019 3:43:01 EDT</formattedStartTime> <endTime>-1</endTime> <performanceLevel>HIGH</performanceLevel> <objectsExamined>1056</objectsExamined> <objectsExaminedPerSecond>1056.0</objectsExaminedPerSecond> <objectsServiced>0</objectsServiced> <objectsServicedPerSecond>0.0</objectsServicedPerSecond> <objectsUnableToService>0</objectsUnableToService> <objectsUnableToServicePerSecond>0.0</objectsUnableToServicePerSecond> </service> <service> <name>GarbageCollection</name> <state>READY</state> <startTime>1539531912</startTime> <formattedStartTime>7/25/2019 0:00:00 EST</formattedStartTime> <endTime>1539576002</endTime> <formattedEndTime>7/25/2019 0:04:49 EST</formattedEndTime> <objectsExamined>29530</objectsExamined> <objectsExaminedPerSecond>1102.05</objectsExaminedPerSecond> <objectsServiced>27570</objectsServiced> <objectsServicedPerSecond>.08</objectsServicedPerSecond> <objectsUnableToService>0</objectsUnableToService> <objectsUnableToServicePerSecond>0.0</objectsUnableToServicePerSecond> </service> <service> <name>RetirementPolicy</name> <state>DISABLED</state> <startTime>-1</startTime> <formattedStartTime>-1</formattedStartTime> <endTime>-1</endTime> <formattedEndTime>-1</formattedEndTime> <objectsExamined>0</objectsExamined> <objectsExaminedPerSecond>0.0</objectsExaminedPerSecond> <objectsServiced>0</objectsServiced> <objectsServicedPerSecond>0.0</objectsServicedPerSecond> <objectsUnableToService>0</objectsUnableToService> <objectsUnableToServicePerSecond>0.0</objectsUnableToServicePerSecond> </service> </services> <serviceStatistics>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+428/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Support access credentials resource
+
+Use the Support access credentials resource to retrieve current Hitachi Vantara Support access credentials and to configure exclusive Support access credentials for additional security compliance. Note:

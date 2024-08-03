@@ -1,0 +1,39 @@
+It looks for hidden objects and parts. If it finds such objects or parts marked for deletion, it deletes them. It looks for objects and parts left by failed writes through HTTP, WebDAV, and SMTP. If it finds such objects or parts, it deletes them. It looks for multipart uploads that should be automatically aborted. If it finds such a multipart upload, the Garbage Collection service hides the parts of the multipart upload that have already been written, marks those parts for deletion, and, on a subsequent run, deletes them.
+
+In all cases, when applicable, object deletion triggers the Shredding service. Note: If an object or part has been erasure coded, the Garbage Collection service works on the applicable chunk in the same way the service works on objects and parts that are not erasure coded.
+
+Transaction log cleanup
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+114/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP maintains a transaction log of all create, delete, purge, prune, and disposition operations performed on objects. HCP uses this log to respond to operation-based queries issued through the metadata query API.
+
+HCP adds and deletes records in the transaction log according to the following scenarios: When a client creates an object, HCP adds a creation record to the log. When a client deletes an object from a namespace that has versioning enabled without specifying a version to be deleted, HCP adds a deletion record to the log but does not delete the creation record. When a client deletes a specified version of an object from a namespace that has versioning enabled, HCP deletes the applicable creation record from the log and adds a
+
+deletion record. When a client deletes an object from a namespace that does not have versioning enabled, HCP deletes the applicable creation record from the log and adds a deletion record. When a client purges an object, HCP deletes all the creation and deletion records for all versions of the object from the log and adds a purge record for the most recent version. When HCP prunes a version of an object, it deletes the applicable creation record from the log and adds a prune record. When the Disposition service deletes an object, HCP deletes the applicable creation record from the log and adds a disposition record.
+
+Deletion, purge, prune, and disposition records contain only object metadata. You can configure the Garbage Collection service to delete these records after a specified amount of time. If you configure the service to delete these records, each time the service runs, it checks the log for records that are eligible for deletion and, if it finds any, deletes them.
+
+If you do not configure the Garbage Collection service to delete deletion, purge, prune, and disposition records from the transaction log, they remain in the log indefinitely. For any given namespace, the applicable tenant administrator can choose whether HCP should keep records of delete, purge, prune, and disposition operations if the namespace has ever had versioning enabled. If the tenant administrator chooses not to keep these records, they are immediately eligible to be deleted from the log regardless of the Garbage Collection service configuration.
+
+While the transaction log contains any deletion, purge, prune, or disposition records for a namespace, the namespace cannot be deleted. If a tenant administrator cannot delete an
+
+apparently empty namespace, a possible reason is that the transaction log contains one or more of these records. In this case, have the tenant administrator disable the option to keep these records for that namespace.
+
+Note: A namespace with versioning enabled can be cleared from replication while the owning tenant is included in an active/active replication link. In this situation, deletion, purge,
+
+prune, and disposition records for objects in the namespace are not deleted from the transaction log, regardless of the Garbage Collection service configuration, unless the namespace option to keep those records is disabled. Other Garbage Collection service functions
+
+The Garbage Collection service performs the following additional functions.
+
+Deletes data and metadata left in the repository by unsuccessful or interrupted write operations. Deletes extra copies of objects, parts, and chunks that are marked for deletion.
+
+For example, the following series of events could occur:
+
+1. A logical volume fails on primary running storage.

@@ -1,0 +1,55 @@
+The HCP metadata query API lets you query namespaces for objects that match criteria you specify. Query criteria can be based on system metadata, custom metadata, ACLs, and
+
+operations performed on objects. The API does not support queries based on object content.
+
+In response to a query, HCP returns metadata for objects that match query criteria. It does not return object data.
+
+The metadata query API supports two types of queries, object-based queries and operation-based queries.
+
+A single query can return metadata for objects in multiple namespaces, including a combination of HCP namespaces and the default namespace. For HCP namespaces that support versioning, operation-based queries can return metadata for both current and old versions of objects.
+
+To support object-based queries, HCP maintains an index of objects in the repository. To access HCP through the metadata query API, you use the HTTP POST method. With this method, you specify query criteria in the request body. In the request body you also specify what information you want in the query results.
+
+The API accepts query criteria in XML or JSON format and can return results in either format. For example, you could use XML to specify the query criteria and request that the
+
+response be JSON.
+
+Note: This book uses the term entry to refer to an XML element and the equivalent JSON object and the term property for an XML attribute or the equivalent JSON name/value pair.
+
+Because a large number of matching objects can result in a very large response, the metadata query API lets you limit the number of results returned for a single request. You can
+
+retrieve metadata for all the matching objects by using multiple requests. This process is called using a paged query. Types of queries
+
+The metadata query API supports two types of queries: object-based queries and operation-based queries. These query types have different request formats and return different information about objects in the result set. However, they have similar response formats.
+
+Object-based queries
+
+Object-based queries search for objects currently in the repository based on any combination of system metadata, object paths, custom metadata that’s well-formed XML, ACLs, and content properties. With object-based queries, you use a robust query language to construct query criteria.
+
+In response to an object-based query, HCP returns a set of results, each of which identifies an object and contains metadata for the object. With object-based queries, you can
+
+specify sort criteria to manage the order in which results are returned. You can specify facet criteria to return summary information about object properties that appear in the result set. Operation-based queries
+
+Operation-based queries search for objects based on any combination of create, delete, and disposition operations and, for HCP namespaces that support versioning, purge and prune operations. Operation-based queries are useful for applications that need to track changes to namespace content.
+
+In response to an operation-based query, HCP returns a set of operation records, each of which identifies an object and an operation on the object and contains additional metadata for the object. Query results
+
+By default, for both types of queries, HCP returns only basic information about the objects that meet the query criteria. This information includes the object URL, the version ID, the
+
+operation type, and the change time.
+
+If you specify a verbose entry with a value of true in the request body, HCP returns complete system metadata for the object or operation. If you aren’t interested in the complete system metadata, you can specify the objectProperties entry with only the system metadata you want. Object-based query results
+
+Object-based queries return information about objects that currently exist in the repository. For objects with multiple versions, these queries return information only for the current
+
+version.
+
+Object-based queries return information only about objects that have been indexed. Operation-based query results
+
+HCP maintains records of object creation, deletion, disposition, prune, and purge operations (also called transactions). These records can be retrieved through operation-based
+
+queries. The HCP system configuration determines how long HCP keeps deletion, disposition, prune, and purge records. HCP keeps creation records for as long as the object exists in the repository.
+
+Each record has a change time. For creation records, this is the time the object was last modified. For deletion, disposition, prune, and purge records, the change time identifies the time of the operation.
+
+Records returned while versioning is enabled

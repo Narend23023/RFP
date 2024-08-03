@@ -1,0 +1,49 @@
+Deleting a replication link
+
+1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the replication Links page, click the name of the link you want to delete. 3. On the replication link details page, click Link.
+
+4. In the replication Link panel, click the Management tab. 5. In the Management panel, click Delete Replication Link. 6. In the Delete Replication Link section, click Delete. 7. In response to the confirming message:
+
+If any namespace being replicated on the link contains metadata-only objects on either of the systems involved in the link or if the two systems involved in the link cannot communicate with each other: a. In the field in the message window, type YES. This value is case sensitive. b. Click Delete Link.
+
+If no namespaces being replicated on the link contain metadata-only objects on either of the systems involved in the link and the two systems involved in the link can communicate with each other, click Delete Link.
+
+Working with erasure coding topologies
+
+An erasure coding topology provides all the information the Replication service and Geo-distributed Erasure Coding service need to implement erasure-coded protection. You can create and manage an erasure coding topology in the HCP System Management Console from any of the HCP systems included in the topology.
+
+To create an erasure coding topology, you select the HCP systems and replication links to include in the topology. You also set the topology properties. After you create the topology, you add HCP tenants to it. If the tenants you add are not already on the replication links in the erasure coding topology, they are automatically added to those links.
+
+You can modify the properties of an erasure coding topology at any time. You can also replace the systems in a topology, but you cannot replace the links. You can retire and delete erasure coding topologies. However, these actions should be taken only with a full understanding of the consequences.
+
+This section of the Help contains considerations and instructions for performing the activities mentioned above.
+
+To view an erasure coding topology, you need the monitor or administrator role. To create, specify tenants for, modify, retire, or delete an erasure coding topology, you need the administrator role.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+349/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can also use the HCP management API to create, specify tenants for, modify, retire, and delete erasure coding topologies.
+
+About erasure coding topologies
+
+An erasure coding topology consists of a set of HCP systems and active/active replication links that connect those systems. Within an erasure coding topology, each system must have at least two paths to each other system. Each path can consist of any number of systems and links, but the paths cannot have any systems or links in common.
+
+When you create an erasure coding topology, you select the systems to include in it. The systems you select must be part of an existing active/active replication ring topology or fully
+
+connected active/active replication topology.
+
+For each pair of selected systems that are connected to each other in the underlying replication topology, if the pair has only one active/active replication link between them, that link is automatically included in the erasure coding topology. If any pair of the selected systems is connected by more than one active/active link, you select which one of those links to
+
+include in the erasure coding topology.
+
+An erasure coding topology does not automatically include the tenants on the links in the underlying replication topology. Instead, you select the tenants to include in an erasure coding topology from all the replication-enabled tenants defined on the systems in the topology. Each tenant you select is automatically added to each link in the erasure coding topology.
+
+When you create an erasure coding topology, it's in the active state. If you want to stop using the active topology for erasure-coded protection, you need to retire the topology.
+
+Retiring an erasure coding topology causes the Geo-distributed Erasure Coding service to restore object chunks to full-copies or, on systems where the objects are on metadata- only storage tiers, delete the chunks. While the chunks are being restored or deleted, the topology is in the retiring state.

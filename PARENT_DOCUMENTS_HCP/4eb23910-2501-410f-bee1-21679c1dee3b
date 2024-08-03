@@ -1,0 +1,159 @@
+The list below describes XML elements in an error response body.
+
+Error
+
+Root element.
+
+Code
+
+The error code.
+
+Message
+
+Text that provides more information about the error.
+
+RequestId
+
+The HCP-internal ID assigned to the request. HostId
+
+The HCP-internal ID of the host responding to the request.
+
+BucketName
+
+The specified bucket name. This element is included in the response body only when the error code is NoSuchBucket.
+
+Key
+
+The specified object name. This element is included in the response body only when the error code is NoSuchKey. Error codes
+
+Every error response body contains an error code and a message that provides more information about the error. Error codes are returned in addition to HTTP status codes. A single HTTP status code can correspond to multiple error codes.
+
+The table below describes the error codes that can be returned in response to S3 compatible API requests.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+564/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Status Code
+
+Meaning
+
+Error Code
+
+Description
+
+200
+
+OK
+
+BucketAlreadyOwnedByYou
+
+You are trying to create a bucket, but a bucket with the specified name already exists and is owned by you.
+
+200 OK
+
+EntityTooSmall
+
+The list of parts in a request to complete a multipart upload includes a part, other than the last part, that is smaller than one megabyte.
+
+When this error occurs, the multipart upload is not completed, even though the
+
+returned status code is 200 (OK).
+
+200
+
+OK
+
+InvalidPart
+
+One or more of the parts listed in a request to complete a multipart upload cannot be found. Either the part was not uploaded, or the specified ETag does not match the ETag for the uploaded part.
+
+When this error occurs, the multipart upload is not completed, even though the returned status code is 200 (OK).
+
+200 OK
+
+InvalidPartOrder
+
+The list of parts in a request to complete a multipart upload is not in ascending order by part number.
+
+When this error occurs, the multipart upload is not completed, even though the returned status code is 200 (OK).
+
+304
+
+Not Modified
+
+PreconditionFailed
+
+HCP did not perform the requested operation because a specified precondition for the operation was not satisfied.
+
+When this error occurs with a request to complete a multipart upload, the returned status code is 200 (OK), but the multipart upload is not completed.
+
+400 Bad Request
+
+BadDigest
+
+One of these:
+
+The value of the Content-MD5 header does not match the Base64-encoded 128-bit MD5 hash of the submitted data. The value of the Content-MD5 header is not a valid hash value.
+
+400
+
+Bad Request
+
+InvalidArgument
+
+Possible reasons include:
+
+A query parameter has an invalid value. An ACL grant header specifies an invalid grantee. The request includes conflicting conditional headers (for example, If-Match and If-None-Match). The request includes a header that is invalid for the requested operation.
+
+400 Bad Request
+
+InvalidBucketName
+
+The specified bucket name is invalid.
+
+400
+
+Bad Request
+
+InvalidRequest
+
+You are trying to create a bucket, and one of these is true:
+
+You already own the maximum number buckets allowed per user. The tenant does not have enough space for another bucket. The tenant already has the maximum number of buckets it’s allowed to have. An unexpected error occurred.
+
+400 Bad Request
+
+KeyTooLong
+
+The specified object name is too long.
+
+400
+
+Bad Request
+
+MalformedXML
+
+The request is invalid. Possible reasons include:
+
+The object name specified in the request is invalid. A query parameter specifies an invalid value. The request includes both the x-amz-acl header and an individual ACL grant header. The XML in the request body is malformed or contains an invalid value.
+
+400 Bad Request
+
+MetadataTooLarge
+
+The custom metadata you are trying to store is larger than two kilobytes.
+
+400
+
+Bad Request
+
+EntityTooLarge
+
+Your proposed upload exceeds the maximum allowed object size.
+
+400

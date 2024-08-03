@@ -1,0 +1,73 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> The table below describes HTTP status codes that can be returned in response to a request to upload a part of a multipart upload by copying.<br>
+                       <b>Bounding box:</b> x1=185, y1=173, x2=1516, y2=1802
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>OK</td>
+      <td>HCP successfully uploaded the part.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>Possible reasons include:\nThe specified part number is not an integer in the range 1 (one) through 10,000.\nThe request specifies a range, and one of these is true:\nThe start position for the range is greater than or equal to the size of the source object data.\nThe start position for the range is greater than the end position.\nThe request includes conflicting conditional headers (for example, x-amz-copy-source-if-match\nand x-amz-copy-source-if-none-match).\nThe request includes a custom metadata header. (x-amz-meta-)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>Possible reasons include:\nThe request specifies anonymous access. Only an authenticated user can upload parts for a\nmultipart upload.\nThe credentials provided with the request are invalid.\nThe credentials provided with the request do not match the credentials used to initiate the multipart\nupload.\nYou do not have permission to upload parts in the specified bucket.\nThe S3 compatible API is currently disabled for the specified bucket.\nThe source object exists, but the HCP system does not have the source object data. Try the\nrequest again later.\nThe source object is in the process of being deleted.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>One of these:\nThe specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload\nwas aborted or completed.\nIn the case of completion, if the part being uploaded is a replacement for an existing part, the\nexisting part is used for completing the multipart upload.\nThe specified bucket does not exist.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>409</td>
+      <td>Conflict</td>
+      <td>The specified multipart upload was completed or aborted while the upload part copy operation was in\nprogress.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>412</td>
+      <td>Precondition Failed</td>
+      <td>One of these:\nThe request included an header, and the ETag for the specified x-amz-copy-source-if-match\nsource object or object version does not match any of the values specified by the header.\nThe request included an header, and the ETag for the x-amz-copy-source-if-none-match\nspecified source object or object version matched a value specified by the header.\nThe request included an header, and the specified x-amz-copy-source-if-modified-since\nsource object or object version was not modified after the date and time specified by the header.\nThe request included an header, and the specified x-amz-copy-source-if-unmodified-since\nsource object or object version was modified after the date and time specified by the header.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>500</td>
+      <td>Internal Server Error</td>
+      <td>An internal error occurred.\nIf this error persists, contact your tenant administrator.</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>503</td>
+      <td>Service Unavailable</td>
+      <td>Possible reasons include:\nThe source object exists but cannot be read.\nHCP is temporarily unable to handle the request, probably due to system overload, maintenance,\nor upgrade.\nTry the request again, gradually increasing the delay between each successive attempt.\nIf this error persists, contact your tenant administrator.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

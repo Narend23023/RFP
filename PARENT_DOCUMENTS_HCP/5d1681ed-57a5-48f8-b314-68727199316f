@@ -1,0 +1,103 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+732/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the
+
+existence of the current version of an object. If you specify a valid range, HCP returns the requested amount of data with a status code of 200.
+
+deleted
+
+No
+
+By default, the GET request to retrieve object versions
+
+does not include delete records. To retrieve a listing that includes delete records, specify this URL query
+
+parameter:
+
+deleted=true
+
+You can also specify deleted=false, which results in the default behavior. forceEtag
+
+No
+
+To force HCP to generate an ETag for an object that does not yet have one, specify a forceEtag URL query parameter with a value of true.
+
+nowait
+
+No
+
+HCP may detect that a GET request will take a significant amount of time to return an object. You can choose to
+
+have the request fail in this situation instead of waiting for
+
+HCP to return the object.
+
+When a GET request fails because the request would take a significant amount of time to return an object and the no wait parameter is specified, HCP returns an HTTP 503 (Service Unavailable) error code. If this happens, retry the
+
+request a few times, waiting about thirty seconds between retries. type
+
+No
+
+Use the value whole-object to retrieve a single object or version data.
+
+annotation
+
+No
+
+Use a value of the name of the annotation. You can omit
+
+this parameter for the default annotation.Used in conjunction with the type parameter.
+
+Response headers for retrieving a single object or version
+
+The next list describes request-specific response headers for the retrieving a single object or version of the an object.
+
+The response headers for retrieving multiple objects or object versions are described in the next section.
+
+ChangeTimeString The change time for the object in this format:
+
+DDD, ddmmmyyyyhh:mm:ss GMT
+
+For example, Fri, 18 Sep 2020 21:02:13 GMT. This header contains the same datetime value as the X-HCP-ChangeTimeMilliseconds and X-HCP-ChangeTimeString headers, but in a format that can be used directly in If-Modified-Since and If-Unmodified-Since request headers. Content-Encoding
+
+Always gzip. This header is returned only if HCP compressed the response before returning it.
+
+Content-Length
+
+The length, in bytes, of the returned data. These considerations apply:
+
+If you requested that the response be compressed, this is the compressed size of the returned data. If you requested uncompressed object data without custom metadata, the value of this header is the same as the value of the X-HCP-Size header. If you requested uncompressed partial content, the value is the size of the returned part. This value is equal to the difference between the start-position and end- position values in the Content-Range header plus one byte. If you requested uncompressed object data and custom metadata, the value is the sum of the size of the object data (the X-HCP-Size header) and the size of the custom metadata.
+
+If the returned data is large, HCP might send a chunked response, which does not include this header. Content-Range
+
+Returned only when getting partial content. The byte range of the returned object data, in this format:
+
+start-position–end-position / object-size
+
+where object-size is the total size of the object data and is the same as the value of the X-HCP-Size header.
+
+Content-Type
+
+The type of content for the object:
+
+If you requested all or part of the object data only, this is the Internet media type of the object data, such as text/plain or image/jpg. If you requested the object data and an annotation together, this value is always application/octet-stream.
+
+ETag
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+733/907

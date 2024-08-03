@@ -1,0 +1,79 @@
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked.
+
+Status codes
+
+The next table describes HTTP status codes that can be returned in response to a request to retrieve a bucket ACL. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the bucket ACL.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to read the bucket ACL. The specified bucket does not currently support the requested operation. The S3 compatible API is currently disabled for the specified bucket. The tenant does not currently support use of the S3 compatible API for retrieving bucket ACLs.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator. Example: Retrieving a bucket ACL
+
+Here is a sample GET request that retrieves the ACL for the bucket named finance.
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?acl" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET /?acl HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:Msry4PBtztkM6FMvzdDblC5RoPE=
+
+x-hcp-pretty-print: true
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+577/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <AccessControlList>

@@ -1,0 +1,29 @@
+HCP replication helps ensure continuous namespace availability. If a system in a replication topology fails, client requests for access to a replicated namespace can be serviced by other systems in the topology.
+
+You can use the HCP DNS failover feature to automate the process of redirecting client requests from a failed system to a healthy one. For active/active links, this process can be automated in other ways as well. Automating redirection means that applications do not need to be modified to explicitly direct requests to another system when the normally targeted system fails.
+
+The DNS failover feature requires that the HCP systems involved use a shared DNS for system addressing. If the systems don’t use a shared DNS, DNS failover is not an option for automating redirection of client requests. An HCP system can service automatically redirected requests only if the target namespace is configured to support service by remote systems. If the namespace is not configured this way, requests to access the namespace on a failed system fail. About DNS failover
+
+DNS failover is an HCP system configuration option that, when enabled on the one system involved in a replication link, forces requests to that system to be automatically redirected to the other system involved in the link while the link is failed over to the other system. This redirection occurs only when the request identifies the target system by domain name, not by IP address.
+
+In effect, DNS failover causes the domain name for the failed-over system to be associated with the IP addresses for the nodes in the other system. Therefore, all types of requests that specify that domain name are redirected to the other system. This includes not only requests for namespace access but also requests for access to HCP interfaces such as the Tenant Management Console and HCP management API. An HCP system can service redirected requests only if they come in through a namespace access protocol. This means that requests for access to the failed-over system that are made through other interfaces fail.
+
+With an active/active link, failover can occur in either direction between the two systems involved in the link. Therefore, if you are using DNS failover for automatic redirection of client requests, you should enable it on both systems.
+
+With an active/passive link, failover can occur only from the primary system to the replica. In this case, therefore, you need to enable DNS failover only on the primary system. However, if the replica is also the primary system for another link, you need to enable DNS failover on the replica as well.
+
+For DNS failover to work for the system where it’s enabled, the HCP domains for that system in the DNS must be configured to support service by remote systems. If DNS failover is not enabled, the HCP domains should not be configured that way. DNS failover is intended to address cases of catastrophic failure of the HCP system where DNS failover is enabled. However, DNS failover also applies if you fail over a link while the system is healthy. In this case, the method used to access unreplicated items on that system depends on the data access network for the tenant that owns the target namespace.
+
+For example, suppose:
+
+Tenants ten1 and ten2 both use the network named net1 for data access.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+372/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Tenant ten1 and its namespace ns1 are in a replication link that is failed over from system A to system B. Tenant ten2 and its namespace ns2 are not in the failed-over replication link. Client requests for access to ns1 on system A, where the request URL specifies the name of the domain associated with net1, are redirected to system B. Because they come in on the same network, client requests for access to ns2 on system A, where the request URL specifies the domain name, are also redirected to the system B and, therefore, fail. For those requests to succeed, they need to access system A by using an IP address assigned to a node in net1 on that system instead of by using the domain name.

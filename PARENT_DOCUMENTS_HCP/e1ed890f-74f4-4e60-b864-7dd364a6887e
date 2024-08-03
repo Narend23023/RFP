@@ -1,0 +1,39 @@
+If the network is selected as the replication network, take one of these actions: On the replication Settings page, select a different network for replication. On the Networks page, click the gear icon next to the disabled network to display the network Settings panel. Then select the option to enable the network and click Update Settings.
+
+If the network is not assigned to any tenants, and is not used for replication, no action is required. You can use the Networks page to reconfigure, reenable, or delete the network at any time without affecting access to the HCP system. IP mode mismatch
+
+The system-level front-end network IP mode is Dual, but the [hcp_system] network is configured to use only IPv4 addresses or only IPv6 addresses. Submit a request to your authorized service provider to set the system-level IP mode and set the [hcp_system] network IP mode, to provide support only for the type(s) of IP address you want to configure for user-defined networks.
+
+Network has only one node IP address
+
+The network is degraded; that is, only one node has IP addresses defined for the network. A degraded network presents a single point of failure for clients accessing HCP over that network. Reconfigure the network to assign IP addresses to one or more additional nodes.
+
+Network is missing node IP addresses The network is a partial network; that is, at least two nodes have IP addresses defined for the network and at least one node does not. The load from client requests over a partial network is not fully distributed across the nodes in the HCP system. Reconfigure the network to assign IP addresses to all the nodes in the HCP system. Each node must have an IP address on each subnet defined for the network.
+
+Network not functioning properly
+
+The network is experiencing problems on one or more nodes. Possible causes for this warning condition alert include: The current MTU for the network on one or more nodes does not match the configured MTU. If the problem is with a user-defined network, restart the network. If that doesn’t resolve the problem, reboot the applicable nodes. If the problem persists, Contact your authorized HCP service provider. For the [hcp_system] network, the current speed of the network on one or more nodes does not match the configured speed. Contact your authorized HCP service
+
+provider. (This does not apply if the speed is set to auto.) For the [hcp_backend] network, the current speed of the network on one or more nodes is not the maximum speed possible for that network. Contact your authorized HCP service provider. Tenants page alerts
+
+Tenant page alerts are listed alphabetically by their hover text.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+207/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Degraded network assigned
+
+The tenant is associated with a degraded network for management or data access purposes. A degraded network presents a single point of failure for clients accessing the tenant or its namespaces over that network. Take one of these actions:
+
+On the Tenants page, reconfigure the affected tenant to use only networks that have IP addresses defined for at least two nodes in the HCP system. On the Networks page, reconfigure each degraded network to assign IP addresses to one or more additional nodes.
+
+Empty network assigned The tenant is associated with an empty network for management or data access purposes. If the management network is empty, the tenant cannot be accessed through the Tenant Management Console or HCP management API. If the data access network is empty, namespaces belonging to a tenant are inaccessible. Take one of these actions:
+
+On the Tenants page, reconfigure the affected tenant to use only networks that have IP addresses defined for at least two nodes in the HCP system. On the Networks page, configure each empty network to assign IP addresses to one or more nodes. Each node must have a separate IP address on each subnet defined for the network. Inaccessible due to network configuration
+
+The management and/or data access network specified for the tenant does not exist. If the management network does not exist, the tenant cannot be accessed through the Tenant Management Console or HCP management API. If the data access network does not exist, namespaces belonging to a tenant are inaccessible. This error can occur on an HCP system that’s a replication target when a network defined on a source system is not defined on the target system. For each undefined network, create a network with the name of the undefined network.

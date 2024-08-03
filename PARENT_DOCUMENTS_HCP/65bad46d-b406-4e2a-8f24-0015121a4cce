@@ -1,0 +1,37 @@
+Example: Preflighted request
+
+Here is an sample CORS preflighted request.
+
+The preflighted request comprises two exchanges: an HTTP OPTIONS request (preflight request) from a web browser in one domain to a server in another domain to determine whether the actual request is safe to send, followed by the actual request. Request headers (Preflight request)
+
+OPTIONS rest/file.txt HTTP/1.1 Host: finance.europe.hcp.example.com User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36 Access-Control-Request-Headers: Authorization Access-Control-Request-Method: GET Origin: http://lgreen.example.com Referer: http://lgreen.example.com/cors/rest.html Response headers (Preflight request)
+
+HTTP/1.1 200 OK Access-Control-Allow-Headers: Authorization Access-Control-Allow-Methods: GET, PUT, DELETE, POST, HEAD Access-Control-Allow-Origin: *
+
+Cache-Control: no-cache,no-store,must-revalidate Content-Length: 0 Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; connect-src 'self'; img-src 'self'; style-src 'sel f' 'unsafe-inline'; object-src 'self'; frame-ancestors 'self'; Date: Tue, 07 May 2019 14:45:08 GMT Expires: Thu, 01 Jan 1970 00:00:00 GMT Pragma: no-cache Strict-Transport-Security: max-age=31536000; includeSubDomains Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method X-Content-Type-Options: nosniff X-DNS-Prefetch-Control: off X-Download-Options: noopen X-Frame-Options: SAMEORIGIN X-XSS-Protection: 1; mode=block In this example, the first exchange is complete. The server evaluated the preflight request against the CORS rules configuration for the resource, and responded that it is acceptable for the browser to send the actual request parameters: a GET request to a bucket named finance for an object named rest/file.txt. Request headers (Actual request)
+
+GET rest/file.txt HTTP/1.1 Host:finance.europe.hcp.example.com User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36 Origin:http://lgreen.example.com
+
+Response headers (Actual request)
+
+HTTP/1.1 200 OK Access-Control-Allow-Credentials: true Access-Control-Allow-Origin: http://lgreen.example.com Access-Control-Expose-Headers: ETag
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+668/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response body (Actual request)
+
+[contents of the rest/file.txt object] Usage considerations
+
+This section of the Help contains considerations that apply to using the S3 compatible API.
+
+Hostname and IP address considerations
+
+In the URL you use to access HCP, you can specify either a hostname or an IP address. If the HCP system supports DNS and you specify a hostname, HCP selects the IP address for you from the currently available nodes. HCP uses a round-robin method to ensure that it doesn’t always select the same address.
+
+When you specify IP addresses, your application must take responsibility for balancing the load among nodes. Also, you risk trying to connect (or reconnect) to a node that is not available. However, in several cases using explicit IP addresses to connect to specific nodes can have advantages over using hostnames.

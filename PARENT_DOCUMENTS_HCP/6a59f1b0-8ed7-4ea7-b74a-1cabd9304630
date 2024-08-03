@@ -1,0 +1,69 @@
+The AD user account password.
+
+Here’s an example of an Authorization header for AD authentication:
+
+Authorization: AD lgreen@example.com:p4sswOrd
+
+Note: You cannot use AD authentication with S3 compatible requests to create a bucket.
+
+Presigned URLs
+
+To provide credentials for AWS authentication using a presigned URL, you append these query parameters to the request URL: AWSAccessKeyId=access-key Expires=expiration-time Signature=signature
+
+In these parameters:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+560/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+access-key
+
+The Base64-encoded username for your user account.
+
+expiration-time
+
+The time the request expires, in seconds since January 1, 1970, at 00:00:00 UTC. signature
+
+A value calculated using your secret key and specific elements of the S3 compatible request, including the date and time the request expires.
+
+If any part of a presigned URL is changed, the URL becomes invalid.
+
+Here’s an example of a presigned URL:
+
+https://finance.europe.hcp.example.com/quarterly_rpts/Q4_2019.ppt ?AWSAccessKeyId=bGdyZWVu&Expires=1363867332 &Signature=eY9lpX2KXRuW%2FrzLYU%2F5jXfjHj7%3D Signatures
+
+Third-party tools that are compatible with the S3 compatible API typically calculate request signatures automatically. Some of these tools can also be used to generate presigned URLs.
+
+If you’re writing your own application, you can use an AWS SDK to calculate request signatures. For information about these SDKs, see: http://docs.aws.amazon.com/AmazonS3/latest/dev/AuthUsingAcctOrUserCredentials.html
+
+For detailed information on calculating signatures for AWS authentication, see: http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html Anonymous access
+
+To request anonymous access to a bucket or object, you use the Authorization request header with the AWS authentication format. However, instead of providing credentials for a user account, you specify all_users in place of the access key and leave the signature blank, like this:
+
+Authorization: AWS all_users:
+
+The colon after all_users is required.
+
+Note: If the bucket you are trying to access is configured to support single sign-on with Active Directory (AD), anonymous requests to access that bucket or objects in that bucket fail. Invalid credentials
+
+Regardless of how the S3 compatible API is configured, if you provide invalid credentials, HCP returns an InvalidAccessKeyId or SignatureDoesNotMatch error code and does not perform the requested operation:
+
+InvalidAccessKeyId
+
+Indicates that the access key you provided does not correspond to a valid user name. SignatureDoesNotMatch
+
+Indicates that the signature does not match the content of the request. This can happen if the secret key used in the signature calculation does not correspond to the password for the account with the applicable user name but can also be due to other errors.
+
+Changing your password
+
+If you have an HCP user account, the password for the account is initially set by a tenant administrator. You can change this password at any time, as long as you have browse or read permission for at least one bucket. For security purposes, you should change your password as soon as possible after you receive your account information.
+
+Your password is used to calculate your secret key for use with the S3 compatible API. When you change your password, your secret key also changes. You can use a few different HCP interfaces to change your password, as long as you have access to those interfaces. When you change your password in one interface, it changes for all HCP interfaces to which you have access.
+
+The next procedure describes how to change your password using the Namespace Browser.
+
+1. Open a web browser window. 2. In the address field, enter the URL for a bucket for which the S3 compatible API requires user authentication and for which you have browse or read permission. Use this format: http[s]://bucket-name.tenant-name.hcp-domain-name/browser

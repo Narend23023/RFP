@@ -1,0 +1,171 @@
+814/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Namespace information URL
+
+To retrieve a namespace list: http[s]://namespace.tenant.domain/proc
+
+To retrieve settings for an individual namespace:
+
+http[s]://namespace.tenant.domain/proc?single=true
+
+To retrieve retention classes:
+
+http[s]://namespace.tenant.domain/proc/retentionClasses
+
+To retrieve permissions:
+
+http[s]://namespace.tenant.domain/proc/permissions
+
+To retrieve statistics: http[s]://namespace.tenant.domain/proc/statistics
+
+Response headers
+
+X-HCP-Time X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Status codes
+
+Success: 200
+
+Error: 400, 401, 403, 404, 414, 500, 503
+
+HEAD
+
+Checks existence of:
+
+Objects Versions
+
+Directories Annotations
+
+ACLs Retrieves metadata for:
+
+Objects
+
+Versions
+
+Permissions
+
+For all operations: read
+
+To check existence of ACLs: read or read ACL
+
+Elements
+
+For all operations:
+
+Authorization header Object, directory, or symbolic link URL
+
+To conditionally check the existence of an object or version, these headers:
+
+If-Match: etag-list If-None-Match: etag-list If-Modified-Since: datetime
+
+If-None-Modified-Since: datetime
+
+To check a specific version or the annotation for a specific version, this URL query parameter:
+
+version=version-id
+
+To check an annotation, these URL query parameters:
+
+type=custom-metadata
+
+annotation=annotation-name
+
+The annotation name is optional for the default annotation.
+
+To check ACLs, this URL query parameter: type=acl
+
+To include or exclude the X-HCP-Replicated header in the response, this header:
+
+X-HCP-Get-Replicated: true|false
+
+Response headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+815/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+General
+
+X-HCP-Time X-HCP-SoftwareVersion
+
+X-HCP-ServicedBySystem X-HCP-SymlinkTarget
+
+(if URL is a symbolic link)
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Objects, versions, directories, and annotations:
+
+X-HCP-ChangeTimeMilliseconds
+
+X-HCP-ChangeTimeString
+
+Objects, versions, and annotations: ETag
+
+Objects and versions:
+
+X-HCP-ACL
+
+X-HCP- CurrentStorageNode
+
+X-HCP-Custom-Metadata X-HCP-CustomMetadataAnnotations
+
+X-HCP-Domain X-HCP-DPL
+
+X-HCP-GID X-HCP-Hash
+
+(not returned for multipart objects)
+
+X-HCP-Index X-HCP-IngestProtocol
+
+X-HCP-IngestTime X-HCP-LabelRetentionHold
+
+X-HCP-LabelRetentionHold-Labels X-HCP-Owner X-HCP-Replicated X-HCP-Retention
+
+X-HCP-RetentionClass X-HCP-RetentionHold
+
+X-HCP-RetentionString X-HCP-Shred
+
+X-HCP-Size X-HCP-Type
+
+X-HCP-UID X-HCP-VersionID
+
+Directories:
+
+X-HCP-Type
+
+ACLs:
+
+X-HCP-ACL
+
+Status codes
+
+Success: 200, 204
+
+Error: 304, 400, 403, 404, 412, 414, 500, 503
+
+POST
+
+Changes one or more of these metadata values: Hold status Index setting
+
+Retention setting Shred setting
+
+Object owner
+
+Permissions
+
+For all operations: write
+
+For hold: privileged

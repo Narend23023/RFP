@@ -1,0 +1,61 @@
+ingestTimeString:[2012-03-01T00:00:00 TO *])
+
+Paged queries with object-based requests
+
+To use a paged query with object-based requests:
+
+In the first request, use a count entry with a value of zero to get a response that does not include any object records but contains a totalResults value that specifies the total number of objects that meet the query criteria. In each request after the first, optionally specify a count entry. If you omit the count entry, the result set includes at most 100 objects. After each request, check the value of the code property of the status entry to determine whether the result set contains the last object that meets the criteria:
+
+If the value is INCOMPLETE, more results remain. Request another page. If the value is COMPLETE, the result set includes the last object that meets the query criteria.
+
+Paged queries with 100,000 or fewer matching objects If no more than 100,000 objects match the query criteria, use the offset entry to page through the result set. In each request after the first one with a count value greater than 0, include an offset entry that specifies the number of results to skip when returning the next page of results. For example, if you specified a count value of 50 for your first request, specify an offset value of 50 for your second request.
+
+Paged queries with more than 100,000 matching objects
+
+If a large number of objects match the query criteria, a paged query can consume a large amount of memory. If more than 100,000 objects match the query criteria, limit memory use by using multiple paged queries. Each paged query should retrieve results for no more than 100,000 objects. To do this, use the changeTimeMilliseconds as the basis for generating the paged queries, as follows: 1. Issue a request with a count entry value of zero and a changeTimeMilliseconds criterion with a range from zero to some time in the past, such as this:
+
+<queryRequest>
+
+<object> <query>+changeTimeMilliseconds:[0 TO 1262304000000.00]
+
++retentionClass:hlthReg-107</query> <count>0</count>
+
+</object> </queryRequest>
+
+If the count property in the response is greater than 100,000, repeat this step with an earlier changeTimeMilliseconds end time until the count property in the response is no more than 100,000.
+
+2. Use a paged query with:
+
+A changeTimeMilliseconds criterion that specifies the same time as you used in the last request in step 1 A count entry value that specifies the number of objects you want per page An offset entry that you increment by the count value in each request
+
+For example, the request body for the third iteration of the paged query might look like this:
+
+<queryRequest> <object> <query>+changeTimeMilliseconds:[0 TO 1150000000000.00] +retentionClass:hlthReg-107</query>
+
+<sort>changeTimeMilliseconds</sort> <count>50</count>
+
+<offset>150</offset> </object> </queryRequest>
+
+Stop when the code property of the status entry in the response is COMPLETE.
+
+3. Repeat step 1 above using a changeTimeMilliseconds entry that specifies a range with start value equal to the end value of the changeTimeMilliseconds range you
+
+used in step 2.
+
+Use a curly opening brace for the range so that the last entry in the previous result set is not included in the new results. For example, use a changeTimeMilliseconds value like this:
+
+changeTimeMilliseconds:{1150000000000.00 TO 1341000000000.00]
+
+Then repeat step 2 using the new query criteria.
+
+4. Repeat step 3 until you retrieve the last matching object.
+
+Use a value of * (for an unlimited range) as the end of the changeTimeMilliseconds range in the last paged query to ensure that you retrieve all objects including those that were most recently added. Operation-based query requests
+
+The body of an operation-based query request consists of entries in XML or JSON format.
+
+XML request body for operation-based queries
+
+The XML request body for an operation-based query must contain a top-level queryRequest entry and, except when requesting all available information, an operation entry. All other entries are optional.
+
+The XML request body has the format shown below. Entries at each hierarchical level can be specified in any order:

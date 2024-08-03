@@ -1,0 +1,39 @@
+The description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+5. Click Next. 6. On the wizard HCP System Selection page:
+
+a. In the Number of HCP Systems field, select the number of systems to be included in the erasure coding topology. b. If you selected 4, 5, or 6 for the number of systems, for Topology Type, select Ring or Fully connected. c. In each numbered field in the HCP Systems section, select an HCP system to be included in the erasure coding topology:
+
+For a ring topology, the order of the systems in the numbered fields must correspond to the arrangement of the systems in the topology diagram displayed on the page, with your choice of system as number one. For a fully connected topology, the systems can be in any order in the numbered fields. If you don't see all the systems you want to include in the erasure coding topology, check that all required links exist and are healthy.
+
+In the process of creating the erasure coding topology, HCP may change which system is associated with each number. However, this change in no way affects the topology itself.
+
+7. Click Next. 8. On the wizard Link Selection page, for each pair of HCP systems connected by more than one replication link, select the link you want to include in the erasure coding topology. For each pair of systems connected by a single link, that link is automatically included in the erasure coding topology. These pairs on not listed on the Link Selection page.
+
+9. Click Next.
+
+10. On the wizard Settings page:
+
+a. For Distribution Method, select Chunk distribution or Full-copy distribution. b. In the Minimum Object or Object Part Size for Erasure Coding field, select the minimum size for objects and parts of multipart objects to be erasure coded. The options are 4 KB, 16 KB, 32 KB, 64 KB, 128 KB, 256 KB, 512 KB, and 1 MB.
+
+c. In the Erasure Coding Delay field, type the number of days after ingest that full copies of object or part data should be reduced to chunks.
+
+Valid values are integers in the range zero through 3,650.
+
+d. In the Restore Period field, type the number of days that full copies of object or part data should remain on the ingest after being restored from chunks due to a read
+
+operation. Valid values are integers in the range zero (no restore period) through 180.
+
+11. Click Next. 12. On the wizard Review page, review the erasure coding topology configuration.
+
+If the erasure coding topology configuration is what you want, click Finish. If the erasure coding topology configuration is not what you want, use the Previous button in the wizard to return to pages on which you want to make corrections. Alternatively, press Cancel to leave the wizard without creating the erasure coding topology. Considerations for specifying the tenants for an erasure coding topology
+
+These considerations apply to specifying the content for an erasure coding topology:
+
+When you add a tenant to an erasure coding topology, that tenant is automatically included on all the replication links in the underlying replication topology. Therefore, all the considerations that apply to adding a tenant to a replication link apply to adding a tenant to an erasure coding topology.
+
+An erasure coding topology can include at most one thousand tenants. You cannot add default-namespace directories to an erasure coding topology. You cannot add or remove tenants from a retiring or retired erasure coding topology. You can use the System Management Console for any system in an erasure coding topology to add tenants to that topology. You choose tenants to add to an erasure coding topology from a list of tenant candidates. This list includes only tenants for which all of these are true: Replication is enabled for the tenant. The tenant exists on at least one system in the topology. For at least one such system, either:
+
+The tenant is not on any links in which that system participates. The tenant is on one or more links in which that system participates, and each of those links is in an active, retiring, or retired topology.
+
+If, for every such system, the tenant is on one or more links that are not in an active, retiring, or retired topology, the tenant is not included in the candidate list. In this case, to have HCP include the tenant in the candidate list, for at least one of the systems, remove the tenant from all links not in an active, retiring, or retired topology.

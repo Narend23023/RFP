@@ -1,0 +1,81 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+X-HCP-Replicated: false
+X-HCP-ReplicationCollision: false
+X-HCP-ChangeTimeMilliseconds: 1335347627362.00
+X-HCP-ChangeTimeString: 2012-04-25T05:53:47-0400
+Last-Modified: Wed, 25 Apr 2012 09:53:47 GMT
+Response body: The first 10,000 bytes of the contents of status27.txt
+Deleting an object or object versions and using privileged delete
+You use the HTTP DELETE method to delete an object. If versioning is enabled for a bucket, you can delete old versions of objects.
+To delete a specific version of an object, you use a version ID or timestamp. To delete a range of versions of an object, you specify starting and ending version IDs or timestamps.
+The result of an object or version deletion is a delete marker or delete record. A delete marker is an indicator that a version of an object has been deleted. A delete marker has a
+version ID but does not have any data or metadata.
+Similar to purging an object, you can use a version ID or timestamp range to delete all versions of an object. However, purging an object does not result in delete markers.
+If an object is under retention or on hold, you can delete it only if the namespace is configured to allow privileged operations and you have the necessary permissions. Privileged
+operations require you to provide a reason for the deletion.
+Tip: If an object is not under retention, you can use a privileged delete operation to specify a reason for the deletion. Although the object is not under retention, the namespace must
+still support privileged operations, and you need privileged permission.
+Using the DELETE method with a symbolic link deletes the link, not the target object.
+Access permission
+To delete an object, you need delete permission.
+To perform a privileged delete, even if the object is not under retention, you also need privileged permission.
+Request header
+DELETE /rest/directory/file HTTP/1.1
+The DELETE request to delete an object has these elements:
+If you’re accessing the namespace as an authenticated user, an Authorization header
+The URL of the object or symbolic link<br>
+                       <b>Bounding box:</b> x1=185, y1=1023, x2=1516, y2=1973
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>version</td>
+      <td>No</td>
+      <td>One of:\nSpecific version number of the file. For example:\n?version=80232998058817\nRange of version IDs, separated by a dash. For\nexample:\n?version=91728994618369-91728994618372\nRange of create timestamps, separated by a dash.\nFor example:\n?version=@1493911519817-@1493911519817\nwhich provides all versions of an object. 0-,\nThese rules apply to the query parameter: version\nIf you omit the parameter, HCP checks the\nexistence of the current version of an object.\nIf you specify a valid range, HCP returns the\nrequested amount of data with a status code of\n200.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>privileged</td>
+      <td>No</td>
+      <td>To perform a privileged delete, the request must specify\nboth and URL query parameters privileged reason\nFor example:\n?privileged=true&amp;reason=reason-text</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>reason</td>
+      <td>Yes, if is used privileged</td>
+      <td>Use percent-encode characters in the parameter reason\nthat have special meanings in URLs.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

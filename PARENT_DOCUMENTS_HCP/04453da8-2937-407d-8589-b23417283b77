@@ -1,0 +1,65 @@
+node and HCP associates a volume with that node, HCP has no access to the share for that volume.
+
+If you use node IP addresses to identify the HCP system and you subsequently change any of those IP addresses in the [hcp_system] network, you need to update the export specification for the share with the new addresses. Then you need to export the share again.
+
+The method you use to export the shares and the export options you specify depend on the type of storage device for which you want to create an NFS storage component. Minimally, the exported share must allow read and write access by the HCP system. The following information on exporting shares on Linux systems is included for explanatory purposes only. The extended storage devices that are represented by NFS storage components should be enterprise-class, purpose-built appliances. The storage volumes that are accessed using NFS mount points should be on storage that’s RAID-protected,
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+47/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+secure, and monitored closely for its health.
+
+The extended devices that are represented by the NFS storage component must support the Linux file naming scheme. When using a non-Linux OS, you need to reconfigure mapping on the NFS storage device.
+
+On Linux systems, you specify the shares to be exported in the /etc/exports file. To ensure that HCP correctly uses the NFS volumes that you make available to it, the specification of each exported share must minimally include these options: rw,sync,no_wdelay
+
+For example, to export the share named /hcp_shares/share1 to the HCP system with the domain name hcp.example.com, you would add this line to the /etc/exports file:
+
+/hcp_shares/share1 admin.hcp.example.com(rw,sync,no_wdelay)
+
+The export options in each line in the /etc/exports file must directly follow the system identifier with no space between them.
+
+After you’ve specified the shares to exported, you use this command to export them: exportfs -a
+
+For information about how to export shares on non-Linux storage devices, see the device-specific documentation.
+
+Required NFS storage component configuration settings
+
+To enable HCP to access the storage that’s represented by an NFS storage component, when you create that component, you specify the following information:
+
+The IP address or hostname that HCP needs to use to connect to the physical storage device on which you want to access storage volumes using NFS mount points.
+
+The mount command options that you want HCP to use when it creates NFS mount points to access NFS shares on the device that’s represented by the component.
+
+To ensure that NFS volumes are mounted correctly, HCP always uses these options to the mount command: rw,sync,soft,nodev,nfsvers=3
+
+HCP uses the options that you specify in addition to the above options. The additional options that you can specify are:
+
+lookupcache=none
+
+noatime nodiratime
+
+nosuid port=n retrans=n
+
+rsize=n tcp
+
+proto=tcp6 timeo=n wsize=n
+
+Other mount command options are not supported.
+
+If the [hcp_system] network is currently configured to use both IPv4 and IPv6 addresses, you need to specify tcp or proto=tcp6 to indicate which type of IP address you want
+
+HCP to use to connect to the NFS storage component.
+
+The full pathname of each directory that you want to access using an NFS mount point.
+
+Note: At any given time, a mount point can be associated with only one NFS storage component.
+
+By default, the Add Component wizard displays a list of the existing mount points that HCP is able to access using the specified user account credentials, but the wizard does not display the controls required to specify the pathname for an existing NFS share. To specify a directory that does not appear in the list, you need to click Mount Point
+
+Actions, then specify the full path name of the directory for which you want to create an NFS mount point.

@@ -1,0 +1,33 @@
+name/statistics resource. This value is the total amount of storage, in bytes, occupied by chunks for erasure-coded objects in all the tenant's namespaces.
+
+2. Add together the numbers of bytes occupied by chunks for erasure coded objects for all the tenants. The total is the number of bytes occupied by chunks for all erasure-
+
+coded objects on the system.
+
+3. Multiply the total number of bytes by the number of data chunks in the topology protection level. The result is an estimate of the required amount of storage, in bytes. Also before retiring an erasure coding topology, if you don't want chunks for objects in a namespace restored to full copies of the object data on a given system, ensure that, on that system, the namespace is already associated with a service plan that keeps all objects in the namespace on a metadata-only storage tier. That way, chunks are not unnecessarily restored to full copies on systems where the objects should be metadata-only.
+
+As the Geo-distributed Erasure Coding service on a system processes the chunks for a retiring erasure coding topology, the number of erasure-coded objects for that topology on that system decreases. When that number reaches zero on all the systems in the topology, the state of the topology changes to retired.
+
+For any given system in an erasure coding topology, you can use the erasure coding topology details page in the HCP System Management Console to monitor the count of erasure-coded objects for that topology on that system. You can also view counts of erasure-coded objects for all active and retiring erasure coding topologies:
+
+The storage Overview page shows the total number of erasure-coded objects currently stored on the system. The tenant Overview panel shows the total number of erasure-coded objects in all the tenant's namespaces.
+
+These counts are not specific to an erasure coding topology. If an active erasure coding topology exists, these numbers do not go down to zero when an erasure coding topology has finished retiring.
+
+Chargeback reports also contain erasure-coded object counts for the system, tenants, and, if you have administrative access to a tenant, the namespaces owned by that tenant.
+
+Erasure coding topology replacement You cannot add or remove HCP systems in an erasure coding topology. You also cannot add, remove, or replace replication links in an erasure coding topology. If you want to change a topology in any of these ways, you need to retire the topology and create a new one to replace it.
+
+After you retire an erasure coding topology, you cannot make it active again. If you inadvertently retire a topology, you can replace it with a new topology that includes the same systems and links.
+
+To replace a system in an active erasure coding topology, you don't need to create a new topology. Instead, you use the procedure for replacing a failed system. At the end of this procedure, replication restarts with the replacement system, and the replacement system receives full copies of object data or chunks for objects, as determined by the erasure coding topology. Note: To replace a system in an active erasure coding topology with a system that has a different domain name or different IP addresses, you need to reconfigure the replication links that connect other systems in the topology to the system you're replacing. When reconfiguring the links, ensure that they all connect to the same replacement system. If the links connect to different systems, the erasure coding topology will no longer be functional.
+
+Erasure coding topology replacement process
+
+When replacing an erasure coding topology, you don't need to wait for the old topology to finish retiring before you create the new topology. During the replacement process, the Geo-distributed Erasure Coding service on each system in the retiring topology determines what to do with each object affected by that topology based on: The current state of the object on the system (full copy or chunk). The state the object should be in with the new topology. (Until you create the new topology, the object is subject to whole-object protection.)
+
+The requirement that the object always be protected against a single system failure.
+
+During the topology replacement process, the Geo-distributed Erasure Coding service on any given system in the retiring topology can take any of these actions on an object:
+
+If the system is part of the new topology:

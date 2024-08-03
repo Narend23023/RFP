@@ -1,0 +1,139 @@
+"name":content-property-name, "type":data-type,
+
+"multivalued":true|false, "format":data-format, } Additional content properties
+
+}], The facets entry below is included only if the request included a facets entry.
+
+"facets":{
+
+One or more of the following facet entries depending on the properties specified in the facets request entry:
+
+"facet":[{ "property":"hold",
+
+"frequency":[{ "value":"true", "count:object-count }, {
+
+"value":"false", "count":object-count
+
+}] }, {
+
+"property":"namespace", "frequency":[{
+
+"value":"namespace-name.tenant-name", "count":object-count
+
+Up to 99 additional value properties
+
+}] }, {
+
+"property":"retentionClass", "frequency":[{
+
+"value":"retention-class-name", "count":object-count
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+856/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Up to 99 additional value properties
+
+}] }, { "property":"retention", "frequency":[{
+
+"value":"initialUnspecified",
+
+"count":object-count },{
+
+"value":"neverDeletable", "count":object-count
+
+},{ "value":"expired",
+
+"count":object-count },{
+
+"value":"not expired", "count":object-count
+
+] Zero or more of the following facet entries depending
+
+on whether the number of defined content properties in the facets request entry.
+
+},{ property:"content--property-name",
+
+frequency:[{ count:"object-count", value:"value-or-facet-range"
+
+},{ Up to 99 additional range frequency entries
+
+} }]
+
+}] }
+
+}
+
+JSON response body for operation-based queries
+
+A JSON response for an operation-based query has this format:
+
+{
+
+"queryResult":{
+
+"query":{ "end":end-time-in-milliseconds,
+
+"start":start-time-in-milliseconds },
+
+"resultSet":[{ {
+
+"urlName":"object-url", "operation":"operation-type",
+
+"changeTimeMilliseconds":"change-time-in-milliseconds.index", "version":version-id,
+
+Additional properties if specified in the objectProperties request entry or if the verbose request entry specifies true }, Additional object entries
+
+}], "status":{
+
+"results":returned-record-count, "message":"",
+
+"code":"COMPLETE|INCOMPLETE"
+
+} }
+
+}
+
+Response body contents
+
+Both XML and JSON have a single top-level queryResult entry. The queryResult entry contains one of each of the entries listed in the list below. query
+
+For object-based queries, a container for the query expression.
+
+For operation-based queries, a specification of the time period that the query covers. The results include only operation records for objects with change times during this
+
+period.
+
+resultSet
+
+A container for the set of object entries representing the objects or operation records that match the query. status
+
+Information about the response, including the number of returned records and whether the response completes the query results.
+
+contentProperties
+
+(object-based queries only) For queries that contained a contentProperties entry with a value of true, a list of the available content properties. facets
+
+(object-based queries only)
+
+Summary information about property values that appear in the result set. This entry is returned only if the query request included the facets entry.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+857/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+query entry
+
+The query entry contains the entry and properties described in the list below. expression
+
+(entry, object-based queries only) A container for value of the query request entry.
+
+start

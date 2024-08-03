@@ -1,0 +1,63 @@
+Request headers
+
+PUT /AcctgBestPractices.doc?acl HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000
+
+Authorization: AWS bGdyZWVu:C8KpGuK62B7j2US0kN0Bl0Wx48k= x-amz-acl: public-read
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+615/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response headers HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Length: 0
+
+Example: Adding an ACL to an object by using an ACL request body
+
+Here’s a sample PUT request that uses an ACL request body to add an ACL to the object named mktg/budget_proposals/BudgProp-2020. The ACL grants read access to all authenticated users and full control user pblack. It makes no change to the object owner. The ACL request body is in a file named acl-3.xml. Request body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <AccessControlList> <Grant> <Grantee xsi:type="Group" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <URI>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</URI> </Grantee> <Permission>READ</Permission> </Grant> <Grant> <Grantee xsi:type="CanonicalUser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <ID>b9d39144-a081-4761-b0e8-b8fb51e10192</ID> <DisplayName>pblack</DisplayName> </Grantee> <Permission>FULL_CONTROL</Permission> </Grant> </AccessControlList> </AccessControlPolicy>
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put=acl-3.xml -- -k "https://finance.europe.hcp.example.com/mktg/budget_proposals/
+
+BudgProp-2020?acl"
+
+Request headers
+
+PUT /mktg/budget_proposals/BudgProp-2020?acl HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:mRqVstjwWxvfEFr8JajjrPcd8eY= Content-Length: 632
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Date: Fri, 07 February 2020 17:19:26 GMT Content-Length: 0
+
+Retrieving the ACL for an object
+
+You use the HTTP GET method with the acl query parameter to retrieve the ACL for an object. To retrieve the ACL for an object, you need read ACL permission for the bucket containing the object or for the object itself.
+
+The object ACL is returned in an XML response body. The format of the response body is the same as the format you use for the ACL request body when you add an ACL to a bucket. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to retrieve an object ACL has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /object-name?acl HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name/object-name?acl HTTP/1.1
+
+The acl query parameter is not case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to add an ACL to an object. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date

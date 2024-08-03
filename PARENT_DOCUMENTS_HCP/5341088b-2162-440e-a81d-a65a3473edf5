@@ -1,0 +1,93 @@
+system-level users. For operation-based queries, the Authorization header or hcp-ns-auth cookie specifies credentials for a tenant-level user, but the query specifies a namespace for which that user account does not have search permission. For operation-based queries, the Authorization header or hcp-ns-auth cookie specifies credentials for a system-level user account that is configured to allow use of the metadata query API and the URL specifies admin, but the request body specifies a namespace in a tenant that has not granted administrative access to system-level users. The tenant specified in the URL does not exist.
+
+If more information about the error is available, the response includes the HCP-specific X-HCP-ErrorMess age HTTP header.
+
+406 Not Acceptable
+
+One of:
+
+The request does not have an Accept header, or the Accept header does not specify application/xml or application/json.
+
+The request has an Accept-Encoding header that does not specify gzip or *.
+
+413
+
+Request Entity Too Large
+
+Request body exceeds the 8k limit.
+
+415
+
+Unsupported Media Type One of:
+
+The request does not have a Content-Type header, or the Content-Type header does not specify application/xml or application/json. The request has a Content-Encoding header with a value other than gzip.
+
+500
+
+Internal Server Error
+
+An internal error occurred. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error happens repeatedly, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or
+
+upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+HTTP response headers
+
+The response to a valid query request includes a Transfer-Encoding header with a value of chunked and an Expires header with a value of Thu, 01 Jan 1970 00:00:00 GMT.
+
+If the query request specifies a gzip-compressed response, the response includes a Content-Encoding header with a value of gzip.
+
+If HCP can provide additional information about an invalid query request, the response has an X-HCP-ErrorMessage header describing the error. Examples
+
+This chapter contains examples of both object-based and operation-based queries. The examples show some of the ways you can use the metadata query API to get information about namespace content.
+
+Object-based query examples
+
+This section contains examples of object-based queries.
+
+Example: Querying for custom metadata content
+
+Here’s a sample metadata query API request that retrieves metadata for all objects that:
+
+Are in namespaces owned by the europe tenant Have custom metadata that contains an element named department with a value of Accounting
+
+The query uses an XML request body and requests results in JSON format.
+
+In addition to the basic information about the objects in the result set, this request returns the shred and retention settings for each object in the result set. The request also specifies that objects in the result set be listed in reverse chronological order based on change time.
+
+Request body in the XML file named Accounting.xml <queryRequest>
+
+<object> <query>customMetadataContent:
+
+"department.Accounting.department" </query>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+860/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<objectProperties>shred,retention</objectProperties>
+
+<sort>changeTimeMilliseconds+desc</sort> </object> </queryRequest>
+
+Request with cURL command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "Content-Type: application/xml" -H "Accept: application/json" -d @Accounting.xml "https://europe.hcp.example.com/query?prettyprint"
+
+Request in Python using PycURL
+
+import pycurl import os curl = pycurl.Curl()
+
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint")

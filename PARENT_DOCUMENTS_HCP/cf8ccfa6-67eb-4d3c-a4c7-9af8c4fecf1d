@@ -1,0 +1,33 @@
+If you specify IP addresses for one or more nodes, they must be IP addresses in the network that’s selected for replication on the other system.
+
+Note: If you specify a domain name, the system where you’re creating the link transmits data to all storage nodes in the other system. If you specify IP addresses, the system where you’re creating the link transmits data to only those nodes. Therefore, you should specify IP addresses only if you have a compelling reason to do so (for example, HCP is not using DNS, or you need to reduce the processing load on some number of nodes). (Optional) To specify a different port for the other system to listen on or to specify network address translation (NAT) information for the system where you’re creating
+
+the link, click Advanced Configuration. Then, in the Advanced Configuration section, as applicable: In the Remote Port field, type the number of the port on which the other system will listen for data from the system where you’re creating the link. The default port is 5748. Typically, you specify a different port only if other port usage makes using a different port necessary. If the system where you’re creating the link uses NAT for communication with the other system, specify the target for data transmissions from the other system:
+
+In the Local Hostname or IP Addresses field, type either the name of the domain associated with the network that’s selected for replication on the system where you’re creating the link (as that name is known to the other system) or one or more comma-separated IP addresses of storage nodes in that network (as those addresses are known to the other system). For the domain name, use either of these formats: replication.hcp-domain-name
+
+replication.admin.hcp-domain-name
+
+Make sure the other system can resolve the domain name you specify.
+
+Note: The other system will transmit data only to the nodes identified by the domain name or IP addresses you specify. Therefore, if you’re using IP addresses, you should specify the addresses of all the storage nodes in the system. In the Local Port field, type the number of the port on which the system where you’re creating the link will listen for data from the other system. This is the port that’s exposed to the other system. Note: For network configurations that use NAT, multiple IP addresses must be configured to expose the HCP nodes. You cannot use multiple ports on the same IP address.
+
+8. Click Next. 9. On the wizard Review page, review the link configuration.
+
+10. If the link configuration is what you want, click Finish to create the link.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+341/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If the link configuration is not what you want, use the Previous button in the wizard to return to pages on which you want to make corrections. Alternatively, press Cancel to leave the wizard without creating the link. Tip: If HCP cannot create the configured link, check that the other system is healthy and that you’ve correctly shared SSL server certificates between the two systems.
+
+Considerations for specifying link content
+
+These considerations apply to specifying the content for replication links:
+
+The content for a replication link (that is, what is replicated on the link) consists of any number of: HCP tenants HCP namespaces Directories defined in the default namespace For active/passive links only, chained links

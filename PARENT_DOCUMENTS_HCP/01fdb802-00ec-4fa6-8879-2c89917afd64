@@ -1,0 +1,73 @@
+HCP management API for creating and managing tenants
+
+HCP metadata query API for querying the default namespace Search Console to search in the default namespace
+
+Note: System-level user and group accounts do not control access to stored data and metadata other than through the metadata query API and Search Console. User accounts
+
+An HCP user account is a set of credentials that gives a user access to one or more of the interfaces listed above. You create and manage user accounts in the HCP System
+
+Management Console.
+
+When you create a user account, you specify a username and password. You also associate roles with the account and specify whether the user credentials are authenticated
+
+locally or by RADIUS. Additionally, for locally authenticated users, you specify whether the account password must be changed the next time the account is used to access one of the Consoles.
+
+You can enable and disable user accounts, as needed. While an account is disabled, it cannot be used to access any of the applicable interfaces. You might decide to disable an
+
+account, for example, while the user for whom you created it is on vacation.
+
+Multiple people can use the same user account concurrently for the same or different interfaces. To prevent this from happening, you should create a separate account for each user, and users should keep their passwords confidential.
+
+An HCP system can have at most 200 system-level user accounts. Group accounts
+
+An HCP group account is a representation of an Active Directory group. The group account enables AD users in the AD group to access one or more of the interfaces listed above.
+
+You create and manage group accounts in the HCP System Management Console.
+
+When you create a group account, you associate roles with it. When an AD user accesses HCP, that user has all the roles associated with all the group accounts that correspond to AD groups to which the user belongs.
+
+An HCP system can have at most 100 system-level group accounts.
+
+Roles and permissions
+
+A role is a named collection of permissions that are granted to a user either through an HCP user account or through one or more HCP group accounts. Each permission in a role lets the user perform some specific interaction or set of interactions with the HCP system. Roles generally correspond to job functions.
+
+You can associate any number of roles with a user or group account. The account user then has all the permissions granted by each of those roles.
+
+Before associating roles with a user or group account, make sure the permissions granted by those roles are consistent with the job functions of the user or group of users for whom
+
+you’re creating the account.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+15/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: An AD user can be added to an AD group while that user is using the System Management Console. If the AD group corresponds to an existing HCP group account, the user may
+
+not automatically get the roles associated with that group account for up to eight hours. To get the roles immediately, the user needs to log out of the System Management Console
+
+and then log back in. If the user is also currently using the Tenant Management Console or Namespace Browser, logging out of either of those interfaces has the same effect.
+
+Alternatively, you can force the roles to be recognized immediately by clearing the AD cache. Available roles
+
+The roles that you can associate with a user or group account are:
+
+Monitor
+
+Grants permission to use the System Management Console to view the HCP system status and most aspects of the system configuration, including tenant configurations. The monitor role also grants read-only permission to view user and group accounts. Administrator
+
+Grants permission to use the System Management Console to view the HCP system status, perform most system configuration activities, create and manage tenants, and
+
+download the HCP internal logs. The administrator role also grants read-only permission to view user and group accounts. The administrator role does not grant permission to configure user or group accounts. Security
+
+Grants permission to use the System Management Console to view the HCP system status, create and manage user accounts, configure remote authentication, modify
+
+system security settings, configure syslog and SNMP logging and email notification, and view security events in the system log.
+
+Compliance
+
+Grants permission to use the Tenant Management Console to work with retention classes and retention-related settings and perform privileged deletes, as well as to use the

@@ -1,0 +1,53 @@
+You also might clear the cache if a domain is added to or removed from the AD forest. This forces an immediate update to the list of allowable domains on the HCP login pages.
+
+You use the Active Directory page in the HCP System Management Console to clear the AD cache. To display this page, in the top-level menu of the System Management Console, select Security > Authentication.
+
+Note: To view the Active Directory page and clear the AD cache, you need the security role.
+
+To clear the AD cache, on the Active Directory page:
+
+1. If support for AD is not currently enabled: a. Select Active Directory. b. Select Enable Active Directory.
+
+2. Click Clear Cache.
+
+Configuring connections to RADIUS servers
+
+For RADIUS authentication of an HCP user account, the HCP system must have network access to one or more RADIUS servers. To enable HCP to communicate with RADIUS, each RADIUS server must have at least one IPv4 or IPv6 address that is routable from the [hcp_system] network. To add and manage connections to one or more RADIUS servers, you use the RADIUS page in the HCP System Management Console. To display this page, in the top-level menu, select Security > RADIUS.
+
+Note: To add, view, test, and manage connections to RADIUS servers, you need the security role.
+
+Understanding the RADIUS server list
+
+The RADIUS page lists the currently configured RADIUS servers. For each server, the page shows:
+
+The relative order in which HCP contacts the server. The hostname of the RADIUS server or the IPv4 or IPv6 address that HCP uses to communicate with the RADIUS server. The number of the UDP port on which the RADIUS server listens for authentication requests from HCP. The protocol the RADIUS server uses to authenticate users.
+
+HCP does not limit the number of servers you can add to this list.
+
+Adding a RADIUS server
+
+To add a RADIUS server for remote authentication:
+
+1. On the RADIUS page in the System Management Console, click Add RADIUS Server.
+
+2. In the Add RADIUS Server panel:
+
+In the RADIUS Host field, type the host name of the RADIUS server or the IP address that HCP uses to communicate with the RADIUS server.
+
+If you specify the RADIUS server host name, then at least one IPv4 or IPv6 address assigned to the RADIUS server must be routable from the [hcp_system] network.
+
+If you specify an IPv4 or IPv6 address assigned to the RADIUS server, then that IP address must be routable from the [hcp_system] network. Optionally, if a RADIUS server has multiple IP addresses that are routable from the [hcp_system] network, you can configure multiple RADIUS server list entries for that server — one list entry for each routable IP address.
+
+In the Port field, type the number of the UDP port on which the RADIUS server listens for authentication requests from HCP. Typically, this is port number 1812. In the Shared Secret field, type the text string that serves as a password for communications between HCP and the RADIUS server. The text string can contain any characters, including white space, and can be any length. In the Retries field, type the number of times HCP should try again to contact the RADIUS server before giving up. Valid values are integers greater than or equal to zero. In the Timeout field, type the number of seconds HCP should wait for a response from the RADIUS server before retrying the request. Valid values are integers greater than or equal to zero. A value of 0 tells HCP to wait indefinitely. For Protocol, select the protocol the RADIUS server uses to authenticate users.
+
+3. Click Add RADIUS Server.
+
+Tip: After adding a RADIUS server, test the connection to it.
+
+Testing the connection to a RADIUS server
+
+You test the connection to a RADIUS server by sending the server a username and password it knows about. HCP indicates that the test was successful if all of these conditions apply:
+
+The connection information is correct. The RADIUS server is running. The specified user name and password are known to the RADIUS server. If any of these conditions don’t apply, HCP indicates that the test failed.
+
+Note: A successful test does not log the user in.

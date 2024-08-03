@@ -1,0 +1,87 @@
+Each level of mapping that ultimately associates the file system with one or more low-level block devices Some device diagnostic information, if available. For example, for configurations that include SSDs, the SSD expected write life remaining. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+34/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Additional RAID-specific information, if available
+
+Additionally, for HCP with SAN-attached storage systems, the details include this information for each low-level block device: vendor, array type, serial number, device number, and worldwide port number.
+
+Note: For HCP with SAN-attached storage systems that also have internal storage, the number of file systems includes those located on the internal drives.
+
+For HCP with SAN-attached storage systems, if multipathing is degraded, one or more of the low-level block devices will be missing from the display details. IPMI information
+
+Intelligent Platform Management Interface (IPMI) is a specification that defines a method of monitoring the internal hardware components of a server. If IPMI is implemented on a
+
+node, sensors in that node can detect abnormal conditions such as a high fan speed or a failed power supply.
+
+The IPMI data that’s displayed on the Storage Node page for a given node is organized by sensor type. The list of sensors that you see for each sensor type depends on the specific IPMI implementation.
+
+The details displayed, by sensor type, are:
+
+Temperatures
+
+For each temperature sensor, the current temperature reading, and for some sensors, the normal range for the temperature.
+
+Power Supplies
+
+For each power supply sensor, a text string read from the applicable power supply. If only one power supply is working, this section displays the message, No redundancy. Fans
+
+For each fan sensor, the current fan speed.
+
+Processors
+
+For each processor sensor, a text string giving the status of the applicable processor.
+
+Voltages
+
+For each voltage sensor, the current voltage reading.
+
+Note: For fans and power supplies in CB 320 server chassis, IPMI information appears on the Hardware page. Nodes that are individual blades do not have their own fans and power supplies.
+
+HCP does not report IPMI information for nodes in HCP VM systems.
+
+Network interface cards (NICs)
+
+Each HCP node has two pairs of bonded ports:
+
+One pair of ports is used for connecting to the front-end networks, including the [hcp_system] network and all user-defined networks. These ports share all front-end network
+
+IPv4 and IPv6 addresses assigned to the node.
+
+One pair of ports is used for connecting to the back-end network. These ports share the back-end IP address assigned to the node.
+
+The name assigned to each front-end and back-end port includes the NIC port number (for example, eth0 and eth1). By default, HCP uses the lower-numbered port in each bonded pair. If the lower-numbered port for a network fails, HCP automatically switches to the other port in the pair.
+
+Optionally, depending on your HCP system hardware configuration, an HCP node may have an extra port connected to the management network. The name assigned to the
+
+management port is eth4. On the Storage Node page for a given node, the Console displays information about each of the NICs in the node. The NIC information is organized by network. For each port
+
+assigned to a network, the Console displays these details:
+
+Interface
+
+The name assigned to the port.
+
+Active
+
+An indication of whether the port is available for use. Possible values are true and false. Duplex
+
+An indication of whether the port is full-duplex (full) or half-duplex (half).
+
+Active in Bond
+
+An indication of whether the port is currently the one being used. Possible values are true, false, and N/A.
+
+Speed
+
+The current rate of data transmission through the port.
+
+Maximum Supported Speed The maximum supported rate of data transmission for the port.
+
+File system status
+
+Each node in an HCP system has multiple file systems on its primary storage. At installation time, a fixed amount of space and a fixed number of inodes are allocated to each of

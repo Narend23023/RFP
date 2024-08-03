@@ -1,0 +1,81 @@
+You can also monitor your HCP system by checking the object count on the Overview page. The page contains a graph that shows the total number of objects that
+
+were stored in the repository during the past 30 days out of a maximum storage capacity.
+
+Configuring the system time
+
+HCP can be configured to maintain the system time internally or to synchronize the system time to one or more external time servers. In the latter case, if either of the following
+
+events occurs, the HCP system restarts automatically:
+
+The time on the time server is changed by more than 1,000 seconds. The HCP system starts using a new time server whose time differs from the original time server by more than 1,000 seconds.
+
+Note: Changing the system time restarts the HCP system automatically, which makes system data unavailable for several minutes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+27/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+1. On the Configuration menu, click Time.
+
+The Time Settings dialog box appears.
+
+2. Perform one of the following steps:
+
+To configure the HCP system to use an external time server, enter the server's hostname or IP address in the Time Servers field. If specifying more than one time server, separate each one with a comma.
+
+To configure the HCP system to use an internal time server, enter the current time in the Current Time field, and then use the Time Zone drop-down list to select the
+
+time zone with which the current time will be associated. 3. Click Update Settings.
+
+Shutting down or restarting HCP
+
+Shutting down HCP means shutting down the system and powering off the nodes. After shutting down HCP, you need to manually power the nodes back on to start it again.
+
+Restarting HCP means shutting down and restarting the system without powering off the nodes.
+
+While HCP is shut down or in the process of restarting, clients have no access to the data in it, and the System Management Console is unavailable.
+
+Under normal operating conditions, you don’t need to shut down or restart HCP. However, situations where shutting down the system may be appropriate include:
+
+You are physically moving the HCP system to another location and need to shut it down first.
+
+You need to perform maintenance on the HCP power sources.
+
+When you shut down or restart the HCP system, you are required to specify a reason for the action. Important: Restarting HCP without shutting it down is very rarely necessary. If you believe you need to take this action, contact your authorized HCP service provider before you do so.
+
+To shut down or restart the HCP system, you need the administrator or service role.
+
+Shutting down HCP
+
+When you shut down HCP, the hardware configuration determines whether the nodes power off automatically. To complete the action, you may need to power off each node
+
+manually after shutting down the system.
+
+To ensure that HCP has enough time to shut down cleanly, wait a few minutes before powering nodes off manually. If a node is connected to a console, the console displays System halted when you can safely power off the node. Important:
+
+If you shut down HCP while objects are being stored, the repository may then contain incomplete objects. Therefore, if possible, before shutting down HCP, you should notify all
+
+tenant administrators about the upcoming shutdown. The tenant administrators can then notify namespace users to suspend all client activity before the shutdown occurs.
+
+If you take an entire HCP with SAN-attached storage system offline, including the storage system, you need to power the storage system and, if applicable, the Fibre Channel
+
+switches back on before powering on the nodes.
+
+To shut down or restart the HCP system, you need the administrator or service role.
+
+1. In the top-level menu of the System Management Console, click Hardware.
+
+2. At the top of the Hardware page, click Shut Down. The Shut Down System window appears.
+
+3. In the Reason field, type the reason why you’re shutting down the system. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including
+
+white space.
+
+4. Click Shut Down System.
+
+The nodes shut down HCP and, if possible, power off.

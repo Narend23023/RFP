@@ -1,0 +1,49 @@
+Replication link has autopaused tenants
+
+HCP has automatically paused replication of one or more HCP tenants. For each tenant, correct the situation that caused replication to be paused. Then resume replication of the tenant.
+
+Replication link pending
+
+Either the system has sent a request for a replication link to another system and is waiting for a response, or the system has received a request for a replication link and has not yet responded.
+
+Replication link stalled
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+364/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Replication has unexpectedly stopped on a replication link. Check the network connection between the two systems involved in the link. If the connection appears to be
+
+working properly, contact your authorized HCP service provider for help.
+
+Replication links shut down
+
+All replication links in which this system is involved are shut down. No replication or recovery activity is occurring on these links, and the links cannot be used for read-from- remote or object-repair purposes.
+
+Time out of sync between replicating systems
+
+The system time on this system is more than one minute out of sync with the system time on one or more other systems with which this system participates in a replication link. The recommended practice is to have all HCP systems in a replication topology use the same external time server.
+
+Managing replication To help manage the load on an HCP system and the replication network, you can control the performance level for send activity on each replication link in which the system participates. You can use a schedule to change the performance level for a link automatically at specific times on a weekly basis. Alternatively, you can choose a single performance level for the entire week.
+
+Occasionally, you may need to temporarily stop all send activity on an individual link. Or, you may want to temporarily stop send activity only for particular tenants.
+
+Rarely, you may need to stop all activity on all links in which the HCP system participates. This action stops not only replication and recovery but also read and repair from remote systems. It also prevents you from changing which items are included on the links.
+
+If the HCP system uses virtual networking, you can select the network to use for communications through any replication link. You typically do this only once. You can control whether the HCP system allows DNS failover to other systems in the replication topology. Disallowing DNS failover prevents the system from servicing requests redirected from remote systems regardless of whether this is allowed by the targeted namespace.
+
+You can configure an HCP system to automatically share its domains and SSL server certificates with other systems with which it participates in replication links. This ensures that SSL works for access to replicated namespaces on those systems.
+
+You can manage the load the Replication Verification service puts on the system by disabling the service, setting the service to run once, or allowing the service to run continuously.
+
+This section of the Help explains how to perform the tasks outlined above. To view replication link schedules and global replication settings, you need the monitor role. To modify replication link schedules, manage replication at the link, tenant, and system levels, and set global replication options, you need the administrator role.
+
+Note: You can also use the HCP management API to manage replication.
+
+Scheduling activity on a replication link
+
+The amount of send activity that can occur on a replication link at any given time is controlled by the performance level that applies to the sending system. An active/active link has two performance levels at any given time, one for each system involved in the link. An active/passive link has only one performance level at any given time. That level applies to the primary system during replication and to the replica during data recovery. The performance levels for different replication links are independent of each other, as are the performance levels for the two systems involved in an active/active link. In each case, the performance level can be low, medium, high, custom, or off. Off means that no send activity is occurring for the applicable link on the applicable system.
+
+For each system involved in an active/active link and for an active/passive link, you can schedule the performance level to change automatically over the course of a week. At any time, if you don’t want to use the schedule, you can override it by selecting a single performance level to apply until you cancel the override.

@@ -1,0 +1,68 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> XML has a single top-level element. JSON has a corresponding unnamed top-level object. All ACLs must contain this entry in their body. The top-level entry accessControlList
+contains the entries listed in the table below.<br>
+                       <b>Bounding box:</b> x1=185, y1=317, x2=1516, y2=1542
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Entry</td>
+      <td>Valid values</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grant</td>
+      <td>N/A</td>
+      <td>Container for and entries. Identifies one user or one group of grantee permissions\nusers and the permissions granted to that user or group.\nAn ACL can contain up to one thousand entries. grant</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grantee</td>
+      <td>N/A</td>
+      <td>Child of entry. Container for and entries. grant name, type, domain</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>name</td>
+      <td>One of:\nThe username of a user that’s defined in HCP.\nThe username of an Active Directory user account.\nThis can be either the user principal name or the\nSecurity Accounts Manager (SAM) account name\nfor the AD user account.\nThe name of an Active Directory group.\nall_users\nauthenticated</td>
+      <td>Specifies the user or group of users to which the ACL grants permissions.\nHCP has two special groups that you can specify in an ACL:\nall_users\nGrants permissions to all users\nauthenticated\nGrants permissions to all authenticated users\nTo grant permissions to one of these special groups, specify in the entry and group type\nomit the entry. domain\nHCP returns an HTTP 400 (Bad Request) error code if a user or group is specified in\nmore than one entry. name</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>type</td>
+      <td>One of:\nuser\nThe entry specifies an HCP or Active name\nDirectory user account\ngroup\nThe entry specifies an Active Directory name\ngroup, or all_users, authenticated</td>
+      <td>Specifies the type of the value specified in the entry. name\nHCP returns an HTTP 400 (Bad Request) error code if the value of the entry type\ndoesn’t correspond to the value of the entry. name</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>domain</td>
+      <td>The name of an Active Directory domain</td>
+      <td>Specifies the Active Directory domain that contains the user account or group specified\nin the entry. name\nThis entry is required if the entry specifies an Active Directory user account or name\ngroup.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>permissions</td>
+      <td>N/A</td>
+      <td>Container for any combination of entries. permission</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>permission</td>
+      <td>Any of:\nREAD\nWRITE\nREAD_ACL\nWRITE_ACL\nDELETE</td>
+      <td>Child of entry. Specifies the permissions granted to the user or group permissions\nspecified in the entry. name</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

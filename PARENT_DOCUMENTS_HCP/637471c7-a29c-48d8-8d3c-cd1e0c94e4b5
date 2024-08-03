@@ -1,0 +1,95 @@
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata-info") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+771/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+GET /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata-info HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK X-HCP-ServicedBySystem: hcp.example.com
+
+X-HCP-Time: 1352389820 X-HCP-SoftwareVersion: 7.0.0.16
+
+Content-Type: text/xml Content-Length: 822
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <annotations>
+
+<annotation> <name>report_data</name>
+
+<hash>SHA-256 F8C7D88D139D14D115BA5300CD352338B8A1D344...</hash> <changeTimeMilliseconds>1352322387000.00</changeTimeMilliseconds>
+
+<changeTimeString>2012-11-07T16:06:27-0500</changeTimeString> <size>35643</size> <contentType>text/xml</contentType> </annotation>
+
+<annotation> <name>default</name>
+
+<hash>SHA-256 F8C7D88D139D14D115BA5300CD352338B8A1D344...</hash> <changeTimeMilliseconds>1352386457000.00</changeTimeMilliseconds>
+
+<changeTimeString>2012-11-08T09:54:17-0500</changeTimeString>
+
+<size>908</size> <contentType>tex/xml</contentType> </annotation> </annotations>
+
+Retrieving annotations for objects and versions
+
+You use the HTTP
+
+GET method to retrieve an annotation for an object or version of an object. The annotation is returned in the format it had before it was stored.
+
+You can also use a single request to retrieve object or version data and custom metadata together. Access permission
+
+To retrieve an annotation, you need read permission.
+
+Request header
+
+GET /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value custom-metadata. annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter.
+
+nowait
+
+No
+
+HCP may detect that a GET request will take a significant amount of time to return an object. You can choose to have the request fail in this situation instead of waiting for HCP to return the object.

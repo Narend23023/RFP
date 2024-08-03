@@ -1,0 +1,65 @@
+Tenant has namespace-count namespace(s) configured for CIFS with authenticated access only, but CIFS authenticated access is not currently supported One or more of the tenant's namespaces are configured for CIFS authenticated access only, but the system is not configured to support the use of authenticated CIFS. As a result, CIFS cannot be used for access to those namespaces. Reconfigure the affected namespace(s) to support both anonymous and authenticated access with CIFS.
+
+Tenant tenant-name has irreparable-object-count irreparable objects
+
+One or more of the tenant's namespaces contain the indicated total number of irreparable objects. Contact your authorized HCP service provider.
+
+Tenant tenant-name has irreparable-object-count irreparable objects and unavailable-object-count unavailable objects
+
+One or more of the tenant's namespaces contain the indicated total number of irreparable objects, and one or more of the tenant's namespaces contain the indicated total number of unavailable objects. Contact your authorized HCP service provider.
+
+Tenant tenant-name has unavailable-object-count unavailable objects One or more of the tenant's namespaces contain the indicated total number of unavailable objects. This is most likely due to one or more nodes being unavailable, If the situation persists, please contact your authorized HCP service provider.
+
+Tenant may have directories that are not being replicated
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+208/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For the default tenant in HCP with internal storage systems only, the default namespace has a DPL of one and at least one of the directories in it is being replicated. When the default namespace has a DPL of one, all directories in it should be replicated to ensure that the stored data is protected.
+
+Tenant with DPL 1 namespaces that are not replicating In HCP with internal storage systems only:
+
+For HCP tenants, the tenant owns one or more namespaces that have a DPL of one and are not being replicated. All HCP namespaces with a DPL of one should be replicated to ensure that the stored data is protected. For the default tenant, the default namespace has a DPL of one and none of the directories in it are being replicated. When the default namespace has a DPL of one, all directories in it should be replicated to ensure that the stored data is protected.
+
+Domains and certificates page alerts
+
+Domains and certificates page alerts are listed alphabetically by their hover text. Domain list
+
+All certificates for domain are invalid
+
+All the certificates associated with the domain have either an expiration date in the past or a start date in the future. Add a valid certificate to the domain.
+
+All valid certificates for the domain are expiring
+
+All the valid certificates associated with the domain will expire within 30 days. Ensure that the domain has at least one certificate that will be valid when the expiring certificate expires. Certificate list
+
+Certificate has a start date in the future
+
+The start date for the certificate is in the future, so the certificate is currently invalid. Make sure the domain has at least on valid certificate.
+
+Certificate is expired
+
+The certificate has expired and is no longer valid. Delete the certificate.
+
+Certificate is expiring
+
+The certificate will expire within 90 days. Make sure the domain has at least one certificate that will be valid when this certificate expires.
+
+Common name for certificate does not match domain name
+
+The common name of the certificate does not represent a subdomain of the domain with which the certificate is associated. The certificate is invalid. If a domain has no valid certificates, clients must accept the invalid certificate presented by HCP for access to namespaces in that domain. If the domain associated with the replication network has no valid certificates, replication fails. Make sure that domain has at least one valid certificate. Then delete the certificate with the common name mismatch.
+
+Active directory page alerts
+
+Active Directory page alerts are listed alphabetically by their hover text.
+
+Active Directory enabled for default namespace only Either:
+
+AD authentication is enabled only for the default namespace and is not currently supported for HCP namespaces. This can happen after an upgrade, where the CIFS protocol was enabled for the default namespace with AD authentication before the upgrade occurred.
+
+To enable support for AD for HCP namespaces, enable HCP support for AD on the Active Directory page in the HCP System Management Console.

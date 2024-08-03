@@ -1,0 +1,127 @@
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value custom-metadata. annotation
+
+No
+
+Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in conjunction with the type parameter.
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully deleted the annotation.
+
+204
+
+No Content
+
+The specified object does not have the specified annotation.
+
+400
+
+Bad Request
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user doesn’t have delete permission.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+774/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The object is under retention, and the namespace does not allow deleting custom metadata for
+
+objects under retention. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP-specific X-HCP-Err orMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find an object or version at the specified URL. The specified object or version does not exist, or the request specified the current version of an object that has been deleted.
+
+The URL path contains a symbolic link to a directory anywhere other than in the last component.
+
+409 Conflict
+
+HCP could not delete the annotation because it is currently being written to the namespace.
+
+Example: Deleting an annotation for an object
+
+Here’s a sample HTTP DELETE request that deletes the report_data annotation for an object named Q1_2012.ppt located in the quarterly_rpts directory.
+
+Request with curl command line curl -k -iX DELETE -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt
+
+?type=custom-metadata&annotation=report_data"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \ &annotation=report_data")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata &annotation=report_data HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers

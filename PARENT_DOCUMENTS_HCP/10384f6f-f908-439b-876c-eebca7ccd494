@@ -1,0 +1,61 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> The table below describes HTTP status codes that can be returned in response to a request to complete a multipart upload.<br>
+                       <b>Bounding box:</b> x1=185, y1=467, x2=1516, y2=2013
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>OK</td>
+      <td>Possible reasons include:\nHCP successfully started processing the request.\nTo determine whether the multipart upload successfully completed, check whether HCP returned a\nresponse body that identifies the resulting multipart object or an error response body.\nThe following errors can cause a request to complete a multipart upload to fail after HCP returns\nthe 200 (OK) status code:\nThe list of parts in the request body includes a part, other than the last part, that is smaller\nthan one megabyte.\nThe list of parts in the request body includes one or more part numbers that are not the\nnumber of an uploaded part.\nThe ETag associated with one or more part numbers listed in the request body is not the\nETag returned for the part with the specified part number.\nThe parts in the request body are not listed in ascending order.\nThe request includes the If-Match request header and either the value specified by the\nheader does not match the ETag of the most recent version of the specified object, or the\nspecified object does not already exist.\nThe application attempts to set a labeled hold on an object with an HCP version earlier than 9.1.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>Possible reasons include:\nThe request does not include a header. Content-Type\nThe XML in the request body is malformed or contains an invalid value.\nThe request includes a custom metadata header. x-amz-meta-\nThe labeled hold ID length exceeds 64 characters.\nA label hold ID must have at least one character.\nThe request contains over 100 labeled holds.\nThe active labeled hold limit exceeds 100 labels.\nA request cannot specify the same labeled hold ID as both active and inactive.\nThe request must specify the labeled hold and values. id hold\nTo use the labeled hold feature, an online upgrade is required to HCP 9.1 or later.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>Possible reasons include:\nThe request specifies anonymous access. Only an authenticated user can complete a multipart\nupload.\nThe credentials provided with the request are invalid.\nThe credentials provided with the request do not match the credentials used to initiate the multipart\nupload.\nYou do not have permission to complete multipart uploads in the specified bucket.\nThe S3 compatible API is currently disabled for the specified bucket.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>One of these:\nThe specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload\nwas aborted or already completed.\nThe specified bucket does not exist.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>500</td>
+      <td>Internal Server Error</td>
+      <td>An internal error occurred. If this error persists, contact your tenant administrator.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>503</td>
+      <td>Service Unavailable</td>
+      <td>HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or\nupgrade. Try the request again, gradually increasing the delay between each successive attempt.\nIf this error persists, contact your tenant administrator.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

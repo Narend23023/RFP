@@ -1,0 +1,53 @@
+In the list of tenants, click the access control (
+
+) for the tenant that you want to access.
+
+In the list of tenants, click the name of the tenant that you want to access. Then click the tenant URL in the tenant Overview panel.
+
+The browser window switches to the tenant Overview page in the Tenant Management Console. 3. To return to the System Management Console from the Tenant Management Console, click the return control (
+
+) in the top right corner of the Tenant Management Console
+
+window. Note: After opening a Tenant Management Console from the System Management Console, do not use the browser back button to return to the System Management Console. Doing so can have unpredictable results.
+
+Modifying a tenant
+
+After creating a tenant, you can modify some of its properties. You do this by using the Settings and Security panels on the Tenants tab for the tenant.
+
+Note: To view the Settings and Tenants panels, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+95/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+These considerations apply to modifying HCP tenants: You can enable AD authentication for a tenant only while HCP can communicate with AD. When you rename a tenant for which AD authentication is enabled, AD authentication is automatically disabled for that tenant. After the operation is complete, you need to manually reenable AD authentication for the tenant. You cannot rename a tenant while the only account with the security role defined for the tenant is a group account. You cannot rename a tenant while the CIFS or NFS protocol is enabled for any namespaces owned by that tenant. When you select a different management network for an HCP tenant while any given user is logged in to the Tenant Management Console for that tenant, HCP denies any subsequent requests made within the same Console session. To continue using the Console, you must start a new session so that the client can use the new management network to access the Console for the tenant. When you select a different data access network for an HCP tenant, HCP denies any client requests for access to namespaces owned by that tenant that arrive over the previously selected network. When a tenant is replicated from one system to a second system, if the management or data access network selected for the tenant on the first system does not exist on the second system, the applicable field in the tenant Settings panel on the second system shows the network name enclosed in angle brackets (for example, <ten1_data>). This network is not included in the dropdown list for the field, so if you select a different network in that field, you cannot then select the undefined network.
+
+You can change the service plan that’s assigned to a specific tenant by modifying the tenant to select the new service plan or by modifying the new service plan to assign it to the tenant. You can also modify a service plan to assign it to multiple tenants at the same time.
+
+To modify the configuration settings for an individual tenant, including selecting a new service plan for that tenant, follow the procedure outlined below. Modifying tenant properties
+
+You can modify some properties for a tenant by using the Settings panel for the tenant.
+
+To view the Settings panel, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants. 2. In the list of tenants, click the name of the tenant that you want to modify.
+
+3. In the row of tabs below the tenant name, click Settings. 4. In the Settings panel, make the changes you want.
+
+To remove a tag from an HCP tenant, in the Tags section in the Settings panel, click the delete control ( before submitting your changes, click again on the delete control.
+
+) for the tag. The row with the tag turns red. To revert the removal
+
+5. Click Update Settings.
+
+If all of these are true, a confirming message appears: You changed the name of the tenant. The tenant supports AD authentication.
+
+HCP cannot communicate with AD. In response to the confirming message, click Update Settings.
+
+Tenant-level CORS rules configuration
+
+You can configure CORS rules at the tenant level to serve as the default configuration for all namespaces owned by a tenant. This practice is useful in deployments where a large number of namespaces support the same CORS configuration.

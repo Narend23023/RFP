@@ -1,0 +1,77 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=2124
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Methods</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>401</td>
+      <td>Unauthorized</td>
+      <td>GET for namespace\ninformation</td>
+      <td>The user does not have access to the namespace for which information is being\nrequested.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>All</td>
+      <td>The requested operation was not allowed. These are some, but not all, of the possible\nreasons:\nThe Authorization header or cookie specifies invalid credentials. hcp-ns-auth\nThe namespace requires authentication, and the request does not include an\nAuthorization header or cookie. hcp-ns-auth\nThe user doesn’t have permission to perform the requested operation.\nThe namespace does not exist.\nThe data access port for HTTP or HTTPS, as applicable, is disabled.\nFor a DELETE request to delete an object, the object is under retention.\nFor a DELETE request to delete a directory, the directory is not empty.\nFor a DELETE request to delete an annotation, the object is under retention, and\nthe namespace does not allow deleting annotations for objects under retention.\nFor a PUT request to add a version of an existing object, the object is under\nretention.\nFor a PUT request to add or replace an annotation for an object that is under\nretention, the namespace does not allow the operation for objects under\nretention.\nIf more information about the error is available, the response headers include the HCP-\nspecific header. X-HCP-ErrorMessage</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>DELETE\nGET\nHEAD\nPOST\nPUT of an annotation or\nACL\nGET of information about\nannotations</td>
+      <td>One of:\nFor all methods, HCP could not find the specified object, version, or directory.\nAny component of the URL except for the last component in the path is a\nsymbolic link to a directory.\nFor a GET request for a version or a PUT request to copy a version, the\nspecified version is the current version of a deleted object.\nFor a GET request to retrieve object or version data and an annotation\nconcurrently, the requested object does not have an annotation with the specified\nname.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>406</td>
+      <td>Not Acceptable</td>
+      <td>GET</td>
+      <td>One of:\nThe request has an header that does not include or Accept-Encoding gzip *.\nFor a GET request for an ACL, the request has a header with a Content-Type\nvalue other than or application/xml application/json.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>409</td>
+      <td>Conflict</td>
+      <td>DELETE\nPUT</td>
+      <td>One of:\nFor a DELETE request, HCP could not delete or purge the specified object or\ndelete the directory, annotation, or ACL because it is currently being written to\nthe namespace.\nFor a PUT request, HCP could not add the object or directory because it already\nexists and versioning is not enabled.\nFor a PUT request to store a version of an existing object, HCP could not add a\nnew version of the object because another version is currently being added.\nFor a PUT request to store an annotation, the object for which the annotation is\nbeing stored was ingested using CIFS or NFS, and the lazy close period for the\nobject has not expired.\nFor a PUT request that includes a conditional header, HCP is processing another\nPUT request for the object.\nA large number of clients are trying to store custom metadata or ACLs for\nmultiple objects at the same time.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>410</td>
+      <td>Gone</td>
+      <td>GET\nPUT with X-HCP-\nCopySource</td>
+      <td>Possible reasons include:\nFor a GET request, the object is in the process of being deleted.\nFor a GET request, the object exists, but the HCP system does not have the\nobject data. Retry the request, targeting a different system in the replication\ntopology.\nFor a PUT request to copy an object or version, the source object is in the\nprocess of being deleted.\nFor a PUT request to copy an object or version, the source object exists, but the\nHCP system does not have the source object data. Retry the request, targeting a\ndifferent system in the replication topology.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>412</td>
+      <td>Precondition Failed</td>
+      <td>GET, HEAD, or PUT with If-\nMatch or If-Unmodified-\nSince header\nPUT with</td>
+      <td>One of:\nThe request specified an header, and the ETag of the requested object If-Match\nor version does not match the value in the header.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

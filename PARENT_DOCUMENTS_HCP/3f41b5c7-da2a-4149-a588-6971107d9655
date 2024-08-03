@@ -1,0 +1,73 @@
+840/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help For example, the string product123 contains two search terms — product and 123. A query based on this string finds objects with paths or custom metadata that contains at least one of product and 123.
+
+Search terms match only complete alphabetic or numeric strings in paths or custom metadata. For example, the text strings AnnualReport, 2012, and AnnualReport_2012 match the object named AnnualReport_2012.pdf. A query expression with a text string such as Annual or 201 does not match this object.
+
+Similarly, to query for objects with a path or custom metadata that contains the word product, you need to use the complete word product as the text string. A query expression with a text string such as prod does not match objects with a path or custom metadata containing product.
+
+Search terms are not case sensitive. Therefore, the text strings AnnualReport, Annualreport, and annualreport are equivalent. Common words such as a and is are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a. To prevent such a match, use a phrase as described below.
+
+To specify a negative number as a text-based criterion, enclose the criterion term in double quotation marks ("); for example, "-3121".
+
+To specify a phrase as a criterion, put the text string in double quotation marks. A phrase matches paths and custom metadata that contain each of the alphabetic or numeric search terms within the quotation marks in the specified order, but any special characters or white space between the individual strings is ignored. For example, the phrase product 123 matches custom metadata that contains any of these strings: product 123 product123
+
+product_123
+
+Boolean operators in text-based criteria
+
+You can precede a text-based criterion with one of these Boolean operators:
+
+Plus sign (+)
+
+Objects in the result set must contain the search term following the plus sign.
+
+Minus sign (-)
+
+Objects in the result set must not contain the search term following the minus sign.
+
+For example, this query expression finds objects where the path and custom metadata do not contain the string product.
+
+product
+
+If a value is in quotation marks, the Boolean operator comes before the opening quotation mark. For example, this query expression finds objects with paths or custom metadata that contains the phrase wetland permit: +"wetland permit"
+
+A plus sign in front of a string that is not all-alphabetic or all-numeric finds paths and custom metadata that match at least one of the search terms. For example, the following expression matches paths and custom metadata that contain either the string product or the number 456: +product456
+
+A minus sign in front of a string that is not all-alphabetic or all-numeric finds paths that contain none of the search terms. For example, the following expression matches all paths and custom metadata that do not contain the string product or the number 456:
+
+product456
+
+Wildcard characters in text-based criteria
+
+You can use these wildcard characters in or at the end of the text string for a text-based criterion: Question mark (?)
+
+Represents a single character
+
+Asterisk (*)
+
+Represents any number of consecutive printable characters, including none
+
+These characters do not function as wildcards when included within double quotation marks (").
+
+Wildcards are not valid at the beginning of a text string. For example, the query expression on the top is valid; the query expression on the bottom is not: Valid: princ* Invalid: *cipal
+
+You can use multiple wildcards in a criterion. Two asterisks next to each other are treated as a single asterisk. Asterisks with characters between them are treated as separate wildcards. For example, the criterion below matches the path /Conflicts.txt:
+
+c**nflict*
+
+Similarly, in an all query, the criterion below matches any path with at least two directories preceding the object in the path:
+
+/*/*/**
+
+Two question marks next to each other are treated as separate wild cards. For example, the criterion below does not match the path /Conflicts.txt: c??nflict*
+
+Wildcards between text that the metadata query engine considers to be separate search terms are not valid. For example, the search string below does not match the path test1.txt
+
+because the wildcard is between an alphabetic character and a numeric character:
+
+tes*1
+
+Property-based criteria

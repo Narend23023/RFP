@@ -1,0 +1,53 @@
+Filtering the tenant lists
+
+By default, each tenant list in the Tenants panel contains all the applicable tenants. You can filter the list in either section to display a subset of the applicable tenants. A filtered list contains only those items with a name that begins with or is the same as a specified text string.
+
+You cannot filter a list while any of the tenants in it are selected. Filtering
+
+You can filter the tenant list by tenant name or tag. The filtered list includes only those tenants with a name or tag, as applicable, that begins with or is the same as a specified text string.
+
+1. In the field above the Name column, select Name to filter by name or Tag to filter by tag. 2. In the next field, type the text string you want to use as a filter.
+
+This string can be up to 64 characters long, can contain any valid UTF-8 characters except commas (,), and is not case sensitive. White space is allowed.
+
+3. Click the find control (
+
+).
+
+To redisplay the entire list of tenants after filtering it, click the clear filter control (
+
+).
+
+Considerations for modifying an erasure coding topology
+
+These considerations apply to modifying an erasure coding topology:
+
+You can modify these properties of an active erasure coding topology:
+
+Name Description Distribution method
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 355/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Minimum object size for erasure coding
+
+Erasure coding delay Restore period
+
+You cannot modify a retiring or retired erasure coding topology. Changes you make to the configuration of an erasure coding topology apply to existing objects as well as to new objects. When you change the distribution method from chunk distribution to full-copy distribution, previously distributed chunks are restored to full copies of object data if the erasure coding delay has not yet expired. The full copies are reduced to chunks again after the erasure coding delay expires. When you change the distribution method from full-copy distribution to chunk distribution, previously distributed full copies of object data are reduced to chunks after the erasure coding delay expires. When you reduce the minimum object size for erasure coding, for any given object that was previously subject to whole-object protection but is now subject to erasure coding:
+
+On a system where the object is not metadata-only, the object data is reduced to a chunk after the erasure coding delay expires On a system where the object is metadata-only:
+
+If the erasure coding topology is configured for chunk distribution, the system receives a chunk for the object. If the erasure coding topology is configured for full-copy distribution, the system receives a chunk for the object if the erasure coding delay has already expired. If the erasure coding delay has not yet expired, the system receives a chunk for the object when the delay expires.
+
+When you increase the minimum object size for erasure coding, for any given object that was previously subject to erasure coding but is now subject to whole-object protection:
+
+On a system where the object is not supposed to be metadata-only:
+
+If the system has a chunk for the object, the chunk is restored to a full copy of the object data If the system has a full copy of the object, the full copy remains as is On a system where the object should be metadata-only, the chunk for the object or the full copy of the object data, as applicable, is deleted
+
+When you increase the erasure coding delay for an erasure coding topology configured for full-copy distribution, chunks for existing objects for which the new delay has not yet expired are restored to full copies of the object data. When you decrease the restore period, objects that are currently in a restored state and for which the new restore period has already expired are returned to their previous erasure-coded states. When you increase the restore period, objects that are currently in a restored state and for which the new restore period has not yet expired are returned to their previous erasure-coded states after the new restore period expires.
+
+You can modify an erasure coding topology from any system in the topology. While a system in an erasure coding topology is being upgraded, you cannot use that system to modify the topology. Modifying an erasure coding topology

@@ -1,0 +1,45 @@
+One or both of the networks involved can have both IPv4 and IPv6 addresses. If the replication networks for the two systems involved in a replication link have both types of addresses, HCP uses the IP addresses for the first mode in which it can establish communication between the two systems, with preference given to IPv6.
+
+Within a replication topology, different pairs of systems can use different IP modes for communication. The figure below shows a replication chain in which different IP modes are
+
+used for communication over each link.
+
+In the topology shown above: System A replicates to system B on link AB. System B replicates to system C on link BC. The replication network for system A has only IPv6 IP addresses. The replication network for system B has both IPv4 IP address and IPv6 addresses. The replication network for system C has only IPv4 IP addresses. System A and system B use IPv6 addresses to communicate with each other. System B and system C use IPv4 addresses to communicate with each other. Loss of connectivity
+
+You can select a different network for replication at any time. Selecting a different replication network on any given system can result in loss of connectivity to other systems with which that system is directly involved in replication.
+
+When connectivity is lost between the two systems that participate in a replication link, the Replication service automatically suspends activity on that link. After restoring connectivity, you need to manually resume activity on the link.
+
+For any given replication link, connectivity is lost between the two systems involved when you select a different network on one of the systems and either of these apply: The networking infrastructure is not configured to route communications between the new network and the network selected for replication on the other system. The new network is associated with a different domain from the previously selected network. In this case, the SSL server certificate used for replication changes, and you need to share the new certificate with the other system involved in the link.
+
+Additionally, in this case, if the system where you selected the new network is identified by domain name in the link configuration, you need to update the domain name in the link configuration.
+
+In any case, if you select a different network on one system and the link identifies that system by IP addresses, you need to update those IP addresses in the link configuration. If you need to both share new SSL server certificates and update the identification of one of the systems in the link configuration, you should share the certificates first. If you update the link first and then share the certificates, the link status changes to broken. To recover from this situation, you need to click again on Update Link in the Settings panel for the link.
+
+Shared domain name
+
+When you create a replication link, if both of the following are true, you need to use the replication.admin.hcp-domain-name format to identify the other system involved in the link:
+
+You are identifying the other system by domain name. The domain associated with the network selected for replication on the other system is also associated with another network.
+
+In the configuration of an existing replication link, the domain name used to identify a system can have a format other than replication.admin.hcp-domain-name. In this case, you need to update the system identification to use the replication.admin.hcp-domain-name format if any of these happens on that system:
+
+You change the domain associated with the replication network to a domain that’s also associated with another network. You select a new replication network, and the new network is associated with a domain that’s also associated with another network. You change the domain associated with another network to the domain that’s associated with the replication network.
+
+Selecting the replication network
+
+By default, HCP uses the [hcp_system] network for replication.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+371/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help 1. In the top-level menu of the HCP System Management Console, select Services > Replication. 2. On the left side of the Replication page, click Settings. 3. On the replication Settings page, in the Replication Network field, select the network you want to use for replication traffic.
+
+The dropdown list of networks does not include empty, degraded, or partial networks. The Replication Network field is present only while virtual network management is enabled for the HCP system.
+
+4. Click Update Settings.
+
+Displaying the zone definition for the replication network domain

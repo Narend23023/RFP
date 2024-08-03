@@ -1,0 +1,65 @@
+A domain can have only one outstanding CSR at a time. By installing a certificate that’s created outside of HCP.
+
+At any given time, the combined number of certificates and outstanding CSRs for a domain cannot exceed ten.
+
+CSR and returned certificates
+
+SSL server certificates are available from several trusted sources. To obtain a certificate, you need to create a CSR and present it to a CA. The CA then generates the requested certificate and makes it available to you either as an email attachment, as text embedded in the body of an email, or as a download from a web page:
+
+If the certificate is an email attachment, save it to disk. Use .cer as the extension for the certificate file name.
+
+If the certificate is embedded in an email or downloadable from a web page, copy and paste it into a new text file. Then save the file to disk. Important: Use a simple text editor to do this. Do not use Microsoft® Word or any other word-processing program to create the text file.
+
+You can create a CSR by using the HCP System Management Console or a third-party tool. When you use the System Management Console, however, HCP securely stores the private key needed for installing the returned certificate, so you don’t need to save it yourself.
+
+Certificates created outside HCP
+
+You can create an SSL server certificate yourself by using a third-party tool such as OpenSSL, which is publicly available. Or, you can create a CSR yourself and use that to get a certificate from a CA.
+
+Certificates created outside HCP have two passwords: one for the PKCS12 object containing the certificate and one for the private key for the certificate. To install the certificate in
+
+HCP, these passwords must be identical.
+
+Common names
+
+Every SSL server certificate has a common name. In HCP, the common name for a certificate must represent a subdomain of the domain with which the certificate is associated.
+
+The first segment of the common name can be an asterisk (*) by itself, which represents any valid domain name segment. A common name can be at most 255 characters long.
+
+Here are some examples of common names for certificates associated with the domain named hcp.example.com:
+
+.hcp.example.com admin.hcp.example.com
+
+ten1.hcp.example.com
+
+*.ten1.hcp.example.com
+
+ns1.ten1.hcp.example.com
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+130/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The common name for the certificate generated during HCP installation is an asterisk followed by the name of the domain created during installation.
+
+HCP supports subject alternative names for certificates created outside the system. Certificate selection
+
+At any given time, an SSL server certificate is in one of these three states: valid, expired, or future (that is, not yet valid). When choosing which certificate to present to a client for a
+
+given domain:
+
+1. HCP first looks for a valid certificate for the domain and, if it finds any, uses the one with the earliest start date and time.
+
+2. If the domain has no valid certificates, HCP looks for an expired certificate for the domain and, if it finds any, uses the one with the latest expiration date and time. 3. If the domain has no expired certificates, HCP uses the future certificate with the earliest start date and time.
+
+HCP consistently chooses the same certificate. Any of these events, however, can cause HCP to start choosing a different certificate:
+
+The chosen certificate expires or is deleted. A future certificate for the domain becomes valid.
+
+A new certificate is added to the domain. Note: After an event that causes HCP to choose a different certificate, the system may continue using the certificate initially chosen for a client session until the applicable cache is cleared.
+
+HCP does not take the common name into consideration when choosing a certificate. This means that in response to a client request, HCP can use any certificate for the domain associated with the network over which the request arrives (subject to the selection process described above).

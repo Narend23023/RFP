@@ -1,0 +1,43 @@
+For user accounts defined in HCP, the system supports local and RADIUS authentication. User accounts defined in AD must be authenticated by AD. RADIUS and AD authentication are types of remote authentication.
+
+A tenant can support one or more of these authentication types. The types supported are set when the tenant is created. HCP system-level administrators can change these settings at any time. Local authentication
+
+For locally authenticated users, the user account password is stored in the HCP system. When a user submits the account username and password either on a login page for a Console or with a cookie in a command line, HCP checks the username and password internally.
+
+HCP lets the user into the target Console or performs the requested operation if these conditions are true:
+
+The combination of the specified username and password is valid. The user account is enabled. For the Tenant Management Console, the user account is associated with at least one role. For the Search Console, the user account is associated with the search permission. For the HCP management API, the user account is associated with a role that allows the requested operation. For a namespace access protocol, the user account is associated with permissions that allow the requested operation. For the metadata query API, the user account is associated with the search permission. If any of these conditions is not true, HCP rejects the login or command-line request.
+
+You can change the passwords of locally authenticated users in the Tenant Management Console. These users can also change their own passwords in the Tenant Management Console, if they have access to it, or in the Search Console, if they have access to that. RADIUS authentication
+
+For RADIUS-authenticated users, the user account password is stored outside the HCP system. When a user submits the account username and password either on a login page for a Console or with a cookie in a command line, HCP securely sends the submitted username and password to a RADIUS server. That server checks whether the username and password are valid and sends the result to HCP.
+
+HCP lets the user into the target Console or performs the requested operation if these conditions are true:
+
+The combination of the specified username and password is valid. The user account is enabled. For the Tenant Management Console, the user account is associated with at least one role. For the Search Console, the user account is associated with the search permission. For a command-line interface, the user account is associated with permissions that allow the requested operation.
+
+If any of these conditions is not true, HCP rejects the login or command-line request. All password management for RADIUS-authenticated users is handled by the RADIUS server. You cannot use the Tenant Management Console to set or change the passwords of RADIUS-authenticated users.
+
+Connections to RADIUS servers are configured at the HCP system level.
+
+Note: RADIUS authentication is not supported for the namespace access protocols or for access to namespace content through any other interface.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+254/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Active Directory authentication
+
+For AD-authenticated users, the username and password for the user account are stored in AD. If the user is signed into a Windows client, HCP relies on Windows to have already validated the username and password with AD (this is single sign-on). However, if the user provides an AD username and password on the System Management Console or Search Console login page, HCP securely sends the specified username and password to AD for authentication.
+
+HCP lets an authenticated user into the target Console only if these conditions are true:
+
+The user belongs to at least one AD group for which a corresponding group account exists in HCP. Note: Alternatively, the user can belong to an AD group that’s nested at any level under another group for which a corresponding HCP group account exists. In this case,
+
+however, any parent groups that are defined in a domain other than the user’s domain must be universal. For the Tenant Management Console, at least one such group account is associated with at least one role. For the Search Console, at least one such group account is associated with the search permission. If any of these conditions is not true, HCP doesn’t let the user in.
+
+All password management for AD-authenticated users is handled by AD. You cannot use the Tenant Management Console to set or change the passwords of AD-authenticated

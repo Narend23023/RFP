@@ -1,0 +1,33 @@
+If you don’t see the expected node list, the secondary zone or stub zone is not defined correctly. DNS considerations for service by remote systems
+
+When you configure a secondary zone or stub zone for an HCP system, you specify a domain name and the IP addresses of the primary name servers for the applicable HCP domain. This causes client requests that identify the system by that domain name to be forwarded to those primary name servers.
+
+Namespaces can be configured to accept client requests on HCP systems other than the system targeted by the request when that system is unavailable. To enable this redirection to occur automatically for a namespace:
+
+DNS failover must have been enabled on the target system. The applicable replication link must be failed over. The applicable replication link is the link between the target system and the system to which requests must be redirected. Attention: DNS failover affects all the tenants on an HCP cluster. For DNS failover to succeed, all Active-Active and Active-Passive links must fail over to the target system. If the HCP cluster has tenants that are not part of a replication link, or if the tenant is on a replication link that has not failed over, write requests to the tenant and read requests from the tenant fail if the domain name is used in the request. Requests will succeed if the request includes the IP address of the primary cluster instead of the domain name. The applicable secondary zone or stub zone for the target system must include the IP addresses of the applicable primary name servers for the system to which requests must be redirected, where:
+
+The applicable secondary zone or stub zone on the target system is the one defined for the data network for the tenant that owns the namespace The applicable primary name servers for the system to which requests should be redirected are the ones included in the secondary zone or stub zone for the network with the same name as the tenant data network on the target system
+
+For examples, you may suppose: The data network for a tenant is the network named net1. The system targeted by a client request has primary name servers with IPv4 addresses 192.168.210.15, 16, 17, and 18 and with IPv6 addresses 2001:0db8::101, 102, 103, and 104 for net1. The system to which requests must be redirected has primary name servers with IPv4 addresses 192.168.24.72, 73, 74, and 75 and with IPv6 addresses 2001:0db8::201, 202, 203, and 204 for net1.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+215/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The system targeted by a client request has primary name servers with IPv4 addresses 192.168.210.15, 16, 17, and 18 and with IPv6 addresses 2001:0db8::101, 102, 103,
+
+and 104 for net1. The system to which requests must be redirected has primary name servers with IPv4 addresses 192.168.24.72, 73, 74, and 75 and with IPv6 addresses 2001:0db8::201, 202, 203, and 204 for net1. In this case, the secondary zone or stub zone for net1 on the target system have these IP addresses:
+
+192.168.210.15 2001:0db8::101
+
+192.168.210.16 2001:0db8::102 192.168.210.17 2001:0db8::103 192.168.210.18 2001:0db8::104 192.168.24.72 2001:0db8::201 192.168.24.73
+
+2001:0db8::202 192.168.24.74 2001:0db8::203 192.168.24.75 2001:0db8::204 Configuring Active Directory to support HCP
+
+An HCP system can be configured to support Active Directory. With the system configured this way, you can create HCP group accounts that correspond to AD groups at both the system and tenant levels. AD users in those AD groups then have access to HCP through the various HCP interfaces, subject to the roles and permissions associated with the HCP group accounts.
+
+For HCP to work with AD, you first need to prepare AD for access by HCP. Then you need to configure HCP to support AD. The table below outlines the major steps in this procedure.

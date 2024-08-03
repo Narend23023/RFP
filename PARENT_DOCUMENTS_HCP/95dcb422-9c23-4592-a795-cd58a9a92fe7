@@ -1,0 +1,85 @@
+compressed. Request with gzip and curl commands
+
+gzip -c Q2_2020.ppt |
+
+curl -k -T - -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "Content-Encoding: gzip" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt"
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q2_2020.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 678400
+
+Transfer-Encoding: chunked Content-Encoding: gzip
+
+Expect: 100-continue
+
+Response headers
+
+HTTP/1.1 201 Created
+
+X-HCP-ServicedBySystem: hcp.example.com ETag: "9c604138ffb0f308a8552a3752e5a1be"
+
+Location: /rest/quarterly_rpts/Q2_2020.ppt X-HCP-VersionId: 79885459513089 X-HCP-VersionCreateTimeMilliseconds: 1494364634616 X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1...
+
+X-HCP-Time: 1334862478
+
+Content-Length: 0
+
+Sending object data in compressed format (Java)
+
+Here is the partial implementation of a Java class named HTTPCompression. The implementation shows the WriteToHCP method, which stores an object (or version) in an HCP namespace. The method compresses the data before sending it and uses the Content-Encoding header to tell HCP that the data is compressed.
+
+The WriteToHCP method uses the GZIPCompressedInputStream helper class. import org.apache.http.client.methods.HttpPut;
+
+import org.apache.http.HttpResponse; import org.apache.http.util.EntityUtils;
+
+import com.hds.hcp.examples.GZIPCompressedInputStream;
+
+class HTTPCompression { .
+
+. .
+
+void WriteToHCP() throws Exception {
+
+/* * Set up the PUT request.
+
+* This method assumes that the HTTP client has already been
+
+initialized. */ HttpPut httpRequest = new HttpPut(sHCPFilePath);
+
+// Indicate that the content encoding is gzip.
+
+httpRequest.setHeader("Content-Encoding", "gzip");
+
+// Open an input stream to the file that will be sent to HCP. // This file will be processed by the GZIPCompressedInputStream to
+
+// produce gzip-compressed content when read by the Apache HTTP client. GZIPCompressedInputStream compressedInputFile = new GZIPCompressedInputStream(new FileInputStream( sBaseFileName + ".toHCP"));
+
+// Point the HttpRequest to the input stream.
+
+httpRequest.setEntity(new InputStreamEntity(compressedInputFile, -1));
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+719/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+// Create the HCP Authorization header.
+
+httpRequest.setHeader("Authorization", "HCP " + sEncodedUserName + ":" + sEncodedPassword);
+
+/*
+
+Now execute the PUT request. */ HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+/* * Process the HTTP response.
+
+/
+
+// If the status code is anything but in the 200 range indicating // success, throw an exception.
+
+if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100)) {

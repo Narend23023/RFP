@@ -1,0 +1,65 @@
+Tip: If HCP has a small number of storage nodes, consider registering them all as primary name servers. The more nodes you register, the more distributed the DNS queries will be.
+
+When defining a secondary zone or stub zone for an HCP domain, you specify a fully qualified domain name for the HCP system. This is the name of the domain associated with the network that is defined in HCP.
+
+Configuring an HCP secondary zone or stub zone in Windows You can use either the GUI or a command line to configure a secondary zone or stub zone in Windows. The following sections present the GUI configuration procedure for Windows.
+
+For information about which Windows servers are supported, check the HCP release notes for the version of HCP that you have installed.
+
+Configuring an HCP secondary zone in Windows
+
+1. Open the DNS Manager
+
+a. In the Windows Control Panel, double-click Administrative Tools. b. In the Administrative Tools window, double-click DNS.
+
+The DNS Manager window shows the hierarchy of zones currently defined in the DNS.
+
+2. In the DNS Manager window, right-click Forward Lookup Zones under higher-level zone within which you want to configure the HCP secondary zone. On the dropdown
+
+menu, select New Zone. The New Zone Wizard window opens.
+
+3. In the New Zone Wizard window, click Next. 4. On the Zone Type page, select Secondary zone. Then click Next. 5. In the Zone name field on the Zone Name page, type the applicable fully qualified domain name for the HCP system. Then click Next. 6. On the Primary DNS Servers page, for each HCP storage node you want to register as a primary name server, in the list box, type the IPv4 and IPv6 addresses assigned to the node for the applicable network. Then press Enter.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+214/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+When you’re finished adding all the node IP addresses, click Next.
+
+7. Click Finish.
+
+The new HCP secondary zone appears in the zone hierarchy in the DNS manager window .
+
+Configuring an HCP stub zone in Windows
+
+How to configure an HCP domain as a stub zone in Windows:
+
+1. Open the DNS Manager: a. In the Windows Control Panel, double-click Administrative Tools. b. In the Administrative Tools window, double-click DNS.
+
+The DNS Manager window shows the hierarchy of zones currently defined in the DNS.
+
+2. In the DNS Manager window, right-click Forward Lookup Zones under higher-level zone within which you want to configure the HCP stub zone. On the dropdown menu,
+
+select New Zone. The New Zone Wizard window opens.
+
+3. In the New Zone Wizard window, click Next. 4. On the Zone Type page, select Stub zone.
+
+5. To configure the stub zone with Windows Active Directory integration, take one of these following actions:
+
+a. Select Store the zone in Active Directory. b. On the Active Directory Zone Replication Scope page, select the option for the way in which you want DNS data to be replicated throughout your network. c. Then click Next. Note: You need to configure the stub zone with Windows Active Directory integration if you plan to enable HCP support for AD. For information about doing that, see Configuring Active Directory or Windows workgroup support.
+
+d. To configure the stub zone without Windows Active Directory integration, click Next.
+
+6. In the Zone name field on the Zone Name page, type the applicable fully qualified domain name for the HCP system. Then click Next. 7. On the Zone File page, select Create a new file with this file name and leave the default file name in the accompanying field. Then click Next.
+
+8. On the Primary DNS Servers page, for each HCP storage node you want to register as a primary name server, in the list box, type the IPv4 and IPv6 addresses assigned to
+
+the node for the applicable network. Then press Enter. When you’re adding all the node IP addresses, click Next.
+
+9. Click Finish.
+
+The HCP new stub zone appears in the zone hierarchy in the DNS manager window. Verifying the configuration

@@ -1,0 +1,45 @@
+With this view of objects as conventional files and directories, HCP supports routine file-level calls and enables users and applications to find fixed-content data in familiar ways. Tenant and namespace properties
+
+Tenants and namespaces have certain properties that affect how they operate. Some of these properties are set when the tenant or namespace is created. Others are set after creation. Some can be modified after they are initially set; others cannot. Namespace quota
+
+The namespace quota for a tenant is the number of namespaces HCP reserves for the tenant out of the total number of namespaces the system can have. At any given time, the
+
+tenant can own only as many namespaces as specified by this quota.
+
+The namespace quota is set when the tenant is created. HCP system-level administrators can change this quota at any time. However, the quota cannot be set lower than the
+
+number of namespaces the tenant currently owns.
+
+Storage quotas
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+236/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Both tenants and namespaces have hard and soft storage quotas:
+
+hard quota An absolute number of bytes. For a tenant, it is the total amount of storage available to that tenant for allocation to its namespaces. For a namespace, it is the total amount of space available for storing objects in that namespace, including object data, metadata (except ACLs), and the redundant data required to satisfy the namespace DPL. Note: HCP checks the amount of data stored in a namespace against the namespace hard quota hourly. If large amounts of data are added rapidly to a namespace, the namespace can store substantially more data than its hard quota allows.
+
+Each namespace managed by a tenant can exceed its hard quota in this way. As a result, the total amount of storage used by all the tenant's namespaces can exceed the hard quota for the tenant. soft quota
+
+The percentage point at which HCP notifies the tenant that allocated storage space is being used up. For a tenant, the soft quota measures the space used in all the namespaces the tenant owns relative to the hard quota for that tenant. For a namespace, the soft quota measures the space used in just that namespace relative to the hard quota for that namespace.
+
+The storage quotas for a tenant are set when the tenant is created. HCP system-level administrators can change these quotas at any time. However, the hard quota for a tenant cannot be set lower than the amount of space the tenant has currently allocated to its namespaces. The storage quotas for a namespace are set when the namespace is created. You can change these quotas at any time. However, the hard quota for a namespace cannot be set lower than the amount of space currently used in the namespace. And, the total of the hard quotas for all the namespaces owned by a tenant cannot exceed the hard quota for that tenant. Data protection level
+
+Each namespace has a data protection level (DPL) that specifies how many copies of each object HCP must maintain. HCP stores each copy of an object in a different location. All but one of these copies can become unavailable (for example, due to a hardware outage) without affecting access to the object.
+
+The DPL for a namespace can be one (if allowed by the HCP system configuration), two, three, four, or dynamic. The highest allowed DPL is also determined by the HCP system configuration.
+
+When the DPL is set to dynamic, the namespace uses the current HCP system-level DPL setting. Typically, this is the optimal DPL for the system configuration. If the system-level DPL setting changes, HCP adjusts the number of copies of objects in the namespace to match the new setting. The DPL affects the amount of storage used when data is added to the namespace. With a DPL of one, HCP stores only one copy of the object. With a DPL of two, HCP stores two copies, thereby using twice as much storage.
+
+The DPL for a namespace is set when the namespace service plan is created. You can change this setting at any time. Cryptographic hash algorithm
+
+At object creation, HCP uses a cryptographic hash algorithm to calculate a hash value for the object from the object data. HCP then uses this hash value to ensure the integrity of the object over time.
+
+HCP supports these cryptographic hash algorithms:
+
+MD5 SHA-1 SHA-256 SHA-384 SHA-512 RIPEMD-160

@@ -1,0 +1,61 @@
+criteria for being moved to that tier.
+
+An HCP system can have a full copy of the data for an object that is subject to erasure coding but that has not yet been erasure coded. The Storage Tiering service can tier the data for such an object to HCP S Series or spindown storage but not to extended storage.
+
+While the data for an object is stored only on HCP S Series or extended storage:
+
+If the object is deleted, the data that is on HCP S Series or extended storage is also deleted If the object is an old version that is pruned, the version data that is stored on HCP S Series or extended storage is also deleted
+
+If the object is shredded, the data that is stored on HCP S Series or extended storage is not shredded Encryption and compression of objects in storage pools
+
+The configuration of an HCP S Series or extended storage pool specifies whether the object data should be encrypted and/or compressed when it is stored on the storage that is
+
+used for that pool. Encryption can be enabled only if it was enabled when HCP was first installed. If encryption was not enabled during installation, the System Management Console
+
+does not have an option to encrypt data.
+
+If the encryption option is selected for an HCP S Series or extended storage pool, the Storage Tiering service encrypts object data before writing it to the storage that is used for that
+
+pool. When reading encrypted data from an HCP S Series or extended storage pool, HCP automatically decrypts the data.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+39/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help If an extended storage tier contains multiple external storage pools, HCP evenly distributes object data that is stored on that tier across all of those pools. For this reason, each
+
+storage pool that is configured for a given extended storage tier should be configured to use the same encryption setting (enabled or disabled).
+
+To encrypt object data for S Series or extended storage, the Storage Tiering service uses the currently active PGP encryption key.
+
+If compression is selected for an HCP S Series or extended storage pool, the Storage Tiering service compresses the object data before writing it to the storage that is used for that
+
+pool. When reading compressed data from an HCP S Series or extended storage pool, HCP automatically decompresses the data.
+
+This compression activity is separate from the activity of the Compression/Encryption service. If an HCP object has been compressed by the Compression/Encryption service, HCP must decompress it before the Storage Tiering service can compress the object data and write it to HCP S Series or extended storage.
+
+If you select compression and/or encryption for an HCP S Series used as an ingest tier, the object data is compressed and/or encrypted when it is written to the HCP S Series. When
+
+you read compressed and/or encrypted data from an HCP S Series, HCP automatically decompresses/decrypts the data. This compression/encryption activity is separate from the regular compression/encryption service.
+
+If an extended storage tier contains multiple storage pools, HCP evenly distributes object data that is stored on that tier across all of those pools. For this reason, each extended
+
+storage pool that is configured for a given storage tier should be configured to use the same compression setting (enabled or disabled). If you change the encryption or compression setting for a given HCP S Series or extended storage pool, the change affects only the data that is stored after you make the change.
+
+HCP does not change the data that is already stored on the storage that is used for the pool. As a result, an HCP S Series or extended storage pool may contain both encrypted and
+
+unencrypted data and both compressed and uncompressed data at the same time.
+
+Downloading an encryption key
+
+You use the Storage Certificates & Keys page of the System Management Console to download an encryption key.
+
+1. In the System Management Console, click the Storage tab at the top of the page. The Storage Overview page opens.
+
+2. On the side pane, click the Certificates & Keys tab. The Storage Certificates & Keys page opens.
+
+3. In the Encryption Keys pane, click the Download Key (
+
+) next to the key that you want to download.

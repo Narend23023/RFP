@@ -1,0 +1,57 @@
+must use the SPNEGO protocol to negotiate the AD user authentication. Hitachi Device Manager and Hitachi Tiered Storage Manager
+
+As an alternative to the System Management Console, you can use Hitachi Device Manager (HDvM) to report on HCP storage usage. Additionally, when using USP or USP V storage, you can use Hitachi Tiered Storage Manager to migrate repository content to different storage tiers.
+
+You cannot make changes to the HCP configuration through HDvM or Hitachi Tiered Storage Manager.
+
+HCP supports IPv4 and IPv6 network connections to HDvM servers. However, HDvM support for IPv6 network connections varies based on the HDvM server operating system. For information about requirements for HDvM servers that support IPv6 networks, see the applicable Hitachi Command Suite documentation. Hitachi Remote Ops
+
+Hitachi Remote Ops is a Hitachi Vantara product that enables you and HCP support personnel to monitor your HCP system remotely. With Hitachi Remote Ops, you can monitor
+
+nodes, back-end switches, and front-end switches. For HCP with SAN-attached storage systems, you can also monitor SAN arrays and Fibre Channel switches.
+
+Hitachi Remote Ops is used for monitoring and error notification purposes only. It does not allow any changes to the HCP system.
+
+HCP supports IPv4 and IPv6 network connections to Hitachi Remote Ops servers. However, Hitachi Remote Ops support for IPv6 network connections varies based on the Hitachi Remote Ops server operating system. For information about requirements for Hitachi Remote Ops servers that support IPv6 networks, see the Hitachi Remote Ops documentation. System Management Console URL
+
+The URL for the System Management Console has this format:
+
+https://admin.hcp-domain-name:8000
+
+In this format, hcp-domain-name is the name of the domain associated with the [hcp_system] network.
+
+For example, for access to the System Management Console for the HCP system with the domain name hcp‑ma.example.com, you would use this URL: https://admin.hcp-ma.example.com:8000
+
+If the management network is enabled, you cannot access the System Management Console with the domain name associated with the [hcp_system] network. You need to use the domain name associated with the [hcp_management] network.
+
+Normally, you specify the HCP system domain name in the System Management Console URL and let HCP choose the node on which the Console application runs. However, in certain situations, you may need to access the Console on a specific node. To do so, you specify a System Management Console URL that includes a valid [hcp_system] network IP
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+11/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+address for the node on which you want to access the Console. For example, if a node has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101 defined for the [hcp_system] network, you can access the System Management Console on that specific node by entering either of these URLs in your browser address field:
+
+https://192.168.210.16:8000
+
+https://[2001:0db8::101]:8000
+
+Regardless of whether you access the System Management Console by specifying a domain name or a node IP address, the Console provides administrative capabilities for the entire system.
+
+Using a hosts file
+
+Typically, the HCP system is included as a subdomain in your DNS. If this is not the case, you can specify an IP address in the System Management Console URL, as described
+
+above. Alternatively, you can specify the HCP system domain name in the URL and use a hosts file to define mappings of one or more node IP addresses to the domain name.
+
+The location of the hosts file depends on the client operating system: On Windows, by default: c:\windows\system32\drivers\etc\hosts
+
+On Unix: /etc/hosts On Mac OS® X: /private/etc/host
+
+Note: Every HCP system has a domain that’s associated with the [hcp_system] network. If HCP is not included in your DNS, this is a dummy domain with a name that follows the
+
+conventions for well-formed DNS names. Hostname mappings

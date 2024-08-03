@@ -1,0 +1,31 @@
+Access-Control-Allow-Headers Request type: Preflight Returned by the server in response to a preflight request that includes the Access-Control-Request-Headers header to indicate which HTTP headers can be used during the actual request. Only returned for the OPTIONS request, not for the preflighted API call. Access-Control-Allow-Methods Request type: Preflight Returned by the server in response to a preflight request to specify the HTTP method or methods allowed when the actual request is made. Only returned for the OPTIONS request, not for the preflighted API call.
+
+Access-Control-Expose-Headers
+
+Request type: Simple, Preflight Optional Headers that browsers are allowed to access. By default, only six simple response headers are exposed:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+667/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+cache-control content-language content-type expires last-modified pragma
+
+Only returned for the OPTIONS request, not for the preflighted API call. Access-Control-Max-Age: delta-seconds
+
+Request type: Preflight Optional Indicates how long the results of a preflight request can be cached in the browser. Access-Control-Allow-Credentials: true Request type: Simple, Preflight Optional When used in a response to a preflight request, this header indicates whether the actual request can be made with credentials. For a simple request, if the header is true, the response is ignored by the browser and no content is returned to the web browser. This header works in conjunction with the credentials option (XHR or Fetch request). HCP returns the true value for this header unless the AllowedOrigin element in the CORS rules configuration is defined as "*"; in the latter case, the Access-Control-All ow-Credentials header is not returned. Note: A CORS compliant HCP server will not return the Access-Control-Allow-Credentials header when the wildcard character "*" is defined as Allow-Origin and the value of the Access-Control-Allow-Origin response header is "*". Vary
+
+Request type: Simple, Preflight This response header determines how to match future request headers to determine whether a cached response can be used rather than requesting a new response from the server. If the HCP server sends a response with an Access-Control-Allow-Origin value that is an explicit origin (rather than the wildcard character "*"), the response should also include a Vary response header with the Origin value to indicate that server responses can differ based on the value of the Origin request header. The value of the Vary header is a comma separated list of header names that can change. For example: Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+
+Example: Preflighted request
+
+Here is an sample CORS preflighted request.
+
+The preflighted request comprises two exchanges: an HTTP OPTIONS request (preflight request) from a web browser in one domain to a server in another domain to determine whether the actual request is safe to send, followed by the actual request. Request headers (Preflight request)
+
+OPTIONS rest/file.txt HTTP/1.1 Host: finance.europe.hcp.example.com User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36 Access-Control-Request-Headers: Authorization Access-Control-Request-Method: GET Origin: http://lgreen.example.com Referer: http://lgreen.example.com/cors/rest.html Response headers (Preflight request)
+
+HTTP/1.1 200 OK Access-Control-Allow-Headers: Authorization Access-Control-Allow-Methods: GET, PUT, DELETE, POST, HEAD Access-Control-Allow-Origin: *

@@ -1,0 +1,89 @@
+specify multiple email addresses, you can specify a total of more than 25 addresses across all instances of this property. However, if you specify more than 25, HCP sends each email only to an arbitrary 25 of them.
+
+Example
+
+Here’s an XML example of the recipients data type property:
+
+<recipients> <recipient> <address>lgreen@example.com, sgold@example.com</address> <importance>MAJOR</importance> <severity>ERROR</severity> <type>GENERAL,SECURITY</type> </recipient> <recipient> <address>mwhite@example.com</address> <importance>ALL</importance> <severity>WARNING</severity> <type>COMPLIANCE</type> </recipient> </recipients>
+
+remote (data type for replication link failoverSettings remote property)
+
+The local data type in this section describes the remote property of the failoverSettings data type.
+
+Replication link failoverSettings remote data type properties
+
+The following table describes the properties included in the remote data type that describes the remote property of the failoverSettings data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+autoCompleteRecovery Boolean
+
+For an active/passive link, specifies whether the complete recovery phase starts automatically while data is being recovered from the remote system for the replication link to the local system. Valid values are:
+
+This property is optional on a PUT request to create an active/passive link. It is not valid on a PUT or POST request for an active/active link and is not returned by any GET request for an active/active link. true
+
+The complete recovery phase starts automatically.
+
+false
+
+The complete recovery phase does not start automatically.
+
+The default is false.
+
+autoCompleteRecovery
+
+Minutes
+
+Integer
+
+For an active/passive link, specifies the number of minutes the up-to-date-as-of time for
+
+the replication link must be less than before HCP automatically starts the complete recovery phase while data is being recovered from the remote system for the link to the local system. Valid values are integers in the range one through 9,999. The default is 120.
+
+This property is optional on a PUT request to create an active/passive link. It is not valid on a PUT or POST request for an active/active link and is not returned by any GET request for an active/active link.
+
+The up-to-date-as-of time is the difference between:
+
+The date and time before which configuration changes and changes to namespace content are guaranteed to have been sent to the local system The current date and time autoFailover
+
+Boolean
+
+Specifies whether the replication link automatically fails over to the remote system for the link after a loss of connectivity to the local system. Valid values are:
+
+This property is optional on a PUT request to create a replication link.
+
+true
+
+The link automatically fails over. false
+
+The link does not fail over automatically.
+
+The default is false.
+
+autoFailoverMinutes
+
+Integer
+
+Specifies the number of minutes HCP waits before automatically failing over the replication link to the remote system for the link after a loss of connectivity to the local. Valid values are integers in the range seven through 9,999. The default is 120.
+
+This property is optional on a PUT request to create a replication link. Example
+
+Here’s an XML example of the remote data type that describes the remote property of the failoverSettings data type; the properties shown are those that are returned by a GET request sent to the primary system for an active/passive link:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+494/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>120</autoFailoverMinutes> <autoCompleteRecovery>false</autoCompleteRecovery> <autoCompleteRecoveryMinutes>60</autoCompleteRecoveryMinutes> </remote>
+
+remote (data type for replication link schedule remote property)
+
+The remote data type in this section describes the remote property of the schedule data type that describes the schedule resource for replication links. Replication link schedule local data type properties

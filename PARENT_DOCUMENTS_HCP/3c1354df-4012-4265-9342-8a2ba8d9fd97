@@ -1,0 +1,63 @@
+If the object is on hold on system A but not on system B, HCP places the object on hold on system B.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+243/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If the object is on hold on system B but not on system A, HCP leaves the object on hold on system B. Here are some examples of how HCP handles collisions when changed system metadata for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology.
+
+Example 1
+
+The object starts out on both system A and system B with these system metadata settings:
+
+Shred: false Index: false
+
+The list below shows a sequence of events in which the system metadata for the object is changed and the changes are then replicated.
+
+1. On system A, a client changes the shred setting to true. 2. On system B, a client changes the index setting to true. 3. The changes on system A are replicated to system B. The resulting settings for the object on system B are: Shred: false Index: true
+
+Example 2
+
+The object starts out on both system A and system B with these system metadata settings:
+
+Retention: Initial Unspecified Shred: false Index: false
+
+The list below shows a sequence of events in which the system metadata for the object is changed and the changes are then replicated.
+
+1. On system A, a client changes the retention setting to Deletion Prohibited.
+
+2. On system B, a client changes the retention setting to Deletion Allowed. 3. On system B, a client changes the index setting to true. 4. On system A, a client changes the shred setting to true. 5. The changes on system A are replicated to system B. The resulting settings for the object on system B are: Retention: Deletion Prohibited Shred: true Index: false Example 3
+
+The object starts out on both system A and system B with these system metadata settings:
+
+Retention: Initial Unspecified Hold: true Shred: false Index: false
+
+The list below shows a sequence of events in which the system metadata for the object is changed and the changes are then replicated.
+
+1. On system A, a client changes the retention setting to Deletion Allowed. 2. On system B, a client changes the retention setting to Deletion Prohibited. 3. On system B, a client changes the index setting to true. 4. On system A, a client changes the shred setting to true. 5. On system A, a client releases the object from hold. 6. The changes on system A are replicated to system B. The resulting settings for the object on system B are: Hold: true Shred: true Index: false
+
+7. The changes on system B are replicated to system A. The resulting settings for the object on system A are: Retention: Deletion Prohibited Hold: true Shred: true Index: false
+
+Custom metadata collisions
+
+A custom metadata collision occurs when these events occur in the order shown:
+
+1. One of these changes occurs:
+
+An annotation is added with the same name to a given object on each of two systems in a replication topology, but the annotation has different content on the two systems.
+
+The addition of an annotation to a given object on only one of the systems does not result in a custom metadata collision if the object does not have an annotation with the same name on the other system. In this case, the new annotation is replicated without conflict.
+
+Different changes are made to the content of a given annotation for a given object on each of the two systems in a replication topology. A change is made to the content of a given annotation for a given object on one system in a replication topology, and the same annotation is deleted on another system in the topology.
+
+2. The change made on one of the systems is replicated to the other system.
+
+If a collision occurs when a custom metadata change for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the
+
+topology:
+
+If the last change on system A is more recent than the last change on system B, HCP applies the change from system A to the custom metadata on system B

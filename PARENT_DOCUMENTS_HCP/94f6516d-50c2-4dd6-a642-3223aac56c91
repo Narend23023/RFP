@@ -1,0 +1,104 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Primary system failure workflow
+The table below outlines what happens when the primary system for an active/passive link fails.<br>
+                       <b>Bounding box:</b> x1=185, y1=958, x2=1516, y2=1983
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Step</td>
+      <td>What you do</td>
+      <td>What happens</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Primary system fails</td>
+      <td>Primary system fails</td>
+      <td>Primary system fails</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>On the replica, fail over the link</td>
+      <td>Applicable tenants and directories on the replica become read-write;\napplicable tenants and directories on the primary system either remain\nread-write or become read-only depending on whether the two systems can\ncommunicate with each other; if DNS failover is enabled, the replica\nbroadcasts new DNS configuration</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>If DNS failover is disabled, direct clients to write only to the replica</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Primary system comes back online</td>
+      <td>Primary system comes back online</td>
+      <td>Primary system comes back online</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>If the primary system has been rebuilt:\nOn the primary system, upload the replication SSL server certificate\nfrom the replica\nOn the replica, upload the replication SSL server certificate from the\nprimary system</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4</td>
+      <td>On the replica, update the link configuration as needed</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>5</td>
+      <td>If the link is broken, on the replica, send a request to restore the link</td>
+      <td>Replication link is recreated</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6</td>
+      <td>On the replica, begin data recovery</td>
+      <td>Applicable tenants and directories on the replica remain read-write;\napplicable tenants and directories on the primary system remain or become\nread-only; data recovery from the replica to the primary system begins</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>7</td>
+      <td>Wait for data recovery to come close to being up to date</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>8</td>
+      <td>On the replica, complete data recovery</td>
+      <td>Applicable tenants and directories on the replica become read-only;\napplicable tenants and directories on the primary system remain read-only;\ndata recovery from the replica to the primary system continues to\ncompletion</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Data recovery finishes</td>
+      <td>Data recovery finishes</td>
+      <td>Data recovery finishes</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>9</td>
+      <td>Nothing</td>
+      <td>Applicable tenants and directories on the replica remain read-only;\napplicable tenants and directories on the primary system become read-\nwrite; the primary system and the replica broadcast original DNS\nconfigurations; replication from the primary system to the replica restarts</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>10</td>
+      <td>If DNS failover is disabled, after you see this message in the system log,\ndirect clients to write only to the primary system: Replication data recovery\ncompleted</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

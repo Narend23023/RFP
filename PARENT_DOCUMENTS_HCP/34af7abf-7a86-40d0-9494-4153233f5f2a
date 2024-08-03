@@ -1,0 +1,53 @@
+An object is marked as irretrievable if it meets all the criteria listed above for a duration of 24 hours or after the Content Verification (CV) service makes 3 unsuccessful repair
+
+attempts, whichever occurs first. These settings, the 24-hour timeframe and the limit of 3 repair attempts, are configurable. After either the 24-hour period elapses or the 3 repair attempts are exhausted, the object is flagged as irreparable.
+
+An object is irreparable if all of these are true:
+
+All of the primary storage volumes, NFS volumes, and extended storage devices on which copies of the object data are stored are available. None of the available copies of the object is of good quality. Either the namespace that contains the object is not being replicated, or all copies of the object data on other systems in the replication topology are either inaccessible or not good. Configuring the Content Verification service
+
+The Content Verification service regenerates cryptographic hash values to detect object corruption. Under certain circumstances, you might want to modify or disable this function to reduce the load on the system.
+
+Before you begin
+
+The circumstances when you might want to modify or disable the Content Verification service from regenerating cryptographic hash values include:
+
+In a namespace that is not being replicated, has a service plan that sets the ingest tier DPL to 1, and does not define any additional storage tiers, only one copy of each object exists. Therefore, if the Content Verification service discovers a discrepancy in the cryptographic hash values for an object, it cannot repair the object from another copy. You can choose to have the Content Verification service regenerate hash values only for objects that it could repair, if needed. With this option, the service does not regenerate hash values for objects in a namespace if HCP is configured to maintain only one copy of each object in that namespace.
+
+Although the service cannot repair corrupt objects in this situation, it can report them. For this reason, if performance is not an issue, you might want to keep hash-value regeneration enabled for all objects.
+
+When the load on the system is high, temporarily disabling all hash-value regeneration can provide some relief. Procedure
+
+1. In the top-level menu of the System Management Console, click Services > Content Verification. The Content Verification page opens.
+
+2. Select the applicable Content Verification Mode option:
+
+To configure the Content Verification service to regenerate hash values for all objects stored in the repository, regardless of the number of copies of each object that HCP must maintain in the repository, select Check all objects and repair if needed. To configure the Content Verification service to regenerate hash values for a given object only when HCP is required to maintain multiple copies of that object in the
+
+repository, select Check only objects that can be repaired and repair if needed.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+112/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+To disable the hash-value regeneration function, select Do not check and repair objects. 3. Click Update Settings.
+
+If you selected the second or third option in the previous step, a confirm message is displayed. To confirm that you understand the consequences of your actions, select I understand. Then click Update Settings. Disposition service
+
+The Disposition service automatically deletes expired objects.
+
+An object is expired if either of these conditions is true:
+
+The object has a retention setting that’s a specific date and time, and that date and time is in the past.
+
+The object has a retention setting that’s a retention class, and the date and time calculated from the duration specified by the retention class is in the past. In this case, the Disposition service deletes the object only if the retention class has Disposition enabled.
+
+The service deletes only the current version of a versioned object. It does not delete old versions.
+
+The Disposition service is enabled or disabled both at the HCP system level and on a per-namespace basis. Enabling the service for a namespace has no effect if the service is disabled at the HCP system level.
+
+By default, when the HCP system is first installed, the Disposition service is disabled at the system level. The Disposition service runs according to the active service schedule. When the service runs, it checks each object to see whether the object is expired. If the object is expired, the service checks whether Disposition is enabled for the namespace that includes the object.

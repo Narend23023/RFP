@@ -1,0 +1,65 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+810/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Avoid structures that result in a single directory getting a large amount of traffic in a short time. For example, if you ingest objects rapidly, use structures that do not store
+
+objects by date and time. If you do store objects by date and time, consider the number of objects ingested during a given period of time when planning the directory structure. For example, if you
+
+ingest several hundred files per second, you might use a directory structure such as year/month/day/hour/minute/second. If you ingest just a few files per second, a less fine- grained structure would be better. Follow these guidelines on directory depth and size:
+
+Try to balance the namespace directory tree width and depth.
+
+Do not create directory structures that are more than 20 levels deep. Instead, create flatter directory structures. Avoid placing a large number of objects (greater than 100,000) in a single directory. Instead, create multiple directories and evenly distribute the objects among them. Unbalanced directory usage
+
+Avoid numerous nested directories. For example, a structure where each object is stored in its own directory. You must configure the namespace to use unbalanced directory if one or more of the following are true:
+
+If your application uses a flat directory structure.
+
+If your object access or usage is focused on a limited number of directories, or it is not possible to ensure a balanced directory structure.
+
+If your application needs a more unstructured or semi-structured access to your data.
+
+Shredding considerations
+
+Multiple objects with the same content should all have the same shred setting. If they don't and you delete the objects, each object is shredded or not shredded according to its shred setting. Non-WORM objects
+
+The namespace can contain objects that are not WORM:
+
+Objects that are open for write and have no data are not WORM.
+
+Objects left by certain failed write operations are not WORM.
+
+Objects that are not WORM are not subject to retention. You can delete these objects or overwrite them without first deleting them.
+
+Moving or renaming objects
+
+You cannot move or rename an object in an HCP namespace. If a client tries either of these operations, the operation fails.
+
+If this occurs, many clients automatically try to copy and delete the object instead. (This is how the HCP WebDAV MOVE method works.) If deletion is not allowed (for example,
+
+because the object is under retention), the original object remains in place, regardless of whether the copy is created.
+
+When a copy is created and the original object is deleted, the move or rename operation appears to have been successful.
+
+Deleting objects under repair If you try to delete an object while HCP is repairing it, HCP returns an error response, and the object is not deleted. For HTTP and WebDAV, the return value is an HTTP 409
+
+(Conflict) error code, and for CIFS and NFS, the request may time out. When you get such errors, wait a few minutes and then try the request again.
+
+Deleting directories
+
+You can delete a directory only when it is empty. Some clients, however, can appear to delete nonempty directories, as long as those directories don’t contain objects under retention. In such cases, what’s really happening is that the client is using a single call to HCP to first delete the objects in the directory and then delete the now empty directory. Multithreading
+
+HCP lets multiple threads access the namespace simultaneously. Using multiple threads can enhance performance, especially when accessing many small objects across multiple directories.
+
+Here are some guidelines for the effective use of multithreading:
+
+Concurrent threads, both reads and writes, should be directed against different directories. If that’s not possible, multiple threads working against a single directory is still
+
+better than a single thread. To the extent possible, concurrent threads should work against different IP addresses. If that’s not possible, multiple threads working against a single IP address is still better
+
+than a single thread. Only one client can write to a given object at one time. Similarly, a multithreaded client can write to multiple objects at the same time but cannot have multiple threads writing

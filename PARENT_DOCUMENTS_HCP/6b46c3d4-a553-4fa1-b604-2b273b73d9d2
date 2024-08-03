@@ -1,0 +1,45 @@
+In an simple active/active replication topology, two HCP systems replicate the same HCP tenants and namespaces and default-namespace directories to each other over an active/active link. The items being replicated can be created originally on either system. The items are read-write on the system in which they were created and, after being
+
+replicated, are also read-write on the other system.
+
+With active/active replication, client requests can be directed to either system. All changes made on each system, including both configuration changes and changes to namespace
+
+content, are replicated to the other system.
+
+What this looks like
+
+The following figure shows a simple active/active replication topology in which two HCP systems (A and B) are replicating to each other.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+323/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this figure:
+
+Two of three HCP tenants created locally in system A are being replicated between system A and system B. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication. Two tenants created locally in system B are being replicated between system A and system B. In the first tenant, two namespaces are selected for replication. In the second tenant, one of three namespaces is selected for replication. Uses
+
+The active/active replication topology supports a cloud storage model, where any type of client request can be serviced equally by either HCP system involved in the replication link. With this topology, if one system becomes unavailable (for example, either unexpectedly or for scheduled maintenance), the other system can still provide all the required functionality.
+
+With an active/active replication topology, the processing load can be distributed between the two systems. This distribution can be accomplished in two ways:
+
+By having some applications direct requests to one system and other applications direct requests to the other system. Typically, the assignment of applications to systems is based on geographic location.
+
+With this configuration, a single shared DNS can enable requests to be redirected automatically from one system to the other in case one of the systems becomes unavailable. By using a load balancer to divide requests between the two systems. For each client request, the decision as to which system to target can be based on several factors, such as the current load on each system and the geographical distance between the client and each system.
+
+With this configuration, if one system becomes unavailable, the load balancer simply directs all requests to the other system. Active/active replication ring
+
+In an active/active replication ring topology, four or more HCP systems are connected by active/active links, where:
+
+Each system has exactly two active/active links that connect that system to two other systems in such a way that all the systems are linked in the form of a ring The same HCP tenants and namespaces and default-namespace directories are replicated on each link
+
+With an active/active replication ring topology, changes made on one system travel around the ring in both directions from that system until they reach a system where those changes have already occurred.
+
+Configuring an active/active replication ring
+
+To configure an active/active replication ring topology: 1. Create an active/active link between each pair of systems to be connected in the ring. 2. For each system that has locally created tenants, namespaces, and directories that you want to replicate, add those items to one of the links connected to that system. 3. After those tenants, namespaces, and directories have been replicated, add them to the second link that’s connected to the system to which the items have been replicated. 4. After the items have been replicated to that system, add them to the next link in the ring. 5. Continue adding the replicated items to successive links until you have added them to the second link that connects to the system where the items were originally created.
+
+Active/active replication ring topology An active/active replication ring topology that includes four, five, or six HCP systems can be used as the basis for an erasure coding topology. When you add a tenant to the erasure coding topology, if the tenant is not already being replicated in the ring topology, HCP automatically adds that tenant to all the links in the ring topology.
+
+What this looks like

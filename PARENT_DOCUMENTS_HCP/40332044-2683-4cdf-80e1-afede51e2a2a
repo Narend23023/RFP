@@ -1,0 +1,125 @@
+System-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete an erasure coding topology
+
+System-level user account with the administrator role
+
+Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenantCandidates Data type
+
+Method Use
+
+Access
+
+tenant Candidates
+
+GET
+
+Retrieve a list of the tenants that are eligible to be added to an erasure coding topology
+
+System-level user account with the monitor or administrator role
+
+Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenantConflictingCandidates
+
+Data type
+
+Method Use
+
+Access
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+Notes
+
+Notes
+
+394/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method Use
+
+Access
+
+tenant Candidates
+
+GET
+
+Retrieve a list of tenants that are not eligible to be added to an erasure coding topology due to name or link conflicts
+
+System-level user account with the monitor or administrator role Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenants
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the tenants that are included in a replication topology
+
+System-level user account with the monitor or administrator role
+
+In XML, the element that identifies each tenant is name. The root element for the list of tenants is tenants.
+
+In JSON, the name in the name/value pair that lists the tenants is n ame. Table. .../services/erasureCoding/ecTopologies/ec-topology-name/tenants/tenant-name
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+String
+
+PUT
+
+Add a tenant to an erasure coding topology
+
+System-level user account with the administrator role
+
+With cURL, you need to use -X PUT, not -T, in a request to add a tenant to an erasure coding topology. String
+
+DELETE Remove a tenant from an erasure
+
+coding topology
+
+System-level user account with the administrator role
+
+Table. .../services/erasureCoding/linkCandidates
+
+Data type
+
+Method Use
+
+Access
+
+repliationLinks GET
+
+Retrieve a list of the replication links that may be eligible for use in an erasure coding topology System-level user account with the monitor or
+
+that includes the local HCP system
+
+administrator role
+
+Example: Retrieving a list of eligible replication links
+
+Here's a sample GET request that retrieves a list of all the active/active replication links that directly connect the local HCP system to another HCP system or that are in a path of active/active links that indirectly connect the local system to another system. The request writes the list of links to a file named eligible-links.xml. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ linkCandidates?verbose=true&prettyprint" > eligible-links.xml
+
+Request in Python using PycURL

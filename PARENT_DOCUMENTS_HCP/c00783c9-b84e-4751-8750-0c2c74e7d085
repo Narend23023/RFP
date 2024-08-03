@@ -1,0 +1,91 @@
+The metadata query engine treats strings of all-alphabetic characters and strings of all-numeric characters as search terms and treats all other characters as search term separators,
+
+both in the text you enter and in text being searched. Therefore, test123 is treated as two search terms, test and 123. Similarly, left-handed is treated as two separate search terms, left and handed. Therefore, an any search for test matches test123 and an any search for left matches left-handed. The metadata query engine treats multiple strings that contains all-alphabetic characters as multiple search terms. If multiple strings are enclosed inside brackets and those strings
+
+are separated by any special characters, these special characters will be used as search term separators. For example, the term (left-handed) inside brackets, is treated as two search terms - left and handed.
+
+The search string (left-handed) matches these strings:
+
+Both words left and handed. Either word left or handed.
+
+Examples that match these strings:
+
+left-xxxx left xxxx
+
+xxxx-left xxxx left
+
+handed-xxxx handed xxxx
+
+xxxx-handed xxxx handed
+
+left xxx handed
+
+Examples that does not match these strings:
+
+lefth andled
+
+lef thanded lefth-andled lef-thanded
+
+The metadata query engine treats any text that is inside double quotes as a phrase. A phrase is separated into a sequence of terms based on all-alphabetic or all-numeric words that
+
+are separated either by white spaces or special characters. The resulting query will match only if the search text has the same terms in the same order and number of occurrences as in the search phrase. For example, the search string "left-handed" is treated as a phrase because it is inside double quotes.
+
+The search string "left-then-right" matches these strings:
+
+Both words left then and right. All words left, then, and right.
+
+All words right, then left, and then right.
+
+The search string "left-then-right" does not match these strings:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+880/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Both words leftthen and right.
+
+All words right and thenleft. The metadata query engine treats only first string if the search string contain spaces or any special characters and the entire query string is not inside double quotes. For example, the search string left-handed is not treated as a phrase because it is not inside double quotes. In this instance, the metadata query engine looks for terms that matches only string
+
+left and ignores the string handed.
+
+The search string left-handed matches these strings: left-handed
+
+left handed
+
+The search string left-handed does not match these strings:
+
+handed right
+
+right handed handed xxxx
+
+handed-xxxx
+
+Note:
+
+White space, "," and "-" are considered as special characters in a query string.
+
+The xxx in the examples indicates any number of characters. The above mentioned search behaviors work only if custom metadata has been ingested with Pretty Print XML (properly formatted XML). Directory paths and object names
+
+A search term can be any part or all of a directory path after rest or data (HCP namespaces) or fcfs_data (default namespace) with or without an object name. For example, these search terms will all return the corporate/HR/benefits_2 object:
+
+corporate/HR HR
+
+HR/benefits_2 benefits_2
+
+This search term, however, will not return the corporate/HR/benefits_2 object because it includes the rest directory: rest/corporate/HR/benefits_2
+
+Likewise, this search term will not return the corporate/HR/benefits_2 object because it includes the fcfs_data directory:
+
+fcfs_data/corporate/HR/benefits_2
+
+Multiple exact phrases
+
+To search for any or all of two or more exact phrases, you use quoted terms in an any or all search; for example:
+
+"executive officer" "wetland permit"
+
+Here’s what a search like this returns:

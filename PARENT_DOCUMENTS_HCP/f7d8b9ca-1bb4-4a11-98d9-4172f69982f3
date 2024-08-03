@@ -1,0 +1,41 @@
+When you use NFS to view POSIX ownership and permission values for any item for which these values have not been set, HCP displays default values. For UID and GID, these values are determined by the namespace configuration. For POSIX permissions, these values are 555 for objects and 777 for directories.
+
+You can use the CIFS or NFS protocol to change the UID, GID, and permissions for an object.
+
+Changing POSIX ownership and permissions for existing items
+
+If you’re the root user, you can change the UID and GID for an existing item. If you’re the user identified by the UID value for an item or the root user, you can change the permissions for an item. You can make these changes through the CIFS and NFS protocols. Note:
+
+The namespace can be configured to disallow POSIX ownership and permission changes for objects that are under retention. If an object has an HCP-specific object owner, you cannot change the UID and GID values for the object.
+
+To change POSIX ownership and permissions through CIFS or NFS, you use the standard technique for that protocol. Versioning
+
+Versioning is the capability of the namespace to store multiple versions of objects. If the namespace supports versioning, you can save a new version of an object and the previous version will be kept.
+
+Each version is an independent copy of the object that includes both data and metadata. A new version is created each time you save the object, but not when you modify metadata, ACLs, or custom metadata. A version can also be a special entity that represents a deleted object.
+
+Note: In this book, the term object refers to an object that does not have versions or to the current version of an object with multiple versions. The term old version refers to any version of an object except the current one.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+703/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help You use HTTP to save a new version of an object. HCP does not support versioning operations through any other protocol.
+
+All objects, including those created when versioning is not enabled, have version IDs. Version IDs are integers. Each time a new version of an existing object is created, it is assigned an ID that is greater than the previous version of the object. The IDs for multiple versions of an object are not necessarily consecutive numbers.
+
+Directories do not normally have versions. One exception exists: if a directory contains or contained one or more versions of an object and also contained, at some time, a subdirectory with the same name as the object, the deleted subdirectory has a version ID.
+
+You can use version IDs and version ID ranges to delete older versions of objects (provided that the versions are not under retention or on hold). Similarly, you can use timestamps and timestamp ranges to delete older versions of objects. If versioning is enabled for the namespace, pruning may also be enabled. Pruning is the automatic deletion of old versions after a specific length of time. HCP does not prune versions of objects that are on hold.
+
+Each version of an object has its own retention, shred, and index settings and its own custom metadata.
+
+When you store a new version of an object, the retention setting of the old version doesn’t change. However, you cannot explicitly delete old versions of objects under retention, even if their retention periods have expired.
+
+If you specify a retention value for an object by using an offset or retention class, the retention period is relative to the time the current version was stored, not when the first version was stored.
+
+Hold settings apply to all versions of an object; if you put an object on hold, all old versions of the object are also put on hold. Object owner settings apply to all versions of an object; if you change the owner of an object, that change affects all versions of the object. However, if you restore a deleted object, the object owner of the object may differ between the current version and the old version or versions.
+
+ACLs do not apply to all versions of an object. You can add, replace, or delete an ACL from any specific version of an object or all versions of the object. If you restore a deleted object, the ACL on the object may differ between the current version and the old version or versions.

@@ -1,0 +1,39 @@
+When selecting objects to move, the HCP S Series Balancing service considers the size of the object data and any custom metadata that the object includes, and the age of the object. If an S Series Node is retiring, the balancing service excludes the node in its balancing algorithm. At any point in time, HCP is unlikely to be in a perfectly balanced state for the following reasons:
+
+The HCP S Series Balancing service is designed to stop balancing when the nodes are within a 10% difference threshold. Object additions and deletions to and from the system do not trigger the HCP S Series Balancing service to run.
+
+When all the objects in a directory have been deleted, the empty directory remains in the namespace. Directories in the default namespace, whether empty or not, have metadata that takes up space. Best practices in configuring HCP S Series Balancing
+
+The HCP S Series Balancing service balances object data across S Series Nodes in the same storage pool to spread the storage load.
+
+When the HCP S Series Balancing service runs, balancing is initiated if S Series Nodes in the same storage pool have a percent-used disparity greater than 10%. Balancing is relative to the size of each storage node, that is, percent capacity. Best practices
+
+To optimize balancing in a deployment with multiple attached S Series Nodes, if storage pools are sharing S Series Nodes, they should either share all their nodes with one another, or share none.
+
+The practice of sharing all S Series Nodes allows data from any pool to be stored on any node, thereby maximizing the balancing algorithm and making use of all available storage
+
+capacity. Each pool must also have balancing enabled. If one pool does not enable balancing, balancing for the other pools might not complete.
+
+Similarly, the practice of pools sharing none of their S Series Nodes ensures that each pool that participates in balancing can always move data.
+
+The following figure shows a best-practice configuration where Pools A and B share all the same S Series Nodes, in the example, Nodes 1 and 2.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+122/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Because there is a greater than 10% disparity in the used capacity between Nodes 1 and 2 (Node 1 = 36% used, Node 2 = 18% used), the HCP S Series Balancing service will have work to do. Each time the service runs, data will be moved from Node 1 to Node 2 until there is a less than 10% disparity in used capacity. For example, if Node 1 reaches 31% used
+
+capacity and Node 2 reaches 23% used capacity, the service will stop.
+
+The following figure shows a best-practice configuration where Pools A and B each have their own set of S Series Nodes. There is no node sharing between the pools.
+
+For Pool A, because there is a greater than 10% disparity in the used capacity between Nodes 1 and 2 (Note 1 = 36% used, Node 2 = 18% used), the S Series Balancing service will have work to do when it runs. For Pool B, because there is a less than 10% disparity in the used capacity between Nodes 3 and 4 (Node 3 = 36% used, Node 4 = 32% used), the HCP S Series Balancing service will not have any work to perform.
+
+Poor practices
+
+There are some configuration scenarios that can prevent the HCP S Series Balancing service from moving data, or can lead to less-than-optimal performance. When pools share some, but not all, of the same S Series Nodes, an object imbalance results across nodes. Data from any pool cannot be placed on any node, which prevents the HCP S Series
+
+Balancing service algorithm from using all available capacity. In some instances, capacity on one S Series Node in a pool should be moved to another node in the pool, but there is insufficient data to move to balance the nodes.

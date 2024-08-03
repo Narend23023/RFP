@@ -1,0 +1,133 @@
+To check for the existence of an ACL, you need read ACL permission.
+
+Request headers
+
+HEAD /rest/directory/file?type=acl HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value acl.
+
+version No
+
+One of:
+
+Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object. If you specify a valid range, HCP returns the requested amount of data with a status code of 200. Response headers
+
+The list below describes the request-specific response headers for this operation.
+
+Content-Type
+
+application/xml or application/json.
+
+Content-Length
+
+The size of the ACL in bytes. Zero if the object does not have an ACL.
+
+X-HCP-ACL
+
+A true or false value indicating whether the object has an ACL.
+
+X-HCP-SymlinkTarget
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+777/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The path to the target object as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP found the specified object or version and returned its ACL existence information.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find the specified object.
+
+The specified version is a delete marker. Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+Example: Checking the existence of an ACL
+
+Here’s a sample HTTP HEAD request that checks the existence of an ACL for an object named Q1_2012.ppt in the quarterly_rpts directory.
+
+Request with curl command line
+
+curl -k -iI -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt ?type=acl"
+
+Request in Python using PycURL
+
+import pycurl
+
+import StringIO cin = StringIO.StringIO()
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=acl") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HEADER, 1) curl.setopt(pycurl.NOBODY, 1)
+
+curl.setopt(pycurl.WRITEFUNCTION, cin.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) print cin.getvalue()
+
+curl.close()
+
+Request headers

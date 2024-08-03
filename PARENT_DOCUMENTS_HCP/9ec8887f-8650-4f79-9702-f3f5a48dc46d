@@ -1,0 +1,89 @@
+String
+
+Indicates the general health of the replication link. Possible values are:
+
+This property is not valid on a PUT request to create an erasure coding topology. It is returned only by a verbose GET request.
+
+HEALTHY
+
+The specific status of the link is one of these:
+
+oSynchronizing data oScheduled data NOT_REPLICATING
+
+The specific status of the link is one of these:
+
+oSuspended by user oRemote storage full, link suspended oLocal storage full, link suspended oFailed over
+
+UNHEALTHY
+
+The specific status of the link is one of these:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+496/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+oHigh error rate oStalled link oUnrecognized link oBroken link UNKNOWN
+
+HCP cannot determine the specific status of the link.
+
+uuid
+
+String
+
+Specifies the unique ID for the replication link.
+
+This property is not valid on a PUT request to create an erasure coding topology. It
+
+is returned only by a verbose GET request.
+
+Example
+
+Here's an XML example of the replicationLink data type; the properties shown are those that are returned in response to a verbose GET request: <replicationLink>
+
+<hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-eu.example.com</name> </hcpSystems> <name>eu-ca</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>7ae4101c-6e29-426e-ae71-9a7a529f019d</uuid> </replicationLink>
+
+replicationLinks
+
+The replicationLinks data type describes the linkCandidates resource for erasure coding and the replicationLinks property of the ecTopology data type. replicationLinks data type property
+
+The following table describes the property included in the replicationLinks data type.
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+name
+
+replicationLink
+
+replication Link
+
+Specifies a replication link.
+
+In a PUT request to create an erasure coding topology, include one instance of this property for each link you want to include in the topology. Example
+
+Here's an XML example of the replicationLinks data type; the properties shown are those that are returned in response to a verbose GET request:
+
+<replicationLinks> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-eu.example.com</name> </hcpSystems> <name>eu-ca</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state>
+
+<uuid>7ae4101c-6e29-426e-ae71-9a7a529f019d</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>us-ca</name> <pausedTenantsCount>4</pausedTenantsCount> <state>HEALTHY</state> <uuid>cdb7edcd-feb6-4476-8d8d-bd053e3bc2ee</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com.com</name> </hcpSystems> <name>us-eu</name>
+
+<pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>32871da5-2355-458a-90f5-1717aa684d6f</uuid> </replicationLink> </replicationLinks> replicationService
+
+The replicationService data type describes the replication resource.

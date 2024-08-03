@@ -1,0 +1,61 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+134/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP must be able to contact at least one DNS server that can resolve the AD domain name.
+
+The AD time must be within five minutes of the HCP system time. A good practice is to configure HCP and AD to use the same time server. All the domains in the AD forest HCP uses for user authentication must minimally be at the 2008 functional level.
+
+To ensure that AD users have continuous access to HCP, the AD infrastructure should have a robust and fault tolerant configuration.
+
+Service principal name attributes for HCP
+
+When you enable Active Directory (AD) support in HCP, HCP adds values to the service principal name (SPN) attribute of the HCP computer account in AD. The initial values that HCP adds to the SPN attribute of the computer account in AD are:
+
+System Management Console Default tenant Search Console Each node in the HCP system
+
+Subsequently, values are added for:
+
+Each tenant that supports AD authentication Each namespace that has both the HTTP protocol and AD single sign-on enabled Each node added to the HCP system
+
+Each object for which an SPN value is created is referred to as a single sign-on location. If a single sign-on location for a tenant, namespace, or node is removed from the system, the value for that location is removed from the SPN attribute of the HCP computer account in AD. AD has a size limit on values that applies to the SPN attribute. Any system-level operation in HCP that causes this limit to be exceeded fails with a message indicating that the failure is related to the number of single sign-on locations. Any tenant-level operation that causes this limit to be exceeded fails with a message indicating that single sign-on cannot be enabled.
+
+Important: Active Directory imposes a practical limit of 1200 SPN values for a given AD object. When a tenant is created with AD enabled, HCP creates a SPN value corresponding to that tenant. Additionally, HCP creates a SPN value for each namespace created on the tenant. Because both the tenant and namespace SPN values are registered to the same AD object, the total number of AD enabled tenants plus their namespaces across the entire cluster must be less than 1200. Configuring support for Active Directory
+
+Before you configure support for AD in HCP, you need to prepare AD for access by HCP.
+
+To enable and configure support for AD in HCP:
+
+1. Log in to the HCP System Management Console with a user account that has the Security role. 2. Navigate to the Security > Active Directory page. 3. Select one of these options: Active Directory with SSL
+
+Enables both support for AD and secure communication with the AD
+
+Active Directory without SSL
+
+Enables support for AD without enabling secure communication with the AD
+
+With either of these options selected, the Active Directory page displays a Status section. This section contains alerts that report the status of various elements of HCP support for Active Directory.
+
+4. If you selected Active Directory with SSL:
+
+a. In the Certificates panel, click Browse. Then select the file containing the AD SSL certificate. b. Click Upload Certificate.
+
+The Certificates section shows the uploaded certificate.
+
+You can download or delete the uploaded certificate if needed. To download the certificate, click the download control for it (
+
+). To delete the certificate, click the delete control (
+
+) for it.
+
+5. In the Configuration Settings section, select Enable Active Directory. Then:
+
+In the Domain field, type the fully qualified name of the AD domain in the AD forest that is to be used for HCP user authentication. All letters in this domain name must be uppercase. In the Domain User field, type the username of an existing AD user account in the applicable AD domain. Make sure the user account belongs to one or more groups that have the applicable permissions, as described earlier in this section.
+
+If the username that you specify is not all lowercase, HCP converts it to all lowercase before passing it to AD.
+
+In the Password field, type the password that goes with the specified username. Passwords are case-sensitive.

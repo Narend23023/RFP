@@ -1,0 +1,83 @@
+4. Click Generate Authorization Token.
+
+Working with group accounts
+
+To view, create, and manage HCP group accounts, you use the Groups page in the HCP System Management Console. This page is available only while support for AD is enabled.
+
+If you disable HCP support for AD, HCP does not delete existing group accounts. If you subsequently reenable AD support, the group accounts become accessible again. To display the Groups page, in the top-level menu, select Security > Groups.
+
+Note:
+
+To view group accounts, you need the monitor, administrator, or security role. To create and manage group accounts, you need the security role.
+
+Groups page
+
+The Groups page lets you create, modify, and delete HCP group accounts. It also lists the existing group accounts.
+
+By default, the group account list includes all existing group accounts. The accounts are listed 20 at a time in ascending order by group name.
+
+You can page through, sort, and filter the list of group accounts. The Groups page indicates which accounts are shown out of the total number of accounts in the current list.
+
+To view additional information about an individual group account, click the group name. Paging
+
+You can change the number of group accounts shown at a time on the Groups page. To do this, in the Items per page field, select the number of group accounts you want. The
+
+options are 10, 20, and 50.
+
+To page forward or backward through the group account list, click the next (
+
+) or back (
+
+) control, respectively.
+
+1. In the Page field, type the page number you want.
+
+2. Press Enter. Sorting
+
+You can sort the group account list in ascending or descending order by group name. To change the sort order, click the Name column heading. Each time you click the column
+
+heading, the sort order switches between ascending and descending. Filtering
+
+You can filter the group account list by group name. The filtered list includes only those group accounts with a name that begins with or is the same as a specified text string.
+
+1. In the entry field above the list, type the text string you want to use as a filter.
+
+This string can be up to 64 characters long and can contain any valid UTF-8 characters, including white space. It is not case sensitive.
+
+2. Click the find control (
+
+).
+
+To redisplay the entire list of group accounts after filtering it, click the clear filter control (
+
+).
+
+Creating group accounts
+
+You create group accounts by first displaying a list of AD groups and then selecting the ones from which you want to create HCP group accounts. After selecting the groups you
+
+want, you select the roles you want to associate with those group accounts.
+
+You can create up to the maximum supported number of group accounts in a single operation (that is, 100). In HCP, each AD group is identified by both the group name and the name of the AD domain in which the group is defined (for example, hcp-admin@ad.example.com). The HCP
+
+group account created from an AD group has the same name as the AD group, including the domain name. Internally, however, the HCP group account is associated with the security ID (SID) of the AD group.
+
+You can create an HCP group account from any group defined in the AD forest that HCP uses for user authentication. The only exceptions are predefined groups such as
+
+Administrators that have the same SID in all domains.
+
+You can use a single operation to both create new group accounts and change the roles associated with existing group accounts. In this case, all the accounts involved end up with the same roles.
+
+To view group accounts, you need the monitor, administrator, or security role. To create and manage group accounts, you need the security role.
+
+1. On the Groups page in the System Management Console, click Add Active Directory Groups.
+
+The Find and Select Groups section lists all the AD groups HCP knows about. Groups for which system-level HCP group accounts already exist are marked with a checkmark (
+
+).
+
+2. Optionally, filter the list of AD groups:
+
+a. In the Find and Select Groups field, type a text string to use as a filter for the list of AD groups. This string can be up to 64 characters long and can contain any valid
+
+UTF-8 characters, including white space. It is not case-sensitive.

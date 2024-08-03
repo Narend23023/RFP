@@ -1,0 +1,27 @@
+Example: Listing multipart uploads a few at a time
+
+Here's a sample GET request for a limited listing of the in-progress multipart uploads in the finance bucket. The request uses these query parameters in addition to uploads: key-marker=acctg/AcctgAtExampleCorp-Introduction.mov
+
+Starts the listing with a multipart upload for the first object with a name that's alphanumerically greater than acctg/AcctgAtExampleCorp-Introduction.mov
+
+max-uploads=3
+
+Lists at most three multipart uploads
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?uploads &key-marker=acctg/AcctgAtExampleCorp-Introduction.mov&max-uploads=3" -H "x-hcp-pretty-print: true" Request headers
+
+GET /?uploads&key-marker=acctg/AcctgAtExampleCorp-Introduction.mov &max-uploads=3 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:+fE2/Hy6h+ntZ9Q3fuhCnH3SLQM= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+600/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

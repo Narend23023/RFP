@@ -1,0 +1,117 @@
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot overwrite or delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example
+
+x-amz-object-lock-legal-hold: ON
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response headers
+
+The list below describes the headers returned in response to a successful request to initiate a multipart upload.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to initiate a multipart upload, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. x-amz-abort-date
+
+Specifies the date and time when the multipart upload will be automatically aborted if it has not already been completed. The date and time are expressed in this format:
+
+DDD, dd MMM yyyy hh:mm:ss GMT
+
+For example:
+
+Sat, 25 Mar 2017 17:19:26 GMT
+
+x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption. Response body
+
+HCP returns information about the multipart upload that results from a successful initiate request in an XML response body.
+
+The list below describes the XML elements in the response body returned in response to a request to initiate a multipart upload. The elements are listed in alphabetical order. Bucket
+
+Child of the InitiateMultipartUploadResult element. The Bucket element specifies the name of the bucket where the multipart upload was initiated.
+
+InitiateMultipartUploadResult Root element.
+
+Key
+
+Child of the InitiateMultipartUploadResult element. The Key element specifies the name of the object for which the multipart upload was initiated. UploadId
+
+Child of the InitiateMultipartUploadResult element. The UploadId element specifies the upload ID for the multipart upload initiated by the request. Use this ID in conjunction with the object name to identify the multipart upload in:
+
+Requests to upload parts for the multipart upload
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+640/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Requests to upload parts for the multipart upload by copying Requests to complete the multipart upload Requests to abort the multipart upload Requests to list the parts that have been uploaded for the multipart upload Responses to requests to list in-progress multipart uploads Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to initiate a multipart upload.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully initiated the multipart upload.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+The specified object name is too long.
+
+An ACL grant header specifies an invalid grantee.
+
+403 Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can initiate a multipart upload. The credentials provided with the request are invalid. You do not have permission to initiate multipart uploads in the specified bucket. The specified bucket does not support multipart uploads.

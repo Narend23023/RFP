@@ -1,0 +1,59 @@
+When the node comes back up, the failback process extends the reboot by 15 to 30 seconds. The data outage caused by the failback lasts less than five minutes.
+
+To shut down or restart a node, you need the administrator or service role.
+
+1. Take one of these actions:
+
+On the Hardware > Nodes page, click the restart icon for the node. On the Storage Node page for the node, click Restart Node.
+
+The Restart Node window appears.
+
+2. In the Reason field, type the reason why you’re restarting the node. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white
+
+space.
+
+3. Click Restart Node.
+
+The node reboots. When the node has finished rebooting, it is again available for client access. Storage administration
+
+By default, HCP stores all objects in a repository on primary running storage. However, you can use HCP S Series Nodes as an alternative to primary running storage. HCP also
+
+supports the use of primary spindown storage (HCP with SAN-attached storage systems only), HCP S Series storage (storage provided by S Series Nodes), and extended storage
+
+for tiering purposes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+36/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP is automatically configured to access and use primary running storage and primary spindown storage. HCP can also be configured to write directly to S Series Nodes. To
+
+configure HCP to store objects on S Series Nodes, you need to set up a service plan that targets S Series Node storage as the ingest tier. HCP S Series storage and extended storage can be used for tiering object data. To enable tiering, you need to manually configure HCP to access each physical storage device and
+
+cloud storage service endpoint. Regardless of the tier on which the data is stored, a copy of the object metadata must always remain on primary running storage.
+
+A service plan defines the ingest tier and one or more storage tiers that can be used to store objects in a namespace. For each object, at any point in the object lifecycle, the service
+
+plan specifies the criteria that determines where the objects are initially ingested, which storage tiers are used to store copies of that object, and the number of copies of that object that must be stored on each tier. Storage for HCP systems
+
+An HCP system includes multiple nodes that are networked together, where each node is either an individual server, a blade in a blade server, or a virtual machine. Each physical
+
+node can have multiple internal drives that can connect to SAN storage. Each virtual node emulates a server that has only internal drives.
+
+The physical storage that is managed by the nodes in the HCP system is called primary storage. By default, primary storage consists entirely of running storage, which is storage on
+
+continuously spinning disks. However, an HCP with SAN-attached storage system can be configured to use SAN storage that includes both running storage and spindown storage,
+
+which is storage on disks that can be spun up or spun down, as needed. If primary spindown storage is enabled on an HCP with SAN-attached storage system, you can configure
+
+HCP to use that storage for tiering purposes. You can also add S Series Nodes to your HCP system. These nodes can be used as an alternative to primary running storage or for tiering purposes. The number of objects you can
+
+write to an S Series Node is limited to the total storage capacity of the node. If you want more storage capacity, you need to purchase more S Series Nodes. The HCP system
+
+communicates with the S Series Nodes through the S3 compatible and management APIs.
+
+You can also configure any HCP system to use extended storage for tiering purposes. Extended storage is additional storage that is managed by devices outside of the HCP system.

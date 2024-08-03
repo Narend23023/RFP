@@ -1,0 +1,51 @@
+To implement virtual networking on a system that is configured to support it, you define one or more networks. You then configure the system to use specific networks for specific functions.
+
+This help section assumes that you already have a solid understanding of network virtualization and experience with configuring physical and logical network components. HCP networks
+
+HCP has two networks that are created during system installation: [hcp_system] and [hcp_backend]. The [hcp_system] network is used for front-end communication with the system. The [hcp_backend] network is used for communication between the nodes in the HCP system. Modifying the [hcp_system] and [hcp_backend] networks requires the service role and should be done only by authorized HCP service providers.
+
+With certain HCP system hardware configurations, an [hcp_management] network is created during installation and can be enabled once the system is running. The [hcp_management] network needs to be enabled by a system administrator. The management network segregates system and tenant administration, management API, SNMP,
+
+syslog, outgoing SMTP, and SSH traffic from the [hcp_system] network. IP modes
+
+The IP mode for a front-end network determines whether that network can be configured to use IPv4 addresses, IPv6 addresses, or both. HCP has a system-level IP mode setting
+
+that determines which types of front-end network IP addresses are supported.
+
+If the system supports both IPv4 and IPv6 addresses (that is, the IP mode is set to Dual), the [hcp_system] networks can be configured to use either or both types of IP addresses. If the HCP system is configured to support the [hcp_management] network, the [hcp_management] network can use IPv4 or IPv6 regardless of the IP mode set for front-end network.
+
+The IP mode of a front-end network determines the types of IP addresses that can be used for communication between HCP and other devices over that network. For example, if the [hcp_system] network is configured to use only IPv6 addresses, all devices that need to use that network to communicate with HCP must be configured to use IPv6 addresses (or both IPv4 and IPv6 addresses).
+
+If HCP is not currently configured to support a specific type of IP address that is required for communication between HCP and other devices, contact your authorized HCP service
+
+provider to request a change to the system configuration.
+
+About virtual networking with HCP
+
+Virtual networking is a technology that enables the overlay of multiple logical network configurations onto a single physical network. For virtual networking to work, the physical network must include VLAN-capable devices.
+
+HCP supports virtual networking only for the front-end network through which clients communicate with the system and through which different HCP systems communicate with each other. HCP does not support virtual networking for the back-end network through which the HCP nodes communicate with each other.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+74/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In HCP, logical network configurations are referred to simply as networks. Each network has a name, an IP mode (IPv4, IPv6, or Dual), one or more subnets defined for the network, IP addresses defined on each subnet for none, some, or all of the nodes in the HCP system, and some other settings.
+
+You can create and configure user-defined networks for communication with HCP over the front-end network. In order to create networks the Virtual network management must be enabled. You can then configure the system to use the specific networks for specific functions.
+
+You can also create network aliases for user-defined networks. Aliases are pointers to actual networks.
+
+At any given time, the total number of user-defined networks and network aliases together cannot exceed 200. Front-end network usage
+
+The [hcp_system] network is always used for:
+
+Access to the HCP System Management Console
+
+Access to the Tenant Management Console for the default tenant Access to the HCP management API using a system-level URL
+
+Syslog functions at the system and tenant levels SNMP functions at the system and tenant levels Access to the default namespace using the namespace access protocols
+
+Access to the HCP metadata query API using a system-level URL Access to the HCP Search Console using a system-level URL

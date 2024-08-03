@@ -1,0 +1,45 @@
+Note: To view the Resources page, you need the monitor or administrator role.
+
+About the resource usage graphs
+
+HCP uses System Activity Reporter (SAR) data as the basis for resource usage reporting. SAR is a utility that runs on each node in the HCP system. Every ten minutes, SAR records statistics representing the average use of various resources in the node during the past ten-minute interval. The graphs on the Resources page in the System Management Console show these statistics for a subset of those resources.
+
+For the CPU, memory, and network resources, the graphs can show either the average of the SAR statistics across all storage nodes or this average along with the SAR statistics for an individual storage node. For the logical volume resource, the graphs can show can show the SAR statistics only for an individual logical volume. CPU
+
+CPU statistics provide information about the processing load on the HCP system. HCP reports CPU statistics in these graphs:
+
+CPU Usage
+
+This graph shows both the percent of CPU capacity used by the operating system kernel (OS in the graph legend) and the percent of CPU capacity used by HCP processes (HCP in the graph legend). CPU IO Wait
+
+This graph shows the percent of CPU capacity spent waiting to access logical volumes that are in use by other processes.
+
+These two statistics together equal the total processing load on the system.
+
+If CPU usage is consistently high across all nodes and system performance is degraded, the namespace application workload may be too heavy for the system to handle efficiently. In this case, you may need to add nodes to the system or upgrade the existing nodes to nodes with greater CPU capacity.
+
+If CPU usage is high on a recurring basis, check the system log to see whether the high CPU usage correlates with recurring events such as services running. If the high usage correlates with services running, you may want to change the service schedule. High CPU usage on only a small number of nodes may mean that applications are repeatedly using the same IP addresses to access the system. In this case, you may want to suggest to tenant administrators that their applications use DNS or some other mechanism to help balance the workload across all the nodes in the system.
+
+Consistently high CPU IO wait with low CPU usage may mean that HCP cannot access the system storage fast enough to keep up with application demand. In this case, you may need to add storage to the system so that attempts to access storage are spread across a larger number of logical volumes. In an HCP with SAN-attached storage system with spindown storage, high IO wait on nodes with logical volumes that can be spun down may indicate that these volumes are being spun up frequently. Check the LUN Utilization graph for the load on spindown volumes. If the load is high, you may want to redefine service plans to have a longer wait time before objects are moved to spindown storage. To see which logical volumes are spindown volumes, check the Hardware page in the System Management Console.
+
+A brief period of high CPU IO wait that corresponds to increased workload does not necessarily indicate a problem. Logical volumes
+
+Logical volume usage statistics provide information about the load on storage managed by HCP. These statistics are available only for individual logical volumes. HCP reports logical
+
+volume usage statistics in these graphs:
+
+LUN Read/Write
+
+This graph shows the number of blocks read from the logical volume per second and the number of blocks written to the logical volume per second. LUN Utilization
+
+This graph shows the usage of the communication channel between the operating system and the logical volume as a percent of the channel bandwidth.
+
+The way logical volumes are used depends on the HCP system configuration. Some logical volumes can store only objects, some can store only the metadata query engine index, and some can store both. Additionally, in an HCP with SAN-attached storage system, some logical volumes may used for spindown storage. How you interpret the statistics in the logical volume usage graphs is partly dependent on the these factors.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+179/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help High read, write, and access values for all logical volumes along with low CPU usage may mean that the HCP system storage has insufficient bandwidth to support its workload. In this case, you may need to add storage to the system to spread read and write operations across more logical volumes.

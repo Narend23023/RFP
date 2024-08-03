@@ -1,0 +1,77 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help<br>
+                       <b>Bounding box:</b> x1=185, y1=80, x2=1516, y2=1871
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Property</td>
+      <td>Data type</td>
+      <td>Description</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>forcePasswordChange</td>
+      <td>Boolean</td>
+      <td>Specifies whether the password for the user account must\nbe changed the next time the account is used to log into\nthe Tenant Management Console. Valid values are:\ntrue\nThe password must be changed.\nfalse\nThe password does not need to be changed.</td>
+      <td>This property is required on a PUT request. It is valid on a\nPOST request and returned by a GET request only if the\nuser making the request has the security role.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>fullName</td>
+      <td>String</td>
+      <td>Specifies the full name of the user for whom you’re\ncreating the account. This name must be from one\nthrough 64 characters long and can contain any valid\nUTF-8 characters, including white space.</td>
+      <td>This property is required on a PUT request. It is valid on a\nPOST request only if the user making the request has the\nsecurity role.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>localAuthentication</td>
+      <td>Boolean</td>
+      <td>Specifies whether the user account is authenticated\nlocally or by a RADIUS server specified at the HCP\nsystem level. Valid values are:\ntrue\nThe user account is authenticated locally.\nfalse\nThe user account is authenticated by a RADIUS\nserver.</td>
+      <td>This property is required on a PUT request. It is not valid\non a POST request and is returned only by a verbose\nGET request.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>roles</td>
+      <td>List</td>
+      <td>Associates zero, one, or more roles with the user account.\nValid values for roles are:\nADMINISTRATOR\nCOMPLIANCE\nMONITOR\nSECURITY\nThese values are not case sensitive.\nThe default is no roles.</td>
+      <td>This property is valid on a POST request and returned by\na GET request only when the user making the request has\nthe security role.\nFor an existing user account, the set of roles specified in\nthe request body replaces the set of roles currently\nassociated with the user account. To remove all roles,\nspecify an empty set.\nIn XML, the element that identifies each role is In role.\nJSON, the name in the name/value pair that lists the roles\nis role.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>userGUID</td>
+      <td>String</td>
+      <td>Specifies the system-supplied globally unique user ID for\nthe user account. HCP generates this ID automatically\nwhen you create an account.</td>
+      <td>This property is not valid on a PUT or POST request. It is\nreturned only by a verbose GET request and only when\nthe user making the request has the security role.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>userID</td>
+      <td>Integer</td>
+      <td>Specifies the system-supplied local user ID for the user\naccount. HCP generates this ID automatically when you\ncreate an account.\nLocal user IDs are unique within an HCP system. These\nIDs are maintained for backward compatibility but are no\nlonger used for user identification.</td>
+      <td>This property is not valid on a PUT or POST request. It is\nreturned only by a verbose GET request and only when\nthe user making the request has the security role.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>username</td>
+      <td>String</td>
+      <td>Specifies the username for the user account. Usernames\nmust be from one through 64 characters long and can\ncontain any valid UTF-8 characters, including white space,\nbut cannot start with an opening square bracket ([).\nUsernames are not case sensitive.\nThe username for a user account must be unique for the\ntenant. Different tenants can have user accounts with the\nsame username.\nYou can reuse usernames that are not currently in use.\nSo, for example, if you delete the account for a user and\nthen create a new account for that user, you can give the\nuser the same username as before.\nTip: Consider using email addresses as user names. This\nenables users to more easily remember their HCP\nusernames. It also gives you easy access to email\naddresses should you need to contact any users.</td>
+      <td>This property is required on a PUT request. It is valid on a\nPOST request only when the user making the request has\nthe security role.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

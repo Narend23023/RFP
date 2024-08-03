@@ -1,0 +1,55 @@
+You can create namespaces with versioning enabled only if allowed to do so by the tenant configuration. system-level administrators can change this configuration from not allowing the creation of namespaces with versioning enabled to allowing it. However, they cannot do the reverse. Compatibility property
+
+To support compatibility with other storage products, POSIX atime values can be synchronized with HCP retention settings. For information about the effects of this option, see Using a Namespace.
+
+When you create a namespace, both of this features is disabled. You can enable or disable it at any time. Disposition
+
+Disposition is the automatic deletion of objects. Disposition can be enabled for:
+
+Objects with expired retention periods. To be eligible for disposition, an object must have a retention setting that’s either:
+
+A date in the past A retention class with automatic deletion enabled that results in a calculated expiration date in the past
+
+Objects flagged as replication collisions.
+
+Disposition has the benefit of automatically freeing storage space for the creation of more objects. Without disposition, users need to explicitly delete qualified objects to free the occupied space.
+
+Disposition deletes only the current version of a versioned object. It does not delete old versions.
+
+Disposition is enabled on a per-namespace basis. When you create a namespace, this feature is disabled. You can change this setting at any time. Automatic abort of multipart uploads
+
+After initiating a multipart upload, the user who initiated it can upload parts at any time until the multipart upload is completed or aborted. Completing a multipart upload creates a multipart object from the uploaded parts. Aborting a multipart upload causes the uploaded parts to be deleted. After a multipart upload is aborted, no more parts can be uploaded for
+
+it, and it cannot be completed.
+
+Note: When a multipart upload is aborted, its parts may not be deleted immediately. However, an aborted multipart upload cannot be completed even if its parts have not yet been deleted.
+
+If a multipart upload is never completed or aborted, the disjointed parts can remain in HCP indefinitely. Even though the multipart upload is incomplete, these parts count toward the storage used by the bucket where they were uploaded. To prevent parts of multipart uploads from remaining in HCP indefinitely, the tenant administrator can set the maximum amount of time for which a multipart upload can remain incomplete before the multipart upload is automatically aborted. This time is counted from the time the multipart upload was initiated.
+
+Each bucket has its own automatic abort time for multipart uploads. This time is not visible through the S3 compatible API. By default, the automatic abort time for new buckets is 30 days.
+
+You can change the automatic abort time for a namespace at any time. When you change the time, the new time applies to all subsequent multipart uploads as well as to multipart uploads that are already in progress. For example, if a user initiates a multipart upload on September 9th while the automatic abort time is set to 30 days, that multipart upload will be automatically aborted on October 9th. If, before October 9th, you change the automatic abort time to 35 days, the date on which the multipart upload will be automatically aborted changes to October 14th. If you change the automatic abort time to an amount of time that has already elapsed since the multipart upload was initiated, the multipart upload is immediately aborted.
+
+Note: The value of the x-amz-abort-date header returned in response to an S3 compatible request to list the parts of a multipart upload is the date on which the multipart upload will be automatically aborted, as determined by the current automatic abort time setting. Data access permission masks
+
+A data access permission mask determines which of these operations are allowed in a namespace:
+
+Read
+
+Lets users:
+
+View and retrieve objects, including object metadata (system metadata, custom metadata, and ACLs) View and retrieve previous versions of objects List annotations for objects List directory contents Write
+
+Lets users:
+
+Add objects to the namespace. Modify system metadata. For users to modify the hold status of objects, privileged operations must also be allowed. Add and replace custom metadata. Add, replace, and delete ACLs. Change object owners.
+
+Delete
+
+Lets users delete objects and custom metadata from the namespace. Purge
+
+Lets users delete all versions of an object with a single operation. For users to perform purge operations, delete operations must also be allowed.
+
+Privileged
+
+Lets users:

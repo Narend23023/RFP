@@ -1,0 +1,63 @@
+All operating systems have a hosts file that contains mappings from hostnames to IP addresses. If the HCP system does not support DNS, you can use this file to enable access to tenants by hostname.
+
+The location of the hosts file depends on the client operating system:
+
+On Windows®, by default: c:\windows\system32\drivers\etc\hosts On Unix: /etc/hosts On Mac OS® X: /private/etc/host Hostname mappings
+
+Each entry in a hosts file maps one or more fully qualified hostnames to a single IP address. For example, the entry below maps the hostname of the europe tenant in the HCP
+
+system named hcp.example.com to the IP address 192.168.210.16:
+
+192.168.210.16 europe.hcp.example.com
+
+The following considerations apply to hosts file entries:
+
+Each entry must appear on a separate line.
+
+Multiple hostnames in a single line must be separated by white space. With some versions of Windows, these must be single spaces. At the system-level, the fully qualified hostname includes admin. Each hostname can map to multiple IP addresses.
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Note: If you don’t know the IP addresses for the HCP system, contact your HCP system administrator. Hostname mapping considerations
+
+You can map a hostname to any number of IP addresses. The way multiple mappings are used depends on the client platform. For information about how your client handles
+
+multiple mappings in a hosts file, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the System Management Console.
+
+Sample hosts file entries
+
+Here’s a sample hosts file that contains mappings for the repository as a whole and the europe tenant: # HCP system-level mappings 192.168.210.16 admin.hcp.example.com
+
+192.168.210.17 admin.hcp.example.com
+
+# tenant-level mappings 192.168.210.16 europe.hcp.example.com
+
+192.168.210.17 europe.hcp.example.com Authentication
+
+To use the metadata query management API, you need either a system-level or tenant-level user account that’s defined in HCP. If HCP is configured to support Windows Active Directory® (AD), applications can also use an AD user account that HCP recognizes to access HCP through the metadata query API.
+
+HCP also accepts Active Directory (AD) authentication provided through the SPNEGO protocol or through AD authentication header. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.
+
+With each metadata query API request, you need to provide your account credentials in the form of a username and password. If you do not provide credentials or provide invalid
+
+credentials, HCP responds with a 403 (Forbidden) error message.
+
+To provide credentials in a metadata query API request, you specify an authentication token in an HTTP Authorization request header. HCP also accepts credentials provided in an hcp-ns-auth cookie. However, this method of providing credentials is being deprecated and should not be used in new applications.
+
+HCP authentication through the metadata query management API
+
+To authenticate with HCP through the metadata query management API, you need to construct an authentication token from a system-level user account or a tenant-level user account and then submit it using a request header with all requests. Successful authentication requires encoding your account information.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+835/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Authentication token
+
+An authentication token consists of a username in Base64-encoded format and a password that’s hashed using the MD5 hash algorithm, separated by a colon, like this: base64-encoded-user-name:md5-hashed-password

@@ -1,0 +1,65 @@
+Active Directory, ActiveX, Bing, Excel, Hyper-V, Internet Explorer, the Internet Explorer logo, Microsoft, Microsoft Edge, the Microsoft corporate logo, the Microsoft Edge logo, MS-DOS, Outlook, PowerPoint, SharePoint, Silverlight, SmartScreen, SQL Server, Visual Basic, Visual C++, Visual Studio, Windows, the Windows logo, Windows Azure, Windows PowerShell, Windows Server, the Windows start button, and Windows Vista are registered trademarks or trademarks of Microsoft Corporation. Microsoft product screen shots are reprinted with permission from Microsoft Corporation. All other trademarks, service marks, and company names in this document or website are properties of their respective owners.
+
+Copyright and license information for third-party and open source software used in Hitachi Vantara products can be found in the product documentation, at https://www.hitachivantara.com/en-us/company/legal.html.
+
+Hitachi Content Platform Release Notes
+
+2 Contents Content Platform 9.6.3 Release notes - Customer................................... 4 About this document............................................................................................ 4 Release highlights................................................................................................4 Upgrade notes..................................................................................................... 5 Supported limits................................................................................................... 7 Supported browsers and platforms....................................................................12 Browsers.......................................................................................................12 Platforms for HCP VM.................................................................................. 13 Third-party integrations......................................................................................13 Hitachi API for Amazon S3 tools.................................................................. 14 Mail servers.................................................................................................. 14 NDMP backup applications.......................................................................... 14 Windows Active Directory.............................................................................14 RADIUS protocols........................................................................................ 14 System Monitoring........................................................................................15 Supported hardware.......................................................................................... 15 Supported servers........................................................................................ 15 Server memory.............................................................................................15 Supported storage platforms........................................................................ 16 Supported back-end network switches.........................................................16 Recommendations for HCP back-end network switch configuration...... 17 Supported Fibre Channel switches.............................................................. 17 Supported Fibre Channel host bus adapters................................................17 Issues resolved..................................................................................................18 Issues resolved in this release..................................................................... 18 Common Vulnerabilities and Exposures (CVE) Records and other security vulnerabilities resolved in this release (9.6.3)............................20 Compatibility issues introduced in HCP 8.2 or later...........................................21 Known issues............................................................................................... 22 Accessing product documentation.....................................................................31 Getting help........................................................................................................31 Comments..........................................................................................................32
+
+Contents
+
+Hitachi Content Platform Release Notes
+
+3 Content Platform 9.6.3 Release notes - Customer
+
+About this document
+
+This document contains release notes for Hitachi Content Platform 9.6.3. Release highlights
+
+The HCP version 9.6.3 is a maintenance release that, in addition to resolving several issues, adds support for the following appliance components:
+
+■ Added support for the 3916 RAID controller card with the HCP G11 appliance. G11
+
+Hardware Setup Tool version 3.1 or later is required to support the 3916 RAID controller.
+
+■ Added support for NVIDIA Mellanox ConnectX-4 Lx SFP28 network interface card on the HCP G11 appliance. 25 Gb can be run on both the back-end and the front-end network.
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+4
+
+Upgrade notes
+
+The release also resolves several software issues observed in prior HCP releases:
+
+■ Fixed an S-Node retirement issue, where S Node retirement got stuck, with negative file
+
+size usage being reported in the SMC.
+
+■ Fixed an upgrade issue where online upgrade to v9.6 or later failed in specific rare circumstances of AD settings after the first upgraded node started using newer messaging type.
+
+■ Resolved an issue where the SMC reported an error indicating missing Management
+
+network IP addresses for nodes that have been retired.
+
+■ Resolved an issue that was causing the deletion of empty parent directories to time-out.
+
+■ Resolved an issue where arc-deploy could not unmount /tmp/upgrade_root/run when an
+
+upgrade restarted after a failed attempt.
+
+■ Fixed an issue where DNS failover stopped working after the clusters involved in the
+
+replication setup were renamed.
+
+■ Resolved an issue where domain/DNS aliases were not updated after cluster rename,
+
+causing DNS failover to stop working.
+
+■ Resolved an issue where putObject and uploadPart requests were failing against HCP when the supplied requests used Transfer-Encoding: chunked and (an incorrectly calculated) content-length header at the same time. ■ Resolved an issue related to management port configuration where the configuration
+
+information was not cleaned up after the management port is disabled. This bug that was also causing issues with new VLAN creation.
+
+■ Resolved a log spam issue related to retry logic logging immediately on undetermined

@@ -1,0 +1,101 @@
+Stop when the code property of the status entry in the response is COMPLETE.
+
+3. Repeat step 1 above using a changeTimeMilliseconds entry that specifies a range with start value equal to the end value of the changeTimeMilliseconds range you
+
+used in step 2.
+
+Use a curly opening brace for the range so that the last entry in the previous result set is not included in the new results. For example, use a changeTimeMilliseconds value like this:
+
+changeTimeMilliseconds:{1150000000000.00 TO 1341000000000.00]
+
+Then repeat step 2 using the new query criteria.
+
+4. Repeat step 3 until you retrieve the last matching object.
+
+Use a value of * (for an unlimited range) as the end of the changeTimeMilliseconds range in the last paged query to ensure that you retrieve all objects including those that were most recently added. Operation-based query requests
+
+The body of an operation-based query request consists of entries in XML or JSON format.
+
+XML request body for operation-based queries
+
+The XML request body for an operation-based query must contain a top-level queryRequest entry and, except when requesting all available information, an operation entry. All other entries are optional.
+
+The XML request body has the format shown below. Entries at each hierarchical level can be specified in any order:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+846/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<queryRequest>
+
+<operation> <count>number-of-results</count> <lastResult> <urlName>object-url</urlName>
+
+<changeTimeMilliseconds>change-time-in-milliseconds.index </changeTimeMilliseconds>
+
+<version>version-id</version> </lastResult>
+
+<objectProperties>comma-separated-list-of-properties </objectProperties>
+
+<systemMetadata> <changeTime>
+
+<start>start-time-in-milliseconds</start> <end>end-time-in-milliseconds</end> </changeTime>
+
+<directories> <directory>directory-path</directory>
+
+... </directories>
+
+<indexable>(true|false)</indexable> <namespaces>
+
+<namespace>namespace-name.tenant-name</namespace> ...
+
+</namespaces> <replicationCollision>(true|false)</replicationCollision>
+
+<transactions> <transaction>operation-type</transaction> ... </transactions>
+
+</systemMetadata> <verbose>(true|false)</verbose>
+
+</operation> </queryRequest>
+
+The XML body for an operation-based query that requests all available operation records contains only this line:
+
+<queryRequest/>
+
+JSON request body for operation-based queries
+
+The JSON request body for an operation-based query must contain an unnamed top-level entry and, except when requesting all available information, the operation entry. All other entries are optional.
+
+The JSON request body has the format shown below. Entries at each hierarchical level can be in any order:
+
+{
+
+"operation": { "count":"number-of-results", "lastResult":{
+
+"urlName":"object-url", "changeTimeMilliseconds":"change-time-in-milliseconds.index",
+
+"version":version-id },
+
+"objectProperties":"comma-separated-list-of-properties", "systemMetadata":{
+
+"changeTime":{ "start":start-time-in-milliseconds,
+
+"end":end-time-in-milliseconds },
+
+"directories":{ "directory":["directory-path",...]
+
+}, "indexable":"(true|false)",
+
+"namespaces":{ "namespace":["namespace-name.tenant-name",...]
+
+}, "replicationCollision":"(true|false)", "transactions":{
+
+"transaction":["operation-type",...] }
+
+}, "verbose":"(true|false)"
+
+} }
+
+For the namespace, directory, and transaction entries, the square brackets shown in this format are required.

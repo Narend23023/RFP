@@ -1,0 +1,107 @@
+Object-based storage
+
+HCP stores objects in a repository. Each object permanently associates data HCP receives (for example, a document, an image, or a movie) with information about that data, called metadata.
+
+An object encapsulates:
+
+Fixed-content data
+
+An exact digital reproduction of data as it existed before it was stored in HCP. After it’s in the repository, this fixed-content data cannot be modified.
+
+System metadata
+
+System-managed properties that describe the fixed-content data (for example, its size and creation date). System metadata includes policies, such as retention and data
+
+protection level, that influence how transactions and services affect the object. Custom metadata
+
+Optional metadata that a user or application provides to further describe the object. Custom metadata is specified as one or more annotations, where each annotation is a
+
+discrete unit of information about the object. Annotations are typically specified in XML format.
+
+You can use custom metadata to create self-describing objects. Users and applications can use this metadata to understand and repurpose object content. Access control list (ACL)
+
+Optional metadata consisting of a set of grants of permissions to perform various operations on the object. Permissions can be granted to individual users or to groups of
+
+users.
+
+ACLs are provided by users or applications and are specified in either XML or JSON format.
+
+HCP also stores directories and symbolic links. These items have system metadata but no fixed-content data, custom metadata, or ACLs.
+
+HCP can store multiple versions of an object, thus providing a history of how the data has changed over time. Each version is a separate object, with its own system metadata and, optionally, its custom metadata and ACL.
+
+HCP supports multipart uploads with the Hitachi API for Amazon S3. Multipart uploads is the process of writing the data for an object to HCP in multiple parts. Multipart upload is
+
+supported only by the Hitachi API for Amazon S3. With a multipart upload, the data for an object is broken into multiple parts that are written to HCP independently of each other.
+
+Even though the data is written in multiple parts, the result of a multipart upload is a single object. An object for which the data is stored in multiple parts is called a multipart object. Namespaces and tenants
+
+An HCP repository is partitioned into namespaces. A namespace is a logical grouping of objects such that the objects in one namespace are not visible in any other namespace.
+
+Namespaces provide a mechanism for separating the data stored for different applications, business units, or customers. For example, you could have one namespace for accounts
+
+receivable and another for accounts payable.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+2/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Namespaces also enable operations to work against selected subsets of objects. For example, you could perform a query that targets the accounts receivable and accounts payable
+
+namespaces but not the employees namespace.
+
+Namespaces share the same underlying physical storage. This, together with the multitenancy feature described under "Tenants" below, enables HCP to provide support for cloud storage services.
+
+HCP and default namespaces
+
+An HCP system can have a maximum of 10,000 locally defined namespaces, including one special namespace called the default namespace. Applications are typically written
+
+against namespaces other than the default; these namespaces are called HCP namespaces. The default namespace is most often used with applications that existed before release 3.0 of HCP.
+
+Note: Replication can cause an HCP system to have more than 10,000 namespaces.
+
+The table below outlines the major differences between HCP namespaces and the default namespace.
+
+Feature
+
+HCP namespaces
+
+Default namespaces
+
+Storage usage quotas
+
+✓
+
+Object ownership (not related to POSIX UID)
+
+✓ Access control lists (ACLs) for objects
+
+✓
+
+Object versioning
+
+✓
+
+Multiple custom metadata annotations
+
+✓
+
+Namespace ownership by users
+
+✓
+
+RESTful HTTP/HTTPS API for data access
+
+✓
+
+Non-RESTful HTTP/HTTPS protocol for data access
+
+✓
+
+Data access authentication with HTTP/HTTPS
+
+✓

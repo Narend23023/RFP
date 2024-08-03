@@ -1,0 +1,115 @@
+This chapter describes the response format for both object-based queries and operation-based queries.
+
+Note: In some situations, when you specify one or more namespaces in a query request, the result may differ depending on whether the query is object-based or operation-based.
+
+XML response bodies
+
+The format of an XML query response differs depending on the type of the query. XML reponse body for object-based queries
+
+An XML response for an object-based query has this format:
+
+<?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/query-result-6.0.xsd">
+
+<query> <expression>query-request-entry</expression> </query> <resultSet>
+
+<object changeTimeMilliseconds="change-time-in-milliseconds.index"
+
+version="version-id" urlName="object-url"
+
+operation="operation-type" Additional properties if specified in the objectProperties request entry
+
+or if the verbose request entry specifies true />
+
+Additional object entries </resultSet>
+
+<status totalResults="total-object-count"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+854/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+results="returned-object-count"
+
+message="" code="COMPLETE|INCOMPLETE" />
+
+The contentProperties entry below is included only if the request included a contentProperties entry with a vlaue of true.
+
+<contentProperties> <contentProperty> <expression>content-property-expression</expression>
+
+<name>content-property-name</name> <type>data-type</type>
+
+<multivalued>true|false</multivalued> <format>data-format</format>
+
+</contentProperty> Additional content properties
+
+</contentProperties> The facets entry below is included only if the request included a facets entry.
+
+<facets> One or more of the following facet entries depending on the properties specified
+
+in the facets request entry <facet property="hold"> <frequency
+
+count="object-count" value="true" />
+
+<frequency count="object-count"
+
+value="false" />
+
+</facet> <facet
+
+property="namespace"> <frequency
+
+count="object-count" value="namespace-name.tenant-name" />
+
+Up to 99 additional frequency entries </facet>
+
+<facet property="retentionClass"> <frequency count="object-count"
+
+value="retention-class-name" /> Up to 99 additional frequency entries
+
+</facet> <facet
+
+property="retention"> <frequency
+
+count="object-count"
+
+value="initialUnspecified" /> <frequency
+
+count="object-count" value="neverDeletable" />
+
+<frequency count="object-count"
+
+value="expired" /> <frequency
+
+count="object-count" value="not expired" />
+
+</facet> Zero or more of the following facet entries depending on the number of content
+
+properties in the facets request entry: <facet property="content-property-name"> <frequency
+
+count="object-count"
+
+value="value-or-facet-range" /> Up to 99 additional range frequency entries
+
+</facet> </facets>
+
+</queryResult>
+
+XML response body for operation-based queries
+
+An XML response for an operation-based query has this format:
+
+<?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/query-result-6.0.xsd">
+
+<query start="start-time-in-milliseconds"
+
+end="end-time-in-milliseconds" />
+
+<resultSet> <object
+
+changeTimeMilliseconds="change-time-in-milliseconds.index"

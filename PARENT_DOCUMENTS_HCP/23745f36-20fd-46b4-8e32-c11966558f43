@@ -1,0 +1,105 @@
+For disposition to take effect at the namespace level, it must also be enabled in the HCP system configuration.
+
+true
+
+Disposition is enabled.
+
+false
+
+Disposition is not enabled.
+
+The default is false.
+
+minimumRetentionAfterInitialUnspecified String
+
+This property is not valid for the default namespace.
+
+For an HCP namespace, specifies that the retention set on Initial Unspecified objects must be greater than the Minimum Retention after Initi al Unspecified value.
+
+The default is 0 (zero) years, 0 months, and 0 days. retentionDefault
+
+String
+
+This property is not valid for the default namespace.
+
+For an HCP namespace, specifies the default retention setting for objects added to the namespace. Valid values are special values, offsets, retention classes, and fixed dates.
+
+The default is 0 (zero), which is equivalent to Deleti on Allowed. shreddingDefault
+
+Boolean
+
+For an HCP namespace, specifies the default shred setting for objects added to the namespaces. Valid values are:
+
+This property is not valid for the default namespace.
+
+Once an object is marked for shredding, its shred setting cannot be changed.
+
+true
+
+New objects are marked for shredding. false
+
+New objects are not marked for shredding.
+
+The default is false.
+
+Example
+
+Here’s an XML example of the complianceSettings data type:
+
+<complianceSettings> <customMetadataChanges>ALL</customMetadataChanges> <retentionDefault>A+7Y</retentionDefault> <minimumRetentionAfterInitialUnspecified>19y+0M+7d</minimumRetentionAfterInitialUnspecified> <dispositionEnabled>true</dispositionEnabled> <shreddingDefault>false</shreddingDefault> </complianceSettings> connection
+
+The connection data type describes the connection property of the link data type.
+
+connection data type properties
+
+The following table describes the properties included in the connection data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+452/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description localHost
+
+String
+
+Identifies the local system for the replication link. Valid values are:
+
+The domain name for the remote system for the link to use for communication with the local system (as that name is known to the remote system), in either of these formats:
+
+replication.hcp-domain- name replication.admin. hcp-domain-name
+
+One or more comma-separated IP addresses of storage nodes in the local system (as those addresses are known to the remote system)
+
+For more information about these values, see the description of the remoteHost property.
+
+Typically, you specify this property on a PUT request to create a link only if the system on which you’re creating the link uses network address translation (NAT) for communication with the other system. localPort
+
+Integer
+
+Specifies the port on which the local system for the replication link listens for data from the remote system. The default is 5748.
+
+Typically, you specify a different port only if other port usage makes it necessary.
+
+remoteHost String
+
+Identifies the remote system for the replication link. Valid values are: The domain name of the remote system, in either of these formats:
+
+replication.hcp-domain- name replication.admin. hcp-domain-name
+
+hcp-domain-name must be the name of the domain associated with the network that’s selected for replication on the remote system. The second format is required if the domain for the replication network is shared with other networks.
+
+One or more comma-separated IP addresses of storage nodes in the remote system. These must be the node IP addresses in the network that’s selected for replication on the remote system.
+
+The local system for the link transmits data only to the nodes identified by the domain name or IP addresses you specify. Therefore, you should specify IP addresses only if you have a compelling reason to do so (for example, HCP is not using DNS, or you need to reduce the processing load on some number of nodes). remotePort
+
+Integer
+
+Specifies the port on which the remote system for the replication link listens for data from the local system. The default is 5748.

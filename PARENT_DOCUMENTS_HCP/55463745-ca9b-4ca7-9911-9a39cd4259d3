@@ -1,0 +1,91 @@
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the versioning status.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You are not the bucket owner. The S3 compatible API is currently disabled for the specified bucket. The tenant does not currently support use of the S3 compatible API for retrieving the versioning status of a bucket.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Checking the versioning status of a bucket
+
+Here’s a sample GET request that retrieves the versioning status of the bucket named finance. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?versioning" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+GET /?versioning HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:2rmMzjz+08PWDb/4Kd1nD43Wf1s= x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <VersioningConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Status>Enabled</Status> </VersioningConfiguration>
+
+Listing bucket contents (version 1)
+
+You use the HTTP GET method to list the contents of a bucket. To list the contents of a bucket, you need browse permission for the bucket. You do not need to be an authenticated user.
+
+For the purpose of a bucket listing, the bucket contents consist not only of the objects you stored in the bucket but also of the folders that you created in the bucket or that HCP created automatically from the object names. For example, by default, if a bucket contains an object named quarterly_rpts/Q4_2019, a list of the bucket contents includes these two items: quarterly_rpts/
+
+quarterly_rpts/Q4_2019
+
+By default, a bucket listing includes only the current (or only) versions of objects. To request a listing that includes old versions of objects, you use the versions query parameter.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+582/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+A listing that includes versions of objects may include delete markers. A delete marker indicates that a version of the object was deleted.
+
+A delete marker version is returned in a GET bucket versions response just like any other object version.
+
+A bucket listing is returned in an XML response body. In the response body, items in the bucket listing occur in ascending alphanumeric order by item name. If the listing includes multiple versions of an object, those versions are listed in ascending chronological order by last-modified time. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list the contents of a bucket of a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /[?[versions][query-parameters]] HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name[?[versions][query-parameters]] HTTP/1.1
+
+The versions query parameter is not case sensitive.
+
+query-parameters can be none, one, or more of: delimiter

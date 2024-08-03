@@ -1,0 +1,51 @@
+What you can do with the API depends on: The level of account you’re using The roles associated with the account (or applicable group accounts) For tenant-level accounts, whether the account (or applicable group accounts) has the allow namespace management property
+
+The permissions granted by each role have the same effect with the management API as they do in the Tenant Management Console . For example, with an HCP tenant-level user account that includes the administrator role, you can create, modify, and delete namespaces. With a tenant-level user account that includes only the monitor role, you can only
+
+retrieve information about these entities.
+
+An HCP tenant can grant system-level users administrative access to itself. This enables users with system-level user accounts to perform the activities allowed by the tenant-level roles that correspond to their system-level roles. If you have only the allow namespace management property and no roles, the activities you can perform with the HCP management API are limited to creating namespaces, listing and deleting namespaces you own, and viewing and modifying the versioning status of namespaces you own.
+
+For you to use the management API with a system-level user account, the API must be enabled at the system level. For you to use the management API with a tenant-level user account, the API must be enabled at both the system and tenant levels. Resources and properties
+
+Each entity that you can manage independently in the HCP management API is called a resource. Examples of resources are tenants and namespaces.
+
+Resources have properties. The values of these properties describe the resource. For example, tenant properties include the tenant name, description, and whether system-level users can manage the tenant.
+
+Some properties are treated as resources in their own right. For example, the Tenant Management Console configuration is a property of a tenant, but it is treated as a resource.
+
+To identify a resource, you use a URL. For example, this URL identifies the tenant resource named Finance in the HCP system named hcp.example.com: https://finance.hcp.example.com:9090/mapi/tenants/finance
+
+You also use URLs to identify lists of resources. For example, this URL identifies the list of namespaces owned by the Finance tenant: https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces
+
+Each URL that identifies a resource or list of resources has a data type. For a list of resources, the data type is list. For an individual resource, the data type is a named unordered set of properties. For example, the data type for the retention class resource is retentionClass. The properties included in this data type are name, value, description, and allowDisposition.
+
+Properties also have data types. The data type of a property can be string, integer, long, Boolean, or list, or it can be another named unordered set of properties. For example, the name property for a tenant resource has a data type of string. The ipSettings property for a Tenant Management Console configuration resource has a data type of ipSettings.
+
+Supported methods
+
+The HCP management API supports the HTTP methods listed in the list below. PUT
+
+Creates a resource. When creating a resource, you need to supply values for all properties that do not have default values. If properties with default values are omitted from the request body, those values are applied to the resource.
+
+GET
+
+Retrieves information about an individual resource or retrieves a list of resources of a given type. HEAD
+
+Performs a GET but does not return the response body. You can use a HEAD request to check whether a particular resource exists.
+
+POST
+
+Modifies a resource. When modifying a resource, you need to supply values only for the properties whose values you want to change. If properties are omitted from the request body, they remain unchanged. DELETE
+
+Deletes a resource.
+
+OPTIONS
+
+Describes the methods supported by a given resource.
+
+Each request you submit to the management API can work on only one resource. So, for example, you cannot use a single PUT request to create two tenants.
+
+Input and output formats
+
+When you create or modify a resource through the HCP management API, you use XML or JSON to specify the resource properties. When you request information about resources, you can ask for the response to be returned in XML format or in JSON format. For one resource, chargebackReport, you can also ask for the response to be returned in CSV format.

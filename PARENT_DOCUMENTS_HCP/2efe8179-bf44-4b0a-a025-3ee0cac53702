@@ -1,0 +1,33 @@
+HTTP headers and Internet media types are not case sensitive.
+
+XML
+
+In an XML request or response body:
+
+Property names are element names. Property values are element values. For example, the element that corresponds to the softQuota property with a value of 85 is:
+
+<softQuota>85</softQuota>
+
+The name of the root element for a request that involves a single resource is the data type of that resource. For example, for this URL, which identifies a single namespace named Accounts-Receivable, the root element is namespace: https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/Accounts-Receivable
+
+The name of the root element for a request for a list of resources is the term used to identify those resources in the URL. For example, for this URL, the root element is namespaces:
+
+https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces
+
+In a list of resources, each resource is the value of an element whose name is the name of the property used to identify the resource. For example, the response body for a request for the namespaces owned by the Finance tenant might include this:
+
+<namespaces> <name>Accounts-Payable</name> <name>Accounts-Receivable</name> </namespaces>
+
+Here’s a request for complete information about the Accounts-Receivable namespace to be returned in XML format: curl -k -i -H "Accept: application/xml" -H "Authorization: bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable?verbose=true&prettyprint"
+
+Here’s the XML response body you get when you make the request using a user account that includes the administrator role:
+
+<namespace> <aclsUsage>ENFORCED</aclsUsage> <authUsersAlwaysGrantedAllPermissions>true </authUsersAlwaysGrantedAllPermissions> <allowPermissionAndOwnershipChanges>true </allowPermissionAndOwnershipChanges> <appendEnabled>false</appendEnabled> <atimeSynchronizationEnabled>false</atimeSynchronizationEnabled> <authMinimumPermissions> <permission>BROWSE</permission> <permission>READ</permission> <permission>WRITE</permission> </authMinimumPermissions> <creationTime>2017-02-09T15:42:36-0500</creationTime> <customMetadataIndexingEnabled>true</customMetadataIndexingEnabled> <customMetadataValidationEnabled>true</customMetadataValidationEnabled> <description>Created for the Finance department at Example Company by Lee Green on 2/9/2017.</description> <dpl>Dynamic</dpl> <enterpriseMode>true</enterpriseMode> <allowErasureCoding>true</allowErasureCoding> <fullyQualifiedName>Accounts-Receivable.Finance.hcp.example.com </fullyQualifiedName> <hardQuota>50 GB</hardQuota> <hashScheme>SHA-256</hashScheme> <indexingDefault>true</indexingDefault> <indexingEnabled>true</indexingEnabled> <isDplDynamic>true</isDplDynamic> <mqeIndexingTimestamp>2017-02-26T18:11:13-0400</mqeIndexingTimestamp> <multipartUploadAutoAbortDays>30</multipartUploadAutoAbortDays> <name>Accounts-Receivable</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+382/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <optimizedFor>CLOUD</optimizedFor> <owner>pblack</owner> <ownerType>LOCAL</ownerType> <readFromReplica>true</readFromReplica> <replicationEnabled>true</replicationEnabled> <replicationTimestamp>2017-02-27T06:45:52-0500</replicationTimestamp>

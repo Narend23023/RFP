@@ -1,0 +1,89 @@
+Represents a single character
+
+Asterisk (*)
+
+Represents any number of consecutive printable characters, including none
+
+These characters do not function as wildcards when included within double quotation marks (").
+
+Wildcards are not valid at the beginning of a text string. For example, the query expression on the top is valid; the query expression on the bottom is not: Valid: princ* Invalid: *cipal
+
+You can use multiple wildcards in a criterion. Two asterisks next to each other are treated as a single asterisk. Asterisks with characters between them are treated as separate wildcards. For example, the criterion below matches the path /Conflicts.txt:
+
+c**nflict*
+
+Similarly, in an all query, the criterion below matches any path with at least two directories preceding the object in the path:
+
+/*/*/**
+
+Two question marks next to each other are treated as separate wild cards. For example, the criterion below does not match the path /Conflicts.txt: c??nflict*
+
+Wildcards between text that the metadata query engine considers to be separate search terms are not valid. For example, the search string below does not match the path test1.txt
+
+because the wildcard is between an alphabetic character and a numeric character:
+
+tes*1
+
+Property-based criteria
+
+Property-based criteria let you query for objects based on specified object property values. The format for a simple property-based criterion is:
+
+property:value
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+841/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example, this expression finds objects that are on hold:
+
+hold:true
+
+When querying for a value that’s a negative number, enclose the value in double quotation marks ("). For example, this query expression finds objects with the retention setting -2: retention:"-2"
+
+The special property based criterion *:* matches all objects in all namespaces searchable by the user.
+
+Boolean operators with property-based criteria
+
+You can precede a criterion or an individual property value with one of these Boolean operators:
+
+Plus sign (+)
+
+Objects in the result set must contain the criterion or value following the plus sign. Minus sign (-)
+
+Objects in the result set must not contain the criterion or value following the minus sign.
+
+For example, this query expression finds objects that are not on hold:
+
+hold:true
+
+Multiple values for a single property
+
+A property-based criterion can specify multiple values for a single property. To specify multiple values, use this format:
+
+property:([+|-]value [[+|-]value]...)
+
+In this format, the parentheses are required.
+
+For example, this query expression finds objects in either the HlthReg-107 or HlthReg-224 retention class: retentionClass:(HlthReg-107 HlthReg-224)
+
+This query expression finds objects with custom metadata that contains the string finance but not the string foreign.
+
+customMetadataContent:(+finance -foreign)
+
+When you specify multiple values for a single property, you can combine values that are preceded by Boolean operators with values that do not have Boolean operators. In this
+
+case, objects that match the property values that are not preceded by Boolean operators may or may not appear in the result set, but objects that match the terms without Boolean operators are sorted higher in the query results than objects that don’t match those terms.
+
+For example, this query expression finds objects that have custom metadata that contains both the terms quarterly report and accounting department or only the term quart erly report: customMetadataContent:(+"quarterly report" "accounting department")
+
+Objects that contain both terms are sorted higher in the query results.
+
+Value ranges
+
+You can query based on ranges of values for properties with numeric, string, or date data types. These properties are accessTime, accessTimeString, changeTimeString, dpl, h ash, hashScheme, ingestTime, ingestTimeString, retention, retentionClass, retentionString, size, updateTime, updateTimeString, and utf8Name. You can also query based on ranges for content properties with numeric, string or date data types.
+
+Criteria that query for a range of values can have either of these formats:

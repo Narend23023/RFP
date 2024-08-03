@@ -1,0 +1,31 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+590/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<Version> <Key>AcctgBestPractices.doc</Key> <VersionId>87288808614529</VersionId>
+
+<IsLatest>false</IsLatest> <LastModified>2019-12-28T21:06:52.011Z</LastModified> <ETag>"5ab7542f753b09fdb73141a66c134b9"</ETag> <Size>3557448</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> <DeleteMarker> <Key>AcctgBestPractices.doc</Key> <VersionId>87288810855745</VersionId> <IsLatest>false</IsLatest> <LastModified>2019-12-29T13:10:04.902Z</LastModified> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> </DeleteMarker> <Version> <Key>AcctgBestPractices.doc</Key> <VersionId>87288815588289</VersionId> <IsLatest>true</IsLatest> <LastModified>2019-12-29T19:42:16.331Z</LastModified> <ETag>"764f38262c6e581f678e1ac9b0211ae8"</ETag> <Size>3552369</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Version> </ListVersionsResult>
+
+Listing bucket contents (version 2)
+
+You use the HTTP GET method to list the contents of a bucket. To list the contents of a bucket, you need browse permission for the bucket. You do not need to be an authenticated user. For the purpose of a bucket listing, the bucket contents consist not only of the objects you stored in the bucket but also of the folders that you created in the bucket or that HCP created automatically from the object names. For example, by default, if a bucket contains an object named quarterly_rpts/Q4_2019, a list of the bucket contents includes these two items: quarterly_rpts/ quarterly_rpts/Q4_2019
+
+By default, a bucket listing includes only the current (or only) versions of objects.
+
+A listing that includes versions of objects may include delete markers. A delete marker indicates that a version of the object was deleted.
+
+A bucket listing is returned in an XML response body. In the response body, items in the bucket listing occur in ascending alphanumeric order by item name. If the listing includes multiple versions of an object, those versions are listed in ascending chronological order by last-modified time. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list the contents of a bucket of a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /[?[query-parameters]] HTTP/1.1
+
+With the bucket name following the hostname: GET /bucket-name[?[query-parameters]] HTTP/1.1
+
+query-parameters can be one or more of: continuation-token

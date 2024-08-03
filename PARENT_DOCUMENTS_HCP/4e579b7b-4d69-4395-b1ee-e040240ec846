@@ -1,0 +1,348 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+If an object cannot be read from one system in a replication topology (for example, because a node is unavailable), HCP can try to read it from another system in the
+topology. Whether HCP tries to do this depends on the namespace configuration.
+If a system in a replication topology is unavailable, HTTP-based requests to that system can be automatically serviced by another system in the topology. Whether HCP tries
+to do this depends on the namespace configuration.
+Operations
+You use namespace access protocols to perform operations in a namespace. The operations you can perform depend on the protocol you’re using.
+Operation restrictions
+The operations you can perform in a namespace are subject to these restrictions:
+The namespace access protocol must support the operation.
+If the namespace protocol requires client authentication, you need to provide valid user credentials.
+The namespace access protocol must be configured to allow access to the namespace from your client IP address.
+Both the effective namespace permission mask and your permissions must allow the operation.
+Supported operations
+The table below lists the operations HCP supports and indicates which protocols you can use to perform those operations. Some operations relate to specific types of metadata.<br>
+                       <b>Bounding box:</b> x1=185, y1=591, x2=1516, y2=2103
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Operation</td>
+      <td>REST</td>
+      <td>WebDAV</td>
+      <td>CIFS</td>
+      <td>NFS</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Write data from files or memory to a namespace to create an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Transmit data to and from HCP in gzip-compressed format</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Check for object existence</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>View the content of an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Copy an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Store new versions of existing objects</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Append to existing objects</td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Delete an object that’s not under retention</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Delete an object that’s under retention if the namespace configuration\nallows it</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>View object metadata</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>View a metafile</td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Override default index, retention, and shred settings when storing an object</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Change the retention setting for an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Hold or release an object</td>
+      <td>✓</td>
+      <td></td>
+      <td>✓</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Enable shredding for an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Change the index setting for an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Change object ownership (not related to POSIX UID)</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Change the POSIX UID and GID for an object</td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Change the POSIX permission settings for an object</td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Change the POSIX or value for an object atime mtime</td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Store, replace, or delete an annotation for an object</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Store, replace, or delete the default annotation for an object</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Store or retrieve object data and an annotation in a single operation</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Store or retrieve object data and the default annotation in a single operation</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Check for annotation existence</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Check for existence of the default annotation</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>List annotations</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Read an annotation</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Read the default annotation</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Store, replace, or delete an ACL for an object</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Check for ACL existence</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Read ACLs</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Create an empty directory in a namespace</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>View the namespace directory structure, not including metadirectories</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>View the namespace directory structure, including both directories and\nmetadirectories</td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Rename an empty directory (unless synchronization is enabled) atime</td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Delete an empty directory</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Create a symbolic link</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

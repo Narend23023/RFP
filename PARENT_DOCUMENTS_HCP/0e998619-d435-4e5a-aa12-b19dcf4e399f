@@ -1,0 +1,85 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+Request in Python using PycURL
+import pycurl
+import os
+filehandle = open("Q1_2012.acl.xml", 'rb')
+curl = pycurl.Curl()
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+/rest/quarterly_rpts/Q1_2012.ppt?type=acl")
+curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+curl.setopt(pycurl.UPLOAD, 1)
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2012.acl.xml"))
+curl.setopt(pycurl.READFUNCTION, filehandle.read)
+curl.perform()
+print curl.getinfo(pycurl.RESPONSE_CODE)
+curl.close()
+filehandle.close()
+Request headers
+PUT /rest/quarterly_rpts/Q1_2012.ppt?type=acl HTTP/1.1
+Host: finance.europe.hcp.example.com
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+Content-Length: 246
+Response headers
+HTTP/1.1 201 Created
+X-HCP-ServicedBySystem: hcp.example.com
+Location: /rest/quarterly_rpts/Q1_2012.ppt
+X-HCP-Time: 1334772280
+Content-Length: 0
+Checking the existence of an ACL
+You use the HTTP HEAD method to check whether an object or version of an object has an ACL.
+Access permission
+To check for the existence of an ACL, you need read ACL permission.
+Request headers
+HEAD /rest/directory/file?type=acl HTTP/1.1<br>
+                       <b>Bounding box:</b> x1=185, y1=1189, x2=1516, y2=1810
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>type</td>
+      <td>Yes</td>
+      <td>Use the value acl.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>version</td>
+      <td>No</td>
+      <td>One of:\nSpecific version number of the file. For example:\n?version=80232998058817\nRange of version IDs, separated by a dash. For example:\n?version=91728994618369-91728994618372\nRange of create timestamps, separated by a dash. For example:\n?version=@1493911519817-@1493911519817\nwhich provides all versions of an object. 0-,\nThese rules apply to the query parameter: version\nIf you omit the parameter, HCP checks the existence of the current version of an object.\nIf you specify a valid range, HCP returns the requested amount of data with a status code of 200.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

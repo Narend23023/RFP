@@ -1,0 +1,155 @@
+X-HCP-Custom-Metadata X-HCP-CustomMetadataAnnotations
+
+X-HCP-Domain X-HCP-DPL
+
+X-HCP-GID X-HCP-Hash
+
+(not returned for multipart objects)
+
+X-HCP-Index X-HCP-IngestProtocol
+
+X-HCP-IngestTime X-HCP-LabelRetentionHold
+
+X-HCP-LabelRetentionHold-Labels X-HCP-Owner X-HCP-Replicated X-HCP-Retention
+
+X-HCP-RetentionClass X-HCP-RetentionHold
+
+X-HCP-RetentionString X-HCP-Shred
+
+X-HCP-Size X-HCP-Type
+
+X-HCP-UID X-HCP-VersionID
+
+Directories:
+
+X-HCP-Type
+
+ACLs:
+
+X-HCP-ACL
+
+Status codes
+
+Success: 200, 204
+
+Error: 304, 400, 403, 404, 412, 414, 500, 503
+
+POST
+
+Changes one or more of these metadata values: Hold status Index setting
+
+Retention setting Shred setting
+
+Object owner
+
+Permissions
+
+For all operations: write
+
+For hold: privileged
+
+For owner: change owner
+
+Elements
+
+Authorization header Object URL
+
+A body containing these form-encoded values:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+816/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+To hold or release, this URL query parameter:
+
+hold=true|false
+
+To change the index setting, this URL query parameter: index=true|false
+
+To change the retention setting, this URL query parameter:
+
+retention=retention-expression
+
+To add or change a labeled retention hold, this query parameter:
+
+label_hold = [{"id":"UniqueLabelHold-1","hold":true|false},
+
+{"id":"UniqueLabelHold-2","hold":true|false}]
+
+To specify that the object will be shredded, this URL query parameter: shred=true
+
+To change the owner of the object, this URL query parameter:
+
+owner=user-name
+
+If the owner query parameter specifies an Active Directory user, this URL query parameter:
+
+domain=ad-domain
+
+Response headers
+
+X-HCP-ServicedBySystem
+
+X-HCP-ErrorMessage
+
+(if an error occurred and more information is available) Status codes
+
+Success: 200
+
+Error: 400, 403, 404, 414, 500, 503
+
+PUT
+
+Stores:
+
+Objects Versions
+
+Empty directories Annotations
+
+ACLs
+
+Copies objects
+
+Permissions
+
+For all operations: write
+
+To copy objects and versions: read for source namespace
+
+To hold or release: privileged
+
+To add an ACL: write or write ACL Elements
+
+For all operations:
+
+Authorization header Object or directory URL
+
+For all operations except directory creation:
+
+A body containing the data To send Gzip compressed data, a Content-Encoding request header with a value of gzip and a chunked transfer encoding
+
+To copy an object, this header: X-HCP-CopySource:source-namespace-name.source-tenant-name/object-path
+
+To add or change a labeled retention hold, this query parameter:
+
+label_hold = [{"id":"UniqueLabelHold-1","hold":true|false}, {"id":"UniqueLabelHold-2","hold":true|false}]
+
+Optionally, to control whether custom metadata is copied with object data, this header: X-HCP-MetadataDirective:ALL|NONE
+
+Default is NONE.
+
+To copy a specific version of an object, this URL query parameter:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+817/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+version=version-number

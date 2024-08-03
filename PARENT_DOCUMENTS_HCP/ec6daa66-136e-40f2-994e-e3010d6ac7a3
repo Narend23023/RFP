@@ -1,0 +1,79 @@
+Child of the Upload element. The UploadId element specifies the upload ID of the applicable multipart upload.
+
+UploadIdMarker
+
+Child of the ListMultipartUploadsResult element. The UploadIdMarker element specifies the value of the upload-id-marker query parameter included in the request. If the request did not include the upload-id-marker query parameter, the response body does not include the KeyMarker element. Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to list the in-progress multipart uploads in a bucket.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the requested multipart upload listing.
+
+400
+
+Bad Request
+
+Possible reasons include that a query parameter has an invalid value.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to list the in-progress multipart uploads in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404
+
+Not Found
+
+The specified bucket does not exist.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the multipart uploads for an object
+
+Here's a sample GET request for a listing of the in-progress multipart uploads in the finance bucket for an object named acctg/RulesAndRegulations.pdf. The request uses the prefix query parameter to specify the object name. Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?uploads &prefix=acctg/RulesAndRegulations" -H "x-hcp-pretty-print: true"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+599/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers
+
+GET /?uploads&prefix=acctg/RulesAndRegulations.pdf HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:IUzJmUIE9YYu9S6f7l9iYUqzZRE= x-hcp-pretty-print: true
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8
+
+Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListMultipartUploadsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Bucket>finance</Bucket>

@@ -1,0 +1,139 @@
+848/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Entry
+
+Valid values
+
+Description
+
+(+|-)hhmm
+
+For example, 2011-11-16T14:27:20-0500
+
+represents the start of the 20th second into 2:27 PM, November 16, 2011, EST. end(child)
+
+One of:
+
+Requests operation records for objects with change times before the specified date and time. This entry is a child entry of the changeTime entry.
+
+Milliseconds since January 1, 1970, 00:00:00 UTC
+
+An ISO 8601 datetime value in this format:
+
+The default value is one minute before the time HCP received the request. yyyy-MM-ddThh:mm:ssZ
+
+In the ISO 8601 format, you cannot specify a millisecond value. The time corresponds to zero milliseconds into the specified second.
+
+If you specify a value that is less than one minute before the current time, ensure that all writes finished at least one minute ago so that you get results for the most recent operations.
+
+directories
+
+N/A
+
+Specifies the directories to query. This entry contains zero or more directory entries.
+
+If you omit this entry, HCP returns operation records for objects in all directories in the
+
+specified namespaces.
+
+directory(child)
+
+The path to the directory containing the objects for which to retrieve operation records.
+
+Specifies a directory to query. This entry is a child of the directories entry.
+
+Start the path with a forward slash (/) followed by the
+
+If you query multiple namespaces, HCP returns operation records for the directory contents in each namespace in which the directory occurs. name of a directory immediately below
+
+rest, data, or fcfs_data. Do not include rest, dat a, or fcfs_data in the path.
+
+indexable
+
+One of:
+
+Specifies whether to filter the returned operation records based on the object index
+
+setting.
+
+true
+
+Return operation records only for objects with an index setting of true.
+
+HCP returns deletion and purge records only for objects that had the specified setting at
+
+the time they were deleted or purged. false
+
+Return operation records only for objects with index setting of false.
+
+If you omit this entry, HCP returns operation records for objects regardless of their index settings.
+
+namespaces
+
+N/A
+
+Specifies the namespaces to query. This entry contains zero or more namespace entries.
+
+If the URL in the request starts with default, you can omit this entry. The URL itself limits the query to the default namespace.
+
+If you omit this entry and the URL starts with admin, HCP returns operation records for the default namespace and the namespaces owned by each tenant that has granted system-level users administrative access to itself.
+
+If you omit this entry and the URL starts with a tenant name, HCP returns operation
+
+records for the tenant's namespaces that the user has permission to search.
+
+Specifies a namespace to query. This entry is a child of the namespaces entry.
+
+namespace A namespace name along with the name of the owning
+
+tenant, in this format:
+
+(child)
+
+namespace-name.tenant-name
+
+replication
+
+One of:
+
+Specifies whether to filter the returned operation records based on whether the object is flagged as a replication collision.
+
+Collsion
+
+true
+
+Return operation records only for objects that are
+
+HCP returns deletion and purge records only for objects that were flagged as replication
+
+flagged as replication collisions.
+
+collisions at the time they were deleted or purged. false
+
+Return operation records only for objects that are not flagged as replication collisions.
+
+If you omit this entry, HCP returns operation records for objects regardless of whether
+
+they are flagged as replication collisions.
+
+transactions
+
+N/A
+
+Specifies the operation types for which to query. This entry contains up to five transact ion entries, each specifying a different operation type.
+
+If you omit this entry, HCP returns records only for create, delete, and purge operations. transaction(child)
+
+One of:
+
+Specifies a type of operation for which to return records. This entry is a child entry of the transactions entry.
+
+create delete
+
+HCP returns prune and disposition records only when you explicitly request them.
+
+dispose

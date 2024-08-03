@@ -1,0 +1,45 @@
+discrepancy is that Windows applications that do not observe differences in case may not be able to access HCP objects by name.
+
+For example, suppose a Windows application adds a file named File.txt to the namespace by using the CIFS protocol. CIFS preserves case, so the namespace then contains an
+
+object named File.txt. Now suppose the application tries to retrieve that object using the name file.txt. CIFS is case sensitive, so it passes the request to HCP with only the name file.txt. It doesn’t include any case variations on the name, such as File.TXT, FILE.txt, or File.txt. As a result, HCP cannot find the object.
+
+If you have Windows applications that ignore case, you may want HCP to ignore case as well. You can change the CIFS protocol configuration in either of two ways to meet this need:
+
+Make CIFS case forcing
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+287/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+With this behavior, CIFS changes names to all upper- or lowercase in the requests it passes to HCP. To Windows applications, then, HCP appears to be case-insensitive. An application that stores File.txt and then retrieves File.TXT will get the right object back. The drawback to this method is that applications using other namespace access protocols must accommodate this behavior. For example, suppose CIFS changes names to
+
+all uppercase. If an application using the CIFS protocol stores an object named File.txt, applications using the case-sensitive HTTP, WebDAV, and NFS protocols need to retrieve the object as FILE.TXT. Make CIFS case insensitive
+
+With this behavior, CIFS preserves case as objects are stored in the namespace but passes through every case variation possible when applications make other requests for objects. For example, suppose an application using the CIFS protocol requests an object named FILE.txt. CIFS passes the request through with the names File.txt, FILE.txt, fiLe.TXT, and so on. HCP then returns the first object it finds with a name that matches any of these. The major drawback to this method is that performance is slowed by the need to check for matches to multiple case variations. A second drawback is that if the namespace contains multiple objects with names that vary only in case, HCP may return the wrong object.
+
+If you make CIFS both case forcing and case insensitive, it is case forcing when storing objects and case insensitive on requests for existing objects.
+
+Enabling CIFS access to a namespace The CIFS panel has three sections for enabling and configuring the CIFS protocol.
+
+Settings section
+
+1. Select Enable CIFS.
+
+2. To specify CIFS authentication requirements, select either Authenticated access only or Anonymous and authenticated access. 3. Click Update Settings in the Settings section. Allow/Deny section
+
+Optionally, in the Allow/Deny section, specify IP addresses to be allowed or denied access to the namespace through CIFS.
+
+CIFS case sensitivity
+
+The Windows operating system is case preserving but not case sensitive. The HCP CIFS implementation, by default, is both case preserving and case sensitive. One result of this discrepancy is that Windows applications that do not observe differences in case may not be able to access HCP objects by name.
+
+For example, suppose a Windows application adds a file named File.txt to the namespace by using the CIFS protocol. CIFS preserves case, so the namespace then contains an
+
+object named File.txt. Now suppose the application tries to retrieve that object using the name file.txt. CIFS is case sensitive, so it passes the request to HCP with only the name file.txt. It doesn’t include any case variations on the name, such as File.TXT, FILE.txt, or File.txt. As a result, HCP cannot find the object. If you have Windows applications that ignore case, you may want HCP to ignore case as well. You can change the CIFS protocol configuration in either of two ways to meet this need:
+
+Make CIFS case forcing

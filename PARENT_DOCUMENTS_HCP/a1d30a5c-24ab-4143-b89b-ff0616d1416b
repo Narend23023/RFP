@@ -1,0 +1,37 @@
+Request in Python using PycURL
+
+import pycurl import os filename = "logPrepare.xml" filehandle = open(filename, "rb") filesize = os.path.getsize(filename) curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", \ "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"])
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+404/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/logs/prepare") curl.setopt(pycurl.SSL_VERIFYPEER, False) curl.setopt(pycurl.SSL_VERIFYHOST, False) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, filesize) curl.perform() filehandle.close() curl.close()
+
+Request headers
+
+POST /mapi/logs/prepare HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: application/xml Content-Length: 56 Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Download the logs
+
+Here’s a sample POST request that downloads the system logs prepared in the previous example to your current directory in a zip file. The request downloads the Service logs for General Node 17. The log type and selected General Node are specified in an XML file named logDownload.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <logDownload> <nodes>17</nodes> <content>SERVICE</content> </logDownload>
+
+Request with cURL command line
+
+curl -X POST -T logDownload.xml -k -H "Content-type: application/xml"
+
+H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs/download" -o logDownload.zip
+
+Request in Python using PycURL

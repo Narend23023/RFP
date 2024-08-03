@@ -1,0 +1,61 @@
+This option is available only if you select the Enable versioning option or if versioning has ever been enabled.
+
+To keep or not keep deletion records, select or deselect the Keep deletion records for versioned objects option, respectively.
+
+6. Click Update Settings.
+
+If the version pruning option is unselected, a confirming message appears.
+
+7. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 8. Click Update Settings.
+
+Changing the compatibility setting
+
+When you create a namespace, atime synchronization is disabled. You can change this setting at any time. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+279/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+To view the compatibility setting for a namespace, you need the monitor or administrator role. To change the compatibility setting, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Settings.
+
+4. On the left side of the Settings panel, click Compatibility. 5. In the Compatibility panel, select or deselect the Synchronize POSIX atime values and object retention settings. 6. Click Update Settings.
+
+Changing disposition settings
+
+When you create a namespace, disposition is disabled for both objects with expired retention periods and objects flagged as replication collisions. Once the namespace exists, you can change these settings at any time. To view the disposition settings for a namespace, you need the monitor, administrator, or compliance role. To change the disposition settings for a namespace, you need the compliance role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Services. 4. On the left side of the Services panel, click Disposition. 5. In the Disposition panel:
+
+To enable or disable disposition for objects with expired retention periods, select or deselect Automatically delete objects with expired retention periods, respectively.
+
+To enable or disable disposition for objects flagged as replication collisions, select or deselect Automatically delete replication collision objects after ... days, respectively. If you select this option, in the option field, type the number of days objects flagged as replication collisions must remain in the namespace before they are automatically deleted. Valid values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means delete immediately.
+
+6. Click Update Settings.
+
+Changing the automatic abort time for multipart uploads
+
+The automatic abort time for a namespace determines how long multipart uploads can remain incomplete before they are automatically aborted.
+
+You can change the automatic abort time for a namespace at any time while the namespace is cloud optimized. You cannot change the automatic abort time for a namespace that is not cloud optimized.
+
+To view the automatic abort time for a namespace, you need the monitor or administrator role.
+
+To change the automatic abort time for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Multipart Upload. 5. In the Abort incomplete multipart uploads field, type the number of days after which HCP should automatically abort incomplete multipart uploads in the namespace. Valid values are integers in the range zero through 180. A value of zero means multipart uploads are never automatically aborted.
+
+6. Click Update Settings.
+
+Changing replication options
+
+You can enable or disable replication for a namespace on the namespace Replication panel. While replication is enabled for the namespace, you can change options that relate to replication. While replication is disabled for the namespace, these options are hidden.
+
+The replication options you can change are:
+
+Read from remote system.
+
+By default, when you create a namespace, this option is enabled. Important: Do not disable the read-from-remote-system option unless you have a specific reason to do so. Accept REST, S3 compatible requests redirected from other HCP systems.

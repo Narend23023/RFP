@@ -1,0 +1,72 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> // Clean up after ourselves and release the HTTP connection to the
+// connection manager.
+EntityUtils.consume(httpResponse.getEntity());
+}
+.
+.
+.
+}
+Copying an object or version of an object
+You use the HTTP PUT method to copy an object or existing version of an object from one location to another. The copy operation has these characteristics:
+The source location can be any namespace, including the default namespace.
+The target location must be an HCP namespace within the source tenant and can include the source namespace.
+The name of the target object can differ from the name of the source object.
+The copied object inherits all its system metadata from the target namespace default values and does not have any ACL values. However, you can specify whether custom
+metadata is copied with the object data.
+When versioning is enabled, the target object gets a new version ID that differs from the source object version ID.
+You cannot store a new version of an object that is under retention or on hold in the target namespace.
+Copying a large object can take some time. If a client times out because a copy operation is taking too long, HCP continues the operation in the background.
+Because the connection to the client is broken, HCP cannot report the completion of the copy operation to the client. Until the operation is complete, HCP returns a 404 Not Found
+status code in response to HEAD requests for the object being created by the copy operation.
+After a copy operation finishes successfully, HCP returns information about the new object in response to HEAD requests for the object. If the operation does not succeed, HCP
+continues to return a 404 Not Found status code in response to HEAD requests for the object.
+If copy operations are causing a client to time out, consider increasing the client timeout interval.
+Note: Depending on the replication configuration, copy operations may be slow, thereby increasing the likelihood of client timeouts.
+Access permission
+To copy an object or version, you need read permission for the source namespace and write permission for the target namespace.
+Request header
+PUT /rest/directory/file HTTP/1.1
+The PUT request to copy an object or version of an object has these elements:
+If you’re accessing the target namespace as an authenticated user, an Authorization header
+An header in this format: X-HCP-CopySource
+X-HCP-CopySource: source-namespace-name.source-tenant-name/source-object-path
+The value of the header must be URL-encoded. X-HCP-CopySource
+A URL specifying the location in which to store the object
+Note: If the header identifies a directory, HCP creates an empty directory with the path specified in the target URL, assuming the specified path does not already X-HCP-CopySource
+exist.<br>
+                       <b>Bounding box:</b> x1=185, y1=1981, x2=1516, y2=2094
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

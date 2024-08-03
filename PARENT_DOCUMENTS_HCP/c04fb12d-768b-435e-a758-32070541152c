@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <InitiateMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Bucket>finance</Bucket> <Key>acctg/RulesAndRegulations.pdf</Key> <UploadId>94837746087105</UploadId> </InitiateMultipartUploadResult>
+
+Uploading a part of a multipart upload
+
+You use the HTTP PUT method with the uploadId and partNumber query parameters to upload a part of a multipart upload. The bucket where you upload the part must be the same bucket as the one where the multipart upload was initiated.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+641/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+To upload a part, you must be an authenticated user. You need to use the same user account as the account used in the request to initiate the multipart upload. Additionally, you need write permission for the bucket where you're uploading the part. For a request to upload a part, the request body consists of the data in a specified file.
+
+You use the uploadId query parameter to specify the upload ID of the multipart upload for which you're uploading the part. If the upload ID you specify doesn't match the upload ID of an in-progress multipart upload or isn't associated with the object specified in the request, HCP returns a 404 (Not Found) status code and does not upload the part.
+
+When you upload a part, you use the partNumber query parameter to specify the part number of the data you're uploading. The part number must be an integer in the range 1 (one) through 10,000.
+
+The parts of the data for an object are ordered, but the part numbers do not need to start at one and do not need to be consecutive numbers. For example, if you're uploading the data for an object in three parts, you could number the parts 1, 2, and 3, but you could also number them 2, 7, and 19. You can upload the parts of a multipart upload in any order. However, in the request to complete the multipart upload, you need to list the parts in ascending numeric order.
+
+You can upload multiple parts of a multipart upload concurrently.
+
+If a request to upload a part includes any custom metadata (x-amz-meta-) headers, HCP returns a 400 (Bad Request) status code and does not upload the part.
+
+HCP ignores ACL headers in requests to upload a part. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to upload a part of a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /object-name?uploadId=upload-id&partNumber=part-number HTTP/1.1
+
+With the bucket name following the hostname: PUT /bucket-name/object-name?uploadId=upload-id&partNumber=part-number HTTP/1.1
+
+The uploadId and partNumber query parameters are not case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to upload a part of a multipart upload.
+
+Authorization
+
+Specifies user credentials or requests anonymous access. Content-Length
+
+Specifies the size, in bytes, of the data being uploaded.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.

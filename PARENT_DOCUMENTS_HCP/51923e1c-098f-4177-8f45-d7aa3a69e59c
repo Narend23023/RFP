@@ -1,0 +1,47 @@
+If the Operations per Second graph is not currently visible, click Operations per Second to display it.
+
+The x‑axis in the Operations per Second graph marks the passage of time. The axis shows 30 days (or fewer if the replication link was created less than 30 days ago). The y-axis marks the operation rate in tens, hundreds, or thousands. As the operation rate varies, the measurement unit on the y-axis grows or shrinks as needed (for example, from tens to
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+361/907
+
+6/25/24, 11:34 AM Content Platform System Management Help
+
+hundreds to thousands).
+
+The graph heading displays the current rate of replication operations. Factors that affect the operation rate are the same as those that affect the data transmission rate.
+
+Remote storage space
+
+The Remote Total Primary Storage pie chart in the link status Overview panel for an active/active link or an outbound active/passive link during replication shows the amounts of free and used space in primary storage for the other system involved in the link. Each amount is also shown as a number of bytes.
+
+In a HCP with SAN-attached storage system with spindown storage, the storage being measured in this chart includes both primary running storage and primary spindown storage. In this case, a second pie chart to the right, labeled Remote Primary Running Storage, shows the amounts of free and used space in only primary running storage. The two systems involved in a replication link do not necessarily have the same storage capacity or storage tiering strategies. If a system receiving replicated data starts to run low on free space in primary running storage, you need to evaluate whether to take action on that system to address the issue (for example, by increasing the primary running storage capacity or by tiering more data to other types of storage).
+
+When primary running storage in the remote system for a replication link is almost full, the Overview page in the HCP System Management Console for the local system displays an alert. When the storage is full, the Console displays a different alert, and HCP automatically suspends replication on the link. Tenants view
+
+To monitor the status of replication or recovery activity for the individual tenants on a given replication link, you use the link status Tenants panel in the HCP System Management Console.
+
+Display the Tenants panel
+
+1. In the list of links on the replication Links page, click the name of the link you want. 2. On the replication link details page, click Status. 3. In the link Status panel, click the Tenants tab.
+
+Understanding the tenant list
+
+The link status Tenants panel lists the tenants on a replication link, including the default tenant if the link includes any default-namespace directories. For each tenant, the list shows: Name
+
+The tenant name. Sent as Of
+
+For an active/active link, an outbound active/passive link during replication, or an inbound active/passive link during data recovery, the average of the sent-as-of times for the tenant's namespaces. The sent-as-of time for a namespace is the amount of time that is the difference between:
+
+The date and time before which the namespace content is guaranteed to have been sent from the local system to the remote system The current date and time
+
+For the default tenant, this is the average sent-as-of time among the directories on the link. Tip:
+
+If some tenants are significantly less up to date than others, set the replication priority for the link to Oldest Object First to reduce the gap. If the sent-as-of time is consistently increasing for one or more tenants, even with the replication performance level set to High, you may need to add more processing power (for example, additional nodes) to your system or increase the bandwidth between the two systems involved in the link. Received as Of
+
+For an active/active link, an outbound active/passive link during data recovery, or an inbound active/passive link during replication, the average of the received-as-of times for the tenant's namespaces. The received-as-of time for a namespace is the amount of time that is the difference between:
+
+The date and time before which the namespace content is guaranteed to have been sent from the remote system to the local system The current date and time
+
+For the default tenant, this is the average received-as-of time among the directories on the link. Status

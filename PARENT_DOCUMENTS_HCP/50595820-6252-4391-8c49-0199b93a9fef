@@ -1,0 +1,41 @@
+The System Events page in the Console displays HCP S Series Balancing service event status and metrics about each event. Metrics include the number of objects examined, the number of bytes examined, the number of objects moved to another S Series Node, and the number of bytes moved. The S Series Balancing page in the Console displays balancing status and metrics for each pool configured to use the service. Metrics include the pool balancing status (balanced, balancing, paused, unscheduled, or unavailable) and the percent balanced. Note: The HCP S Series Balancing service reports that a pool is balanced when the S Series Node in the pool have a percent-used disparity of less than 10%. The Overview, Services, and Monitoring System Events pages in the Console show HCP S Series Balancing service status.
+
+Scavenging service
+
+The Scavenging service ensures that objects in the repository have valid metadata. When the service runs, it verifies that both the primary metadata for each object and the
+
+secondary metadata are complete, valid, and in sync with each other.
+
+For the purpose of scavenging, HCP treats these as individual objects:
+
+Parts of multipart objects Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+To correct violations it detects, the Scavenging service tries to rebuild or repair the problem metadata:
+
+If the primary metadata for an object is missing, the service reconstructs it from the secondary metadata. If a user or application changed any of the object metadata between when the violation occurred and the time of its repair, those changes may be overwritten with the previous settings. If the primary metadata is missing a pointer to a copy of the object data, the service reconstructs that pointer.
+
+If the secondary metadata for an object doesn’t match any copies of the primary metadata, the object is considered irreparable, and the service moves it to the .lost+found directory, located under rest, data, or fcfs_data, as applicable,. At this point, you need to determine whether the object needs to be stored again and, if so, ensure that it happens. You can delete an object from the .lost+found directory only when it’s not under retention.
+
+In the default namespace, the Scavenging service detects and repairs violations in the metadata for directories only if the directory is associated with abandoned data (that is, data no longer associated with any metadata). If the service cannot recover the directory metadata, it rebuilds it from the metadata associated with the parent directory.
+
+The Scavenging service runs according to the active service schedule.
+
+Note: The Scavenging service does not ensure object metadata validity for objects stored in namespaces that use service plans that have HCP S Series storage set as the ingest tier.
+
+Shredding service
+
+Shredding, also called secure deletion, is the process of overwriting the places where all the copies of the data, secondary metadata, and custom metadata for an object were stored in such a way that the object cannot be reconstructed. The Shredding service shreds deleted objects that are marked for shredding. If the object is a multipart object, the Shredding service shreds each part of the object. The Shredding service also shreds unused parts of multipart uploads that were initiated in namespaces where the default shred setting is true.
+
+The primary metadata for a shredded object is deleted from HCP after all of these events have happened:
+
+The object is removed from the metadata query engine index, if applicable. The object deletion is replicated, if applicable.
+
+For old versions of objects, the version is pruned or purged. The deletion record for the object is deleted from the transaction log. If the Garbage Collection service is configured never to delete deletion records from the transaction log, the primary metadata for the object remains in the system indefinitely.
+
+The shredding policy for each object determines whether that object is shredded.
+
+Note: The Shredding service does not shred object data if: The data is stored in a namespace that uses a service plan that has HCP S Series storage set as the ingest tier. The data is stored on extended storage.
+
+Shredding service processing
+
+By default, the Shredding service uses three passes to overwrite the areas where the object data, secondary metadata, and custom metadata were stored. The three passes are applied to the entire object, repeating for each 128-KB block. Each pass has this pattern:

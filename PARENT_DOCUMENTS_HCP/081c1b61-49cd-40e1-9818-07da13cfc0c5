@@ -1,0 +1,21 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+462/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<replicationLink> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>us-eu</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>32871da5-2355-458a-90f5-1717aa684d6f</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-an.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>us-an</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>c8c875ad-dbfe-437d-abd3-862a6c719894</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-an.example.com</name> <name>hcp-ca.example.com</name> </hcpSystems> <name>ca-an</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>a1f21e03-fb46-48cc-967e-b0cedf80bb20</uuid> </replicationLink> </replicationLinks> <restorePeriod>5</restorePeriod> <state>ACTIVE</state> <tenants> <name>research-dev</name> <name>sales-mktg</name> <name>exec</name> <name>finance</name> </tenants> <type>RING</type> </ecTopology>
+
+Query parameter for retiring an erasure coding topology
+
+You use the retire query parameter to retire an erasure coding topology. You use this parameter on a POST request against the topology resource. You cannot include a request body with this request.
+
+Here's a sample POST request that retires the erasure coding topology named ex-corp-3. curl -k -d "<ecTopology/>" -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ ecTopologies/ex-corp-3?retire"
+
+Query parameter for forcing the deletion of an erasure coding topology
+
+You can delete an erasure coding topology only while either of these is true:
+
+At least one system in the topology is available, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retired. These are the normal conditions for deleting a topology. No more than one system in the topology is unavailable, the total number of erasure-coded objects and erasure-coded parts of multipart objects on each available system is zero, and the state of the topology is retiring. To delete the topology under these conditions, you need to include the force=true query parameter on the DELETE request. Important: Deleting an erasure coding topology under these conditions may result in inaccessible data in namespaces on the unavailable system, even if those namespaces are configured to be compliant. You should delete the topology only if that system is no longer needed. If the system is still needed, wait to delete the topology until the topology has finished retiring on all systems.

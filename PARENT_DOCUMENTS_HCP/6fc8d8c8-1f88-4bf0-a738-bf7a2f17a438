@@ -1,0 +1,65 @@
+How to change compression/encryption settings
+
+To change the settings for the Compression/Encryption service, on the Compression page in the System Management Console:
+
+In the Compression Settings section, configure the settings that you want to use:
+
+To compress only objects and parts added to a namespace more than a certain number of days ago, type the number of days in the Compress objects stored more than field. Valid values are integers in the range zero through 40,000.
+
+A value of zero tells the Compression/Encryption service not to use age as a criterion when selecting objects and parts to compress. To compress only objects and parts larger than a certain size, type the size, in KB, in the Compress objects larger than field. Valid values are integers in the range zero though 104,857,600 (100 GB).
+
+A value of zero tells the Compression/Encryption service not to use size as a criterion when selecting objects and parts to compress.
+
+In the Other Compression/Encryption Settings section, change the settings to match the HCP system configuration of the following components: S Series node objects
+
+Modify Compression/Encryption settings of HCP S Series Node objects.
+
+Legacy encrypted S Series node objects
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+110/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Re-encrypt objects that are encrypted earlier to HCP Release 8.2 to use either local encryption or KM Server encryption on HCP S Series Node objects. Legacy encrypted cloud objects
+
+Re-encrypt objects that are encrypted earlier to HCP Release 8.2 to use either local encryption or KM Server encryption on cloud objects. Then click Update Settings.
+
+If you change any of the Other Compression/Encryption Settings, a confirming message appears. In the field in the message window, type YES (this is case sensitive) to confirm that you understand the consequences of your action. To exclude objects and parts from compression based on location or name, specify the criteria for exclusion in the Exclude from Compression list:
+
+To add a criterion to the list, type the criterion in the field above the list. Then click Add.
+
+To remove a criterion from the list, click the delete control ( To remove all criteria from the list, click Delete All. ) for that criterion.
+
+Exclusion criteria
+
+You can exclude objects and parts from compression based on location, name, or a combination of the two. Locations are paths relative to the namespace identification plus any protocol-specific identifiers, such as rest for HTTP or data for the CIFS protocol.
+
+For object names, you can use patterns. The wildcard character for pattern matching is the asterisk (*), which matches any number of characters of any type, including none.
+
+The format for criteria in the exclude list is: [/directory-path/]object-name-pattern
+
+The initial forward slash (/) is required with a directory path.
+
+Here are some examples:
+
+Either of these excludes all objects and parts in the corporate/mktg/graphics directory, as well as all objects and parts in all subdirectories of that directory, recursively: /corporate/mktg/graphics/*
+
+/corporate/mktg/graphics/*.*
+
+This excludes all objects and parts with names ending in .jpg:
+
+.jpg
+
+This excludes all objects and parts that have names ending in .ppt and that are in the /corporate/hr/benefits directory or any of its subdirectories, recursively:
+
+/corporate/hr/benefits/*.ppt
+
+This excludes all objects and parts that have names matching 21*_*.* (for example, 2198_John_Doe.doc) and that are in the corporate/hr/employees directory or any of its subdirectories, recursively: /corporate/hr/employees/21*_*.* Content Verification service
+
+When an object is created, HCP uses cryptographic hash algorithms to calculate various hash values for it. These values, which are generated based on the object data, system
+
+metadata, and custom metadata are stored with the primary metadata for the object.

@@ -1,0 +1,61 @@
+Users and applications represent system metadata and identify custom metadata by using query parameters appended to the URLs. HCP returns system metadata in HTTP response headers and returns custom metadata in the format in which it was originally specified.
+
+Object representation with the S3 compatible API
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+4/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+With the S3 compatible API, HCP represents each object as a URL. The exact format of this URL depends on how the application used to access the object handles user
+
+authentication.
+
+The S3 compatible API does not have the concept of directories. Slashes in object names are simply part of the name and are not directory separators. Thus, with the S3 compatible
+
+API, objects do not have paths. Here’s an example of one of the possible URLs for an object named images/wind.jpg in a namespace named climate in a tenant named geo in an HCP system named
+
+hcp.example.com:
+
+http://climate.geo.hcp.example.com/hs3/images/wind.jpg
+
+Users and applications represent system and custom metadata by using HTTP request headers. HCP returns system and custom metadata in HTTP response headers. Object representation with other namespace access protocols
+
+For namespace access protocols other than the HTTP and S3 compatible APIs, HCP includes a standard POSIX file system called HCP-FS that represents each object as a set of
+
+files. One of these files has the same name as the object. This file contains the fixed-content data. When downloaded or opened, this file has the same content as the originally stored item.
+
+The other files that HCP-FS presents contain object metadata. These files, most of which are plain text, are called metafiles.
+
+All files containing fixed-content data are in a directory hierarchy headed by data. All metafiles are in a directory hierarchy headed by metadata.
+
+With this view of objects as conventional files and directories, HCP supports routine file-level calls and enables users and applications to find fixed-content data in familiar ways. HCP nodes and storage
+
+An HCP system includes multiple nodes that are networked together, where each node is either an individual server, a blade in a blade server, or a virtual machine. Each physical
+
+node can have multiple internal drives and/or can connect to SAN storage. Each virtual node emulates a server that has only internal drives.
+
+The physical storage that’s managed by the nodes in the HCP system is called primary storage. By default, primary storage consists entirely of running storage, which is storage on
+
+continuously spinning disks. However, an HCP with SAN-attached storage system can be configured to use SAN storage that includes both running storage and spindown storage,
+
+which is storage on disks that can be spun up or spun down as needed. HCP uses primary spindown storage for tiering purposes.
+
+You can also add HCP S Series Nodes , known as S Series storage, to an HCP system. S Series Nodes are highly efficient, highly available, cost-effective storage devices that support very large amounts of data. An S Series Node uses commodity hardware which ensures that the costs of growth and repair remain low. To protect data, S Series Nodes use
+
+erasure coding. S Series Nodes also use several internal processes to continuously check the integrity of the stored data and the storage media.
+
+You can use S Series Nodes as an alternative to primary running storage or as a tiering platform. This is configurable. HCP uses the S Series Node S3 compatible API to write,
+
+retrieve, and otherwise manage objects in an S Series Node. A single HCP system can seamlessly write data across multiple S Series Nodes, thereby enabling scalability in both capacity and performance.
+
+Additionally, for tiering purposes, HCP can use extended storage. Extended storage is storage that's managed entirely outside of the HCP system.
+
+Each node has its own set of logical volumes. Logical volumes on storage managed by HCP are local storage volumes. Logical volumes can also be NFS volumes (also called
+
+external volumes). These are volumes that are stored on extended storage and are accessed using NFS mount points. General nodes
+
+General nodes are the core components of an HCP system. These nodes manage the objects that reside in HCP system storage. To ensure data integrity and continuous availability

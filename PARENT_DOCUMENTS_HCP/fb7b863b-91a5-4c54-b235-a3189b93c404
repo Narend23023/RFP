@@ -1,0 +1,79 @@
+89/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If a tenant is configured to allow system-level users to manage it, clicking the URL for that tenant opens its Tenant Management Console Overview page. For an HCP tenant, the Overview page opens only if at least one of your client IP addresses is allowed access to the Tenant Management Console for the tenant. If the tenant is not configured to allow system-level users to manage it, clicking the URL for that tenant opens its Tenant Management Console login page.
+
+You can also use the access control (
+
+) for a tenant to click through to the Tenant Management Console. Tenant description
+
+The tenant Overview panel shows the tenant description, if any, below the tenant URL. This is optional text that you can specify when creating or modifying the tenant.
+
+Features Enabled section
+
+The Features Enabled section of the tenant Overview panel lists the features that are enabled for the tenant. Possibilities are: Replication
+
+The tenant is eligible for replication.
+
+Retention Mode Selection
+
+An HCP tenant administrator can create namespaces in either enterprise or compliance mode. Additionally, a tenant administrator can change the retention mode of a namespace from enterprise to compliance.
+
+Without this feature, tenant administrators can create namespaces only in enterprise mode and cannot subsequently change the retention mode.
+
+The default tenant administrator can change the retention mode of the default namespace from enterprise mode to compliance mode (if the namespace was originally in enterprise mode). Search
+
+Tenant administrators can enable and disable search in the namespaces that the tenant owns.
+
+Service Plan Selection
+
+Tenant administrators can associate service plans with the namespaces that the tenant owns.
+
+If the tenant does not have this feature, the HCP system administrator chooses the service plan for the tenant, and that service plan applies to all namespaces owned by that tenant.
+
+Versioning
+
+Tenant administrators can enable and disable versioning in the namespaces that the tenant owns. This feature is available only for HCP tenants.
+
+Namespaces section
+
+For HCP tenants only, the Namespaces section of the tenant Overview panel shows:
+
+Quota
+
+The number of namespaces that HCP reserves for the tenant out of the total number of namespaces that the system can have. This is also the maximum number of namespaces that the tenant can own at any given time. If the tenant doesn’t have a namespace quota, this field displays No Quota. Used
+
+The number of namespaces the tenant currently owns.
+
+Available
+
+If the tenant has a quota, this is the number of additional namespaces that the tenant can own. If the tenant has no quota, this is the number of unallocated namespaces out of the total number of namespaces the system can have, minus the number of existing namespaces owned by tenants that don’t have quotas.
+
+When calculating the number of available namespaces for a tenant with no quota, HCP considers only locally created namespaces and not namespaces that were replicated to the system from another system Objects section
+
+The Objects section of the tenant Overview panel shows:
+
+Ingested
+
+The total number of objects currently stored in all the tenant's namespaces. Each version of an object counts as a separate object. However, the object count does not
+
+include delete markers or delete records. When you delete an object from a versioning-enabled namespace, a delete marker is created to indicate that the object has been deleted. A delete marker has a version ID but does not have any data or metadata. For more information on delete markers and delete records please see Enabling delete markers section in Versioning.
+
+Multipart objects are each counted as a single object. Objects that are in the process of being created by a multipart upload are not included in the object count. Indexed
+
+The total number of indexed objects currently stored in all the tenant's namespaces. This item appears only if the tenant has the search feature and a search facility is currently selected for use with the Search Console.
+
+Erasure coded
+
+The total number of erasure-coded objects in all the tenant's namespaces. An object is counted as erasure coded if a chunk for it is stored on the current system.
+
+Each multipart object counts as one object even though the parts of a multipart object are erasure coded independently of each other. Storage section
+
+For HCP tenants only, the Overview panel includes a Storage section. This section shows:
+
+Quota
+
+The total amount of storage available to the tenant for allocation to its namespaces. Used

@@ -1,0 +1,89 @@
+Child of the Part element. The PartNumber element specifies the part number of the applicable part.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to complete a multipart upload.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to complete a multipart upload, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+x-amz-server-side-encryption
+
+Specifies whether objects stored in HCP are encrypted. Possible values are:
+
+If objects are encrypted, AES256 If objects are not encrypted, None
+
+This header is returned only if the request headers include x-amz-server-side-encryption. x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+Response body
+
+HCP returns information about the object that results from a successful complete multipart upload request in an XML response body.
+
+The information is returned in the following format:
+
+<?xml version='1.0' encoding='UTF-8'?> <CompleteMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2020-09-01/"> <Location>object-url</Location> <Bucket>bucket-name</Bucket> <Key>object-name</Key> <ETag>&quot;etag&quot;</ETag> </CompleteMultipartUploadResult>
+
+The following list describes the XML elements returned in the response body. The elements are listed in alphabetical order. Bucket
+
+Child of the CompleteMultipartUploadResult element. The Bucket element specifies the bucket where the object was created.
+
+CompleteMultipartUploadResult
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+654/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Root element.
+
+ETag
+
+Child of the CompleteMultipartUploadResult element. The ETag element specifies the ETag for the object. The ETag in the multipart upload complete operation is not an MD5 hash of the object data and therefore is not useful for verifying the data integrity. Key
+
+Child of the CompleteMultipartUploadResult element. The Key element specifies the name of the object.
+
+Location
+
+Child of the CompleteMultipartUploadResult element. The Location element specifies the complete URL for the object.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to complete a multipart upload. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+Possible reasons include:
+
+HCP successfully started processing the request.
+
+To determine whether the multipart upload successfully completed, check whether HCP returned a response body that identifies the resulting multipart object or an error response body.
+
+The following errors can cause a request to complete a multipart upload to fail after HCP returns the 200 (OK) status code:
+
+The list of parts in the request body includes a part, other than the last part, that is smaller than one megabyte. The list of parts in the request body includes one or more part numbers that are not the number of an uploaded part. The ETag associated with one or more part numbers listed in the request body is not the ETag returned for the part with the specified part number. The parts in the request body are not listed in ascending order. The request includes the If-Match request header and either the value specified by the header does not match the ETag of the most recent version of the specified object, or the specified object does not already exist.
+
+The application attempts to set a labeled hold on an object with an HCP version earlier than 9.1.
+
+400 Bad Request
+
+Possible reasons include:

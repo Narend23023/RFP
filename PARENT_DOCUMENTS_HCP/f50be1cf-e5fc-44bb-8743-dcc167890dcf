@@ -1,0 +1,83 @@
+x-amz-acl
+
+Adds a canned ACL to the bucket. This header is used only to add a canned ACL to a bucket. If you’re using individual x-amz-grant- headers to add the ACL, the x-amz-acl header is invalid.
+
+x-amz-grant-full-control
+
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid. x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid.
+
+x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid. x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid.
+
+x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid. x-amz-meta-
+
+Adds custom metadata to the resulting object when the multipart upload is completed.
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body.
+
+COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+639/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example
+
+x-amz-object-lock-mode: GOVERNANCE x-amz-object-lock-retain-until-date
+
+Specify the date and time until which an object must be retained. The date and time must be in YYYY-MM-DDTHH:MM:SSZ format, where YYYY represents the year, MM represents the month, DD represents the day, T represents the time separator, HH represents the hour in 24-hour format, MM represents the minute, SS represents the second and Z represents the time zone. Example x-amz-object-lock-retain-until-date: 2023-03-30T00:00:00Z
+
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot overwrite or delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example
+
+x-amz-object-lock-legal-hold: ON
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response headers
+
+The list below describes the headers returned in response to a successful request to initiate a multipart upload.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to initiate a multipart upload, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:

@@ -1,0 +1,53 @@
+When using the S3 compatible API, you can view objects as being in a flat space or in a structured space:
+
+In a flat space, objects are not grouped by any sort of structural elements, such as folders (also called directories), and forward slashes (/) in object names are simply part of those names. In a structured space, forward slashes in object names serve as folder separators, and objects can be grouped into folders.
+
+To support the structured view, when you use the S3 compatible API to store an object that has forward slashes in its name, HCP also creates folders and subfolders that conform to the pattern of those forward slashes. For example, if you store an object named quarterly_rpts/Q4_2019, HCP not only stores that object but also creates a folder named quarterly_rpts. HCP does not create duplicate folders. If, after storing the object named quarterly_rpts/Q4_2019, you store an object named quarterly_rpts/Q3_2019, the single quarterly_rpts folder appears to contain two objects: Q4_2019 and Q3_2019.
+
+Folders provide a method for organizing the objects you store in a bucket. By using meaningful names for the portions of object names from which HCP creates folders, you can more easily manage the contents of the bucket.
+
+You can also use the S3 compatible API to create folders and subfolders by themselves. For example, you could create a folder named mktg with a subfolder named budget_proposals. If you then store an object named mktg/budget_proposals/BudgProp-2020, that object appears to be in the mktg/budget_proposals folder. Folder names follow the same rules as object names. When you use HCP interfaces other than the S3 compatible API to view or manage objects stored through the S3 compatible API, HCP always treats forward slashes in object names as folder separators. So, for example, in the Namespace Browser, the object you stored as quarterly_rpts/Q4_2019 shows up as an object named Q4_2019 in the quarterly_rpts folder.
+
+Grouping objects into folders not only lets you more easily manage those objects, it can also enhance HCP performance.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+545/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Object naming considerations
+
+The following considerations apply to object names.
+
+Names ending with a forward slash A forward slash (/) at the end of a name indicates that the item is a folder. So, for example, if you include a forward slash at the end of the object name in a request to store an object, HCP creates an empty folder with that name and does not store the object.
+
+Period or forward slash as an object or folder name
+
+You cannot use a period (.) or forward slash (/) by itself as the name of an object or folder. Object names with non-ASCII, nonprintable characters
+
+When you store an object with non-ASCII, nonprintable characters in its name, those characters are percent-encoded in the name displayed back to you.
+
+Regardless of how the name is displayed, the object is stored with its original name, and you can access it either by its original name or by the names with the percent-encoded characters. Object names and access through the CIFS and NFS protocols
+
+The CIFS and NFS protocols cannot handle object or folder names that are longer than 255 bytes. An object stored through the S3 compatible API is inaccessible through CIFS and
+
+NFS if:
+
+The object name is longer than 255 bytes and does not include any forward slashes. The object name includes one or more forward slashes and any part of the name is longer than 255 bytes. In this case, a part of an object name is any character string that either precedes the first forward slash, comes between two forward slashes, or follows the last forward slash. Percent-encoding special characters
+
+With the S3 compatible API, object names are specified in URLs. Some characters have special meaning in URLs and may be interpreted incorrectly when used for other purposes. To avoid ambiguity, percent-encode the special characters listed in the table below.
+
+Character Percent-encoded values
+
+Space
+
+%20
+
+Tab
+
+%09
+
+New line

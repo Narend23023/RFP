@@ -1,0 +1,95 @@
+{"query": {"expression":"customMetadataContent:
+
+"department.Accounting.department""}, "resultSet":[
+
+{"version":84689494804123, "operation":"CREATED",
+
+"urlName":"https://finance.europe.hcp.example.com/rest/presentations/
+
+Q1_2012.ppt", "changeTimeMilliseconds":"1334244924615.00",
+
+"retention":0, "shred":false},
+
+. .
+
+. ],
+
+"status":{ "message":"", "results":12, "code":"COMPLETE"}
+
+} }
+
+Custom metadata file for the Q1_2012.ppt object
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+861/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<?xml version="1.0">
+
+<presentation>
+
+<presentedBy>Lee Green</presentedBy> <department>Accounting</department>
+
+<slides>23</slides> <date>04-01-2012</date> </presentation>
+
+Example: Using a paged query to retrieve a list of all objects in a namespace
+
+The Java® example below implements a paged query that uses multiple requests to retrieve all objects in a namespace. The example returns metadata for fifty objects per request and also returns information about the size and ingest time of each object in the result set.
+
+This example uses the com.hds.hcp.apihelpers.query Java class infrastructure, which uses the Jackson JSON processor to produce a JSON query request body and consume a JSON query response. To limit the example size, the example does not include the source code for this infrastructure. To view the full source code, see
+
+http://community.hitachivantara.com/groups/developer-network-for-hitachi-content-platform and reference the sample code section.
+
+The Jackson JSON processor serializes and deserializes JSON formatted content with Java Objects. For more information about the Jackson JSON processor, see http://jackson.codehaus.org.
+
+package com.hds.hcp.examples;
+
+import java.util.List;
+
+import java.io.BufferedReader; import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+
+import org.apache.http.client.HttpClient; import org.apache.http.client.HttpResponseException;
+
+import org.apache.http.client.methods.*; import org.apache.http.entity.StringEntity; import org.apache.http.util.EntityUtils;
+
+/* General purpose helper routines for samples */
+
+import com.hds.hcp.apihelpers.HCPUtils;
+
+/* Provide for helper routines to encapsulate the queryRequest and queryResults. */ import com.hds.hcp.apihelpers.query.request.Object;
+
+import com.hds.hcp.apihelpers.query.request.QueryRequest; import com.hds.hcp.apihelpers.query.result.Status; import com.hds.hcp.apihelpers.query.result.QueryResult;
+
+import com.hds.hcp.apihelpers.query.result.ResultSetRecord;
+
+public class PagedObjectQuery {
+
+// Local member variables private Boolean bIsInitialized = false;
+
+private String sQueryTenant; private String sQueryNamespace; private String sEncodedUserName, sEncodedPassword; private String sHTTPQueryURL;
+
+/**
+
+Initialize the object by setting up internal data and establishing the HTTP client.
+
+connection.
+
+* This routine is called by the ReadFromHCP and WriteToHCP routines, so calling it
+
+by the consumer of this class is unnecessary. */
+
+void initialize(String inNamespace, String inUsername, String inPassword) throws Exception {
+
+if (! bIsInitialized) // Initialize only if we haven't already
+
+{ // Break up the namespace specification to get the namespace and tenant parts.
+
+String parts[] = inNamespace.split("\\.");
+
+sQueryNamespace = parts[0]; sQueryTenant = parts[1];

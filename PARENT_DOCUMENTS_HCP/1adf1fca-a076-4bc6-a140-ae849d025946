@@ -1,0 +1,41 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+668/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Response body (Actual request)
+
+[contents of the rest/file.txt object] Usage considerations
+
+This section of the Help contains considerations that apply to using the S3 compatible API.
+
+Hostname and IP address considerations
+
+In the URL you use to access HCP, you can specify either a hostname or an IP address. If the HCP system supports DNS and you specify a hostname, HCP selects the IP address for you from the currently available nodes. HCP uses a round-robin method to ensure that it doesn’t always select the same address.
+
+When you specify IP addresses, your application must take responsibility for balancing the load among nodes. Also, you risk trying to connect (or reconnect) to a node that is not available. However, in several cases using explicit IP addresses to connect to specific nodes can have advantages over using hostnames.
+
+These considerations apply when deciding which technique to use: If your client uses a hosts file to map HCP hostnames to IP addresses, the client system has full responsibility for converting any hostnames to IP addresses. Therefore, HCP cannot spread the load or prevent attempts to connect to an unavailable node. If your client caches DNS information, connecting by hostname may result in the same node being used repeatedly. When you access the HCP system by hostname, HCP ensures that requests are distributed among nodes, but it does not ensure that the resulting loads on the nodes are evenly balanced. When multiple applications access the HCP system by hostname concurrently, HCP is less likely to spread the load evenly across the nodes than with a single application.
+
+Tip: When using hostnames, you can ping the HCP system periodically to check whether you’re getting connections to different nodes. Folder structures
+
+Because of the way HCP stores objects, the folders you create and the way you store objects in them can have an impact on performance. Here are some guidelines for creating effective folder structures:
+
+Plan the folder structure for a bucket before storing objects in the bucket. Make sure all users of the bucket are aware of these plans. Avoid structures that result in a single folder getting a large amount of traffic in a short time. For example, if you ingest objects rapidly, use a structure that does not store objects by date and time. If you store objects by date and time, consider the number of objects ingested during a given period of time when planning the folder structure. For example, if you ingest several hundred objects per second, you might use a folder structure such as year/month/day/hour/minute/second. If you ingest only a few folders per second, a less fine- grained structure would be better. Follow these guidelines on the size of the folder structure:
+
+Try to balance the width and depth of the folder structure. Do not create folder structures that are more than 20 levels deep. Instead, create flatter folder structures. Avoid placing a large number of objects (greater than 100,000) in a single folder. Instead, create multiple folders and evenly distribute the objects among them. Concurrent writes of the same object
+
+If two or more clients try to store an object with the same name at the same time, what happens depends on whether versioning is enabled for the target bucket:
+
+If versioning is enabled, HCP creates one version of the object for each PUT request. The versions are numbered in the order in which HCP received the requests, regardless of the order in which HCP finished processing the requests. If versioning is disabled and the bucket doesn’t already contain an object with the specified name, HCP creates the object for the first PUT request. In response to each subsequent PUT request, HCP returns a 409 (Conflict) status code and does not create an object. This happens regardless of whether HCP has finished processing the first request.
+
+Failed PUT requests to store objects
+
+A PUT request to store an object fails if either of these happens: The target node fails while the object is open for write. The TCP connection breaks while the object is open for write (for example, due to a network failure or the abnormal termination of the client application).
+
+Also, in some circumstances, a PUT request fails if HCP system hardware fails while HCP is processing the request.
+
+When a PUT request fails, HCP does not create a new object or object version.

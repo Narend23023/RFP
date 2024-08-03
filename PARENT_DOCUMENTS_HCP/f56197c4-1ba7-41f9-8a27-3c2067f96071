@@ -1,0 +1,115 @@
+<name>Patient_ID</name> <expression>/dicom_image/patient/id</expression> <type>INTEGER</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Patient_Name</name> <expression>/dicom_image/patient/name</expression> <type>STRING</type> <multivalued>false</multivalued> <format></format> </contentProperty> </contentProperties> <namespaces> <name>Medical-Records</name> </namespaces> </contentClass> contentProperty
+
+The contentProperties data type describes the contentProperties property of the contentClass data type.
+
+Properties
+
+The table below describes the properties included in the contentProperty data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+expression
+
+String
+
+This property is required.
+
+Specifies the expression for the content property. Valid values are valid XPath expressions, optionally prefixed with an annotation name, in this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+457/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+@annot-name:xpath-expression format
+
+String
+
+Specifies the format for the content property. Valid values are specific to each data type for which the format
+
+This property is optional and can have a value only when the value of the types property is DATE, FLOAT, or INTEGER.
+
+property is valid:
+
+For DATE, the value must be a valid datetime format. If you don't specify a format, the metadata query engine indexes only values that match patterns such as MM/DD/yyy, MM-dd-yyy, yyy-MM- dd, or yyy-MM-dd'T'HH:mm:ssZ. For FLOAT, the value must be a valid number format that can map content property vales to decimal numbers. If you don't specify a format, the metadata query engine indexes only sequences of digits that optionally include one decimal point. For INTEGER, the value must be a valid number
+
+format that can map content property values to integers. If you don't specify a format, the metadata query engine indexes only sequences of digits with no special characters.
+
+multivalued Boolean
+
+Specifies whether the content property is single-valued or multivalued. Valid values are:
+
+true
+
+The content property can have multiple values for any given object.
+
+false
+
+The content property can have only one value for any given object.
+
+The default is false.
+
+name
+
+String
+
+Specifies the name of the content property. Content property names must be from one through 25 characters long, can contain only alphanumeric characters and underscores (_), and are case sensitive. White space is not allowed.
+
+This property is required. type
+
+String
+
+This property is required.
+
+Specifies the data type of the content property. Valid values are:
+
+BOOLEAN
+
+The metadata query engine indexes the value as true or false.
+
+DATE
+
+The metadata query engine indexes the value as a date and time.
+
+FLOAT
+
+The metadata query engine indexes the value as a decimal number with or without an exponent, depending on the value. FULLTEXT
+
+The metadata query engine indexes the value as a text string after breaking it into tokens.
+
+INTEGER
+
+The metadata query engine indexes the value as an integer.
+
+STRING
+
+The metadata query engine indexes the content property values as text strings.
+
+These values are not case sensitive.
+
+Example
+
+Here’s an XML example of the contentProperty data type: <contentProperty>
+
+<name>Image_Date</name> <expression>/dicom_image/image/date</expression> <type>DATE</type> <multivalued>false</multivalued> <format>MM/dd/yyyy</format> </contentProperty>
+
+contentProperties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3

@@ -1,0 +1,81 @@
+For each listed link, the replication Links page shows: Name
+
+The link name.
+
+Type
+
+The link type. The link type can be Active/Active, Outbound, or Inbound.
+
+If the link is part of an erasure coding topology, the link type is followed by this icon: Status
+
+The link status, represented by an icon and text. The icon indicates the general health of the link. The text specifies the status of the link. The possible icons are:
+
+The link is healthy. The statuses that can accompany this icon are:
+
+Synchronizing data
+
+On either system for an active/active link, the local system is sending data to the other system involved in the link.
+
+Sending data
+
+On the primary system for an active/passive link during replication, the primary system is sending data to the replica.
+
+Receiving data
+
+On the replica for an active/passive link during replication, the primary system is sending data to the replica.
+
+The link is healthy, but normal replication is not occurring on the link. The statuses that can accompany this icon are:
+
+Recovering data
+
+On the replica for an active/passive link during the first part of data recovery, the replica is sending data to the primary system.
+
+Completing recovery On the replica for an active/passive link during final data recovery, the replica is sending data to the primary system.
+
+Receiving data
+
+On the primary system for an active/passive link during data recovery, the replica is sending data to the primary system.
+
+Scheduled off period
+
+No data is being sent on the link because the scheduled performance level for the current time period for the link is Off.
+
+Suspended by user
+
+On both systems for an active/active or active/passive link, activity on the link has been manually suspended. No replication or recovery is occurring.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+359/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The link is unhealthy. The statuses that can accompany this icon are:
+
+Failed over
+
+On both systems for an active/active or active/passive link, the link is currently failed over.
+
+Remote storage full, link suspended On the local system for an active/active link, on the primary system for an active/passive link during replication, or on the replica for an active/passive link
+
+during data recovery, the other system involved in the link does not have enough free space in primary running storage to accept any more data transmissions. In any case, HCP has automatically suspended activity on the link.
+
+Local storage full, link suspended
+
+On the local system for an active/active link, on the replica for an active/passive link during replication, or on the primary system for an active/passive link during data recovery, the local system does not have enough free space in primary running storage to accept any more data transmissions. In any case, HCP has automatically suspended activity on the link. High error rate
+
+On both systems for an active/active or active/passive link, errors are occurring at a high rate. If you see this status for:
+
+An active/active link, check the health of both systems involved in the link An active/passive link during replication, check the health of the replica. An active/passive link during data recovery, check the health of the primary system
+
+In any case, also check the health of the network connection between the two systems involved in the link. If you cannot find the problem, contact your authorized HCP service provider for help.
+
+Stalled link
+
+On both systems for an active/active or active/passive link, activity on the link has stopped. Check the network connection between the two systems. If the connection appears to be working properly, contact your authorized HCP service provider for help.
+
+Unrecognized link On either system for an active/active or active/passive link, the other system involved in the link doesn’t recognize the link. Restore the link. Then, if applicable, start data recovery. Broken link
+
+On both systems for an active/active or active/passive link, the Replication service cannot contact any nodes on the other system involved in the link. If you see this status for:

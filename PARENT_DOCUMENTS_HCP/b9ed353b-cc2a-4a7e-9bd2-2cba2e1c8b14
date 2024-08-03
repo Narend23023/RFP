@@ -1,0 +1,71 @@
+Shredding, also called secure deletion, is the process of deleting an object and overwriting the places where its copies were stored in such a way that none of its data or metadata, including custom metadata, can be reconstructed.
+
+Every object has a shred setting that determines whether it will be shredded when it’s deleted.
+
+With HTTP, the shred settings for an object are returned by the X-HCP-Shred response header. The shred setting values are: false
+
+Don’t shred.
+
+true
+
+Shred following deletion.
+
+With WebDAV, CIFS, or NFS, you view the shred setting for an object in the shred.txt metafile. The shred setting values in this metafile are:
+
+0
+
+(zero) Don’t shred.
+
+1
+
+(one) Shred following deletion.
+
+Default shred settings
+
+The namespace is configured with a default shred setting. When an object is stored in the namespace, the object inherits this setting. With HTTP, you can override the default shred setting by specifying a different shred setting when you store the object.
+
+Changing shred settings
+
+You can change the shred setting for an existing object from false to true (or 0 to 1) but not from true to false (or 1 to 0).
+
+With WebDAV, CIFS, or NFS, you change the shred setting for an object by overwriting its shred.txt metafile. In the new file, you specify only the new value. Tip:
+
+With Windows and Unix, you can also use the echo command to insert the new value into the shred.txt metafile. As a general rule, if you mark an object for shredding, you should mark all other objects with the same content for shredding as well. Indexing
+
+Each object has an index setting that is either true or false. The setting is present regardless of whether the namespace supports search operations.
+
+The metadata query engine uses the index setting to determine whether to index custom metadata for an object:
+
+For objects with an index setting true, the metadata query engine indexes custom metadata. For objects with an index setting false, the metadata query engine does not index custom metadata.
+
+Note: The namespace configuration can prevent the metadata query engine from indexing a particular annotation.
+
+The HCP search facility uses the index setting to determine whether to index an object at all:
+
+The HCP search facility indexes objects with an index setting true. The HCP search facility does not index objects with an index setting false.
+
+Metadata query API requests can use this setting as a search criterion. Additionally, third-party applications can use this setting for their own purposes. With HTTP, index settings are returned by the X-HCP-Index response header. With WebDAV, CIFS, and NFS, you can view the index setting for an object or directory in its index.t xt metafile. In this metafile:
+
+A value of 1 (one) means true. A value of 0 (zero) means false. Default index settings
+
+The namespace is configured with a default index setting. When an object is stored in the namespace, the object inherits this setting. With HTTP, you can override the default index setting by specifying a different index setting when you store the object.
+
+Changing index settings
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+701/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Changing the index setting on an object causes these changes to the indexes maintained by the metadata query engine and the HCP search facility:
+
+If you change the index setting of an object from true to false:
+
+The metadata query engine removes the custom metadata for the object from the index, but leaves the system metadata and ACL, if any. The HCP search facility completely removes the object from the index.
+
+If you change the index setting of an object from false to true: The metadata query engine indexes the custom metadata for the object along with the system metadata and ACL, if any. The HCP search facility indexes the object.
+
+With WebDAV, CIFS, or NFS, you change the index setting on an object by overwriting its index.txt metafile. In the new file, you specify only the new value.

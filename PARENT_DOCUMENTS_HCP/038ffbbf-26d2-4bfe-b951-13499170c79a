@@ -1,0 +1,125 @@
+HCP returns this header only if either of these is true: In an HCP system with multiple replication links (e.g., in a ring
+
+topology or GeoEC configuration), the header will return the value true for an object only when the object has been accurately copied to all the replication links associated with a
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+823/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Header
+
+Methods
+
+Description
+
+particular tenant. If even one of these replication links
+
+experiences a problem or goes offline, the header will not change to true If one of the HCP systems becomes unavailable or if a
+
+replication link experiences an outage or if there is an issue with any of the components, the header will not change to tru e, even when an alternative HCP system is available for replication. X-HCP-ReplicationCollision
+
+HEAD and GET for objects and
+
+object versions
+
+A true or false value indicating whether the object is flagged as a replication collision.
+
+X-HCP-Retention
+
+HEAD and GET for objects and object versions
+
+The end of the retention period for the object, in seconds since January 1, 1970, at 00:00:00 UTC. This value can also be 0, -1, or -2. X-HCP-RetentionClass
+
+HEAD and GET for objects and object versions
+
+The name of the retention class to which the object belongs. This value is an empty string if the object is not in a retention class.
+
+X-HCP-RetentionHold
+
+HEAD and GET for objects and object versions
+
+A true or false value indicating whether the object is on hold. X-HCP-RetentionString
+
+HEAD and GET for objects and
+
+object versions
+
+The end of the retention period for the object, in this format:
+
+yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example, 2015-11-16T14:27:20-0500 represents the start of the 20th second into 2:27 PM, November 16, 2015, EST. The value can also be Deletion Allowed, Deletion Prohibited, or Initial Undefined.
+
+X-HCP-ServicedBySystem
+
+All except GET for namespace
+
+information
+
+The domain name of the HCP system responding to the request.
+
+If the target HCP system is unable to respond to the request and also
+
+participates in replication, this value may be another system in the replication topology. X-HCP-Shred
+
+HEAD and GET for objects and
+
+object versions
+
+A true or false value indicating whether HCP will shred the object after it is deleted.
+
+X-HCP-Size
+
+HEAD and GET for objects, object versions, and annotations
+
+The size of the object, version, or annotation, in bytes. For whole- object data, this value is the size of the object data. X-HCP-SoftwareVersion
+
+HEAD and GET for objects, object versions, annotations, ACLs, and
+
+The version number of the HCP software.
+
+directories
+
+X-HCP-SymlinkTarget
+
+HEAD and GET
+
+The path to the target object or directory as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object or directory.
+
+X-HCP-Time
+
+All except POST
+
+The time at which HCP sent the response to the request, in seconds since January 1, 1970, at 00:00:00 UTC.
+
+X-HCP-Type
+
+HEAD and GET for objects, object versions, annotations, and
+
+The entity type. One of:
+
+directories
+
+annotation directory
+
+object
+
+X-HCP-UID HEAD and GET for objects and object versions
+
+The POSIX user ID for the object.
+
+For objects added through the NFS protocol, this value is determined by the NFS client.
+
+This value is an empty string if either of these are true:
+
+The object was added through a protocol other than NFS and neither the UID nor the GID for the object has been changed.

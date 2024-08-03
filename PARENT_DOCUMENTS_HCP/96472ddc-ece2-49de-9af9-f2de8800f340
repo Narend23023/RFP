@@ -1,0 +1,31 @@
+For erasure-coded protection with full-copy distribution, when an object is ingested, each available system in the erasure coding topology, except systems where the object should be metadata-only storage tier, receives a full-copy of the object data. When an unavailable system becomes available:
+
+If the erasure coding delay has not expired and the object is not supposed to be metadata-only, the system receives a full copy of the object data. If the object should be metadata-only, the system does not receive either a full copy or a chunk.
+
+After all the systems in the topology are available, when the erasure coding delay expires, each system where the object should be metadata-only receives a chunk for the object, and all full copies of the object data are reduced to chunks. If the erasure coding delay has expired, the system receives a chunk for the object regardless of whether the object should be metadata-only. After all the systems in the topology are available, full copies of the object data are reduced to chunks.
+
+Geo-Distributed Erasure Coding service processing
+
+The Geo-Distributed Erasure Coding service is responsible for ensuring that objects that are or have ever been subject to erasure coding are in the correct state at any given time.
+
+On any given HCP system, the Geo-Distributed Erasure Coding service runs according to a system-specific schedule. Therefore, the service is not necessarily running at the same time on any set of systems. However, the service on one system can query other HCP systems for the state of the objects on those systems even when the service is not running on those systems.
+
+While running, the Geo-Distributed Erasure Coding service examines each object individually. If the system in which the service is running has a full copy of the data for an object and should not, the service reduces the data to a chunk. If the system has a chunk for the object and should not, the service restores the chunk to a full copy. If the object is in the
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+321/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+state it should be in, the service takes no action on the object.
+
+To have sufficient information to restore a chunk for an object to a full copy of the object data, the Geo-Distributed Erasure Coding service can ask other systems to send the chunks they have for that object. Alternatively, if any of those systems has a full copy of the object data, the service can ask for the full copy. During a scheduled run time, the Geo-Distributed Erasure Coding service actually runs only if the system is part of an active erasure coding topology or if the system contains erasure-coded objects. An active erasure coding topology is one that is currently being used for geo-protection. A system can participate in only one active erasure coding topology.
+
+If the Geo-Distributed Erasure Coding service doesn't have sufficient run time on a system that's receiving full copies of object data, those full copies may not be reduced to chunks in a timely manner. When scheduling the service, keep in mind that full copies of object data use the full storage required by the object data until they are reduced to chunks.
+
+The Geo-Distributed Erasure Coding service cannot restore a chunk for an object to a full copy of the object data if the system where the service is running doesn't have enough space for the complete object data. In this case, the service leaves the chunk on the system as is. Note: The Geo-Distributed Erasure Coding service is automatically added to the HCP Default Schedule service schedule when HCP is upgraded to release 8.x from a release earlier than 8.0. You need to schedule the service yourself in any user-created service schedules in which you want the service to have run time.
+
+Determining what the state of an object should be

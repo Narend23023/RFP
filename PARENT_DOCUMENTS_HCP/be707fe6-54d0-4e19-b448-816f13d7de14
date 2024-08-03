@@ -1,0 +1,59 @@
+currently used for a storage tier that’s defined for a namespace by its service plan.
+
+5. Click Update Settings.
+
+Remounting an NFS volume
+
+If an NFS volume is experiencing problems, you can manually try to remount that NFS volume. Before doing that, however, you should ensure that the device hosting the NFS volume and the network connection to that device are functioning properly. You should also ensure that the exported share that corresponds to the NFS volume is configured correctly on the host device.
+
+HCP can take up to a minute to respond to a remount request.
+
+1. On the left side of the Storage page, click Components.
+
+2. In the components list, click the name of the NFS storage component that’s associated with the NFS volume that you want to remount. 3. At the top of the panel that opens, click the Mount Points tab.
+
+4. On the Mount Points panel, in the table row that contains the NFS mount point that corresponds to the NFS volume you want to remount, click the remount control ( ).
+
+If the manual remount fails, try restarting the node with which the NFS volume is associated. To see which node the NFS volume is associated with, hover your cursor over the status icon for the mount point on the Mount Points panel.
+
+Deleting an extended storage pool
+
+If the storage that is represented by an extended storage pool is not currently being used to store objects in any namespaces defined on the HCP system, you can safely delete that storage pool. If, however, the storage that is represented by an extended storage pool is currently being used to store object data, you cannot delete that pool. Before you can delete a storage pool, you need to first remove the extended storage pool from all storage tiers that currently include that pool and then retire the storage pool by migrating all of the data off it.
+
+When you retire an extended storage pool, HCP migrates the data off that pool and then deletes that pool from the system.
+
+1. On the left side of the Storage page, click the Pools tab.
+
+The Pools pane opens, showing a list of storage pools that are currently defined on the HCP system. A delete control (
+
+) appears in the row for each unused storage pool.
+
+2. Click the delete control for any unused extended storage pool to delete it from the HCP system.
+
+Retiring storage You can use the Storage > Retirement page in the System Management Console to retire primary storage devices, HCP S Series storage pools, HCP S Series storage components, HCP S Series storage volumes (buckets), extended storage pools, extended storage components, and extended storage volumes that are associated with specific access points (mount points, buckets, and containers).
+
+Retiring primary storage devices
+
+You can use either the Migration page or the Storage page in the System Management Console to migrate data off selected storage nodes in either an HCP with internal storage or
+
+HCP with SAN-attached storage system or off selected storage systems in an HCP with SAN-attached storage system in preparation for retiring those devices.
+
+The Migration service is not available for HCP VM systems.
+
+During a data migration, the Migration service copies objects and, if applicable, the metadata query engine index from the selected devices to free storage on the remaining devices. Before you start a data migration, you need to ensure that those devices have enough unused capacity to hold the data to be migrated.
+
+After copying an object, the Migration service deletes the object from the source device. After the migration is complete, you can submit a request to your authorized HCP service
+
+provider to finalize the migration and remove the retired devices from the system. Important:
+
+After the migration of data off a storage node in an HCP with internal storage system is finalized, the system can never again include a node with the same fourth octet in its back-
+
+end IP address as that node had.
+
+Retiring a node is not part of the normal procedure for replacing a node that has failed or for upgrading to newer hardware. In these cases, the new node can use the same back-
+
+end IP address as the one being replaced.
+
+The Migration service runs only when you explicitly start a data migration. When the migration is complete, the service stops automatically.
+
+When you start a data migration, the selected nodes or storage systems automatically become read-only (except for allowing the Migration service to delete objects). After the migration is complete, they remain read-only.

@@ -1,0 +1,33 @@
+Making objects metadata-only
+
+The third function of the Storage Tiering service is to delete all existing copies of the data for any object that’s moved to a metadata-only storage tier and ensure that the correct number of copies of the metadata for that object are stored on primary running storage.
+
+The Storage Tiering service also restores data for metadata-only objects to the ingest tier. Restoring the data for an object to the ingest tier is called rehydrating the object.
+
+When the Storage Tiering service moves an object off the ingest tier and onto another storage tier, the service removes all copies of the object data from the ingest tier and stores the specified number of copies of the object data on the new storage tier. However, at least one copy of the object metadata must always remain on primary running storage. For each storage tier that’s defined for a given namespace, the service plan specifies the number of copies of object data that must be stored on the tier and the number of copies of
+
+object metadata that must be stored on primary running storage. If a given namespace is being replicated to another system, you can configure the service plan for that namespace to define a metadata-only storage tier. This type of tier specifies the number of copies of object metadata that must be stored on primary running storage, but it also specifies that no copies of the object data can be stored on any storage tier,
+
+including the ingest tier.
+
+For a multipart object on a metadata-only storage tier, the applicable number of copies of the metadata for each part must be stored on primary running storage, and no copies of the
+
+part data can be stored on any storage tier.
+
+The Storage Tiering service makes objects metadata-only only when all of these conditions are true: The service plan for the namespace that contains the object defines a metadata-only storage tier. The object is on the storage tier that immediately precedes the metadata-only tier defined in the namespace service plan, and the object meets the transition criteria specified for the metadata-only storage tier.
+
+A copy of the object data exists on at least one other HCP system in the replication topology in which the current system participates. (This is possible because service plans with the same name can have different definitions on different systems.) When all of these conditions are true, the Storage Tiering service deletes all copies of the object data from the preceding storage tier. If the preceding storage tier is not primary running storage, the Storage Tiering service also deletes any copies of the object data that exist on primary running storage. After deleting all copies of the object data, the Storage Tiering service creates or deletes copies of the object metadata on primary running storage as necessary so that the number of copies of object metadata match the number of copies that the service plan requires for the metadata-only tier.
+
+If rehydration is enabled for a metadata-only storage tier, when rehydrating a replicated object that’s been read from primary running storage on a remote system, the Storage Tiering service rehydrates all copies of the object on the ingest tier on the local system When replicating an object in a namespace to a system on which objects in that namespace can be made metadata-only, HCP replicates only the object metadata if the object is larger than one MB. If the object is smaller than one MB, HCP replicates both the data and metadata.
+
+Here’s a scenario that shows how allowing metadata-only objects can be used to advantage:
+
+You have a many-to-one replication topology in which the HCP systems at the outlying sites are much smaller than the central HCP system to which they all replicate. To optimize
+
+the use of storage on the outlying systems, you allow the namespaces on those systems to have metadata-only objects while requiring the central system to have the object data. The outlying systems respond to client requests for object data by reading the data from the central system. In this scenario, the replication topology should include a disaster recovery system (that is, a replica of the central system) to protect against data loss in case of a catastrophic failure of the central system.
+
+Important: HCP does not prevent you from removing a namespace from a replication topology even if the namespace contains metadata-only objects on one or more systems in that
+
+topology. This can result in data for objects in that namespace being permanently inaccessible from those systems. In most cases, HCP warns you if the modification you’re making to a replication link would cause this condition to occur. Storage Tiering service processing
+
+The Storage Tiering service processes one object at a time. For each object, the service checks the applicable service plan to determine the storage tiers on which copies of the

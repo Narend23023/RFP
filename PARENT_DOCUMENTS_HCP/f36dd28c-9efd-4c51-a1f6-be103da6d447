@@ -1,0 +1,97 @@
+ETag
+
+Child of the CopyObjectResult element. The ETag element specifies the ETag for the target object.
+
+LastModified
+
+Child of the CopyObjectResult element. The LastModified element specifies the date and time when the target object was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+Modifying an object means modifying its metadata. You cannot modify the content of an object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+621/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to copy an object. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully copied the object.
+
+400
+
+Bad Request
+
+Possible reasons include that an ACL grant header specifies an invalid grantee.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to store objects in the target bucket. An object with the specified target object name already exists in the specified target bucket, and versioning is enabled for that bucket, but the existing object is under retention or on hold. The S3 compatible API is currently disabled for the source or target bucket. The source object exists, but the HCP system does not have the source object data. Retry the request, targeting a different system in the replication topology. The source object is in the process of being deleted.
+
+404 Not Found
+
+One of these:
+
+The specified source object version ID identifies a delete marker or a delete record. The specified source bucket does not exist.
+
+409
+
+Conflict
+
+One of these:
+
+An object with the specified target object name already exists in the target bucket, versioning is disabled for that bucket, and the copy request does not include an x-amz-metadata-directive header with a value of REPLACE. A folder with the specified target object name already exists in the target bucket.
+
+412 Precondition Failed
+
+One of these:
+
+The request included an x-amz-copy-source-if-match header, and the ETag for the specified source object or object version does not match any of the values specified by the header. The request included an x-amz-copy-source-if-none-match header, and the ETag for the specified source object or object version matched a value specified by the header. The request included an x-amz-copy-source-if-modified-since header, and the specified source object or object version was not modified after the date and time specified by the header. The request included an x-amz-copy-source-if-unmodified-since header, and the specified source object or object version was modified after the date and time specified by the header.
+
+413 Request Entity Too Large
+
+The source object you are trying to copy is too big for the amount of space left in the target bucket.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+The request includes the x-amz-acl header with an invalid value.
+
+503 Service Unavailable
+
+Possible reasons include:
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Conditionally copying an object from one bucket to another

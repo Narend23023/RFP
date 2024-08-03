@@ -1,0 +1,77 @@
+Request in Python using PycURL
+
+import pycurl filehandle = open("Q1_2012.ppt", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "If-None-Match: d158a5494cf76bf2cbbe40a7aa674543"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d If-None-Match: d158a5494cf76bf2cbbe40a7aa674543
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1353352625
+
+X-HCP-SoftwareVersion: 7.0.0.16 ETag: "d45e5b124c1807d6ec4f8088b5e51f8d"
+
+Content-Type: application/vnd.ms-powerpoint
+
+Content-Length: 130919 X-HCP-Type: object
+
+X-HCP-Size: 130919 X-HCP-Hash: SHA-256 F19D0CA6D684F4B9C48789828A31551A50673597ABAC66C6D7....
+
+X-HCP-VersionId: 86614553936513 X-HCP-IngestTime: 1353352405 X-HCP-RetentionClass: X-HCP-RetentionString: Deletion Allowed
+
+X-HCP-Retention: 0 X-HCP-IngestProtocol: HTTP
+
+X-HCP-RetentionHold: false X-HCP-Shred: false
+
+X-HCP-DPL: 2 X-HCP-Index: true
+
+X-HCP-Custom-Metadata: false X-HCP-ACL: false
+
+X-HCP-Owner: europe X-HCP-Domain:
+
+X-HCP-UID:
+
+X-HCP-GID: X-HCP-Replicated: false X-HCP-ReplicationCollision: false X-HCP-ChangeTimeMilliseconds: 1353352405323.00
+
+X-HCP-ChangeTimeString: 2012-11-19T14:13:25-0500 Last-Modified: Mon, Nov 19 2012 19:13:25 GMT
+
+Response body: The contents of the Q1_2012.ppt object
+
+Working with directories
+
+Creating an empty directory
+
+You use the HTTP PUT method to create empty directories in a namespace. If any other directories in the path you specify for a new directory do not already exist, HCP creates them as well.
+
+Access permission
+
+To create a directory, you need write permission for the namespace.
+
+Request header
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+755/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+PUT /rest/directory/new_dir?type=directory HTTP/1.1
+
+The PUT request to create an empty directory has these elements:

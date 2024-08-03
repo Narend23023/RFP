@@ -1,0 +1,75 @@
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Server
+
+The version of the HCP system that responded to the request. The value of this header is always HCP followed by the HCP version number (for example, HCP V9.0.0.2).
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked. Response body
+
+The list below describes the XML elements in the response body that is returned in response to a request to list the contents of a bucket. The elements are listed in alphabetical order.
+
+CommonPrefixes
+
+Child of the ListBucketResult element and container for the Prefix element. The response body contains one CommonPrefixes element for each common prefix in the bucket listing. Contents
+
+Child of the ListBucketResult element and container for the elements that describe a current item in the bucket. The response body contains one Contents element for each item that satisfies the request criteria.
+
+ContinuationToken
+
+Child of the ListBucketResult element. If sent with the request, the ContinuationToken element specifies the continuation token for listing the next set of objects. Delimiter
+
+Child of the ListBucketResult element. The Delimiter element specifies the value of the delimiter query parameter included in the request. If the request did not include the delimiter query parameter, the response body does not include the Delimiter element.
+
+DisplayName
+
+Child of the Owner element. If the item owner is identified by an HCP user account, the value of the DisplayName element is the user name for that account. If the item owner is identified by an AD user account, the value of the DisplayName element is the user name of that account followed by an at sign (@) and the AD domain name. If the item has no owner, the value of the DisplayName element is nobody. For folders, the value of the DisplayName element is always nobody. Encoding-Type
+
+Child of the ListBucketResult element. The Encoding-Type element specifies the type of encoding used by the S3 compatible API to encode the key names of objects.
+
+ETag
+
+Child of the Contents element. The ETag element specifies the ETag of the applicable item. The response body includes ETag elements for the listed folders. However, because they have no content, all folders have the same value for this element. ID
+
+Child of the Owner element. If the item owner is identified by an HCP user account, the value of the ID element is the user ID for that account. If the item owner is identified by an AD user account, the value of the ID element is the SID for that account. If the item has no owner, the value of the ID element is nobody. For folders, the value of the ID element is always nobody.
+
+IsTruncated
+
+Child of the ListBucketResult element. The IsTruncated element indicates whether the returned bucket listing includes the last item that satisfies the request criteria. Possible values are:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+593/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+true
+
+The returned listing includes the last item that satisfies the request criteria.
+
+false
+
+The returned listing does not include the last item that satisfies the request criteria. Key
+
+Child of the Contents element. The Key element specifies the name of an item in the bucket listing.
+
+KeyCount
+
+Child of the ListBucketResult element. The KeyCount element specifies the number of keys in the response. The value of the KeyCount element is always less than or equal to the value of the MaxKeys element.
+
+LastModified
+
+Child of the Contents element. The LastModified element specifies the date and time when the applicable item was last modified, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z

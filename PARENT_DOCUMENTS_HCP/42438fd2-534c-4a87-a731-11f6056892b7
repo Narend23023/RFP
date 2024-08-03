@@ -1,0 +1,105 @@
+/*
+
+This function intercepts all read requests in order to
+
+calculate the CRC value that is stored in this object. */ public int read(byte b[], int off, int len) throws IOException { // Do the actual read from the input stream. int retval = inputStream.read(b, off, len);
+
+// If we successfully read something, compute the CRC value // of it. if (0 <= retval) { crc.update(b, off, retval);
+
+}
+
+// All done with the intercept. Return the value. return retval;
+
+};
+
+/* * Function to retrieve the CRC value computed thus far while the
+
+stream was processed.
+
+/ public long getCRCValue() { return crc.getValue(); }; } // End class CRCWrappedInputStream.
+
+/** * Create a new input stream with the default buffer size of
+
+512 bytes. * @param pInputStream - InputStream to read content for
+
+compression. * @throws IOException if an I/O error has occurred.
+
+/ public GZIPCompressedInputStream(InputStream pInputStream) throws IOException { this(pInputStream, 512);
+
+}
+
+/**
+
+Create a new input stream with the specified buffer size. * @param pInputStream - InputStream to read content for
+
+compression. * @param size - The output buffer size.
+
+@exception - IOException if an I/O error has occurred. */ public GZIPCompressedInputStream(InputStream pInputStream, int size) throws IOException { super(new CRCWrappedInputStream(pInputStream), new Deflater(Deflater.DEFAULT_COMPRESSION, true), size);
+
+mCRCInputStream = (CRCWrappedInputStream) super.in;
+
+}
+
+// Indicator for if EOF has been reached for this stream. private boolean mReachedEOF = false;
+
+// Holder for the hijacked InputStream that computes the // CRC32 value.
+
+private CRCWrappedInputStream mCRCInputStream;
+
+/* * GZIP header structure and positional variable.
+
+*/ private final static int GZIP_MAGIC = 0x8b1f;
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+826/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+private final static byte[] mHeader = { (byte) GZIP_MAGIC, // Magic number (short) (byte)(GZIP_MAGIC >> 8), // Magic number (short) Deflater.DEFLATED, // Compression method (CM)
+
+0, // Flags (FLG) 0, // Modification time MTIME (int)
+
+0, // Modification time MTIME (int) 0, // Modification time MTIME (int)
+
+0, // Modification time MTIME (int) 0, // Extra flags (XFLG)
+
+0 // Operating system (OS) FYI. UNIX/Linux OS is 3 };
+
+private int mHeaderPos = 0; // Keeps track of how much of the
+
+// header has already been read.
+
+/*
+
+GZIP trailer structure and positional indicator. *
+
+Trailer consists of 2 integers: CRC32 value and original file * size.
+
+/ private final static int TRAILER_SIZE = 8; private byte mTrailer[] = null; private int mTrailerPos = 0;
+
+/***
+
+Overridden functions against the DeflatorInputStream. */
+
+/*
+
+Function to indicate whether there is any content available to * read. It is overridden because there are the GZIP header and
+
+trailer to think about. */
+
+public int available() throws IOException { return (mReachedEOF ? 0 : 1); }
+
+/*
+
+This read function is the meat of the class. It handles passing * back the GZIP header, GZIP content, and GZIP trailer in that
+
+order to the caller. */
+
+public int read(byte[] outBuffer, int offset, int maxLength) throws IOException, IndexOutOfBoundsException {
+
+int retval = 0; // Contains the number of bytes read into
+
+// outBuffer and will be the return value of // the function.

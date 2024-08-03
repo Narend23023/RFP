@@ -1,0 +1,87 @@
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-Time: 1336490468 X-HCP-SoftwareVersion: 7.0.0.16
+
+Content-Type: application/vnd.ms-powerpoint X-HCP-ServicedBySystem: hcp.example.com
+
+ETag: "827ccb0eea8a706c4c34a16891f84e7b" X-HCP-Type: object
+
+X-HCP-Size: 678400 X-HCP-Hash: SHA-256 36728BA190BC4C377FE4C1A57AEF9B6AFDA98720422960...
+
+X-HCP-VersionId: 80205544854849 X-HCP-IngestTime: 1334426531 X-HCP-RetentionClass: X-HCP-RetentionString: Deletion Allowed
+
+X-HCP-Retention: 0 X-HCP-IngestProtocol: HTTP
+
+X-HCP-RetentionHold: false
+
+X-HCP-Shred: false X-HCP-DPL: 2
+
+X-HCP-Index: true X-HCP-Custom-Metadata: false
+
+X-HCP-ACL: false X-HCP-Owner: myuser
+
+X-HCP-Domain: X-HCP-UID:
+
+X-HCP-GID: X-HCP-Replicated: false X-HCP-ReplicationCollision: false X-HCP-ChangeTimeMilliseconds: 1335347627362.00
+
+X-HCP-ChangeTimeString: 2012-04-25T05:53:47-0400 Last-Modified: Wed, 25 Apr 2012 09:53:47 GMT
+
+Content-Encoding: gzip Transfer-Encoding: chunked
+
+Response body: The contents of the Q1_2012.ppt object in gzip-compressed format.
+
+Example: Retrieving object data in compressed format (Java)
+
+Here’s the partial implementation of a Java class named HTTPCompression. The implementation shows the ReadFromHCP method, which retrieves an object from an HCP namespace. It uses the Accept-Encoding header to tell HCP to compress the object before returning it and then decompresses the results. import org.apache.http.client.methods.HttpGet; import org.apache.http.HttpResponse;
+
+import org.apache.http.EntityUtils; import java.util.zip.GZIPInputStream;
+
+class HTTPCompression {
+
+.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+738/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+.
+
+. void ReadFromHCP() throws Exception {
+
+/*
+
+Set up the GET request. *
+
+This method assumes that the HTTP client has already been * initialized.
+
+/ HttpGet httpRequest = new HttpGet(sHCPFilePath);
+
+// Indicate that you want HCP to compress the returned data with gzip. httpRequest.setHeader("Accept-Encoding", "gzip"); // Create the HCP authorization header.
+
+httpRequest.setHeader("Authorization", "HCP " + sEncodedUserName + ":" + sEncodedPassword);
+
+/*
+
+Now execute the GET request. */
+
+HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+/* * Process the HTTP Response.
+
+/
+
+// If the status code is anything but in the 200 range indicating // success, throw an exception.
+
+if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100))
+
+{ // Clean up after ourselves and release the HTTP connection to the // connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+throw new Exception("Unexpected HTTP status code: " +
+
+httpResponse.getStatusLine().getStatusCode() + " (" + httpResponse.getStatusLine().getReasonPhrase() + ")");

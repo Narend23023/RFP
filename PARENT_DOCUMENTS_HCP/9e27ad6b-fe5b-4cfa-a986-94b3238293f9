@@ -1,0 +1,77 @@
+The example shows the response headers HCP returns while versioning is enabled for the bucket and while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/
+
+BudgProp-2020"
+
+Request headers
+
+DELETE /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:i9bRonH4gi1SrymsF0Fw84mWUeQ=
+
+Response headers with versioning enabled
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+x-amz-version-id: 87288781940929 x-amz-delete-marker: true
+
+Response headers with versioning disabled
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Example: Deleting a folder
+
+Here’s a sample DELETE request that deletes a folder named hum_res/budget_proposals from the finance bucket. The request is being made while versioning is disabled for the bucket. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --delete -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/"
+
+Request headers
+
+DELETE /hum_res/budget_proposals/ HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:6iZRgTyBmsiLxX37WDtIS8X7vT8= Response headers
+
+HTTP/1.1 204 No Content Date: Fri, 07 February 2020 17:19:26 GMT
+
+Deleting multiple objects
+
+You use the HTTP POST method to delete multiple objects in a bucket. To delete multiple objects, you need delete permission for the bucket containing the objects or for the objects themselves. You cannot use this method with the S3 compatible API to delete:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+633/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Objects that are under retention. Objects that are on hold. Delete markers of objects. Multiple versions of objects.
+
+You can use the delete marker feature in Amazon S3 using Hitachi API for Amazon S3 and REST API. To delete the delete marker of the objects., you must enable the delete marker feature on the namespace. You can also delete multiple objects based on an object’s version IDs. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to delete multiple objects has either of these formats:
+
+With the bucket name included in the hostname:
+
+POST /?delete HTTP/1.1
+
+With the bucket name following the hostname:
+
+POST /bucket-name?delete HTTP/1.1
+
+Required headers
+
+The list below describes the headers you can use in a request to delete multiple objects. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-MD5
+
+Directs HCP to check the integrity of the data it receives by comparing a Base64-encoded MD5 hash of that data to the value specified by this header. The valid value for this header is the Base64-encoded MD5 hash of the data in the request body. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date

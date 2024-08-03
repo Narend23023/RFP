@@ -1,0 +1,131 @@
+Permissions
+
+Read
+
+Write
+
+Delete
+
+Purge
+
+Priv. delete
+
+Search
+
+Systemwide permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Tenant permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Namespace permission mask
+
+✓
+
+✓
+
+✓
+
+✓
+
+✓
+
+Effective permission mask
+
+✓
+
+✓
+
+✓
+
+A tenant initially has all permissions in its data access permission mask. When you create a namespace, it also has all permissions in its data access permission mask.
+
+HCP system-level administrators can change the systemwide permission mask at any time. You can change the tenant and namespace permission masks at any time.
+
+You can make a namespace effectively read-only be removing all operations except read from its data access permission mask. Minimum data access permissions
+
+The configuration of a namespace can include minimum data access permissions for all users (that is, authenticated users and users that access the namespace anonymously) and for authenticated users only. When accessing the namespace:
+
+Authenticated users have all the data access permissions associated with the applicable user account or group accounts and all the minimum data access permissions for authenticated users. Additionally:
+
+When using a protocol that requires authentication, authenticated users may or may not also have the minimum data access permissions for all users. This is determined by a namespace option that’s intended to support the following scenario: Data can be written to the namespace only from within a secured environment and only from a limited number of client computers through a protocol such as NFS that does not support authentication. This requires write permission for all users. Objects can be accessed from outside the secured environment but only through a protocol that requires authentication. This requires read permission but not write permission for authenticated users.
+
+When using a protocol that does not require authentication, authenticated users also have the all minimum data access permissions for all users.
+
+Authenticated users also have any object-specific permissions granted to them by object ACLs.
+
+Unauthenticated users (that is, users who access the namespace anonymously) have the minimum data access permissions for all users and any object-specific permissions
+
+granted to all users by object ACLs.
+
+If you don’t set any minimum data access permissions for all users, the only operations unauthenticated users can perform in the namespace are those for which they are granted permission by ACLs.
+
+Tip: If you enable only namespace access protocols that don’t support authentication, consider setting at least one minimum data access permission for all users.
+
+For both all users and authenticated users, the set of minimum data access permissions can include only these permissions: Browse
+
+Lets users list directory contents.
+
+Read
+
+Lets users:
+
+View and retrieve objects, including system metadata and custom metadata for objects View and retrieve previous versions of objects Check the existence of objects
+
+List annotations for objects
+
+For this permission to be granted, users must also have browse permission. Read ACL
+
+Lets users view and retrieve object ACLs. Write
+
+Lets users:
+
+Add objects to the namespace Modify system metadata (except retention hold) Add or replace custom metadata
+
+Write ACL
+
+Lets users add, replace, and delete object ACLs.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+241/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Delete
+
+Lets users delete objects, and custom metadata, and ACLs from the namespace.
+
+Purge
+
+Lets users delete all versions of an object with a single operation. For this permission to be granted, users must also have delete permission.
+
+Users with any data access permissions for a namespace can view information about that namespace.
+
+Note: To store an object with CIFS on a Windows client, a user must have both read and write permissions.
+
+When you create a namespace, the set of minimum data access permissions is empty for both all users and authenticated users. You can modify these sets at any time. Access control lists
+
+A namespace can be configured to allow users to associate ACLs with objects. An ACL consists of access control entries. Each access control entry grants a user or group of users (the grantee) one or more data access permissions for the applicable object.
+
+ACL permissions

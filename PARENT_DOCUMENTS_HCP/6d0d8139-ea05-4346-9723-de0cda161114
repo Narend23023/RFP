@@ -1,0 +1,57 @@
+839/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The count of objects in a retention class can include objects from more than one namespace. This is because multiple namespaces can have retention classes with the same name. To get an accurate count of the objects in a namespace that are in a specific retention class, restrict the query to a single namespace.
+
+content-property-name For Boolean and string content properties, returns the number of objects with the specified property value. For numeric and date properties, returns the number of objects in
+
+ranges of values.
+
+You cannot use tokenized (full-text searchable) content properties with facets.
+
+Content property facet ranges
+
+For numeric and date content properties, you specify the minimum and maximum values (range) for which to return information. You also specify the size of the sub-ranges (the interval) into which to divide the range.
+
+You use the following format to specify the range and interval for facets for content properties with a type of integer, floating point, or date: (start-value;end-value;+interval)
+
+In this expression:
+
+start-value is inclusive, that is the range includes the specified value.
+
+Each entry in the response has an interval that is as close as possible to the specified interval, but not larger than it. end-value is inclusive.
+
+The last facet must have a full interval, even if end-value is less than the end of an interval.
+
+For example, if the a facets entry includes a salary content property with a start-value of 10,000, an end-value of 99,999.99 and an interval of 10,000, the response will include ten entries for the property. The first entry will contain the number of employees with salaries of 10,000.00 through 19,999.99, the second will count salaries of 20,000.00 through
+
+29,999.99, and the last will count salaries of 90,000 through 99,999.99.
+
+However, if you specify an end-value of 100,000, the response will include 11 entries. The tenth entry will count salaries of 90,000.00 through 99,999.99, as before, but the response will include an additional entry that counts salaries of 100,000 through 109,999.99, even though you specified only 100,000
+
+For dates:
+
+The start-value and end value must be either NOW, for the time when HCP processes the request, or a date-time value in this format: yyyy-mm-ddThh:mm:ssZ
+
+The time must be in UTC (coordinated universal time, also known as Greenwich Mean Time), not the local time, and you must specify the letter Z at the end of the format. For example, to specify noon Eastern Standard Time on February 10, 2013, specify 2013-02-10T17:00:00Z
+
+Follow these rules when you specify the interval:
+
+Specify the time using a number immediately followed by the calendar unit: SECOND, MINUTE, HOUR, DAY, MONTH, YEAR. You can use plurals of these values, for example 2MONTHS.
+
+Precede the time interval with a plus sign (+). You can combine intervals, such as +1YEAR+6MONTHS
+
+This example requests facet information for three content properties: salary, dateOfBirth, and zip:
+
+<facets>salary(0;999999.99;50000), dateOfBirth(1900-01-01T00:00:00Z;*;+10YEARS),zip</facets>
+
+The example consists of these facets: The salary facet requests the number of objects with salaries in the range zero through 999,999.00, broken out into intervals of 50,000. The dateOfBirth facet requests the number of objects with birth dates in each ten-year interval from midnight, January 1, 1900 to now. The zip facet requests the number of objects with each zip code that occurs in the result set. In this example, the zip content property has a type of string, so you cannot specify a range or interval for it. This request returns facets only for zip codes that have at least one matching object. Query expressions
+
+With object-based queries, you specify a query expression in the query request entry. Query expressions have this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, [+|-] is an optional Boolean operator and criterion is one of:

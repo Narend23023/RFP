@@ -1,0 +1,141 @@
+The table below describes the effects of specifying true or false for the allowIfInBothLists property.
+
+Listed IP addresses
+
+true
+
+false
+
+allowAddresses: none
+
+All IP addresses can access HCP through the given interface.
+
+No IP addresses can access HCP through the given interface. denyAddresses: none
+
+All IP addresses can access HCP through the given
+
+Only IP addresses in the allowAddresses list can access
+
+allowAddresses: at least one
+
+interface.
+
+HCP through the given interface.
+
+denyAddresses: none
+
+allowAddresses: none
+
+denyAddresses: at least one
+
+All IP addresses not in the denyAddresses list can access HCP through the given interface. IP addresses in the denyAddresses list cannot.
+
+No IP addresses can access HCP through the given interface. allowAddresses: at least one
+
+IP addresses appearing in both or neither of the lists can access HCP through the given interface.
+
+IP addresses appearing in both or neither of the lists cannot access HCP through the given interface.
+
+denyAddresses: at least one
+
+Example
+
+Here’s an XML example of the ipSettings data type:
+
+<ipSettings> <allowAddresses> <ipAddress>192.168.140.10</ipAddress> <ipAddress>192.168.140.14</ipAddress>
+
+<ipAddress>192.168.140.15</ipAddress> <ipAddress>192.168.149.0/24</ipAddress> </allowAddresses> <allowIfInBothLists>false</allowIfInBothLists> <denyAddresses> <ipAddress>192.168.149.5</ipAddress> </denyAddresses> </ipSettings>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+471/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+license
+
+The license data type retrieves information about current and past storage licenses. license data type properties
+
+The following table describes the properties included in the license data type.
+
+Property name
+
+Data type Description
+
+Notes
+
+localCapacity
+
+Long
+
+Specifies the active storage capacity in terabytes.
+
+Value is returned in bytes.
+
+expirationDate
+
+String
+
+Specifies the storage license expiration date.
+
+If there is no expiration date, enter None. extendedCapacity Long
+
+Specifies the extended storage capacity in terabytes.
+
+Value is returned in bytes.
+
+feature
+
+String
+
+Specifies the type of license. Valid values are:
+
+Basic Premium
+
+serialNumber
+
+String
+
+Specifies the serial number of the HCP system the storage license is intended for.
+
+uploadDate String
+
+Specifies the date that the license was uploaded.
+
+This property is returned only by a verbose GET request.
+
+Example
+
+Here’s an XML example of the license data type:
+
+<license> <localCapacity>10000000000000</activeCapacity> <expirationDate>Jan 1, 2021</expirationDate> <extendedCapacity>0</extendedCapacity> <feature>Premium</feature> <serialNumber>12345</serialNumber> <uploadDate>Aug 14, 2016</uploadDate> </license>
+
+licenses
+
+The licenses data type describes the storage licenses resource.
+
+licenses data type properties
+
+The following table describes the property included in the licenses data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+License
+
+License
+
+Specifies information about individual storage license.
+
+The response to a GET for the licenses resource returns either a single instance of the license property or multiple instances depending on whether the request includes the verbose query parameter. Example
+
+Here’s an XML example of the licenses data type:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <licenses> <license> <localCapacity>10000000000000</activeCapacity> <expirationDate>Jan 1, 2021</expirationDate> <extendedCapacity>0</extendedCapacity> <feature>Premium</feature> <serialNumber>12345</serialNumber> <uploadDate>Aug 14, 2016</uploadDate> </license> </licenses>

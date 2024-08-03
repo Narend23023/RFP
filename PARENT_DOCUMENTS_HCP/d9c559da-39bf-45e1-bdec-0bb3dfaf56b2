@@ -1,0 +1,51 @@
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid.
+
+You do not have permission to add an ACL to the bucket. The specified bucket does not currently support the requested operation. The S3 compatible API is currently disabled for the specified bucket.. The tenant does not currently support use of the S3 compatible API for adding ACLs to a buckets.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Adding an ACL to a bucket by specifying individual grants
+
+Here’s a sample PUT request that adds an ACL to the finance bucket by using x-amz-grant- headers. The ACL grants read permission to all users, write permission to user pdgrey, and write, read ACL, and write ACL permission to user mwhite. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put ~ -- -k "https://europe.hcp.example.com/finance?acl" -H "x-amz-grant-read: emailAddress=all_users" -H "x-amz-grant-write: emailAddress=pdgrey, emailAddress=mwhite" -H "x-amz-grant-read-acp: emailAddress=mwhite" -H "x-amz-grant-write-acp: emailAddress=mwhite" Request headers
+
+PUT /finance?acl HTTP/1.1 Host: europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:RuKD8rwRevmwLo+ZMhF5beGq7Qk= x-amz-grant-read: emailAddress=all_users x-amz-grant-write: emailAddress=pdgrey, emailAddress=mwhite x-amz-grant-read-acp: emailAddress=mwhite x-amz-grant-write-acp: emailAddress=mwhite Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Length: 0
+
+Example: Adding an ACL to a bucket by using an ACL request body
+
+Here’s a sample PUT request that uses an ACL request body to add an ACL to the finance bucket and, at the same time, change the owner of the bucket. The ACL grants read and write access to the bucket to user lgreen and changes the bucket owner to user mwhite. The ACL request body is in a file named acl-7.xml. Request body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Owner> <ID>b9d39144-a081-4760-b0e8-b8fb51e10192</ID> <DisplayName>mwhite</DisplayName>
+
+</Owner> <AccessControlList> <Grant> <Grantee xsi:type="CanonicalUser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Grantee> <Permission>READ</Permission> </Grant> <Grant> <Grantee xsi:type="CanonicalUser"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+575/907
+
+6/25/24, 11:34 AM

@@ -1,0 +1,53 @@
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the items in a folder
+
+Here’s a sample GET request for a bucket listing that lists the objects that are in the mktg folder and, separately, the subfolders that are in the mktg folder. The request uses these query parameters: prefix=mktg/
+
+Lists only items that start with mktg/
+
+marker=mktg/
+
+Starts the listing with the item that follows mktg/ by itself
+
+delimiter=/
+
+Treats items that have a forward slash (/) after mktg/ as having a common prefix
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?prefix=mktg/ &marker=mktg/&delimiter=/" -H "x-hcp-pretty-print: true" Request headers
+
+GET /?prefix=mktg/&delimiter=/&marker=mktg/ HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:ysiVYJ/cOr78z69BuDy6fy07ryo= x-hcp-pretty-print: true
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix>mktg/</Prefix> <Marker>mktg/</Marker> <MaxKeys>1000</MaxKeys> <Delimiter>/</Delimiter> <IsTruncated>false</IsTruncated> <Contents> <Key>mktg/campaign_GoGetEm_expenses.xls</Key> <LastModified>2020-02-13T17:44:53.000Z</LastModified> <ETag>"6ed7faad1e0661c03ad65a4317d4a94c"</ETag> <Size>94328</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <StorageClass>STANDARD</StorageClass> </Contents> <Contents> <Key>mktg/campaign_LiveIt_expenses.xls</Key> <LastModified>2019-12-05T14:32:29.110Z</LastModified> <ETag>"7ad452af1e2f61b33a865c4362be5921"</ETag>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+587/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<Size>81578</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner>
+
+<StorageClass>STANDARD</StorageClass> </Contents> <CommonPrefixes> <Prefix>mktg/budget_proposals/</Prefix> </CommonPrefixes> </ListBucketResult> Example: Request for the first three items

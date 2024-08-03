@@ -1,0 +1,107 @@
+import com.hds.hcp.apihelpers.query.request.QueryRequest; import com.hds.hcp.apihelpers.query.result.Status; import com.hds.hcp.apihelpers.query.result.QueryResult;
+
+import com.hds.hcp.apihelpers.query.result.ResultSetRecord;
+
+public class PagedObjectQuery {
+
+// Local member variables private Boolean bIsInitialized = false;
+
+private String sQueryTenant; private String sQueryNamespace; private String sEncodedUserName, sEncodedPassword; private String sHTTPQueryURL;
+
+/**
+
+Initialize the object by setting up internal data and establishing the HTTP client.
+
+connection.
+
+* This routine is called by the ReadFromHCP and WriteToHCP routines, so calling it
+
+by the consumer of this class is unnecessary. */
+
+void initialize(String inNamespace, String inUsername, String inPassword) throws Exception {
+
+if (! bIsInitialized) // Initialize only if we haven't already
+
+{ // Break up the namespace specification to get the namespace and tenant parts.
+
+String parts[] = inNamespace.split("\\.");
+
+sQueryNamespace = parts[0]; sQueryTenant = parts[1];
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+862/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+// Now extract just the tenant part of the URL and use it to create the // HTTPQueryURL.
+
+parts = inNamespace.split(sQueryNamespace + "\\."); sHTTPQueryURL = "https://" + parts[1] + "/query";
+
+// Encode both the username and password for the authentication string. sEncodedUserName = HCPUtils.toBase64Encoding(inUsername);
+
+sEncodedPassword = HCPUtils.toMD5Digest(inPassword);
+
+// Set up an HTTP client for sample usage. mHttpClient = HCPUtils.initHttpClient();
+
+bIsInitialized = true; }
+
+}
+
+/** * This method performs an orderly shutdown of the HTTP connection manager.
+
+/ void shutdown() throws Exception {
+
+// Clean up open connections by shutting down the connection manager. mHttpClient.getConnectionManager().shutdown();
+
+}
+
+/** * This routine issues a query to an HCP namespace requesting information about
+
+objects in it. The query requests 1,000 results at a time. If there are more,
+
+the routine performs paged queries to retrieve all the results. *
+
+While processing the query results, the routine displays the name of the first * and last object of the result set to system output.
+
+/ protected void runQuery() { // Statistics counters
+
+Long TotalRecordsProcessed = 0L; Integer HTTPCalls = 0;
+
+try {
+
+/*
+
+Set up the query request. */
+
+// Set up for an object query by calling the
+
+// com.hds.hcp.apihelpers.query.request.Object constructor. Object mObjQuery = new Object();
+
+// Get only 50 objects at a time. mObjQuery.setCount(50);
+
+// Retrieve only those that reside in the namespace specified in the command. mObjQuery.setQuery("+namespace:" + sQueryNamespace + "." + sQueryTenant);
+
+// Retrieve the "size" and "ingestTimeString" properties for the object. mObjQuery.setObjectProperties("size,ingestTimeString");
+
+// Set up the query request.
+
+QueryRequest mQuery = new QueryRequest(mObjQuery);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+863/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+/*
+
+Loop through and process all the objects one response at a time or until * an error occurs.
+
+/ QueryResult mQueryResult = null;
+
+do { System.out.println("Issuing query: \n" + mQuery.toString(true));

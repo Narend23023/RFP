@@ -1,0 +1,111 @@
+The default is no versioning. Example
+
+Here’s an XML example of the namespaceDefaults data type:
+
+<namespaceDefaults> <description></description>
+
+<dpl>Dynamic</dpl> <effectiveDpl>Dynamic</effectiveDpl> <enterpriseMode>true</enterpriseMode> <allowErasureCoding>true</allowErasureCoding> <hardQuota>75 GB</hardQuota> <hashScheme>SHA-256</hashScheme> <optimizedFor>CLOUD</optimizedFor> <replicationEnabled>true</replicationEnabled> <searchEnabled>true</searchEnabled> <servicePlan>Short-Term-Activity</servicePlan> <softQuota>75</softQuota> <versioningSettings> <enabled>true</enabled> <prune>true</prune> <pruneDays>10</pruneDays> <useDeleteMarkers>true</useDeleteMarkers> </versioningSettings> </namespaceDefaults>
+
+namespacePermission
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+488/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The namespacePermission data type describes the namespacePermission property of the dataAccessPermissions data type. Properties
+
+The table below describes the properties included in the namespacePermission data type.
+
+Property
+
+Data Type
+
+Description
+
+Notes
+
+namespaceName
+
+String
+
+Specifies the name of the namespace to which the permissions listed in the permission property provide access.
+
+permissions
+
+List
+
+Lists the permissions associated with the namespace identified by the namespaceName property. Valid values for permissions are: BROWSE CHOWN DELETE PRIVILEGED PURGE
+
+The set of permissions specified in the request body replaces the set of permissions currently associated with the namespace identified by the namespaceName property. To remove all the permissions for a namespace, specify an empty list.
+
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes READ, browse permission is READ READ_ACL SEARCH WRITE_ACL WRITE
+
+enabled automatically. If the set of permissions includes SEARCH, browse and read permissions are enabled automatically.
+
+These values are not case sensitive.
+
+Example
+
+Here’s an XML example of the namespacePermission data type:
+
+<namespacePermission>
+
+<namespaceName>Accounts-Receivable</namespaceName> <permissions> <permission>BROWSE</permission> <permission>CHOWN</permission> <permission>SEARCH</permission> <permission>PURGE</permission> <permission>WRITE_ACL</permission> <permission>DELETE</permission> <permission>PRIVILEGED</permission> <permission>READ</permission> <permission>READ_ACL</permission> <permission>WRITE</permission> </permissions> </namespacePermission> networkSettings
+
+The network data type sets the downstream DNS to either basic or advanced mode.
+
+networkSettings data type properties
+
+The following table describes the properties included in the network data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+downstreamDNSMode
+
+String
+
+Specifies whether downstream DNS is set to basic or advanced mode. Valid values are: BASIC ADVANCED
+
+The default is basic.
+
+Example
+
+Here's an XML example of the network data type:
+
+<networkSettings> <downstreamDNSMode>ADVANCED</downstreamDNSMode> </networkSettings>
+
+nfsProtocol
+
+The nfsProtocol data type describes the nfs resource for HCPnamespaces.
+
+Properties
+
+The table below describes the properties included in the nfsProtocol data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+489/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+enabled
+
+Boolean

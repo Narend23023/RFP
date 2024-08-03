@@ -1,0 +1,57 @@
+An ACL collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the ACL for a given object on each of two systems in a replication topology.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+710/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+2. The changed ACL on one of the systems is replicated to the other system.
+
+An ACL is treated as a single unit. If a collision occurs when a changed ACL for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+If the last change to the ACL on system A is more recent than the last change to the ACL on system B, HCP changes the ACL on system B to match the changed ACL on system A If the last change to the ACL on system B is more recent than the last change to the ACL on system A, HCP does not change the ACL on system B For example, suppose the ACL for a given object starts out with these grants on both system A and system B:
+
+All users: read User lgreen: write User mwhite: write, delete
+
+The list below shows a sequence of events in which the ACL for the object is changed and the change is then replicated.
+
+1. On system B, a client changes the grants in the ACL to:
+
+All users: read User lgreen: write, delete User pdgrey: write
+
+2. On system A, a client changes the grants in the ACL to:
+
+All users: read User mwhite: write User pdgrey: write
+
+3. The changed ACL on system A is replicated to system B. The resulting ACL for the object on system B contains these grants:
+
+All users: read User mwhite: write User pdgrey: write REST API
+
+This section of the Help contains information about using the REST namespace access protocol.
+
+Accessing a namespace with the REST API
+
+For access to namespaces, HCP supports a RESTful implementation of HTTP called the REST API. To access a namespace through this protocol, you can write applications that use any standard HTTP client library, or you can use a command-line tool, such as cURL, that supports HTTP. You can also use a web browser to access the namespace. The namespace configuration determines whether you need to use HTTP with SSL (HTTPS).
+
+Using the REST API, you can store, view, retrieve, and delete objects. You can specify certain metadata when you store new objects and change the metadata for existing objects. You can add, replace, and delete custom metadata and ACLs and retrieve information about namespaces.
+
+The REST API is compliant with HTTP/1.1, as specified by RFC 2616. For you to access a namespace using the REST API, the API must be enabled in the namespace configuration. If you cannot use the REST API to access the namespace, contact your tenant administrator.
+
+This chapter explains how to use the REST API to access and perform operations in namespaces.
+
+The REST API examples in this book use cURL and Python with PycURL, a Python and Java® interface that uses the libcurl library. cURL and PycURL are both freely available open-source software. You can download them from http://curl.haxx.se.
+
+Note: In version 7.12.1 of PycURL, the PUT method was deprecated and replaced with UPLOAD. The Python examples in this book show UPLOAD but work equally well with PUT.
+
+URLs for namespace access using the REST API URL formats
+
+The following sections show the URL formats you can use to access a namespace. These formats all use a domain name to identify the HCP system. As an alternative, you can use
+
+an IP address to identify the HCP system.
+
+If the HCP system does not support DNS, you can use the client hosts file to enable access to a namespace by hostname. Note:

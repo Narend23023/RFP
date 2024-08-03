@@ -1,0 +1,93 @@
+Assigns the object to a retention class. You can assign this value to an object if any one of these is true:
+
+The original retention period for the object has expired. The original retention period for the object has not expired, and the retention class results in
+
+a retention period that is longer than the current retention period. The retention setting for the object is 0 or -2.
+
+The retention setting for the object is -1, and the class has a retention setting of -1. The object is in a retention class, and the duration of the new class is not shorter than the
+
+duration of the original class. The retention class you assign must already be defined for the namespace.
+
+shred No
+
+Specifies whether to shred the object after it is deleted. Either true or false.
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200 OK
+
+HCP successfully updated the metadata.
+
+400
+
+Bad Request
+
+One of:
+
+The URL in the request is not well-formed.
+
+The request is trying to change the retention setting from a retention class to an explicit setting, such as a datetime value.
+
+The request is trying to change the retention setting and the retention hold setting at the same time.
+
+The request is trying to change the retention setting for an object on hold. The request is trying to change the shred setting from true to false. The request is trying to change the owner of an object and specifies an invalid username or domain.
+
+The request is trying to change the owner of an object to an AD user, but Active Directory authentication is not supported.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter.
+
+If more information about the error is available, the response headers include the HCP product-specific X-HCP-ErrorMessage header.
+
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The user does not have write permission.
+
+For a request to hold or release an object, the user does not have privileged permission. For a request to change the owner of an object, the user does not have change owner permission.
+
+The access method (HTTP or HTTPS) is disabled.
+
+404 Not Found
+
+HCP could not find the specified object, or the URL path contains a symbolic link to a directory anywhere other than in the last component.
+
+Example: Changing multiple metadata values for an existing object
+
+Here is a sample HTTP POST request that makes the following changes to the metadata for the Q1_2020.ppt file: Increases retention by one year from the current value
+
+Turns on shredding on delete Turns off indexing
+
+Request with curl command line
+
+curl -k -i -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -d "retention=R+1y" -d "shred=true" -d "index=false"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2020.ppt"
+
+Request in Python using PycURL
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+766/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+import pycurl curl = pycurl.Curl()
+
+theHeader = ["Transfer-Encoding: chunked"] curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", theHeader])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2020.ppt")

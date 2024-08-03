@@ -1,0 +1,37 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+587/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<Size>81578</Size> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner>
+
+<StorageClass>STANDARD</StorageClass> </Contents> <CommonPrefixes> <Prefix>mktg/budget_proposals/</Prefix> </CommonPrefixes> </ListBucketResult> Example: Request for the first three items
+
+Here are two sample GET requests for bucket listings that list item versions. The first request returns a list of three items. The second request returns a list of the three items that follow the last item returned by the first request.
+
+The request for the first three items uses these query parameters: versions
+
+Lists item versions
+
+key-marker=mktg/
+
+Starts the listing with the item that follows mktg/ by itself
+
+max-keys=3
+
+Lists at most three items
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?versions &key-marker=mktg/&max-keys=3" -H "x-hcp-pretty-print: true" Request headers
+
+GET /?versions&key-marker=mktg/&max-keys=3 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:sf4WfS+TzOj9zrHVRA5Z0i1KsFg= x-hcp-pretty-print: true
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListVersionsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Name>finance</Name> <Prefix></Prefix> <KeyMarker>mktg/</KeyMarker><VersionIdMarker></VersionIdMarker> <NextKeyMarker>mktg/campaign_GoGetEm_expenses.xls</NextKeyMarker> <NextVersionIdMarker>87288784288321</NextVersionIdMarker>

@@ -1,0 +1,75 @@
+Managing repository access
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+14/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Managing repository access entails:
+
+Setting the systemwide permission mask, which provides the highest level of control over namespace access.
+
+Optionally, enabling and configuring the metadata query engine and API.
+
+Controlling access to the Search Console for the default tenant.
+
+Ensuring HCP system recovery
+
+Through its services, the HCP system is self-healing, so your intervention is not often required for recovery from unexpected events. Events that may require your intervention,
+
+however, include power outages and hardware failures. To protect against a catastrophic failure of an HCP system, you can implement replication. When you do this, you are responsible not only for configuring the connections between
+
+the systems involved but also for managing failover and recovery should that become necessary.
+
+Note: Default tenant administrators can use NDMP to back up and restore the default namespace. Troubleshooting
+
+From the system console for any HCP node, you can run selected diagnostics that can help you analyze and resolve issues with interactions between the node and other components in the HCP environment. Using these diagnostics, for example, you can troubleshoot problems with physical networks, virtual networking, external storage, and DNS.
+
+Occasionally, you may need help resolving problems that occur with the HCP system. In such cases, your authorized service provider may ask you to download the logs HCP
+
+maintains internally and send them to the HCP support center.
+
+You download the HCP internal logs from the System Management Console. You can also use the Console to insert comments into these logs to indicate when problems occur and
+
+describe their symptoms. Account administration
+
+As an HCP security administrator, you are responsible for creating and managing HCP system-level user and group accounts. These accounts give users permission to access the
+
+HCP System Management Console, the Tenant Management Console for the default tenant, the HCP management API, the HCP metadata query API, and/or the HCP Search Console for the default tenant. For the System Management Console and Tenant Management Consoles and the management API, these accounts also determine which actions the
+
+user is allowed to perform through the applicable interface.
+
+When creating a user or group account, you associate roles with the account. For a user account, you also specify whether the account is authenticated locally or by RADIUS when used to access an HCP interface. To enable RADIUS authentication, you need to set up connections to one or more RADIUS servers.
+
+You can create group accounts only if HCP is configured to support Active Directory (AD). About user and group accounts
+
+HCP uses system-level user and group accounts to control access to these interfaces:
+
+HCP System Management Console
+
+Tenant Management Console for managing the default tenant and namespace
+
+HCP management API for creating and managing tenants
+
+HCP metadata query API for querying the default namespace Search Console to search in the default namespace
+
+Note: System-level user and group accounts do not control access to stored data and metadata other than through the metadata query API and Search Console. User accounts
+
+An HCP user account is a set of credentials that gives a user access to one or more of the interfaces listed above. You create and manage user accounts in the HCP System
+
+Management Console.
+
+When you create a user account, you specify a username and password. You also associate roles with the account and specify whether the user credentials are authenticated
+
+locally or by RADIUS. Additionally, for locally authenticated users, you specify whether the account password must be changed the next time the account is used to access one of the Consoles.
+
+You can enable and disable user accounts, as needed. While an account is disabled, it cannot be used to access any of the applicable interfaces. You might decide to disable an
+
+account, for example, while the user for whom you created it is on vacation.
+
+Multiple people can use the same user account concurrently for the same or different interfaces. To prevent this from happening, you should create a separate account for each user, and users should keep their passwords confidential.
+
+An HCP system can have at most 200 system-level user accounts. Group accounts

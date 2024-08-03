@@ -1,0 +1,85 @@
+RADIUS server. That server checks whether the username and password are valid and sends the result to HCP.
+
+HCP lets the user into the target Console if these conditions are true:
+
+The combination of the specified username and password is valid.
+
+The user account is enabled. The user account is associated with a role that grants permission to access the target Console.
+
+If any of these conditions is not true, HCP doesn’t let the user in.
+
+All password management for RADIUS-authenticated users is handled by the RADIUS server. You cannot use the System Management Console to set or change the passwords of RADIUS-authenticated users. Active Directory authentication
+
+For AD-authenticated users, the username and password for the user account are stored in AD. If the user is signed into a Windows client, HCP relies on Windows to have already
+
+validated the username and password with AD (this is single sign-on). However, if the user provides an AD username and password on the System Management Console or Search
+
+Console login page, HCP securely sends the specified username and password to AD for authentication.
+
+HCP lets an authenticated user into the target Console only if these conditions are true:
+
+The user belongs to at least one AD group for which a corresponding group account exists in HCP.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+20/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Note: Alternatively, the user can belong to an AD group that’s nested at any level under another group for which a corresponding HCP group account exists. In this case,
+
+however, any parent groups that are defined in a domain other than the user’s domain must be universal.
+
+At least one such group account is associated with a role that grants permission to access the target Console.
+
+If either of these conditions is not true, HCP doesn’t let the user in.
+
+All password management for AD-authenticated users is handled by the AD. You cannot use the System Management Console to set or change the passwords of AD-authenticated users.
+
+Starter account
+
+When HCP is first installed, one user account is already defined.
+
+The username and password for the predefined user account are:
+
+Username: security Password: Chang3Me!
+
+This account has only the security role and is authenticated locally.
+
+You need to use the security account the first time you log into the System Management Console after HCP is installed. When you log in, you are immediately required to change the
+
+password for this account. Then you can create new accounts as needed, including new accounts with the security role.
+
+You can delete the security account as long as at least one other locally authenticated HCP user account has the security role and is enabled.
+
+Note: Your authorized HCP service provider may have changed the password and roles for the security account while verifying and completing the installation of the HCP system. If
+
+this is the case, you need to get the new password for the security account from the service provider.
+
+Working with user accounts
+
+To view, create, and manage user accounts, you use the Users page in the HCP System Management Console. Note:
+
+To view user accounts, you need the monitor, administrator, or security role. To create and manage user accounts, you need the security role.
+
+To display the Users page, in the top-level menu, select Security ► Users.
+
+About the Users page
+
+The Users page lets you create, modify, and delete user accounts. It also lists the existing user accounts.
+
+Understanding the user account list
+
+The Users page lists existing user accounts. For each account, the list shows: The user name
+
+Whether the account is enabled or disabled
+
+The full name of the account user Whether the user login is authenticated locally or by RADIUS
+
+To view additional information about an individual user account, click the account user name.
+
+Managing the user account list
+
+By default, the user account list on the Users page includes all existing user accounts. The accounts are listed 20 at a time in ascending order by username.
+
+You can page through, sort, and filter the list of user accounts. The Users page indicates which accounts are shown out of the total number of accounts in the current list. Paging

@@ -1,0 +1,35 @@
+333/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: System B can service redirected namespace access requests only if the applicable namespace is configured to allow service by remote systems.
+
+If a client request targeted to system A is for an HCP namespace or default-namespace directory that was not being replicated on the failed-over link, the request is not redirected to system B. Client requests that target system A by IP address are also not redirected to system B.
+
+Client requests that use a domain name to target the Tenant Management Console for a replicated HCP tenant on system A are redirected to system B, but system B cannot process such requests. Instead, system B returns a 403 error code.
+
+While the link is failed over, system A does not broadcast any configuration information to the DNS. With DNS failover disabled, failing over an active/active link stops replication on the link but does not cause any other changes. Clients can still access system A by domain name (if system A is available).
+
+Failback with an active/active link
+
+Failing back an active/active link entails a single action, fail back. When an active/active link fails back:
+
+Replication immediately restarts in both directions on the link. With DNS failover enabled, each HCP system involved in the link broadcasts its own configuration to the DNS.
+
+From that point on, client requests that target either system by domain name are directed to the specified system. Failover and failback with active/passive links
+
+The effects of failing over and failing back an active/passive link differ depending on whether DNS failover was enabled for the system that became unavailable. In all cases, however, when an active/passive link fails over, replication on that link stops. When the link fails back, normal replication restarts. Failover with an active/passive link
+
+Failover with an active/passive link occurs only from the primary system to the replica. When an active/passive link fails over to the replica, the replicated HCP tenants and namespaces and default-namespace directories become read-write on the replica.
+
+With DNS failover enabled, when an active/passive link fails over, the replica broadcasts a new configuration to the DNS. This new configuration causes client requests targeted to the primary system by domain name to be redirected to the replica when the request is for an HCP namespace or default-namespace directory that was being replicated on the failed-over link.
+
+Note: A replica can service redirected namespace access requests only if the applicable namespace is configured to allow service by remote systems. If a client request targeted to the primary system is for an HCP namespace or default-namespace directory that was not being replicated on the failed-over link, the request is not redirected to the replica. Client requests that target the primary system by IP address are also not redirected to the replica.
+
+Client requests that use a domain name to target the Tenant Management Console for a replicated HCP tenant on the primary system are redirected to the replica, but the replica cannot process such requests. Instead, the replica returns a 403 error code.
+
+If the primary system is still available when an active/passive link is failed over and the primary system and the replica can communicate with each other, the replicated HCP tenants and namespaces and default-namespace directories become read-only on the primary system. Also, while the link is failed over, the primary system does not broadcast any configuration information to the DNS. If the two systems cannot communicate with each other when the link is failed over, the replicated items remain read-write on the primary system, and the primary system continues to broadcast its configuration information to the DNS. If DNS failover is disabled, clients can still access the primary system by domain name.
+
+If clients are allowed to write to both the primary system and the replica while an active/passive link is failed-over, configuration conflicts and conflicts in namespace content may occur when the link is failed back. Although HCP resolves such conflicts in a predictable manner, the recommended practice is to avoid them in the first place. Therefore, when you fail over an active/passive link without DNS failover enabled, you should tell the applicable tenant administrators to direct all client access requests to the replica. Failover with bidirectional active/passive links

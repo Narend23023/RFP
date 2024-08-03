@@ -1,0 +1,111 @@
+/*
+
+Write GZIP member trailer to a byte array, starting at a given * offset.
+
+/ private void writeTrailer(byte[] buf, int offset) throws IOException { writeInt((int)mCRCInputStream.getCRCValue(), buf, offset);
+
+// CRC32 of uncompr. data writeInt(def.getTotalIn(), buf, offset + 4); // Number of uncompr. bytes }
+
+/*
+
+Write integer in Intel byte order to a byte array, starting at
+
+a given offset. */
+
+private void writeInt(int i, byte[] buf, int offset) throws IOException {
+
+writeShort(i & 0xffff, buf, offset); writeShort((i >> 16) & 0xffff, buf, offset + 2);
+
+} /*
+
+Write short integer in Intel byte order to a byte array, * starting at a given offset
+
+/ private void writeShort(int s, byte[] buf, int offset) throws IOException { buf[offset] = (byte)(s & 0xff);
+
+buf[offset + 1] = (byte)((s >> 8) & 0xff); }
+
+} WholeIOOutputStream class
+
+package com.hds.hcp.apihelpers;
+
+import java.io.IOException; import java.io.InputStream;
+
+import java.io.OutputStream;
+
+/** * This class defines an OutputStream that will create both the data
+
+file and the custom metadata file for an object. The copy() method * is used to read an InputStream and create the two output files based
+
+on the indicated size of the data file portion of the stream. *
+
+The class is used to split and create content retrieved over REST * API as a single stream for type=whole-object GET operations.
+
+/ public class WholeIOOutputStream extends OutputStream {
+
+// Constructor. Passed output streams for the data file and the // custom metadata file. Allows specification of whether the custom
+
+// metadata comes before the object data. public WholeIOOutputStream(OutputStream inDataFile, OutputStream inCustomMetadataFile, Boolean inCustomMetadataFirst) {
+
+bCustomMetadataFirst = inCustomMetadataFirst;
+
+// Set up first and second file Output Streams based on whether
+
+// custom metadata is first in the stream.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+829/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+if (bCustomMetadataFirst) { mFirstFile = inCustomMetadataFile; mSecondFile = inDataFile; } else {
+
+mFirstFile = inDataFile; mSecondFile = inCustomMetadataFile;
+
+}
+
+bFinishedFirstPart = false; }
+
+// Member variables.
+
+private Boolean bFinishedFirstPart; private Boolean bCustomMetadataFirst;
+
+private OutputStream mFirstFile, mSecondFile;
+
+/**
+
+This routine copies content in an InputStream to this * output Stream. The first inDataSize number of bytes are written
+
+to the data file output stream. *
+
+@param inStream - InputStream to copy content from. * @param inFirstPartSize - number of bytes of inStream that should
+
+be written to the first output stream. * @throws IOException
+
+/ public void copy(InputStream inStream, Integer inFirstPartSize) throws IOException { int streamPos = 0; byte buffer[] = new byte[2048];
+
+int readLength = 0;
+
+// Keep reading bytes until EOF has been reached.
+
+while (-1 != (readLength = inStream.read(buffer, 0, Math.min(buffer.length, (bFinishedFirstPart ? buffer.length :
+
+inFirstPartSize - streamPos ) )))) {
+
+// Update the position in the stream. streamPos += readLength;
+
+// Write the bytes read. write(buffer, 0, readLength);
+
+// Was all the content for the first file written? if ( streamPos == inFirstPartSize)
+
+{ // Yes. Flag that the next write should be to the second file.
+
+bFinishedFirstPart = true; }
+
+}
+
+}
+
+/** * This is the core buffer write function for the OutputStream

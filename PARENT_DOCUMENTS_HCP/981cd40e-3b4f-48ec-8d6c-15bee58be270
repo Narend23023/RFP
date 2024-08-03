@@ -1,0 +1,65 @@
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?purge=true") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+
+curl.perform()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+751/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?purge=true HTTP/1.1
+
+Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-ServicedBySystem: hcp.example.com
+
+X-HCP-Time: 1334425187
+
+Content-Length: 0
+
+Example: Performing a privileged purge
+
+Here’s a sample HTTP DELETE request that purges the object named
+
+Q1_2012.ppt, which is under retention, from the quarterly_rpts directory. This example uses form-encoded data to pass the operation parameters and percent-encodes the reason because it contains an ampersand. Request with curl command line
+
+curl -k -iX DELETE -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+k -d "purge=true" -d "privileged=true" -d "reason=Purged%20per%20Compliance%20Dept.%20order%20AD%26943" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt"
+
+Request in Python using PycURL import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.example.hcp.com \ /rest/quarterly_rpts/Q1_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+
+args = {'privileged':'true', 'purge':'true', 'reason':'Purged per Compliance Dept. order AD&943'}
+
+params = urllib.urlencode(args) curl.setopt(pycurl.POSTFIELDS, params)
+
+curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers DELETE /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: finance.europe.hcp.example.com

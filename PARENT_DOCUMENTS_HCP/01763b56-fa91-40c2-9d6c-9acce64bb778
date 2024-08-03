@@ -1,0 +1,45 @@
+With either of these options selected, the Active Directory page displays a Status section. This section contains alerts that report the status of various elements of HCP support for Active Directory.
+
+4. If you selected Active Directory with SSL:
+
+a. In the Certificates panel, click Browse. Then select the file containing the AD SSL certificate. b. Click Upload Certificate.
+
+The Certificates section shows the uploaded certificate.
+
+You can download or delete the uploaded certificate if needed. To download the certificate, click the download control for it (
+
+). To delete the certificate, click the delete control (
+
+) for it.
+
+5. In the Configuration Settings section, select Enable Active Directory. Then:
+
+In the Domain field, type the fully qualified name of the AD domain in the AD forest that is to be used for HCP user authentication. All letters in this domain name must be uppercase. In the Domain User field, type the username of an existing AD user account in the applicable AD domain. Make sure the user account belongs to one or more groups that have the applicable permissions, as described earlier in this section.
+
+If the username that you specify is not all lowercase, HCP converts it to all lowercase before passing it to AD.
+
+In the Password field, type the password that goes with the specified username. Passwords are case-sensitive.
+
+HCP uses the password that you type only to authenticate the username with the AD server. To help maintain AD security, HCP discards both the username and password after you submit the page. If you’re modifying the AD configuration, you need to specify the password again.
+
+6. Optionally, to specify an organization unit and computer account other than the defaults and to use NTLMv2 instead of NTLM, click Advanced Configuration. Then:
+
+In the Organizational Unit field, type the distinguished name of the existing organizational unit in which you want the HCP computer accounts to be created. This is
+
+the distinguished name relative to the AD domain (for example, OU=HCP, OU=Storage). Do not include the domain name elements. In the HCP Computer Account field, type the name of the computer account that HCP will use when querying AD for groups. This can be the name of an existing account in the specified organizational unit or the name of a new account to be created automatically in that organizational unit. For a new computer account, the name must be from one through 64 characters long, can contain only alphanumeric characters and hyphens (-), and cannot consist only of digits.
+
+If a computer account with the specified name already exists in a different organizational unit in the same Active Directory domain, the request to configure Active Directory support will fail.
+
+Optionally, to specify how the HCP user account obtains permissions, do either of these:
+
+If you created an AD group, select Add HCP Computer Account to groups of Domain User. This allows the HCP Computer account from inherit permissions associated with the specified domain user.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+135/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help If you did not create an AD group, deselect Add HCP Computer Account to groups of Domain User. This prevents the HCP Computer account from inheriting the permissions associated with the specified domain user. If this checkbox is deselected, appropriate permissions need to be manually assigned to the HCP Computer account.
+
+Optionally, select Non-Hierarchical Realm Configuration if you have multiple trees in your AD forest. This permits authentication from any domain in the forest, and is necessary if they have different domain names. Optionally, select Enable Authenticated CIFS Support if you want to require authentication for data access via CIFS in your namespaces. Authenticated CIFS support is disabled by default for new AD joins. If you selected Enable Authenticated CIFS Support, the Use NTLMv2 authentication option appears. Optionally, deselect Use NTLMv2 authentication to use NTLM for secure communication with AD when configuring the computer accounts for the HCP nodes. In release 7.2.1 of HCP or later, new AD connections are created with

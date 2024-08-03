@@ -1,0 +1,87 @@
+231/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+h. In the Network ID field, type the first three octets of the subnet for the applicable AD domain.
+
+Then click the Next button. The Dynamic Update page appears. i. Click the Next button.
+
+The Completing New Zone Wizard page appears.
+
+j. Click the Finish button.
+
+To see the reverse lookup you just created, expand Reverse Lookup Zones in the tree view in the left panel of the Active Director Users and Computers window. The name of the reverse lookup zone, which appears under Reverse Lookup Zones, consists of the first three octets that you specified in Step 8 above in reverse order, followed by in-addr.arpa., as in this sample Active Director Users and Computers window.
+
+7. Configure support for AD in HCP
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+232/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Now that you’ve completed the steps for preparing AD for communication with HCP, you need to use the HCP System Management Console to configure support for AD in HCP. Browser configuration for single sign-on with Active Directory
+
+Configuring Windows Internet Explorer for single sign-on
+
+Before you set up single sign-on, you need to configure Windows Internet Explorer. The following instructions apply with Windows Internet Explorer 11.
+
+1. Open Internet Explorer. 2. On the Tools menu, click Internet Options. 3. In the Internet Options window, click the Security tab. 4. On the Security page, select Local intranet.
+
+5. Click Sites. 6. In the Local intranet window, ensure that all the options are selected. 7. Click Advanced. 8. In the Add this website to the zone field, take either of these actions: To enable single sign-on with HTTP, type: http://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com
+
+To enable single sign-on with HTTPS, type:
+
+https://*.hcp-name.domain-name
+
+For example:
+
+https://*.hcp.example.com
+
+9. Click Add. 10. Click Close. 11. In the Local intranet window, click OK. 12. In the Internet Options window, click the Advanced tab. 13. In the Settings list, under Security, select Enable Integrated Windows Authentication. 14. Click OK. 15. Close Internet Explorer. Configuring Mozilla Firefox for single sign-on
+
+1. Open Firefox. 2. In the address field in the Firefox window, enter:
+
+about:config
+
+3. In response to the warning message, click I’ll be careful, I promise!. 4. In the Preference Name list, double-click network.negotiate-auth.delegation-uris. 5. In the Enter string value window, type: http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com,https://*.hcp.example.com
+
+6. Click OK. 7. In the Preference Name list, double-click network.negotiate-auth.trusted-uris. 8. In the Enter string value window, type:
+
+http://*.hcp-name.domain-name,https://*.hcp-name.domain-name
+
+9. Click OK.
+
+10. Close Firefox. SSL server certificate providers
+
+An SSL server certificate provides security for:
+
+HCP System Management Console HCP Tenant Management Console HCP management API Replication HTTP and WebDAV protocols HCP metadata query API HCP Search Console
+
+HCP is installed with its own SSL server certificate. If you want, you can replace this with a different certificate.
+
+SSL server certificates are available from several sources. The following table lists some vendors with products that are suitable for use with HCP. Vendor
+
+Suitable SSL Products
+
+Website
+
+thawte, Inc.
+
+http://www.thawte.com
+
+SGC SuperCert
+
+SSL Web Server Certificate

@@ -1,0 +1,121 @@
+The tenant can set the retention mode.
+
+The tenant cannot set the retention mode.
+
+In enterprise mode, privileged deletes are allowed, retention class durations can be shortened, and retention classes can be deleted. In compliance mode, these activities are not allowed.
+
+creationTime
+
+String
+
+Specifies the date and time at which the tenant was created, in this ISO 8601 format:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request. yyyy-MM-ddThh:mm:ssZ
+
+Z represents the offset from UTC, in this format:
+
+(+|-)hhmm
+
+For example:
+
+2017-02-09T19:26:32-0500
+
+fullyQualifiedName
+
+String
+
+Specifies the fully qualified hostname of the tenant.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+hardQuota String
+
+For an HCP tenant, specifies the total amount of space available to the tenant for allocation to its namespaces.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+Possible values are decimal numbers with up to two places after the period, followed by a space, followed by
+
+This property is not valid for the default tenant.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+521/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+MB, GB, or TB (for example, 10.25 TB). The minimum value is 1 (one) for GB and .01 for TB. id
+
+String
+
+Specifies the system-supplied unique ID for the tenant. HCP generates this ID automatically when you create a tenant.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+maxNamespacesPer User
+
+integer
+
+This property is not valid for the default tenant.
+
+For an HCP tenant, specifies the maximum number of namespaces that can be owned at one time by any given user.
+
+Valid values are zero through 10,000. The default is 100. name
+
+String
+
+Specifies the name of the tenant. HCP derives the
+
+This property is not valid on a POST request. It is returned
+
+hostname for the tenant from this name. The hostname is used in URLs for access to the tenant and its namespaces.
+
+only by a verbose GET request for an HCP tenant.
+
+This property is not returned by any GET request for the default tenant.
+
+The name of the default tenant is always Default.
+
+The tenant name is used in the URL for access to the tenant. namespaceQuota
+
+String
+
+For an HCP tenant, specifies the number of namespaces HCP reserves for the tenant out of the total number of namespaces the system can have. This is also maximum number of namespaces the tenant can own at any given time.
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant.
+
+Possible values are:
+
+Integers in the range 1 (one) through the current number of namespaces available for allocation. The number of available namespaces is equal to 10,000 minus the number of namespaces currently allocated to HCP tenants, minus the number of namespaces currently owned by HCP tenants without a quota, minus one for the default namespace, if it exists. If any tenants are above quota, the number of excess namespaces is also subtracted from the number of available namespaces. None
+
+replicationConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant is eligible for replication. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+true
+
+false
+
+The tenant is eligible for replication.
+
+This property is not valid for the default tenant. If the HCP system supports replication, directories in the default namespace are automatically eligible for replication.
+
+The tenant is not eligible for replication.
+
+searchConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant can enable and disable search for the namespaces it owns. Possible values are:

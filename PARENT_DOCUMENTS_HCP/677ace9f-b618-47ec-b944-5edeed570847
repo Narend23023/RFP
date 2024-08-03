@@ -1,0 +1,67 @@
+Allow/Deny section
+
+Optionally, in the Allow/Deny section, specify IP addresses of email servers to be allowed or denied access to the namespace through SMTP.
+
+Emails section
+
+1. Click Emails. 2. In the Email Location field, type the path for the directory in which you want email objects stored.
+
+This is the full path starting after the root directory (that is, rest or data). Be sure to start and end the path with a forward slash (/), like this: /email/company_all/
+
+If any part of the specified directory path doesn’t exist, HCP creates it.
+
+3. In the Format field, select either .eml or .mbox.
+
+The one you choose depends on the application you use to read the stored email.
+
+4. To store email attachments separately from the emails they’re attached to, select Separate attachments from parent email.
+
+Important: Storing attachments separately from the email they accompany can have a significant impact on performance and storage space. Unless you have a specific reason to do so, do not enable this option. 5. Click Update Settings in the Emails section.
+
+Changing the default settings for namespace creation
+
+When you open the Create Namespace panel to create a namespace, the panel shows default settings for many of the namespace properties. You can change the defaults for these
+
+settings at any time. Changing the default settings for namespace creation has no effect on existing namespaces. To view the default settings for namespace creation, you need the monitor or administrator role. To change the default settings for namespace creation, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, select Configuration > Namespace Defaults. 2. (Optional) In the Description field, type a new description.
+
+The description can be up through 1,024 characters long and can contain any valid UTF-8 characters, including white space. By default, this field is blank.
+
+3. (Optional) In the Hash Algorithm field, select a different cryptographic hash algorithm.
+
+The default is SHA-256.
+
+4. (Optional) In the Hard Quota field, type a new number of gigabytes or terabytes of storage to allocate to the namespace and select either GB or TB to indicate the
+
+measurement unit. The default is 50 GB. The maximum value you can specify is equal to the hard quota for the tenant. 5. (Optional) In the Soft Quota field, type a new percent at which you want HCP to notify the tenant that free storage space for the namespace is running low.
+
+The default is 85.
+
+6. (Optional) Under Replication, change the selection.
+
+The default is Off. The Replication option is present only if the tenant is allowed to create namespaces with replication enabled.
+
+7. (Optional) If you selected On for replication, select Allow erasure coding to allow HCP to use erasure coding to implement replication of the objects in the namespace.
+
+The Allow erasure coding option is present only if the tenant can manage erasure coding for namespaces. When you select Allow erasure coding, if the Cloud Optimized setting is currently set to Off, the setting automatically changes to On.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+289/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+8. Under Cloud Optimized: Select On to optimize the namespace for cloud protocols only. Select Off to optimize the namespace for all protocols.
+
+When you select Off while Allow erasure coding is selected, that option is automatically deselected.
+
+Select System default to use the system-level default protocol optimization setting that's current when you create a namespace.
+
+The Cloud Optimized option is present only if the tenant is allowed to create namespaces with replication enabled.
+
+9. Under Directory usage:
+
+Select Balanced to configure the namespace for balanced directory usage. Select Unbalanced to configure the namespace for unstructured data usage. It is applicable only for cloud-optimized namespaces. Select System default to use the system-level default directory usage setting that's current when you create a namespace.

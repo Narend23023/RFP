@@ -1,0 +1,49 @@
+Namespace quota: 5 Versioning: disabled
+
+The following list shows a sequence of events in which the tenant configuration is changed and the change is then replicated.
+
+1. In the System Management Console on system B, an administrator changes the namespace quota for the tenant to 10.
+
+2. In the System Management Console on system A, an administrator enables versioning for the tenant. 3. The change on system A is replicated to system B. Because namespace quota and versioning are properties in the same submission group, the resulting properties for the tenant on system B are:
+
+Namespace quota: 5 Versioning: enabled Example 2
+
+A given tenant-level user account starts out on both system A and system B with these roles and data access permissions:
+
+Roles: monitor, compliance Namespace-1 permissions: browse, read, write, delete
+
+The following list shows a sequence of events in which the user account is changed and the changes are then replicated.
+
+1. In the System Management Console on system B, an administrator changes the namespace quota for the tenant to 10. 2. In the System Management Console on system A, an administrator enables versioning for the tenant. 3. The change on system A is replicated to system B. Because namespace quota and versioning are properties in the same submission group, the resulting properties for the tenant on system B are:
+
+Namespace quota: 5 Versioning: enabled
+
+4. In the Tenant Management Console on system A, an administrator adds the privileged permission to Namespace-1. 5. In the Tenant Management Console on system B, an administrator gives the user account browse and read permissions for Namespace-2. 6. In the Tenant Management Console on system A, an administrator gives the user account browse, read, and write permissions for Namespace-3. 7. The changes on system A are replicated to system B. Because roles and data access permissions are in separate submission groups, the resulting roles and data access permissions for the user account on system B are:
+
+Roles: compliance Namespace-1 permissions: browse, read, write, delete, privileged Namespace-2 permissions: browse, rea Namespace-3 permissions: browse, read, write Retention class collisions
+
+A retention class collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the same retention class on each of two systems in a replication link. 2. The changed retention class on one of the systems is replicated to the other system.
+
+If a collision occurs when a change to a retention class is replicated from one system (system A) in a replication link to another system (system B) involved in the link:
+
+If the last change to the retention class on system A is more recent than the last change to the class on system B and:
+
+The value of the class on system A is greater than the value of the class on system B, HCP changes the value of the class on system B to the value of the class on system A The value of the class on system A is less than the value of the class on system B and: System B is in enterprise mode, HCP changes the value of the class on system B to the value of the class on system A Note: An exception to this rule is when the value of the class on system A is -2 (Initial Unspecified) and the value of the class on system B is not 0 (Deletion Allowed). In this case, the value of the class on system B does not change. System B is in compliance mode, HCP does not change the value of the class on system B
+
+If the last change to the retention class on system B is more recent than the last change to the class on system A, HCP does not change the value of the class on system B
+
+A retention class value of -1 (Deletion Prohibited) is greater than a value that’s a specific duration. A retention class value of 0 (Deletion Allowed) or -2 (Initial Unspecified) is less than a value that’s a specific duration.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+338/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+Considerations for cross-release replication
+
+HCP release 9.x systems support replication with other release 9.x systems and with release 8.x systems. HCP does not support replication between 9.x systems and systems earlier than 8.0.
+
+Cross-release replication and erasure coding topologies

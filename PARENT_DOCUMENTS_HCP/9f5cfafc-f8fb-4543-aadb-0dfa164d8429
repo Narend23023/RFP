@@ -1,0 +1,67 @@
+Features
+
+With both HTTP and WebDAV:
+
+Client libraries are available for many different programming languages.
+
+You can store custom metadata in the namespace. You can use SSL security for data transfers. The namespace configuration determines whether this feature is available.
+
+You can retrieve object data by byte ranges. With HTTP:
+
+Each operation can be completed in a single transaction, which provides better performance.
+
+You can override metadata defaults when you add an object to the namespace. HCP automatically creates any new directories in the paths for objects you store in the namespace.
+
+You can change object ownership. You can add, replace, or delete ACLs for objects. With WebDAV:
+
+Some operations on directories, such as, COPY, MOVE, and DELETE, are performed in a single call. You can recursively delete a directory and its subdirectories.
+
+With CIFS and NFS:
+
+You get file-system semantics. Multiple concurrent threads can write to the same object.
+
+Drawbacks
+
+CIFS and NFS have lazy close With CIFS and NFS, performance degrades when write operations target directories with large numbers of objects (greater than 100,000).
+
+With CIFS and NFS, you need to use multiple mounts of a namespace to have HCP spread the load across the nodes in the system. Hostname and IP address considerations
+
+You can access a namespace by specifying either the namespace hostname or an IP address. If your HCP system supports DNS and you specify the hostname, HCP selects the IP address for you from the currently available nodes. HCP uses a round-robin method to ensure that it doesn’t always select the same address.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+808/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When you specify IP addresses, your application must take responsibility for balancing the load among nodes. Also, you risk trying to connect (or reconnect) to a node that is not
+
+available. However, in several cases using explicit IP addresses to connect to specific nodes can have advantages over using hostnames.
+
+These considerations apply when deciding which technique to use: You may be able to improve the performance of GET requests for an object if you use the IP address of a node on which the object is stored in the request URL.
+
+If your client uses a hosts file to map HCP hostnames to IP addresses, the client system has full responsibility for converting any hostnames to IP addresses. Therefore, HCP cannot spread the load or prevent attempts to connect to an unavailable node.
+
+If your client caches DNS information, connecting by hostname may result in the same node being used repeatedly. When you access the HCP system by hostname, HCP ensures that requests are distributed among nodes, but it does not ensure that the resulting loads on the nodes are
+
+evenly balanced. When multiple applications access the HCP system by hostname concurrently, HCP is less likely to spread the load evenly across the nodes than with a single application. Tip: When accessing the namespace by hostname, you can ping the HCP system periodically to check whether you’re getting connections to different nodes.
+
+Using a hosts file
+
+Typically, HCP is included as a subdomain in your DNS. If this is not the case, for access to the system, you need to use the tenant domain name in the URL and use a hosts file to define mappings of one or more node IP addresses to that domain name.
+
+The location of the hosts file depends on the client operating system: On Windows, by default: c:\windows\system32\drivers\etc\hosts
+
+On Unix: /etc/hosts On Mac OS® X: /private/etc/hosts
+
+Note: If HCP is not included in your DNS, the tenant domain name is a dummy domain name that follows the conventions for well-formed DNS names.
+
+Hostname mappings
+
+Each entry in a hosts file is a mapping of an IP address to a hostname. For an HCP tenant, the hostname must be the fully qualified domain name (FQDN) for the tenant.
+
+Each hosts file entry you create for access to a tenant must include: An IP address of a node in the HCP system
+
+The FQDN of the tenant domain

@@ -1,0 +1,21 @@
+You use the encoding-type query parameter to request the S3 compatible API to encode the response. You can also use this query parameter to specify the encoding method to use. The key for an object can contain any Unicode character. Some characters, such as those with an ASCII value from 0 to 10, cannot be parsed by XML 1.0 parsers. For these characters, you can add the encoding-type query parameter to request the S3 compatible API to encode the keys in the response. The encoding-type parameter name is case sensitive. key-marker
+
+You use the key-marker query parameter without the upload-id-marker query parameter to specify a starting point for the returned multipart upload listing. That point is the first multipart upload with an object name that's alphanumerically greater than the character string specified by the key-marker parameter. For example, the multipart upload listing returned in response to a GET multipart upload listing request with the key-marker=sales/ query parameter contains this multipart upload: sales/RulesAndRegulations.pdf
+
+When more than the requested number of multipart uploads satisfy the criteria in a request for a multipart upload listing, HCP returns a partial listing. In this case, the response body includes:
+
+The IsTruncated element with a value of true. The NextKeyMarker element. The value of this element is either the object name for the last multipart upload included in the returned listing or the last common prefix in the returned listing, whichever is alphanumerically greater. Conditionally, the NextUploadIdMarker element. To return the next part of the multipart upload listing, you include the key-marker query parameter in another request for the listing. As the parameter value, you specify the value of the NextKeyMarker element returned with the previous partial listing. When the returned listing includes the last multipart upload that satisfies the request criteria, the response body includes the IsTruncated element with a value of false and does not include the NextKeyMarker and NextUploadIdMarker elements. The character string you specify for the key-marker query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The key-marker parameter name and the character string you specify are both case sensitive. max-uploads
+
+By default, a multipart upload listing can include at most one thousand multipart uploads. However, you can use the max-uploads query parameter in a multipart upload listing request to specify a smaller maximum number of multipart uploads. For example, the bucket listing returned in response to a GET bucket list multipart uploads request with the max-uploads=2 query parameter contains these multipart uploads: acctg/AcctgAtExampleCorp-Advanced.mov acctg/AcctgAtExampleCorp-Introduction.mov
+
+If more than the maximum number of multipart uploads satisfy the criteria for a request, you can use the the key-marker and, optionally, upload-id-marker query parameters in conjunction with max-uploads to retrieve the parts in groups. Valid values for the max-uploads query parameter are integers in the range 0 (zero) through 1,000. If you specify an integer greater than one thousand, HCP returns a 400 (Invalid Argument) status code and does not return a multipart upload listing. The max-uploads parameter name is case sensitive.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+596/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+prefix You use the prefix query parameter to request a multipart upload listing that contains only multipart uploads with object names that begin with a specified character string (the prefix). For example, the multipart upload listing returned in response to a GET bucket list multipart uploads request with the prefix=acctg query parameter contains only these items: acctg/AcctgAtExampleCorp-Advanced.mov acctg/AcctgAtExampleCorp-Introduction.mov acctg/RulesAndRegulations.pdf

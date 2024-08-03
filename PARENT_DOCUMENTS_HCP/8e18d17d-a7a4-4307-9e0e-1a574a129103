@@ -1,0 +1,49 @@
+If-Modified-Since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified object or object version was last modified. If the modification date and time is later than the specified date and time, HCP continues processing the request. If the modification date and time is equal to or earlier than the specified date and time, HCP returns a 304 (Not Modified) status code. To specify the date and time for this header, use one of these formats: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+For example: Tue, 07 Feb 2017 14:27:05 +0000
+
+DDDD, dd-MMM-yyyy HH:mm:ss (+0000|GMT)
+
+For example: Tuesday, 07-Feb-17 14:27:05 +0000
+
+DDD MMM d HH:mm:ss yyyy
+
+For example: Tue Feb 7 14:27:05 2017
+
+If the value specified by the If-Modified-Since header doesn’t conform to one of the formats shown above, the header is ignored. If-None-Match
+
+Specifies one or more values for comparison with the ETag of the specified object or object version. If the ETag doesn’t match any of the specified values, HCP continues processing the request. If the ETag matches any of the specified values, HCP returns a 304 (Not Modified) status code.
+
+To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the If-None-Match header. No ETags match an asterisk in an If-None-Match header.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+626/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If-Unmodified-Since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified object or object version was last modified. If the modification date and time is equal to or earlier than the specified date and time, HCP continues processing the request. If the modification date and time is later than the specified date and time, HCP returns a 412 (Precondition Failed) status code. For valid values for this header, see the description of the If-Modified-Since header above. Range
+
+You can use the Range header in a GET request to retrieve only part of an object or object version. By using the Range header, you can limit the amount of data returned, even when you don’t know the size of the object. The value of the Range header is the range of bytes you want to retrieve. The first byte of the data for an object is in position 0 (zero), so a range of 1-5 specifies the second through sixth bytes, not the first through fifth. To specify a byte range in a range header, you use this format: Range: bytes=byte-range
+
+The list below shows the valid values for byte-range.
+
+start-position–end-position
+
+Bytes in start-position through end-position, inclusive. If end-position is greater than the size of the object data, HCP returns the bytes in start-position through the end of the data. Valid values for start-position and end-position are integers greater than or equal to zero. For the specified range to be valid, end-position must be greater than or equal to start-position. start-position–
+
+Bytes in start-position through the end of the object data.
+
+Valid values for start-position are integers greater than or equal to zero.
+
+–offset-from-end
+
+Bytes in the offset-from-end position, counted back from the last position in the object data, through the end of the object data. If offset-from-end is greater than the size of the object data, HCP returns the complete object data. Valid values for offset-from-end are integers greater than or equal to zero.

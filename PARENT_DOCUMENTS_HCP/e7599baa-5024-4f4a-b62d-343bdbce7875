@@ -1,0 +1,106 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:33 AM
+Content Platform System Management Help
+Prometheus or Alertmanager servers, it creates a system event to indicate that the server is unavailable. This situation could occur if the volume storing the metrics runs out of
+space, forcing the Prometheus server to shutdown.
+Prometheus collects performance metrics in the following categories:
+Gateway metrics
+Storage metrics
+Node metrics
+Replication metrics
+Event metrics
+Services metrics
+After you upgrade to HCP v9.6 or later versions and enable Prometheus, all the collectors are enabled by default and HCP begins collecting performance metrics. However, if the
+filesystem storing the Prometheus TSDB reaches or exceeds 95% of its total capacity, the filesystem will become read-only and Prometheus will stop collecting metrics until there is
+sufficient disk space.
+The following table describes the performance metrics collected by Prometheus.
+Note: In the following table, the instance label refers to the node from where the HCP performance metrics is collected.<br>
+                       <b>Bounding box:</b> x1=185, y1=496, x2=1516, y2=2113
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Metric</td>
+      <td>Description</td>
+      <td>Label</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>disk_transfers_per_second</td>
+      <td>The speed at which data can be transferred between the\nnode and the disk drives.</td>
+      <td>instance, disk_name, job</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>gateway_operation_latency_milliseconds_count</td>
+      <td>Count of gateway operations.</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>gateway_operation_latency_milliseconds_bucket</td>
+      <td>Count of gateway operations by bucket based on the\nlatency in milliseconds.\nValid values must be less than or equal to the one of the\nfollowing values:\n10 milliseconds\n1000 milliseconds\n1 second\n10 seconds\ninfinity</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>gateway_operation_latency_milliseconds_sum</td>
+      <td>Sum of the latency of gateway operations in milliseconds.</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>gateway_operation_size_bytes_sum</td>
+      <td>Sum of the size of the gateway operations in bytes.</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>gateway_operation_size_bytes_bucket</td>
+      <td>Count of gateway operations by bucket based on size in\nbytes.\nValid values must be less than or equal to one of the\nfollowing values:\n1000 (1K)\n100000 (100K)\n10000000 (10M)\n1000000000 (1G)\ninfinity</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>gateway_operation_size_bytes_count</td>
+      <td>Count of gateway operations.</td>
+      <td>instance, tenant, request_code, response_code, interface,\nnamespace</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>http_connections</td>
+      <td>Count of HTTP connections.</td>
+      <td>instance</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>https_connections</td>
+      <td>Count of HTTPS connections.</td>
+      <td>instance</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>http_connections_limit</td>
+      <td>Maximum number of supported HTTP connections on an\nHCP node.\nNote: The setting specifies the http_connections_limit\nmaximum number of concurrent connections that can be\nmade to a server. The number of connections can exceed\nthe HTTP connections limit. The queue size may not be\nlimited, but it can grow.</td>
+      <td>instance</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>https_connections_limit</td>
+      <td>Maximum number of supported HTTPS connections on an\nHCP node.\nNote: The setting specifies https_connections_limit\nthe maximum number of concurrent connections that can\nbe made to a server. The number of connections can\nexceed the HTTPS connections limit. The queue size may\nnot be limited, but it can grow.</td>
+      <td>instance</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

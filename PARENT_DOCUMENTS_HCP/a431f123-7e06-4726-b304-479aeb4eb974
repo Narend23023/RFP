@@ -1,0 +1,105 @@
+When you enable WebDAV basic authentication, you need to specify a username and password. In this case, you use the webdavBasicAuthPassword property of the httpProtoco l data type to specify the password.
+
+Passwords can be up to 64 characters long, are case sensitive, and can contain any valid UTF-8 characters, including white space. To be valid, a password must include at least one character from two of these three groups: alphabetic, numeric, and other. The minimum password length is configurable. To set the minimum password length, you use the minimumPasswordLength property of the consoleSecurity data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+444/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Descriptions
+
+Namespaces, namespace defaults, retention classes, user accounts, replication links, and erasure coding topologies all have a description property. Tenants have two properties for descriptions — systemVisibleDescription and tenantVisibleDescription.
+
+All descriptions can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+All description properties are optional. If you omit this property when you create a namespace, the description defaults to the description specified by the namespace defaults for the tenant. For other resources, the default on creation is no description. Boolean values
+
+For properties that take a Boolean value, valid values are:
+
+true, t, or 1 (one) false, f, or 0 (zero)
+
+These values are case sensitive.
+
+Invalid values are interpreted as false. Permission lists
+
+These resources and properties have values that are lists of permissions:
+
+The permissions resource for tenants (specifies the permissions in the data access permission mask for a tenant) The permissions resource for namespaces (specifies the permissions in the data access permission mask for a namespace) The permissions property of the namespacePermission data type (used in the specification of the data access permissions for a user or group account) The authMinimumPermissions and authAndAnonymousMinimum-Permissions properties of the namespaces data type
+
+The permissions that can be included in a list differ for the various resources and properties. However, in each case:
+
+In XML, the element that identifies each permission is permission. For example:
+
+<permissions> <permission>READ</permission> <permission>WRITE</permission> <permission>DELETE</permission> <permission>PURGE</permission> <permission>SEARCH</permission> </permissions> In JSON, the name in the name/value pair that lists the permissions is permission. For example:
+
+"permissions" : { "permission" : [ "READ", "WRITE", "DELETE", "PURGE", "SEARCH" ] }
+
+availableServicePlan
+
+The availableServicePlan data type describes the availableServicePlans resource for tenants.
+
+Properties
+
+The table below describes the properties included in the availableServicePlan data type. Property name
+
+Data type
+
+Description
+
+description
+
+String
+
+Specifies the description of the service plan.
+
+name
+
+String
+
+Specifies the name of the service plan.
+
+Example
+
+Here’s an XML example of the availableServicePlan data type:
+
+<availableServicePlan> <name>Platinum</name> <description>Most highly available, best performance -- suitable for data that will be frequently accessed or modified throughout its life</description> </availableServicePlan> certificate
+
+The certificate data type retrieves information about current and past replication certificates.
+
+certificate data type properties
+
+The following table describes the property included in the certificate data type.
+
+Property name Data type Description
+
+id
+
+String
+
+Specifies the system-supplied unique ID for the replication certificate. HCP generates this ID automatically when the certificate is generated.
+
+subjectDN
+
+String
+
+Specifies the distinguished name of the certificate and its specified attributes
+
+validOn
+
+Date
+
+Specifies the certificate activation date.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+445/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name Data type Description

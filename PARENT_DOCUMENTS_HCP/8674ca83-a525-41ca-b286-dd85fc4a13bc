@@ -1,0 +1,43 @@
+Note: You can also use the HCP management API to manage replication.
+
+Scheduling activity on a replication link
+
+The amount of send activity that can occur on a replication link at any given time is controlled by the performance level that applies to the sending system. An active/active link has two performance levels at any given time, one for each system involved in the link. An active/passive link has only one performance level at any given time. That level applies to the primary system during replication and to the replica during data recovery. The performance levels for different replication links are independent of each other, as are the performance levels for the two systems involved in an active/active link. In each case, the performance level can be low, medium, high, custom, or off. Off means that no send activity is occurring for the applicable link on the applicable system.
+
+For each system involved in an active/active link and for an active/passive link, you can schedule the performance level to change automatically over the course of a week. At any time, if you don’t want to use the schedule, you can override it by selecting a single performance level to apply until you cancel the override.
+
+Overriding a replication schedule lets you change the performance level without changing the configured schedule. You might do this, for example, on a holiday when the load on the applicable HCP system is expected to be light. Note: When data recovery begins on an active/passive link, a schedule override with a performance level of high takes effect. When data recovery is complete, the performance level automatically returns to the currently scheduled level if the schedule was in effect when data recovery began or to the override level that was in effect when data recovery began, as applicable.
+
+The performance level for a sending system determines the amount of load replication or recovery processing puts on that system and on the network connecting that system to the other system involved in the applicable replication link. If a system is sending data on multiple links, the total load on the system is determined by the performance levels for all of those links together. To minimize the load, you should schedule the links to be active at different times. Tip: If the system load from other activities is light, consider raising the performance level for one or more links to reduce any replication backlog. If the system load is heavy, consider lowering the performance level for one or more links to free resources for other system activity. About replication schedules
+
+You use the Schedule panel on the Replication page in the HCP System Management Console to set the schedule for replication activity on a replication link. For an active/active
+
+link, this panel has two tabs on each system involved in the link — one labeled Local for the local system and one labeled Remote for the remote system.
+
+For an active/passive link, you set the schedule only for the primary system. Therefore, on the primary system the Schedule panel has a tab labeled Local. On the replica, the Schedule panel has a tab labeled Remote.
+
+Each Local and Remote schedule panel contains a grid in which the weekdays from Sunday through Saturday are each broken out into 24 hours. To set a schedule, you assign performance levels to time periods in the grid. The Console makes it easy for you to do this for the whole week, individual days, individual hours, or ranges of hours within a day. In the schedule grid, the top of each time period with a given performance level displays the start and end times for that period (for example, 8 am to 6 pm). These times are in the time zone of the primary system.
+
+The top of each time period also displays the performance level for that period. Additionally, each time period is color coded in the schedule grid to indicate the performance level so you can easily see which levels are assigned to which periods:
+
+Low:
+
+(light green)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+365/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Medium: High: Custom: Off:
+
+(green) (dark green) (blue) (gray)
+
+While a schedule is overridden, the words Schedule Overridden appear on the schedule grid.
+
+You cannot set a schedule to off for the entire week. Instead, to disable activity on a replication link for an extended period of time, suspend activity on the link.
+
+Modifying a replication schedule

@@ -1,0 +1,49 @@
+2. Click Activate Schedule.
+
+The Activate Schedule button is present only if the displayed schedule is not active.
+
+Deleting a service schedule
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+108/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+To view service schedules and log messages about service activity, you need the monitor or administrator role. To create, modify, activate, and delete service schedules, you need the administrator role.
+
+1. In the field on the left above the schedule grid, select the service schedule you want to delete. You cannot delete the active schedule. If the schedule you want to delete is currently active, activate a different schedule before you display the one you want to delete.
+
+2. Click Delete Schedule. 3. In response to the confirming message, click Delete Schedule.
+
+HCP deletes the schedule, and the schedule grid displays the active schedule. Capacity Balancing service
+
+The Capacity Balancing service ensures that the percent of HCP storage space used on the storage nodes in the system remains roughly equivalent across the nodes when new nodes are added.
+
+When the Capacity Balancing service runs, it evaluates the storage level for each node without regard to the individual logical volumes the node manages. If the storage levels for the nodes differ by a wide margin, the service moves objects around to bring the levels closer to a balanced state.
+
+For the purpose of capacity balancing, HCP treats these items as individual objects: Parts of multipart objects
+
+Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+The Capacity Balancing service runs only when it is started manually. Typically, an authorized HCP service provider starts this service after adding new storage nodes to the system.
+
+Note: The Capacity Balancing service does not balance the storage space across nodes for data stored in namespaces that have HCP S Series storage set as the ingest tier. Capacity Balancing service processing
+
+The Capacity Balancing service detects and repairs imbalances in storage availability across nodes in an HCP system, except for nodes that have data stored in namespaces where HCP S Series storage is set as the ingest tier.
+
+To detect imbalances in storage usage, the Capacity Balancing service compares node storage usage statistics. If the service determines that storage usage is imbalanced across nodes: The service determines whether the storage managed by each node is a source of objects to move or a target to move them to. From the storage for each source node, the service moves objects individually to storage managed by a target node provided the following conditions apply: The percent of capacity used on the source node is less than or equal to the average percent of capacity used on all the nodes in the system. The percent of capacity used on the target node is greater than the average percent of capacity used on all the nodes in the system. The storage managed by the target node does not have a copy of the object to be moved.
+
+When selecting objects to move, the Capacity Balancing service considers the size of the object data and any custom metadata that the object includes.
+
+At any point in time, HCP is unlikely to be in a perfectly balanced state for the following reasons: Object additions and deletions to and from the system do not trigger the Capacity Balancing service to run. When all the objects in a directory have been deleted, the empty directory remains in the namespace. Directories in the default namespace, whether empty or not, have metadata that takes up space. Compression/Encryption service
+
+The Compression/Encryption service compresses object data to make more efficient use of HCP storage space. The space reclaimed by compression can be used to store additional objects.
+
+Depending on the types of objects stored, compression can provide a significant benefit. For example, email objects compress very well.
+
+The Compression/Encryption service performs several tasks based on user settings in its interface. These tasks include:
+
+Rewriting objects to match the current compression or encryption settings of the storage pool. For example, if an object is uncompressed but compression has been enabled on its pool, then the service will compress the object data to match the pool’s settings. Rewriting objects compressed prior to HCP release 8.2 to use the new compression method added in that release. This allows for efficient ranged-reads of the objects. Re-encrypting objects encrypted prior to HCP release 8.2 to use local or KM Server encryption on S Series Node and cloud storage.

@@ -1,0 +1,63 @@
+curl.setopt(pycurl.RANGE, "0-9999") curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/status/status27.txt") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+GET /rest/status/status27.txt HTTP/1.1 Range: bytes=0-9999 Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 206 Partial Content X-HCP-Time: 1335347627
+
+X-HCP-SoftwareVersion: 7.0.0.16 Content-Type: text/plain
+
+Content-Range: bytes 0-9999/38985 Content-Length: 10000
+
+X-HCP-ServicedBySystem: hcp.example.com ETag: "39273c07f4709e6fea1c155c569fa29f" X-HCP-Type: object X-HCP-Size: 38985
+
+X-HCP-Hash: SHA-256 36728BA190BC4C377FE4C1A57AEF9B6AFDA98720422960... X-HCP-VersionId: 80232488876481
+
+X-HCP-IngestTime: 1334851131
+
+X-HCP-RetentionClass: X-HCP-RetentionString: Deletion Allowed
+
+X-HCP-Retention: 0 X-HCP-IngestProtocol: HTTP
+
+X-HCP-RetentionHold: false X-HCP-Shred: false X-HCP-DPL: 2 X-HCP-Index: true
+
+X-HCP-Custom-Metadata: false X-HCP-ACL: false
+
+X-HCP-Owner: myuser X-HCP-Domain:
+
+X-HCP-UID: X-HCP-GID:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+744/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+X-HCP-Replicated: false
+
+X-HCP-ReplicationCollision: false X-HCP-ChangeTimeMilliseconds: 1335347627362.00
+
+X-HCP-ChangeTimeString: 2012-04-25T05:53:47-0400 Last-Modified: Wed, 25 Apr 2012 09:53:47 GMT Response body: The first 10,000 bytes of the contents of status27.txt
+
+Deleting an object or object versions and using privileged delete
+
+You use the HTTP DELETE method to delete an object. If versioning is enabled for a bucket, you can delete old versions of objects.
+
+To delete a specific version of an object, you use a version ID or timestamp. To delete a range of versions of an object, you specify starting and ending version IDs or timestamps.
+
+The result of an object or version deletion is a delete marker or delete record. A delete marker is an indicator that a version of an object has been deleted. A delete marker has a version ID but does not have any data or metadata.
+
+Similar to purging an object, you can use a version ID or timestamp range to delete all versions of an object. However, purging an object does not result in delete markers. If an object is under retention or on hold, you can delete it only if the namespace is configured to allow privileged operations and you have the necessary permissions. Privileged operations require you to provide a reason for the deletion.
+
+Tip: If an object is not under retention, you can use a privileged delete operation to specify a reason for the deletion. Although the object is not under retention, the namespace must

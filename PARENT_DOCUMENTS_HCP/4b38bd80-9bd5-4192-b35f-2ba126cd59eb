@@ -1,0 +1,57 @@
+With the HCP management API, resources are represented by URLs. Each request you make must specify one such URL. Each request must also include the credentials for the account you’re using to access HCP through the management API.
+
+This section of the Help describes resource URLs and explains how to include account credentials in a management API request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+388/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+URL for HCP access through the management API
+
+Using an IP address in URL
+
+Normally, you let HCP choose the node on which to process a management API request. You can, however, use an IP address in the URL to access the system on a specific node. To do this, you replace the fully qualified domain name (FQDN) in the URL with the IP address for the node you want. If the node has both an IPv4 address and an IPv6 address, you can use either address. For example, to access the namespaces resource on a node that has both the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you can use either of these URLs:
+
+https://192.168.210.16:9090/mapi/tenants/finance/namespaces https://[2001:0db8::101]:9090/mapi/tenants/finance/namespaces
+
+Additionally, you need to provide the fully qualified domain name of the tenant in an HTTP Host header. With cURL, you do this with the -H option. For example:
+
+H "Host: finance.hcp.example.com"
+
+In Python with PycURL, you do this with the HTTPHEADER option. For example: curl.setopt(pycurl.HTTPHEADER, ["Host: finance.hcp.example.com"])
+
+Note: If you don’t know the IP addresses for the nodes in the HCP system, contact your HCP system administrator.
+
+Using a hosts file
+
+Typically, HCP is included as a subdomain in your DNS. If this is not the case, for access to the system, you need to use the tenant domain name in the URL and use a hosts file to
+
+define mappings of one or more node IP addresses to that domain name.
+
+The location of the hosts file depends on the client operating system:
+
+On Windows, by default: c:\windows\system32\drivers\etc\hosts On Unix: /etc/hosts On Mac OS® X: /private/etc/hosts
+
+Note: If HCP is not included in your DNS, the tenant domain name is a dummy domain name that follows the conventions for well-formed DNS names. Hostname mappings
+
+Each entry in a hosts file is a mapping of an IP address to a hostname. For an HCP tenant, the hostname must be the fully qualified domain name (FQDN) for the tenant.
+
+Each hosts file entry you create for access to a tenant must include:
+
+An IP address of a node in the HCP system The FQDN of the tenant domain
+
+For example, if the tenant domain name is finance.hcp.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101, you could add either or both of these lines to the hosts file on the client: 192.168.210.16 finance.hcp.example.com 2001:0db8::101 finance.hcp.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the system through the management API.
+
+Sample hosts file

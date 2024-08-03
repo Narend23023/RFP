@@ -1,0 +1,33 @@
+317/907
+
+6/25/24, 11:33 AM Content Platform System Management Help
+
+With full-copy distribution, each system receives a full copy of the object data unless the object should be metadata-only on that system. After the erasure coding delay
+
+expires, each system where the object should be metadata-only receives a chunk for the object, and the Geo-Distributed Erasure Coding service on each system with a full copy of the object data reduces that full copy to a chunk. Object counts
+
+An HCP system keeps track of the total number of objects stored on it and, separately, the number of erasure-coded objects stored on it:
+
+The total number of objects stored on a system includes whole objects, metadata-only objects, and objects that are subject to erasure coding, regardless of whether the system currently has a full copy of the object data or a chunk for the object. The number of erasure-coded objects stored on a system includes only objects for which the system currently has a chunk.
+
+HCP also tracks both of these object counts by tenant and namespace. You can view system-level and tenant-level object counts in the System Management Console, through the management API, and in system-level chargeback reports. For tenants to which you have administrative access, you can also view namespace-level object counts through the management API and in chargeback reports.
+
+Tenant administrators can view total object counts for the applicable tenant and its namespaces in the Tenant Management Console, through the management API, and in tenant- level chargeback reports. Tenant administrators cannot see counts of erasure-coded objects.
+
+Choosing a protection type
+
+The two protection types, whole-object protection and erasure-coded protection, each have their own benefits and limitations. The following sections describe factors you should consider when choosing the protection type for a namespace. Storage efficiency
+
+With whole-object protection, all the data for an object in a replicated namespace is stored on each system that has that namespace, except on systems where the object is on a metadata-only storage tier. This means that the total storage used for the object data is at most the size of the data times the number of systems in the replication topology. (The storage used can be less due to compression/encryption, duplicate elimination, and metadata-only storage tiers.)
+
+Note: This discussion assumes a data protection level (DPL) of one. As the DPL increases, the amount of storage needed to store the data for an object also increases, regardless of the protection type.
+
+For example, in a three-system replication topology in which the object is not metadata-only on any system, the storage used for a 1 MB object is, at most, 3 MB. Having the object be metadata-only on one or two of the systems increases storage efficiency but decreases the level of data protection. With erasure-coded protection, each system in the erasure coding topology stores one data or parity chunk for any given erasure-coded object. The size of each chunk for an object is the size of the object data divided by the number of data chunks for the object. This means that the total storage used for an object in a replicated namespace is at most the size of a chunk times the total number of data and parity chunks for the object.
+
+For example, each object in an erasure coding topology with three systems has two data chunks and one parity chunk, so the size of each chunk of a one-megabyte object is .5 MB. As a result, the total storage used for the object is, at most, 3 × 0.5 MB, which is 1.5 MB.
+
+The greater the number of systems in an erasure coding topology, the greater the storage efficiency. The maximum number of systems that can be in an erasure coding topology is six. With six systems, the total storage used for a one-megabyte object is, at most, 1.2 megabytes. Data availability
+
+Whole-object protection can provide better protection from system unavailability than erasure-coded protection provides. With whole-object protection, clients can access objects in a replicated namespace if at least one of the systems where the object data is stored is available. (HCP does not store data for objects on metadata-only storage tiers.)
+
+With erasure-coded protection, all but one of the systems in the erasure coding topology must be available for clients to access objects in a namespace that's replicated on those systems. Disaster recovery

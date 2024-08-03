@@ -1,0 +1,81 @@
+syslogLoggingEnabled Boolean
+
+Specifies whether tenant log messages are sent to the syslog servers specified at the HCP system level. Valid
+
+values are:
+
+true
+
+Tenant log messages are sent to syslog servers.
+
+false
+
+Tenant log messages are not sent to syslog servers.
+
+The default is false.
+
+tenantVisibleDescription
+
+String
+
+Specifies the tenant-level description of the tenant. This description is optional. The default is no description.
+
+To remove a tenant-level description from an existing tenant, specify the tenantVisibleDescription property with no value.
+
+versioningConfiguration Enabled Boolean
+
+For an HCP tenant, specifies whether the tenant's namespaces can have versioning enabled. Possible values are:
+
+This property is not valid on a POST request. It is returned only by a verbose GET request.
+
+This property is not valid for the default tenant.
+
+true
+
+The tenant's namespaces can have versioning enabled. false
+
+The tenant's namespaces cannot have versioning enabled.
+
+Example
+
+Here’s an XML example of the tenant data type that describes the tenants resource; the properties shown are those that are returned in response to a verbose GET request for an HCP tenant where the request is made using a tenant-level user account that includes the administrator role:
+
+<tenant> <administrationAllowed>true</administrationAllowed> <authenticationTypes> <authenticationType>LOCAL</authenticationType> <authenticationType>RADIUS</authenticationType> </authenticationTypes> <complianceConfigurationEnabled>true</complianceConfigurationEnabled> <creationTime>2017-02-09T09:11:17-0500</creationTime> <fullyQualifiedName>Finance.hcp.example.com</fullyQualifiedName> <hardQuota>100 GB</hardQuota> <maxNamespacesPerUser>5</maxNamespacesPerUser> <name>Finance</name> <namespaceQuota>5</namespaceQuota> <replicationConfigurationEnabled>true</replicationConfigurationEnabled> <snmpLoggingEnabled>false</snmpLoggingEnabled> <searchConfigurationEnabled>true</searchConfigurationEnabled> <softQuota>90</softQuota> <syslogLoggingEnabled>true</syslogLoggingEnabled> <tenantVisibleDescription>Please see Lee Green for any questions about this tenant and its namespaces.</tenantVisibleDescription> <id>4420f62f-3f63-43ab-a3cd-0bcf1f399daf</id> <versioningConfigurationEnabled>true</versioningConfigurationEnabled> </tenant>
+
+Query parameters for creating tenants
+
+When you create a tenant, you need to specify query parameters on the resource URL. These parameters differ for HCP tenants and the default tenant. HCP tenant query parameters
+
+When you create an HCP tenant, HCP automatically creates the initial user or group account for the tenant, depending on which query parameters you include in the PUT request.
+
+Creating an initial user account
+
+To create a tenant with an initial user account, you use these query parameters, which correspond to user account properties with the same name: username
+
+This parameter is required when you create a tenant. The user name you specify is also used as the full name for the user account.
+
+password
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+523/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+This parameter is required when you create a tenant.
+
+forcePasswordChange
+
+This parameter is optional when you create a tenant. The default is false.
+
+The user account that’s created:
+
+Is enabled Is locally authenticated Has only the security role Has no data access permissions Has no description
+
+The username, password, and forcePasswordChange query parameters are valid only when you create an HCP tenant and only if you enable local authentication for the tenant in the same request. They are not valid on a request to modify a tenant.
+
+Creating an initial group account To create the tenant with an initial group account, you use the initialSecurityGroup query parameter. The value of this parameter must be the name or SID of an AD group defined in the AD forest supported by HCP. You can specify the name in either of these formats:
+
+group-name

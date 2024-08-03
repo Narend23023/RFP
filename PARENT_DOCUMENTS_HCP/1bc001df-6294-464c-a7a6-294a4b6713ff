@@ -1,0 +1,103 @@
+To display the Hardware page, click Hardware in the top-level menu.
+
+Note:
+
+To view the Hardware page, you need the monitor, administrator, security, service, or compliance role. About the Nodes page
+
+The Hardware > Nodes page lists all the HCP General Nodes and HCP S Series Nodes in the HCP system. General Nodes remain listed on this page regardless of whether they
+
+are running, starting up, stopping, or not running. Nodes that have been permanently removed from the system are not displayed in the list.
+
+For each node in the HCP system, the General Node list on the Hardware > Nodes page shows: Node ID
+
+The unique number assigned to the node.
+
+Model
+
+The type of node. Possible models are:
+
+G11
+
+A Hitachi Advanced Server DS220 that can exist in a HCP with internal storage or HCP with SAN-attached storage system
+
+G10
+
+A Hitachi Advanced Server that is the predecessor to the HCP G11. A HCP G10 can exist in a HCP with internal storage or HCP with SAN-attached storage system. VM
+
+A server running a HCP VM system
+
+Status
+
+The node status. Possible values are:
+
+Available
+
+The node is running.
+
+Unavailable
+
+The node is either not running, starting up but not yet able to perform HCP functions, or shutting down and no longer able to perform HCP functions. If a node is
+
+unavailable because of a hardware problem, you might be able to determine the cause by reviewing the Hardware Status section on the individual Storage Node page.
+
+Migrating
+
+The node is available, and the Migration service is currently migrating data off the storage managed by the node.
+
+Alert
+
+The node is unavailable, and HCP can detect which components are experiencing problems. One or more alerts identifying the problems are displayed in the Alerts
+
+column.
+
+Note: If the status of a node changes from available to unavailable and the node does not restart automatically, contact your authorized HCP service provider. Do not try to
+
+restart the node manually; this action might cause the loss of information that is required to diagnose the problem. Alerts
+
+None, one, or more icons representing components are experiencing problems.
+
+For more information about any problem, click the node number.
+
+Logical Volumes
+
+The status of the logical volumes managed by the node. Each logical volume can be one of these types: Data volume
+
+Primary running storage that stores object data, but does not store the metadata query engine index. Primary running storage is storage that is managed by the
+
+nodes in the HCP system and consists of continuously spinning disks.
+
+Data volumes have numeric IDs in the range 1 (one) through 63 and 92 through 95.
+
+Index volume
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+29/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+(HCP with SAN-attached storage systems only) Primary running storage that stores only the metadata query engine index. All storage nodes should have the same
+
+number of index volumes.
+
+Index volumes have numeric IDs in the range 64 through 91.
+
+Shared volume
+
+Primary running storage that stores both object data and the metadata query engine index. All storage nodes have one shared volume.
+
+The shared volume for each node has a numeric ID in the same range as data volumes. Spindown volume
+
+(HCP with SAN-attached storage systems only) Primary spindown storage that is used for tiering purposes. Primary spindown storage is storage that is managed by
+
+the nodes in the HCP system and consists of disks that can be spun down and spun up as needed. Primary spindown storage stores object data, but it does not store
+
+the metadata query engine index. All storage nodes should have the same number of spindown volumes.
+
+Spindown volumes have numeric IDs in the range 96 through 127. The volume numbering starts at 96.
+
+A HCP with SAN-attached storage system can have spindown volumes only if both of these conditions are true:
+
+One or more logical volumes used by the system are capable of being spun down. This means that they are on storage systems that support spindown.

@@ -1,0 +1,61 @@
+While the transaction log contains any deletion, purge, prune, or disposition records for a namespace, the namespace cannot be deleted. If a tenant administrator cannot delete an
+
+apparently empty namespace, a possible reason is that the transaction log contains one or more of these records. In this case, have the tenant administrator disable the option to keep these records for that namespace.
+
+Note: A namespace with versioning enabled can be cleared from replication while the owning tenant is included in an active/active replication link. In this situation, deletion, purge,
+
+prune, and disposition records for objects in the namespace are not deleted from the transaction log, regardless of the Garbage Collection service configuration, unless the namespace option to keep those records is disabled. Other Garbage Collection service functions
+
+The Garbage Collection service performs the following additional functions.
+
+Deletes data and metadata left in the repository by unsuccessful or interrupted write operations. Deletes extra copies of objects, parts, and chunks that are marked for deletion.
+
+For example, the following series of events could occur:
+
+1. A logical volume fails on primary running storage.
+
+2. The Protection service detects the failed volume and creates a new copy of each object, part, and chunk stored on that volume. 3. The volume comes back online, so the extra object, part, and chunk copies that the Protection service created are no longer needed. 4. The Protection service finds the extra copies that it created and marks them for deletion. 5. The Garbage Collection service detects the object, part, and chunk copies marked for deletion, verifies that they are extra copies, and deletes them. In all cases, when applicable, the deletion of an object, part, or chunk triggers the Shredding service.
+
+Configuring the Garbage Collection service
+
+The Garbage Collection page in the HCP System Management Console lets you set the length of time to keep deletion, purge, prune, and disposition records in the transaction log.
+
+Note: To view the Garbage Collection page, you need the monitor or administrator role. To configure the Garbage Collection service, you need the administrator role. Procedure
+
+1. In the top-level menu of the System Management Console, click Services > Garbage Collection. The Garbage Collection page opens.
+
+2. Take one of these actions:
+
+To delete deletion, purge, prune, and disposition records from the transaction log after a set period of time:
+
+Select Keep deletion records in the transaction log. In the days field, type the number of days you want these records to remain in the transaction log. Valid values are integers in the range zero through 999.
+
+Zero means delete the records immediately.
+
+To keep deletion, purge, prune, and disposition records in the transaction log indefinitely, select Keep deletion records in the transaction log forever.
+
+By default, the Garbage Collection service is configured to delete deletion, purge, prune, and disposition records from the transaction log after 90 days.
+
+3. Click Update Settings. Migration service
+
+The Migration service migrates data off selected storage nodes in either an HCP with internal storage or HCP with SAN-attached storage system or off selected storage arrays in an
+
+HCP with SAN-attached storage system in preparation for retiring those devices. During a data migration, the service copies objects and, if applicable, the metadata query engine index from the selected devices to free storage on the remaining devices. Before you start a data migration, you need to ensure that those devices have enough unused capacity to hold the data to be migrated.
+
+After copying an object, the service deletes it from the source device. Once the migration is complete, you can submit a request to your authorized HCP service provider to finalize the migration and remove the retired devices from the system.
+
+For the purpose of data migration, HCP treats these as individual objects: Parts of multipart objects
+
+Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+115/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Important:
+
+After a data migration off a storage node in an HCP system is finalized, the system can never again include a node with the same fourth octet in its back-end IP address as that node had.

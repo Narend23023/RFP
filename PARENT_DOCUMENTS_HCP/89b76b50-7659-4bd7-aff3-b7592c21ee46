@@ -1,0 +1,73 @@
+soon as the current queries are complete. A 503 (Service Unavailable) error code is only returned if so many queries are queued up that the node fails to deal with them in the maximum allotted wait time.
+
+In response to a 503 error code, you should try the query again, gradually increasing the delay between each successive attempt. Query performance with object-based queries
+
+For improved query performance with object-based queries:
+
+Do not specify a true value for the verbose request entry. Specify the facets or sort request entries only when necessary. In the objectProperties entry, specify only urlName, objectPath, version, and changeTimeMilliseconds.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+875/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When performing paged queries, specify a value of one hundred or less in the count request entry.
+
+Queries based on object names
+
+The metadata query API relies on UTF-8 encoding conventions to find objects by name. If the name of an object is not UTF-8 encoded, queries for the object by name may return unexpected results.
+
+Queries specified namespaces
+
+When you specify namespaces in query requests, responses to object-based queries differ from responses to operation-based queries in these situations:
+
+If you specify a namespace that doesn’t exist:
+
+In an object-based query, HCP returns zero results. If you specify both namespaces that exist and namespaces that don’t exist, HCP returns results for objects in the namespaces that exist.
+
+In an operation-based query, HCP returns a 400 (Bad Request) error.
+
+If you use a tenant-level user account and specify an HCP namespace for which you do not have search permission:
+
+In an object-based query, HCP returns zero results for the namespace. In an operation-based query, HCP returns a 403 (Forbidden) error.
+
+If you use a system-level user account and specify an HCP namespace owned by a tenant that has not granted administrative access to system-level users: In an object-based query, HCP returns zero results for the namespace. In an operation-based query, HCP returns a 403 (Forbidden) error.
+
+HTTP status code considerations
+
+Applications should account for all possible HTTP status codes for query requests.
+
+Searching namespaces
+
+Introduction to searching in HCP
+
+Hitachi Content Platform (HCP) is a distributed storage system designed to support large amounts of data. HCP provides access to the stored data through a variety of industry-
+
+standard protocols, as well as through an integrated Search Console.
+
+The Search Console enables you to search for objects stored in HCP using the metadata query engine.
+
+Note: When working with the metadata query engine, the Search Console is called the Metadata Query Engine Console.
+
+This chapter provides an introduction to HCP and searching namespaces, including how to use the Search Console, the types of queries you can construct, and what search results look like.
+
+About Hitachi Content Platform
+
+Hitachi Content Platform is the distributed, fixed-content, data storage system from Hitachi Vantara. HCP provides a cost-effective, scalable, easy-to-use repository that can
+
+accommodate all types of data, from simple text files to medical image files to multigigabyte database images.
+
+A fixed-content storage system is one in which the data cannot be modified. HCP uses write-once, read-many (WORM) storage technology, and a variety of policies and internal processes to ensure the integrity of the stored data.
+
+Object based storage
+
+HCP stores objects in a repository. Each object permanently associates data HCP receives with information about that data; that is, each object encapsulates both object data and metadata.
+
+HCP distributes objects across its storage space but still presents them as files in a standard directory structure. Namespaces and tenants
+
+An HCP repository is partitioned into namespaces. A namespace is a logical grouping of objects such that the objects in one namespace are not visible in any other namespace.
+
+Namespaces provide a mechanism for separating the data stored for different applications, business units, or customers. For example, you could have one namespace for accounts receivable and another for accounts payable.

@@ -1,0 +1,141 @@
+Response body in XML <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<groupAccounts> <groupname>hcp-admin@ad.example.com</groupname> <groupname>hcp-security@ad.example.com</groupname> <groupname>hcp-compliance@ad.example.com</groupname> <groupname>AR-read@ad.example.com</groupname> <groupname>AR-full-access@ad.example.com</groupname> <groupname>AP-read@ad.example.com</groupname> <groupname>AP-full-access@ad.example.com</groupname> </groupAccounts> Tenant-level user account resources
+
+Tenant-level user account resources let you create, retrieve information about, modify, and delete tenant-level user accounts. The table below provides information about these resources.
+
+User account resources are not available for the default tenant.
+
+.../tenants/tenant-name/userAccounts Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+userAccount
+
+PUT
+
+Create a user account for a tenant
+
+Tenant-level user account with the security role
+
+List
+
+GET
+
+Retrieve a list of the user accounts defined for a tenant
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The listed user accounts are identified by the account username.
+
+In XML, the element that identifies each user account is username. The root element for the list of user accounts is userAccounts.
+
+In JSON, the name in the name/value pair that lists the user accounts is username. .../tenants/tenant-name/userAccounts/username
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+userAccount
+
+GET
+
+Retrieve information about a user account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+The information returned depends on the roles associated with the user making the request. N/A
+
+HEAD
+
+Check for the existence of a user account
+
+Tenant-level user account with the monitor, administrator, or security role
+
+userAccount
+
+POST
+
+Modify a user account
+
+Tenant-level user account with the administrator or security role
+
+A user with only the administrator role can modify only the allow-NamespaceManagement property. A user with only the security role cannot modify that property. N/A
+
+DELETE
+
+Delete a user account
+
+Tenant-level user account with the security role
+
+.../tenants/tenant-name/userAccounts/username/changePassword
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+updatePassword Request
+
+POST
+
+Change the password for a locally authenticated tenant- level user account
+
+System-level user account with the security role or tenant-level user account with the security role .../tenants/tenant-name/userAccounts/username/dataAccessPermissions
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+440/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+dataAccess Permissions
+
+GET
+
+Retrieve information about the data access permissions associated with a user account
+
+Tenant-level user account with the administrator or security role POST
+
+Modify the data access permissions associated with a user account
+
+Tenant-level user account with the administrator role
+
+The request body must contain all permissions granted for each included namespace. If a
+
+namespace is not included, its permissions are not changed by the POST request.
+
+By default, when you create a user account, it does not include any data access permissions.
+
+Example: Creating a user account
+
+Here’s a sample PUT request that creates a user account for the Finance tenant. The account is defined in an XML file named mwhite-UA.xml. The username for the account is specified in the XML file. The password is specified by the password query parameter. The request is made using a tenant-level user account that includes the security role. Request body in XML

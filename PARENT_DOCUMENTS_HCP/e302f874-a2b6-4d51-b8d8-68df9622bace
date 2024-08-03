@@ -1,0 +1,111 @@
+<operationsPerSecond>119.1</operationsPerSecond> <errors>0</errors> <errorsPerSecond>0.0</errorsPerSecond> <objectsVerified>200000</objectsVerified> <objectsReplicatedAfterVerification>0</objectsReplicatedAfterVerification> </statistics> statistics (data type for tenant and namespace statistics resources)
+
+The statistics data type in this section describes the statistics resource for tenants and namespaces.
+
+Properties
+
+The table below describes the properties included in the statistics data type that describes the statistics resource for tenants and namespaces. Property
+
+Data Type
+
+Description
+
+customMetadataCount
+
+Long
+
+Specifies the number of custom metadata files stored in a given namespace or in all the namespaces owned by a given tenant.
+
+customMetadataSize
+
+Long
+
+Specifies the total number of bytes of custom metadata stored in a given namespace or in all the namespaces owned by a given tenant. ingestedVolume
+
+Long
+
+Specifies the total size of the stored data and custom metadata, in bytes, before it was added to a given namespace or to all the namespaces owned by a given tenant.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+518/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data Type
+
+Description
+
+objectCount
+
+Long
+
+Specifies the number of objects, including old versions of objects, in a given namespace or in all the namespaces owned by a given tenant.
+
+Each multipart object counts as a single object. Objects that are in the process of being created by multipart uploads are not included in the object count.
+
+The object count does not include object versions that are delete markers or delete records. shredCount
+
+Long
+
+Specifies thetotal number of these items waiting to be shredded in a given namespace or in all the namespaces owned by a given tenant: objects, old versions of objects, parts of multipart objects, parts of old multipart versions of objects, replaced parts of multipart uploads, parts of aborted multipart uploads, unused parts of completed multipart uploads, and transient parts created during the processing of certain multipart upload operations.
+
+shredSize Long
+
+Specifies the total number of bytes of object, object version, and part data and metadata waiting to be shredded in a given namespace or in all the namespaces owned by a given tenant.
+
+storageCapacityUsed
+
+Long
+
+Specifies the total number of bytes occupied by stored data in the given namespace or in all the namespaces owned by the given tenant. This includes object data, metadata, and any redundant data required to satisfy the applicable service plans. Example
+
+Here’s an XML example of the statistics data type that describes the statistics resource for tenants and namespaces:
+
+<statistics> <customMetadataCount>5</customMetadataCount> <customMetadataSize>3276</customMetadataSize> <objectCount>1616</objectCount> <shredCount>0</shredCount> <shredSize>0</shredSize> <storageCapacityUsed>143892480</storageCapacityUsed> </statistics> Support access credentials data type
+
+Use the supportAccessCredentials data type to retrieve Support access credentials for an HCP system.
+
+Note: A system-level user account with the monitor, administrator, security, or service role is required to retrieve Hitachi Vantara Support access credentials for an HCP system. supportAccessCredentials data type properties
+
+The following table describes the properties included in the supportAccessCredentials data type.
+
+Property name
+
+Data type
+
+Description
+
+applyTimeStamp
+
+Integer
+
+Time that the exclusive Hitachi Vantara Support Access Credentials key was applied to the HCP system createTimeStamp
+
+String
+
+Time that the exclusive Hitachi Vantara Support Access Credentials key was created
+
+type
+
+String
+
+Valid values:
+
+Default Exclusive
+
+defaultKeyType
+
+String
+
+Default key type that shipped with the HCP system
+
+serialNumberFromPackage
+
+Integer Serial number of the installed Hitachi Vantara Support Access Credentials key
+
+Here is an XML example of the supportAccessCredentials data type returned for system-specific exclusive Hitachi Vantara Support access credentials:

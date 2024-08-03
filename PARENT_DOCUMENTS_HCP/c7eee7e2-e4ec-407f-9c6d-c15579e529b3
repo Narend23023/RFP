@@ -1,0 +1,91 @@
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C
+
+Quotation marks with URLs in command lines
+
+When using the HCP management API, you work in a Windows, Unix, or Mac OS X shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters may indicate that a process should be put in the background.
+
+To avoid the possibility of the Windows, Unix, or Mac OS X shell misinterpreting special characters in a URL, always enclose the entire URL in double quotation marks. WebDAV properties
+
+WebDAV properties are name/value pairs that provide information about items in a namespace. To store and retrieve property values, you use the PROPPATCH and PROPFIND
+
+methods, respectively.
+
+Properties exist in XML namespaces. To fully identify a property, you need to specify the namespace it’s in as well as the property name.
+
+All the properties defined in the WebDAV specification are in the DAV: namespace. So, for example, the standard WebDAV property named creationdate is in the DAV: namespace.
+
+For information about the standard WebDAV properties, see RFC 2518 or 4918. Live and dead properties
+
+Properties can be live or dead. Live properties are properties that are known to the WebDAV server (in this case, HCP). The server can respond to changes you make to these
+
+properties and can also dynamically modify their values.
+
+Dead properties are properties that are not known to the WebDAV server. The server stores and retrieves these properties but does not do anything else with them. Dead properties
+
+can be in any XML namespace.
+
+A PROPFIND request for all properties returns both live and dead properties. However, when responding to such a request, the server may omit live properties whose values are expensive to calculate.
+
+In response to a PROPFIND request for all properties, HCP may omit some standard WebDAV properties but always includes all properties defined in the HCP XML namespace. HCP-specific metadata properties for WebDAV
+
+HCP recognizes all the live properties defined in the DAV: namespace. Additionally, it provides its own XML namespace with live properties that allow you to store and retrieve HCP system metadata. This namespace is specified as:
+
+http://www.hitachivantara.com/hcap/webdav/
+
+Note: In a WebDAV PROPPATCH or PROPFIND request, the HCP XML namespace must be specified exactly as shown above. The URL must specify hcap, not hcp.
+
+As with the standard WebDAV properties, you use the PROPPATCH and PROPFIND methods to change and retrieve the values of the HCP-specific properties.
+
+The list below describes the metadata properties HCP provides for objects. access-time
+
+The value of the POSIX atime attribute for the object. You can retrieve, but not change, the value of this property.
+
+change-time
+
+The value of the POSIX ctime attribute for the object. You can retrieve, but not change, the value of this property.
+
+creation-time
+
+The date and time the object was stored in the namespace.
+
+You can retrieve, but not change, the value of this property. domain
+
+If the object is owned by an Active Directory user, the domain in which the user account of the object owner is defined. You can retrieve, but not change, the value of this property.
+
+dpl
+
+The object data protection level.
+
+You can retrieve, but not change, the value of this property.
+
+gid
+
+The POSIX group ID for the object. You can retrieve, but not change, the value of this property.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+791/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+has-acl
+
+An indication of whether the object has an ACL, either true (has an ACL) or false (does not have an ACL). You can retrieve, but not change, the value of this property. hash-scheme

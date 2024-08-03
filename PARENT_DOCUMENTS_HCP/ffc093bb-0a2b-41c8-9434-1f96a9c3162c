@@ -1,0 +1,85 @@
+The HCP Search Console uses the Search Results page to list the objects that satisfy the criteria you specify for a search. This page has four areas of information:
+
+The criteria you specified for the query. Options for working with the search results.
+
+Filters for refining the search results.
+
+The list of returned objects. The objects are numbered for ease of reference.
+
+Note: Under certain circumstances, the results of a search may be incomplete. To indicate this, the Search Results page shows this message: Partial results.
+
+If this message persists, see your HCP tenant administrator.
+
+Initial search results for individual objects
+
+The information initially returned for each object differs depending on the active search facility. Once you have retrieved the initial information you can ask for additional information
+
+for any given object. Initial results with the metadata query engine
+
+While the metadata query engine is active, the Search Results page initially returns this information for each object in the search results:
+
+Object directory path and name. URL. This is the absolute path to the object. The location is the HCP system, and the root directory is rest for HCP namespaces or fcfs_data for the default namespace.
+
+You can click the URL to access the object. Change time.
+
+Here’s an example of the information initially returned for an object while the metadata query engine is active:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+883/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The metadata query engine can return a maximum of ten thousand objects in response to a single query. If your query would return more that ten thousand objects, you should run a
+
+query with more precise search criteria to ensure that you get all the objects you want. Object directory path and name URL
+
+A message indicating that the object has been deleted
+
+Viewing returned objects
+
+If you are logged in to the Search Console as a tenant-level user, you can view the content of any object in the search results by clicking the object name or URL. If you are logged
+
+in to the Search Console as a system-level user, you do not have permission to view object content. In this case, when you click the object, the Namespace Browser opens and
+
+displays the login page. After you log into the Namespace Browser, it displays the object content. If you then return to the Search Console, you need to log in again.
+
+Depending on the browser you’re using and the object type, you may be asked whether you want to open the object or save it to disk. When you view the object, it opens in the default application for that object type.
+
+Showing results details
+
+The Search Results page includes a Show details link for each returned object. When you click this link for an object, the Search Results page shows additional metadata.
+
+To hide additional metadata after displaying it, click Hide details.
+
+Understanding returned metadata
+
+The Search Results page shows metadata for each listed object. You can see some metadata initially. You can view the remaining metadata by showing result details.
+
+The metadata shown varies depending on namespace type and object type. The Search Results page shows as much of this metadata as is available: For all objects
+
+Size
+
+The object size, in bytes.
+
+Version ID
+
+The version ID of the object.
+
+Retention
+
+The retention setting for the object, shown as one of these:
+
+A specific date and time in the future.
+
+Deletion Prohibited. Initial Unspecified.
+
+A retention class. Expired. This includes objects whose retention setting is either a specific date and time in the past or Deletion Allowed.
+
+Note: HCP cannot represent dates later than February 18, 2038, at 22:14:07. Later dates appear as 2/18/2038 22:14:07 (overflow). Hold
+
+An indication of whether the object is on hold. While an object is on hold, it cannot be deleted under any circumstances until it is explicitly released, nor can its retention setting be changed. While the metadata query engine is active, for an object that’s on hold, the retention setting is followed by | HOLD. Custom metadata annotations
+
+(metadata query engine only) If the object has one or more custom metadata annotations, a list of the annotation names. You can click any annotation name to view the content of that annotation. You can

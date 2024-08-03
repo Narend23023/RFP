@@ -1,0 +1,105 @@
+false
+
+Version pruning is enabled for the namespace.
+
+You cannot include both this property and the pruneOnPri mary property in the same request.
+
+Version pruning is disabled for the namespace.
+
+The default is false.
+
+pruneDays
+
+Integer
+
+Specifies the number of days old versions of objects must remain in the namespace before they are pruned. Valid
+
+This property is required on a PUT request to create a namespace and on a POST request to modify namespace
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+528/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+defaults if the prune property is set to true.
+
+The default is zero.
+
+You cannot include both this property and the daysOnPrim ary property in the same request. pruneOnPrimary
+
+Boolean
+
+Specifies whether version pruning is enabled for the namespace. Valid values are:
+
+Deprecated; replaced by the prune property.
+
+true
+
+false
+
+Version pruning is enabled for the namespace.
+
+If specified on a PUT or POST request, this property has the same function as the prune property. You cannot include both this property and the prune property in the same request.
+
+Version pruning is disabled for the namespace.
+
+This property is not returned by any GET request.
+
+The default is false. pruneOnReplica
+
+Boolean
+
+Deprecated. The prune property applies to the namespace on all systems on which the namespace exists.
+
+This property is ignored on a PUT or POST request and is not returned by any GET request.
+
+useDeleteMarkers
+
+Boolean
+
+Specifies whether delete markers are used in the namespace. Valid values are:
+
+Modify namespace defaults if the enabled property is set to true. true
+
+Delete marker support is enabled for the
+
+namespace.
+
+false
+
+Delete marker support is disabled for the namespace.
+
+The default is false.
+
+Example
+
+Here’s an XML example of the versioningSettings data type:
+
+<versioningSettings> <enabled>true</enabled>
+
+<keepDeletionRecords>true</keepDeletionRecords> <prune>true</prune> <pruneDays>10</pruneDays> <useDeleteMarkers>true</useDeleteMarkers> </versioningSettings> Usage considerations
+
+This section of the Help contains usage considerations for the HCP management API.
+
+Choosing an access method
+
+You can access the HCP system through the management API by specifying either a hostname or an IP address in the resource URL. If the system uses DNS and you specify a hostname, HCP selects the IP address for you from the currently available nodes. HCP uses a round-robin method to ensure that it doesn’t always select the same address.
+
+When you specify IP addresses, your application must take responsibility for balancing the load among the nodes. In this case, you risk trying to connect (or reconnect) to a node that is not available. However, using explicit IP addresses to connect to specific nodes can sometimes have advantages over using hostnames.
+
+These considerations apply when deciding which method to use: If the client uses a hosts file to map HCP hostnames to IP addresses, the client system has full responsibility for converting any hostnames to IP addresses. Therefore, HCP cannot spread the load or prevent attempts to connect to unavailable nodes. If the client caches DNS information, connecting by hostname may result in the same node being used repeatedly. When you access the HCP system by hostname, HCP ensures that requests are distributed among the nodes, but it does not ensure that the resulting loads on the nodes are evenly balanced. When multiple applications access the HCP system by hostname concurrently, HCP is less likely to spread the load evenly across the nodes than with a single application.
+
+Note: When using hostnames, you can ping the HCP system periodically to check whether you’re getting connections to different nodes.

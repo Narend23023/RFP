@@ -1,0 +1,57 @@
+The Migration service is not available for HCP VM systems.
+
+During a data migration, the Migration service copies objects and, if applicable, the metadata query engine index from the selected devices to free storage on the remaining devices. Before you start a data migration, you need to ensure that those devices have enough unused capacity to hold the data to be migrated.
+
+After copying an object, the Migration service deletes the object from the source device. After the migration is complete, you can submit a request to your authorized HCP service
+
+provider to finalize the migration and remove the retired devices from the system. Important:
+
+After the migration of data off a storage node in an HCP with internal storage system is finalized, the system can never again include a node with the same fourth octet in its back-
+
+end IP address as that node had.
+
+Retiring a node is not part of the normal procedure for replacing a node that has failed or for upgrading to newer hardware. In these cases, the new node can use the same back-
+
+end IP address as the one being replaced.
+
+The Migration service runs only when you explicitly start a data migration. When the migration is complete, the service stops automatically.
+
+When you start a data migration, the selected nodes or storage systems automatically become read-only (except for allowing the Migration service to delete objects). After the migration is complete, they remain read-only.
+
+When you start a migration of data off selected nodes in a HCP with internal storage system, HCP automatically removes any NFS volumes from those nodes and associates those volumes with other nodes in the system.
+
+Important:
+
+To prevent data loss in namespaces that are not being replicated and that have service plans that set the ingest tier DPL to 1, always migrate data off a device before submitting a request to your authorized HCP service provider to remove the device from the HCP system.
+
+Before starting a primary storage retirement
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+56/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Typically, for a HCP with internal storage system, before starting a data migration, you submit a request to your authorized HCP service provider to add new nodes to the HCP
+
+system in order to maintain (or increase) the system storage capacity. However, if the nodes not selected for migration have sufficient free space to accommodate all the data to be migrated, adding new nodes before the data migration is not required. For a HCP with SAN-attached storage system, before starting a data migration, your SAN storage administrator, working in conjunction with your authorized HCP service provider, needs to add logical volumes (LUNs) from new or existing storage systems to any nodes on which all the existing LUNs on all the existing arrays are being retired. Migrated data, however, can be written to any node, and does not necessarily have to be written to the same node from which the data is being migrated.
+
+The HCP system cannot be upgraded while a data migration is in progress. Before the system can be upgraded, you need to either allow the migration to finish or cancel the migration. If you cancel the migration, you can configure a new migration of data off the same devices after the system is upgraded.
+
+Using the Retire Primary Storage wizard to perform a data migration Important: This section describes how to use the Retire Primary Storage wizard to migrate data off one or more primary storage devices, but it does not provide a detailed description of the entire data migration process.
+
+To retire one or more primary storage devices, you can use the Retire Primary Storage wizard on the Retirement panel to specify the devices you want to retire and then configure
+
+and run a data migration to move all the data off the storage devices you want to retire and onto one or more other primary storage devices.
+
+When configuring a data migration on an HCP with internal storage system, you select nodes to be retired. When configuring a data migration on an HCP with SAN-attached storage
+
+system, you can either retire an entire storage system or individual nodes.
+
+You can use the Storage page to perform a data migration in preparation for retiring primary storage.
+
+1. On the left side of the Storage page, click Retirement. 2. On the Retirement panel, click Retire Storage.
+
+The Get Started wizard opens. You use this wizard to select the type of storage you want to retire. After you select a type of storage, the System Management Console

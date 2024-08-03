@@ -1,0 +1,145 @@
+To include a variable in the email template, you specify the variable name preceded by the dollar sign ($). A dollar sign followed by anything other than a variable name is displayed as a dollar sign in the email HCP sends.
+
+The list below lists the variables you can use in the email template. $action
+
+The action to take in response to the message
+
+$date
+
+The date and time at which the event occurred (for example, Wed Feb 8 2017 3:15:57 PM EST)
+
+$fullText
+
+The full text of the message
+
+$id
+
+The message ID
+
+$location
+
+The fully qualified name of the HCP system on which the event occurred (for example, hcp-ma.example.com) $origin
+
+For user-initiated events, the IP address from which the event request was sent and the port through which HCP received the event request, separated by a colon (for example, 192.168.152.181:8000)
+
+$reason
+
+The reason why HCP issued the message
+
+$severity
+
+The severity of the event that triggered the message $shortText
+
+A brief description of the event that triggered the message
+
+$type
+
+The type of message (General, Security, or Compliance), preceded by Important and a comma if the message is important (for example, Important, Security)
+
+$user
+
+The user ID and username of the event initiator (for example, 105ff38f-4770-4f98-b5b3-8371ab0af359 lgreen) Defaults
+
+The list below shows the format of the default email template.
+
+From
+
+log@$location
+
+Subject
+
+[$severity] $shortText
+
+Body
+
+The following event occurred on $date: $fullText
+
+Reason:
+
+$reason
+
+Action: $action
+
+Details: User: $user Origin: $origin
+
+Example
+
+Here’s an XML example of the emailTemplate data type:
+
+<emailTemplate> <from>log@$location</from>
+
+<body>A message was written to the tenant log on $date.\n\n$reason\n\n $action</body> <subject>$severity - $shortText</subject> </emailTemplate>
+
+failoverSettings
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+465/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The failoverSettings data type describes the failoverSettings property of the link data type.
+
+failoverSettings data type properties
+
+The following table describes the properties included in the failoverSettings data type. Property name
+
+Data type
+
+Description
+
+Notes
+
+local
+
+local
+
+Specifies the automatic failover and failback settings for the local system for the replication link.
+
+This property is optional on a PUT request to create a replication link.
+
+remote
+
+remote
+
+Specifies the automatic failover and failback settings for the remote system for the replication link.
+
+This property is optional on a PUT request to create a replication link. Example
+
+Here’s an XML example of the failoverSettings data type; the properties shown are those that are returned by a GET request sent to the primary system for an active/passive link:
+
+<failoverSettings> <remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>120</autoFailoverMinutes> <autoCompleteRecovery>false</autoCompleteRecovery> <autoCompleteRecoveryMinutes>60</autoCompleteRecoveryMinutes> </remote> </failoverSettings>
+
+groupAccount
+
+The groupAccount data type describes the groupAccounts resource.
+
+Properties
+
+The table below describes the properties included in the groupAccount data type.
+
+Property
+
+Data Type
+
+Description
+
+Notes
+
+allowNamespace
+
+Management
+
+Boolean
+
+Specifies whether the group account has the allow namespace management property. Valid values are:
+
+This property is not valid on a PUT request. It is valid on a POST request only if the user making the request has the administrator role. true
+
+The group account has the allow namespace property.
+
+false
+
+The group account does not have the allow namespace management property.

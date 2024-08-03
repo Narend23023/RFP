@@ -1,0 +1,195 @@
+hr
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+7
+
+9609368
+
+9621504
+
+9609368
+
+0
+
+0
+
+7
+
+0
+
+0
+
+hcp.example.com europe hr
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+15
+
+19707387
+
+19730432
+
+10098019
+
+0
+
+0
+
+8
+
+0
+
+0
+
+hcp.example.com europe
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+13
+
+143853089
+
+143892480
+
+133595631 0
+
+0
+
+17
+
+0
+
+0
+
+hcp.example.com europe
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+30
+
+206204134
+
+206278656
+
+62351045
+
+0
+
+0
+
+20
+
+0
+
+0 hcp.example.com
+
+2/17/2017 0:00:00
+
+2/17/2017 23:59:59
+
+28
+
+420800453
+
+420839844
+
+339910962 335195
+
+7
+
+32
+
+0
+
+0
+
+hcp.example.com
+
+2/18/2017 0:00:00
+
+2/18/2017 23:59:59
+
+57
+
+503995558
+
+524851111
+
+153827138 64387
+
+2
+
+47
+
+0
+
+0
+
+Chargeback page graphs
+
+The Chargeback page contains four graphs. These graphs how information about the usage of the HCP system during the past 30 days (or since HCP was installed if that was less than 30 days ago).
+
+The graphs are: Writes (bytes)
+
+Shows the number of bytes of data written to the HCP system.
+
+The number of bytes written includes all parts written for multipart uploads regardless of whether the upload of the part has finished, the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Writes (operations)
+
+Shows the number of successful write operations that targeted the HCP system.
+
+Each upload of a part for a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Reads (bytes)
+
+Shows the number of bytes of data read from the HCP system.
+
+Reads (operations)
+
+Shows the number of read operations that targeted the HCP system.
+
+A read of a multipart object counts as a single read operation.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+185/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Checking the status of your nodes
+
+You can use the node status command to check the status of a target node in your HCP system. Any user can perform the node status command. System-level users with the administrator role can enable and disable the node status API.
+
+The request to check the status of a node requires a URL specifying the front-end IP address of the target node. You enter the command in the following format: http://node-front-end-ip-address/node_status
+
+You can also request node metrics to be returned with the node HTTP status return code. To request node metrics, you additionally need to:
+
+Specify a type URL query parameter with a value of metrics. Specify the format URL query parameter with a value of xml or json.
+
+If you omit the format parameter, you are only returned a response status code. Request-specific return codes (node status)
+
+The following table describes the HTTP return status codes that can be returned from a node status request.
+
+Code HTTP status
+
+Description
+
+204
+
+OK
+
+Node is configured to return node status
+
+403
+
+Forbidden
+
+The HCP node status check returns a 403 forbidden message for the following reasons:

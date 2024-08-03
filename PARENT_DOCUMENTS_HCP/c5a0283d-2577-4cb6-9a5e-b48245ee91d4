@@ -1,0 +1,63 @@
+You can view and retrieve metafiles through the WebDAV, CIFS, and NFS protocols. You can also use these protocols to overwrite metafiles that contain the HCP-specific metadata you can change. By overwriting a metafile, you change the metadata for the corresponding object.
+
+If an object has a default annotation or an ACL, HCP presents it as a metafile. HCP does not show other annotations as metafiles. You can add, replace, or delete the default annotation only with the REST API and WebDAV protocol. You can add, replace, or delete other annotations and ACLs only with the REST API. For backward compatibility, HCP-FS also presents a metafile named tpof.txt. This metafile is superseded by dpl.txt.
+
+HCP-FS presents these metafiles for objects:
+
+created.txt
+
+Contains the date the object was added to the namespace. This metafile contains two lines:
+
+The first line is the date expressed as the number of seconds since January 1, 1970. The second line is the date in this ISO 8601 format: yyyy-MM-ddThh:mm:ssZ
+
+In this format, Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example:
+
+1326978027
+
+2012-01-19T08:00:27-0500
+
+You can view the content of this metafile, but you cannot change it.
+
+dpl.txt
+
+Contains the data protection level (DPL) for the object. The DPL is the number of copies of the object HCP must maintain in the repository to ensure the integrity and availability of the object. For example:
+
+2
+
+You can view the content of this metafile, but you cannot change it. hash.txt
+
+Contains the name of the cryptographic hash algorithm used to generate the cryptographic hash value for the object, as well as the hash value itself. For example:
+
+SHA-256 2BC9AE8640D50145604FB6CFC45A12E5561B40429174CE404A...
+
+HCP calculates the hash value for an object from the object data. You can view the content of this metafile, but you cannot change it. index.txt
+
+Contains the index setting for the object. You can view and change the content of this metafile.
+
+replication.txt
+
+Indicates whether the object is replicated, in this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+692/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+replicated=true|false The value is true only when the object and all its metadata have been replicated. For example, if you add custom metadata to a replicated object, the content of the replicated.txt metafile changes to replicated=false. When the metadata is replicated, the value changes back to replicated=true. You can view the content of this metafile, but you cannot change it. retention.txt
+
+Contains the retention setting for the object. You can view and change the content of this metafile.
+
+shred.txt
+
+Contains the shred setting for the object. You can view and change the content of this metafile.
+
+core-metadata.xml
+
+Contains a summary of the HCP-specific and POSIX metadata for the object. For example:

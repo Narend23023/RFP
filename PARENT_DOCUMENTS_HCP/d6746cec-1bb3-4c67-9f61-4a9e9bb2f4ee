@@ -1,0 +1,81 @@
+For an active/passive link, the value of this property is always zero. This value is also always zero for the default tenant.
+
+objectsPending Long
+
+For an active/active link, an outbound active/passive link during replication, or an inbound active/passive link during data recovery, specifies the approximate number of objects in the tenant's namespaces that are currently waiting to be replicated from the local system to the remote system for the replication link.
+
+For an outbound link during data recovery or for an inbound link during replication, the value of this property is always zero. This value is also always zero for the default tenant. objectsPendingRemote Long
+
+Specifies the approximate number of objects in the tenant's namespaces that are currently waiting to be replicated from the remote system for the replication link to the local system.
+
+For an active/passive link, the value of this property is always zero. This value is also always zero for the default tenant. status
+
+String
+
+Specifies the status of activity for the tenant on the replication link. Possible values are:
+
+AUTO_PAUSED
+
+HCP automatically paused replication or recovery of the tenant.
+
+PAUSED
+
+A user paused replication or recovery of the tenant.
+
+REPLICATING
+
+Replication or recovery of the tenant is proceeding normally. upToDateAsOfMillis
+
+Long
+
+Specifies, in milliseconds since January 1, 1970, at 00:00:00 UTC, the date and time before which configuration changes and changes to namespace content for all the replicating namespaces owned by the tenant are guaranteed to have been replicated from the local system to the remote system for the replication link.
+
+upToDateAsOfString String
+
+Specifies, as a datetime string, the date and time before which configuration changes and changes to namespace content for all the replicating namespaces owned by the tenant are guaranteed to have been replicated from the local system to the remote system for the replication link.
+
+The datetime string has this format: yyyy-MM-ddThh:mm:ssZ
+
+In this format, hh is the hour on a 24-hour clock, and
+
+Z represents the offset from UTC, in this format:
+
+(+|-)hhmm
+
+For example:
+
+2017-03-18T10:47:59-0400
+
+Example
+
+Here’s an XML example of the tenant data type that describes the tenant-name resource for replication link content; the properties shown are those that are returned by a GET request for a tenant in an active/active link:
+
+<tenant> <status>REPLICATING</status> <upToDateAsOfString>2017-03-19T17:45:15-0400</upToDateAsOfString> <upToDateAsOfMillis>1395265515303</upToDateAsOfMillis> <objectsPending>196</objectsPending> <bytesPending>46347338966</bytesPending> <objectsPendingRemote>14</objectsPendingRemote> <bytesPendingRemote>735856</bytesPendingRemote> </tenant> Query parameters for replication link content tenant actions
+
+To perform actions on tenants in replication links, you use these query parameters:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+520/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+pause
+
+Pauses replication or recovery for the tenant on the replication link, as applicable.
+
+resume
+
+Resumes replication or recovery for the tenant on the replication link, as applicable.
+
+You use these query parameters with a POST request against the replication link content tenant resource. You cannot include a request body with this request.
+
+Here’s a sample POST request that pauses replication activity for the Finance tenant on the replication link named MA-CA: curl -k -iX POST -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp-ma.example.com:9090/mapi/services/replication/links/ MA-CA/content/tenants/Finance?pause"
+
+tenant (data type for tenant resource)
+
+The tenant data type in this section describes the tenants resource.

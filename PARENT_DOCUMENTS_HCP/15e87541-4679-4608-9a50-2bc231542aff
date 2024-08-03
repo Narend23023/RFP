@@ -1,0 +1,35 @@
+369/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+5. You create a new topology, ECT2, that consists of systems B, C, and E and links BC, BE, and CE.
+
+6. You add tenant T1 to topology ECT2. 7. All of these occur: T1 is added to links BE and CE and is replicated to system E. The Replication service on system B pauses replication or recovery of T1 on link AB because system B is in topology ECT2 and system A is not The Replication service on system C pauses replication or recovery of T1 on link CD because system C is in topology ECT2 and system D is not
+
+Labeled holds in a replication topology
+
+In a replication topology, when one or more labeled retention holds are placed on an object, there is a small time period when the hold settings will not be synchronized across all clusters. In a healthy replication environment, this time period should be minimal.
+
+Before labeled hold settings are synchronized, the object is not protected from deletion. The object should not be considered on labeled retention hold until all clusters in the replication topology are synchronized.
+
+There are several ways to verify the labeled hold status of an object in a replication topology, including: Use the REST API HTTP HEAD request with the X-HCP-Get-Replicated:true parameter on the same cluster where you added the labeled hold. In the resulting response header, check that X-HCP-Replicated:true. Use the HTTP HEAD request against the object on each cluster in the replicated topology. In the resulting response header, check that X-HCP-LabelRetentionHold:true. View the object in the NameSpace Browser on each cluster in the replication topology. Look in the Metadata column associated with object to verify that the lock icon, indicating that retention hold is enabled, is displayed. Replication in an environment with mixed HCP versions
+
+Starting in HCP 9.1, the labeled retention hold feature is supported. In a replication topology with mixed HCP versions, if you attempt to replicate objects that contain a labeled
+
+retention hold to a pre-version 9.1 cluster, the affected tenant on the replication link will be paused, while other tenants on the replication link will continue to replicate.
+
+Therefore, before using the labeled retention hold feature, it is a best practice to upgrade all clusters in the replication topology to HCP 9.1 or later.
+
+Shutting down and reestablishing all replication links
+
+Shutting down replication links on an HCP system stops all activity on all links in which the system participates. You cannot shut down an individual link.
+
+While links are shut down: No replication or recovery activity occurs on the links. The system where the links are shut down cannot read or repair objects from other HCP systems. Other HCP systems cannot read or repair objects from the system where the links are shut down. The system where the links are shut down can still service requests that are redirected from other HCP systems in the replication topology. Objects ingested on the system where the links are shut down are not protected from system failure. The system where the links are shut down is isolated in all erasure coding topologies that include the system. As a result:
+
+Erasure-coded objects cannot be read from that system. For a system in the active erasure coding topology, other systems in that topology cannot send full copies of object data or chunks for objects to that system. As a
+
+result, the topology protection status is broken on all systems in the topology. You cannot change which HCP tenants and namespaces, default-namespace directories, and inbound links are included in the links in which the system participates. An alert indicating that all links are shut down appears on the Overview page in the System Management Console for the system where the links are shut down. A message indicating that all links are shut down appears at the top of the Replication page in the System Management Console for the system where the links are shut down.
+
+You may want to shut down replication links, for example, if you need to temporarily dedicate as much network bandwidth as possible to applications that are unrelated to HCP. Additionally, your authorized HCP service provider may ask you to shut down all links for certain system upgrade scenarios.

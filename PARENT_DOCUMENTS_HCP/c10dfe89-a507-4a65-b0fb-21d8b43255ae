@@ -1,0 +1,99 @@
+The metadata shown varies depending on namespace type and object type. The Search Results page shows as much of this metadata as is available: For all objects
+
+Size
+
+The object size, in bytes.
+
+Version ID
+
+The version ID of the object.
+
+Retention
+
+The retention setting for the object, shown as one of these:
+
+A specific date and time in the future.
+
+Deletion Prohibited. Initial Unspecified.
+
+A retention class. Expired. This includes objects whose retention setting is either a specific date and time in the past or Deletion Allowed.
+
+Note: HCP cannot represent dates later than February 18, 2038, at 22:14:07. Later dates appear as 2/18/2038 22:14:07 (overflow). Hold
+
+An indication of whether the object is on hold. While an object is on hold, it cannot be deleted under any circumstances until it is explicitly released, nor can its retention setting be changed. While the metadata query engine is active, for an object that’s on hold, the retention setting is followed by | HOLD. Custom metadata annotations
+
+(metadata query engine only) If the object has one or more custom metadata annotations, a list of the annotation names. You can click any annotation name to view the content of that annotation. You can
+
+right-click the link to copy the URL for the annotation.
+
+Access control list URL
+
+(metadata query engine only) If the object has an ACL, the URL for that ACL. You can click this URL to view the content.
+
+The access control list URL consists of the object path followed by a type=acl query parameter. For example, this URL specifies the ACL for an object named Q1_2012.ppt: https://finance.europe.hcp.example.com/rest/presentations/
+
+Q1_2012.ppt?type=acl
+
+Ingest time
+
+The date and time the object was created (that is, when the data was added to the namespace).
+
+Access time
+
+The POSIX atime for the object. Users and applications can change this metadata.
+
+While the metadata query engine is active, this metadata is shown for all objects. Modify time
+
+The POSIX mtime for the object. Users and applications can change this metadata. While the metadata query engine is active, this metadata is shown for all objects. Change time
+
+The POSIX ctime for the object. This is the last time the object metadata changed. While the metadata query engine is active, this metadata is shown for all objects.
+
+Hash value
+
+The cryptographic hash value for the object. The label for this value is the name of the cryptographic hash algorithm used to calculate the value.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+884/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+DPL
+
+The number of copies of the object data HCP must maintain, as dictated by the service plan that applies to the namespace. DPL stands for data protection level.
+
+Shredding
+
+The shred setting for the object, which indicates whether the object will be shredded when it’s deleted. Shredding is the process of deleting an object and overwriting the place where it was stored in such a way that none of its data or metadata can be reconstructed. Replication
+
+An indication of whether the object has been replicated to another HCP system.
+
+User ID
+
+The POSIX user ID of the object owner.
+
+While the metadata query engine is active, this metadata is shown for all objects.
+
+Group ID
+
+The POSIX ID of the owning group. While the metadata query engine is active, this metadata is shown for all objects. . Permissions
+
+The object permissions in POSIX format and as an octal value.
+
+While the metadata query engine is active, this metadata is shown for all objects.
+
+Owner
+
+(metadata query engine only)
+
+For objects in HCP namespaces, the user that owns the object. The owner is an HCP-specific metadata property and does not correspond to the POSIX UID of an object. This value has this format: USER,location,username
+
+For objects with no owner, this value has this format:
+
+GROUP,location,all_users
+
+In these formats:
+
+location

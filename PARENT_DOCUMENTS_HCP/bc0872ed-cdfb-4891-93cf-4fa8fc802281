@@ -1,0 +1,79 @@
+To avoid the possibility of the Unix, Mac OS X, or Windows shell misinterpreting special characters in a URL, always enclose the entire URL, including any query parameters, in double quotation marks.
+
+Disabling SSL certificate verification
+
+If you’re using HTTPS in your request URLs, check with your tenant administrator as to whether you need to disable SSL certificate verification. You would need to do this if the SSL server certificate presented by the HCP system is not signed by a trusted CA. With s3curl, you disable SSL certificate verification by including ‑k or ‑‑insecure in the request command line.
+
+Authentication
+
+To use the S3 compatible API as an authenticated user, you need to provide credentials. These credentials must be based on the username and password for your HCP user account or, if HCP is configured to support Windows Active Directory® (AD), for an AD user account that HCP recognizes.
+
+To provide credentials, you typically use the HTTP Authorization request header. However, HCP also accepts Active Directory authentication provided through the SPNEGO protocol. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.
+
+If the S3 compatible API is configured to require user authentication, you need to provide credentials with every request. If the S3 compatible API is configured to allow anonymous access, you need to either provide credentials or request anonymous access with each request. HCP supports presigned URLs. A presigned URL uses query parameters to provide credentials. Presigned URLs allow you to temporarily share objects with other users without the need to grant those users permission to access your buckets or objects. Presigned URLs are compatible only with the AWS method of authentication. AWS authentication
+
+To provide credentials for AWS Version 2 authentication, you use the Authorization request header with a value in the format shown below:
+
+Authorization: AWS access-key:signature
+
+In this format:
+
+access-key
+
+The Base64-encoded username for your user account.
+
+signature
+
+A value calculated using your secret key and specific elements of the S3 compatible request, including the date and time of the request. Your secret key is the MD5-hashed password for your user account. Because the signature for an S3 compatible request is based on the request contents, it differs for different requests.
+
+Here’s an example of an Authorization header for AWS Version 2 authentication: Authorization: AWS bGdyZWVu:vQ/rj3y0AUjWsht9M5aQw4+D0dA=
+
+With AWS Version 4 authentication, the S3 compatible API supports both signed and unsigned payloads.
+
+Active Directory authentication
+
+To provide credentials for Active Directory authentication, you use the Authorization request header with a value in the format shown below: Authorization: AD ad-user-name:ad-password
+
+In this format:
+
+ad-username
+
+The AD user account username.
+
+ad-password
+
+The AD user account password.
+
+Here’s an example of an Authorization header for AD authentication:
+
+Authorization: AD lgreen@example.com:p4sswOrd
+
+Note: You cannot use AD authentication with S3 compatible requests to create a bucket.
+
+Presigned URLs
+
+To provide credentials for AWS authentication using a presigned URL, you append these query parameters to the request URL: AWSAccessKeyId=access-key Expires=expiration-time Signature=signature
+
+In these parameters:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+560/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+access-key
+
+The Base64-encoded username for your user account.
+
+expiration-time
+
+The time the request expires, in seconds since January 1, 1970, at 00:00:00 UTC. signature
+
+A value calculated using your secret key and specific elements of the S3 compatible request, including the date and time the request expires.
+
+If any part of a presigned URL is changed, the URL becomes invalid.
+
+Here’s an example of a presigned URL:

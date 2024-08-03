@@ -1,0 +1,77 @@
+hash value that you generate from the original annotation content. This header is returned only if the request contains both data and custom metadata. X-HCP-Hash
+
+The cryptographic hash algorithm HCP uses, along with the cryptographic hash value stored for the object, in this format:
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is the same as the data you sent. To perform the verification, compare this value with a hash value that you generate from the original data. The
+
+X-HCP-Hash
+
+header is not returned for multipart objects.
+
+X-HCP-VersionId
+
+The version ID of the object.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+400
+
+OK
+
+One of:
+
+The URL in the request is not well-formed.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter. The request is trying to store an object with a predefined ACL in a namespace that does not support ACLs.
+
+Example: Setting metadata when storing an object
+
+Here’s a sample HTTP PUT request that stores a file named Q1_2012.ppt in the quarterly_rpts directory, sets the retention value for the object to the Reg-107 class, and sets the shred setting for the object to true.
+
+Request with curl command line curl -k -iT Q1_2012.ppt
+
+H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/ Q1_2012.ppt?retention=C+Reg-107&shred=true"
+
+Request in Python using PycURL
+
+import pycurl
+
+import os filehandle = open("Q1_2012.ppt", 'rb')
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?retention=C+Reg-107") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2012.ppt")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q1_2012.ppt?retention=C+Reg-107 HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 678400 Content-Type:text/plain
+
+Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com
+
+ETag: "9c604138ffb0f308a8552a3752e5a1be" Location: /rest/quarterly_rpts/Q1_2012.ppt
+
+X-HCP-VersionId: 80238663473089 X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1C... X-HCP-Time: 1334829227 Content-Length: 0
+
+Modifying object metadata

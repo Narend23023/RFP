@@ -1,0 +1,123 @@
+label_hold
+
+No
+
+Specifies whether to place an object on labeled hold and if true, specifies a JSON format array containing pairs of one or more unique labeled hold IDs and an associated hold value. id
+
+Unique identifier string for the labeled hold. The maximum ID size is 64 characters.
+
+hold
+
+Specifies whether the object is on labeled hold using this id. Either true or false.
+
+Example
+
+label_hold=[{"id":"MY-HOLD-ID1","hold":true}, {"id":"MY-HOLD-ID2","hold":true}]
+
+owner
+
+No
+
+Specifies the user that owns the object. One of:
+
+The name of a user account that’s defined in HCP The name of an AD user account that HCP recognizes. This can be either the user principal name
+
+or the Security Accounts Manager (SAM) account name for the AD user account.
+
+If you specify an AD user account, you also need to specify the domain parameter. An empty string
+
+Specifying an empty string causes the object to have no owner.
+
+retention
+
+No
+
+Specifies the retention setting for the object. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you
+
+add it to the namespace or when its retention setting is -2. The value -0 is equivalent to 0 (zero).
+
+1 or Deletion Prohibited
+
+Prevents the object from being deleted and its retention setting from being changed. You can
+
+assign this value to an object that is not in a retention class at any time. If an object is assigned to a retention class and that class is then deleted, the retention setting for
+
+that object changes to -1.
+
+2 or Initial Unspecified
+
+Specifies that the object does not yet have a retention setting. You can assign this value to an object when you add the object to the namespace. You can also directly change the retention setting for an object from 0 to ‑2. You can change ‑2 to any other retention setting. datetime
+
+Prevents the object from being deleted until the specified date and time. You can assign this value
+
+to an object that is not in a retention class if the specified date and time is later than the current retention setting for the object. You cannot assign it to an object for which the current retention
+
+setting is -1.
+
+offset
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+765/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+Specifies a period for which to retain the object. You can assign this value to an object that is not in a retention class at any time, except when its current retention setting is -1.
+
+HCP calculates the retention setting date and time from the offset and one of these:
+
+The time the object was added to the namespace
+
+The current retention setting The current time C+retention_class_name
+
+Assigns the object to a retention class. You can assign this value to an object if any one of these is true:
+
+The original retention period for the object has expired. The original retention period for the object has not expired, and the retention class results in
+
+a retention period that is longer than the current retention period. The retention setting for the object is 0 or -2.
+
+The retention setting for the object is -1, and the class has a retention setting of -1. The object is in a retention class, and the duration of the new class is not shorter than the
+
+duration of the original class. The retention class you assign must already be defined for the namespace.
+
+shred No
+
+Specifies whether to shred the object after it is deleted. Either true or false.
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200 OK
+
+HCP successfully updated the metadata.
+
+400
+
+Bad Request
+
+One of:
+
+The URL in the request is not well-formed.
+
+The request is trying to change the retention setting from a retention class to an explicit setting, such as a datetime value.

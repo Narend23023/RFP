@@ -1,0 +1,113 @@
+as a dollar sign in the email HCP sends.
+
+The list below lists the variables you can use in the email template. $action
+
+The action to take in response to the message
+
+$date
+
+The date and time at which the event occurred (for example, Wed Feb 8 2012 3:15:57 PM EST)
+
+$fullText
+
+The full text of the message
+
+$id
+
+The message ID
+
+$location
+
+The fully qualified name of the HCP system on which the event occurred (for example, hcp-ma.example.com) $origin
+
+For user-initiated events, the IP address from which the event request was sent and the port through which HCP received the event request, separated by a colon (for
+
+example, 192.168.152.181:8000)
+
+$reason
+
+The reason why HCP issued the message
+
+$scope
+
+Either Tenant or Namespace
+
+$severity
+
+The severity of the event that triggered the message $shortText
+
+A brief description of the event that triggered the message
+
+$type
+
+The type of message (General, Security, or Compliance), preceded by Important and a comma if the message is important (for example, Important, Security)
+
+$user
+
+The user ID and username of the event initiator (for example, 105ff38f-4770-4f98-b5b3-8371ab0af359 lgreen)
+
+Modify the email notification template
+
+Modify the template HCP uses for email notification about log messages.
+
+1. On the Email page, in the From, Subject, and Body fields in the Message Settings section, specify the values that you want to use. 2. Click Preview to preview the sample email with the specified format in the Message Preview field. 3. Click Update Settings at the bottom of the page.
+
+Restoring the default template
+
+The list below shows the format of the default email template. From
+
+log@$location
+
+Subject
+
+[$severity] $shortText
+
+Body
+
+The following event occurred on $date: $fullText
+
+Reason: $reason
+
+Action: $action
+
+Details: User: $user Origin: $origin
+
+1. On the Email page, click Reset. 2. Click Preview to preview the sample email with the default format in the Message Preview field.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+266/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+3. Click Update Settings at the bottom of the page.
+
+Specifying email recipients
+
+You use the Recipients section on the Email page to specify the email addresses to which HCP sends email about log messages. HCP sends email as blind carbon copies, so email recipients are not visible to one another.
+
+Each row in the Recipients section contains one or more email addresses and indicates which messages are sent to those addresses. The section can have at most 25 rows. Because each row in the Recipients section can contain multiple email addresses, you can specify a total of more than 25 addresses in this section. However, HCP sends each email only to an arbitrary 25 of the addresses that are supposed to receive the email. For example, if 34 email addresses are supposed to receive email about log messages that are important and have a severity level of error and a type of general, HCP sends such email only to 25 of those addresses.
+
+You can add, modify, and delete rows in the Recipients section at any time.
+
+Understanding the recipients list Each row in the Recipients section specifies:
+
+One or more email addresses. Whether to send email only about important log messages (Major) to the specified email addresses or to send email about all log messages (All). The severity of the log messages about which to send email:
+
+Notice
+
+Tells HCP to send email about log messages with a severity level of notice, warning, or error. Warning
+
+Tells HCP to send email about log messages with a severity level of warning or error. Error
+
+Tells HCP to send email only about log messages with a severity level of error.
+
+Whether to send email about general log messages (
+
+). General log messages are all messages that do not have a type of security or compliance.
+
+Whether to send email about log messages with a type of security (
+
+).

@@ -1,0 +1,35 @@
+8. In the link Failover panel, click Complete Recovery.
+
+The applicable tenants and directories on the replica immediately become read-only. The tenants and directories on both systems then remain read-only until the Replication service finishes the data recovery. The amount of time this takes depends on how much data is left to recover. When recovery is complete, the tenants and directories on the primary system become read-write, those on the replica remain read-only, and the Replication service on the primary system starts copying objects to the replica again.
+
+Tip:
+
+You can schedule completion of the data recovery process for a time when client usage of the repository is low. If, before final recovery is complete, you need to allow clients to write to the applicable tenants and directories on the replica again, click Cancel Final Recovery in the link Failover panel. The recovery process continues, but the applicable tenants and directories become read-write on the replica and remain read-only on the primary
+
+system until you click Complete Recovery again.
+
+9. If DNS failover is disabled:
+
+a. Wait for this message to appear in the system log:
+
+Replication data recovery completed
+
+b. Tell the applicable tenant administrators to redirect all client access requests to the primary system. Failover and failback considerations
+
+These basic rules apply to replication, failover, and failback on replication links, regardless of the replication topology:
+
+Multiple failed-over active/active links in a replication topology can be failed back in any order. With failback of multiple failed-over active/passive links in a replication topology, order matters. If a topology includes both failed-over active/active links and failed-over active/passive links, order matters for failing back the active/passive links, but the active/active links can be failed back in any order and at any time. With active/passive links, failover occurs from the primary system to the replica for the same link. Failover cannot occur from the primary system for one link to the replica for a different link. With active/passive links, failback occurs from the replica to the primary system for the same link. Failback cannot occur from the replica for one link to the primary system for another link. With an active/passive link, when a link fails over to the replica, only the HCP tenants and namespaces and default-namespace directories that were read-write on the primary system become read-write on the replica. In a complex replication topology that includes only active/passive links in many-to-one and/or chained relationships, the HCP tenants and namespaces and default- namespace directories being replicated in the topology are read-write on at most one HCP system at a time. This is true regardless of the type of activity on the links.
+
+Additional considerations apply to failover and failback in replication topologies that include multiple links. Failover and failback in an active/passive many-to-one topology
+
+In an active/passive many-to-one replication topology, multiple HCP systems replicate to a single other HCP system.
+
+To recover from a single primary system failure in an active/passive many-to-one replication topology, you follow the normal pattern:
+
+1. Fail over the link between the failed primary system and the replica. 2. When the primary system becomes available again, restore the link from the replica. 3. Begin and complete data recovery from the replica to the primary system.
+
+If more than one primary system fails in an active/passive many-to-one topology, you need to fail the link from each failed system over to the replica. Multiple inbound links on the replica can be in the failed-over state at the same time. When the failed systems become available again, you can restore the links at any time. However, you can perform data recovery on only one link at a time. (You don’t need to wait for all the failed systems to become available before recovering data to the first one.)
+
+For example, suppose systems A, B, and C all replicate to system D. If both A and B fail, you can return to normal replication with these steps after the failed systems become available again:
+
+1. On system D, restore the link from A to D. 2. On system D, begin and complete data recovery from D to A. 3. On system D, restore the link from B to D. 4. After the recovery of data from D to A is complete and replication from A to D has restarted, on system D, begin and complete data recovery from D to B.

@@ -1,0 +1,83 @@
+S3 Compatible
+
+Usage
+
+The number of bytes currently used to store objects, parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of objects on
+
+storage represented by the pool.
+
+For primary running and HCP S Series storage pools, the number of bytes includes storage occupied by the parts of in-progress multipart uploads that have already
+
+been written to the storage represented by the component. The number of bytes does not include storage occupied by replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads.
+
+Note: For an NFS storage pool, the number of bytes shown is the total number of bytes used on the NFS storage in the pool, including bytes used for the OS, non- HCP files, and system overhead. Compliant
+
+Whether the pool is compliant. A green checkmark indicates that the pool is compliant.
+
+A storage pool is considered compliant if it includes at least one compliant component. A service plan is considered compliant if each tier in the plan includes at least
+
+one compliant storage pool. Only compliant service plans can be associated with namespaces that are in compliance mode.
+
+In Use
+
+Whether the pool is included in any storage tiers defined a service plan. A green checkmark indicates that the pool is included in at least one tier.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+69/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Alerts
+
+If an issue exists with the pool, either a warning icon (
+
+) or an error icon (
+
+), depending on the severity of the issue.
+
+To view text describing the condition that's causing an alert, hover over the alert icon. Understanding pool details for HCP S Series and extended storage
+
+The details page for an HCP S Series or extended storage pool lets you view and modify information about that pool. You can display this page for a component.
+
+1. In the top-level menu of the HCP System Management Console, click Storage.
+
+2. On the left side of the Storage page, click Pools. 3. In the pool list, click the HCP S Series or extended storage pool you want.
+
+The details page for HCP S Series and extended storage pools has three tabs: Overview
+
+Shows read and write information for the pool.
+
+Settings
+
+Shows the pool settings and lets you change some of them.
+
+Buckets, Containers, or Mount Points
+
+Lists the buckets, containers, or mount points included in the storage components that are of the same type as the storage pool. This tab shows which of these items are currently assigned to the pool. On this tab, you can assign additional items to the pool and remove items from the pool.
+
+HCP S Series and extended storage pool reads and writes
+
+The Overview tab on the details page for an HCP S Series or extended storage pool contains four graphs. These graphs show information about the use of storage represented by the pool during the past 30 days (or since the pool was added to the HCP system if that was less than 30 days ago).
+
+The graphs are: Writes (bytes)
+
+Displays the number of bytes of data written to storage represented by the pool.
+
+For an HCP S Series storage pool, this number includes:
+
+Bytes written both with the pool included in the ingest tier and with the pool included in a non-ingest tier.
+
+Bytes written for all parts of multipart uploads regardless of whether the upload of the part has finished, the part was subsequently replaced, the multipart upload was aborted, or the part was not used in the completed multipart upload. Writes (operations)
+
+Displays the number of successful write operations that targeted storage represented by the pool.
+
+Each write of a part of a multipart object counts as a separate write operation.
+
+For an HCP S Series storage component:
+
+This number includes write operations both with the pool included in the ingest tier and with the pool included in a non-ingest tier. Each write of a part of a multipart upload counts as a separate write operation. This applies even if the part was subsequently replaced, the multipart upload was
+
+aborted, or the part was not used in the completed multipart upload. Reads (bytes)

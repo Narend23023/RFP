@@ -1,0 +1,103 @@
+Child of the ListVersionsResult element. The NextVersionIdMarker element specifies the version ID of the last item included in the returned bucket listing. This element is included in the response body only when the value of the IsTruncated element is true. If the returned listing is truncated, you can use the value of the NextVersionIdMarker element as the value of the version-id-marker query parameter in a new request to retrieve the next set of items that satisfy the request criteria. Owner
+
+Child of the Contents, Version, or DeleteMarker element and container for the DisplayName and ID elements. The Owner element identifies the owner of the applicable item.
+
+Prefix
+
+One of these:
+
+Child of the ListBucketResult or ListVersionsResult element.
+
+In this case, the Prefix element specifies the value of the prefix query parameter included in the request. If the request did not include the prefix query parameter, the response body includes Prefix as an empty element. Child of the CommonPrefixes element.
+
+In this case, the Prefix element specifies a common prefix.
+
+Size
+
+Child of the Contents or Version element. The Size element specifies the size, in bytes, of the content of the item or item version. The response body includes Size elements for the listed folders. However, because folders have no content, the value of this element for a folder is always 0 (zero). StorageClass
+
+Child of the Contents or Version element. The value of the StorageClass element is always STANDARD.
+
+Version
+
+Child of the ListVersionsResult element and container for the elements that describe a version of an item in the bucket. The response body contains one Version element for each item version that satisfies the request criteria. VersionId
+
+Child of the Version or DeleteMarker element. The VersionId element specifies the version ID of an item version.
+
+VersionIdMarker
+
+Child of the ListVersionsResult element. The VersionIdMarker element specifies the value of the version-id-marker query parameter included in the request. If the request did not include the version-id-marker query parameter, the response body includes VersionIdMarker as an empty element.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+586/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to list the contents of a bucket. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the requested bucket listing.
+
+400
+
+Bad Request
+
+Possible reasons include that a query parameter has an invalid value.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to list the contents of the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the items in a folder
+
+Here’s a sample GET request for a bucket listing that lists the objects that are in the mktg folder and, separately, the subfolders that are in the mktg folder. The request uses these query parameters: prefix=mktg/
+
+Lists only items that start with mktg/
+
+marker=mktg/
+
+Starts the listing with the item that follows mktg/ by itself
+
+delimiter=/
+
+Treats items that have a forward slash (/) after mktg/ as having a common prefix
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com?prefix=mktg/ &marker=mktg/&delimiter=/" -H "x-hcp-pretty-print: true" Request headers

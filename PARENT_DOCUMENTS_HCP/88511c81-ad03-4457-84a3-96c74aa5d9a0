@@ -1,0 +1,97 @@
+Deny list: empty
+
+All IP addresses not in the Deny list can access the
+
+No IP addresses can access the namespace through Allow list: empty
+
+Deny list: at least one entry
+
+namespace through REST, the S3 compatible API, and WebDAV. IP addresses in the Deny list cannot.
+
+REST, the S3 compatible API, or WebDAV.
+
+Allow list: at least one entry
+
+Deny list: at least one entry
+
+IP addresses appearing in both or neither of the lists can access the namespace through REST, the S3 compatible API, and WebDAV.
+
+Only IP addresses appearing in the Allow list and not in the Deny list can access the namespace through REST, the S3 compatible API, or WebDAV.
+
+Allow and Deny list handling for CIFS
+
+For CIFS, HCP handles Allow and Deny list entries as described in the table below. List entries
+
+Effect
+
+All IP addresses can access the namespace through the CIFS protocol.
+
+Allow list: empty
+
+Deny list: empty
+
+Allow list: at least one entry
+
+Only IP addresses in the Allow list can access the namespace through the CIFS protocol.
+
+Deny list: empty
+
+Allow list: empty
+
+All IP addresses that are not in the Deny list can access the namespace through the CIFS protocol. IP addresses in the Deny list cannot. Deny list: at least one entry
+
+Allow list: at least one entry
+
+IP addresses that appearing in the Allow list and the Deny list cannot access the namespace through the CIFS protocol.
+
+Deny list: at least one entry
+
+Allow list handling for NFS
+
+For NFS, if the Allow list in the NFS panel includes one or more IP addresses, those addresses have access to the namespace through NFS and all others don’t. If the list is empty, all IP addresses can access the namespace through NFS.
+
+Allow and Deny list handling for SMTP
+
+For SMTP, HCP handles Allow and Deny list entries as described in the table below.
+
+List entries
+
+Effect
+
+All IP addresses can access the namespace through the SMTP protocol.
+
+Allow list: empty
+
+Deny list: empty Allow list: at least one entry
+
+Only IP addresses in the Allow list can access the namespace through the SMTP protocol.
+
+Deny list: empty
+
+No IP addresses can access the namespace through the SMTP protocol.
+
+Allow list: empty
+
+Deny list: at least one entry
+
+Allow list: at least one entry
+
+Only IP addresses appearing in the Allow list and not in the Deny list can access the namespace through the SMTP protocol. Deny list: at least one entry User authentication options
+
+The REST, S3 compatible, and CIFS protocols have the option to either require user authentication or support both authenticated and unauthenticated (anonymous) access. If a protocol requires authentication, users must present valid credentials in order to use the protocol. If a protocol supports both types of access, users can present credentials but are not required to.
+
+With the REST, S3 compatible, or CIFS protocol configured to support both authenticated and anonymous access:
+
+If a user presents credentials, HCP tries to authenticate the user. If the credentials are valid, HCP continues processing the request. If the credentials are invalid, HCP rejects the request. With REST and CIFS, if a user does not present credentials, HCP continues processing the request.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+285/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help With the S3 compatible API, if a user presents the clear-text username all_users, HCP continues processing the request. If the user does not present either credentials or all_users, HCP rejects the request.
+
+Configuring the REST, S3 compatible, and WebDAV APIs
+
+With the REST and S3 compatible APIs, users and applications can add, view, and delete objects and modify object metadata through a RESTful API. With the WebDAV API, users and applications can perform these activities through familiar directory structures. REST, S3 compatible, and WebDav API configuration

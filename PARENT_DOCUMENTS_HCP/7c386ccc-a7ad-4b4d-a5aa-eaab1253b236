@@ -1,0 +1,77 @@
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+Synchronizing data Sending data Receiving data Recovering data Completing recovery Scheduled off period Suspended by user Pending remote reply Pending Failed over Remote storage full, link suspended
+
+Local storage full, link suspended High error rate Stalled link Broken link
+
+suspended Boolean
+
+Specifies whether the replication link is currently suspended. Possible values are:
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request.
+
+true
+
+The link is suspended
+
+false
+
+The link is not suspended.
+
+type
+
+String
+
+Specifies the replication link type. Valid values are:
+
+This property is required on a PUT request. ACTIVE_ACTIVE
+
+The link is an active/active link.
+
+OUTBOUND
+
+You can change the value of this property from OUTBOUND or INBOUND to ACTIVE_ACTIVE. You cannot change the value from:
+
+The link is an outbound active/passive link.
+
+INBOUND
+
+ACTIVE_ACTIVE to OUTBOUND or INBOUND
+
+The link is an inbound active/passive link.
+
+OUTBOUND to INBOUND
+
+These values are not case-sensitive.
+
+INBOUND to OUTBOUND Example
+
+Here’s an XML example of the link data type; the properties shown are those that are returned by a verbose GET request for an active/active link:
+
+<link> <compression>false</compression> <connection> <localHost>
+
+192.168.210.16, 192.168.210.17, 192.168.210.18, 192.168.210.19 </localHost> <localPort>5748</localPort> <remoteHost>replication.admin.hcp-ca.example.com</remoteHost> <remotePort>5748</remotePort> </connection> <description>Active/active link between systems in MA and CA</description> <encryption>false</encryption> <failoverSettings> <local> <autoFailover>true</autoFailover> <autoFailoverMinutes>60</autoFailoverMinutes> </local> <remote> <autoFailover>true</autoFailover> <autoFailoverMinutes>60</autoFailoverMinutes> </remote> </failoverSettings> <id>2de89eec-0ec0-4f98-b852-0778dfeee792</id> <name>MA-CA</name> <priority>OLDEST_FIRST</priority> <statistics> <upToDateAsOfString>2017-02-18T10:47:59-0400 </upToDateAsOfString> <upToDateAsOfMillis>1395154079640</upToDateAsOfMillis> <bytesPending>189027593061</bytesPending> <bytesPendingRemote>319740</bytesPendingRemote> <bytesReplicated>72254119306967</bytesReplicated> <bytesPerSecond>56215390</bytesPerSecond> <objectsPending>534</objectsPending> <objectsPendingRemote>2</objectsPendingRemote> <objectsReplicated>295661</objectsReplicated> <operationsPerSecond>119.1</operationsPerSecond>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+474/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<errors>0</errors> <errorsPerSecond>0.0</errorsPerSecond> <objectsVerified>402200</objectsVerified> <objectsReplicatedAfterVerification>0</objectsReplicatedAfterVerification> </statistics> <status>GOOD</status> <statusMessage>Synchronizing data</statusMessage> <suspended>false</suspended> <type>ACTIVE_ACTIVE</type> </link>
+
+Query parameters for replication link actions
+
+To perform actions on replication links, you use these query parameters:
+
+suspend
+
+Suspend activity on the link.
+
+resume
+
+Resume activity on a suspended link.
+
+failOver

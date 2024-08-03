@@ -1,0 +1,73 @@
+802/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help Depending on the namespace configuration, you can log into the Namespace Browser as an authenticated user or you can log in anonymously. If the namespace supports Active Directory authentication, it can also be configured to support single sign-on. With single sign-on, if you’re logged in to a Windows client with an AD user account that HCP
+
+recognizes, you do not need to explicitly log into the Namespace Browser.
+
+Note: If the namespace is configured to support single sign-on, you cannot log into the Namespace Browser anonymously.
+
+For single sign-on to work, your web browser must be configured to support it.
+
+The information you see and actions you can perform in the Namespace Browser depend on the permissions you have. Namespace Browser sessions
+
+A Namespace Browser session begins when you take one of these actions:
+
+Log into the Browser using an HCP user account.
+
+Log into the Browser anonymously. Access a Browser page using single sign-on.
+
+Log into the Browser using a recognized AD user account other than the one with which you’re currently logged in to Windows.
+
+A session ends when you log out.
+
+During a session, if you don’t take any action for a certain amount of time, the Browser displays an idle timeout message. When you try to click an option in the Browser menu bar at
+
+the top of the page, the Namespace Browser automatically logs you out if you explicitly logged in or, in the case of single sign-on, allows you to go to the page you clicked. The exact amount of idle time allowed is determined by the tenant configuration. Accessing the Namespace Browser
+
+1. Open a web browser window. 2. In the address field, enter the URL for the namespace you want to access, in this format:
+
+http[s]://namespace-name.tenant-name.hcp-domain-name/browser
+
+For example, to use HTTPS to browse the finance.europe.hcp.example.com namespace, enter: https://finance.europe.hcp.example.com/browser
+
+The namespace configuration determines whether you need to use HTTP or HTTPS.
+
+Note:
+
+You cannot use an IP address in the URL to access the Namespace Browser.
+
+If you enter a URL that includes /rest, HCP redirects you to a URL that includes /browser. One of these happens:
+
+If all of these are true, you’re automatically logged in to the Namespace Browser, which opens to the Content page:
+
+The namespace supports AD authentication. Your web browser is configured to support single sign-on.
+
+You’re currently logged in to a Windows client with an AD user account that HCP recognizes.
+
+This is single sign-on. No further action is required.
+
+If both of these are true, the Namespace Browser opens to the Content page:
+
+The namespace does not support AD authentication. The namespace supports anonymous access through the HTTP protocol.
+
+In this case, you access the Namespace Browser as an unauthenticated user. No further action is required.
+
+If both of these are true, the Namespace Browser login page appears: The namespace does not support AD authentication.
+
+The namespace requires user authentication for access to the Namespace Browser. Note: The URL for the Namespace Browser login page always includes HTTPS. If the namespace does not support HTTP with SSL security, the URL for the login page
+
+includes HTTPS but the URLs for other Namespace Browser pages include HTTP. If the namespace supports AD authentication but any of the following are true, a message appears indicating that single sign-on was not possible:
+
+Your web browser is not configured for single sign-on.
+
+You’re not logged in to a Windows client with an AD user account that HCP recognizes. You’re not on a Windows client.
+
+Click the link to display the Namespace Browser login page.
+
+Logging into the Namespace Browser as an authenticated user
+
+1. On the Namespace Browser login page, enter your user name and password. 2. If the namespace supports AD authentication, in the Domain field, take either of these actions: If you’re accessing the Namespace Browser with an AD user account, select the AD domain in which your user account is defined. If you’re accessing the Namespace Browser with a user account that’s defined in HCP, select the domain name of the HCP system.
+
+3. Click Log In.

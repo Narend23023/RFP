@@ -1,0 +1,79 @@
+for access to the default namespace. For the System Management Console and Tenant Management Consoles, they also determine which actions you’re allowed to perform after logging in. You use the System Management Console to create, modify, and delete system-level user and group accounts. For each HCP user account, you specify whether it’s authenticated
+
+locally or by RADIUS. To enable RADIUS authentication, you need to configure connections to one or more RADIUS servers.
+
+You also use the System Management Console to configure login settings for the Console as a whole.
+
+Additionally, you use the System Management Console to clear the AD cache. You may need to do this, for example, to immediately discontinue system access by a user whose AD
+
+user account is no longer valid.
+
+Monitoring the system
+
+HCP is a self-monitoring, self-healing system that automatically alerts you to problems it cannot resolve itself. It also provides the means for you to monitor it. This type of monitoring entails:
+
+Periodically checking the status of hardware, system resources, services, and available storage. Watching for alerts that may indicate conditions requiring human intervention. Periodically reviewing system resource usage and the system log to ensure that HCP is running smoothly and not exceeding its storage license.
+
+Reviewing and, if required, responding to system log messages received through syslog servers, SNMP managers, or email.
+
+If SNMP is enabled, evaluating and, if required, responding to trap-generated event notifications.
+
+You can also generate chargeback reports. Typically, these reports are used as input to billing applications that need to determine charges for capacity and bandwidth usage at the
+
+tenant or namespace level. However, they are also a good source of information for system analysis, enabling you to adjust storage and bandwidth allocations based on usage patterns
+
+Configuring the system
+
+Configuring HCP entails:
+
+Optionally, making extended storage components such as NFS storage volumes and Amazon S3 compatible cloud storage known to HCP so that content can be offloaded
+
+from primary storage onto each type of extended storage
+
+Optionally, configuring user-defined networks so that you can segregate network traffic for different purposes.
+
+Enabling or disabling access to the HCP nodes. Managing domains and SSL server certificates. Controlling access to the System Management Console.
+
+Controlling access to the HCP management API.
+
+Configuring support for Windows AD or Windows workgroups. Enabling or disabling the use of SNMP for modifying system settings.
+
+Optionally, configuring HCP to send system log messages to syslog servers, SNMP managers, and/or specified email addresses.
+
+Scheduling and configuring HCP services to manage system load, ensure data and metadata integrity and availability, and optimize storage usage.
+
+Managing the system hardware
+
+An HCP system or any of its individual nodes may occasionally need to be shut down or restarted for a variety of reasons, including for hardware maintenance. When you want to
+
+retire a node or SAN array, you first need to migrate stored data off that device.
+
+Managing tenants
+
+HCP system-level administrators create all tenants. Once a tenant is created, you can change only some of its features. Tenant-level administrators are responsible for most tenant management. In addition to creating and modifying tenants, you can delete tenants, but only if they don’t own any namespaces.
+
+Managing repository access
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+14/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Managing repository access entails:
+
+Setting the systemwide permission mask, which provides the highest level of control over namespace access.
+
+Optionally, enabling and configuring the metadata query engine and API.
+
+Controlling access to the Search Console for the default tenant.
+
+Ensuring HCP system recovery
+
+Through its services, the HCP system is self-healing, so your intervention is not often required for recovery from unexpected events. Events that may require your intervention,
+
+however, include power outages and hardware failures. To protect against a catastrophic failure of an HCP system, you can implement replication. When you do this, you are responsible not only for configuring the connections between
+
+the systems involved but also for managing failover and recovery should that become necessary.

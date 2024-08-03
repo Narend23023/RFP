@@ -1,0 +1,51 @@
+Active Directory authentication
+
+For AD-authenticated users, the username and password for the user account are stored in AD. If the user is signed into a Windows client, HCP relies on Windows to have already validated the username and password with AD (this is single sign-on). However, if the user provides an AD username and password on the System Management Console or Search Console login page, HCP securely sends the specified username and password to AD for authentication.
+
+HCP lets an authenticated user into the target Console only if these conditions are true:
+
+The user belongs to at least one AD group for which a corresponding group account exists in HCP. Note: Alternatively, the user can belong to an AD group that’s nested at any level under another group for which a corresponding HCP group account exists. In this case,
+
+however, any parent groups that are defined in a domain other than the user’s domain must be universal. For the Tenant Management Console, at least one such group account is associated with at least one role. For the Search Console, at least one such group account is associated with the search permission. If any of these conditions is not true, HCP doesn’t let the user in.
+
+All password management for AD-authenticated users is handled by AD. You cannot use the Tenant Management Console to set or change the passwords of AD-authenticated
+
+users.
+
+For the command-line interfaces, applications may use the SPNEGO protocol or the AD authentication header to negotiate the AD user authentication themselves. You cannot
+
+submit AD credentials with a cookie in a command line. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559. To provide credentials using the Active Directory authentication header, you use this format: Authorization: AD ad-username:ad-password
+
+Note: AD authentication is not supported for namespace creation through the S3 compatible API. Tip: If the tenant supports both local and AD authentication, consider creating a locally authenticated user account with the security role. This ensures that you can still access the
+
+Tenant Management Console in the unlikely event that HCP cannot communicate with AD. Starter account
+
+When creating a tenant, the HCP system administrator defines either one locally authenticated HCP user account or one HCP group account for it. This starter account has only the security role and no data access permissions. It also does not have the allow namespace management property.
+
+Before you can log into the Tenant Management Console:
+
+If the starter account is an HCP user account, you need to get the username and password for this account from the system administrator. The first time you log in with this account, you are immediately required to change your password. If the starter account is an HCP group account, you need to get the username and password of an AD user account for a user that belongs to the AD group that corresponds to the starter group account.
+
+After you’ve logged in with the starter account, you can create new accounts as needed, including new accounts with the security role. You can delete the starter account as long as at least one of these will still exist after you delete the account:
+
+A locally authenticated HCP user account that has the security role and is enabled
+
+An HCP group account that has the security role
+
+Working with user accounts
+
+To view, create, and manage HCP user accounts, you use the Users page in the Tenant Management Console. To display this page, in the top-level menu of the Tenant Management Console, select Security > Users. Roles:
+
+View the user account list, you need the monitor, administrator, or security role View the full definitions of user accounts, you need the security role View the description, allow namespace management property, and data access permissions for user accounts, you need the monitor or administrator role Create, associate roles with, delete, and otherwise manage user accounts, except modifying the allow namespace management property and data access permissions, you need the security role Modify the allow namespace management property and data access permissions for user accounts, you need the administrator role
+
+About the Users page
+
+The Users page lets you create, modify, and delete user accounts. It also lists the existing user accounts.
+
+Understanding the user account list
+
+The Users page lists existing user accounts. For each account, the list shows: The username Whether the account is enabled or disabled The full name of the account user Whether the user login is authenticated locally or by RADIUS
+
+To view additional information about an individual user account, click the account username.
+
+Managing the user account list

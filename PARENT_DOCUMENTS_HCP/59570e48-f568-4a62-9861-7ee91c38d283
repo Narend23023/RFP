@@ -1,0 +1,59 @@
+HCP computer account missing
+
+The HCP computer account is missing from the AD domain. Reconfigure HCP support for AD on the Active Directory page in the HCP System Management Console.
+
+IP lookup failed for Active Directory server server-name
+
+HCP was unable to do an IP lookup of an IP address used to communicate with the AD domain controller for either the Key Distribution Center or the LDAP server. Make sure the DNS configuration includes all A and AAAA records needed to resolve the IP addresses that HCP uses to communicate with the indicated domain controller.
+
+No external time server configured. Active Directory recommends an external time server.
+
+HCP is configured to use itself as a time server. For HCP to work with AD, HCP time must be within five minutes of AD time. The recommended configuration is HCP HCP and AD to use the same external time server. No Key Distribution Center found
+
+HCP cannot find a Key Distribution Center in the AD domain specified in the HCP AD configuration. Make sure AD is configured correctly in your DNS. If the problem persists, contact your authorized HCP service provider.
+
+No LDAP server found
+
+HCP cannot find an LDAP server in the AD domain specified in the HCP AD configuration. Make sure AD is configured correctly in your DNS.
+
+If the problem persists, contact your authorized HCP service provider.
+
+Nodes correctly configured
+
+All of these conditions are true:
+
+The computer accounts for all nodes are present in the AD domain. These accounts are created automatically when you configure HCP to support AD. All nodes have valid credentials for the HCP computer account used to query AD for groups. All nodes can connect to AD.
+
+Nodes misconfigured
+
+At least one of these conditions is true: The computer account for one or more nodes is missing from the AD domain. These accounts are created automatically when you configure HCP to support AD. The credentials for the HCP computer account used to query AD for groups and other information are invalid on one or more nodes. One or more nodes cannot connect to AD. To resolve these issues, reconfigure support for AD on the Active Directory page in the HCP System Management Console.
+
+If the problem persists, contact your authorized HCP service provider.
+
+Reverse IP lookup failed for Active Directory server server-name. Record for server-ip-address not found.
+
+Given the indicated IP address, HCP was unable to do a reverse IP lookup of the hostname of the AD domain controller. Make sure your DNS includes a PTR record for that IP address that specifies the correct domain controller hostname.
+
+Reverse IP lookup mismatch for Active Directory server server-name. Record for server-ip-address points to server other-server-name. HCP was able to do a reverse IP lookup of an IP address used to communicate with the AD domain controller, but the PTR record identifies a different domain controller. Make sure your DNS configuration includes a PTR record for the indicated IP address that specifies the correct domain controller hostname.
+
+Service principal names are missing
+
+The SPN attribute for one or more tenants or namespaces is missing from the AD domain. If the HCP system is involved in replication, these tenants and namespaces could be defined in any system in the replication topology. If the missing SPN attribute is for a namespace, have the administrator for the tenant that owns the namespace disable and reenable AD single sign-on for the namespace. If the missing SPN attribute is for a tenant, disable and reenable AD authentication for the tenant. If the issue is still not resolved, reconfigure HCP support for AD on the Active Directory page in the HCP System Management Console. If the problem persists, contact your authorized HCP service provider.
+
+System correctly configured
+
+All of the following are true:
+
+No HCP components are missing from the AD domain. The HCP configuration of AD support is complete (that is, it’s not configured only for the CIFS protocol for the default namespace). The username mapping file used by the CIFS protocol does not contain any invalid mappings.
+
+Time server correctly configured
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+210/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP is configured to use an external time server. Zero-copy failover behavior

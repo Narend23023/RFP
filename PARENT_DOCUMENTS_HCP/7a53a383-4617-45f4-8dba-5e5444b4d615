@@ -1,0 +1,49 @@
+Specified in the namespace configuration as the minimum permissions for authenticated or unauthenticated users, in which case they apply to all objects in the namespace
+
+Specified in an ACL, in which case they apply to the individual object for which the ACL is defined Virtual networking
+
+Virtual networking is a technology that enables you to define multiple logical networks over which clients can communicate with HCP. You can assign different networks to
+
+different tenants, thereby segregating network traffic to and from the namespaces owned by one tenant from network traffic to and from the namespaces owned by other tenants. This segregation enhances the privacy and security of data transmitted between clients and the HCP system. Data availability
+
+HCP has these features that help ensure the continuous availability of stored data:
+
+Multipathing
+
+In an HCP with SAN-attached storage system, a single node can connect to more than one port on a storage system, either directly or through multiple Fibre Channel switches. This creates multiple physical paths between the node and any given logical volume that maps to it. With this setup, if one component of a physical path connecting
+
+such a node to the storage system fails, the node still has access to the logical volume through another physical path. Multiple means of access to a logical volume from a single node is called multipathing. Zero-copy failover
+
+In a HCP with SAN-attached storage system, one node can automatically take over management of storage previously managed by another node that has failed. This
+
+process is called zero-copy failover. To support zero-copy failover, each logical volume that stores objects or the metadata query engine index must map to two different storage nodes. The pair of nodes forms a set such that the volumes that map to one of the nodes also map to the other. This is called cross-mapping. Service plans
+
+Each namespace has a service plan that defines both a data protection strategy and a storage tiering strategy for the objects in that namespace. At any given point in the
+
+lifecycle of an object, its data protection strategy specifies the number of copies of the object that must exist in the HCP repository and the type of storage on which each copy must be stored. Because some types of storage are more highly available than others, you can use the service plan for a namespace to control both data redundancy and data availability for the objects in that namespace.
+
+Protection service
+
+HCP uses the Protection service to maintain the correct number of copies of each object in the HCP repository. When the number of existing copies of an object goes below
+
+the number of object copies specified in the applicable service plan (for example, because of a logical volume failure), the Protection service automatically creates a new copy of that object in another location. When the number of existing copies of an object goes above the number of object copies specified in the applicable service plan, the
+
+Protection service automatically deletes all unnecessary copies of that object. Protection sets
+
+To protect data availability against concurrent node failures, HCP stores multiple copies of each object on different nodes in an automatically predetermined set of nodes, called a protection set. If a node (or one of its logical volumes) fails, objects stored on its associated volumes (or on the failed volume) are still available through other nodes in the set.
+
+Geo-protection
+
+You can create a configuration in which selected tenants and namespaces are maintained on two or more HCP systems and the objects in those namespaces are managed across those systems. This cross-system management helps ensure that data is well-protected against the unavailability or catastrophic failure of a system.
+
+Typically, the systems involved in cross-system data management are in separate geographic locations and are connected by a high-speed wide area network. This
+
+arrangement provides geographically distributed data protection (called geo-protection).
+
+Geo-protection enables HCP to support a cloud storage model, where any type of client request can be serviced equally by any system in the topology. Additionally, each
+
+system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. HCP supports two methods of geo-protection: whole-object protection and erasure-coded protection. Both methods are implemented by the Replication service, which is responsible for the distribution of configuration information and either complete copies of object data or chunks for erasure-coded objects.
+
+Read from remote
+
+If an object in a replicated HCP namespace or default-namespace directory is unavailable on one system in a replication topology (for example, because a node is unavailable), HCP can try to read the object from another system in the topology. HCP tries this only if the namespace has the read-from-remote feature enabled and the

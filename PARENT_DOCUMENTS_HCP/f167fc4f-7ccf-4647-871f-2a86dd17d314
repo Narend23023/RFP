@@ -1,0 +1,123 @@
+X-HCP-UID:
+
+X-HCP-GID: X-HCP-Replicated: false X-HCP-ReplicationCollision: false X-HCP-ChangeTimeMilliseconds: 1353352405323.00
+
+X-HCP-ChangeTimeString: 2012-11-19T14:13:25-0500 Last-Modified: Mon, Nov 19 2012 19:13:25 GMT
+
+Response body: The contents of the Q1_2012.ppt object
+
+Working with directories
+
+Creating an empty directory
+
+You use the HTTP PUT method to create empty directories in a namespace. If any other directories in the path you specify for a new directory do not already exist, HCP creates them as well.
+
+Access permission
+
+To create a directory, you need write permission for the namespace.
+
+Request header
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+755/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+PUT /rest/directory/new_dir?type=directory HTTP/1.1
+
+The PUT request to create an empty directory has these elements:
+
+If you’re accessing the namespace as an authenticated user, an Authorization header
+
+A URL specifying the location in which to create the directory Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+new_dir
+
+Yes
+
+Name of the new directory you want to create.
+
+type
+
+Yes
+
+Use the value directory to specify a directory object.
+
+Response header
+
+This creation operation does not return any request-specific response headers.
+
+Status codes Code
+
+Meaning
+
+Description
+
+201
+
+Created
+
+HCP successfully created the directory.
+
+409
+
+Conflict
+
+HCP could not create the directory in the namespace because a directory, object, or symbolic link with the specified name already exists.
+
+Example: Creating an empty directory
+
+Here’s a sample HTTP PUT request that creates a new directory named graphics in the quarterly_rpts directory. Request with curl command line
+
+curl -k -iX PUT -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/graphics
+
+?type=directory"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/graphics?type=directory") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "PUT")
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/graphics?type=directory HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorizaton: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com
+
+Location: /rest/quarterly_rpts/graphics Content-Length: 0
+
+Checking the existence of a directory
+
+You use the HTTP HEAD method to check whether a directory exists in a namespace. Access permission
+
+To check for directory existence, you need browse permission.
+
+Request header
+
+HEAD /rest/directory HTTP/1.1

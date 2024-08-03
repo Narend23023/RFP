@@ -1,0 +1,115 @@
+Response headers
+
+HTTP/1.1 200 OK
+
+Date: Fri, 07 February 2020 17:19:26 GMT Content-Length: 0
+
+Retrieving the ACL for an object
+
+You use the HTTP GET method with the acl query parameter to retrieve the ACL for an object. To retrieve the ACL for an object, you need read ACL permission for the bucket containing the object or for the object itself.
+
+The object ACL is returned in an XML response body. The format of the response body is the same as the format you use for the ACL request body when you add an ACL to a bucket. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to retrieve an object ACL has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /object-name?acl HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name/object-name?acl HTTP/1.1
+
+The acl query parameter is not case sensitive.
+
+Required headers
+
+The list below describes the headers you can use in a request to add an ACL to an object. Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+616/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+DDD, dd MMM yyyy HH:mm:ss (+0000|GMT) In this format: DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb).
+
+yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock. mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header.
+
+Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format: tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Optional headers
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response headers
+
+The list below describes the headers returned in response to a successful request to retrieve an object ACL.
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to retrieve an object ACL, the value of this header is always application/xml;charset=UTF-8. Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format:
+
+DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding

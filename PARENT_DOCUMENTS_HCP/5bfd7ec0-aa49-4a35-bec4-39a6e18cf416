@@ -1,0 +1,35 @@
+HCP supports uploads using HTML forms in POST requests. POST object uploads can reduce latency. Because an object is uploaded in a single operation, an HTTP success response indicates that the entire object has been stored. Buckets and tenants
+
+An HCP repository is partitioned into buckets. A bucket is a logical grouping of objects such that the objects in one bucket are not visible in any other bucket. Buckets are also called namespaces.
+
+Buckets provide a mechanism for separating the data stored for different applications, business units, or customers. For example, you could have one bucket for accounts receivable and another for accounts payable.
+
+Buckets also enable operations to work against selected subsets of objects. For example, you could perform a query that targets the accounts receivable and accounts payable buckets but not the employees bucket.
+
+Buckets are owned and managed by administrative entities called tenants. A tenant typically corresponds to an organization, such as a company or a division or department within a company. In addition to being owned by a tenant, each bucket can have an owner that corresponds to an individual HCP user. The owner of a bucket automatically has permission to perform certain operations on that bucket.
+
+HCP nodes
+
+The core hardware for an HCP system consists of servers that are networked together. These servers are called nodes.
+
+When you access an HCP system, your point of access is an individual node. To identify the system, however, you can use either the domain name of the system or the IP address of an individual node. When you use the domain name, HCP selects the access node for you. This helps ensure an even distribution of the processing load. Replication
+
+Replication is a process that supports configurations in which selected tenants and buckets are maintained on two or more HCP systems and the objects in those buckets are managed across those systems. This cross-system management helps ensure that data is well-protected against the unavailability or catastrophic failure of a system.
+
+A replication topology is a configuration of HCP systems that are related to each other through replication. Typically, the systems in a replication topology are in separate geographic locations and are connected by a high-speed wide area network. This arrangement provides geographically distributed data protection (called geo-protection).
+
+You can read from buckets on all systems where those buckets are replicated. The replication topology, which is configured at the system level, determines the systems on which you can write to buckets.
+
+Replication has several purposes, including: If a system in a replication topology becomes unavailable (for example, due to network issues), another system in the topology can provide continued data availability. If a system in a replication topology suffers irreparable damage, another system in the topology can serve as a source for disaster recovery. If multiple HCP systems are widely separated geographically, each system may be able to provide faster data access for some applications than the other systems can, depending on where the applications are running. If an object cannot be read from one system in a replication topology (for example, because a node is unavailable), HCP can try to read it from another system in the topology. Whether HCP tries to do this depends on the bucket configuration. If a system in a replication topology is unavailable, HTTP requests to that system can be automatically serviced by another system in the topology. Whether HCP tries to do this depends on the bucket configuration. About the Hitachi API for Amazon S3
+
+The Hitachi API for Amazon S3 is a RESTful, HTTP-based API that is compatible with Amazon S3.
+
+To use the S3 compatible API to perform the operations listed above, you can write applications that use any standard HTTP client library. The S3 compatible API is also compatible with many third-party tools that support Amazon S3. Other bucket access methods
+
+HCP allows access to bucket (namespace) content through several namespace access protocols, HCP Namespace Browser, HCP metadata query API, and Search Console. Namespace access protocols
+
+Along with the S3 compatible API, HCP supports access to namespace content through these industry-standard protocols: a RESTful, HTTP-based API called REST, WebDAV, CIFS, and NFS. HCP also supports access to namespace content through an Swift-compatible API called.
+
+Using the supported protocols, you can access namespaces programmatically with applications, interactively with a command-line tool, or through a GUI. You can use these protocols to perform actions such as storing objects in a namespace, viewing and retrieving objects, changing object metadata, and deleting objects.
+
+HCP allows special-purpose access to namespaces through the SMTP protocol. This protocol is used only for storing email.

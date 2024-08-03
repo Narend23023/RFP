@@ -1,0 +1,99 @@
+Optionally, depending on your HCP system hardware configuration, an HCP node may have an extra port connected to the management network. The name assigned to the
+
+management port is eth4. On the Storage Node page for a given node, the Console displays information about each of the NICs in the node. The NIC information is organized by network. For each port
+
+assigned to a network, the Console displays these details:
+
+Interface
+
+The name assigned to the port.
+
+Active
+
+An indication of whether the port is available for use. Possible values are true and false. Duplex
+
+An indication of whether the port is full-duplex (full) or half-duplex (half).
+
+Active in Bond
+
+An indication of whether the port is currently the one being used. Possible values are true, false, and N/A.
+
+Speed
+
+The current rate of data transmission through the port.
+
+Maximum Supported Speed The maximum supported rate of data transmission for the port.
+
+File system status
+
+Each node in an HCP system has multiple file systems on its primary storage. At installation time, a fixed amount of space and a fixed number of inodes are allocated to each of
+
+those file systems. Each NFS volume associated with a node has a single file system with a fixed amount of space and a fixed number of inodes.
+
+Inodes determine the total number of files and directories a file system can have. (These files and directories do not have a direct correspondence to the objects and directories that
+
+users create.)
+
+On the Storage Node page for a given node, when you click the row that shows the file system status summary, the Console displays the following information about each file
+
+system on each primary storage volume and NFS volume that’s managed by the node: Path
+
+The directory path
+
+Free 1K Blocks
+
+The amount of available storage associated with the file system, in one-KB blocks
+
+Total 1K Blocks
+
+The total amount of storage associated with the file system, in one-KB blocks
+
+Block Usage
+
+The percent of the storage blocks currently in use
+
+Inode Usage
+
+The percent of the allocated inodes currently in use
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+35/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Note: The file systems listed include those used for the operating system. Therefore, the total amount of storage associated with all the file systems for a node is greater than the total amount of storage associated with the logical volumes displayed for that node. Node events
+
+The Node Events section on the Storage Node page for a given General Node lists all event messages logged for that node since the HCP system was installed. The list of
+
+messages in this section is a subset of the messages in the HCP system log. You can view all the messages in the system log in the All Events panel on the System Events page.
+
+By default, the messages are listed ten at a time in reverse chronological order.
+
+Shutting down or restarting individual nodes
+
+Under normal operating conditions, the HCP nodes manage themselves. However, because hardware failures are possible, the System Management Console provides controls for
+
+shutting down and restarting individual nodes.
+
+Shutting down a node means shutting down the HCP software on it and powering it off. After shutting down a node, you need to manually power it back on to start HCP on it again.
+
+Restarting a node means shutting down and restarting the HCP software on it without powering it off.
+
+Shutting down or restarting a node has no effect on the data in the primary storage volumes and the NFS volumes that are associated with the node. However, while a node is shut
+
+down or in the process of restarting, clients have no access to that node.
+
+Shutting down or restarting a node is rarely necessary and can cause extra service activity, which increases the load on the system. However, situations in which shutting down a
+
+node may be appropriate include:
+
+A hardware failure has occurred.
+
+The node requires maintenance.
+
+You plan to remove the node from the system.
+
+The most frequent reason for restarting a node is that your authorized HCP service provider has requested it during the assessment or resolution of a problem.

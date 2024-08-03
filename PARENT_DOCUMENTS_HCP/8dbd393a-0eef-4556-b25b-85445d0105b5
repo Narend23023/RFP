@@ -1,0 +1,73 @@
+The date and time the email was stored, in this format, followed by a hyphen (-):
+
+year/month/day/hour/minute/hour-minute-second.millisecond
+
+Example: 2013/03/02/02/47/02-47-22.186-
+
+An internally generated message ID followed by a hyphen: Example: 1D34A84A-
+
+A repeat of the system-generated numeric ID followed by a hyphen:
+
+Example: 341-
+
+A counter to ensure that all objects stored in the same millisecond have unique names followed by an at sign (@):
+
+Example: 0@
+
+The domain name of the sender contained in the From field of the mail header, followed by a hyphen (-): Example: example.com-
+
+The email suffix specified in the namespace configuration:
+
+Example: mbox.eml
+
+Here’s the complete path and object name for a sample email message:
+
+/rest/email/341/2013/03/02/02/47/02-47-22.186-1D34A84A-341-0@example.com-mbox.eml
+
+The message ID that the mail server generates for an email ingested through the SMTP protocol can include one or more forward slashes (/) or colons (:). Before storing an email,
+
+HCP replaces each such slash or colon with a hyphen (-). Email attachments
+
+The namespace can be configured to store each email together with or separately from its attachments, if any. When stored together, the result is the single email object named as
+
+described above.
+
+When stored separately, each attachment is in the same directory as the email object. The name of the attachment object is formed from the name of the email object (without the
+
+suffix) concatenated with a hyphen (-) and the name of the attached file.
+
+Here’s an example of the complete path and object names that result from storing two attachments separately from the email with which they arrive: Email:
+
+/rest/email/365/2013/03/02/17/12/17-12-29.522-4FE72776-365-0@example.com-mbox.eml
+
+First attachment:
+
+/rest/email/365/2013/03/02/17/12/17-12-29.522-4FE72776-365-0@example.com-Wetlands Guidelines 2011-10-01.pdf
+
+Second attachment:
+
+/rest/email/365/2013/03/02/17/12/17-12-29.522-4FE72776-365-0@example.com-Anytown-Lot53645-A.jpg Directory structures
+
+Because of the way HCP stores objects, the directory structures you create and the way you store objects in them can have an impact on performance. Here are some guidelines for
+
+creating effective directory structures. When creating namespaces you must know how the namespace is intended to be used. Following are some guidelines for effective directory usage: Balanced directory usage
+
+Plan your directory structures before storing objects. Make sure all namespace users are aware of these plans.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+810/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Avoid structures that result in a single directory getting a large amount of traffic in a short time. For example, if you ingest objects rapidly, use structures that do not store
+
+objects by date and time. If you do store objects by date and time, consider the number of objects ingested during a given period of time when planning the directory structure. For example, if you
+
+ingest several hundred files per second, you might use a directory structure such as year/month/day/hour/minute/second. If you ingest just a few files per second, a less fine- grained structure would be better. Follow these guidelines on directory depth and size:
+
+Try to balance the namespace directory tree width and depth.
+
+Do not create directory structures that are more than 20 levels deep. Instead, create flatter directory structures. Avoid placing a large number of objects (greater than 100,000) in a single directory. Instead, create multiple directories and evenly distribute the objects among them. Unbalanced directory usage

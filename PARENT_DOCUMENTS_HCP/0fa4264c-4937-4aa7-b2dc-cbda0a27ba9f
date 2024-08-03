@@ -1,0 +1,66 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Storing an annotation
+You use the HTTP PUT method to store or replace an annotation for an existing object. Some namespaces are configured to require custom metadata to be well-formed XML. In this
+case, HCP rejects an annotation that is not well-formed XML and returns an HTTP 400 (Bad Request) error code.
+An annotation is stored as a single unit. You can add it or replace it in its entirely, but you cannot add to or change an existing annotation. If you store an annotation with the same
+name as an existing annotation, the new metadata replaces the existing metadata.
+In addition to storing an annotation for an existing object, you can use a single request to store object data and an annotation together.
+Access permission
+To store an annotation, you need write permission.
+Usage consideration
+A PUT to store an annotation may fail in either of these cases:
+The XML has a large number of different elements and attributes. In this case, the request returns an HTTP 400 (Bad Request) error code.
+To prevent failures, try restructuring the XML to have fewer different elements and attributes. For example, try concatenating multiple element values, such as the different
+parts of an address, to create a new value for a single element.
+If you cannot restructure the XML to prevent failures, ask your tenant administrator about reconfiguring the namespace to prevent HCP from checking custom metadata XML.
+A large number of clients try to store custom metadata for multiple objects at the same time. In this case, the request returns an HTTP 409 (Conflict) error code.
+To prevent failures, limit the number of concurrent requests from clients to the namespace.
+Request header
+PUT /rest/directory/file?type=custom-metadata&annotation=annotation HTTP/1.1<br>
+                       <b>Bounding box:</b> x1=185, y1=1653, x2=1516, y2=1866
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Parameter</td>
+      <td>Required</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>directory</td>
+      <td>Yes</td>
+      <td>Folder name.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>file</td>
+      <td>Yes</td>
+      <td>Name of the file, including file extension.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>annotation</td>
+      <td>No</td>
+      <td>Use a value of the name of the annotation. You can omit this parameter for the default annotation.Used in\nconjunction with the parameter. type</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>type</td>
+      <td>Yes</td>
+      <td>Use the value custom-metadata.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

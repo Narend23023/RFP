@@ -1,0 +1,53 @@
+Specifying the authentication header in Python with PycURL
+
+Tip: After you log in using the authorization AD header, the response header replies with an hcap Set-Cookie value. You can use this cookie for subsequent authentication requests instead of using the authoriation AD header. For example: curl -ik -b HCAP-Login="acmepKMUfWLEu"
+
+"https://tenant.hcp.example.com:9090/mapi/tenants"
+
+In Python with PycURL, you use the HTTPHEADER option to specify a header, as in this example: curl.setopt(pycurl.HTTPHEADER, ["Authorization: AD
+
+lgreen@example.com:p4sswOrd"])
+
+Transmitting data in compressed format
+
+To save bandwidth, you can compress object data, an annotation, or an ACL in GZIP format before sending it to HCP. In the PUT request, you tell HCP that data is compressed so
+
+that HCP knows to decompress the data before storing it.
+
+Similarly, in a GET request, you can tell HCP to return object data, an annotation, or an ACL in compressed format. In this case, you need to decompress the returned data yourself.
+
+HCP supports only the GZIP algorithm for compressed data transmission.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+714/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+You tell HCP that the request body is compressed by including a Content-Encoding header with the value gzip in the HTTP PUT request. In this case, HCP uses the GZIP algorithm to decompress the received data. You tell HCP to send a compressed response by specifying an Accept-Encoding header in the HTTP GET request. If the header specifies gzip, a list of compression algorithms that includes gzip, or *, HCP uses the GZIP algorithm to compress the data before sending it.
+
+Note: HCP normally compresses the object data, annotations, and ACLs that it stores, so you don’t need to explicitly compress objects for storage. However, if you do need to store GZIP-compressed objects, annotations, or ACLs, do not use a Content-Encoding header. To retrieve stored GZIP-compressed data, do not use an Accept-Encoding header.
+
+Responding system
+
+When an HCP system participates in replication, REST API requests (except those that request information about a namespace) may be redirected to another system in the
+
+replication topology if the target system is unavailable. For this redirection to work, both the target namespace and the HCP system must be configured to support it. The X-HCP-ServicedBySystem response header returns the name of the system that responded to the request. This header is returned regardless of whether the system is replicated.
+
+Working with objects and versions
+
+With the REST API, you can perform operations on individual objects. If the namespace you are using is configured to allow versioning, you can also store multiple versions of an object. You can use this technique, for example, to preserve multiple states of a file that changes over time.
+
+Storing an object or version of an object
+
+You use the HTTP PUT method to store an object or new version of an existing object in a namespace. You can optionally use this method to store the object or version data and custom metadata in a single operation.
+
+To store versions, the namespace must be configured to allow versioning. When versioning is enabled, storing an object with the same name as an existing object creates a new version of the object.
+
+You can store new versions of any object, including multipart objects created by using the multipart upload feature of the S3-compatible API, as long as the object is not under
+
+retention or on hold. You cannot store new versions of an object that is under retention or on hold.
+
+By default, a new object inherits several metadata values from namespace configuration settings. A new version of an object inherits the metadata values of the previous version of the object. In either case, you can override this default metadata when you store the object or version.

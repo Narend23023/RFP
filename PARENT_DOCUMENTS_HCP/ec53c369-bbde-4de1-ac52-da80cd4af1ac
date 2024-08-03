@@ -1,0 +1,39 @@
+In the /var/ris/retired folder, the health check reports .tar files corresponding to the date range you specified when you prepared the health check reports In the /var/ris/logs/HealthCheckReport folder, the latest run of the health check report at the time you prepared the reports for the specified date range
+
+Health check report signatures
+
+When you prepare health check reports, the HCP system runs a health diagnostic tool on the available nodes in the cluster. This tool runs various signatures to collect information about the health of the HCP nodes.
+
+Signatures are JSON files containing different shell commands that gather configuration information and collect data on potential issues related to the health of a node. Signatures are classified into components and types (info and issue). Components include items such as replication, admin, or JVM. Info signatures collect node configuration information such as memory configuration, HCP version, hot fixes, and other HCP configurations. Issue signatures report if a node either is experiencing a certain issue or is at risk of experiencing an issue, such as server issues, object issues, repeated node restarts, or other general issues.
+
+Example: Signature that provides information about disk errors
+
+The following sample health check report signature provides information about specific disk errors on an HCP system. The output format is a JSON file.
+
+{
+
+"name": "DiskErrors", "description": "Get the disk errors", "issueId": "N/A", "component": "Operating System", "executionTime": 15, "modifiedDate": "July 28, 2020 5:57:26 PM", "product": "Hitachi Content Platform", "signatureType": "GeneralIssue", "hcpVersion": "9.2.0", "signatureStatus": "NotMatched", "runMode": "online", "steps": [ { "stepId": "1", "command": "cat /var/log/messages | grep -iE \u0027(error|scsi|unexpected|failure|conflict)\u0027 ", "expectedOutputCommand": "if [[ $(grep -i [A-Z] \"%s\" | wc -l) -gt 0 ]]; then echo true; fi", "logTrace": "", "signatureMatched": false, "executionTime": 15, "timedOut": false, "stepExecutionFailure": "No Error", "timeOutMillis": 10000 } ] }
+
+Licensing
+
+A license specifies the amount of storage and the HCP features that you can use. The storage can either be on HCP and S Series Nodes or on an extended storage tier. Licenses are available for all system configurations (HCP with internal storage, HCP with SAN-attached storage, and HCP Virtual Machine).
+
+All HCP systems are required to have a basic license or a premium license. A newly installed system comes with a default basic license and a default extended license. The default basic license lets you use two terabytes of HCP system and S Series Node storage. The default extended storage license lets you tier two terabytes of data to extended storage. You can request to have other licenses added when your configuration is installed. If a basic, premium, or extended storage license is exceeded or expires, a warning message is displayed on the System Management Console Overview page under System Status. Monitoring mechanisms such as syslog, system log messages, and SNMP send reminders every twenty-four hours asking the system administrator to upload a new storage license. You must get a new basic license or premium license to increase your storage capacity. You must get a new extended license to increase your tiering capacity.
+
+In HCP with internal storage systems with a data protection level (DPL) of two, object copies do not take up storage license space. For example, if you have two terabytes of DPL 2 objects, you have used only one terabyte of your storage license.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+188/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help If the HCP system serial number changes, you must upload a new license with an updated serial number.
+
+Viewing a License
+
+To view your licenses, go to Storage > Licenses page of the System Management Console. From there, you can monitor your current license and the license history.
+
+Note: You need the administrator or monitor role to access Storage > Licenses.
+
+The page contains the following information about your current license:

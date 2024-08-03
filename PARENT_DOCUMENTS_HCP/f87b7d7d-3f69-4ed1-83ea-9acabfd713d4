@@ -1,0 +1,47 @@
+Each namespace has a default shred setting. This is the setting applied to an object when it is stored in the namespace unless the shred setting is explicitly specified in the request to store the object. After an object is stored, users can change its shred setting from don’t shred to shred but not from shred to don’t shred.
+
+When you create a namespace, its default shred setting is not to shred. You can change this setting at any time. Changing this setting does not affect existing objects in the namespace.
+
+Note: If HCP is allowed to use erasure coding to implement replication of a namespace, setting the default shred setting to shred for that namespace can significantly increase the load on all systems in the replication topology.
+
+Default index setting Each object in the repository has an index setting that is either true or false. This setting is present even if the namespace containing the object is not search-enabled or indexed.
+
+The metadata query engine uses the index setting for an object to determine whether to index custom metadata for that object. The HCP search facility uses the index setting to determine whether to index the object at all. Metadata query API requests can use the index setting as a search criterion. Additionally, third-party applications can use this setting for their own purposes.
+
+Note: If custom metadata indexing is disabled, the metadata query engine does not index custom metadata regardless of the index settings for individual objects.
+
+Each namespace has a default index setting. This is the setting applied to an object when it is stored in that namespace unless the index setting is explicitly specified in the request to store the object. After an object is stored, users can change its index setting. When you create a namespace, its default index setting is to index. You can change this setting at any time. Changing this setting does not affect existing objects in the namespace.
+
+Default POSIX UID, GID, and permissions
+
+To support the NFS protocol, HCP supports certain POSIX metadata for objects. This metadata includes the POSIX user ID (UID) of the object owner, the POSIX group ID (GID) of the owning group, and the POSIX permissions. Note:
+
+POSIX object ownership is different from object ownership in HCP. The owner UID is not related to either HCP user accounts or Active Directory user accounts. POSIX permissions are different from HCP data access permissions and access control lists. They affect the operations that clients can perform only through the CIFS and NFS protocols.
+
+POSIX UIDs and GIDs are visible through the HTTP, WebDAV, CIFS, and NFS protocols. POSIX permissions are visible through the WebDAV and NFS protocols. They map to CIFS permissions, which are visible through the CIFS protocol.
+
+For objects stored through NFS, the POSIX UID and GID are determined by the current NFS user. Objects stored through other protocols do not have an explicit UID or GID. Instead, when you use NFS to view these properties for such an object, you see the default UID and GID currently specified in the NFS protocol configuration for the namespace that contains the object. When you create a namespace, the default UID and GID in the NFS protocol configuration are both set to 0 (zero). You can change these settings at any time.
+
+POSIX permissions for objects, directories, and symbolic links stored through NFS are determined by the client. POSIX permissions for objects stored through other protocols are always 555. POSIX permissions for directories and symbolic links stored through other protocols are always 777.
+
+HCP Retention-related properties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+238/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Ownership and permission changes for objects under retention
+
+Namespaces have two properties that affect objects under retention:
+
+Whether changes to POSIX UIDs and GIDs and to object owners are allowed Which custom metadata operations are allowed Custom metadata operations for objects under retention
+
+Custom metadata is user-supplied information that describes an object in a namespace. For objects that are not under retention, users can add, replace, and delete custom metadata annotations as needed. For objects that are under retention, the operations allowed for custom metadata annotations are determined by a namespace-level setting.
+
+You can configure a namespace to:
+
+Allow annotations to be added, replaced, and deleted for objects under retention Allow annotations to be added for objects under retention but not replaced or deleted Disallow all annotations operations for objects under retention

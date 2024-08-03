@@ -1,0 +1,53 @@
+the data from backup, and then export the NFS share again. In this case, the NFS volume needs to be remounted. If HCP doesn’t remount the volume automatically, you can try to manually remount the NFS volume.
+
+1. On the left side of the Storage page, click Components.
+
+2. In the components list, click the name of the NFS storage component that’s associated with the NFS volume that you want to remount. 3. At the top of the panel that opens, click the Mount Points tab.
+
+4. On the Mount Points panel, in the table row that contains the NFS mount point that corresponds to the NFS volume you want to remount, click the remount control ( ).
+
+If the manual remount fails, try restarting the node with which the NFS volume is associated. To see which node the NFS volume is associated with, hover over the status icon for the mount point on the Mount Points panel.
+
+Considerations for using NFS volumes (last part) You can restore an NFS shared directory to a different location from where it was originally. If you do this, you need to modify the configuration of the associated NFS mount point to point to the new location.
+
+If HCP cannot create, mount, or use an NFS volume and you’ve already determined that the permissions for the shared directory, the export options for the share, the mount point configuration on the associated NFS storage component in HCP, and the mount options for the mount point are all correct, the problem may exist on the extended storage device that’s represented by the NFS storage component on which you configured the mount point. To resolve such problems:
+
+Ensure that the NFS share has been exported on the device. Ensure that the NFS server is running on the device.
+
+Ensure that any NFS security software on the device is not blocking access by any of the HCP nodes. Check the system log file on the device for messages indicating device errors. Then correct those errors. If HCP still cannot create, mount, or use the volume, contact your authorized HCP service provider for help.
+
+Modifying an extended storage pool
+
+You can use the Pools panel on the Storage page to view and modify the configuration of any extended storage pool. To display this panel, click the Pools tab on the left side of the Storage page.
+
+You can use the Pools panel to modify the configuration of any extended storage pool in any of the following ways:
+
+Change one or more of the configuration settings that are specified when the pool is first created:
+
+Amazon S3 and S3 compatible storage pools configuration settings Google Cloud storage pools configuration settings
+
+Microsoft Azure storage pools configuration settings Amazon S3 and S3 compatible storage pools configuration settings NFS storage pools configuration settings
+
+Add one or more storage component access points (mount points, buckets, or containers) to an extended storage pool. Delete one or more storage component access points from an extended storage pool.
+
+Modifying the configuration settings used for an extended storage pool
+
+1. On the left side of the Storage page, click the Pools tab. 2. On the Pools panel, click the table row that contains the name of the pool that you want to modify.
+
+3. At the top of the panel that opens, click the Settings tab. 4. On the panel that opens, use the fields to change any of the settings that are currently used for the pool.
+
+5. Click Update Settings.
+
+Adding access points to an extended storage pool
+
+You can add one or more access points (mount points, buckets, or containers) to an existing extended storage pool.
+
+1. On the left side of the Storage page, click the Pools tab. 2. On the Pools panel, click the table row that contains the name of the pool to which you want to add one or more access points. 3. At the top of the panel that opens, click the tab that corresponds to the type of access point that’s contained in the pool (Mount Points, Buckets, or Containers).
+
+The AccessPointType panel opens, displaying a table that contains a list of existing access points (mount points, buckets, or containers) that can be included in the type of storage pool that you’re currently configuring. The access points that are currently included in the pool are selected.
+
+4. Select each existing access point that you want to add to the storage pool.
+
+5. Click Update Settings.
+
+Deleting access points from an extended storage pool

@@ -1,0 +1,95 @@
+This header is returned only for delete markers and only if versioning is enabled for the bucket. The value is always true. x-amz-meta-
+
+For objects and object versions only, specifies a custom metadata property/value pair. The response headers include one x-amz-meta- header for each applicable pair.
+
+x-amz-missing-meta
+
+For objects and object versions only, indicates that the .metapairs annotation for the object or object version does not contain valid XML, that the first line in the annotation does not begin with the metapairs element. This header is returned only when applicable. The value is always 1 (one). x-amz-version-id
+
+Specifies the version ID of the object. This header is returned only while versioning is enabled for the bucket.
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body. COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements.
+
+Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date
+
+Specify the date and time until which an object must be retained. The date and time must be in YYYY-MM-DDTHH:MM:SSZ format, where YYYY represents the year, MM represents the month, DD represents the day, T represents the time separator, HH represents the hour in 24-hour format, MM represents the minute, SS represents the second and Z represents the time zone. Example x-amz-object-lock-retain-until-date: 2023-03-30T00:00:00Z
+
+x-amz-object-lock-legal-hold
+
+Specify the Legal hold status of an object version. Valid values are ON and OFF.
+
+ON
+
+You cannot overwrite or delete the object version until you remove the legal hold status.
+
+OFF
+
+You can overwrite or delete the object version. Example
+
+x-amz-object-lock-legal-hold: ON
+
+x-hcp-labelretentionhold
+
+Specifies whether the object is on labeled hold. A Boolean value of true or false is returned.
+
+For a user without privileged data access permission, the response header returns true or false indicating whether there are one or more labeled holds. For a user with privileged data access permission:
+
+If the response header returns true, an additional header, x-hcp-labelretentionhold-labels, is returned. If the response header returns false, the x-hcp-labelretentionhold-labels header is not returned
+
+x-hcp-labelretentionhold-labels
+
+If the object is on labeled hold (x-hcp-labelretentionhold:true) and the user has privileged data access and read permissions on the bucket, this header is returned with a JSON format string specifying all labeled holds. Example
+
+X-HCP-LabelRetentionHold-Labels: [{"id":"UniqueLabelHold-1","hold": true}, [{"id":"UniqueLabelHold-2","hold": true},[{"id":"UniqueLabelHold-3","hold": true}]
+
+x-hcp-retention
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. x-hcp-retentionhold
+
+Specifies whether the object is on hold. A Boolean value of true or false is returned.
+
+Status codes
+
+The following table describes HTTP status codes that can be returned in response to a request to check the existence of an object, object version, or folder.
+
+Code
+
+Meaning
+
+Description
+
+200 OK
+
+Possible reasons include:
+
+The specified object, object version or folder exists. The application tries to get the labeled holds on an object with an HCP version earlier than 9.1.
+
+304
+
+Not Modified
+
+One of these:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+611/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning

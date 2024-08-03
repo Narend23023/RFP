@@ -1,0 +1,91 @@
+If a retention class is deleted, the objects assigned to that class have a retention setting of Deletion Prohibited (-1) and cannot be deleted.
+
+If a new retention class is created with the same name as a deleted retention class, existing objects in the deleted class get the retention setting of the new class.
+
+You can assign a retention class to an existing object using any namespace access protocol. With the REST API, you can assign a retention class to an object when you store the object in the namespace, thereby overriding the default retention setting. Retention-related request headers
+
+The table below describes the retention-related request headers you can use with the S3 compatible API.
+
+Header
+
+Methods
+
+Description
+
+x-hcp-retention
+
+PUT object
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value.
+
+PUT object copy
+
+POST object complete multipart upload x-hcp-retentionhold
+
+Specifies whether the object is on hold. This value can be either true or false.
+
+PUT object
+
+PUT object copy
+
+POST object complete multipart upload
+
+x-hcp-privileged
+
+If you have privileged permission and the bucket allows it, this enables a privileged
+
+DELETE object DELETE multiple objects
+
+delete on an object that is under retention. The valid value for this header is a text string of up to 1,024 characters long, which can contain any valid UTF-8 characters, including white space.
+
+Retention-related response headers
+
+The table below describes the retention-related response headers that are returned with the S3 compatible API.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+548/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Header
+
+Methods
+
+Description
+
+x-hcp-retention
+
+GET object
+
+Specifies the retention value for the object being stored. This value can be a fixed date, an offset, a retention class, or a special value. HEAD object
+
+x-hcp-retentionhold
+
+GET object
+
+Specifies whether the object is on hold. This value can be either true or false.
+
+HEAD object
+
+Specifying retention settings
+
+You can change the retention setting for an existing object. With the S3 compatible API, you can also specify a retention setting when you store an object in a bucket. The following information describes the retention settings you can specify.
+
+These general rules apply to values you can set:
+
+If you are storing an object in a bucket with the S3 compatible API or setting retention for an existing object that is not under retention, you can specify any retention setting — past or present. If you set a time in the past, the object is immediately deletable. If you are changing the setting for an existing object that is in a retention class, you can replace the class with another class, as long as the duration of the replacement class is not shorter than the duration of the original class. You cannot replace the class with an explicit retention setting, such as Deletion Prohibited or a datetime value. If you are changing the setting for an existing object that has an explicit datetime retention setting, you can change the setting to lengthen the retention period but not to shorten it.
+
+The list below describes the values you can use to specify the retention setting for an object and contains rules for specifying these values. These values are not case sensitive. 0 (zero) or Deletion Allowed
+
+Allows the object to be deleted at any time. You can assign this value to an object only when you add it to the namespace or when its retention setting is -2. The value -0 is equivalent to 0 (zero).
+
+1 or Deletion Prohibited
+
+Prevents the object from being deleted and its retention setting from being changed. You can assign this value to an object that is not in a retention class at any time. If an object is assigned to a retention class and that class is then deleted, the retention setting for that object changes to -1.
+
+2 or Initial Unspecified
+
+Specifies that the object does not yet have a retention setting. You can assign this value to an object when you add the object to the namespace. You can also directly change the retention setting for an object from 0 to ‑2. You can change ‑2 to any other retention setting. datetime

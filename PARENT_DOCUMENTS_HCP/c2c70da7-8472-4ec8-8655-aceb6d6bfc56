@@ -1,0 +1,51 @@
+With the S3 compatible API, the service point (also called the endpoint) is a tenant. Every request you make to access HCP using the S3 compatible API is made within the context of a tenant.
+
+The URL in a request identifies the target of the request. This target can be the tenant, a bucket within the tenant, or an object within a bucket within the tenant. The format you use for a URL depends on the target of the request and the authentication method being used.
+
+An HCP system can have multiple tenants and, therefore, multiple service points. Each tenant has its own default configuration settings for new buckets. Buckets, therefore, can have different characteristics depending on the tenants within which you create them.
+
+Each tenant also has its own set of user accounts. For access that requires you to be an authenticated user, you need to use a user account that’s defined for the applicable tenant.
+
+Targeting a tenant In an S3 compatible request that uses AWS authentication, if the target is a tenant, you use a URL in this format:
+
+http[s]://tenant-name.hcp-domain-name
+
+Here’s an example in which the tenant name is europe:
+
+https://europe.hcp.example.com
+
+Targeting a bucket
+
+In an S3 compatible request that uses AWS authentication, if the target is a bucket, you use a URL in either of these formats: http[s]://bucket-name.tenant-name.hcp-domain-name http[s]://tenant-name.hcp-domain-name/bucket-name
+
+In the first format above, the bucket name is part of the hostname. In the second format, the bucket name follows the hostname.
+
+Here’s are examples in which the tenant name is europe and the bucket name is finance: https://finance.europe.hcp.example.com https://europe.hcp.example.com/finance
+
+Targeting an object
+
+In an S3 compatible request that uses AWS authentication, if the target is an object, you use a URL in either of these formats:
+
+http[s]://bucket-name.tenant-name.hcp-domain-name/object-name http[s]://tenant-name.hcp-domain-name/bucket-name/object-name
+
+In the first format above, the bucket name is part of the hostname. In the second format, the bucket name follows the hostname.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+558/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Here are examples in which the tenant name is europe, the bucket name is finance, and the object name is Q4_2019.ppt:
+
+https://finance.europe.hcp.example.com/Q4_2019.ppt https://europe.hcp.example.com/finance/Q4_2019.ppt Using SSL security
+
+When you create a bucket or list the buckets you own, HCP does not require the use of SSL security with the S3 compatible request; that is, you can start the URL in the request with either HTTP or HTTPS. Whether the use of SSL security with other S3 compatible requests is required, optional, or not supported depends on the configuration of the S3 compatible API for the target bucket.
+
+By default, the use of SSL security is optional for requests for operations other than creating a bucket or listing the buckets you own. You cannot use the S3 compatible API to change this configuration. However, tenant administrators can use other HCP interfaces to reconfigure the S3 compatible API to require or not support the use of SSL security.
+
+Using an IP address in a URL Normally, you let HCP choose the node on which to process an S3 compatible API request. You can, however, use an IP address in the request URL to access the system on a specific node. To do this, you replace the fully qualified hostname in the URL with the IP address of an HCP node.
+
+When you use an IP address in a URL, you also need to specify the fully qualified hostname in an HTTP Host request header.

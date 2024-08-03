@@ -1,0 +1,49 @@
+3. Click Update Settings. HCP Management API Reference
+
+Introduction to the HCP management API
+
+The Hitachi Content Platform (HCP) management API is a RESTful HTTP interface to a subset of the administrative functions of an HCP system. Using this API, you can manage tenants, namespaces, retention classes, content classes, and tenant-level user and group accounts (HCP tenants only).
+
+Each entity you can manage is referred to as a resource. Each resource has properties that provide information about it. Note:
+
+Most of the examples in this book use cURL and Python with PycURL, a Python interface that uses the libcurl library. cURL and PycURL are both freely available open- source software. You can download them from http://curl.haxx.se. In version 7.12.1 of PycURL, the PUT method was deprecated and replaced with UPLOAD. The Python examples in this book show UPLOAD but work equally well with PUT.
+
+What you can do with the management API
+
+The HCP management API lets you work with tenants, namespaces, retention classes, content classes, and tenant-level user and group accounts. For tenants, you can:
+
+Modify HCP tenants Retrieve information about a single tenant Set default properties for namespaces created for an HCP tenant Retrieve statistics about the content of the namespaces owned by a tenant Generate a chargeback report for an HCP tenant
+
+For namespaces, you can:
+
+Create HCP namespaces Modify namespaces Delete HCP namespaces Retrieve information about a single namespace Retrieve a list of all the namespaces owned by a tenant Retrieve statistics about the content of a namespace Generate a chargeback report for an HCP namespace Reset the indexing checkpoint for a namespace For retention classes, you can:
+
+Create, modify, and delete retention classes for a namespace Retrieve information about a single retention class Retrieve a list of all the retention classes defined for a namespace
+
+For content classes, you can:
+
+Create, modify, and delete content classes for a tenant Retrieve information about a single content class Retrieve a list of all the content classes defined for a tenant For HCP tenant-level user accounts, you can:
+
+Create, modify, and delete user accounts Retrieve information about a single user account Retrieve a list of all the user accounts defined for a tenant For HCP tenant-level group accounts, you can:
+
+Create, modify, and delete group accounts Retrieve information about a single group account Retrieve a list of all the group accounts defined for a tenant Create a new group account with the security role or give the security role to an existing group account
+
+Who can use the management API
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+380/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+To use the HCP management API, you need either a system-level or tenant-level user account that’s defined in HCP. If HCP is configured to support Windows® Active Directory® (AD), clients can also use recognized AD user accounts to access HCP through the management API. A recognized AD user account is an AD user account for a user that belongs to one or more AD groups for which corresponding group accounts are defined in HCP.
+
+What you can do with the API depends on: The level of account you’re using The roles associated with the account (or applicable group accounts) For tenant-level accounts, whether the account (or applicable group accounts) has the allow namespace management property
+
+The permissions granted by each role have the same effect with the management API as they do in the Tenant Management Console . For example, with an HCP tenant-level user account that includes the administrator role, you can create, modify, and delete namespaces. With a tenant-level user account that includes only the monitor role, you can only
+
+retrieve information about these entities.
+
+An HCP tenant can grant system-level users administrative access to itself. This enables users with system-level user accounts to perform the activities allowed by the tenant-level roles that correspond to their system-level roles. If you have only the allow namespace management property and no roles, the activities you can perform with the HCP management API are limited to creating namespaces, listing and deleting namespaces you own, and viewing and modifying the versioning status of namespaces you own.

@@ -1,0 +1,69 @@
+Resetting HCP tenant security
+
+HCP ensures that each HCP tenant always has at least one:
+
+Locally authenticated HCP user account with the security role Group account with the security role
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+98/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+For a given tenant, it is highly improbable that all locally authenticated users with the security role will forget their passwords at the same time. However, should this happen, if the tenant does not have a group account with the security role, the tenant would have no administrators who could manage user and group accounts.
+
+To resolve this issue, you can use the System Management Console to restore access to the tenant for locally authenticated users with the security role. You can do this in one of two ways: Reset the passwords for all locally authenticated user accounts with the security role. When you do this, you specify a single password for all affected accounts. Grant the security role to a new or existing group account. A new group account will have only the security role and no data access permissions. An existing group account will have the security role plus whatever roles and data access permissions it currently has.
+
+You can grant the security role to a group account only if the tenant is configured to support AD authentication, HCP is configured to support AD, and HCP is to communicate with AD.
+
+Note: To reset security for an HCP tenant, you need the administrator role.
+
+Resetting security for an HCP tenant
+
+To reset security for an HCP tenant, you need the administrator role. 1. In the top-level menu of the System Management Console, click Tenants. 2. In the list of tenants, click the name of the tenant for which you want to reset security. 3. In the row of tabs below the tenant name, click Settings. 4. In the Settings panel, click Reset Security.
+
+5. In the Reset Security window, select Local to reset the passwords of all locally authenticated HCP user accounts with the security role, or select Active Directory to grant the
+
+security role to a new or existing group account.
+
+If you selected Local:
+
+In the Password field, type a new password for the locally authenticated user accounts with the security role. Passwords can be up to 64 characters long, are case sensitive, and can contain any valid UTF-8 characters, including white space. The minimum length for a password is the tenant-specific minimum password length.
+
+To be valid, a password must include at least one character from two of these three groups: alphabetic, numeric, and other. In the Confirm Password field, type the password again.
+
+If you selected Active Directory:
+
+In the Group field, enter the name of the AD group account that corresponds to the new HCP group account that you want to create or the existing HCP group to which you want to grant the security role.
+
+6. Click Reset Security.
+
+Deleting a tenant
+
+You can delete an HCP tenant only if it doesn’t currently own any namespaces. You cannot delete the default tenant.
+
+To delete a tenant, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants.
+
+2. In the list of tenants, click the delete control ( 3. In response to the confirming message, click Delete.
+
+) for the tenant that you want to delete.
+
+Changing the product branding
+
+By default, the graphical user interfaces that HCP provides for tenant and namespace access are branded for the company Hitachi and the product Hitachi Content Platform. The elements that show this are: In the Tenant Management Console and Namespace Browser:
+
+The company logo that appears in the top right corner of each page except the login page The product name that appears:
+
+In the title bar of the browser window for all pages In the top portion of the login page Above the top-level menu on every page except the login page
+
+The product name abbreviation that appears before the product name in the title bar of the browser window for the login page
+
+The following figure highlights the branding elements that appear on each page of the Tenant Management Console except the login page. In the HCP Search Console:
+
+The company logo that appears in the top right corner of every page except the login page The product name that appears:
+
+In the title bar of the browser window for the login page In the top portion of the login page

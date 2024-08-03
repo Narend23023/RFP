@@ -1,0 +1,147 @@
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request header
+
+GET /rest/directory/file?type=custom-metadata-info HTTP/1.1 Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value custom-metadata-info
+
+version
+
+No
+
+To check whether an annotation exists for a specific object version, in addition to specifying the request
+
+elements listed above, specify this URL query parameter. Response header
+
+The list below describes the request-specific response header for this operation.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created. This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. Response body
+
+Element
+
+Child element
+
+Description
+
+annotations
+
+annotation
+
+Each annotation is in their own separate annotation element.
+
+annotation
+
+name
+
+Annotation name.
+
+annotation
+
+changeTimeMilliseconds
+
+Seconds after 1 January 1970 that the object was either modified or deleted.
+
+annotation
+
+changeTimeString
+
+Change date and time. In ISO 8601 format, which is the time in the time zone of the HCP system followed by the hour and minute offset between local time and UTC. annotation
+
+size
+
+Annotation size in bytes.
+
+annotation
+
+contentType
+
+The contentType element value is text/xml if the namespace is configured to check whether custom metadata is well-formed XML. Otherwise the value is unknown.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully listed the annotations for the object.
+
+204
+
+No Content
+
+The specified object or version does not have any annotations.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find an object or version at the specified URL. The specified object or version does
+
+not exist, or the request specified the current version of an object that has been deleted. Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+Example: Listing annotations for an object
+
+Here’s a sample HTTP GET request that lists the annotations for an object named Q1_2012.ppt in the quarterly_rpts directory.
+
+Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt ?type=custom-metadata-info
+
+Request in Python using PycURL
+
+import pycurl
+
+filehandle = open("Q1_2012.ppt.custom-metadata.xml", 'wb') curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata-info") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+771/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

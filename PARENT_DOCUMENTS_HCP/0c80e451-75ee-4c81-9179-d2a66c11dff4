@@ -1,0 +1,47 @@
+1. Different changes are made to the same configuration property on each of two systems in a replication topology. 2. The changed property on one of the systems is replicated to the other system.
+
+Examples of configuration properties are:
+
+The data access permission mask for a namespace The default shred setting for a namespace
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+245/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The HTTP protocol enabled setting for a namespace The default versioning setting for new namespaces The roles for a user account The data access permissions a group account has for a namespace The protocol optimization setting on a namespace Certain groups of properties are treated as a single unit. Generally, these groups consist of properties that are updated by a single submission in the Tenant Management Console. Two notable exceptions to this rule are data access permissions for user accounts and content properties for content classes. In these cases, each set of data access permissions for a namespace and each content property is treated as an individual property.
+
+If a collision occurs when a configuration change is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+If the last change to the configuration on system A is more recent than the last change to the configuration on system B, HCP changes the configuration on system B to match the configuration on system A If the last change to the configuration on system B is more recent than the last change to the configuration on system A, HCP does not change the configuration on system B The rules above apply to all configuration collisions except collisions that occur when retention class properties are changed.
+
+Here are two examples of how HCP handles collisions when configuration changes are replicated from one system (system A) in a replication topology to another system (system B) in the topology. Example 1
+
+A given namespace starts out on both system A and system B with these properties:
+
+Read from remote system: enabled
+
+Collision handling: move object
+
+The list below shows a sequence of events in which the namespace configuration is changed and the change is then replicated.
+
+1. On system B, an administrator disables read from replica for the namespace. 2. On system A, an administrator changes the collision handling option for the namespace to rename object. 3. The change on system A is replicated to system B. Because read from remote system and collision handling are properties in the same submission group, the resulting properties for the namespace on system B are:
+
+Read from remote system: enabled Collision handling: rename object Example 2
+
+A given user account starts out on both system A and system B with these roles and data access permissions:
+
+Roles: monitor, compliance Namespace-1 permissions: browse, read, write, delete
+
+The list below shows a sequence of events in which the user account is changed and the changes are then replicated. 1. On system B, a security administrator adds the administrator role to the user account. 2. On system A, a security administrator removes the monitor role from the account. 3. On system B, an administrator removes the write permission from Namespace-1 and adds the purge permission. 4. On system A, an administrator adds the privileged permission to Namespace-1. 5. On system B, an administrator gives the user account browse and read permissions for Namespace-2. 6. On system A, an administrator gives the user account browse, read, and write permissions for Namespace-3. 7. The changes on system A are replicated to system B. Because roles and data access permissions are in separate submission groups, the resulting roles and data access Roles: compliance Namespace-1 permissions: browse, read, write, delete, privileged Namespace-2 permissions: browse, read Namespace-3 permissions: browse, read, write Retention class collisions
+
+A retention class collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the same retention class on each of two systems in a replication topology. 2. The changed retention class on one of the systems is replicated to the other system.
+
+If a collision occurs when a change to a retention class is replicated from one system (system A) in a replication topology to another system (system B) involved in the topology:
+
+If the last change to the retention class on system A is more recent than the last change to the class on system B and:

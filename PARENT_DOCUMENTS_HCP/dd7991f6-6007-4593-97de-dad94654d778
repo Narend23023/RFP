@@ -1,0 +1,72 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> The data type describes the resource for namespaces and the property of the namespace and versioningSettings versioningSettings versioningSettings
+namespaceDefaults data types.
+Properties
+The table below describes the properties included in the data type. versioningSettings<br>
+                       <b>Bounding box:</b> x1=185, y1=707, x2=1516, y2=2123
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Property</td>
+      <td>Data type</td>
+      <td>Description</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>daysOnPrimary</td>
+      <td>Integer</td>
+      <td>Specifies the number of days old versions of objects must\nremain in the namespace before they are pruned. Valid\nvalues are integers in the range zero through 36,500 (that\nis, 100 years). A value of zero means prune immediately.\nThe default is zero.</td>
+      <td>Deprecated; replaced by the property. pruneDays\nIf specified on a PUT or POST request, this property has\nthe same function as the property. You cannot pruneDays\ninclude both this property and the property in pruneDays\nthe same request.\nThis property is not returned by any GET request.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>daysOnReplica</td>
+      <td>Integer</td>
+      <td></td>
+      <td>Deprecated. The pruneDays property applies to the\nnamespace on all systems on which the namespace\nexists.\nThis property is ignored on a PUT or POST request and is\nnot returned by any GET request.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>enabled</td>
+      <td>Boolean</td>
+      <td>Specifies whether versioning is enabled for the\nnamespace. Valid values are:\ntrue\nVersioning is enabled.\nfalse\nVersioning is disabled.\nThe default is false.</td>
+      <td>This property is required on a PUT request to create a\nnamespace and on a POST request to modify namespace\ndefaults if the request includes the versioningSettings\nproperty.\nYou cannot enable versioning for a namespace while the\nCIFS, NFS, WebDAV, or SMTP protocol or appendable\nobjects are enabled.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>keepDeletionRecords</td>
+      <td>Boolean</td>
+      <td>Specifies whether HCP should keep records of deletion\noperations (delete, purge, prune, disposition) that occur in\nthe namespace if the namespace has ever had versioning\nenabled. Valid values are:\ntrue\nKeep records of deletion operations.\nfalse\nDo not keep records of deletion operations.\nThe default is true.\nThe amount of time for which HCP keeps deletion records\nis determined by the system configuration.</td>
+      <td>This property is not valid on a POST request to modify\nnamespace defaults and is not returned by any GET\nrequest for namespace defaults.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>prune</td>
+      <td>Boolean</td>
+      <td>Specifies whether version pruning is enabled for the\nnamespace. Valid values are:\ntrue\nVersion pruning is enabled for the namespace.\nfalse\nVersion pruning is disabled for the namespace.\nThe default is false.</td>
+      <td>This property is required on a PUT request to create a\nnamespace and on a POST request to modify namespace\ndefaults if the enabled property is set to true.\nYou cannot include both this property and the pruneOnPri\nproperty in the same request. mary</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>pruneDays</td>
+      <td>Integer</td>
+      <td>Specifies the number of days old versions of objects must\nremain in the namespace before they are pruned. Valid</td>
+      <td>This property is required on a PUT request to create a\nnamespace and on a POST request to modify namespace</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

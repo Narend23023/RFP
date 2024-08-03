@@ -1,0 +1,87 @@
+By default, the messages are listed ten at a time in reverse chronological order.
+
+Shutting down or restarting individual nodes
+
+Under normal operating conditions, the HCP nodes manage themselves. However, because hardware failures are possible, the System Management Console provides controls for
+
+shutting down and restarting individual nodes.
+
+Shutting down a node means shutting down the HCP software on it and powering it off. After shutting down a node, you need to manually power it back on to start HCP on it again.
+
+Restarting a node means shutting down and restarting the HCP software on it without powering it off.
+
+Shutting down or restarting a node has no effect on the data in the primary storage volumes and the NFS volumes that are associated with the node. However, while a node is shut
+
+down or in the process of restarting, clients have no access to that node.
+
+Shutting down or restarting a node is rarely necessary and can cause extra service activity, which increases the load on the system. However, situations in which shutting down a
+
+node may be appropriate include:
+
+A hardware failure has occurred.
+
+The node requires maintenance.
+
+You plan to remove the node from the system.
+
+The most frequent reason for restarting a node is that your authorized HCP service provider has requested it during the assessment or resolution of a problem.
+
+When you shut down or restart a node, you are required to specify a reason for the action. Note: After a node shuts down, HCP may perform a file-system check when the node reboots. This can take several hours to complete.
+
+To shut down or restart a node, you need the administrator or service role.
+
+Shutting down an individual node
+
+When you shut down a node, the hardware configuration determines whether it powers off automatically. To complete the action, you may need to power off the node manually after
+
+stopping it.
+
+To ensure that HCP has enough time to shut down cleanly, wait a few minutes before powering the nodes off manually. If the node is connected to a console, the console displays System halted when you can safely power off the node.
+
+To shut down or restart a node, you need the administrator or service role.
+
+1. Take one of these actions:
+
+On the Hardware > Nodes page, click the shutdown icon for the node. On the Storage Node page for the node, click Shut Down Node.
+
+The Shut Down Node window appears.
+
+2. In the Reason field, type the reason why you’re shutting down the node. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including
+
+white space.
+
+3. Click Shut Down Node.
+
+The nodes shut down and, if possible, power off.
+
+Restarting an individual node
+
+Restarting an HCP node causes it to reboot. While the node is in the process of restarting, clients have no access to it. Note:
+
+When you restart a node in a system with zero-copy failover enabled, the storage managed by the node fails over to the paired node during the shutdown part of the restart. The
+
+failover process always finishes before the restarted node completes its shutdown process. Therefore, the data outage caused by the failover lasts less than three minutes.
+
+When the node comes back up, the failback process extends the reboot by 15 to 30 seconds. The data outage caused by the failback lasts less than five minutes.
+
+To shut down or restart a node, you need the administrator or service role.
+
+1. Take one of these actions:
+
+On the Hardware > Nodes page, click the restart icon for the node. On the Storage Node page for the node, click Restart Node.
+
+The Restart Node window appears.
+
+2. In the Reason field, type the reason why you’re restarting the node. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white
+
+space.
+
+3. Click Restart Node.
+
+The node reboots. When the node has finished rebooting, it is again available for client access. Storage administration
+
+By default, HCP stores all objects in a repository on primary running storage. However, you can use HCP S Series Nodes as an alternative to primary running storage. HCP also
+
+supports the use of primary spindown storage (HCP with SAN-attached storage systems only), HCP S Series storage (storage provided by S Series Nodes), and extended storage
+
+for tiering purposes.

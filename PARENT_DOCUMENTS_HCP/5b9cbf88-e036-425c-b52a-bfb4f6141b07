@@ -1,0 +1,53 @@
+Moving object data from primary storage to extended storage frees up HCP system storage space so that you can ingest additional objects.
+
+Note: While all of the data for an object can be moved off primary running storage and stored only on extended storage, at least one copy of the system metadata, custom metadata, and ACL for that object must always remain on primary running storage.
+
+In addition, you can optimize data storage price/performance for the objects in a namespace by configuring the service plan for that namespace to define a storage tiering
+
+strategy that defines storage tiers for multiple types of extended storage.
+
+HCP moves object data between primary running storage, primary spindown storage (if it is used), and one or more types of extended storage according to rules specified in the storage tiering strategies defined by service plans. Erasure-coded protection
+
+Erasure-coded protection is a method of geo-protection where the data for each object in a replicated namespace is subject to erasure coding. With erasure coding, the data
+
+is encoded and broken into multiple chunks that are then stored across multiple HCP systems. All but one chunk contains object data. The other chunk contains parity for the object data.
+
+With erasure-coded protection, each system stores one data or parity chunk for any given erasure-coded object. The size of each chunk for an object is the size of the object
+
+data divided by the number of data chunks for the object. This means that the total storage used for an object in a replicated namespace is at most the size of a chunk times the total number of data and parity chunks for the object. (Storage usage can be less due to compression and duplicate elimination.) For whole-object protection (the other method of geo-protection) to provide the same level of data protection as erasure-coded protection provides, at least two systems must each store all the data for each object in a replicated namespace. With two systems, the total storage used for each object is at most two times the size of the object data,
+
+which is greater than the total storage used when the same object is erasure coded. This is true regardless of the number of systems across which the chunks for the erasure-coded object are distributed.
+
+Additionally, with erasure-coded protection, the storage footprint on any individual system that stores chunks for objects is smaller than the storage footprint resulting from
+
+storing complete object data on that system. Metadata-only objects
+
+With multiple HCP systems participating in a replication topology, you may not need to store object data in every system. A metadata-only object is one from which HCP has
+
+removed the data, leaving the system metadata, custom metadata, and ACL for the object in place. HCP makes an object metadata-only only if at least one copy of the object data exists elsewhere in the topology.
+
+Metadata-only objects enable some systems in a replication topology to have a smaller storage footprint than other systems, even when the same namespaces are
+
+replicated to all systems in the topology.
+
+HCP makes objects metadata-only according to the rules specified in service plans. If the rules change, HCP can restore data to the objects to meet the new requirements. Network bandwidth usage optimization
+
+HCP offers these features to help maximize network throughput and reduce the use of network bandwidth by read and write operations:
+
+Link aggregation
+
+Each node in an HCP system has two bonded ports for connecting to the front-end network. When using a single front-end switch, you can take advantage of this setup by using two cables per node to connect to the switch and configuring both HCP and the applicable ports on the switch for active-active (802.3ad) bonding. The redundant ports
+
+and cables help ensure a high-availability connection to the front-end network and the active-active bonding allows for increased network throughput. 10Gb Ethernet connectivity
+
+Optionally, for HCP with SAN-attached storage systems, HCP supports 10Gb Ethernet connectivity to the front-end network. The 10GbE network interface allows for greater
+
+network throughput than does the 1GbE interface option.
+
+Systems with the 10GbE network interface on the front end also use 10GbE for the back-end network. This enables the HCP nodes to transmit data among themselves at a
+
+rate that supports the higher front-end throughput.
+
+Compressed data transmission
+
+Clients that use the HTTP protocol to communicate with HCP can reduce network bandwidth usage by sending and receiving data in a compressed format. Before sending

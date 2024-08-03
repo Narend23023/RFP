@@ -1,0 +1,113 @@
+OK
+
+HCP successfully deleted the directory.
+
+404 Not Found
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403
+
+Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+761/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The specified directory is not empty. The user doesn’t have delete permission.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP-specific X-HCP-Err orMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find a directory, object, or version at the specified URL. The specified directory does
+
+not exist, or the request specified a directory that has been deleted. Any component of the URL except for the last component in the path is a symbolic link to a
+
+directory.
+
+409 Conflict
+
+HCP could not delete the specified directory because the directory is currently being written to the namespace.
+
+Example: Deleting an empty directory
+
+Here’s a sample HTTP DELETE request that deletes the directory named obsolete from the quarterly_rpts directory in the namespace.
+
+Request with curl command line curl -k -iX DELETE
+
+H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/obsolete”
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/obsolete") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/obsolete HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334829227
+
+Content-Length: 00
+
+Working with system metadata
+
+When converting legacy applications to use the RESTful HTTP interface to access an HCP namespace, be aware that the values used to specify certain metadata settings differ
+
+from those used for metadata settings in the default namespace and HCAP 2.x archives.
+
+Specifying metadata on object creation
+
+You use the HTTP PUT method to store an object in the namespace and override the default values for its metadata. Access permission
+
+To specify metadata in a request to store an object, you need write permission. Additionally, to specify the hold parameter, you also need privileged permission.
+
+Request header
+
+PUT /rest/directory/file?retention=retention HTTP/1.1
+
+Parameter
+
+Required
+
+Description
+
+acl
+
+No
+
+Stores a predefined ACL for the object. One of:

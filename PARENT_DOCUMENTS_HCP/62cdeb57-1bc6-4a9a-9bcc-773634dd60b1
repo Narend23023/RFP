@@ -1,0 +1,57 @@
+Typically, domains are defined in a DNS. For each domain, the DNS lists all node IP addresses assigned to each network with which the domain is associated.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+129/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+With DNS, you can manage domains in a single set of corporate DNS servers. Alternatively, you can set up separate DNS servers for different networks that use the same domain.
+
+Or, you can use a combination of these two techniques. In any case, you need to ensure that your networking environment and DNS configuration allow client requests to be routed to the correct HCP network.
+
+If DNS is in use at your site, you can take advantage of DNS configuration options to further enhance the security of the HCP networks. However, HCP does not require the use of DNS. Without DNS, you can still define multiple domains in HCP and associate them with networks. In this case, to enable client requests to be routed to an HCP network, users would use the hosts file on each client computer to map the node IP addresses assigned to the network to the fully qualified domain name (FQDN) of the domain associated with the network.
+
+From the Networks page in the HCP System Management Console, you can display the stub zone definition that you need to include in the DNS for each combination of domain and network. About SSL server certificates
+
+Each domain in HCP must have at least one SSL server certificate or CSR. SSL server certificates are used to verify to clients that the HCP system is the system it claims to be and
+
+to set up secure communications between the system and those clients.
+
+HCP uses SSL to provide security for:
+
+HCP System Management Console, Tenant Management Console, and Search Console HCP management API Replication
+
+HTTP, S3 compatible, and WebDAV namespace access protocols HCP metadata query API HCP Namespace Browser
+
+HCP comes with one self-signed SSL server certificate, which is generated and installed automatically when the system is installed. This certificate is associated with the domain that’s created during installation.
+
+Self-signed SSL server certificates are not automatically trusted by web browsers and other HTTP client tools. However, clients can choose to trust them. Certificates for domains
+
+You add the first SSL server certificate to a domain as part of creating the domain. Once a domain exists, you can add certificates to it at any time. You can also delete certificates from a domain. However, if the domain is associated with any networks, you cannot delete the last certificate.
+
+For example, you might choose to add a certificate from a trusted vendor and then delete any self-signed certificates associated with the domain. Or, you might choose to add a certificate before the last valid certificate for the domain expires.
+
+You can add a certificate to a domain in these ways:
+
+By having HCP generate and install a new self-signed certificate. In this case, the new certificate has an expiration date that’s five years later than the current date.
+
+By generating a CSR, sending it to a certificate authority (CA), and installing the returned certificate.
+
+A domain can have only one outstanding CSR at a time. By installing a certificate that’s created outside of HCP.
+
+At any given time, the combined number of certificates and outstanding CSRs for a domain cannot exceed ten.
+
+CSR and returned certificates
+
+SSL server certificates are available from several trusted sources. To obtain a certificate, you need to create a CSR and present it to a CA. The CA then generates the requested certificate and makes it available to you either as an email attachment, as text embedded in the body of an email, or as a download from a web page:
+
+If the certificate is an email attachment, save it to disk. Use .cer as the extension for the certificate file name.
+
+If the certificate is embedded in an email or downloadable from a web page, copy and paste it into a new text file. Then save the file to disk. Important: Use a simple text editor to do this. Do not use Microsoft® Word or any other word-processing program to create the text file.
+
+You can create a CSR by using the HCP System Management Console or a third-party tool. When you use the System Management Console, however, HCP securely stores the private key needed for installing the returned certificate, so you don’t need to save it yourself.
+
+Certificates created outside HCP

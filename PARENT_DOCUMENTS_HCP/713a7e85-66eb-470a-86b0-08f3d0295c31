@@ -1,0 +1,71 @@
+necessary, to fix any reported problems.
+
+6. Optionally, enter a description for the data migration and/or change the performance level for the Migration service. 7. Ensure that all of the nodes in the HCP system are running and healthy.
+
+8. Start the data migration. If any nodes become unavailable while the Migration service is running, the service stops migrating data. When those nodes become available, the service automatically
+
+starts migrating data again.
+
+9. Monitor the data migration and manage it by changing the performance level or pausing the migration, as needed. You can also modify the migration description at any time
+
+(for example, to record when and how long the migration was paused).
+
+10. When the data migration is complete (that is, the migration status is Migrated):
+
+If a migration report is available, review it. This report identifies tenants that own namespaces containing unacknowledged irreparable objects. For the default tenant and for HCP tenants that are configured to allow system-level users to manage them, the report also lists the unacknowledged irreparable objects in those namespaces. If the Migration service encounters one or more objects that it cannot migrate, it marks those objects as irreparable (if they weren’t already marked that way).
+
+If the data migration statistics show that not all objects were migrated, contact your authorized service provider for help.
+
+Migration page
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+116/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The Migration page in the HCP System Management Console lets you configure, monitor, and manage data migrations.
+
+Note: To monitor data migrations, you need the monitor or administrator role. To configure and manage data migrations, you need the administrator role.
+
+To display the Migration page, in the top-level menu of the System Management Console, select Services > Migration. You can also perform a migration by using the Retire Primary Storage wizard. You can access the wizard from the Retirement pane on the Storage page in the System Management Console.
+
+Configuring a data migration
+
+When configuring a data migration on a HCP with internal storage system, you select nodes to be retired. When configuring a data migration on a HCP with SAN-attached storage system, you can either select nodes or storage arrays for retirement.
+
+Configuring a migration on a HCP with internal storage system
+
+To configure a data migration on a HCP with internal storage system:
+
+1. On the left side of the Migration page, click Configuration.
+
+The Configuration panel displays step 1 (one) of the migration configuration (Choose items for migration). The Select Hardware for Retirement section lists the storage nodes in the HCP system.
+
+2. Select the nodes from which you want to migrate the data.
+
+To clear your selections and start over, click Cancel. 3. Click Next.
+
+The Configuration panel displays step two of the migration configuration (Review configuration summary and confirm). The Configuration Summary section in this panel indicates whether the migration configuration is acceptable.
+
+Note: When you click Next, HCP checks that the system is in a valid state to perform the migration. This includes checking for degraded RAID groups. This check can take up to 90 seconds.
+
+If the configuration is not acceptable, you can click view details in the Configuration Summary section to display the specific reasons why. You can also click Configuration Report to download the configuration summary and details to a file. The default name for this file is Configuration-Report.txt.
+
+The Configuration Details section in the step-two panel lists the nodes selected for migration:
+
+To change the migration configuration, click Modify Configuration. The Configuration panel redisplays step 1, which shows your current selections. To restart the migration configuration, click Cancel. The Configuration panel redisplays step 1 with all selections cleared.
+
+4. Optionally, add a description of the data migration and/or change the performance level for the Migration service:
+
+To add a description: a. Click Add description.
+
+b. In the text box that opens, type a description of the migration. This text can be up to 1,024 characters long and can contain any valid UTF-8 characters,
+
+including white space.
+
+To change the performance level, in the Performance Level field, select Low, Medium, or High. The higher the performance level, the greater the load on the HCP system.
+
+5. Click Start Migration.

@@ -1,0 +1,139 @@
+409
+
+Conflict
+
+HCP could not delete the ACL because it is currently being written to the namespace.
+
+Example: Deleting an ACL for an object
+
+Here’s a sample HTTP DELETE request that deletes the ACL for an object named Q1_2012.ppt located in the quarterly_rpts directory.
+
+Request with curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+780/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl -k -iX DELETE
+
+-H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt ?type=acl"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt?type=acl") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE") curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt?type=acl HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334858680
+
+Content-Length: 0
+
+Retrieving namespace information
+
+Note: A best practice is to limit your HTTP GET requests for retrieving statistics and metrics to once per hour. Polling the system more frequently can lead to system instability.
+
+Listing accessible namespaces
+
+You use the HTTP GET method to list the namespaces you can access. The list contains the namespaces owned by the specified tenant and for which you have any permissions. Request headers
+
+GET /proc HTTP/1.1
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+If the user doesn’t have permissions for any of the tenant's namespaces, the namespaces element is empty.
+
+Element
+
+Attribute
+
+Description
+
+namespaces
+
+tenantHostName Domain and subdomain of the tenant host.
+
+namespaces
+
+httpScheme
+
+Type of http connection to the tenant. Either http or https.
+
+namespace
+
+name
+
+Name of the namespace
+
+namespace
+
+nameIDNA
+
+URL of the namespace
+
+namespace
+
+versioningEnabled
+
+Boolean. Specifies if versioning is enabled for the namespace. namespace
+
+searchEnabled
+
+Boolean. Specifies if search is enabled for the namespace.
+
+namespace
+
+retentionMode
+
+Specifies the retention mode for the namespace. Values are either compliance or ente rprise.
+
+namespace
+
+defaultShredValue
+
+Boolean. Specifies whether or not the objects in the namespace are shredded after deletion.
+
+namespace
+
+defaultIndexValue
+
+Boolean. Specifies whether or not the objects in the namespace are indexed.
+
+namespace
+
+defaultRetentionValue
+
+Specifies the retention value for the namespace.
+
+namespace
+
+hashScheme
+
+Specifies the hash algorithm of the namespace.
+
+namespace
+
+dpl

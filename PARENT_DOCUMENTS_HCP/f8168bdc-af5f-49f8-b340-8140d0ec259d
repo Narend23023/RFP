@@ -1,0 +1,63 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+440/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+dataAccess Permissions
+
+GET
+
+Retrieve information about the data access permissions associated with a user account
+
+Tenant-level user account with the administrator or security role POST
+
+Modify the data access permissions associated with a user account
+
+Tenant-level user account with the administrator role
+
+The request body must contain all permissions granted for each included namespace. If a
+
+namespace is not included, its permissions are not changed by the POST request.
+
+By default, when you create a user account, it does not include any data access permissions.
+
+Example: Creating a user account
+
+Here’s a sample PUT request that creates a user account for the Finance tenant. The account is defined in an XML file named mwhite-UA.xml. The username for the account is specified in the XML file. The password is specified by the password query parameter. The request is made using a tenant-level user account that includes the security role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <userAccount> <username>mwhite</username> <fullName>Morgan White</fullName> <description>Compliance officer.</description> <localAuthentication>true</localAuthentication> <forcePasswordChange>true</forcePasswordChange> <enabled>true</enabled>
+
+<roles> <role>COMPLIANCE</role> <role>MONITOR</role> </roles> <allowNamespaceManagement>false</allowNamespaceManagement> </userAccount> Request with cURL command line
+
+curl -k -iT mwhite-UA.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/userAccounts ?password=start123"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("mwhite-UA.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://finance.hcp.example.com:9090/mapi/tenants/finance/" + "userAccounts?password=start123") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("mwhite-UA.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+PUT /mapi/tenants/finance/userAccounts?password=start123 HTTP/1.1 Host: finance.hcp.example.com:9090 Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6 Content-Type: application/xml Content-Length: 365 Response headers
+
+HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Changing the roles associated with a user account
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+441/907
+
+6/25/24, 11:34 AM

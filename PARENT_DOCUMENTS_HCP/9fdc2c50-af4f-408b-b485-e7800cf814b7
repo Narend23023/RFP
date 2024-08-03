@@ -1,0 +1,29 @@
+In a JSON request or response body:
+
+Properties are name/value pairs. For example, the name/value pair that corresponds to the softQuota property with a value of 85 is:
+
+"softQuota":"85"
+
+A list of resources is represented by a name/value pair, where the name is the name of the property used to identify each resource and the value is a comma-separated list of the resource identifiers. For example, the response body for a request to list the namespaces owned by the Finance tenant might look like this:
+
+{ "name" : [ "Accounts-Payable", "Accounts-Receivable ] }
+
+Here’s a request for complete information about the Accounts-Receivable namespace to be returned in JSON format: curl -k -i -H "Accept: application/json" -H "Authorization: bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable?verbose=true&prettyprint"
+
+Here’s the JSON response body you get when you make the request using a user account that includes the administrator role:
+
+{ "aclsUsage" : "ENFORCED", "authUsersAlwaysGrantedAllPermissions" : :true, "allowPermissionAndOwnershipChanges" : true, "appendEnabled" : false, "atimeSynchronizationEnabled" : false, "authMinimumPermissions" : { "permission" : [ "BROWSE", "READ", "WRITE" ] }, "creationTime" : "2017-02-09T15:42:36-0500", "customMetadataIndexingEnabled" : true, "customMetadataValidationEnabled" : true, "description" : "Created for the Finance department at Example Company by Lee Green on 2/9/2017.", "dpl" : "Dynamic", "enterpriseMode" : true, "allowErasureCoding" : true, "fullyQualifiedName" : "Accounts-Receivable.Finance.hcp.example.com", "hardQuota" : "50 GB", "hashScheme" : "SHA-256", "indexingDefault" : true, "indexingEnabled" : true, "isDplDynamic" : true, "mqeIndexingTimestamp" : "2017-02-26T18:11:13-0400", "multipartUploadAutoAbortDays" : 30, "name" : "Accounts-Receivable", "optimizedFor" : "CLOUD", "owner" : "pblack", "ownerType" : "LOCAL", "readFromReplica" : true, "replicationEnabled" : true, "replicationTimestamp" : "2017-02-27T06:45:52-0500", "searchEnabled" : true, "servicePlan" : "Short-Term-Activity", "serviceRemoteSystemRequests" : true, "softQuota" : 75, "tags" : "tag" : [ "Billing", "lgreen" ] },
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+383/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+"id" : "0e774b8d-8936-4df4-a352-b68766b5c287", "authAndAnonymousMinimumPermissions" : { "permission" : [ "BROWSE", "READ" ] } } CSV
+
+In a CSV response body (only for a GET of a chargebackReport resource), the name of each reported property for the resource is a field in the first line. Property values are fields in the subsequent lines.
+
+Here’s a request for the chargebackReport resource for the Accounts-Receivable namespace to be returned in CSV format:

@@ -1,0 +1,81 @@
+In addition to creating and managing user and group accounts and login settings, you can:
+
+Specify whether HCP nodes should respond to ping requests Allow or disallow SSH access to HCP nodes
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+127/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+View current Support access credentials Apply exclusive Hitachi Vantara Support access credentials Create domains and associate SSL server certificates with them
+
+Allow or deny access to the System Management Console from specific IP addresses Control the use of the HCP management API by users with system-level user accounts Allow or deny access to the Search Console for the default tenant from specific IP addresses Configure support for Windows Active Directory or Windows workgroups Clear the Active Directory cache Set up connections to RADIUS servers Set the system-wide permission mask for access to namespaces
+
+Setting network security
+
+The Network Security page in the HCP System Management Console lets you enable or disable the following services on HCP nodes:
+
+Ping
+
+Checks network connectivity to HCP nodes. SSH login by authorized service and Support representatives Facilitates troubleshooting when you request support. Node Status
+
+Enables node status commands to check the health of your nodes.
+
+3DES Ciphers
+
+Allows the system to use the Triple-DES cipher algorithm for data encryption. The more secure option is to disable this service. Changing this setting causes the HCP system
+
+to restart and requires your confirmation. SSL renegotiation
+
+Allows SSL renegotiation. The more secure option is to disable this service.
+
+Restrict anonymous access with CIFS
+
+Prevents anonymous users from using CIFS to access namespaces on the system. Tenant-level administrators can override this setting for individual namespaces.
+
+Prevent data access with SMBv1
+
+Prevents users from using the SMBv1 protocol for data access with CIFS. Minimum Security Protocol
+
+Allows you to set the minimum security protocol supported for front-end communications. The recommended minimum security protocol is TLS v1.3.
+
+Note:
+
+AWS Command Line Interface (AWS CLI) tool does not support TLS v1.3 in HCP. Though HCP Release 9.4 supports TLS v1.3, if you are using AWS CLI with HCP, we recommend using TLS v1.2 or an earlier version.
+
+Enabling or disabling network security services on HCP nodes
+
+To view the Network Security page, you need the monitor or administrator role. To change network security settings, you need the administrator role.
+
+Use the Network Security page of the System Management Console to enable or disable network security services on HCP nodes. Figure. Network Security page in the HCP System Management Console
+
+1. In the top-level menu in the System Management Console, select Security > Network Security. The Network Security page opens.
+
+2. For each security setting, select or clear the option to enable it.
+
+a. Click Minimum Security Protocol and select the minimum security protocol you want to use for front-end communications.
+
+You see a table that displays the list of available ciphers.
+
+b. Select or clear the option to enable each cipher.
+
+Note: Changing Minimum Security Protocol setting causes the HCP system to restart and requires your confirmation.
+
+3. Click Update Settings.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+128/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+4. Click Reset to restore all cipher settings to their default configuration.
+
+After upgrading to HCP v9.7, the table will display the previously used old ciphers. However, resetting will enable the default ciphers for HCP v9.7.
+
+Setting exclusive Support access credentials Exclusive Hitachi Vantara Support access credentials provide additional security compliance for an HCP system by enabling each system with a unique set of SSH keys. These keys, which are used for the sole purpose of system support and maintenance by authorized service and Support personnel, can be applied by an authorized service provider during final on-site setup or at a later time.

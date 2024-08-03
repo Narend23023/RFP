@@ -1,0 +1,149 @@
+To include text in a datetime format, enclose the text in single quotation marks ('). To include a single quotation mark, specify two single quotation marks in a row. Here are some examples of datetime formats with examples of values that match them:
+
+Format
+
+Example
+
+MM/dd/yy HH:mm:ss z
+
+03/19/12 14:35:27 EST
+
+hh 'o''clock' a, zzz
+
+2 o'clock PM, Eastern Standard Time
+
+yyyy-MM-dd'T'HH:mm:ss.SSSZ
+
+2012-03-19T14:35:27.236-0400 E., MMM d, yyyy 'at' k:s
+
+Mon., March 19, 2012 at 14:35
+
+If you don’t specify a format for a content property with the datetime data type, the metadata query engine indexes only values that match patterns such as MM/dd/yyyy, MM-dd- yyyy, yyyy-MM-dd, or yyyy-MM-dd'T'HH:mm:ssZ.
+
+Multivalued content properties
+
+A content property is defined as either single-valued or multivalued:
+
+If you define a content property as single-valued, the metadata query engine indexes only the first occurrence of it for any given object, regardless of how many times it occurs in the custom metadata XML for that object. If you define a content property as multivalued, the metadata query engine indexes all occurrences of it in the custom metadata XML for an object.
+
+For example, based on the sample custom metadata XML, you would define as multivalued a content property that extracts the value of the specialty element. With the metadata query API, users can sort query results based on single-valued content properties but not on multivalued properties.
+
+Content properties extracted from sample XML
+
+When working with content properties in the Tenant Management Console, you can supply sample well-formed XML and have HCP extract content properties from that XML. You can then select which of those properties you want to add to a content class.
+
+HCP extracts only content properties for XPath expressions that follow a straight path from the root element. These conventions apply to the content property definitions: The XPath expression always starts from the root element. The name of a content property that extracts an element value is the name of the element preceded by the name of the parent element. The name of a content property that extracts an attribute value is the name of the attribute preceded by the name of the element the attribute applies to. Content property names that would exceed 25 characters in length are truncated to 25 characters, starting from the beginning. The definitions do not include formats. The definitions are listed alphabetically by XPath expression.
+
+When adding extracted content properties to a content class, you can change any parts of their definitions.
+
+The table below shows the definitions of the content properties HCP extracts from the sample custom metadata XML. XPath expression
+
+Name
+
+Data type
+
+Multivalued
+
+/dicom_image/doctor/address/address1
+
+addressAddress1
+
+String
+
+No
+
+/dicom_image/doctor/address/address2
+
+addressAddress2
+
+String
+
+No
+
+/dicom_image/doctor/address/city
+
+addressCity
+
+String
+
+No
+
+/dicom_image/doctor/address/state
+
+addressState
+
+String
+
+No /dicom_image/doctor/address/zip
+
+addressZip
+
+Integer
+
+No
+
+/dicom_image/doctor/name
+
+doctorName
+
+String
+
+No
+
+/dicom_image/doctor/office
+
+doctorOffice
+
+String
+
+No
+
+/dicom_image/doctor/specialties/specialty
+
+specialtiesSpecialty
+
+String
+
+Yes
+
+/dicom_image/doctor/specialties/specialty/@primary
+
+specialtyPrimary Boolean
+
+No
+
+/dicom_image/followup_needed
+
+icom_imageFollowup_needed
+
+Boolean
+
+No
+
+/dicom_image/image/@type
+
+imageType
+
+String
+
+No
+
+/dicom_image/image/date
+
+imageDate
+
+String
+
+No
+
+/dicom_image/image/technician
+
+imageTechnician
+
+String
+
+No
+
+/dicom_image/patient/address/address1
+
+addressAddress1

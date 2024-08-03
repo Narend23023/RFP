@@ -1,0 +1,63 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+50/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If, however, the storage that’s represented by an extended storage component is currently being used to store object data, you cannot delete that component. Instead you need to either retire that component or abandon it.
+
+When you retire an extended storage component, HCP migrates the data off that component and then deletes that component from the system. When you abandon an extended storage component, HCP deletes that component from the system without attempting to migrate any of the stored data off the extended storage component. This operation is not recommended because it may result in data loss. If the only existing copies of the data for a given object are stored on a single extended storage
+
+component, when you abandon that component, the object data becomes permanently inaccessible to HCP.
+
+Retiring and deleting a component is a much safer alternative to abandoning that component, as retiring a component ensures that the data stored on that component remains
+
+protected at the applicable levels. You should consider abandoning an extended storage component only as a last resort and only after you’ve taken the necessary steps to ensure that the data stored on the component exists elsewhere in the HCP system.
+
+Deleting an unused extended storage component To view the Storage page, you need the monitor or administrator role. To create, modify, or delete extended storage components and extended storage pools, you need the administrator role.
+
+1. On the left side of the Storage page, click the Components tab.
+
+2. On the Components panel, click the table row that contains the name of the component that you want to delete. 3. At the top of the panel that opens, click the Manage tab. 4. On the Manage panel, click Delete Component.
+
+Abandoning an extended storage component
+
+To view the Storage page, you need the monitor or administrator role. To create, modify, or delete extended storage components and extended storage pools, you need the administrator role.
+
+1. On the left side of the Storage page, click the Components tab. 2. On the Components panel, click the table row that contains the name of the component that you want to abandon. 3. At the top of the panel that opens, click the Manage tab.
+
+4. On the Manage panel, click Abandon Component. Working with HCP S Series storage pools
+
+HCP uses HCP S Series storage pools to represent logical groups of storage components that can be used as storage tiers. Each storage pool consists of one or more storage components that are used to access the same type of storage.
+
+When storing objects on S Series Nodes, HCP uses all the storage in all the S Series Nodes that are contained in the storage pools. The total capacity of a given storage pool is the
+
+total amount of space remaining in all S Series Nodes connected to the HCP system.
+
+You use the Storage section of the System Management Console to create, modify, manage, delete, and retire HCP S Series storage pools. You also use the Storage section to
+
+monitor the health, availability, capacity, and usage of all the S Series Nodes associated with the storage pool. Creating an HCP S Series storage pool
+
+Use the Create Pool wizard on the Storage page to create and configure a storage pool.
+
+To create an HCP S Series storage pool, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, select Storage.
+
+The Storage page opens to the Overview tab.
+
+2. Click the Pools tab, and then click Create Pool The Get Started wizard opens.
+
+3. In the Pools field, select HCP S Series. 4. Click Go. The Create Pool wizard opens.
+
+5. In the Name field, type a name for the storage pool. 6. Optional: In the Description field, type a description for the storage pool, and then click Next.
+
+The Allocation page opens.
+
+7. Select all the storage components that you want to allocate to the pool.
+
+8. To compress object data that is stored in the buckets in the storage pool, select Compress data at rest. 9. Optional: If you want the Content Verification service to run on the new HCP S Series storage pool, select Content Verification, and then click Next.
+
+10. Take one of these actions from the Review page:

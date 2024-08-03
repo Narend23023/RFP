@@ -1,0 +1,49 @@
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above.
+
+Optional headers Content-MD5
+
+Directs HCP to check the integrity of the data it receives by comparing a Base64-encoded MD5 hash of that data to the value specified by this header. The valid value for this header is the Base64-encoded MD5 hash of the data in the request body. When you store an object, you can use the Content-MD5 request header to ensure the integrity of the object data. The value you specify for this header must be the Base64- encoded MD5 hash of the original file data. When you include the Content-MD5 header in a request to store an object, HCP calculates the Base64-encoded MD5 hash of the data it receives and compares that to the header value. If the values don’t match, HCP returns a 400 (Bad Request) status code and does not store the object. Content-Type
+
+Specifies the Internet media type of the data being stored. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg).
+
+Expect
+
+Tells the application not to send the request body if the request headers are rejected. The only valid value is 100-continue. This value is not case sensitive. You can use the Expect request header in a request to store an object to tell the application not to send the request body (the data) to HCP if the request headers are rejected. This prevents unnecessary network bandwidth usage. x-amz-acl
+
+Adds a canned ACL to the bucket. This header is used only to add a canned ACL to a bucket. If you’re using individual x-amz-grant- headers to add the ACL, the x-amz-acl header is invalid.
+
+x-amz-grant-full-control
+
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid. x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid.
+
+x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid. x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid.
+
+x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid. x-amz-meta-
+
+Adds custom metadata to the object.
+
+x-amz-object-lock-mode
+
+Specify the Object Lock mode status for an object. The value can be either GOVERNANCE or COMPLIANCE.
+
+GOVERNANCE
+
+Use for objects that are subject to retention policies that are governed by a regulatory body.
+
+COMPLIANCE
+
+Use for objects that are subject to strict regulatory requirements. Example
+
+x-amz-object-lock-mode: GOVERNANCE
+
+x-amz-object-lock-retain-until-date

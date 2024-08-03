@@ -1,0 +1,49 @@
+Here is a sample HTTP PUT request that stores a new object or new version of an object named Q2_2020.ppt in the quarterly_rpts directory. Request with curl command line
+
+curl -k -iT Q2_2020.ppt
+
+H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt"
+
+Request in Python using PycURL
+
+import pycurl import os
+
+filehandle = open("Q2_2020.ppt", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q2_2020.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("Q1_2020.ppt")) curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q2_2020.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 678400
+
+Response headers
+
+HTTP/1.1 201 Created X-HCP-ServicedBySystem: hcp.example.com
+
+ETag: "9c604138ffb0f308a8552a3752e5a1be" Location: /rest/quarterly_rpts/Q2_2020.ppt
+
+X-HCP-VersionId: 79885459513089 X-HCP-VersionCreateTimeMilliseconds: 1494364634616
+
+X-HCP-Hash: SHA-256 E830B86212A66A792A79D58BB185EE63A4FADA76BB8A1... X-HCP-Time: 1334858878 Content-Length: 0
+
+Sending object or version data with an annotation (Unix)
+
+Here is a Unix command line that uses an HTTP PUT request to store the object data and an annotation for a file named Q2_2020.ppt. The request stores the object in the
+
+quarterly_rpts directory.
+
+The cat command appends the contents of the Q2_2020-custom-metadata.xml file to the contents of the Q2_2020.ppt file. The result is piped to a curl command that sends the data to HCP and saves the content of Q2_2020-custom-metadata.xml in an annotation named report_data. Unix command line
+
+cat Q2_2020.ppt Q2_2020-custom-metadata.xml | curl -k -iT - -H "X-HCP-Size: `stat -c %s Q2_2020.ppt`"
+
+H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt ?type=whole-object&annotation=report_data" Request headers
+
+PUT /rest/quarterly_rpts/Q2_2020.ppt?type=whole-object&annotaton=report_data HTTP/1.1

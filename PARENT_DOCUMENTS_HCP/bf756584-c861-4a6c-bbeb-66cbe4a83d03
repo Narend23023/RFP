@@ -1,0 +1,61 @@
+authenticated all_users
+
+The DisplayName element is optional and ignored. EmailAddress
+
+Child of the Owner element or of the Grantee element when the identifier type is AmazonCustomerByEmail. The value of the DisplayName element can be:
+
+User name of an HCP user account For object ACLs only, username of an AD user account followed by an at sign (@) and the AD domain name Grant
+
+Child of the AccessControlList element and container for the Grantee and Permission elements, which can occur in either order. Each occurrence of the Grant element grants one permission to one grantee.
+
+Grantee
+
+Child of the Grant element and container for the grantee identifier.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+554/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The Grantee element must include this XML namespace specification:
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+The Grantee element must also include one of these specifications of identifier type to indicate how the grantee is identified: xsi:type="CanonicalUser"
+
+The grantee is identified by the ID and, optionally, the DisplayName element. If present, the DisplayName element is ignored.
+
+xsi:type="Group"
+
+The grantee is identified by the URI element.
+
+xsi:type="AmazonCustomerByEmail"
+
+The grantee is identified by the EmailAddress element. ID
+
+Child of the Owner element or of the Grantee element when the identifier type is CanonicalUser. The value of the ID element can be the user ID of an HCP user account or, for object ACLs only, the SID of an AD user account. The ID element is required in the context of the Owner element and in the context of the Grantee element when the identifier type in the Grantee element is CanonicalUser. To learn the ID or SID for a user account, see your tenant administrator. Owner
+
+Child of the AccessControlPolicy element and container for the owner identifier. The owner is identified by the ID and, optionally, DisplayName elements. The Owner element is optional in an ACL request body. If you omit it, the bucket or object owner does not change.
+
+Permission
+
+Child of the Grant element. Valid values for the Permission element are: READ READ_ACP WRITE WRITE_ACP FULL_CONTROL
+
+These values are case sensitive.
+
+URI
+
+Child of the Owner element or of the Grantee element when the identifier type is Group. Valid values for the URI element are the URI for the group of all authenticated users and the URI for the group of all users.
+
+Here’s a sample ACL that sets the owner to the user named lgreen and grants read permission to all users and write permission to the user named pdgrey:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Owner> <ID>53344e3b-00de-494b-962e-827ac143fa84</ID> <DisplayName>lgreen</DisplayName> </Owner> <AccessControlList> <Grant> <Grantee xsi:type="Group" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <URI>http://acs.amazonaws.com/groups/global/AllUsers</URI> </Grantee> <Permission>READ</Permission> </Grant> <Grant> <Grantee xsi:type="AmazonCustomerByEmail" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <EmailAddress>pdgrey</EmailAddress> </Grantee> <Permission>WRITE</Permission> </Grant> </AccessControlList> </AccessControlPolicy>
+
+Removing an ACL
+
+You can remove an ACL from a bucket or object by removing all grants from it. To do this by using headers, use the x-amz-acl header with the canned ACL named private, like this: x-amz-acl: private
+
+To remove an ACL by using an ACL request body, omit all grants from the request the body, like this:

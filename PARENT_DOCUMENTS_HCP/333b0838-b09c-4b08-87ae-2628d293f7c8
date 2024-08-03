@@ -1,0 +1,149 @@
+A user with the allow namespace management property and no roles can retrieve information only about the namespaces the user owns. In this case, the retrieved information includes only the namespace name and owner. N/A
+
+HEAD
+
+Check for the existence of a namespace
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role or allow namespace management property For the default namespace, system-level user account with the monitor or administrator role
+
+namespace
+
+POST
+
+Modify a namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete an HCP
+
+Tenant-level user account with the administrator
+
+namespace
+
+role or allow namespace management property
+
+A user with the allow namespace management property and no roles can delete only the namespaces the user owns.
+
+The namespace cannot contain any objects. Not valid for the default namespace.
+
+.../tenants/tenant-name/namespaces/namespace-name/chargebackReport
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+chargeback
+
+GET
+
+Generate a chargeback report for a namespace
+
+Tenant-level user account with the monitor or administrator role
+
+Not valid for the default namespace. Report
+
+Supported output formats are XML, JSON, and CSV.
+
+.../tenants/tenant-name/namespaces/namespace-name/complianceSettings
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+compliance Settings
+
+GET
+
+Retrieve the default retention, shred, custom metadata handling, and disposition settings for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role For the default namespace, system-level user account with the monitor, administrator, or compliance role
+
+Default retention and shred settings do not apply to the default namespace. POST
+
+Modify the default retention, shred, custom metadata handling, or disposition setting for a namespace
+
+For an HCP namespace, tenant-level user account with the compliance role For the default namespace, system-level user account with the compliance role
+
+../tenants/tenant-name/namespaces/namespace-name/customMetadataIndexingSettings
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+408/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+custom Metadata Indexing Settings
+
+GET
+
+Retrieve settings specific to metadata query engine indexing of custom metadata for a search-enabled namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role For the default namespace, system-level user account with the monitor or administrator role
+
+Not valid for namespaces that do not have search enabled. POST
+
+Modify settings specific to metadata query engine indexing of custom metadata for a search-enabled namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+.../tenants/tenant-name/namespaces/namespace-name/permissions Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve the list of permissions in the data access permission mask for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor or administrator role For the default namespace, system-level user account with the monitor or administrator role List
+
+POST
+
+Modify the list of permissions in the data access permission mask for a namespace
+
+For an HCP namespace, tenant-level user account with the administrator role For the default namespace, system-level user account with the administrator role
+
+Valid values for permissions are:
+
+DELETE PRIVILEGED PURGE READ SEARCH WRITE
+
+These values are case sensitive.
+
+The set of permissions specified in the request body replaces the set of permissions currently included in the data access permission mask for the namespace. To remove all permissions, specify an empty list.
+
+If the set of permissions includes PURGE, delete permission is enabled automatically. If the set of permissions includes SEARCH, read permission is enabled automatically.

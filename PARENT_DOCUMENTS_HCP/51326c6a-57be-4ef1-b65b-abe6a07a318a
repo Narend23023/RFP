@@ -1,0 +1,149 @@
+Reporting interval granularity
+
+hour
+
+day
+
+The reporting interval is one hour.
+
+The reporting interval is one day.
+
+The statistics reported for the current reporting interval, if included in the chargeback report, may not reflect some reads and writes that have already occurred during the current hour. After the hour is past, however, the statistics for that hour are complete. total
+
+The reporting interval is the time period defined by the start and end times for the report. In this case, the report contains a single set of chargeback statistics.
+
+The default is total.
+
+These values are not case sensitive.
+
+Query parameter examples
+
+To get hourly statistics for the entire day of February 18, 2017:
+
+start=2017-02-18T00:00:00-0500&end=2017-02-18T23:59:59-0500 &granularity=hour
+
+To get daily statistics for the week starting February 19, 2017:
+
+start=2017-02-19T00:00:00-0500&end=2017-02-25T23:59:59-0500 &granularity=day
+
+To get a single set of statistics for the entire month of February 2017:
+
+start=2017-02-01T00:00:00-0500&end=2017-02-29T23:59:59-0500 &granularity=total
+
+To get hourly statistics for the current day from 8:00 a.m. up to the current time, where the current day is February 22, 2017:
+
+start=2017-02-22T08:00:00-0500&granularity=hour Properties
+
+The table below describes the property included in the chargebackReport data type.
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+chargebackData
+
+chargeback
+
+Data
+
+Specifies statistics that describe the usage of a given namespace or of all the namespaces owned by a given tenant.
+
+The response body includes one instance of this property for each reporting interval in the time period specified by the query parameters in the GET request for the chargebackReport resource. cifsProtocol
+
+The cifsProtocol data type describes the cifs resource for HCPnamespaces.
+
+Properties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+450/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The table below describes the properties included in the cifsProtocol data type.
+
+Property name
+
+Data type
+
+Description
+
+caseForcing Boolean
+
+Specifies whether the CIFS protocol is case forcing for the namespace. Valid values are:
+
+UPPER
+
+The protocol changes object names to all uppercase in requests it passes to HCP.
+
+LOWER
+
+The protocol changes object names to all lowercase in requests it passes to HCP.
+
+DISABLED
+
+The protocol is not case forcing.
+
+The default is DISABLED.
+
+These values are not case sensitive. caseSensitive
+
+Boolean
+
+Specifies whether the CIFS protocol is case sensitive for the namespace. Valid values are:
+
+true
+
+The protocol is case sensitive.
+
+false
+
+The protocol is not case sensitive.
+
+The default is true.
+
+enabled
+
+Boolean
+
+Specifies whether the CIFS protocol is enabled for the namespace. Valid values are: true
+
+CIFS is enabled.
+
+false
+
+CIFS is disabled.
+
+The default is false.
+
+ipSettings
+
+ipSettings
+
+Specifies which IP addresses can and cannot access the namespace through the CIFS protocol.
+
+requiresAuthentication
+
+Boolean
+
+Specifies whether user authentication is required or allowed for access to the namespace through the CIFS protocol. Valid values are: true
+
+User authentication is required.
+
+false
+
+User authentication is allowed.
+
+The default is true.
+
+This property can be set to true only if the owning tenant supports AD authentication.
+
+Example
+
+Here’s an XML example of the cifsProtocol data type:

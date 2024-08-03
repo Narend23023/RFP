@@ -1,0 +1,43 @@
+To recover from namespace compliance issue, take one of these actions: Redefine the noncompliant service plan on the receiving system to be compliant. If the service plan is assigned to the tenant that owns the namespace, assign a different service plan to the tenant on the sending system, where that service plan is complaint on both systems involved in the link. If the service plan is assigned to the namespace, have the tenant administrator assign a different service plan to the namespace on the sending system, where that service plan is complaint on both systems involved in the link. Deselect the namespace from replication.
+
+Here are two scenarios that show how a namespace compliance issue can cause the Replication service to pause replication of a tenant. Scenario 1
+
+In this scenario:
+
+System A replicates to system B on link AB. Link AB can be either active/active or active/passive. Link AB includes tenant T1, so T1 exists on both systems. On system A, T1 owns namespace NS1, which is in compliance mode. NS1 not selected for replication. The service plan that applies to NS1 is named SP1. SP1 is compliant on system A and noncompliant on system B.
+
+These events occur in the order shown:
+
+1. On system A, you select NS1 for replication. 2. The Replication service tries to replicate NS1 to system B. The replication is unsuccessful because it would cause NS1, which is in compliance mode, to have a noncompliant service plan on system B. As a result, the service automatically pauses replication of T1 on link AB. Scenario 2
+
+In this scenario:
+
+System A replicates to system B on link AB. Link AB can be either active/active or active/passive. Link AB includes namespace NS1, which is owned by tenant T1, so NS1 exists on both systems. NS1 is in enterprise mode, not compliance mode. The service plan that applies to NS1 is named SP1. SP1 is compliant on system A and noncompliant on system B.
+
+These events occur in the order shown:
+
+1. On system A, you change NS1 to be in compliance mode. 2. The Replication service tries to replicate the change to system B. The replication is unsuccessful because it would cause NS1 to be in compliance mode with a noncompliant service plan on system B. As a result, the service automatically pauses replication of T1 on link AB. Content class collisions
+
+Each content class you create in an HCP system has an internal ID that uniquely identifies that content class. As a result, two content classes created on different HCP systems are different from each other, even if they have the same name and are defined for the same tenant.
+
+A content class collision occurs when the Replication service tries to replicate a content class from one system to another system that already has a different content class with the same name, where both content classes are defined for the same tenant.
+
+To recover from a content class collision, take one of these actions:
+
+Rename the content class on either of the systems involved in the link. Delete the content class on either of the systems involved in the link.
+
+Here’s a scenario that shows how a content class collision can cause the Replication service to pause replication of a tenant. In this scenario: System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems.
+
+These events occur in the order shown:
+
+1. On system A, you create a content class named CC1 for T1.
+
+2. Before CC1 is replicated to system B, you create a content class named CC1 for T1 on system B. 3. The Replication service tries to replicate CC1 to system B. The replication is unsuccessful because a different content class named CC1 already exists on system B. As a result, the service automatically pauses replication of T1 on link AB. User account collisions
+
+Each user account you create in an HCP system has an internal ID that uniquely identifies that user account. As a result, two user accounts created on different systems are
+
+different from each other, even if they have the same username and are defined for the same HCP tenant.
+
+A user account collision occurs when the Replication service tries to replicate a user account from one system to another system that already has a different user account with the same username, where both user accounts are defined for the same tenant.
+
+To recover from a user account collision, take one of these actions:

@@ -1,0 +1,33 @@
+String secretKey = "2a9d119df47ff993b662a8ef36f9ea20";
+
+/* * Set up the client configuration to allow for 200 max HTTP * connections, as this is an HCP best practice. */ ClientConfiguration myClientConfig = new ClientConfiguration(); myClientConfig.setMaxConnections(200);
+
+/* * By default, AWS SDK uses the HTTPS protocol and validates * certificates with a certificate authority. The default * certificates installed in HCP are self-signed. If these * self-signed certificates are used, certificate validation * will need to be disabled. */ myClientConfig.setProtocol(Protocol.HTTPS); System.setProperty("com.amazonaws.sdk.disableCertChecking", "true"); /* * Build the hs3Client to be used for communication with HCP. */ AmazonS3 hs3Client = new AmazonS3Client( new BasicAWSCredentials(accessKey, secretKey), myClientConfig);
+
+// Set up the service point to be the tenant in HCP. hs3Client.setEndpoint("europe.hcp.example.com");
+
+/* * Now that the hs3Client is created for HCP usage, proceed with some * operations. */ String bucketName = "finance";
+
+try { /*
+
+Create a new bucket. With HCP, the bucket name does not need * to be globally unique. It needs to be unique only within the HCP * service point (that is, the HCP tenant). */ System.out.println("Creating bucket " + bucketName + "\n"); hs3Client.createBucket(bucketName); /* * List the buckets you own at the service point. */ System.out.println("Buckets:"); for (Bucket bucket : hs3Client.listBuckets()) { System.out.println(" * " + bucket.getName()); } System.out.println();
+
+/* * Add an ACL to the bucket to give read to a user with the specified user ID. */ AccessControlList bucketACL = hs3Client.getBucketAcl(bucketName); bucketACL.grantPermission( new CanonicalGrantee("7370bb2d-033c-4f05-863e-35a4eaf1d739"),
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+684/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Permission.Read );
+
+hs3Client.setBucketAcl(bucketName, bucketACL);
+
+/* * Upload a couple of objects to the bucket from files on the local * file system. */ String objectNamePrefix = "quarterly_rpts/"; // Setup metadata for first object String firstFileName = "input/Q4_2019.ppt"; ObjectMetadata metadata = new ObjectMetadata(); metadata.addUserMetadata("Author", "P.D. Gray"); metadata.addUserMetadata("Audit_Date", "2020-02-23"); // Content-Length must be set because the application will use an // InputStream during the PUT. Otherwise, the whole file would be // will be read into memory, which could cause the application to // run out of memory. metadata.setContentLength( new File(firstFileName).length());
+
+System.out.println("Uploading first object to HCP from a file\n"); String firstObjectName = objectNamePrefix + "Q4_2019.ppt"; hs3Client.putObject(new PutObjectRequest( bucketName, firstObjectName, new FileInputStream( firstFileName), metadata)); // Write a second object without metadata. Also collect its ETag for // later usage. System.out.println("Uploading second object to HCP from a file\n"); String secondObjectName = objectNamePrefix + "Q3_2019.ppt"; PutObjectResult result = hs3Client.putObject( new PutObjectRequest( bucketName, secondObjectName,
+
+new File( "input/Q3_2019.ppt"))); String secondObjectEtag = result.getETag();

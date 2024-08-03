@@ -1,0 +1,43 @@
+<description>Developer, Team Lead</description> <forcePasswordChange>false</forcePasswordChange> <fullName>Lee Green</fullName> <userGUID>eaa046e0-c17e-42fb-8840-ab5e05cf8876</userGUID> <userID>104</userID> <username>lgreen</username> </userAccount>
+
+Example: Changing a user account password with a query parameter
+
+Here’s a sample POST request that uses the password query parameter to change the password for the system-level user account with the username lgreen to End321!. The request is made using a system-level user account that includes the security role. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes
+
+431/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request with cURL command line
+
+curl -k -i -d "{}" -H "Content-Type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/userAccounts/lgreen ?password=End321!"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/" + "userAccounts/lgreen?password=End321!") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() Request headers
+
+POST /mapi/userAccounts/?password=End321! HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: application/xml Content-Length: 2
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Changing a user account password in the request body
+
+Here’s a sample POST request that uses the updatePasswordRequest data type in the request body to change the password for the system-level user account with the username lgreen. The requested new password is End321!, which is specified in an XML file named Password.xml. The request is made using a system-level user account that includes the security role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <updatePasswordRequest> <newPassword>End321!</newPassword> </updatePasswordRequest>
+
+Request with cURL command line
+
+curl -k -i -d @Password.xml -H "Content-Type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/userAccounts/lgreen /changePassword" Request headers
+
+POST /mapi/userAccounts/lgreen/changePassword HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382
+
+Content-Type: application/xml Content-Length: 2
+
+Response headers

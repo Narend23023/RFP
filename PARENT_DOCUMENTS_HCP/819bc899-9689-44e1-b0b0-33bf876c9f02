@@ -1,0 +1,101 @@
+Example: Updating Support access credentials to exclusive Hitachi Vantara Support access
+
+Here is a sample PUT request that updates the Support access credentials on an HCP system to exclusive Hitachi Vantara Support access by uploading an SSH key from the Exclusive Hitachi Vantara Support Access Credentials package.
+
+Request using the cURL command line: curl -i -k -T HCP-SSHKeyPackage-04022020_14-58-20.plk -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" https://admin.hcp.example.com:9090/mapi/supportAccesscredentials
+
+Response header:
+
+Response header:HTTP/1.1 200 OK Content-Type: application/xml Expires: Thu, 07 Oct 2021 00:00:00 GMT X-HCP-SoftwareVersion: 9.2.0.251 Content-Length: 0 System-level group account resources
+
+System-level group account resources let you retrieve information about the system-level group accounts. The tables below provide information about these resources.
+
+.../groupAccounts
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+List
+
+GET
+
+Retrieve a list of the system-level group
+
+System-level user account with the monitor, administrator, or security role
+
+The listed group accounts are identified by the group name.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 Notes
+
+429/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+accounts.
+
+In XML, the element that identifies each group account is groupname. The root element for the list of group accounts is groupAccounts.
+
+In JSON, the name in the name/value pair that lists the group accounts is groupname. .../groupAccounts/group-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+groupAccount
+
+GET
+
+Retrieve information about a group account.
+
+System-level user account with the monitor, administrator, or security role
+
+The information returned depends on the roles associated with the user making the request. N/A
+
+HEAD
+
+Check for the existence
+
+System-level user account with the monitor,
+
+of a group account.
+
+administrator, or security role
+
+Example: Retrieving system-level group accounts
+
+Here is a sample GET request that retrieves a list of system-level group accounts. The request writes the list of group accounts to a file named systemLevelGroups.xml. The request is made with a system-level user account that includes the monitor role. Request with cURL command line
+
+curl -k -i -H "Authorization: bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp.example.com:9090/mapi/groupAccounts?verbose=true& prettyprint" >systemLevelGroups.xml
+
+Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <groupAccounts> <groupname>Admins@dev.hcp.example.com</groupname> <groupname>Admins@finance.hcp.example.com</groupname> <groupname>Admins@sales.hcp.example.com</groupname> </groupAccounts>
+
+Example: Retrieving system-level group account information
+
+Here is a sample GET request that retrieves the system-level group account information for the groupname Admins@dev.hcp.example.com. The request writes the group account information to a file named systemLevelGroup-Admins-dev-hcp-ex.xml. The request is made with a system-level user account that includes the monitor role. Request with cURL command line

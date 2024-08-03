@@ -1,0 +1,59 @@
+At any given time, an SSL server certificate is in one of these three states: valid, expired, or future (that is, not yet valid). When choosing which certificate to present to a client for a
+
+given domain:
+
+1. HCP first looks for a valid certificate for the domain and, if it finds any, uses the one with the earliest start date and time.
+
+2. If the domain has no valid certificates, HCP looks for an expired certificate for the domain and, if it finds any, uses the one with the latest expiration date and time. 3. If the domain has no expired certificates, HCP uses the future certificate with the earliest start date and time.
+
+HCP consistently chooses the same certificate. Any of these events, however, can cause HCP to start choosing a different certificate:
+
+The chosen certificate expires or is deleted. A future certificate for the domain becomes valid.
+
+A new certificate is added to the domain. Note: After an event that causes HCP to choose a different certificate, the system may continue using the certificate initially chosen for a client session until the applicable cache is cleared.
+
+HCP does not take the common name into consideration when choosing a certificate. This means that in response to a client request, HCP can use any certificate for the domain associated with the network over which the request arrives (subject to the selection process described above).
+
+For example, suppose the domain named hcp.example.com has a certificate with the common name *.ten1.hcp.example.com. Suppose also that the management network for the tenant named ten2 uses the hcp.example.com domain. In response to a client request with a URL that specifies ten2.hcp.example.com, HCP could present the certificate with the
+
+common name *.ten1.hcp.example.com. The client is responsible for deciding how to handle certificates with common names that don’t match the requested URL. Managing domains and certificates
+
+To view, create, and delete domains and the SSL server certificates associated with them, you use the Domains and Certificates page in the HCP System Management Console.
+
+Note: To view existing domains and SSL server certificates, you need the monitor or administrator role. To create and delete domains and SSL server certificates, you need the administrator role.
+
+Creating a domain
+
+You can create a domain by using the HCP System Management Console.
+
+To view existing domains and SSL server certificates, you need the monitor or administrator role. To create and delete domains and SSL server certificates, you need the administrator role.
+
+1. Open the HCP System Management Console. 2. From the top-level menu, click Security > Domains and Certificates. The Domains and Certificates page opens.
+
+3. Click Create Domain. 4. In the Domain Name field, type a unique name for the domain.
+
+5. In the Certificates field, select one of these options: Generate and install self-signed certificate Generate CSR Install PKCS12 certificate
+
+6. Click Create Domain.
+
+Adding a certificate to a domain
+
+You can add an SSL server certificate to an existing domain by using the HCP System Management Console.
+
+To view existing domains and SSL server certificates, you need the monitor or administrator role. To create and delete domains and SSL server certificates, you need the administrator role.
+
+1. Open the HCP System Management Console. 2. From the top-level menu, select Security > Domains and Certificates. The Domains and Certificates page opens.
+
+3. In the list of domains, click the name of the domain that you want to add a certificate to. 4. In the panel that opens, click New Certificate. 5. Select one of these options: Generate and install self-signed certificate Generate CSR Install PKCS12 certificate
+
+6. Take one of these actions:
+
+If you selected Generate and install self-signed certificate, click Generate Certificate.
+
+If you selected Generate CSR, click Generate CSR. If you selected Install PKCS12 certificate, click Install Certificate.
+
+After you generate a CSR, you need to download it to a file that you can send to the CA. Later, when you receive the certificate from the CA, you need to upload it to HCP. Creating a CSR
+
+You can create a CSR when you create a new domain or add a new certificate to an existing domain.
+
+To view existing domains and SSL server certificates, you need the monitor or administrator role. To create and delete domains and SSL server certificates, you need the administrator role.

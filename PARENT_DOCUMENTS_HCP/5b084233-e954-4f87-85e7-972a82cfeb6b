@@ -1,0 +1,107 @@
+HCP has two special groups that you can specify in an ACL:
+
+The username of an Active Directory user account. This can be either the user principal name or the Security Accounts all_users
+
+Manager (SAM) account name for the AD user account. The name of an Active Directory group. all_users. authenticated.
+
+Grants permissions to all users, including those that access the namespace anonymously
+
+authenticated
+
+Grants permissions to all authenticated users
+
+To grant permissions to one of these special groups, specify group in the type element and omit the domain element.
+
+The Search Console returns an error if a given user or group is specified in more than one name element. type
+
+One of:
+
+Specifies the type of the value specified in the name element.
+
+user
+
+The name element specifies an HCP or Active Directory user account
+
+The Search Console returns an error if the value of the type element doesn’t correspond to the value of the name element.
+
+group
+
+The name element specifies an Active Directory group, all_us ers, or authenticated domain
+
+The name of an Active Directory domain
+
+Specifies the Active Directory domain that contains the user account or group specified in the name element.
+
+This element is required if the name element specifies an Active Directory user account or group. This element is invalid if the name
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+893/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Element
+
+Values
+
+Description
+
+element specifies the username of a user account that’s defined in
+
+HCP. permissions
+
+N/A
+
+Container for any combination of permission entries.
+
+permission
+
+One of:
+
+Child of permissions entry. Specifies a permission granted to the user or group specified in the name entry.
+
+READ READ_ACL
+
+WRITE WRITE_ACL DELETE
+
+Exporting search results
+
+You can export the results of a search as a comma-separated-values (CSV) or XML file for use with other applications. For example, you could use a CSV or XML file containing
+
+exported search results to generate a list of selected objects for a regulatory body. Or, you could use an export file as input to an application that analyzes namespace content.
+
+Note: While the metadata query engine is active, you can export up to 102,000 search results. If the search results include more than that, only 102,000 are exported.
+
+For each object in the search results, an export file contains either the object URL alone (metadata query engine only) or the URL along with a specific subset of the object
+
+metadata. The file does not contain the object content. However, you can use the object URL to retrieve the object content in a separate operation.
+
+When the export file includes object metadata, the values for each object in the file are, in order: Object URL
+
+Object size, in bytes Content format (always blank when the metadata query engine is active)
+
+Cryptographic hash algorithm used to calculate the cryptographic hash value of the object Cryptographic hash value of the object
+
+Note: If HCP has not yet calculated the cryptographic hash value for an object, the value in the export file is an empty string.
+
+The same metadata is exported for each object, regardless of whether its details are showing on the Search Results page and regardless of which search facility is active.
+
+To export the current search results, select the format you want in the Export results field. The available formats for metadata query engine are:
+
+To export only the object URLs: XML format (short) CSV format (short)
+
+To export both the object URLs and the object metadata:
+
+XML format (detailed)
+
+CSV format (detailed)
+
+Note: Exporting only object URLs is significantly faster than exporting both the URLs and the object metadata. Additionally, when exporting both the URLS and metadata for a
+
+large number of objects, the resulting export file may not contain all the expected objects.
+
+Depending on the browser you’re using and the file type you’ve selected, you may be asked whether you want to open or save the export file.
+
+Export files are named results.selected-type, where selected-type is either CSV or XML. To prevent a subsequent export operation from overwriting an exported file, you should give

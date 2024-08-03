@@ -1,0 +1,33 @@
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. All ETags match an asterisk in an x-amz-copy-source-if-ma tch header. x-amz-copy-source-if-modified-since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified source object or object version was last modified. If the modification date and time is later than the specified date and time, HCP continues processing the request. If the modification date and time is equal to or earlier than the specified date and time, HCP returns a 412 (Precondition Failed) status code and does not copy the object. To specify the date and time for this header, use one of these formats: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+For example: Tue, 07 Feb 2017 14:27:05 +0000
+
+DDDD, dd-MMM-yyyy HH:mm:ss (+0000|GMT)
+
+For example: Tuesday, 07-Feb-17 14:27:05 +0000
+
+DDD MMM d HH:mm:ss yyyy
+
+For example: Tue Feb 7 14:27:05 2017
+
+If the value specified by the x-amz-copy-source-if-modified-since header doesn’t conform to one of the formats shown above, the header is ignored. x-amz-copy-source-if-none-match
+
+Specifies one or more values for comparison with the ETag of the specified source object or object version. If the ETag doesn’t match any of the specified values, HCP continues processing the request. If the ETag matches any of the specified values, HCP returns a 412 (Precondition Failed) status code and does not copy the object. To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. No ETags match an asterisk in an x-amz-copy-source-if-m atch header. x-amz-copy-source-if-unmodified-since
+
+Specifies a date and time, in Greenwich Mean Time (GMT), for comparison with the date and time the specified source object or object version was last modified. If the modification date and time is equal to or earlier than the specified date and time, HCP continues processing the request. If the modification date and time is later than the specified date and time, HCP returns a 412 (Precondition Failed) status code and does not copy the object. For valid values for this header, see the description of the x-amz-copy-source-if-modified-since header above. x-amz-grant-full-control
+
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid.
+
+x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid. x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid.
+
+x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid. x-amz-grant-write-acp

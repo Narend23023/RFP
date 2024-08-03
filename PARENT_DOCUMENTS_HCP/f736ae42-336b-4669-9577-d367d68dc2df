@@ -1,0 +1,107 @@
+Optional and typically not used for RFC6265
+
+Required for RFC2109
+
+WebDAV
+
+This section of the Help contains information on using the WebDAV namespace access protocol.
+
+Using WebDAV
+
+WebDAV is one of the industry-standard protocols HCP supports for namespace access. To access a namespace through WebDAV, you can write applications that use any standard
+
+WebDAV client library, or you can use a command-line tool, such as cadaver, which supports WebDAV.
+
+Using the WebDAV protocol, you can store, view, retrieve, and delete objects. You can also add and delete custom metadata, as well as change certain system metadata for existing objects.
+
+Note: Using WebDAV, you can store and retrieve the default annotation only. It cannot access other annotations.
+
+HCP is compliant with WebDAV level 2, as specified by RFCs 2518 and 4918.
+
+To access a namespace through WebDAV, this protocol must be enabled in the namespace configuration. If you cannot use the WebDAV protocol to access the namespace, contact your tenant administrator.
+
+The WebDAV examples use cadaver open-source software, which you can download from https://pkgs.org/download/cadaver.
+
+An object is equivalent to a WebDAV resource. A directory is equivalent to a WebDAV collection.
+
+WebDAV methods
+
+HCP supports most standard WebDAV methods, as indicated in the list below. PUT
+
+Use this method to:
+
+Store an object in the namespace Add or replace custom metadata in the default annotation for an existing object
+
+When you store an object in the namespace, HCP uses the ETag response header to return the cryptographic hash value for the object.
+
+GET
+
+Use this method to retrieve an object or metafile from the namespace. HEAD
+
+Use this method to check whether an object, default annotation, an ACL, or a directory exists in the namespace.
+
+MKCOL
+
+Use this method to create a new directory in the namespace.
+
+PROPPATCH
+
+Use this method to:
+
+Change system metadata associated with an object.
+
+If the request to change system metadata specifies a symbolic link, HCP changes the metadata on the object that’s the target of the link and not on the link itself.
+
+Store dead properties as custom metadata in the default annotation (when this capability is enabled in the namespace configuration). PROPFIND
+
+Use this method to retrieve metadata associated with an object, including both system metadata and dead properties stored as custom metadata. You can use PROPFIND to
+
+retrieve dead properties only when the namespace is configured to store dead properties as custom metadata.
+
+COPY
+
+Use this method to copy an object from one location to another. When using this method, you need to specify the full URL for the target location.
+
+A request to copy an object fails if an object with the same name already exists at the target location. MOVE
+
+Use this method to move an object from one location to another.
+
+When using this method, you need to specify the full URL for the target location. A request to move an object fails if:
+
+An object with the same name already exists at the target location. The source object is under retention.
+
+DELETE
+
+Use this method to delete an object, directory, symbolic link, or default annotation from the namespace. LOCK
+
+Use this method to lock an object on a single node.
+
+UNLOCK
+
+Use this method to unlock an object on a single node.
+
+OPTIONS
+
+Use this method to see which WebDAV methods are supported for the specified object, directory, or symbolic link.
+
+Unsupported methods
+
+POST TRACE
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+789/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+URLs for WebDAV access to a namespace
+
+Depending on the method you’re using and what you want to do, the URL you specify can identify any of: The namespace as a whole A directory
+
+An object A symbolic link
+
+A metadirectory A metafile for an object
+
+Note: To access a namespace through WebDAV directly from a Windows client, add the namespace as a network share, using any of the URL formats described in URL formats.

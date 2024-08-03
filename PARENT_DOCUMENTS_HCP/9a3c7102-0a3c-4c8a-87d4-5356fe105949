@@ -1,0 +1,39 @@
+242/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Replication implementation Replication is implemented at the tenant and namespace level. When creating a tenant, the HCP system administrator specifies whether the tenant is eligible to be replicated. HCP
+
+system administrators can change this setting from not allowing replication to allowing it. However, they cannot do the reverse.
+
+If the tenant is eligible for replication, you can choose whether to include each namespace in the replication of the tenant. You can change this setting for a namespace at any time.
+
+If allowed by the tenant configuration, for each cloud-optimized namespace replicated with the tenant, you can specify whether HCP is allowed to use erasure coding to implement replication of the objects in that namespace. Erasure coding improves storage efficiency. However, read performance may be better for replicated namespaces that do not allow erasure coding. System administrators can change a tenant from not being able to choose whether namespaces allow erasure coding to being able to do this. After this change occurs:
+
+Preexisting cloud-optimized namespaces with replication enabled are automatically reconfigured to allow erasure coding. When you enable cloud optimization for a preexisting namespace that had replication enabled but was not cloud optimized, the namespace is automatically configured to allow erasure coding.
+
+The HCP system administrator selects tenants to be replicated from among those that are eligible. If a tenant has granted system-level administrative users access to itself, the system administrator can change the namespace selections for that tenant. HCP replicates the configuration of each selected tenant and the configuration and contents of all the namespaces selected for replication with the tenant. Depending on the replication topology, you may not be able to make any configuration changes to the tenant or any of its namespaces on one or more systems in the topology. Clients cannot make any changes to namespace content on systems on which you cannot make configuration changes.
+
+Replication is asynchronous with other HCP activity. If allowed by the system administrator, you can monitor replication progress in the Tenant Management Console.
+
+Replication collision handling
+
+If clients can write to multiple systems in a replication topology, collisions can occur when different changes are made to the same objects on different systems. Similarly, if you can
+
+make configuration changes to the tenant and its namespaces on multiple systems in a replication topology, configuration collisions can occur. The way HCP handles collisions that occur due to replication depends on the type of collision. However, the general rule is that more recent changes have priority over conflicting less recent changes. Object content collisions
+
+An object content collision occurs when, for a namespace without versioning enabled, these events occur in the order shown:
+
+1. An object is created with the same name in that namespace on two systems in a replication topology, but the object has different content on the two systems. 2. The object on one of the systems is replicated to the other system.
+
+If versioning is enabled, no collision occurs. Instead, the less recently created of the two objects becomes an old version of the more recently created object.
+
+When an object content collision occurs, the more recently created object keeps its name and location. The other object is either moved to the .lost+found directory in the same namespace or renamed, depending on the namespace configuration.
+
+When HCP moves an object to the .lost+found directory, the full object path becomes .lost+found/replication/system-generated-directory/ old-object-path. When renaming an object due to a content collision, HCP changes the object name to object-name.collision or object-name.version-id.collision, where version-id is the version ID of the object. HCP uses the second format only if versioning has ever been enabled for the namespace that contains the object but is not currently enabled.
+
+If the new name is already in use, HCP changes the object name to object-name.1.collision or object-name.version-id.1.collision, as applicable. If that name is already in use, HCP successively increments the middle integer by one until a unique name is formed.
+
+Objects that have been relocated or renamed due to content collisions are flagged as replication collisions in their system metadata. Clients can use the metadata query API to search for objects that are flagged as replication collisions. If an object that’s flagged as a replication collision changes (for example, if its retention period is extended), its collision flag is removed. If a client creates a copy of a flagged object with a new name, the collision flag is not set on the copy.

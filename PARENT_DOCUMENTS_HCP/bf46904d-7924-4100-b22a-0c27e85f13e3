@@ -1,0 +1,35 @@
+If this error persists, contact your tenant administrator. Example: Retrieving an object ACL
+
+Here’s a sample GET request that retrieves the ACL for the object named mktg/budget_proposals/BudgProp-2020.
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen -- -k "https://finance.europe.hcp.example.com/mktg/budget_proposals/ BudgProp-2020?acl" -H "x-hcp-pretty-print: true" Request headers
+
+GET /mktg/budget_proposals/BudgProp-2020?acl HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:3pB7HQ8LNIHaFzHToefVgDD9hVo= x-hcp-pretty-print: true
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Owner> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Owner> <AccessControlList> <Grant> <Grantee xsi:type="CanonicalUser"
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <ID>b9d39144-a081-4762-b0e8-b8fb51e10192</ID> <DisplayName>lgreen</DisplayName> </Grantee> <Permission>FULL_CONTROL</Permission> </Grant> <Grant> <Grantee xsi:type="Group" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <URI>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</URI> </Grantee> <Permission>READ</Permission> </Grant> <Grant> <Grantee xsi:type="CanonicalUser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <ID>b9d39144-a081-4761-b0e8-b8fb51e10192</ID> <DisplayName>pblack</DisplayName> </Grantee> <Permission>FULL_CONTROL</Permission> </Grant> </AccessControlList> </AccessControlPolicy>
+
+Copying an object
+
+You use the HTTP PUT method with the x-amz-copy-source header to copy an object from one location to another. The source and target locations can be two different buckets within the same tenant, or they can be the same bucket. You can specify a name for the target object that is different from the name of the source object.
+
+To copy an object, you need read permission for the bucket containing the source object or for the source object itself, and write permission for the target bucket.
+
+By default, a copy operation copies the current version of the source object specified in the request. If versioning is enabled for the source bucket, you can use the versionId query parameter with the source object specification to copy a specific version of the object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3 618/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+If the version identified by the versionId parameter is a delete marker, HCP returns a 404 (Service Unavailable) status code. If the current version of the source object is a delete marker and you do not specify a version ID, HCP returns a 404 (Not Found) status code.
+
+HCP does not copy version IDs with objects. The object created by a copy operation has its own version ID.

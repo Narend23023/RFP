@@ -1,0 +1,93 @@
+</D:href> <D:propstat>
+
+<D:prop> <HCAP:index>true</HCAP:index>
+
+</D:prop> <D:status>HTTP/1.1 200 OK</D:status>
+
+</D:propstat>
+
+</D:response> </D:multistatus>
+
+Example: Changing the retention setting for an object
+
+Here’s a sample WebDAV PROPPATCH request that changes the retention setting for the object named wind.jpg in the presentations/images directory. Request with cadaver command line
+
+propset presentations/images/wind.jpg retention-string 2015-09-30T17:00:00-0400
+
+Request XML body
+
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ns0:propertyupdate xmlns:ns0="DAV:"> <ns0:set>
+
+<ns0:prop> <ns1:retention-string xmlns:ns1="http://www.hitachivantara.com/hcap/webdav/">
+
+2015-09-30T17:00:00-0400 </ns1:retention-string>
+
+</ns0:prop>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+794/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+</ns0:set> </ns0:propertyupdate> Response XML body
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<D:multistatus xmlns:D="DAV:" xmlns:HCAP="http://www.hitachivantara.com/hcap/webdav/"
+
+xmlns="http://www.hitachivantara.com/hcap/webdav/">
+
+<D:response> <D:href>http://finance.europe.hcp.example.com/webdav/data/
+
+presentations/images/wind.jpg </D:href> <D:propstat> <D:prop>
+
+<ns1:retention-string xmlns:ns1="http://www.hitachivantara.com/hcap/webdav/"/>
+
+</D:prop> <D:status>HTTP/1.1 200 OK</D:status>
+
+</D:propstat> </D:response>
+
+</D:multistatus>
+
+Example: Storing a dead property as custom metadata
+
+Here’s a sample WebDAV PROPPATCH request that sets the presentedBy property for the object named Q1_2012.ppt in the presentations directory. Request with cadaver command line
+
+propset presentations/Q1_2012.ppt presentedBy Lee.Green
+
+Request XML body
+
+<?xml version="1.0" encoding="utf-8" ?>
+
+<D:propertyupdate xmlns:D="DAV:"> <D:set>
+
+<D:prop> <presentedBy xmlns="http://webdav.org/cadaver/custom-properties/">
+
+Lee.Green </presentedBy>
+
+</D:prop> </D:set> </D:propertyupdate>
+
+Response XML body
+
+<?xml version="1.0" encoding="utf-8" ?>
+
+<D:multistatus xmlns:D="DAV:" xmlns:HCAP="http://www.hitachivantara.com/hcap/webdav/">
+
+<D:response>
+
+<D:href>https://finance.europe.hcp.example.com/webdav/data/ presentations/Q1_2012.ppt
+
+</D:href> <D:propstat>
+
+<D:prop> <presentedBy xmlns="http://webdav.org/cadaver/custom-properties/"/> </D:prop>
+
+<D:status>HTTP/1.1 200 OK</D:status> </D:propstat>
+
+</D:response> </D:multistatus>
+
+WebDAV usage considerations Basic authentication with WebDAV

@@ -1,0 +1,101 @@
+Meaning
+
+Description
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. The specified bucket exists, but you do not have read permission for it. The specified bucket does not currently support the requested operation. The S3 compatible API is currently disabled for the specified bucket. The tenant does not currently support use of the S3 compatible API for checking bucket existence.
+
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Checking the existence of a bucket
+
+Here’s a sample HEAD request that checks the existence of a bucket named finance. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --head -- -k "https://finance.europe.hcp.example.com"
+
+Request headers
+
+HEAD / HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000
+
+Authorization: AWS bGdyZWVu:N2UfjwTaydEqS45O5vgcoGerZKw=
+
+Response headers HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT
+
+Content-Length: 0
+
+Adding an ACL to a bucket
+
+You use the HTTP PUT method with the acl query parameter to add an ACL to an existing bucket. Adding an ACL to a bucket replaces any existing ACL in its entirety. You cannot modify an existing ACL in place.
+
+To add an ACL to a bucket, you need write ACL permission for the bucket.
+
+To add an ACL to a bucket, you can use either request headers or an ACL request body. You cannot use ACL headers and an ACL request body in the same request.
+
+With ACL headers, you can specify either a canned ACL or individual x-amz-grant- headers. You cannot specify both a canned ACL and an x-amz-grant- header in the same request.
+
+You can use an ACL request body to change the owner of a bucket you own. You cannot use ACL headers to do this. To change the owner of a bucket, you need both write ACL and change owner permission for the bucket. If you try to add an ACL that specifies a user account that does not exist, HCP returns a 400 (Bad Request) status code and does not add the ACL to the bucket.
+
+Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to add an ACL to a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+PUT /?acl HTTP/1.1
+
+With the bucket name following the hostname:
+
+PUT /bucket-name?acl HTTP/1.1
+
+The acl query parameter is not case sensitive.
+
+Required headers Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-Length
+
+Specifies the size, in bytes, of the request body. This header is required when you’re using an ACL request body to add an ACL to the bucket. If you’re using ACL headers to add the ACL, the Content-Length header is invalid. Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+573/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+DDD, dd MMM yyyy HH:mm:ss (+0000|GMT) In this format: DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM

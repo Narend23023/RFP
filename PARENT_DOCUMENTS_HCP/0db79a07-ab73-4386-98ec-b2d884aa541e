@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?> <contentClass> <name>DICOM</name> <contentProperties> <contentProperty> <name>Doctor_Name</name> <expression>/dicom_image/doctor/name</expression> <type>STRING</type> <multivalued>false</multivalued>
+
+<format></format> </contentProperty> <contentProperty> <name>Doctor_Specialty</name> <expression>/dicom_image/doctor/specialties/specialty</expression> <type>STRING</type> <multivalued>true</multivalued> <format></format> </contentProperty> <contentProperty> <name>Followup_Needed</name> <expression>/dicom_image/followup_needed</expression> <type>BOOLEAN</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Image_Date</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+392/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help <expression>/dicom_image/image/date</expression> <type>DATE</type> <multivalued>false</multivalued> <format>MM/dd/yyyy</format> </contentProperty> <contentProperty> <name>Image_Type</name> <expression>/dicom_image/image/@type</expression> <type>STRING</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Patient_ID</name> <expression>/dicom_image/patient/id</expression>
+
+<type>INTEGER</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Patient_Name</name> <expression>/dicom_image/patient/name</expression> <type>STRING</type> <multivalued>false</multivalued> <format></format> </contentProperty> </contentProperties> <namespaces> <name>Medical-Records</name> </namespaces> </contentClass> Request with cURL command line
+
+curl -k -iT dicom.xml -H "Content-Type: application/xml" -H "Authorization: HCP bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6" "https://anytown-general-hospital.hcp.example.com:9090/mapi/tenants/ anytown-general-hospital/contentClasses"
+
+Request in Python using PycURL
+
+import pycurl import os filehandle = open("dicom.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ bGdyZWVu:a3b9c163f6c520407ff34cfdb83ca5c6"]) curl.setopt(pycurl.URL, "https://anytown-general-hospital.hcp.example.com:9090/mapi/" + "tenants/anytown-general-hospital/contentClasses")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("dicom.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close() Request headers

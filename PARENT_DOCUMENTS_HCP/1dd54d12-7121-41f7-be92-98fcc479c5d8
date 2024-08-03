@@ -1,0 +1,105 @@
+Windows command copy wind.jpg x:\images
+
+Python code
+
+import shutil shutil.copy("wind.jpg", "x:\\images\\wind.jpg")
+
+Example: Changing a retention setting
+
+This example extends the retention period for the wind.jpg object by one year. If this object is still open due to lazy close, changing the retention setting closes it.
+
+Windows command echo +1y > y:\images\wind.jpg\retention.txt
+
+Python code
+
+retention_value = "+1y" retention_fh = file("y:\\images\\wind.jpg\\retention.txt")
+
+try: retention_fh.write(retention_value)
+
+finally: retention_fh.close()
+
+Example: Retrieving an object
+
+This example retrieves the object named wind.jpg from the namespace and stores the resulting file with the same name in the existing RetrievedFiles directory.
+
+Windows command copy x:\images\wind.jpg RetrievedFiles
+
+Python code
+
+import shutil shutil.copy("x:\\images\\wind.jpg", "RetrievedFiles\\wind.jpg") CIFS usage considerations
+
+This chapter presents considerations that affect the use of the CIFS protocol for namespace access.
+
+Note: HCP is an object store with multiple gateways that support various protocols. The CIFS protocol exists on HCP to support legacy applications that do not have modern HTTP REST/S3 support. The CIFS protocol on HCP is not designed to support direct end-user access.
+
+CIFS case sensitivity
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+797/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The Windows operating system is case preserving but not case sensitive. The HCP CIFS implementation, by default, is both case preserving and case sensitive. One result of this discrepancy is that Windows applications that don’t observe differences in case may not be able to access objects by name. For example, suppose a Windows application adds a file named File.txt to the namespace by using the CIFS protocol. CIFS preserves case, so the namespace then contains an object named File.txt. Now suppose the application tries to retrieve that object using the name file.txt. CIFS is case sensitive, so it passes the request to HCP with only the name
+
+file.txt. It doesn’t include any case variations on the name, such as File.TXT or FILE.txt. As a result, HCP cannot find the object.
+
+You can ask your tenant administrator to make the CIFS implementation case insensitive. However, this change has two consequences that affect object reads:
+
+It slows performance.
+
+If the namespace contains multiple objects with names that differ only in case, HCP may return the wrong object. CIFS permission translations
+
+When you view an object on a Windows client, CIFS translates the POSIX permission settings used in the namespace into settings Windows understands. The list below shows how
+
+CIFS maps POSIX permissions to Windows permissions.
+
+r--
+
+Read
+
+w-
+
+Write
+
+--x
+
+None
+
+rw-
+
+Read
+
+Write r-x
+
+Read
+
+Execute
+
+wx
+
+None
+
+rwx
+
+Read Write
+
+Read and Execute Modify
+
+Full control-
+
+---
+
+None
+
+Creating an empty directory with atime synchronization in effect
+
+When you use Windows Explorer to create a new directory, Windows automatically names it New Folder. This is also true for directories you create in a namespace.
+
+Normally, you can rename an empty directory in a namespace. However, if atime synchronization is in effect, you cannot do this. As a result, the name of the new directory remains New Folder.
+
+CIFS lazy close
+
+When writing a file to a namespace, CIFS can cause a flush at any time. After each flush or write, HCP waits a short amount of time for the next one. If no write occurs within that time, HCP considers the resulting object to be complete and closes it. This event is called lazy close.

@@ -1,0 +1,39 @@
+Each version of an object has its own retention, shred, and index settings and its own custom metadata.
+
+When you store a new version of an object, the retention setting of the old version doesn’t change. However, you cannot explicitly delete old versions of objects under retention, even if their retention periods have expired.
+
+If you specify a retention value for an object by using an offset or retention class, the retention period is relative to the time the current version was stored, not when the first version was stored.
+
+Hold settings apply to all versions of an object; if you put an object on hold, all old versions of the object are also put on hold. Object owner settings apply to all versions of an object; if you change the owner of an object, that change affects all versions of the object. However, if you restore a deleted object, the object owner of the object may differ between the current version and the old version or versions.
+
+ACLs do not apply to all versions of an object. You can add, replace, or delete an ACL from any specific version of an object or all versions of the object. If you restore a deleted object, the ACL on the object may differ between the current version and the old version or versions.
+
+Tenant administrators can enable, disable, and reenable versioning for the namespace. When versioning is disabled, old versions are not lost. However, while versioning is disabled, you cannot list or access old versions. If versioning is later reenabled, you can again list, retrieve, and purge any preexisting versions (until HCP prunes them because of their age).
+
+If you enable S3 Object Lock for your namespace: You can set a unique retention period for each version of an object.
+
+You can create new versions of objects under object lock retention or hold. Pruning requests check the retention period of each object version to determine if it can be pruned. Disposition requests verify if the retention period for each object version has expired.
+
+Creating versions
+
+If versioning is enabled, you can store new versions of an existing object by storing the object using the same URL you used to create the object originally. HCP retains the previous version until it is pruned or you explicitly purge the object.
+
+Updates to the system metadata, custom metadata, or ACL for an object do not create a new version of the object.
+
+When HCP creates a new version of an object, the previous version becomes an old version: The old version:
+
+Includes the object data, system metadata, custom metadata, and ACL. This information, except the hold setting, owner, and ACL, is locked and treated as historic data; it cannot be changed. Can be accessed by using the version ID that was assigned when you first stored it. The new version:
+
+Gets a version ID that is greater than the version ID of the previous version. Inherits the system metadata, custom metadata, and ACL from the previous version, unless you specify new metadata when you add the new version to the namespace.
+
+Note: You cannot create new versions of an object that is under retention or on hold or that has a retention setting of -2 (Initial Unspecified).
+
+Retrieving and listing versions
+
+When you retrieve an object from a namespace that supports versioning, you get the current version by default. You can retrieve an older version of the object by specifying a version ID or ingest time. You can also retrieve multiple object versions by specifying a range of version IDs. To determine the ID to use, you can retrieve an XML listing of the available versions of the object. When you list versions, the list includes the system metadata values for each version. You can retrieve the system metadata for an individual version by specifying the version ID in the command that checks for object existence. You can retrieve both the custom metadata and system metadata for an individual version by specifying the version ID in the command that retrieves custom metadata. You can retrieve the ACL for an individual version by specifying the version ID in the command that retrieves an ACL.
+
+Deleting objects with versioning enabled
+
+If you delete an object while versioning is enabled, HCP:
+
+Retains a copy of the deleted object as an old version. Creates a special version, called delete marker or delete record as the current version to indicate that the object has been deleted. This version has a version ID but does not include any object data or metadata. After you delete an object, any attempt to retrieve the object without specifying the version ID of an old version results in an HTTP 404 (Not Found) error code.

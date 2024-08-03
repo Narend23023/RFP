@@ -1,0 +1,73 @@
+By default, the Compression/Encryption service runs only on primary storage. However, you can configure HCP to run the Compression/Encryption service on extended storage as well.
+
+If an object, part, or chunk that was not eligible for compression becomes eligible, the Compression/Encryption service compresses it on its next run. Similarly, if a compressed object, part, or chunk loses its eligibility for compression, the Compression/Encryption service decompresses it on its next run.
+
+Note: Multiple objects, parts, or chunks merged by the Duplicate Elimination service may have differing eligibility for compression. If any one of the objects, parts, or chunks is eligible for compression, the merged object, part, or chunk data is compressed.
+
+Understanding compression statistics The Compression page in the HCP System Management Console displays statistics about the space saved by the Compression/Encryption service. It also lets you control various aspects of compression activity.
+
+Note: To view the Compression page, you need the monitor or administrator role. To change compression settings, you need the administrator role.
+
+To display the Compression page, in the top-level menu of the System Management Console, select Services > Compression. The Compression page shows:
+
+Total bytes saved by compression
+
+The current number of bytes of storage freed by compressed objects, object parts, and chunks for objects and object parts
+
+Percent of storage saved
+
+The amount of storage space currently saved by compression, expressed as a percentage of the total space available for storing objects
+
+Number of objects and object parts compressed
+
+The total number of these items currently compressed: objects, parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects
+
+The page also shows the current compression settings.
+
+Changing compression settings
+
+You can control which objects and object parts HCP compresses based on these properties: Age
+
+You can compress only objects and parts that were added to the repository more than some number of days ago.
+
+Size
+
+You can compress only objects and parts whose content is larger than a specified size. HCP compresses the parts of multipart objects individually based on the size of the
+
+part. HCP never compresses objects or parts smaller than seven KB. Location
+
+You can exclude from compression objects and parts that are located in a specified directory or in any subdirectories of that directory, recursively.
+
+Name
+
+You can exclude from compression objects and object parts where the object name matches a pattern you specify. For example, you might choose to exclude objects with
+
+names that match *.jpg because the data for this type of object is already highly compressed.
+
+To be eligible for compression, an object or part must meet all the criteria you specify.
+
+Chunks of erasure-coded objects and parts are compressed based on the eligibility of the applicable object or part. Note:
+
+The criteria you specify apply across all namespaces.
+
+HCP always compresses old versions of objects, regardless of age, size, and any specified exclusion criteria.
+
+HCP does not compress parts of in-progress multipart uploads, parts of a multipart upload that have been replaced, parts of an aborted multipart upload, or unused parts of completed multipart uploads.
+
+How to change compression/encryption settings
+
+To change the settings for the Compression/Encryption service, on the Compression page in the System Management Console:
+
+In the Compression Settings section, configure the settings that you want to use:
+
+To compress only objects and parts added to a namespace more than a certain number of days ago, type the number of days in the Compress objects stored more than field. Valid values are integers in the range zero through 40,000.
+
+A value of zero tells the Compression/Encryption service not to use age as a criterion when selecting objects and parts to compress. To compress only objects and parts larger than a certain size, type the size, in KB, in the Compress objects larger than field. Valid values are integers in the range zero though 104,857,600 (100 GB).
+
+A value of zero tells the Compression/Encryption service not to use size as a criterion when selecting objects and parts to compress.
+
+In the Other Compression/Encryption Settings section, change the settings to match the HCP system configuration of the following components: S Series node objects
+
+Modify Compression/Encryption settings of HCP S Series Node objects.
+
+Legacy encrypted S Series node objects

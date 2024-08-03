@@ -1,0 +1,69 @@
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+660/907
+
+6/25/24, 11:34 AM Content Platform System Management Help
+
+Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format: bucket-name.tenant-name.hcp-domain-name
+
+Optional headers
+
+x-amz-server-side-encryption
+
+Requests that the response headers include x-amz-server-side-encryption, which indicates whether objects stored in HCP are encrypted. The value of the x-amz-serv er-side-encryption request header can be any character string. Data is only encrypted when Encryption for Primary Running Storage is configured.
+
+Required form fields
+
+The content of a POST object upload request contains a form with fields that are passed to HCP as the contents of a Content-Disposition header. The list below describes the fields you can use in a POST object upload. AWSAccessKeyId
+
+(AWS Signature Version 2 authentication only field) Required if policy is sent with request Specifies the owner of the bucket who grants an anonymous user access for a request that satisfies the constraints in the policy. A Base64-encoded username for a user account.
+
+Signature
+
+(AWS Signature Version 2 authentication only field) Required if policy is sent with request Specifies a value calculated using the secret key and the policy string, as "string to sign." file
+
+Contains file or text content. Can be used with a File or a Textarea form element. HCP ignores any fields that appear after this field. You can only upload one file at a time.
+
+key
+
+Specifies the name of the uploaded key. To use the file name provided by the user, use the variable ${filename}. For example, if the user Greta uploads the file new_hq.jpg and you specify /user/greta/${filenam e}, the key name is /user/greta/new_hq.jpg. policy
+
+Required if bucket is not publicly writable Specifies a security policy describing what is permitted in the request. Requests without a security policy are considered anonymous and work only on publicly writable buckets. x-amz-algorithm
+
+Required if policy is sent with request (AWS Signature Version 4 authentication only field) Specifies the signing algorithm that must be used during signature calculation. The value is AWS4-HMAC-SHA256. x-amz-date
+
+Required if policy is sent with request (AWS Signature Version 4 authentication only field) Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time.
+
+x-amz-signature
+
+Required if policy is sent with request (AWS Signature Version 4 authentication only field) Specifies a value calculated using the secret key and specific elements of the request, including the policy string, as "string to sign." x-amz-credential
+
+Required if using V4 authentication and policy is sent with request (AWS Signature Version 4 authentication only field) Specifies the credentials that you used to calculate the signature. It provides access key ID and scope information identifying the region and service for which the signature is valid. This should be the same scope you used to calculate the signing key. Use this format: access-key-id/date/aws-region/aws-service/aws4_request
+
+For example:
+
+AKIAIOSFODNN7EXAMPLE/20191024/us-east-1/s3/aws4_request
+
+For Amazon S3, the aws-service string is s3.
+
+Optional form fields
+
+acl
+
+Adds a canned ACL to the resulting object when the upload is completed. The default is private.
+
+Content-Encoding
+
+REST-specific header. You can use the values in a policy; they are otherwise treated as follows: If value is gzip and file is gzipped, HCP decodes the file. Expires
+
+REST-specific headers. You can use the values in a policy; they are otherwise treated as follows: If present, HCP returns the value in the response header.

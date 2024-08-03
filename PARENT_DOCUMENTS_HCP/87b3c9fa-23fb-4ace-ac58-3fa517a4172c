@@ -1,0 +1,75 @@
+Specifying the Authorization header with cURL
+
+With cURL, you use the -H option to specify a header. So, for example, a request to list the tenants for the HCP system named hcp.example.com might look like this: curl -k -i -H "Authorization: HCP bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20" -H "Accept: application/xml"
+
+"https://admin.hcp.example.com:9090/mapi/tenants"
+
+Specifying the authentication header in Python with PycURL
+
+In Python with PycURL, you use the HTTPHEADER option to specify a header, as in this example: curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20"])
+
+Active Directory user authentication through the metadata query management API
+
+To authenticate with HCP with Active Directory, you need to construct an authentication token from a AD user account and then submit it using a request header with all requests.
+
+The username and password does not need to be encoded. Active Directory authentication token
+
+An AD authentication token consists of an AD username and password separated by a colon, like this:
+
+AD-username:AD-password
+
+For example, here’s the token for the username lgreen and the password p4ssw0rd:
+
+lgreen@example.com:p4sswOrd
+
+Active Directory authorization header
+
+You use the HTTP Authorization request header to provide the authentication token for an AD user accessing HCP through the management API. The value of this header is AD
+
+followed by the authentication token, in this format: Authorization: AD authentication-token
+
+For example, here’s the Authorization header for a user named lgreen and password p4ssw0rd:
+
+Authorization: AD lgreen@example.com:p4sswOrd
+
+Specifying the Authorization header with cURL
+
+With cURL, you use the -H option to specify a header. So, for example, a request to list the tenants for the HCP system named hcp.example.com might look like this: curl -i -k -H "Authorization: AD lgreen@example.com:p4sswOrd" "Accept: application/xml" "https://admin.hcp.example.com:9090/mapi/tenants"
+
+Specifying the authentication header in Python with PycURL
+
+Tip: After you log in using the authorization AD header, the response header replies with an hcap Set-Cookie value. You can use this cookie for subsequent authentication requests instead of using the authoriation AD header. For example:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+836/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl -ik -b HCAP-Login="acmepKMUfWLEu" "https://tenant.hcp.example.com:9090/mapi/tenants"
+
+In Python with PycURL, you use the HTTPHEADER option to specify a header, as in this example: curl.setopt(pycurl.HTTPHEADER, ["Authorization: AD lgreen@example.com:p4sswOrd"])
+
+Query requests
+
+This chapter describes how to construct both object-based and operation-based query requests.
+
+Request format
+
+You use the HTTP POST method to send a metadata query API request to HCP. The POST request for both object-based and operation-based queries has these elements:
+
+A request URL. Optionally, if the URL starts with an IP address, an HTTP Host header.
+
+An Authorization header. An HTTP Content-Type header with one of these values:
+
+If the request body is XML, application/xml If the request body is JSON, application/json
+
+An HTTP Accept header to specify the response format: application/xml or application/json.
+
+Optionally, to send the query in gzip-compressed format: An HTTP Content-Encoding header with a value of gzip
+
+A chunked transfer encoding

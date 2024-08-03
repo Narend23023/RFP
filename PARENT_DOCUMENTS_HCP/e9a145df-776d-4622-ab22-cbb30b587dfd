@@ -1,0 +1,41 @@
+The host name or IP address of the proxy server. The port number you want to use to connect to the proxy server (default is 0).
+
+The user name, password, and AD domain of the user account that HCP needs to use to access the proxy server.
+
+Whether you want HCP to use path-style URLs to access the storage that’s represented by the storage component. Whether the extended storage component supports S3 metadata on objects. If you are unsure whether S3 metadata is supported, contact your service provider. In the Max metadata size field, type the maximum size (in bytes) of the S3 metadata that will be attached to objects tiered to the storage component. Each extended
+
+storage service provider permits a different maximum size. Contact your service provider to learn the maximum size.
+
+Whether the storage that’s represented by this component is considered to be compliant. The account label that you want to associate with the initial user account that you want HCP to use to access the storage that’s represented by the component. In the System
+
+Management Console, HCP uses the account label to represent the user account with the specified credentials. The authentication type you want to use to authenticate all requests sent from HCP to the storage component. The access key and secret key for the user account that you want HCP to use to access the storage that’s represented by the component.
+
+After you create an S3 compatible storage component, you can modify it to specify credentials for one or more additional user accounts.
+
+If you are using AWS STS or AWS STS V4 authentication, the authentication endpoint text field appears. This is the endpoint to which you send your credentials, in order to generate an authentication token. Optionally, any custom request headers that you want HCP to include in the access request URLs that are sent to the target storage device or cloud service to request read
+
+or write access to the storage associated with the specified user account. Whether you want to access existing buckets associated with the specified user account, and if so, the name of each existing bucket you want to access.
+
+At any given time, a bucket can be associated with only one storage component. You can add an existing bucket to an S3 compatible storage component only if that bucket is empty or has only HCP data in it.
+
+Whether you want to create any new buckets for the specified user account, and if so, the name of each new bucket you want to create.
+
+Note: By default, the Add Component wizard displays a list of the existing buckets that HCP is able to access using the specified user account credentials, but the wizard does not display the controls required to create a new bucket. To create a new bucket, you need to click Bucket Actions, then select Create new from the dropdown list, then
+
+specify the name of the bucket you want to create. NFS storage component settings
+
+Each NFS storage component represents a single physical storage device on which one or more volumes are accessed using NFS mount points.
+
+When you create an NFS storage component, you provide HCP with the information that it needs to create an NFS mount point for each volume that you want to access on the
+
+device that’s represented by the NFS storage component. However, HCP creates an NFS mount point that’s associated with a given storage component only when that mount point is added to an NFS storage pool.
+
+When an HCP system is upgraded from release 6.x to release 7.0 or later, HCP automatically creates an NFS storage component and an NFS storage pool for each external volume that was configured on the HCP system before it was upgraded, and defines each NFS storage pool as a storage tier. For each namespace that was configured to use NFS storage before the upgrade, HCP automatically configures the service plan for that namespace to define the applicable NFS storage pool as a storage tier.
+
+On the Hardware page of the System Management Console, HCP uses an external volume (also called an NFS volume) to represent the storage that’s accessed using a single NFS mount point that’s contained in an NFS storage pool. You can use the Storage page to view information about all NFS volumes stored on a single physical storage device that’s
+
+represented by an NFS storage component.
+
+Creating NFS shares on a physical storage device
+
+Before you can create an NFS storage component, you need to create and configure the NFS shares for the volumes you want to access on the physical storage device that’s represented by the component.

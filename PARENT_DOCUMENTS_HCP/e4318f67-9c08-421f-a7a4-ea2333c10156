@@ -1,0 +1,111 @@
+This routine copies content in an InputStream to this * output Stream. The first inDataSize number of bytes are written
+
+to the data file output stream. *
+
+@param inStream - InputStream to copy content from. * @param inFirstPartSize - number of bytes of inStream that should
+
+be written to the first output stream. * @throws IOException
+
+/ public void copy(InputStream inStream, Integer inFirstPartSize) throws IOException { int streamPos = 0; byte buffer[] = new byte[2048];
+
+int readLength = 0;
+
+// Keep reading bytes until EOF has been reached.
+
+while (-1 != (readLength = inStream.read(buffer, 0, Math.min(buffer.length, (bFinishedFirstPart ? buffer.length :
+
+inFirstPartSize - streamPos ) )))) {
+
+// Update the position in the stream. streamPos += readLength;
+
+// Write the bytes read. write(buffer, 0, readLength);
+
+// Was all the content for the first file written? if ( streamPos == inFirstPartSize)
+
+{ // Yes. Flag that the next write should be to the second file.
+
+bFinishedFirstPart = true; }
+
+}
+
+}
+
+/** * This is the core buffer write function for the OutputStream
+
+implementation. It writes to either the first or second file * stream depending on where it is in the stream.
+
+/ public void write(byte[] b, int offset, int length) throws IOException { // Write to first or second file depending on where we are in the // stream. if (! bFinishedFirstPart ) {
+
+mFirstFile.write(b, offset, length); } else {
+
+mSecondFile.write(b, offset, length); }
+
+}
+
+/**
+
+This version of the write function takes a single int parameter. */ public void write(int b) throws IOException { // Write to first or second file depending on where we are in the // stream. if (! bFinishedFirstPart ) {
+
+mFirstFile.write(b); } else {
+
+mSecondFile.write(b); }
+
+}
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+830/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+/**
+
+flush() method to flush all files involved. */ public void flush() throws IOException { mFirstFile.flush(); mSecondFile.flush(); super.flush();
+
+}
+
+/** * close() method to first close the data file and custom metadata
+
+file. Then close itself.
+
+/ public void close() throws IOException { mFirstFile.close(); mSecondFile.close();
+
+super.close(); }
+
+}
+
+Browser configuration for single sign-on with Active Directory
+
+If a tenant is configured to support AD authentication, you can use a recognized AD user account to access the Tenant Management Console with single sign-on. However, for this to work, the web browser you use to access the Console must be configured to support single sign-on.
+
+This appendix contains instructions for configuring Windows Internet Explorer® and Mozilla® Firefox® to support single sign-on. Configuring Windows Internet Explorer for single sign-on
+
+Before you set up single sign-on, you need to configure Windows Internet Explorer. The following instructions apply with Windows Internet Explorer 11.
+
+1. Open Internet Explorer. 2. On the Tools menu, click Internet Options.
+
+3. In the Internet Options window, click the Security tab. 4. On the Security page, select Local intranet.
+
+5. Click Sites.
+
+6. In the Local intranet window, ensure that all the options are selected. 7. Click Advanced.
+
+8. In the Add this website to the zone field, take either of these actions:
+
+To enable single sign-on with HTTP, type: http://*.hcp-name.domain-name
+
+For example:
+
+http://*.hcp.example.com
+
+To enable single sign-on with HTTPS, type:
+
+https://*.hcp-name.domain-name
+
+For example:
+
+https://*.hcp.example.com
+
+9. Click Add. 10. Click Close.

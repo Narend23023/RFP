@@ -1,0 +1,27 @@
+Recovering from a failure During a catastrophic failure, an HCP system can lose all configuration information. In this case, if the system participates in a replication link, you need to restore the link configuration after the system is rebuilt. If the failure did not cause the system to lose the link configuration, you don’t need to restore the link.
+
+Once the link configuration exists on both systems involved in the link:
+
+For an active/active link, you need to perform the failback procedure. For an active/passive link:
+
+If the primary system failed, you need to recover namespace content and other applicable information from the replica. Note: After you fail over an active/passive link, the only way to return to normal replication is by going through the data recovery procedure. You need to perform this procedure even if you don’t need to restore the link and even if no changes have been made to the configuration or content of the replicated items. Even when nothing has change, the data recovery process can take more than five minutes. If the replica failed, replication automatically restarts, beginning again with the objects with the oldest metadata changes either across all namespaces or within each namespace, depending on the link configuration.
+
+Restoring a link
+
+You do not need to restore a replication link if both systems involved in the link have the correct link configuration. In this scenario, you can skip this portion of the recovery procedure even though the Restore Link button is enabled. Note: Clicking Restore Link will cause the pending recovery to attempt to replicate all object data over the restored link. If the failover and recovery procedures are part of a failover and recover test, clicking this button might cause the recovery procedure to take a lot more time than necessary. Before you can restore a replication link, both systems involved in the link must have the required SSL certificates installed. 1. In the top-level menu of the HCP System Management Console for the system where the link configuration still exists, select Services > Replication. 2. On the replication Links page, click the link you want to restore. 3. On the Replication Link Details page, click Link. 4. If necessary, update the link configuration. You must complete this step only if the domain name or IP addresses of the other system has changed. If the domain name of the other system has not changed, do not replace the displayed IP addresses with the domain name. Note: After a system failure that is part of an erasure coding topology, if the replacement system has a different domain name or different IP addresses from the failed system, you need to reconfigure all the replication links that connect other systems in the topology to the failed system. When reconfiguring the links, ensure that they all connect to the same replacement or rebuilt system; otherwise, the erasure coding topology will no longer function. 5. In the replication Link panel, click the Failover tab. 6. In the Failover pane, click Restore Link.
+
+Note: If you do not see the Restore Link button, wait a few minutes and then refresh the Replication page. Before displaying this button, HCP must recognize that the other system is available, has the necessary SSL certificates installed, and is unaware of the existing link.
+
+After you restore a link, the Restore Link button remains active. This state enables you to repeat the restore procedure if the system that failed needs to be rebuilt again before you fail back or begin recovery on the link. Although the button is still active, you can proceed to the next part of the recovery procedure.
+
+Failing back an active/active link 1. In the top-level menu of the HCP System Management Console for the system you failed over to, select Services > Replication. 2. On the replication Links page, click the link you want to fail back. 3. On the replication link details page, click Link. 4. In the replication Link panel, click the Failover tab. 5. In the link Failover panel, click Fail Back.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+375/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Recovering the data after a primary system failure

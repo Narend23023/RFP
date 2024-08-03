@@ -1,0 +1,41 @@
+To configure a network to use an IPv4 subnet, you need to define both the gateway and the subnet mask for that IPv4 subnet.
+
+You can assign IPv4 addresses to nodes for a network only if an IPv4 subnet is defined for that network. All IPv4 addresses defined for a network must be on the IPv4 subnet defined for that network.
+
+To configure a network to use an IPv6 subnet (whether it’s a primary or secondary IPv6 subnet), you need to define both the gateway and the prefix length for that subnet. A secondary IPv6 subnet can be defined for a network only if a primary IPv6 subnet is also defined for that network.
+
+When hidden primary or notify is enabled for a network, if you configure that network to use a secondary IPv6 subnet, you also need to review and, if necessary, modify the list of downstream DNS server IP addresses configured for that network to ensure that each IPv6 address either is on the secondary IPv6 subnet or is routable from the primary IPv6 gateway that’s defined for the network. You can assign primary IPv6 addresses to nodes for a network only if a primary IPv6 subnet is defined for that network. All primary IPv6 addresses defined for a
+
+network must be on the primary IPv6 subnet defined for that network. You can assign secondary IPv6 addresses to nodes for a network only if a secondary IPv6 subnet is defined for that network. All secondary IPv6 addresses defined for a network must be on the secondary IPv6 subnet defined for that network.
+
+To include a node in a network, you need to assign a separate IP address to that node on each IPv4 and IPv6 subnet that is defined for the network. Note: To configure a partial network, you need to ensure that each node in the HCP system either has no IP addresses for the network or has an IP address on every
+
+IPv4 and IPv6 subnet that is defined for the network. Selecting a different domain for a network has no effect on requests currently being serviced over that network. However, in subsequent requests, clients using that network
+
+need to specify the new domain name in the request URL.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+86/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+If the HCP system is configured for DNS and you select a different domain for a network, make sure you change the domain name in the DNS to specify the name of the new
+
+domain for the network. After you select a different domain for a network that’s being used for tenant management, any clients connected to the Tenant Management Console for the applicable tenants at the time of the change need to close all browser windows to clear cookies so they can access the Console using the new domain name. If you select a different domain for the network that’s used for replication and the other system in the replication pair identifies the current system by its domain name, you need to modify the domain name in the definition of the replication link. Similarly, if you change the node IP addresses for the network that’s used for replication and the other
+
+system in the replication pair identifies the current system by its IP addresses, you need to modify the IP addresses in the definition of the replication link. For the network that’s currently selected for replication, all nodes must have IP addresses. You can change but cannot remove IP addresses for that network. You can disable or reenable a network at any time. If you disable the network that’s currently selected for replication, the status of all replication links in which the HCP system participates changes to broken, and replication or recovery, as applicable, stops on those links. If you then reenable the network, replication or recovery resumes automatically on those links.
+
+Modifying a network
+
+You can use the Networks > Network View page to view and modify any configurable properties of a network or network alias.
+
+You can use the Networks > Node View page to modify the network IP address assignments that are defined for each node for each existing network on the HCP system.
+
+The next two sections provide instructions for modifying a network using the Networks > Network View page and using the Networks > Node View page, respectively.
+
+Modifying a network on the Network View panel
+
+1. On the Networks > Network View page, in the network list, click the name of the network that you want to modify.

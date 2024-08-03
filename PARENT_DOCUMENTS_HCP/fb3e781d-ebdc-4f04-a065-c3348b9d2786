@@ -1,0 +1,51 @@
+Tip: Be sure to give WebDAV users the specified username and password.
+
+Specify whether WebDAV dead properties can be stored as custom metadata. If they can be, they are stored in the annotation named default. Specify the client IP addresses that have access to the namespace through the REST, S3 compatible, and WebDAV APIs.
+
+By default, when a namespace is first created, the REST API is enabled with authentication required. If the HCP system supports the use of SSL for data access, the REST API also requires the use of SSL security by default. Considerations for the S3 compatible API
+
+The following considerations apply to using the S3 compatible API:
+
+You can enable the S3 compatible API for a namespace only while ACLs are enabled for the namespace. For users and applications to be able to perform most bucket-level operations with the S3 compatible API, the HCP management API must be enabled for the tenant. For a user or application to be able to create and manage namespaces with the S3 compatible API, the applicable user or group account must have the allow namespace management property enabled. Only cloud-optimized namespaces support the use of multipart uploads with the S3 compatible API.
+
+Enabling REST, S3 compatible, and WebDAV access to a namespace
+
+The HTTP(S) panel has two sections for enabling and configuring the REST, S3 compatible, and WebDAV APIs. This procedure is for the Settings section.
+
+Note: REST and WebDAV are not supported on the namespaces that are configured to use S3 Object Lock. 1. Take either or both of these actions:
+
+To open the HTTPS port for REST, S3 compatible, and WebDAV access to the namespace with SSL security, select Enable HTTPS.
+
+Certain countries prohibit the export of encryption technology. HCP systems shipped to restricted countries have the HTTPS option on the namespace protocols page disabled. If you do not see the checkbox to enable HTTPS and you are in a country where SSL encryption is permitted, please contact your HCP system administrator.
+
+To open the HTTP port for REST, S3 compatible, and WebDAV access to the namespace without SSL security, select Enable HTTP. These two options are independent of each other. If you select only Enable HTTPS, data sent through the REST, S3 compatible, and WebDAV APIs is always secure. If you select both options, users and applications can send both secure and unsecure data through the REST, S3 compatible, and WebDAV APIs. Note: To enable access to the namespace through the REST, S3 compatible, or WebDAV API, you also need to select Enable REST API, Enable Hitachi API for Amazon S3, or Enable WebDAV API, respectively. Opening the HTTPS and HTTP ports does by itself enable these protocols.
+
+2. Enable the REST API. a. Select Enable REST API.
+
+This option is available only if Enable HTTP or Enable HTTPS is already selected.
+
+Above the Enable REST API option, the panel shows the URL for access to the namespace through the REST API. If the HTTPS port is open or if neither the HTTPS or HTTP port is open, this URL starts with https. If only the HTTP port is open, the URL starts with http.
+
+b. To specify REST authentication requirements, below the Enable REST API option, select either Authenticated access only or Anonymous and authenticated access. c. (Optional) Select or deselect Enable Active Directory single sign-on to allow or disallow, respectively, single sign-on to the namespace with Active Directory
+
+authentication. This option appears only if the tenant supports AD for user authentication.
+
+The option to enable AD single sign-on for REST is synchronized with the same option for the S3 compatible API. Enabling or disabling either enables of disables the other, respectively.
+
+To help ensure that AD single sign-on is available for those namespaces that need it, enable it only for those namespaces.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+286/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+After this option is disabled, you can reenable it only while HCP can communicate with AD.
+
+3. Enable the S3 compatible API.
+
+a. Select Enable Hitachi API for Amazon S3.
+
+This option is available only if Enable HTTP or Enable HTTPS is already selected.

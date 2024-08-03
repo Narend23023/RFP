@@ -1,0 +1,129 @@
+hashScheme="SHA-256" hash="36728BA190BC4C377FE4C1A57AEF9B6AFDA98720422960B19..." retention="0" retentionString="Deletion Allowed"
+
+retentionClass="" hold="false"
+
+shred="false"
+
+dpl="2" index="true"
+
+customMetadata="false" customMetadataAnnotations=""
+
+replicated="false" owner="lgreen"
+
+domain="" hasAcl="false"
+
+state="created" version="80232489767169"
+
+ingestTime="1335613062" X-HCP-VersionCreateTimeMilliseconds="1494355864623" ingestTimeString="4/28/2012 11:37AM" changeTimeMilliseconds="1335627338110.00"
+
+changeTimeString="2012-04-28T15:35:38-0400" />
+
+</versions>
+
+Retrieving an object or multiple versions of an object
+
+You use the HTTP GET method to retrieve an object, a version of an object, or a range of versions of an object from a namespace. When retrieving an single object or version, you can request all the object data or part of the data. When retrieving multiple versions of an object, you can only request all the object data.
+
+You can use a GET request to retrieve all the object data of a single object or version and an annotation together. You cannot retrieve part of the object data together with an
+
+annotation in a single request. You can also use a GET request to retrieve the timestamp range of an object, which you can use to find a version of that object.
+
+Using GET with a symbolic link returns the current version of the object that is the target of the link. Note: Attempts to retrieve the current version of a deleted object result in an HTTP 404 (Not Found) error code. However, if versioning is enabled, you can retrieve the version you
+
+deleted by specifying its version ID.
+
+Access permission
+
+To retrieve an object or version, you need read permission.
+
+Request header GET /rest/directory/file?version=@version&deleted=true HTTP/1.1
+
+The GET request to retrieve an object has these elements:
+
+If you are accessing the namespace as an authenticated user, an Authorization header The URL of the object or symbolic link
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name. file
+
+Yes
+
+Name of the file, including file extension.
+
+version
+
+No
+
+One of:
+
+Specific version number of the file. For example:
+
+?version=80232998058817
+
+Range of version IDs, separated by a dash. For
+
+example:
+
+?version=91728994618369-91728994618372
+
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+732/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the
+
+existence of the current version of an object. If you specify a valid range, HCP returns the requested amount of data with a status code of 200.
+
+deleted
+
+No
+
+By default, the GET request to retrieve object versions
+
+does not include delete records. To retrieve a listing that includes delete records, specify this URL query
+
+parameter:
+
+deleted=true
+
+You can also specify deleted=false, which results in the default behavior. forceEtag
+
+No
+
+To force HCP to generate an ETag for an object that does not yet have one, specify a forceEtag URL query parameter with a value of true.
+
+nowait
+
+No
+
+HCP may detect that a GET request will take a significant amount of time to return an object. You can choose to
+
+have the request fail in this situation instead of waiting for
+
+HCP to return the object.

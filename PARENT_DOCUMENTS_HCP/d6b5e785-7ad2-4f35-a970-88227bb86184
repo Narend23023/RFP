@@ -1,0 +1,93 @@
+unknown
+
+otherwise
+
+This header is returned only if the request asked for the object data and an annotation.
+
+X-HCP-CustomMetadataFirst
+
+One of:
+
+true
+
+The annotation precedes the object data. false
+
+The object data precedes the annotation.
+
+X-HCP-DataContentType
+
+The object Internet media type, such as text/plain or image/jpg. This header is returned only if the request asked for the object data and an annotation.
+
+X-HCP-Domain
+
+The Active Directory domain that contains the user identified by the X-HCP-Owner header. This value is an empty string if the X-HCP-Owner header identifies a user account defined in HCP or if the object has no owner. If the X-HCP-Owner header returns a user account ID or nobody, the value of the X-HCP-Domain header is one of several invalid domains that begin with the percent sign (%). These values have meanings internal to the HCP system. X-HCP-DPL
+
+The data protection level for the object.
+
+X-HCP-GID
+
+The POSIX group ID for the object.
+
+For objects added through the NFS protocol, this value is determined by the NFS client. This value is an empty string if either of these conditions is true:
+
+The object was added through a protocol other than NFS and neither the UID nor the GID for the object has been changed. The HCP product-specific owner of the object was changed. X-HCP-Hash
+
+The cryptographic hash algorithm HCP uses, along with the cryptographic hash value stored for the object, in this format:
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is the same as the data you sent. To perform the verification, compare this value with a hash value that you generate from the original data. The
+
+X-HCP-Hash
+
+header is not returned for multipart objects.
+
+X-HCP-Index
+
+A true or false value indicating whether the object is marked for indexing.
+
+X-HCP-IngestProtocol
+
+The namespace access protocol through which the object was added to the namespace. Possible values are: CIFS_NFS
+
+HTTP SMTP
+
+WebDAV
+
+If HCP cannot determine the protocol through which the object was added, this value is UNKNOWN.
+
+X-HCP-IngestTime
+
+The time when HCP stored the object, in seconds since January 1, 1970, at 00:00:00 UTC.
+
+x-HCP-LabelRetentionHold
+
+Specifies whether the object is on labeled hold. A Boolean value (true | false) is returned.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+734/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+x-HCP-LabelRetentionHold-Labels
+
+If the object is on labeled hold (X-HCP-LabelRetentionHold:true) and the user has privileged data access and read permissions on the object, this header is returned with a list of all labeled holds. Example
+
+X-HCP-LabelRetentionHold-Labels: [{"id":"UniqueLabelHold-1","hold": true}, [{"id":"UniqueLabelHold-2","hold": true },[{"id":"UniqueLabelHold-3","hold": true }]
+
+X-HCP-LastVersionId
+
+The version ID of the last returned object version.
+
+X-HCP-Owner
+
+The user that owns the object.
+
+This value is an empty string if the object has no owner. This value is nobody for objects that were stored by an authenticated user before the HCP system was upgraded from a release earlier than 5.0. These objects effectively have no owner. This value is a user account ID if HCP can no longer identify the object owner by username. For example, you would see a user account ID if the HCP user account has
+
+been deleted. X-HCP-Replicated
+
+A true or false value indicating whether the object, has been replicated. The value is true only if the current version of the object, its system metadata, annotations (if any), and ACL (if any) have been replicated.

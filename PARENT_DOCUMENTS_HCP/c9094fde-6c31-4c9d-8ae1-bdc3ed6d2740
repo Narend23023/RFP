@@ -1,0 +1,65 @@
+The request includes conflicting conditional headers (for example, x-amz-copy-source-if-match and x-amz-copy-source-if-none-match). The request includes a custom metadata (x-amz-meta-) header.
+
+403 Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can upload parts for a multipart upload. The credentials provided with the request are invalid. The credentials provided with the request do not match the credentials used to initiate the multipart upload. You do not have permission to upload parts in the specified bucket. The S3 compatible API is currently disabled for the specified bucket. The source object exists, but the HCP system does not have the source object data. Try the request again later. The source object is in the process of being deleted.
+
+404 Not Found
+
+One of these:
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was aborted or completed.
+
+In the case of completion, if the part being uploaded is a replacement for an existing part, the existing part is used for completing the multipart upload.
+
+The specified bucket does not exist.
+
+409 Conflict
+
+The specified multipart upload was completed or aborted while the upload part copy operation was in progress.
+
+412
+
+Precondition Failed
+
+One of these:
+
+The request included an x-amz-copy-source-if-match header, and the ETag for the specified source object or object version does not match any of the values specified by the header. The request included an x-amz-copy-source-if-none-match header, and the ETag for the specified source object or object version matched a value specified by the header. The request included an x-amz-copy-source-if-modified-since header, and the specified source object or object version was not modified after the date and time specified by the header. The request included an x-amz-copy-source-if-unmodified-since header, and the specified source object or object version was modified after the date and time specified by the header.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+Possible reasons include:
+
+The source object exists but cannot be read. HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade.
+
+Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Conditionally creating a part from an object
+
+Here’s a sample PUT request that conditionally uploads a part of the multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket by copying the data from an existing object named acctg/AcctgRR-Summary in the same bucket.
+
+For this example, assume that part 6 of the multipart upload has already been uploaded and has an ETag of 7914d874df2c1d55cfab4fa82088ff56. The request directs HCP to create a new part 6 from the copied data only if the ETag of the copied data is different from the ETag of the data previously uploaded for part 6. The example shows the response headers HCP returns while versioning is enabled for the bucket.
+
+Request with s3curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+647/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+./s3curl.pl --id=lgreen --copysrc=finance/acctg/AcctgRR-Summary -- -k
+
+"https://finance.europe.hcp.example.com/acctg/RulesAndRegulations.pdf ?uploadId=94837746087105&partNumber=6" -H "x-amz-copy-source-if-none-match:7914d874df2c1d55cfab4fa82088ff56" -H "x-hcp-pretty-print: true" Request headers

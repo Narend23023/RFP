@@ -1,0 +1,41 @@
+Empty network assigned The tenant is associated with an empty network for management or data access purposes. If the management network is empty, the tenant cannot be accessed through the Tenant Management Console or HCP management API. If the data access network is empty, namespaces belonging to a tenant are inaccessible. Take one of these actions:
+
+On the Tenants page, reconfigure the affected tenant to use only networks that have IP addresses defined for at least two nodes in the HCP system. On the Networks page, configure each empty network to assign IP addresses to one or more nodes. Each node must have a separate IP address on each subnet defined for the network. Inaccessible due to network configuration
+
+The management and/or data access network specified for the tenant does not exist. If the management network does not exist, the tenant cannot be accessed through the Tenant Management Console or HCP management API. If the data access network does not exist, namespaces belonging to a tenant are inaccessible. This error can occur on an HCP system that’s a replication target when a network defined on a source system is not defined on the target system. For each undefined network, create a network with the name of the undefined network.
+
+Namespace quota exceeded The number of namespaces owned by the tenant is greater than the namespace quota for the tenant. This situation can happen if the tenant is included in an active/active replication link. With this type of link, namespaces can be created for the tenant independently on each system involved in the link. Namespaces from both systems can then be added to the link such that the total number of namespaces replicated on the link exceeds the
+
+namespace quota for the tenant. As a result, the total number of namespaces for the tenant on each system exceeds the namespace quota for the tenant.
+
+Namespace quota reached
+
+The number of namespaces owned by the tenant equals the namespace quota for the tenant.
+
+Nonreplicating objects
+
+The tenant contains objects that are not replicating. Contact your HCP system administrator.
+
+Partial network assigned The tenant is associated with a partial network for management or data access purposes. The load from client requests for access to the tenant or its namespaces is not being fully distributed across the nodes in the HCP system. Take one of these actions:
+
+On the Tenants page, reconfigure the affected tenant to use only networks that have IP addresses defined for all nodes in the HCP system. On the Networks page, reconfigure each partial network to assign IP addresses to all nodes in the HCP system. Each node must have a separate IP address on each subnet defined for the network.
+
+Read-only, set by replication
+
+For HCP tenants only, the tenant is read-only because it’s included in an active/passive link and one of the following is true: The current system is the replica for the link, and normal replication is occurring on the link. The current system is the primary system for the link, and the initial stage of data recovery is occurring on the link. The current system is either the primary system or the replica for the link, and the final stage of data recovery is occurring on the link.
+
+Soft quota exceeded
+
+For HCP tenants only, the amount of storage used by all namespaces owned by a tenant exceeds the soft quota configured for the tenant. Contact the tenant administrator about increasing the hard quota for the tenant.
+
+Tenant has namespace-count namespace(s) configured for CIFS with authenticated access only, but CIFS authenticated access is not currently supported One or more of the tenant's namespaces are configured for CIFS authenticated access only, but the system is not configured to support the use of authenticated CIFS. As a result, CIFS cannot be used for access to those namespaces. Reconfigure the affected namespace(s) to support both anonymous and authenticated access with CIFS.
+
+Tenant tenant-name has irreparable-object-count irreparable objects
+
+One or more of the tenant's namespaces contain the indicated total number of irreparable objects. Contact your authorized HCP service provider.
+
+Tenant tenant-name has irreparable-object-count irreparable objects and unavailable-object-count unavailable objects
+
+One or more of the tenant's namespaces contain the indicated total number of irreparable objects, and one or more of the tenant's namespaces contain the indicated total number of unavailable objects. Contact your authorized HCP service provider.
+
+Tenant tenant-name has unavailable-object-count unavailable objects One or more of the tenant's namespaces contain the indicated total number of unavailable objects. This is most likely due to one or more nodes being unavailable, If the situation persists, please contact your authorized HCP service provider.

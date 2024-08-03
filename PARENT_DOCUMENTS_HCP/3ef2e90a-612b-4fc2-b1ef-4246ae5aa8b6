@@ -1,0 +1,77 @@
+Authorization
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+644/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT).
+
+To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-copy-source
+
+Specifies the source bucket and object or object version, in this format: /bucket-name/source-object-name[?versionId=source-object-version-id]
+
+The initial forward slash (/) is required. Valid values for source-object-version-id are the IDs of versions of the source object specified in the request. The versionId query parameter is not case sensitive. If you include the versionId query parameter in the x-amz-copy-source header with an invalid value while versioning is enabled, HCP returns a 404 (Not Found) status code and does not perform the upload part copy operation. If you include the versionId query parameter in the x-amz-copy-source header while versioning is disabled, the parameter is ignored, and the current version of the specified object is used as the source for the upload part copy operation. x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above.
+
+Optional headers
+
+Content-Type
+
+Specifies the Internet media type of the data being copied. Valid values are Internet media types (for example, text/plain, application/xml, or image/jpeg). x-amz-copy-source-if-match
+
+Specifies one or more values for comparison with the ETag of the specified source object or object version. If the ETag matches one of the specified values, HCP continues processing the request. If the ETag doesn’t match any of the specified values, HCP returns a 412 (Precondition Failed) status code and does not upload the part. To specify the values for this header, use this format: "value"[, "value"]...
+
+In this format, each value can be any string of one or more characters and must be enclosed in double quotation marks ("). Alternatively, you can specify a single asterisk (*) as the value for the x-amz-copy-source-if-match header. All ETags match an asterisk in an x-amz-copy-source-if-ma tch header. x-amz-copy-source-if-modified-since

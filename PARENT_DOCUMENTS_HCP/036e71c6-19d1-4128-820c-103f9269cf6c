@@ -1,0 +1,51 @@
+Precede the time interval with a plus sign (+). You can combine intervals, such as +1YEAR+6MONTHS
+
+This example requests facet information for three content properties: salary, dateOfBirth, and zip:
+
+<facets>salary(0;999999.99;50000), dateOfBirth(1900-01-01T00:00:00Z;*;+10YEARS),zip</facets>
+
+The example consists of these facets: The salary facet requests the number of objects with salaries in the range zero through 999,999.00, broken out into intervals of 50,000. The dateOfBirth facet requests the number of objects with birth dates in each ten-year interval from midnight, January 1, 1900 to now. The zip facet requests the number of objects with each zip code that occurs in the result set. In this example, the zip content property has a type of string, so you cannot specify a range or interval for it. This request returns facets only for zip codes that have at least one matching object. Query expressions
+
+With object-based queries, you specify a query expression in the query request entry. Query expressions have this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, [+|-] is an optional Boolean operator and criterion is one of:
+
+A single text-based or property-based criterion. One or more criteria in parentheses, in this format: ([+|-]criterion [[+|-]criterion]...)
+
+In this expression, criterion can be a single criterion or one or more criteria in parentheses.
+
+For example, here is one possible query expression:
+
+(namespace:"finance.europe") +(retention:0 index:1)
+
+Query expressions can contain only valid UTF-8 characters.
+
+Tip: You can use the Metadata Query Engine Console to generate query expressions. To do this, construct a query on the Structured Query page and then click the Show as advanced query link. The resulting advanced query can be used as a query expression in an object-based query request. Text-based criteria
+
+Text-based criteria let you perform queries based on object paths and the full-text content of custom metadata. Queries that use text-based criteria find objects with matching custom
+
+metadata only in namespaces that are configured to support full-text searches of custom metadata.
+
+To perform queries based on object paths only or on custom metadata content only, use property-based criteria.
+
+A single text-based criterion is a text string consisting of one or more UTF-8 characters. This string is interpreted as one or more search terms, where each search term is a
+
+sequence of either alphabetic or numeric characters. All other characters, except wildcards, are treated as term separators.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+840/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help For example, the string product123 contains two search terms — product and 123. A query based on this string finds objects with paths or custom metadata that contains at least one of product and 123.
+
+Search terms match only complete alphabetic or numeric strings in paths or custom metadata. For example, the text strings AnnualReport, 2012, and AnnualReport_2012 match the object named AnnualReport_2012.pdf. A query expression with a text string such as Annual or 201 does not match this object.
+
+Similarly, to query for objects with a path or custom metadata that contains the word product, you need to use the complete word product as the text string. A query expression with a text string such as prod does not match objects with a path or custom metadata containing product.
+
+Search terms are not case sensitive. Therefore, the text strings AnnualReport, Annualreport, and annualreport are equivalent. Common words such as a and is are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a. To prevent such a match, use a phrase as described below.
+
+To specify a negative number as a text-based criterion, enclose the criterion term in double quotation marks ("); for example, "-3121".

@@ -1,0 +1,99 @@
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+569/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Optional headers
+
+x-hcp-pretty-print
+
+Optionally, requests that the XML response body be formatted for readability. Valid values are:
+
+true
+
+Format the XML response body for readability.
+
+false
+
+Do not apply any special formatting to the XML response body.
+
+The default is false. The values true and false are not case sensitive. Response headers
+
+Content-Type
+
+Specifies the Internet media type of the response body. For a request to list the contents of a bucket, the value of this header is always application/xml;charset=UTF-8.
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Transfer-Encoding
+
+Indicates that HCP could not determine the size of the response body before formulating the response. For a request to list the buckets you own, the value of this header is always chunked.
+
+Response body
+
+HCP returns the list of buckets you own in an XML response body, in this format:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Owner> <ID>bucket-owner-user-id</ID> <DisplayName>bucket-owner-username</DisplayName> </Owner> <Buckets> Format for a bucket: <Bucket> <Name>bucket-name</Name> <CreationDate>bucket-creation-date-and-time</CreationDate> </Bucket> . . . </Buckets> </ListAllMyBucketsResult> Bucket
+
+Child of the ListAllMyBucketsResult element and container for the Name and CreationDate elements. The response body contains one Bucket element for each bucket you own.
+
+CreationDate
+
+Child of the Bucket element. The CreationDate element specifies the date and time when the applicable bucket was created, in Greenwich Mean Time (GMT). The date and time are expressed in this format: yyyy-MM-ddTHH:mm:ss.SSSZ
+
+For example:
+
+2020-02-18T19:46:03.856Z
+
+DisplayName
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+570/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

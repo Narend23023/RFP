@@ -1,0 +1,75 @@
+The REST API is compliant with HTTP/1.1, as specified by RFC 2616. For you to access a namespace using the REST API, the API must be enabled in the namespace configuration. If you cannot use the REST API to access the namespace, contact your tenant administrator.
+
+This chapter explains how to use the REST API to access and perform operations in namespaces.
+
+The REST API examples in this book use cURL and Python with PycURL, a Python and Java® interface that uses the libcurl library. cURL and PycURL are both freely available open-source software. You can download them from http://curl.haxx.se.
+
+Note: In version 7.12.1 of PycURL, the PUT method was deprecated and replaced with UPLOAD. The Python examples in this book show UPLOAD but work equally well with PUT.
+
+URLs for namespace access using the REST API URL formats
+
+The following sections show the URL formats you can use to access a namespace. These formats all use a domain name to identify the HCP system. As an alternative, you can use
+
+an IP address to identify the HCP system.
+
+If the HCP system does not support DNS, you can use the client hosts file to enable access to a namespace by hostname. Note:
+
+The URL formats and examples that follow show https. If the namespace configuration does not require SSL security for HTTP, you can specify http instead of https in your URLs. If you use HTTPS, check with your tenant administrator as to whether you need to disable SSL certificate verification. With cURL, you do this by including the -k or --insecure option in the request command line. In Python with PycURL, you do this by setting the SSL_VERIFYPEER option to false or 0 (zero). Namespace URL
+
+The URL that identifies a namespace has this format:
+
+https://namespace-name.tenant-name.hcp-domain-name
+
+For example:
+
+https://finance.europe.hcp.example.com
+
+In this example:
+
+finance
+
+the namespace name.
+
+europe
+
+the tenant name.
+
+hcp-example.com
+
+is the domain name of the HCP system.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+711/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The URL for a namespace is not case sensitive.
+
+URLs for accessing objects, directories, and symbolic links
+
+To access the root of the namespace directory tree, append rest, in all lowercase letters, to the namespace URL, as in this example: https://finance.europe.hcp.example.com/rest
+
+To access a specific object, directory, or symbolic link in a namespace, append the directory or object path to the namespace URL and the interface identifier rest. The format for this is:
+
+https://namespace-name.tenant-name.hcp-domain-name/rest/directory-path[/object-name]
+
+Here’s a sample URL that identifies a directory: https://finance.europe.hcp.example.com/rest/Corporate/Employees
+
+Here’s a sample URL that identifies an object:
+
+https://finance.europe.hcp.example.com/rest/Corporate/Employees/23_John_Doe.xls
+
+The names of objects, directories, and symbolic links are case sensitive. You cannot tell from a URL whether it identifies an object, directory, or symbolic link. URLs for namespace information
+
+You may have access to multiple namespaces owned by a given tenant. To retrieve information about these namespaces, use this format for the URL: https://namespace-name.tenant-name.hcp-domain-name/proc
+
+In the URL, proc must be all-lowercase.
+
+A URL used to retrieve information about multiple namespaces owned by a tenant must start with the name of one of the namespaces.
+
+Using an IP address in a URL
+
+Because you need to provide a hostname that includes the tenant and namespace names in all REST API requests, using the hostname is the simplest way to access a namespace. In some applications, however, using IP addresses may be more efficient than using the hostname.

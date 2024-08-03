@@ -1,0 +1,47 @@
+Removing an ACL
+
+You can remove an ACL from a bucket or object by removing all grants from it. To do this by using headers, use the x-amz-acl header with the canned ACL named private, like this: x-amz-acl: private
+
+To remove an ACL by using an ACL request body, omit all grants from the request the body, like this:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <AccessControlList> </AccessControlList> </AccessControlPolicy>
+
+Removing an ACL does not remove full control from the bucket or object owner. Versioning
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+555/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Versioning is an optional bucket feature that enables the creation and management of multiple versions of an object. With versioning enabled, when you store an object with the same name as an existing object, a new version of the object is created. If versioning is not enabled, you cannot store an object that has the same name as an existing object.
+
+HCP does not create new versions of objects that are under retention or on hold. An attempt to store a new version of such an object results in an error.
+
+Enabling and disabling versioning You can use the S3 compatible API to enable, disable, and view the status of versioning for buckets you own. Tenant administrators can also take these actions on buckets you own. Whether versioning is initially enabled when you create a bucket is determined by a tenant-level configuration setting.
+
+Note: Tenants can be configured not to allow versioning at all. If the tenant is configured this way, you cannot enable versioning for your buckets.
+
+You cannot enable versioning for a bucket while the WebDAV, CIFS, NFS, or SMTP protocol is enabled for that bucket. You can disable versioning for a bucket at any time.
+
+Disabling versioning does not cause old versions of objects to be deleted. However, you cannot store new versions while versioning is disabled. A request to retrieve an old version of an object while versioning is disabled returns the current version. Object versions
+
+Each version of an object is an object in its own right. It has system metadata and can have custom metadata and an ACL. However, you can change metadata only on the current version of an object. Changing metadata, other than the owner or ACL, has no effect on old versions of the object. Changes to the object owner apply to all versions of the object. Changes to object ACLs can apply to specific versions or all versions of the object. Version IDs
+
+All objects, including those created while versioning is not enabled, have version IDs. Version IDs are integers. Each time a new version of an existing object is created, that new version is assigned an ID that is greater than the ID of the previous version of the object. The IDs for multiple versions of an object are not necessarily consecutive numbers.
+
+Version IDs are unique for the versions of a given object but are not necessarily unique across the versions of all objects.
+
+HCP also assigns version IDs to folders. However, folders cannot have multiple versions.
+
+When you store an object while versioning is enabled, HCP returns the version ID of the object in the x-amz-version-id response header. When you store an object while versioning is disabled, the response headers do not include x-amz-version-id.
+
+Version pruning If versioning is enabled for a namespace, pruning may also be enabled. Pruning is the automatic deletion of old versions of objects after a specific length of time since their creation. HCP does not prune old versions of objects that are on hold.
+
+Whether pruning is initially enabled when you create a bucket is determined by a tenant-level configuration setting. You cannot use the S3 compatible API to change the pruning setting for a bucket. However, tenant administrators can use other HCP interfaces to do this.
+
+Enabling delete markers

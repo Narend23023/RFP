@@ -1,0 +1,111 @@
+404 Not Found
+
+The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Enabling versioning for a bucket
+
+Here’s a sample PUT request that enables versioning for the finance bucket. The versioning request body is in a file named versioning.xml. Request body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <VersioningConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Status>Enabled</Status> </VersioningConfiguration>
+
+Request with s3curl command line
+
+./s3curl.pl --id=lgreen --put versioning.xml -- -k "https://europe.hcp.example.com/finance?versioning" Request headers
+
+PUT /finance?versioning HTTP/1.1 Host: europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:ETdibK607bVlNdxb0aKCttJU33U= Content-Length: 182
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Location: /finance Content-Length: 0
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+580/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Checking the versioning status of a bucket
+
+You use the HTTP GET method with the versioning query parameter to check the versioning status of a bucket. To check the versioning status of a bucket, you need to be the bucket owner.
+
+The versioning status is returned in an XML response body. The format of the response body is the same as the format you use for the versioning request body when you enable or disable versioning for a bucket. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to check the versioning status of a bucket has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET /?versioning HTTP/1.1
+
+With the bucket name following the hostname:
+
+GET /bucket-name?versioning HTTP/1.1
+
+The versioning query parameter is not case sensitive.
+
+Required headers Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format: DDD, dd MMM yyyy HH:mm:ss (+0000|GMT)
+
+In this format:
+
+DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb). yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock.
+
+mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header. Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format:
+
+tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name

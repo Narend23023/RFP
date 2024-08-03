@@ -1,0 +1,93 @@
+PUT
+
+Create a content class for a tenant
+
+For an HCP tenant, tenant-level user account with the administrator role
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+391/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+For the default tenant, system-level user account with the administrator role List
+
+GET
+
+Retrieve a list of the content classes for a tenant
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role
+
+The listed content classes are identified by content class name.
+
+In XML, the element that identifies each content class is name. The root element for the list of content classes is contentClasses.
+
+In JSON, the name in the name/value pair that lists the content classes is name. .../tenants/tenant-name/contentClasses/content-class-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+contentClass
+
+GET
+
+Retrieve information about a content class
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role N/A
+
+HEAD
+
+Check for the existence of a content class
+
+For an HCP tenant, tenant-level user account with the monitor or administrator role For the default tenant, system-level user account with the monitor or administrator role
+
+contentClass
+
+POST
+
+Modify a content class
+
+For an HCP tenant, tenant-level user account with the administrator role For the default tenant, system-level user account with the administrator role
+
+N/A
+
+DELETE
+
+Delete a content class
+
+For an HCP tenant, tenant-level user account with the administrator role For the default tenant, system-level user account with the administrator role
+
+The content class cannot contain any content properties.
+
+Example: Creating a content class
+
+Here’s a sample PUT request that creates a content class named DICOM and associates it with the Medical-Records namespace, which is search enabled. The content class is defined in an XML file named dicom.xml. The request is made using a tenant-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?> <contentClass> <name>DICOM</name> <contentProperties> <contentProperty> <name>Doctor_Name</name> <expression>/dicom_image/doctor/name</expression> <type>STRING</type> <multivalued>false</multivalued>
+
+<format></format> </contentProperty> <contentProperty> <name>Doctor_Specialty</name> <expression>/dicom_image/doctor/specialties/specialty</expression> <type>STRING</type> <multivalued>true</multivalued> <format></format> </contentProperty> <contentProperty> <name>Followup_Needed</name> <expression>/dicom_image/followup_needed</expression> <type>BOOLEAN</type> <multivalued>false</multivalued> <format></format> </contentProperty> <contentProperty> <name>Image_Date</name>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+392/907
+
+6/25/24, 11:34 AM

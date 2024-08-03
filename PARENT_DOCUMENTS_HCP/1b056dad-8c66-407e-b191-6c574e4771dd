@@ -1,0 +1,97 @@
+Enabled, out of space
+
+Indexing is enabled but not running because insufficient space is available on the index-enabled logical volumes. When more space becomes available, indexing automatically resumes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+102/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Value
+
+Description
+
+Enabled, out of
+
+Indexing is enabled but not running because insufficient memory is available for the metadata query engine to continue the indexing process. When more memory
+
+memory is added to the system (typically, by adding storage nodes), indexing automatically resumes.
+
+Enabled, missing index segments
+
+Indexing is enabled but not running because at least one part of the index is unavailable. This status can appear, for example, while an index-enabled logical volume is unavailable. When the situation is resolved, indexing automatically resumes.
+
+Disabled, stopping
+
+Indexing is disabled and in the process of stopping.
+
+Disabled, stopped
+
+Indexing is disabled and has completely stopped.
+
+If indexing has stopped unexpectedly and does not automatically restart, contact your authorized HCP service provider for help.
+
+Enabling or disabling the Search Console
+
+To enable the HCP Search Console, you select a search facility to be used with it. If you do not select a search facility, users cannot access the Search Console at all. Tenant administrators need to know which search facility, if any, is enabled at any given time. This is because the choice of search facility:
+
+Determines which index, if any, is used as the source of indexing statistics in the System Management Console and Tenant Management Console Affects namespace indexing options in the Tenant Management Console
+
+Note: If the Search Console is currently enabled, before disabling it, you should notify your tenant contacts. You should notify them again when access to the Search Console is restored.
+
+To enable or disable the Search Console, in the Search Console section on the Search page in the System Management Console:
+
+To view the Search page, you need the monitor or administrator role. To configure search, you need the administrator role.
+
+1. Take one of these actions:
+
+To enable the Search Console, select Metadata Query Engine. To disable the Search Console, select Disable Search Console.
+
+2. Click Update Console Settings. HCP policies
+
+An HCP policy is one or more settings that influence how transactions and services work on objects in namespaces. Policies ensure that objects behave in expected ways.
+
+HCP supports these policies:
+
+Retention Shredding Indexing Versioning Custom metadata XML checking
+
+Retention policy
+
+The retention policy determines how long an object must remain in the repository. Each object has its own retention policy settings. These settings are part of the object metadata.
+
+The retention policy consists of two settings:
+
+A retention setting, which is one of these: A specific date and time
+
+before which the object cannot be deleted.
+
+Deletion Allowed
+
+which means that the object can be deleted at any time.
+
+Deletion Prohibited
+
+which means that the object can never be deleted.
+
+Initial Unspecified
+
+which means that the object has not yet been assigned one of the other possible retention settings. Objects with a setting of Initial Unspecified cannot be deleted. A retention class
+
+which prevents an object from being deleted before a certain amount of time past its creation date. The specific amount of time is part of the retention class definition.
+
+A hold setting. An object is either on hold or not. An object that is on hold cannot be deleted through any mechanism under any circumstances. Objects can be placed on hold
+
+or released from hold at any time.
+
+Users and applications can see and modify retention policy settings.
+
+Note: If the namespace is in enterprise mode, the privileged delete function can be used to delete objects regardless of their retention setting, except when the objects are on hold.
+
+Shredding policy
+
+The shredding policy determines whether objects are shredded by the Shredding service when they’re deleted. Each object has its own shredding policy setting that indicates whether or not the object should be shredded. This setting is part of the object metadata. Users and applications can see and modify shredding policy settings.
+
+Indexing policy

@@ -1,0 +1,81 @@
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file
+
+filehandle = open("FinanceCollisions.xml", 'rb') curl.setopt(pycurl.UPLOAD, 1)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.INFILESIZE, os.path.getsize("FinanceCollisions.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+POST /query?prettyprint HTTP/1.1 Host: europe.hcp.example.com
+
+Content-Type: application/xml Accept: application/xml Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 205
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Transfer-Encoding: chunked
+
+XML response body
+
+<?xml version='1.0' encoding='UTF-8'?>
+
+<queryResult xmlns:xsi="http://www.w3.org/2020/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/query-result-9.0.xsd"> <query> <expression>+namespace:t1-ns2.LisaTenant-1 +replicationCollision:true </expression>
+
+</query> <resultSet>
+
+<object version="89322738450881"
+
+urlName="https://finance.europe.hcp.example.com/rest/budgets/2020/ sales_budget_2020.xlsx.collision"
+
+operation="CREATED"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+868/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+objectPath="/budgets/2020/sales_budget_2020.xlsx.collision" changeTimeMilliseconds="1395668086005.00" />
+
+<object version="89322749144130" urlName="https://finance.europe.hcp.example.com/rest/quarterly_rpts/ Q1_2020.ppt.collision"
+
+operation="CREATED" objectPath="/quarterly_rpts/Q1_2020.ppt.collision"
+
+changeTimeMilliseconds="1395668327386.00" /> </resultSet>
+
+<status totalResults="2"
+
+results="2"
+
+message="" code="COMPLETE" />
+
+</queryResult> Example: Listing content properties
+
+Here is a sample metadata query API request that lists the content properties for all indexed objects in the medical namespace owned by the employees tenant. The query uses an
+
+XML request body and requests results in XML format.
+
+Request body in the XML file named MedicalQuery.xml <queryRequest>
+
+<object> <query>namespace:medical.employees</query>
+
+<count>0</count> <contentProperties>true</contentProperties>
+
+</object> </queryRequest>
+
+Request with cURL command line
+
+curl -i -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H "Content-Type: application/xml" -H "Accept: application/xml"

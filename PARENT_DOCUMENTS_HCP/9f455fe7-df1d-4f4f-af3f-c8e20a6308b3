@@ -1,0 +1,29 @@
+object in another location. When the number of existing copies of an object goes above the number of object copies specified in the applicable service plan, the Protection service automatically deletes all unnecessary copies of that object.
+
+The Protection service runs according to the active service schedule and in response to certain events. Ingest tier data protection level
+
+Each namespace has a service plan that defines one or more storage tiers for that namespace and specifies the data protection level (DPL) that’s applied to the objects that are stored on each tier.
+
+Note: For the purpose of DPL, HCP treats parts of multipart objects, parts of multipart uploads, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects as individual objects.
+
+Every service plan defines primary running storage or HCP S Series storage as the initial storage tier, called the ingest tier, and specifies a DPL setting and an MPL setting for that tier. For each object in a given namespace, the ingest tier DPL is the number of copies of the object data that HCP must maintain on primary running storage or HCP S Series storage, as applicable, from the time the object is first stored in the repository until the time the object data is moved to one or more other storage tiers (if multiple storage tiers are defined for the namespace). The ingest tier MPL is the number of copies of the object metadata that HCP must maintain on primary running storage for as long as the object exists in the repository.
+
+In the default namespace, each directory also has an ingest tier DPL setting. This setting is the same as the ingest tier DPL setting that’s specified in the service plan that’s assigned to the default namespace. The ingest tier DPL for a namespace affects the amount of storage that’s used when data is added to that namespace. With an ingest tier DPL of 1, HCP creates only one copy of the object data on primary running storage or HCP S Series storage, as applicable. With an ingest tier DPL of 2, HCP creates two copies, thereby using twice as much storage.
+
+For both objects and directories, the ingest tier DPL setting is stored as metadata. Users and applications can see, but not modify, this metadata.
+
+Note: When the ingest tier DPL of a namespace changes, for each object in that namespace that’s stored on the ingest tier, HCP creates or deletes copies of the object data, as needed to satisfy the new ingest tier DPL. This can take some time, during which some objects have the old required number of copies and some have the new. When viewing object metadata, however, users and applications always see the intended number of copies (that is, the ingest tier DPL specified in the service plan for the namespace). Protection sets
+
+HCP groups storage nodes into protection sets with the same number of nodes in each set. To improve reliability in the case of multiple component failures, HCP tries to store all the copies of the data for an object that exist on primary running storage or primary spindown storage on nodes in a single protection set. Each copy is stored on a logical volume
+
+associated with a different node.
+
+HCP creates protection sets for each possible ingest tier DPL setting that can be specified in a service plan. For example, if an HCP system has six nodes, it creates three groups of protection sets:
+
+One group of six protection sets with one node in each set (for DPL 1)
+
+One group of three protection sets with two nodes in each set (for DPL 2) One group of two protection sets with three nodes in each set (for DPL 3)
+
+For each object in a given namespace, to store copies of the object data on primary running storage, HCP uses the group of protection sets that corresponds to the ingest tier DPL
+
+setting that’s specified in the service plan for the namespace. To store copies of the object data on primary spindown storage (if it’s used), HCP uses the group of protection sets that corresponds to the primary spindown storage tier DPL setting. The nodes in a protection set are not necessarily all associated with the same amount of storage. If the total number of storage nodes in the system is not evenly divisible by a DPL setting, HCP can use the storage associated with the extra nodes as standby storage. At any time, HCP can add standby storage to any existing protection set that requires additional storage to balance available storage capacity among its nodes.

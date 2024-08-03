@@ -1,0 +1,33 @@
+Example: Setting retention for an existing object
+
+Here is a sample PUT request that updates the retention setting for the object named hum_res/budget_proposals/BudgProp-2020 in the finance bucket. In this example, the retention value of the object is set to five days past the time when the object was stored. The request is made while versioning is disabled for the bucket, so the retention value is replaced on the current version of the object. No new version is created. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/finance/hum_res/budget_proposals/BudgProp-2020 -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/ BudgProp-2020" -H "x-hcp-retention: A+5d" -H "x-amz-metadata-directive: REPLACE" -H "x-hcp-pretty-print: true"
+
+Request headers
+
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:WAamEr9PkL76M/kWkFu5K2rY9Bs= x-amz-copy-source: /finance/hum_res/budget_proposals/BudgProp-2020 x-hcp-retention: A+5d x-amz-metadata-directive: REPLACE x-hcp-pretty-print: true
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT
+
+Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<CopyObjectResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <LastModified>2017-02-23T17:19:26.062Z</LastModified> <ETag>"76216527ff2f6219f7c29251a619c8db"</ETag> </CopyObjectResult>
+
+Example: Changing the retention hold value of an object
+
+Here is a sample PUT request that updates the retention hold setting for the object named hum_res/budget_proposals/BudgProp-2020 in the finance bucket. In this example, the retention hold value of the object is modified from false to true. The request is being made while versioning is disabled for the bucket, so the retention hold value is replaced on the current version of the object. No new version is created. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --copysrc=/finance/hum_res/budget_proposals/BudgProp-2020 -- -k "https://finance.europe.hcp.example.com/hum_res/budget_proposals/ BudgProp-2020" -H "x-hcp-retentionhold: true" -H "x-amz-metadata-directive: REPLACE" -H "x-hcp-pretty-print: true" Request headers
+
+PUT /hum_res/budget_proposals/BudgProp-2020 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:WAamEr9PkL76M/kWkFu5K2rY9Bs= x-amz-copy-source: /finance/hum_res/budget_proposals/BudgProp-2020 x-hcp-retentionhold: true x-amz-metadata-directive: REPLACE x-hcp-pretty-print: true Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml;charset=UTF-8 Transfer-Encoding: chunked
+
+Response body

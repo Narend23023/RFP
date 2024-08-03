@@ -1,0 +1,31 @@
+5. To configure the stub zone with Windows Active Directory integration, take one of these following actions:
+
+a. Select Store the zone in Active Directory. b. On the Active Directory Zone Replication Scope page, select the option for the way in which you want DNS data to be replicated throughout your network. c. Then click Next. Note: You need to configure the stub zone with Windows Active Directory integration if you plan to enable HCP support for AD. For information about doing that, see Configuring Active Directory or Windows workgroup support.
+
+d. To configure the stub zone without Windows Active Directory integration, click Next.
+
+6. In the Zone name field on the Zone Name page, type the applicable fully qualified domain name for the HCP system. Then click Next. 7. On the Zone File page, select Create a new file with this file name and leave the default file name in the accompanying field. Then click Next.
+
+8. On the Primary DNS Servers page, for each HCP storage node you want to register as a primary name server, in the list box, type the IPv4 and IPv6 addresses assigned to
+
+the node for the applicable network. Then press Enter. When you’re adding all the node IP addresses, click Next.
+
+9. Click Finish.
+
+The HCP new stub zone appears in the zone hierarchy in the DNS manager window. Verifying the configuration
+
+You can verify that an HCP secondary zone or stub zone is working properly from either a Windows command-prompt window or a Unix shell. In both cases, you use either the dig or nslookup command, depending on which is available. The syntax for this is:
+
+dig|nslookup (admin|nfs|cifs|www).hcp-domain-name
+
+The response to this command should be a list of the IP addresses of all the HCP storage nodes that have IP addresses defined for the network for which the secondary zone or stub zone is defined.
+
+Here’s an example of the output from the nslookup command when six out of the ten nodes in the network are registered as primary name servers for the secondary zone or stub zone: #nslookup www.hcp-ma.example.com Server: adc1850.example.com
+
+Addresses: 192.168.80.45 2001:0db8::201 Name: www.hcp-ma.example.com Addresses: 192.168.210.11, 2001:0db8::101, 1192.168.210.12, 2001:0db8::102, 192.168.210.13, 2001:0db8::103, 192.168.210.14, 2001:0db8::104, 192.168.210.15, 2001:0db8::105, 192.168.210.16, 2001:0db8::106, 192.168.210.17, 2001:0db8::107, 192.168.210.18, 2001:0db8::108, 192.168.210.19, 2001:0db8::109, 192.168.210.20, 2001:0db8::10a
+
+If you don’t see the expected node list, the secondary zone or stub zone is not defined correctly. DNS considerations for service by remote systems
+
+When you configure a secondary zone or stub zone for an HCP system, you specify a domain name and the IP addresses of the primary name servers for the applicable HCP domain. This causes client requests that identify the system by that domain name to be forwarded to those primary name servers.
+
+Namespaces can be configured to accept client requests on HCP systems other than the system targeted by the request when that system is unavailable. To enable this redirection to occur automatically for a namespace:

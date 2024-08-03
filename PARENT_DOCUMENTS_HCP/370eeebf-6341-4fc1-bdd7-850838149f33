@@ -1,0 +1,39 @@
+c. Click the find control (
+
+).
+
+3. In the list of namespaces, click the delete control ( 4. In response to the confirming prompt, click Delete.
+
+) for the namespace for which you want to remove all data access permissions. User account and login settings
+
+Several system settings affect user accounts and logins to the Tenant Management Console and Search Console. To view and change these settings, you use the Console Security page in the Tenant Management Console.
+
+To display the Console Security page, in the top-level menu of the Tenant Management Console, select Security > Console Security.
+
+Note: To view and change user account and login settings, you need the security role.
+
+User account and login settings control:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+259/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help The minimum password length for locally authenticated HCP user accounts is six. The password should not contain commonly used phrases (for example, letmegetin). As a best practice, we recommend that you use a mix of uppercase and lowercase letters, numbers, and special characters. The password must contain at least one character from the following four requirements: Uppercase letters (A-Z) Lowercase letters (a-z) Numbers (0-9) Special characters (~!@#$%^&*()-_+={}[]|\:;"'<>,.?/)
+
+The password should not contain usernames or a part of a username. If an HCP user account is locked out due to failed login attempts, it is unlocked automatically after five minutes. The HCP keeps a history of your passwords and does not allow you to reuse last five passwords. For security, the HCP automatically disables user accounts that have been inactive for 180 days and that users are logged out after 10 minutes of inactivity. The number of days after which locally authenticated users are automatically forced to change their passwords. Valid values are integers in the range zero through 999,999. The default is 180 days. A value of zero means users are never automatically forced to change their passwords. Note: Password expiration affects use of the System Management Console, Tenant Management Console, Search Console, and HCP management API only. Users with expired passwords can continue to use these passwords with the HCP metadata query API.
+
+Password changes affect all the HCP interfaces.
+
+The consecutive number of times a locally authenticated or RADIUS-authenticated user can enter an incorrect password before the user account is automatically disabled. Valid values are integers in the range zero through 999. The default is five. A value of zero means accounts are never disabled due to failed login attempts.
+
+After a user account is automatically disabled, you need to reenable it manually to allow the user to log in again.
+
+If the last locally authenticated user account with the security role is disabled due to failed login attempts and no group accounts have the security role, the user account is reenabled automatically after one hour. Note: A user account with both roles and data access permissions can be disabled by consecutive attempts to use the HTTP protocol or Namespace Browser with an invalid password. A user account with only data access permissions is not disabled by these actions. The number of days an HCP user account can remain inactive before it’s automatically disabled. Valid values are integers in the range zero through 999. The default is 180 days. A value of zero means accounts are never automatically disabled due to inactivity.
+
+If no group accounts have the security role, the last locally authenticated user account with the security role is not automatically disabled due to inactivity.
+
+The number of minutes a Tenant Management Console, Search Console, or Namespace Browser session can be inactive before it times out. Valid values are integers in the range zero through 999. The default is ten minutes. A value of zero means sessions never time out due to inactivity. When a session times out, the Console or Browser displays the Idle Timeout page. If you then select a page to display:
+
+If the user explicitly logged in, the Console or Browser login page appears In the case of single sign-on, the Console or Browser displays the selected page in the Tenant Management Console or Namespace Browser or the Simple Search page in the Search Console.

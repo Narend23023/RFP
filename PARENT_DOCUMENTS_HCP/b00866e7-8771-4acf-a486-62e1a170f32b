@@ -1,0 +1,81 @@
+used with the metadata query engine, see the applicable Apache Solr documentation at http://lucene.apache.org/solr. Query expressions
+
+With the metadata query engine, query expressions have this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, [+|-] is an optional Boolean operator and criterion is one of:
+
+A simple criterion One or more criteria in parentheses, in this format:
+
+[+|-]criterion [[+|-]criterion]...
+
+In this expression, criterion can be a simple criterion or one or more criteria in parentheses.
+
+For example, here is one possible query expression:
+
+(namespace:"finance.europe") +(retention:0 index:1)
+
+Query expressions can contain only valid UTF-8 characters.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+901/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Criterion format
+
+The format for a simple advanced criterion is: property:value
+
+For example, this expression finds objects that are on hold:
+
+hold:true
+
+When querying for a value that’s a negative number, enclose the value in double quotation marks (").
+
+For example, this query expression finds objects with the retention setting -2:
+
+retention:"-2"
+
+The special criterion *:* finds all objects in all namespaces searchable by the user.
+
+Most of the properties for advanced queries correspond to those for structured queries, but the property names differ, and in some cases, the values are expressed differently. Boolean operators
+
+You can precede a criterion or an individual property value with one of these Boolean operators:
+
+Plus sign (+)
+
+Objects in the result set must contain the criterion or value following the plus sign.
+
+Minus sign (-)
+
+Objects in the result set must not contain the criterion or value following the minus sign.
+
+For example, this query expression finds objects that are not on hold:
+
+hold:true Text-based property values
+
+The objectPath and customMetadataContent properties and tokenized content properties match text in the object path or custom metadata.
+
+Text-based property values are text strings consisting of one or more
+
+UTF-8 characters. The string is interpreted as one or more search terms, where each search term is a sequence of either alphabetic or numeric characters. All other characters, except wildcards, are treated as term separators.
+
+For example, the string product123 contains two search terms — product and 123. A query based on this string finds objects for which the specified property contains at least one of product and 123.
+
+Search terms match only complete alphabetic or numeric strings in paths or custom metadata. For example, the text strings AnnualReport, 2012, and AnnualReport_2012 match the object named AnnualReport_2012.pdf. A query expression with a text string such as Annual or 201 does not match this object. Similarly, to query for objects with a path or custom metadata that contains the word product, you need to use the complete word product as the text string. A query expression with a text string such as prod does not match objects with a path or custom metadata containing product.
+
+Common words such as a and is are indexed and are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a.
+
+Search terms are not case sensitive. Therefore, the strings AnnualReport, Annualreport, and annualreport are equivalent.
+
+Common words such as a and is are valid search terms. For example, a query containing the text string A3534 matches all objects with paths and custom metadata that contain the word a. To prevent such a match, use a phrase as described below.
+
+To specify a negative number as a criterion, enclose the value in double quotation marks, for example, "-3121". To specify a phrase as a criterion, put the text string in double quotation marks. A phrase matches paths and custom metadata that contain each of the alphabetic or numeric search terms within the quotation marks in the specified order, but any special characters or white space between the individual strings is ignored. For example, the phrase "product 123" matches custom metadata that contains any of these strings: product 123 product123
+
+product_123
+
+Multiple values for a single property

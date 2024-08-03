@@ -1,0 +1,103 @@
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid.
+
+Response headers
+
+The list below describes the headers returned in response to a successful request to create a bucket. Content-length
+
+Specifies the size, in bytes, of the response body. In response to a successful request to store an object, the value of this header is always 0 (zero).
+
+Date
+
+The date and time when HCP responded to the request, in Greenwich Mean Time (GMT). The date and time are returned in this format: DDD dd MMM yyyy HH:mm:ss GMT
+
+For example:
+
+Fri, 18 Sep 2020 14:27:05 GMT
+
+Location
+
+Specifies the name of the bucket created by the request.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to create a bucket.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK One of these:
+
+The bucket was successfully created. A bucket with the specified name already exists and is owned by you.
+
+400
+
+Bad Request
+
+Possible reasons include:
+
+The specified bucket name is invalid. An ACL grant header specifies an invalid grantee. You already own the maximum number buckets allowed per user. The tenant does not have enough space for another bucket. The tenant already has the maximum number of buckets it’s allowed to have.
+
+403 Forbidden
+
+Possible reasons include:
+
+The credentials provided with the request are invalid. You do not have permission to create buckets. The tenant does not currently support use of the S3 compatible API for creating buckets.
+
+409
+
+Conflict
+
+A bucket with the specified name already exists and either is owned by a user other than you or has no owner.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+501
+
+Not Implemented
+
+The request includes the x-amz-acl header with an invalid value.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Creating a bucket
+
+Here’s a sample PUT request that creates a bucket named finance in the context of the tenant named europe.
+
+Request with s3curl command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+568/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+./s3curl.pl --id=lgreen --createBucket -- -k "https://finance.europe.hcp.example.com"
+
+Request headers
+
+PUT / HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:1RXSNMipYpv4IOpfNS9Odi1UBWM= Content-Length: 0 Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Location: /finance Content-Length: 0
+
+Example: Creating a bucket with an ACL
+
+Here’s a sample PUT request that creates a bucket named human-resources and adds an ACL to the bucket. The ACL grants read permission to all users and write permission to the users with usernames mwhite and pdgrey. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --createBucket -- -k "https://human-resources.europe.hcp.example.com" -H "x-amz-grant-read: emailAddress=all_users" -H "x-amz-grant-write: emailAddress=mwhite, emailAddress=pdgrey"
+
+Request headers

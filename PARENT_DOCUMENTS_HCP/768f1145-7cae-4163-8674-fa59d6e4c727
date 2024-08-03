@@ -1,0 +1,59 @@
+POSIX permissions for objects, directories, and symbolic links stored through NFS are determined by the client. POSIX permissions for objects stored through other protocols are always 555. POSIX permissions for directories and symbolic links stored through other protocols are always 777.
+
+HCP Retention-related properties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+238/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Ownership and permission changes for objects under retention
+
+Namespaces have two properties that affect objects under retention:
+
+Whether changes to POSIX UIDs and GIDs and to object owners are allowed Which custom metadata operations are allowed Custom metadata operations for objects under retention
+
+Custom metadata is user-supplied information that describes an object in a namespace. For objects that are not under retention, users can add, replace, and delete custom metadata annotations as needed. For objects that are under retention, the operations allowed for custom metadata annotations are determined by a namespace-level setting.
+
+You can configure a namespace to:
+
+Allow annotations to be added, replaced, and deleted for objects under retention Allow annotations to be added for objects under retention but not replaced or deleted Disallow all annotations operations for objects under retention
+
+When you create a namespace, only the addition of annotations is allowed for objects under retention. You can change this setting at any time. Protocol optimization and directory usage
+
+HCP namespace access protocols are categorized as either cloud protocols or noncloud protocols. The cloud protocols are the REST and S3 compatible APIs. The noncloud protocols are WebDAV, CIFS, NFS, and SMTP.
+
+Protocol optimization
+
+Protocol optimization improves namespace ingest performance. You can optimize namespaces for all protocols, which provides balanced performance across both cloud protocols
+
+and noncloud protocols. Alternatively, you can optimize namespaces for cloud protocols only. Cloud-only optimization improves the ingest rate of namespaces using cloud protocols. Cloud protocols, themselves, are further optimized for improved ingest performance.
+
+A namespace that is optimized only for cloud protocols is said to be cloud optimized. Clients can use only cloud protocols to access cloud-optimized namespaces. For clients to use
+
+noncloud protocols to access a namespace, the namespace must be optimized for all protocols. Only cloud-optimized namespaces support these features
+
+Multipart uploads Management of multipart objects
+
+Erasure coding as protection type Unbalanced directory usage
+
+You can change the protocol optimization setting for a namespace from optimized only for cloud protocols to optimized for all protocols only if the namespace does not contain any
+
+objects. You can change the setting from optimized for all protocols to optimized only for cloud protocols only if no noncloud protocols are enabled for the namespace.
+
+The default protocol optimization setting for new namespaces is set by the HCP system administrator. Directory usage
+
+Directory usage defines how the objects are stored within the HCP and it allows the user to choose an approach that best matches their data use patterns.
+
+HCP namespaces can use either balanced or unbalanced directory usage. You can configure this setting at the time of creating a namespace and cannot modify later. Balanced directory usage is selected by default. This type of directory usage requires a well distributed directory structure to avoid hot spotting and to ensure maximized performance. This setting can be applied to namespaces optimized for cloud protocols as well as for those optimized for all protocols.
+
+With unbalanced directory usage, you do not need to know how the applications ingest data or ensure that the objects are distributed across a diverse directory structure. Unbalanced directory usage setting can only be applied to namespaces that are optimized only for cloud protocols.
+
+XML checking for custom metadata By default, when a custom metadata annotation is added to or replaced in a namespace, HCP checks whether it contains well-formed XML. If the XML is not well-formed, HCP rejects the annotation.
+
+For any given namespace, you can choose to allow users to provide annotations in non-XML formats (for example, as thumbnail images to accompany large objects with image content). In this case, you need to disable custom metadata XML checking for the namespace so that HCP accepts non-XML annotations.
+
+XML checking applies only when annotations are added to or replaced in a namespace. It does not apply to annotations that already exist in the namespace.

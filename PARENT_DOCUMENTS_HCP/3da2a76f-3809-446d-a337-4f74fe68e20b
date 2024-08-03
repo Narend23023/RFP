@@ -1,0 +1,55 @@
+Domain controller filters are always added as a pairing of a domain and a domain controller or controllers. Each time you add one of these filters to the domain controller filter list, a one-time validation occurs. If a domain or domain controller fails the validation process, the filter is not added to the domain controller filter list. You can also manually invoke validation on the domain controller filter's entries by clicking the Validate button.
+
+9. Click Update Settings.
+
+This update may take few minutes to finish.
+
+Configuring support for Windows workgroups
+
+You can enable and configure HCP support for Windows workgroups. 1. Log in to the HCP System Management Console with a user account that has the Security role. 2. Navigate to the Security > Active Directory page. 3. Select the Windows workgroup option. 4. In the Windows Workgroup field, type the name of the Windows workgroup in which you want HCP to automatically expose CIFS-enabled namespaces. The workgroup name can be up to 15 characters long.
+
+5. Click Update Settings. Refreshing the Active Directory status
+
+Tenants and Namespaces can exist without Service Principal Names. HCP creates a table of unassigned Tenants and Namespaces under the Status panel of the Active Directory page under Security.
+
+The Status panel automatically refreshes every twenty four hours, but it can also be manually refreshed. You can use the Active Directory page in the HCP System Management Console to refresh the status of the AD SPNs. The manual console refresh also attempts to automatically repair any SPNs that are missing. To display this page, in the top-level menu of the System Management Console, select Security > Active Directory.
+
+Note: To view the Active Directory page and refresh the AD status, you need the security role.
+
+To refresh the AD status, on the Active Directory page:
+
+1. If support for AD is not currently enabled:
+
+a. Select Active Directory. b. Select Enable Active Directory.
+
+2. Click Refresh Status. Clearing the Active Directory cache
+
+HCP caches information about authenticated AD users that access any of its interfaces. The cache also includes information about the AD groups to which those users belong. As
+
+long as the applicable information is in the cache, AD-authenticated users can perform any HCP activities for which they have permission without being reauthenticated.
+
+HCP uses the same cache to store information about all the domains included in the AD forest that HCP uses for user authentication. HCP uses this information to supply the list of allowable domains in the Domain field on the login pages for its GUI interfaces.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+136/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help You can clear the AD cache at any time. You might do this, for example, if the account for an authenticated AD user is deleted from AD. In this case, because the user information is already cached, the user can continue to access HCP even though the user account is no longer valid. Clearing the cache prevents the user from continuing to access HCP with the invalid account.
+
+You also might clear the cache if a domain is added to or removed from the AD forest. This forces an immediate update to the list of allowable domains on the HCP login pages.
+
+You use the Active Directory page in the HCP System Management Console to clear the AD cache. To display this page, in the top-level menu of the System Management Console, select Security > Authentication.
+
+Note: To view the Active Directory page and clear the AD cache, you need the security role.
+
+To clear the AD cache, on the Active Directory page:
+
+1. If support for AD is not currently enabled: a. Select Active Directory. b. Select Enable Active Directory.
+
+2. Click Clear Cache.
+
+Configuring connections to RADIUS servers
+
+For RADIUS authentication of an HCP user account, the HCP system must have network access to one or more RADIUS servers. To enable HCP to communicate with RADIUS, each RADIUS server must have at least one IPv4 or IPv6 address that is routable from the [hcp_system] network. To add and manage connections to one or more RADIUS servers, you use the RADIUS page in the HCP System Management Console. To display this page, in the top-level menu, select Security > RADIUS.

@@ -1,0 +1,93 @@
+// Set up for an object query by calling the
+
+// com.hds.hcp.apihelpers.query.request.Object constructor. Object mObjQuery = new Object();
+
+// Get only 50 objects at a time. mObjQuery.setCount(50);
+
+// Retrieve only those that reside in the namespace specified in the command. mObjQuery.setQuery("+namespace:" + sQueryNamespace + "." + sQueryTenant);
+
+// Retrieve the "size" and "ingestTimeString" properties for the object. mObjQuery.setObjectProperties("size,ingestTimeString");
+
+// Set up the query request.
+
+QueryRequest mQuery = new QueryRequest(mObjQuery);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+863/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+/*
+
+Loop through and process all the objects one response at a time or until * an error occurs.
+
+/ QueryResult mQueryResult = null;
+
+do { System.out.println("Issuing query: \n" + mQuery.toString(true));
+
+/*
+
+Execute the query using the HTTP POST method. */ HttpPost httpRequest = new HttpPost(sHTTPQueryURL); // Add the body of the POST request.
+
+httpRequest.setEntity(new StringEntity(mQuery.toString()));
+
+// Set the Authorization header. httpRequest.setHeader("Authorization: HCP " + sEncodedUserName + ":"
+
++ sEncodedPassword);
+
+// Execute the query. HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+// For debugging purposes, dump out the HTTP response. HCPUtils.dumpHttpResponse(httpResponse);
+
+// If the status code is anything BUT in the 200 range indicating success,
+
+// throw an exception. if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100))
+
+{ // Clean up after ourselves and release the HTTP connection to the
+
+// connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+throw new HttpResponseException(httpResponse.getStatusLine()
+
+.getStatusCode(), "Unexpected status returned from " + httpRequest.getMethod() + " (" + httpResponse.getStatusLine().getStatusCode() + ": " + httpResponse.getStatusLine().getReasonPhrase() + ")");
+
+}
+
+/*
+
+Process the response from the query request. */
+
+// Put the response in a buffered reader.
+
+BufferedReader bodyReader = new BufferedReader(newInputStreamReader (httpResponse.getEntity().getContent()));
+
+HTTPCalls += 1;
+
+// Parse the response into the QueryResult object. mQueryResult = QueryResult.parse(bodyReader);
+
+// Get a copy of the query status from the query result. Status mStatus = mQueryResult.getStatus();
+
+// Display the status of what we just accomplished.
+
+System.out.println(); System.out.println("Batch " + HTTPCalls + " Status: " + mStatus.getCode()
+
++ " Record Count:" + mStatus.getResults());
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+864/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help // Display the first and last object of the result set.
+
+List<ResultSetRecord> mResultSet = mQueryResult.getResultSet(); ResultSetRecord mFirstRecord = mResultSet.get(0);
+
+System.out.println(" First Record (" + (TotalRecordsProcessed+1) + ") "
+
++ mFirstRecord.getUrlName()); System.out.println(" Size: " + mFirstRecord.getSize());
+
+TotalRecordsProcessed += mStatus.getResults();

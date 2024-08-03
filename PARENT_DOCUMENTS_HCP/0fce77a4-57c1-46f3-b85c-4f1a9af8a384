@@ -1,0 +1,93 @@
+<ipAddress>192.168.149.5</ipAddress> </denyAddresses> </ipSettings> <restEnabled>true</restEnabled> <restRequiresAuthentication>true</restRequiresAuthentication> <webdavBasicAuthEnabled>false</webdavBasicAuthEnabled> <webdavBasicAuthPassword></webdavBasicAuthPassword> <webdavBasicAuthUsername></webdavBasicAuthUsername> <webdavCustomMetadata>false</webdavCustomMetadata> <webdavEnabled>false</webdavEnabled> </httpProtocol> ipSettings
+
+The ipSettings data type describes the ipSettings property of these data types:
+
+cifsProtocol consoleSecurity httpProtocol nfsProtocol protocols searchSecurity smtpProtocol
+
+Properties
+
+The table below describes the properties included in the ipSettings data type.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+470/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+allowAddresses
+
+allow Addresses
+
+Specifies the IP addresses to be allowed access to HCP through the given interface. By default, the set of IP addresses includes only 0.0.0.0/0.
+
+The set of IP addresses specified in the request body replaces the set of IP addresses currently allowed access to HCP through the given interface. To remove all IP addresses, specify an empty set.
+
+In XML, each IP address specification is the value of an element named ipAddress. In JSON, the name in the name/value pair that specifies the IP addresses is ipAddr ess. allowIfInBothLists
+
+Boolean
+
+Specifies how HCP should handle IP addresses that are either both allowed and denied or neither allowed nor denied access to HCP through the given interface. Valid values are true and false. The default is true.
+
+This property is not valid for the cifsProtocol, nfsProto col, and smtpProtocol data types.
+
+For the effects of specifying true or false, see allowIfI nBothLists property effects list below. denyAddresses
+
+deny
+
+Addresses
+
+Specifies the IP addresses to be denied access to HCP through the given interface. By default, the set of IP addresses is empty.
+
+This property is not valid for the nfsProtocol data type.
+
+The set of IP addresses specified in the request body replaces the set of IP addresses currently denied access to HCP through the given interface. To remove all IP addresses, specify an empty set.
+
+In XML, each IP address specification is the value of an element named ipAddress. In JSON, the name in the name/value pair that specifies the IP addresses is ipAddr ess. allowAddresses and denyAddresses list entries
+
+Each ipAddress entry within an allowAddresses or denyAddresses property can have a value of:
+
+An individual IP address. A comma-separated list of IP addresses. A range of IP addresses specified as ip-address/subnet-mask (for example, 192.168.100.197/255.255.255.0). A range of IP addresses specified in CIDR format (for example, 192.168.100.0/24). The CIDR entry that matches all IP addresses is 0.0.0.0/0. allowIfInBothLists property effects
+
+The table below describes the effects of specifying true or false for the allowIfInBothLists property.
+
+Listed IP addresses
+
+true
+
+false
+
+allowAddresses: none
+
+All IP addresses can access HCP through the given interface.
+
+No IP addresses can access HCP through the given interface. denyAddresses: none
+
+All IP addresses can access HCP through the given
+
+Only IP addresses in the allowAddresses list can access
+
+allowAddresses: at least one
+
+interface.
+
+HCP through the given interface.
+
+denyAddresses: none
+
+allowAddresses: none
+
+denyAddresses: at least one
+
+All IP addresses not in the denyAddresses list can access HCP through the given interface. IP addresses in the denyAddresses list cannot.
+
+No IP addresses can access HCP through the given interface. allowAddresses: at least one

@@ -1,0 +1,43 @@
+POST /acctg/RulesAndRegulations.pdf?uploadId=94837746087105 HTTP/1.1 Host: finance.europe.hcp.example.com Date: Fri, 26 June 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:y4wahRZz+oLpASXkNeBy9LQAJsE= X-HCP-Retention: A+5d X-HCP-LabelRetentionHold: '[{"id":"UniqueLabelHold-1","hold":true}]' Response headers
+
+HTTP/1.1 200 OK Date: Fri, 26 June 2020 17:19:26 GMT x-amz-server-side-encryption: None x-amz-version-id: 94874564091777 Content-Type: application/xml;charset=ISO-8859-1 ETag: "e879d0c42d032f7b55d2be82825071d6-6" Content-Length: 401
+
+Response body <?xml version='1.0' encoding='UTF-8'?> <CompleteMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <Location>https://finance.europe.hcp.example.com/hs3/acctg
+
+/RulesAndRegulations.pdf</Location> <Bucket>finance</Bucket> <Key>acctg/RulesAndRegulations.pdf</Key> <ETag>&quot;e879d0c42d032f7b55d2be82825071d6-6&quot;</ETag> </CompleteMultipartUploadResult>
+
+Aborting a multipart upload
+
+You use the HTTP DELETE method with the uploadId query parameter to abort a multipart upload.
+
+To abort a multipart upload, you must be an authenticated user. You need to use the same user account as the account used in the request to initiate the multipart upload or the user
+
+account for the owner of the bucket where the multipart upload was initiated. Additionally, you need delete permission for the bucket.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+656/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help You use the uploadId query parameter to specify the upload ID of the multipart upload you're aborting. If the upload ID you specify doesn't match the upload ID of an in-progress multipart upload or isn't associated with the object specified in the request, HCP returns a 404 (Not Found) status code and does not abort the multipart upload.
+
+You can abort any in-progress multipart upload, including multipart uploads that are in the process of being completed. You cannot abort a completed multipart upload.
+
+When you abort a multipart upload, HCP stops uploading any parts that are in the process of being uploaded. You cannot upload additional parts for or list the parts of an aborted multipart upload.
+
+Parts of an aborted upload that were already uploaded or that were in the process of being uploaded when you issued the abort request are automatically deleted. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to abort a multipart upload has either of these formats:
+
+With the bucket name included in the hostname:
+
+DELETE /object-name?uploadId=upload-id HTTP/1.1
+
+With the bucket name following the hostname: DELETE /bucket-name/object-name?uploadId=upload-id HTTP/1.1
+
+The uploadId query parameter is case sensitive.
+
+Note: HCP ignores query parameters it doesn't recognize. Therefore, if you use the wrong case for the uploadId query parameter in a request to abort a multipart upload, the request becomes a DELETE request for the object named in the request.
+
+If the named object exists, HCP deletes it and returns a 204 (No Content) status code, indicating that the request was successful. HCP also returns a 204 status code if the named object does not exist. Because HCP returns a 204 status code for a successful abort of a multipart upload, you cannot tell from the status code alone whether a request to abort a multipart upload had the intended result. Request headers

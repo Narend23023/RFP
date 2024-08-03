@@ -1,0 +1,55 @@
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+As a tenant administrator, you are responsible for creating and maintaining namespaces. After creating a namespace, you can change most of its properties. You are also responsible for managing search and indexing for the namespace.
+
+In addition to creating and modifying namespaces, you can delete them, but only if they don’t contain any objects.
+
+Note: Users with the allow namespace management property can use the HCP management and S3 compatible APIs to create, view and change the versioning status of, and delete namespaces.
+
+Monitoring the tenant and namespaces HCP is a self-monitoring, self-healing system that automatically alerts you to any issues you may need to address, for example, a namespace running low on space. The Tenant Management Console enables you to review tenant and namespace activity and take action to address certain issues. Using the Console, you can view:
+
+Statistics and graphs showing namespace usage. Messages about tenant and namespace events, for example, configuration changes and searches performed from the Search Console. Messages about security events, for example, attempts to log into the Tenant Management Console with an invalid username. Messages about compliance events, for example, retention class activity and privileged delete operations. Reports of irreparable objects. Alerts warning you of conditions that may need your attention. The progress of replication activity.
+
+You can also have HCP send tenant and namespace log messages to syslog servers, SNMP managers, and specified email addresses. Additionally, you can generate chargeback reports that can be used as input to billing applications.
+
+Managing namespace access
+
+Managing namespace access entails:
+
+Setting the tenant and namespace data access permission masks Setting minimum data access permissions for authenticated and unauthenticated users Configuring the namespace access protocols for client access to each namespace Optionally, setting the IP addresses from which access to the Search Console is allowed or denied
+
+Performing compliance activities
+
+The Tenant Management Console enables you to perform certain activities required for compliance with some local regulations. Using the Console, you can:
+
+Create, modify, and delete retention classes Perform privileged delete operations
+
+Managing accounts As a tenant security administrator, you are responsible for creating and managing tenant-level user and group accounts. These accounts give users permission to use the Tenant Management Console and HCP management API and to access namespace content through namespace access protocols that require authentication, the Namespace Browser, the
+
+HCP metadata query API, and the HCP Search Console. These accounts also determine which actions the user is allowed to perform through the applicable interface.
+
+Users with HCP user accounts are authenticated locally by HCP or remotely by RADIUS. Group accounts enable users defined in Active Directory to access HCP interfaces. These users are authenticated remotely by AD. The tenant configuration determines which types of authentication the tenant supports. As an administrator with the security role, you can associate administrative roles with user and group accounts. To associate data access permissions with user and group accounts, you need the administrator role.
+
+Different tenants have different user and group accounts. These accounts cannot be shared across tenants. User and group accounts
+
+User and group accounts control access to HCP interfaces. The administrative roles associated with these accounts allow users to use:
+
+The Tenant Management Console The HCP management API
+
+You need the security role to create, modify, delete, and associate roles with user and group accounts.
+
+The data access permissions associated with user and group accounts allow users to access namespace content through:
+
+Namespace access protocols that require authentication The Namespace Browser The HCP metadata query API The HCP Search Console
+
+You need the administrator role to associate data access permissions with user and group accounts.
+
+The allow namespace management property, which you can assign to a user or group account, allows users to use the HCP management and S3 compatible APIs to:
+
+Create namespaces List, view and change the versioning status of, and delete namespaces they own You need the administrator role to assign the allow namespace management property to a user or group account. User accounts
+
+An HCP user account is a set of credentials that gives a user access to one or more of the interfaces listed above. You create and manage user accounts in the Tenant Management Console.
+
+When you create a user account, you specify whether the user credentials are authenticated locally or by RADIUS. Additionally, for locally authenticated users, you specify whether the account password must be changed the next time the account is used to access one of the Consoles.

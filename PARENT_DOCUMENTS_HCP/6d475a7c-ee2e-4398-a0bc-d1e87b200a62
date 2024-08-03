@@ -1,0 +1,39 @@
+"description" : "Implements Finance department standard #42 - keep for 10 years.", "value" : "A+10y", "allowDisposition" : true }
+
+JSON file for creating the replication link Here’s the content of the JSON file that creates a replication link named MA-CA. The name of the file is LinkMA-CA.json.
+
+{ "name" : "MA-CA", "description" : "Active/active link between systems in MA and CA", "type" : "ACTIVE_ACTIVE", "connection" : { "remoteHost" : "replication.admin.hcp-ca.example.com"
+
+}, "compression" : false, "encryption" : false, "priority" : "OLDEST_FIRST", "failoverSettings" : { "remote" : { "autoFailover" : true, "autoFailoverMinutes" : 60 }, "local" : { "autoFailover" : true, "autoFailoverMinutes" : 60 } } } JAVA application
+
+Here is the sample Java application that uses the JSON files shown in the preceding sections.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+534/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+import sun.misc.BASE64Encoder;
+
+import java.security.MessageDigest;
+
+import java.security.NoSuchAlgorithmException; import java.security.KeyManagementException; import java.io.*; import java.net.URI; import java.net.URISyntaxException; import java.util.List; import java.util.ArrayList; import org.apache.http.conn.scheme.SchemeRegistry; import org.apache.http.conn.scheme.Scheme; import org.apache.http.conn.ssl.SSLSocketFactory; import org.apache.http.conn.ClientConnectionManager; import org.apache.http.conn.params.ConnPerRouteBean; import org.apache.http.conn.params.ConnManagerParams; import org.apache.http.params.HttpParams; import org.apache.http.params.BasicHttpParams; import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager; import org.apache.http.impl.client.DefaultHttpClient; import org.apache.http.impl.client.AbstractHttpClient; import org.apache.http.HttpHost; import org.apache.http.HttpResponse; import org.apache.http.NameValuePair; import org.apache.http.HttpRequest; import org.apache.http.message.BasicNameValuePair; import org.apache.http.entity.FileEntity; import org.apache.http.client.utils.URIUtils; import org.apache.http.client.utils.URLEncodedUtils; import org.apache.http.client.methods.HttpPut; import org.apache.http.client.methods.HttpPost; import org.apache.http.util.EntityUtils; import javax.net.ssl.SSLContext; import javax.net.ssl.TrustManager; import javax.net.ssl.TrustManagerFactory import javax.net.ssl.X509TrustManager import java.security.cert.X509Certificate import java.security.cert.CertificateException
+
+import java.security.cert.KeyStore import java.security.cert.KeyStoreException
+
+/** * HCP Management API - Sample Java Application */ public class MAPISample {
+
+private AbstractHttpClient httpClient = null; private String protocol; private int port; private String uname64; private String encodedPassword; private String hcpSystemAddr;
+
+private enum RequestType { PUT, POST;
+
+}
+
+public class HCPNotInitializedException extends Exception { public HCPNotInitializedException(String msg) { super("HTTP client could not be initialized in HCPAdapter for the " + "following reason: " + msg); } }
+
+public static void main(String [] args) { MAPISample adapter = null; try { adapter = new MAPISample();
+
+// Switch the adapter to the initial user account for the new tenant. adapter.setUpSystemInfo(hcpSystemAddr, tenantUser, tenantPassword);

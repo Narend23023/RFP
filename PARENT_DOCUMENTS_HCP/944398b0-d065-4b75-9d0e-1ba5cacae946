@@ -1,0 +1,39 @@
+public void modifylUserAccount(String tenantName, String username, File jsonInputFile) {
+
+String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/userAccounts/" + username; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void createTenantUserAccount(String tenantName, String password, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/userAccounts";
+
+List<NameValuePair> metadata = new ArrayList<NameValuePair>(); metadata.add(new BasicNameValuePair("password", password)); String queryString = URLEncodedUtils.format(metadata, "UTF-8");
+
+this.executeRequest(RequestType.PUT, addr, path, queryString, jsonInputFile); }
+
+public void configureTenantSecurity(String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/consoleSecurity"; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void modifyTenant(String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName;
+
+this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void createNamespace(String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/namespaces"; this.executeRequest(RequestType.PUT, addr, path, null, jsonInputFile); }
+
+public void modifyNamespace(String namespaceName, String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/namespaces/" + namespaceName + "/complianceSettings"; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void modifyNamespaceHTTP(String namespaceName, String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/namespaces/" + namespaceName + "/protocols/http"; this.executeRequest(RequestType.POST, addr, path, null, jsonInputFile); }
+
+public void changeDataUserAccountPerms(String dataUserAcctName, String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/userAccounts/" +
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+537/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+dataUserAcctName + "/dataAccessPermissions";
+
+List<NameValuePair> metadata = new ArrayList<NameValuePair>(); metadata.add(new BasicNameValuePair("debug", "true")); String queryString = URLEncodedUtils.format(metadata, "UTF-8");
+
+this.executeRequest(RequestType.POST, addr, path, queryString, jsonInputFile); } public void createRetentionClass(String namespaceName, String tenantName, File jsonInputFile) { String addr = tenantName + "." + hcpSystemAddr; String path = "/mapi" + "/tenants/" + tenantName + "/namespaces/" + namespaceName + "/retentionClasses";
+
+this.executeRequest(RequestType.PUT, addr, path, null, jsonInputFile); }

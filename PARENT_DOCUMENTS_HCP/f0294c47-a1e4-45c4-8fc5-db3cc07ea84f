@@ -1,0 +1,59 @@
+When you specify both an asterisk and one or more permissions, the metadata query API finds objects with ACLs that grant only the permissions you explicitly specify or that grant
+
+the permissions you explicitly specify and any permissions represented by the asterisk. For example, this query expression finds objects with ACLs that grant read, read_ACL, write, and write_ACL permissions and may also grant delete permission: aclGrant:"RrWw*"
+
+A single asterisk represents all the missing permissions in the location where it appears. Therefore, you don’t use consecutive asterisks. For example, in this query expression, the wildcard character represents any combination of write, write_ACL, and delete permissions:
+
+aclGrant:"r*"
+
+In this query expression, the wildcard character represents any combination of read and write_ACL permissions: aclGrant:"R*w"
+
+In this query expression, the wildcard character represents only read_ACL permission:
+
+aclGrant:"*r"
+
+You can specify multiple asterisks in a query expression. For example, this query expression finds objects with ACLs that grant read permission and any combination of other permissions to the AD group named managers that is defined in the corp.widgetco.com domain:
+
+aclGrant:"*r*,GROUP,@corp.widgetco.com,managers"
+
+By replacing all permission values with a single asterisk, you query for objects that have ACLs that grant any combination of permissions. For example, if you’re accessing the
+
+metadata query API with a tenant-level user account, this query expression finds objects with ACLs that grant any combination of permissions to that user account: aclGrant:"*,USER"
+
+Note: Using aclGrant without specifying a user and tenant returns every object in the index that has the ACL are searching. For instance, aclGrant:"r" returns all objects that have the Read ACL set.
+
+aclGrant considerations
+
+These considerations apply when you specify the aclGrant property in a query expression:
+
+The entire value for this property must be enclosed in double quotation marks (" "). The locations and usernames you specify are not case sensitive. The group names you specify, except for all_users and authenticated, are case sensitive. The permission values you specify and the values USER and GROUP are case sensitive. Query expression examples
+
+Here are some examples of query expressions that use both text-based criteria and property-based criteria:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+845/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+This expression returns metadata for objects that have a retention setting of Deletion Allowed, are not on hold, and may or may not have a path or custom metadata that
+
+contains the term report:
+
++(retention:0) -(hold:true) report
+
+This expression returns metadata for objects in the finance namespace under the /Corporate/Employees directory that were ingested after March 1, 2012: +(namespace:"finance.europe" objectPath:"/Corporate/Employees"
+
+ingestTimeString:[2012-03-01T00:00:00 TO *])
+
+Paged queries with object-based requests
+
+To use a paged query with object-based requests:
+
+In the first request, use a count entry with a value of zero to get a response that does not include any object records but contains a totalResults value that specifies the total number of objects that meet the query criteria. In each request after the first, optionally specify a count entry. If you omit the count entry, the result set includes at most 100 objects. After each request, check the value of the code property of the status entry to determine whether the result set contains the last object that meets the criteria:
+
+If the value is INCOMPLETE, more results remain. Request another page. If the value is COMPLETE, the result set includes the last object that meets the query criteria.
+
+Paged queries with 100,000 or fewer matching objects If no more than 100,000 objects match the query criteria, use the offset entry to page through the result set. In each request after the first one with a count value greater than 0, include an offset entry that specifies the number of results to skip when returning the next page of results. For example, if you specified a count value of 50 for your first request, specify an offset value of 50 for your second request.

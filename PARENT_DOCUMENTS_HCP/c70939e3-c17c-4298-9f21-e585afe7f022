@@ -1,0 +1,55 @@
+121/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Events that trigger a Protection service run are:
+
+Node shutdown
+
+When a node becomes unavailable, HCP triggers the Protection service after waiting 90 minutes to ensure that the node is not just temporarily unavailable. Logical-volume failure
+
+When HCP determines that a local logical volume is broken, it triggers the Protection service after waiting one minute to ensure that the volume is not just temporarily unavailable.
+
+Node removal
+
+When a node is removed from the HCP system, HCP triggers the Protection service after waiting ten minutes to ensure that the node removal is permanent.
+
+Note: When the Protection service is disabled, its scheduled runs are canceled. However, the Protection service still runs in response to the triggers listed above unless all of these
+
+conditions are true:
+
+None of the tenants or namespaces on the HCP system are being replicated. All existing service plans are configured to set the ingest tier DPL to (1) one.
+
+If the HCP system is configured to use spindown storage, all existing service plans set the primary spindown storage tier DPL to 1 (one). HCP S Series Balancing service
+
+The HCP S Series Balancing service is a configurable service that balances object data across S Series Nodes in the same storage pool. The service ensures that the percent of space used across S Series Nodes in a pool remains roughly equivalent. The service is particularly useful when one or more S Series Nodes in the same storage pool is added to, removed from, or retired from an HCP system.
+
+When the HCP S Series Balancing service runs, it evaluates the storage level of each node in a pool. If the levels differ by a wide margin, the service moves objects around to bring the levels closer to a balanced state.
+
+For the purpose of HCP S Series balancing, HCP treats the following items as individual objects:
+
+Parts of multipart objects Parts of in-progress multipart uploads Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects The HCP S Series Balancing service is included in the HCP Default Schedule. However, it remains idle until storage pools are configured to take advantage of the service.
+
+To ensure optimal system performance in deployments with HCP S Series storage pools that include multiple S Series Nodes, you need to add the service to your active service schedule.
+
+New installations and upgrades will benefit from the HCP S Series Balancing feature only when an HCP S Series pool with multiple S Series Nodes is configured to use the service. HCP S Series Balancing service processing
+
+The HCP S Series Balancing service detects and repairs imbalances in storage availability across S Series Nodes in the same storage pool by comparing storage usage statistics.
+
+If the service determines that storage usage is imbalanced across S Series Nodes in the same pool:
+
+The service determines whether each S Series Node in the pool is a source of objects to move or a target to move them to.
+
+From the S Series Node source, the service moves objects individually to the S Series Node target provided the storage managed by the target node does not have a copy of the object to be moved.
+
+When selecting objects to move, the HCP S Series Balancing service considers the size of the object data and any custom metadata that the object includes, and the age of the object. If an S Series Node is retiring, the balancing service excludes the node in its balancing algorithm. At any point in time, HCP is unlikely to be in a perfectly balanced state for the following reasons:
+
+The HCP S Series Balancing service is designed to stop balancing when the nodes are within a 10% difference threshold. Object additions and deletions to and from the system do not trigger the HCP S Series Balancing service to run.
+
+When all the objects in a directory have been deleted, the empty directory remains in the namespace. Directories in the default namespace, whether empty or not, have metadata that takes up space. Best practices in configuring HCP S Series Balancing
+
+The HCP S Series Balancing service balances object data across S Series Nodes in the same storage pool to spread the storage load.
+
+When the HCP S Series Balancing service runs, balancing is initiated if S Series Nodes in the same storage pool have a percent-used disparity greater than 10%. Balancing is relative to the size of each storage node, that is, percent capacity. Best practices

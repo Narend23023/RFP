@@ -1,0 +1,41 @@
+7. Reenable the Geo-distributed Erasure Coding service.
+
+The service starts processing objects again.
+
+8. Reenable the Storage Tiering service.
+
+The service starts tiering object chunks that are the result of the new erasure coding topology. 9. When the state of the retiring erasure coding topology changes to retired, delete that topology.
+
+Considerations for creating an erasure coding topology
+
+These considerations apply to creating an erasure coding topology:
+
+Before you can create an erasure coding topology: All the HCP systems to be included in the erasure coding topology must be at release 8.0 or later. All the HCP systems to be included in the erasure coding topology must be available. The underlying replication topology must already exist. Each system in the underlying replication topology must be able to recognize each other system in the topology through a path of one or more active/active replication links. However, these links do not need to be the links you include in the erasure coding topology.
+
+All replication links to be included in an erasure coding topology must be active/active. You can create an erasure coding topology from any HCP system to be included in the topology. You cannot create an erasure coding topology from a system that will not be part of the topology.
+
+You cannot create an erasure coding topology while any HCP systems to be included in the topology are being upgraded. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+353/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Each link to be included in an erasure coding topology can include any number of tenants, including none. Those tenants do not need to be included in the erasure coding topology. The links to be included in an erasure coding topology can include different tenants from each other.
+
+Two systems to be connected by a replication link in a new erasure coding topology can already be connected by a link in a retiring or retired topology. If this is the case, the new topology must include that link. You cannot use a different link to connect the two systems in the new topology.
+
+Creating an erasure coding topology 1. In the top-level menu of the HCP System Management Console for any system you want to include in the erasure coding topology, select Services > Geo-distributed EC. 2. On the EC Topologies page, click Create Erasure Coding Topology. The erasure coding topology creation wizard opens.
+
+3. Review the information on the wizard Overview page. Then click Next. 4. On the wizard Name page: a. In the Name field, type a name for the erasure coding topology.
+
+The name must be from one through 64 characters long and can contain any valid UTF‑8 characters, including white space. Erasure coding topology names are not case sensitive. Erasure coding topology names must be unique for each HCP system in the topology. That is, you cannot use the name of a retiring or retired topology as the name for a new topology that will include any of the same systems as the retiring or retired topology. You can reuse the name of a deleted topology. b. (Optional) In the Description field, type a description for the erasure coding topology.
+
+The description can be up to 1,024 characters long and can contain any valid UTF-8 characters, including white space.
+
+5. Click Next. 6. On the wizard HCP System Selection page:
+
+a. In the Number of HCP Systems field, select the number of systems to be included in the erasure coding topology. b. If you selected 4, 5, or 6 for the number of systems, for Topology Type, select Ring or Fully connected. c. In each numbered field in the HCP Systems section, select an HCP system to be included in the erasure coding topology:
+
+For a ring topology, the order of the systems in the numbered fields must correspond to the arrangement of the systems in the topology diagram displayed on the page, with your choice of system as number one. For a fully connected topology, the systems can be in any order in the numbered fields. If you don't see all the systems you want to include in the erasure coding topology, check that all required links exist and are healthy.

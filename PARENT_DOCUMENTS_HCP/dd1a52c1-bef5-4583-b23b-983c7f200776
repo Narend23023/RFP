@@ -1,0 +1,79 @@
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+517/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property name
+
+Data type
+
+Description
+
+Notes
+
+The creation, modification, or deletion of a retention class The creation, modification, or deletion of a content class A tenant log message
+
+For an active/active link, the value of this property is the operation rate for replication from the local system to the remote system for the link. For an active/passive link, the value of this property is the operation rate during replication or recovery, whichever is happening at the time. In any case, the operation rate is cumulative for all the tenants being replicated or recovered on the link. upToDateAsOfMillis
+
+Long
+
+Specifies, in milliseconds since January 1, 1970, at 00:00:00 UTC:
+
+For an active/active link, the date and time before which configuration changes and changes to namespace content are guaranteed to be synchronized in both directions between the two systems involved in the link For an active/passive link, the date and time before which configuration changes and changes to namespace content are guaranteed to have been replicated or recovered on the link, as applicable
+
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+upToDateAsOfString String
+
+Specifies, as a datetime string:
+
+For an active/active link, the date and time before which configuration changes and changes to namespace content are guaranteed to be synchronized in both directions between the two systems involved in the link For an active/passive link, the date and time before which configuration changes and changes to namespace content are guaranteed to have been replicated or recovered on the link, as applicable
+
+This property is not valid on a PUT or POST request for a replication link. It is returned only by a verbose GET request.
+
+The datetime string has this format: yyyy-MM-ddThh:mm:ssZ
+
+In this format, hh is the hour on a 24-hour clock, and Z represents the offset from UTC and is specified as:
+
+(+|-)hhmm
+
+For example:
+
+2017-03-18T10:47:59-0400
+
+Example
+
+Here’s an XML example of the statistics data type that describes the statistics property of the link data type.
+
+<statistics> <upToDateAsOfString>2019-07-12T10:47:59-0400</upToDateAsOfString> <upToDateAsOfMillis>1395154079640</upToDateAsOfMillis> <bytesPending>189027593061</bytesPending> <bytesPendingRemote>319740</bytesPendingRemote> <bytesReplicated>72254119306967</bytesReplicated> <bytesPerSecond>56215390</bytesPerSecond> <objectsPending>534</objectsPending> <objectsPendingRemote>2</objectsPendingRemote> <objectsReplicated>295661</objectsReplicated>
+
+<operationsPerSecond>119.1</operationsPerSecond> <errors>0</errors> <errorsPerSecond>0.0</errorsPerSecond> <objectsVerified>200000</objectsVerified> <objectsReplicatedAfterVerification>0</objectsReplicatedAfterVerification> </statistics> statistics (data type for tenant and namespace statistics resources)
+
+The statistics data type in this section describes the statistics resource for tenants and namespaces.
+
+Properties
+
+The table below describes the properties included in the statistics data type that describes the statistics resource for tenants and namespaces. Property
+
+Data Type
+
+Description
+
+customMetadataCount
+
+Long
+
+Specifies the number of custom metadata files stored in a given namespace or in all the namespaces owned by a given tenant.
+
+customMetadataSize
+
+Long

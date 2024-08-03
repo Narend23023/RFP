@@ -1,0 +1,99 @@
+["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file filehandle = open("March.xml", 'rb') curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST")
+
+curl.setopt(pycurl.INFILESIZE, os.path.getsize("March.xml"))
+
+curl.setopt(pycurl.READFUNCTION, filehandle.read)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+866/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request headers
+
+POST /query?prettyprint HTTP/1.1 Host: europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Content-Type: application/xml Accept: application/xml
+
+Content-Length: 134
+
+Response headers
+
+HTTP/1.1 200 OK
+
+Transfer-Encoding: chunked
+
+XML response body
+
+To limit the example size, the XML below shows only one object entry in the response body. <?xml version='1.0' encoding='UTF-8'?>
+
+<queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/static/xsd/query-result-7.0.xsd">
+
+<query>
+
+<expression>ingestTime:[1333238400 TO 1335830399]</expression> <resultSet>
+
+<object version="84689595801123"
+
+utf8Name="Q1_2020.ppt" urlName="https://marketing.europe.hcp.example.com/rest/
+
+presentations/Q1_2020.ppt" updateTimeString="2020-03-31T15:41:35-0400"
+
+updateTime="1333222895" uid="0" type="object" size="6628"
+
+shred="false" retentionString="Deletion Allowed"
+
+retentionClass=" " retention="0"
+
+replicated="true" permissions="555"
+
+owner="USER,europe,lgreen"
+
+operation="CREATED" namespace="marketing.europe"
+
+ingestTimeString="2020-03-31T15:41:35-0400" ingestTime="1333222895"
+
+index="true" hold="false" hashScheme="SHA-256" hash="SHA-256 0662D2A2DEF74EF02A8DF5A4F16BF4D55FEE582..."
+
+gid="0" objectPath="/presentations/Q1_2020.ppt"
+
+dpl="2" customMetadata="false"
+
+changeTimeString="2020-03-31T15:41:35-0400" changeTimeMilliseconds="1333222895615.00"
+
+accessTimeString="2020-03-31T15:41:35-0400" accessTime="1333222895" acl="false" />
+
+. .
+
+. </resultSet>
+
+<status results="7"
+
+message="" code="COMPLETE" />
+
+<facets> <facet
+
+property="namespace <frequency
+
+count="4" value="finance.europe" />
+
+<frequency count="3"
+
+value="marketing.europe" /> </facet>
+
+</facets>
+
+</queryResult>
+
+Example: Querying for replication collisions in a namespace
+
+Here’s a sample metadata query API request that retrieves metadata for all objects that are:

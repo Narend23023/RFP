@@ -1,0 +1,43 @@
+device that’s represented by the NFS storage component. However, HCP creates an NFS mount point that’s associated with a given storage component only when that mount point is added to an NFS storage pool.
+
+When an HCP system is upgraded from release 6.x to release 7.0 or later, HCP automatically creates an NFS storage component and an NFS storage pool for each external volume that was configured on the HCP system before it was upgraded, and defines each NFS storage pool as a storage tier. For each namespace that was configured to use NFS storage before the upgrade, HCP automatically configures the service plan for that namespace to define the applicable NFS storage pool as a storage tier.
+
+On the Hardware page of the System Management Console, HCP uses an external volume (also called an NFS volume) to represent the storage that’s accessed using a single NFS mount point that’s contained in an NFS storage pool. You can use the Storage page to view information about all NFS volumes stored on a single physical storage device that’s
+
+represented by an NFS storage component.
+
+Creating NFS shares on a physical storage device
+
+Before you can create an NFS storage component, you need to create and configure the NFS shares for the volumes you want to access on the physical storage device that’s represented by the component.
+
+The main steps for creating NFS shares on a physical storage device for which you want to create an NFS storage component are: 1. On the physical storage device, create the directories you want to share. 2. Export each directory as an NFS share.
+
+Exports and required NFS component settings Directories for export
+
+For each storage volume you want to access on the physical storage device that’s represented by an NFS storage component, you need to create a directory on that physical storage device. For each directory, you need to set the permissions to allow read, write, and execute access to all users.
+
+For example, on Linux systems, each directory you want to share must have its permissions set to 777.
+
+Exported shares
+
+Each directory that you want to mount as an NFS volume on an HCP node must be exported as an NFS share on the physical storage device that’s represented by the NFS storage component you want to create. To ensure that other systems and applications cannot mount the same storage, you should export each share exclusively to the HCP system. You
+
+can identify each the HCP system in one of three ways: Using the fully-qualified domain name (FQDN) of the domain that’s associated with the [hcp_system] network, preceded by admin (for example, admin.hcp.example.com). This option is available only if the HCP system is using DNS.
+
+By the CIDR notation for any IPv4 or IPv6 gateway that’s defined for the [hcp_system] network. By the node IP addresses that the extended storage device needs to use to communicate with the [hcp_system] network. In this case, you need to export the share to the applicable IPv4 or IPv6 addresses for all the HCP nodes.
+
+You need to export each share to all nodes because you cannot predict with which node HCP will associate the NFS storage volume you create for a share. If you omit a
+
+node and HCP associates a volume with that node, HCP has no access to the share for that volume.
+
+If you use node IP addresses to identify the HCP system and you subsequently change any of those IP addresses in the [hcp_system] network, you need to update the export specification for the share with the new addresses. Then you need to export the share again.
+
+The method you use to export the shares and the export options you specify depend on the type of storage device for which you want to create an NFS storage component. Minimally, the exported share must allow read and write access by the HCP system. The following information on exporting shares on Linux systems is included for explanatory purposes only. The extended storage devices that are represented by NFS storage components should be enterprise-class, purpose-built appliances. The storage volumes that are accessed using NFS mount points should be on storage that’s RAID-protected,
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+47/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

@@ -1,0 +1,123 @@
+Request in Python using PycURL
+
+import pycurl
+
+import StringIO cin = StringIO.StringIO()
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata \ &annotation=report_data")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HEADER, 1) curl.setopt(pycurl.NOBODY, 1)
+
+curl.setopt(pycurl.WRITEFUNCTION, cin.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+print cin.getvalue() curl.close() Request headers
+
+HEAD /rest/quarterly_rpts/Q1_2012.ppt?type=custom-metadata
+
+&annotation=report_data HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-ServicedBySystem: hcp.example.com
+
+X-HCP-Time: 1352396298 X-HCP-SoftwareVersion: 7.0.0.16
+
+X-RequestId: 47306C879E376245 ETag: "8d604138ffb0f308a8552a3752e5a1be" Content-Type: text/xml Content-Length: 35643
+
+X-HCP-Type: annotation X-HCP-Size: 35643
+
+X-HCP-ChangeTimeMilliseconds: 1352322160000.00 X-HCP-ChangeTimeString: 2012-11-07T16:02:40-0500
+
+X-HCP-Hash: SHA-256 F8C7D88D139D14D115BA5300CD352338B8A1D344046DB2...
+
+Listing annotations for an object or version
+
+You use the HTTP GET method to list the annotations for an object or version. Access permission
+
+To list annotations, you need read permission.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+770/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request header
+
+GET /rest/directory/file?type=custom-metadata-info HTTP/1.1 Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name.
+
+file
+
+Yes
+
+Name of the file, including file extension.
+
+type
+
+Yes
+
+Use the value custom-metadata-info
+
+version
+
+No
+
+To check whether an annotation exists for a specific object version, in addition to specifying the request
+
+elements listed above, specify this URL query parameter. Response header
+
+The list below describes the request-specific response header for this operation.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created. This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. Response body
+
+Element
+
+Child element
+
+Description
+
+annotations
+
+annotation
+
+Each annotation is in their own separate annotation element.
+
+annotation
+
+name
+
+Annotation name.
+
+annotation
+
+changeTimeMilliseconds
+
+Seconds after 1 January 1970 that the object was either modified or deleted.
+
+annotation
+
+changeTimeString

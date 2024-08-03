@@ -1,0 +1,39 @@
+Retrieving custom metadata with the S3 compatible API
+
+When you check the existence of or retrieve an object that has a .metapairs annotation containing well-formed XML, the response headers include x-amz-meta- headers with property/value pairs that correspond to the XML elements in the annotation. The property names in these headers are the element names with the initial meta- removed. An element with comma-separated values is returned as a single x-amz-meta- header with comma-separated values. Here’s an example that shows an XML element with comma- separated values and the x-amz-meta- header that results from that element:
+
+<meta-author> <![CDATA[P.D. Grey,Morgan White,Paris Black]]> </meta-author>
+
+x-amz-meta-author:P.D. Grey,Morgan White,Paris Black
+
+Custom metadata usage considerations
+
+The following considerations apply to using custom metadata with the S3 compatible API.
+
+Custom metadata and object versions
+
+Custom metadata is specific to the object version for which it's stored:
+
+If you store an object without custom metadata and then store a new version of the object with custom metadata, the custom metadata is not added to the old version of the object. If you store an object with custom metadata and then store a new version of the object without custom metadata, the old version of the object has custom metadata, but the new version does not.
+
+You cannot add or replace custom metadata for an old version of an object. Property names
+
+When naming custom metadata properties, you should use names that, when concatenated with meta-, result in valid XML element names. That way, the x-amz-meta- headers returned when you retrieve or check the existence of an object match the x-amz-meta- headers you specified when you stored or copied the object.
+
+If HCP has to modify a property name to create a valid element name, the returned x-amz-meta- header won’t match the x-amz-meta- header specified when the object was stored or copied. For example, if the specified header is x-amz-meta-city/town, the returned header is x-amz-meta-city_town. Custom metadata size
+
+When you use the S3 compatible API to store or copy an object, you can specify at most two kilobytes of custom metadata. The size of the custom metadata you specify is the sum of the number of bytes in the UTF-8 encoding of each property name and value.
+
+Allowed operations
+
+Whether you can add, replace, or delete custom metadata for objects under retention depends on a bucket setting. When you create a bucket, it’s set to allow only the addition of custom metadata for objects under retention. You cannot use the S3 compatible API to change this setting. However, tenant administrators can change this setting for the buckets you create. .metapairs annotations with unexpected content
+
+You should not use HCP interfaces other than the S3 compatible API to store annotations named .metapairs. However, HCP does not prevent you from doing this. As a result, annotations named .metapairs are not guaranteed to be compatible with the S3 compatible API.
+
+Here are some ways in which HCP responds to S3 compatible requests for objects that have .metapairs annotations with unexpected content:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+551/907
+
+6/25/24, 11:34 AM

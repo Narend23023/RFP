@@ -1,0 +1,95 @@
+void WriteToHCP() throws Exception { /*
+
+Set up the PUT request to store both object data and an * annotation.
+
+This method assumes that the HTTP client has already been * initialized.
+
+/ HttpPut httpRequest = new HttpPut(sHCPURLFilePath + "?type=whole-object");
+
+// Construct the Whole I/O Sequenced Stream with the object data // and annotation. FileInputStream dataFileStream = new FileInputStream(sBaseFileName);
+
+FileInputStream customMetadataStream = new FileInputStream(sBaseFileName + ".cm");
+
+SequenceInputStream wholeIOStream = new SequenceInputStream(
+
+dataFileStream, customMetadataStream);
+
+// Point the HttpRequest to the input stream. httpRequest.setEntity(new InputStreamEntity(wholeIOStream, -1));
+
+// Put the size of the data object data into the X-HCP-Size header. httpRequest.setHeader("X-HCP-Size", String.valueOf(dataFileStream.available()));
+
+// Create the HTTP Authorization Header.
+
+httpRequest.setHeader(HCPUtils.HTTP_AUTH_HEADER, "HCP " + sEncodedUserName + ":" + sEncodedPassword);
+
+/*
+
+Now execute the PUT request.
+
+/ HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+// If the status code is anything BUT 200 range indicating success,
+
+// throw an exception. if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100))
+
+{ // Clean up after ourselves and release the HTTP connection to the // connection manager. EntityUtils.consume(httpResponse.getEntity())
+
+wholeIOStream.close();
+
+dataFileStream.close(); customMetadataStream.close();
+
+throw new HttpResponseException(
+
+httpResponse.getStatusLine().getStatusCode(), "Unexpected status returned from " + httpRequest.getMethod()
+
++ " (" + httpResponse.getStatusLine().getStatusCode() + ": " + httpResponse.getStatusLine().getReasonPhrase() + ")"); }
+
+// Clean up after ourselves and release the HTTP connection to the
+
+// connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+718/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+wholeIOStream.close(); dataFileStream.close();
+
+customMetadataStream.close();
+
+} .
+
+. .
+
+}
+
+Sending object data in compressed format (Unix)
+
+Here is a Unix command line that uses the gzip utility to compress the
+
+Q2_2020.ppt file and then pipes the compressed output to a curl command. The curl command makes an HTTP PUT request that sends the data and tells HCP that the data is
+
+compressed. Request with gzip and curl commands
+
+gzip -c Q2_2020.ppt |
+
+curl -k -T - -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+H "Content-Encoding: gzip" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt"
+
+Request headers
+
+PUT /rest/quarterly_rpts/Q2_2020.ppt HTTP/1.1 Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Length: 678400
+
+Transfer-Encoding: chunked Content-Encoding: gzip
+
+Expect: 100-continue
+
+Response headers
+
+HTTP/1.1 201 Created
+
+X-HCP-ServicedBySystem: hcp.example.com ETag: "9c604138ffb0f308a8552a3752e5a1be"

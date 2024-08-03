@@ -1,0 +1,103 @@
+Range of create timestamps, separated by a dash. For example:
+
+?version=@1493911519817-@1493911519817
+
+0-, which provides all versions of an object.
+
+These rules apply to the version query parameter:
+
+If you omit the parameter, HCP checks the existence of the current version of an object. If you specify a valid range, HCP returns the requested amount of data with a status code of 200. Response headers
+
+This operation returns Content-Length and Content-Type headers with information about the ACL. If the request specifies a gzip-compressed response, HCP returns a Content- Encoding header with a value of gzip.
+
+This operation does not return any request-specific headers.
+
+Response body
+
+If an object has an ACL, the body of the HTTP response contains the ACL in XML or JSON.
+
+If an object does not have an ACL, the body of the HTTP response contains: In XML:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<accessControlList/>
+
+In JSON:
+
+{"grant":[]}
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the ACL.
+
+HCP returns this status code regardless of whether the object has an ACL. To determine whether an object has an ACL, view the response body for the request.
+
+404 Not Found
+
+One of:
+
+HCP could not find the specified object Any component of the URL except for the last component in the path is a symbolic link to a
+
+directory.
+
+406
+
+Not Acceptable
+
+The request has an Accept-Encoding header that does not include gzip or *.
+
+Example: Retrieving an ACL for an object
+
+Here’s a sample HTTP GET request that retrieves the ACL for an object named Q1_2012.ppt in the quarterly_rpts directory. Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt
+
+?type=acl" > Q1_2012.ppt.acl.xml
+
+Request in Python using PycURL
+
+import pycurl
+
+filehandle = open("Q1_2012.ppt.acl.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?type=acl")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+779/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.close()
+
+filehandle.close() Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt?type=acl HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1335016427
+
+X-HCP-SoftwareVersion: 7.0.0.16 Content-Type: application/xml

@@ -1,0 +1,47 @@
+The Duplicate Elimination page in the HCP System Management Console shows statistics about duplicate-eliminated objects, parts, and chunks.
+
+Note: To view the Duplication Elimination Status panel, you need the monitor or administrator role.
+
+To display the Duplicate Elimination page, in the top-level menu of the System Management Console, select Services > Duplicate Elimination. The Duplication Elimination page shows:
+
+Total objects and object parts merged
+
+The total number of these items for which data was merged since HCP was installed: objects, parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of multipart objects.
+
+Total bytes saved from duplicate elimination
+
+The total number of bytes of storage freed due to duplicate elimination since HCP was installed.
+
+The amount of storage freed when you merge duplicates is the size of the data times one less than the number of objects, parts, and chunks merged, times the total number of copies that HCP needs to maintain on primary storage to comply with the ingest tier DPL and primary spindown storage DPL (if applicable) specified in the applicable service plans and to satisfy all protection set requirements. HCP increases both of these numbers when duplicate data is deleted but does not subtract from these numbers when duplicate-eliminated objects are deleted from the repository.
+
+Fast Object Recovery service
+
+The Fast Object Recovery service checks unavailable objects and, if it finds that an object is available, changes the object status from unavailable to available. The service runs automatically if the Content Verification service is enabled. If the Content Verification service is disabled, the Fast Object Recovery service does not run.
+
+While the Content Verification service is enabled, the Fast Object Recovery service runs once a day. Additionally, the Fast Object Recovery service runs in response to an availability event, such as an unavailable node becoming available. Although you cannot directly schedule the Fast Object Recovery service, you can effectively suspend running the service by disabling the Content Verification service. Garbage collection service
+
+The Garbage Collection service ensures that HCP storage does not fill up with data that is no longer needed.
+
+The Garbage Collection service runs according to the active service schedule.
+
+Garbage Collection service processing
+
+The Garbage Collection service performs several functions, including object deletions and transaction log cleanup. Object deletions
+
+The Garbage Collection service performs object deletions according to the following scenarios:
+
+When a client or the Disposition service deletes an object, HCP hides the object data and metadata, marks the object for deletion, and if possible, immediately deletes it. When a client purges an object, HCP hides the data and metadata for all versions of the object, marks all these items for deletion, and if possible, immediately deletes the items. When HCP prunes a version of an object, HCP hides the data and metadata for that version, marks the version for deletion, and if possible, immediately deletes it. When a client replaces a part during a multipart upload, HCP hides the replaced part and marks the part for deletion. When a client aborts a multipart upload, HCP hides the parts of the multipart upload that have already been written and marks those parts for deletion. When a client completes a multipart upload, HCP hides any parts that were written for the multipart upload but not included in the completion and marks those parts for deletion. When the Garbage Collection service runs:
+
+It looks for hidden objects and parts. If it finds such objects or parts marked for deletion, it deletes them. It looks for objects and parts left by failed writes through HTTP, WebDAV, and SMTP. If it finds such objects or parts, it deletes them. It looks for multipart uploads that should be automatically aborted. If it finds such a multipart upload, the Garbage Collection service hides the parts of the multipart upload that have already been written, marks those parts for deletion, and, on a subsequent run, deletes them.
+
+In all cases, when applicable, object deletion triggers the Shredding service. Note: If an object or part has been erasure coded, the Garbage Collection service works on the applicable chunk in the same way the service works on objects and parts that are not erasure coded.
+
+Transaction log cleanup
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+114/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

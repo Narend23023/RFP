@@ -1,0 +1,81 @@
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.POST, 1) curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/json", "Accept: application/xml"])
+
+# Set the request body
+
+theFields = '{"operation":{"systemMetadata":{"changeTime": \ {"start":1293840000000,"end":1325376000000},"namespaces": \
+
+{"namespace":["finance.europe"]}}}}' curl.setopt(pycurl.POSTFIELDS, theFields) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+Request headers
+
+POST /query HTTP/1.1 Host: europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Content-Type: application/json
+
+Accept: application/xml Content-Length: 81
+
+Response headers
+
+HTTP/1.1 200 OK Transfer-Encoding: chunked Response body
+
+To limit the example size, the XML below shows only two object entries in the response body.
+
+<?xml version='1.0' encoding='UTF-8'?> <queryResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/query-result-7.0.xsd"> <query start="1293840000000" end="1325376000000" /> <resultSet> <object
+
+version="81787101672577" urlName="https://finance.europe.hcp.example.com/rest/
+
+Presentations/Q2_2019.ppt" operation="CREATED"
+
+changeTimeMilliseconds="1310392057456.00" />
+
+<object version="81787102472129"
+
+urlName="https://finance.europe.hcp.example.com/rest/ Presentations/Images/thankYou.jpg" operation="CREATED" changeTimeMilliseconds="1310392336286.00" />
+
+. .
+
+. </resultSet>
+
+<status results="11" message="" code="COMPLETE" /> </queryResult>
+
+Example: Using a paged query to retrieve a large number of records
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+872/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The Python example below implements a paged query that uses multiple requests to retrieve a large number of operation records in batches of 50 per request. This query retrieves records for all create operations on objects in the /customers/widgetco/orders directory in the default namespace and returns basic information for each record.
+
+The query uses a JSON request body and requests results in JSON format. #!/usr/bin/env python # encoding: utf-8
+
+import pycurl
+
+import StringIO import time
+
+import json
+
+class OperationBasedQueryTool(): queryArguments = {'operation': {'count': 1, 'verbose': 'false',
+
+'objectProperties': 'utf8Name, type, size',
+
+'systemMetadata': {'changeTime': {}, 'directories': {'directory': []}, 'namespaces': {'namespace': []}, 'transactions': {'transaction': []}}}}
+
+def __init__(self):
+
+self.complete = False
+
+def setConnectionInfo(self, authToken, hostName, urlName): """ Set all connection info for subsequent query requests.

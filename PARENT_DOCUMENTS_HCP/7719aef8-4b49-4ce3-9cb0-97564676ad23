@@ -1,0 +1,33 @@
+Request with cURL command line
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+435/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl -k -iT FinanceTenant.xml -H "Content-Type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/tenants?username=lgreen &password=start123&forcePasswordChange=false"
+
+Request in Python using PycURL import pycurl import os filehandle = open("FinanceTenant.xml", 'rb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", "Authorization: HCP \ YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"]) curl.setopt(pycurl.URL, "https://admin.hcp.example.com:9090/mapi/tenants?" + "username=lgreen&password=start123&forcePasswordChange=false") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.INFILESIZE, os.path.getsize("FinanceTenant.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+PUT /mapi/tenants?username=lgreen&password=start123 &forcePasswordChange=false HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: application/xml Content-Length: 1016
+
+Response headers HTTP/1.1 200 OK X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Example: Setting Tenant Management Console security for a tenant
+
+Here’s a sample POST request that modifies the Tenant Management Console configuration for the Finance tenant. The Console configuration information is in an XML file named FinanceMgmtConsole.xml. The request is made using a tenant-level user account that includes the security role. Request body in XML
+
+<consoleSecurity> <automaticUserAccountUnlockSetting>false</automaticUserAccountUnlockSetting> <automaticUserAccoutUnlockDuration>0</automaticUserAccoutUnlockDuration> <blockCommonPassword>false</blockCommonPassword> <blockPasswordReUse>false</blockPasswordReUse> <coolDownPeriodDuration>5</coolDownPeriodDuration> <coolDownPeriodSettings>false</coolDownPeriodSettings> <disableAfterAttempts>5</disableAfterAttempts> <disableAfterInactiveDays>180</disableAfterInactiveDays> <forcePasswordChangeDays>180</forcePasswordChangeDays> <ipSettings>
+
+<allowAddresses>
+
+<ipAddress>192.168.103.18</ipAddress>
+
+<ipAddress>192.168.103.24</ipAddress> <ipAddress>192.168.103.25</ipAddress> </allowAddresses>
+
+<lowlfInBothLists>false</lowlfInBothLists> <denyAddresses/>

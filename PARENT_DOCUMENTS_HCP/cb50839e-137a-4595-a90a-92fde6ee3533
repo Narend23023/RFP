@@ -1,0 +1,94 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> 6/25/24, 11:34 AM
+Content Platform System Management Help
+The version ID of the object or object version.
+X-HCP-Operation
+Whether the object or object version is created or deleted.
+X-HCP-IngestTimeMilliseconds
+The time when HCP stored the object or object version, in seconds since January 1, 1970, at 00:00:00 UTC.
+X-HCP-Size
+The size of the object or object version in bytes.
+Status codes<br>
+                       <b>Bounding box:</b> x1=185, y1=326, x2=1516, y2=2113
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Code</td>
+      <td>Meaning</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>OK</td>
+      <td>HCP successfully processed the request.\nThis code is also returned if the URL specified a valid directory path and HCP returned a directory listing.\nNote: For a request for an object or version, if the number of bytes returned does not equal the value of\nthe response header, try the request again later. Content-Length</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>206</td>
+      <td>Partial Content</td>
+      <td>HCP successfully retrieved the data in the byte range specified in the request.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>304</td>
+      <td>Not Modified</td>
+      <td>One of:\nThe request specified an header, and the ETag of the requested object or version If--Match\nmatches the value in the header.\nThe request specified an header, and the object change time is at or before If-Modified-Since\nthe time specified in the header.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>The request was not valid. Possible reasons include:\nThe URL in the request is not well formed.\nThe request has both a query parameter and a request header. type=whole-object Range\nThe requested object is larger than 512,000 bytes and does not yet have an ETag, and the request\nincluded an or header that did not specify a query If-Match If--Match forceEtag=true\nparameter.\nThe request contains an unsupported query parameter or an invalid value for a query parameter.\nIf more information about the error is available, the response headers include the HCP product-specific\nheader. X‑HCP-ErrorMessage</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>The requested operation is not allowed. Possible reasons include:\nThe header or cookie specifies invalid credentials. Authorization hcp-ns-auth\nThe namespace requires client authentication, and the request does not have an Authorization\nheader or cookie. hcp-ns-auth\nThe user does not have read permission.\nThe namespace does not exist.\nThe access method (HTTP or HTTPS) is disabled.\nIf more information about the error is available, the response headers include the HCP product-specific\nheader. X‑HCP-ErrorMessage</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>One of:\nHCP could not find an object, version, or directory at the specified URL. The specified object or\nversion does not exist, or the request specified the current version of an object that has been\ndeleted.\nWhen retrieving object or version data and an annotation together, the requested object does not\nhave an annotation with the specified name.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>406</td>
+      <td>Not Acceptable</td>
+      <td>The request has an header that does not include or Accept-Encoding gzip *.</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>410</td>
+      <td>Gone</td>
+      <td>Possible reasons include:\nThe object exists, but the HCP system does not have the object data. Retry the request, targeting a\ndifferent system in the replication topology.\nThe object is in the process of being deleted.</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>412</td>
+      <td>Precondition Failed</td>
+      <td>One of:\nThe request specified an header, and the ETag of the requested object or version does If-Match\nnot match the value in the header.\nThe request specified an header, and the object change time is after the If-Unmodified-Since\ntime specified in the header.</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>416</td>
+      <td>Requested Range Not Satisfiable</td>
+      <td>One of:\nThe specified start position is greater than the size of the requested data.\nThe size of the specified range is zero.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

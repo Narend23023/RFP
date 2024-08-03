@@ -1,0 +1,127 @@
+Data type
+
+Description
+
+Notes
+
+allowNamespace Management
+
+Boolean
+
+Specifies whether the user account has the allow namespace management property. Valid values are:
+
+This property is not valid on a PUT request. It is valid on a POST request only if the user making the request has the administrator role. true
+
+The user account has the allow namespace property.
+
+false
+
+The user account does not have the allow namespace management property.
+
+On a PUT request, the default is true if the roles property includes ADMINISTRATOR in the same request; otherwise, the default is false.
+
+On a POST request, adding ADMINISTRATOR to the roles for the user account automatically enables the allow namespace management property for the account.
+
+Users with the allow namespace management property can use the HCP management and S3 compatible APIs to:
+
+Create namespaces List, view and change the versioning status of, and delete namespaces they own description
+
+String
+
+Specifies the description of the user account. This description is optional. The default is no description.
+
+This property is valid on a POST request only if the user making the request has the security role.
+
+To remove a description from an existing user account, specify the description property with no value.
+
+enabled Boolean
+
+Specifies whether the user account is enabled. Valid values are:
+
+This property is required on a PUT request. It is valid on a POST request only if the user making the request has the security role.
+
+true
+
+The user account is enabled.
+
+false
+
+The user account is disabled.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+526/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+forcePasswordChange
+
+Boolean
+
+Specifies whether the password for the user account must be changed the next time the account is used to log into the Tenant Management Console. Valid values are:
+
+This property is required on a PUT request. It is valid on a POST request and returned by a GET request only if the user making the request has the security role. true
+
+The password must be changed.
+
+false
+
+The password does not need to be changed.
+
+fullName
+
+String
+
+Specifies the full name of the user for whom you’re creating the account. This name must be from one through 64 characters long and can contain any valid UTF-8 characters, including white space.
+
+This property is required on a PUT request. It is valid on a POST request only if the user making the request has the security role. localAuthentication
+
+Boolean
+
+Specifies whether the user account is authenticated locally or by a RADIUS server specified at the HCP system level. Valid values are:
+
+This property is required on a PUT request. It is not valid on a POST request and is returned only by a verbose GET request.
+
+true
+
+The user account is authenticated locally. false
+
+The user account is authenticated by a RADIUS server.
+
+roles
+
+List
+
+Associates zero, one, or more roles with the user account. Valid values for roles are:
+
+This property is valid on a POST request and returned by a GET request only when the user making the request has the security role.
+
+ADMINISTRATOR COMPLIANCE MONITOR SECURITY
+
+For an existing user account, the set of roles specified in the request body replaces the set of roles currently associated with the user account. To remove all roles, specify an empty set.
+
+These values are not case sensitive.
+
+The default is no roles.
+
+In XML, the element that identifies each role is role. In JSON, the name in the name/value pair that lists the roles is role. userGUID
+
+String
+
+Specifies the system-supplied globally unique user ID for the user account. HCP generates this ID automatically when you create an account.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request and only when the user making the request has the security role. userID
+
+Integer
+
+Specifies the system-supplied local user ID for the user account. HCP generates this ID automatically when you create an account.

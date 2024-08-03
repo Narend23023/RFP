@@ -1,0 +1,67 @@
+Is associated with the domain that’s associated with the network that’s selected for replication on that system Has already reached its start date Has not expired To share a certificate, the HCP administrator for the system in which the certificate is installed needs to download the certificate and give it to the administrator for the other system. That administrator then needs to upload the certificate as a trusted replication server certificate on the other system. Because what’s downloaded is only the public portion of each
+
+server certificate, you can transfer the certificate unsecured.
+
+For any given replication link, the two systems directly involved must share certificates. In a replication chain, for example, from system A to system B to system C, systems A and B must share certificates, and systems B and C must share certificates, but systems A and C don’t need to do this.
+
+If you take any of these actions on one of the systems in a replication pair, the replication certificate on that system automatically changes: Delete the certificate that’s currently being used for replication Associate a different domain with the network that’s selected for replication Select a different network for replication, where that network is associated with a different domain from the previously selected network Install a new valid certificate for the applicable domain where that certificate has an earlier start date than the certificate that’s currently being used for replication The replication certificate also automatically changes if:
+
+The certificate that’s currently being used for replication expires and the applicable domain has at least one other certificate that’s valid A future certificate for the applicable domain becomes valid and the domain has no other valid certificates
+
+In any of these cases, when the certificate changes, HCP automatically suspends replication or recovery activity on all links in which the system participates. At that point, you need to download the new certificate and upload it to the other system for each link. After you upload the new certificate, activity on the link resumes automatically.
+
+Downloading an SSL server certificate
+
+To view the SSL configuration for replication, you need the monitor or administrator role. To configure SSL for replication, you need the administrator role. 1. In the top-level menu of the HCP System Management Console, select Services > > Replication. 2. On the left side of the Replication page, click Certificates.
+
+On the replication Certificates page, the Replication Server panel is displayed. The panel shows this information about each currently installed replication SSL server certificate, regardless of whether it’s expired: Server Certificate Domain
+
+The distinguished name for the certificate
+
+Valid On
+
+The date and time at which the certificate goes (or went) into effect
+
+Expires On
+
+The date and time at which the certificate expires (or expired)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+339/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+3. Click the download control (
+
+) for the certificate you want to download. Then save the downloaded certificate in the location of your choice.
+
+Uploading a trusted replication server certificate
+
+To view the SSL configuration for replication, you need the monitor or administrator role. To configure SSL for replication, you need the administrator role. 1. In the top-level menu of the HCP System Management Console, select Services > > Replication. 2. On the left side of the Replication page, click Certificates. 3. On the replication Certificates page, click Trusted Replication. The Trusted Replication panel shows this information about each trusted replication server certificate: Server Certificate Domain
+
+The distinguished name for the certificate
+
+Valid On
+
+The date and time at which the certificate goes (or went) into effect
+
+Expires On
+
+The date and time at which the certificate expires (or expired)
+
+4. In the Trusted Replication section, click Browse. Then select the file containing the downloaded SSL server certificate.
+
+5. Click Upload Certificate.
+
+The Trusted Replication section displays the uploaded certificate.
+
+Note: You can also download a trusted replication server certificate. To do this, click the download control ( ) for the certificate in the Trusted Replication section.
+
+Deleting a trusted replication server certificate
+
+You can delete trusted replication server certificates. You may want to do this, for example, with certificates that become invalid.
+
+You can delete a trusted replication server certificate only while all links in which the system participates are suspended.

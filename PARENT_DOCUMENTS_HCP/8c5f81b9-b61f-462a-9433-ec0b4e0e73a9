@@ -1,0 +1,35 @@
+connected topology ensures that each system has multiple paths to each other system, thereby preventing individual systems from becoming isolated from the rest.
+
+For example, suppose that the following conditions are true:
+
+Namespace NS1 is being replicated in a replication topology that includes systems A, B, C, and D The service plan associated with NS1 includes a metadata-only storage tier on A and B Object O1 is metadata-only on both A and B
+
+With a ring topology, if the replication links between B and C and between C and D are broken, system C is isolated. Because no path connects system D to system C, system D cannot retrieve data for O1 from the only other system that has the data (for example, in a situation in which read from remote is required). Given the same circumstances with a fully connected topology, system D can still read data for O1 from system C by using the links between D and A and between A and C.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+326/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+A fully connected topology requires more maintenance than a ring topology. In the worst case, with six systems in a fully connected topology, you must maintain 15 replication links. With six systems in a ring topology, you need to maintain only six links. Additionally, the more systems you have in a fully connected topology, the less the ability to replicate other tenants to systems outside the topology. For example, in a five-system fully connected topology, any system could have one additional link on which to replicate tenants that are not in the topology to a system outside the topology. In a six-system fully connected topology, the systems cannot have any additional links.
+
+A typical use for a fully connected active/active replication topology is as the basis for an erasure coding topology.
+
+Responses to read requests for erasure-coded objects are faster with a fully connected topology than with a ring topology because all chunks not on the target system can be retrieved from directly connected systems. In comparison, with an erasure coding topology based on a ring replication topology, responses to read requests are slower because some chunks can be retrieved only through paths consisting of more than one replication link. Also, the use of the additional links increases network bandwidth usage. Simple active/passive replication
+
+In a simple active/passive replication topology, one HCP system, the primary system, replicates HCP tenants and namespaces and default-namespace directories to another HCP system, the replica, over an active/passive link. The items being replicated are originally created only in the primary system. The items are read-write on the primary system and, after being replicated, read-only on the replica.
+
+What this looks like
+
+The figure below shows a simple active/passive replication topology in which one HCP system (A) is replicating to a second HCP system (B). In this figure:
+
+From system A, two of three locally created tenants are being replicated to system B. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication. In system B, no locally created tenants are being replicated. Uses
+
+The main purpose of a simple active/passive replication topology is to have a backup of the primary system for use in disaster recovery. However, this topology also supports a scenario in which some applications need read-write access to the replicated items while other applications need only read access. By directing requests from the latter to the replica, you can reduce the load on the primary system. Active/passive many-to-one replication
+
+In an active/passive many-to-one replication topology, multiple HCP systems replicate to a single other HCP system. Each of the replicating systems is the primary system for an active/passive replication link. The other system is the replica for each of those links.
+
+In this topology, the replica is like a hub, with the primary systems being at the ends of spokes connected to that hub. The spokes themselves are the replication links. The hub can have up to five spokes.

@@ -1,0 +1,123 @@
+Content Platform System Management Help
+
+<userAccount> <allowNamespaceManagement>false</allowNamespaceManagement> <description>Compliance officer.</description> <enabled>true</enabled> <forcePasswordChange>true</forcePasswordChange> <fullName>Morgan White</fullName> <localAuthentication>true</localAuthentication> <roles> <role>MONITOR</role> <role>COMPLIANCE</role>
+
+</roles> <userGUID>a8ae69dc-e2e3-44a9-aa64-9c142a38ed5d</userGUID> <userID>517</userID> <username>mwhite</username> </userAccount> versioningSettings
+
+The versioningSettings data type describes the versioningSettings resource for namespaces and the versioningSettings property of the namespace and namespaceDefaults data types.
+
+Properties
+
+The table below describes the properties included in the versioningSettings data type.
+
+Property Data type
+
+Description
+
+Notes
+
+daysOnPrimary
+
+Integer
+
+Specifies the number of days old versions of objects must remain in the namespace before they are pruned. Valid values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+The default is zero.
+
+Deprecated; replaced by the pruneDays property.
+
+If specified on a PUT or POST request, this property has the same function as the pruneDays property. You cannot include both this property and the pruneDays property in the same request.
+
+This property is not returned by any GET request. daysOnReplica
+
+Integer
+
+Deprecated. The pruneDays property applies to the namespace on all systems on which the namespace exists.
+
+This property is ignored on a PUT or POST request and is not returned by any GET request.
+
+enabled
+
+Boolean
+
+Specifies whether versioning is enabled for the namespace. Valid values are: true
+
+This property is required on a PUT request to create a namespace and on a POST request to modify namespace defaults if the request includes the versioningSettings property.
+
+Versioning is enabled.
+
+false
+
+Versioning is disabled.
+
+You cannot enable versioning for a namespace while the CIFS, NFS, WebDAV, or SMTP protocol or appendable objects are enabled.
+
+The default is false. keepDeletionRecords
+
+Boolean
+
+Specifies whether HCP should keep records of deletion operations (delete, purge, prune, disposition) that occur in the namespace if the namespace has ever had versioning enabled. Valid values are:
+
+This property is not valid on a POST request to modify namespace defaults and is not returned by any GET request for namespace defaults. true
+
+Keep records of deletion operations.
+
+false
+
+Do not keep records of deletion operations.
+
+The default is true.
+
+The amount of time for which HCP keeps deletion records is determined by the system configuration.
+
+prune
+
+Boolean
+
+Specifies whether version pruning is enabled for the namespace. Valid values are:
+
+This property is required on a PUT request to create a namespace and on a POST request to modify namespace defaults if the enabled property is set to true. true
+
+false
+
+Version pruning is enabled for the namespace.
+
+You cannot include both this property and the pruneOnPri mary property in the same request.
+
+Version pruning is disabled for the namespace.
+
+The default is false.
+
+pruneDays
+
+Integer
+
+Specifies the number of days old versions of objects must remain in the namespace before they are pruned. Valid
+
+This property is required on a PUT request to create a namespace and on a POST request to modify namespace
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+528/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+defaults if the prune property is set to true.
+
+The default is zero.
+
+You cannot include both this property and the daysOnPrim ary property in the same request. pruneOnPrimary
+
+Boolean

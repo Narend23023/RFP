@@ -1,0 +1,227 @@
+No
+
+By default, the GET request to retrieve object versions does not include delete records. To retrieve a listing that
+
+includes delete records, specify this URL query parameter: deleted=true
+
+You can also specify deleted=false, which results in the default behavior.
+
+Response header
+
+The table below describes the request-specific response header for this operation.
+
+X-HCP-SymlinkTarget
+
+The path to the target object as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object. If this header is returned, the X-HCP-ACL value is always false. Response body
+
+The body of the HTTP response to a GET request to list object versions contains an XML document listing the versions, in this format:
+
+Element
+
+Attribute
+
+Description
+
+versions
+
+path
+
+Path to the object.
+
+versions
+
+utf8path
+
+UTF-8 compatible path to the object.
+
+versions
+
+parentDir
+
+Parent directory of the object. versions
+
+utf8parentDir
+
+UTF-8 compatible path to the parent directory of the object.
+
+versions
+
+deleted
+
+Boolean value. Indicates whether the object is currently deleted.
+
+versions
+
+showDeleted
+
+Boolean value. Indicates whether the list includes delete records.
+
+versions
+
+namespaceName
+
+Name of the namespace where the object resides. versions
+
+utf8NamespaceName
+
+UTF-8 compatible name of the namespace where the object resides.
+
+entry
+
+urlname
+
+URL of the object
+
+entry
+
+utf8Name
+
+UTF-8 compatible name of the object.
+
+entry
+
+type
+
+Type of object. Default value is object.
+
+entry
+
+size
+
+Size of the object in bytes.
+
+entry
+
+hashScheme Type of hash algorithm, such as MD5.
+
+entry
+
+hash
+
+Has value.
+
+entry
+
+retention
+
+Retention in seconds after 1 January 1970
+
+entry
+
+retentionString
+
+Retention day and time value
+
+entry
+
+retentionClass
+
+Retention class name.
+
+entry
+
+hold
+
+Boolean. Whether or not the object has a hold.
+
+entry
+
+shred
+
+Boolean. Whether or not the object is to be shredded after it is deleted.
+
+entry
+
+index
+
+Boolean. Whether or not the object is to be indexed.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+729/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Element
+
+Attribute
+
+Description
+
+entry
+
+customMetadata
+
+Boolean. Whether or not the object has custom metadata. entry
+
+customMetadataAnnotations
+
+Annotations associated with the object. Delimited by semicolons.
+
+entry
+
+replicated
+
+Boolean. Whether or not the object is replicated.
+
+entry
+
+owner
+
+User name of the owner of the object. If there is no owner listed, the value is nobody.
+
+entry
+
+domain
+
+Active Directory domain entry
+
+hasAcl
+
+Boolean. Whether or not ACL is present for the object.
+
+entry
+
+state
+
+Status is either created or deleted. Specifies whether the version contains data or is a marker indicating that the object was deleted.
+
+entry
+
+version
+
+Version ID of the object.
+
+entry
+
+ingestTime
+
+Seconds after 1 January 1970 that the object was either created or deleted. entry
+
+ingestTimeString
+
+Ingested date and time.
+
+entry
+
+changeTimeMilliseconds
+
+Seconds after 1 January 1970 that the object was either modified or deleted.
+
+entry
+
+changeTimeString Change date and time.
+
+If the directory that contains the object contained at some time a subdirectory with the same name as the object, the results of a version list request that includes delete records shows delete markers for both the object and the directory.
+
+For example, assume you do the following:
+
+1. Create a maintenance subdirectory of the departments directory. 2. Delete the maintenance directory.
+
+3. Save a maintenance object in the departments directory.
+
+In this case, a version listing for the maintenance entry that includes delete markers or delete records shows these items:

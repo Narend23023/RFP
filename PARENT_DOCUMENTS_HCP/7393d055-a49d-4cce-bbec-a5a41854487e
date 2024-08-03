@@ -1,0 +1,35 @@
+the Los Angeles system, where the tenant is in read-only mode. Create an active/passive link (Link-4) from the Los Angeles system to the New York system that includes Link-3 and Tenant-2. The Los Angeles system sends both Tenant-3 and Tenant-2 to the New York system, where the tenants are in read-only mode. Bidirectional active/passive replication with disaster recovery support
+
+You can combine the bidirectional and one-to-many replication topologies to create a configuration in which each of two systems replicates its locally created HCP tenants and
+
+namespaces and default-namespace directories to both the other system and a third system. This third system then provides each of the first two systems with both additional assurance of continuous data availability and disaster recovery functionality.
+
+For example, HCP systems A and B each replicate their locally created HCP tenants and namespaces and default-namespace directories to each other, and a third system, C, provides disaster recovery functionality for each of those systems. To create this combined topology:
+
+Create a link from A to B that includes all the HCP tenants and namespaces and default-namespace directories that were originally created on system A. Create a link from A to C that includes the same tenants, namespaces, and directories as the link from A to B. Create a link from B to A that includes all the HCP tenants and namespaces and default-namespace directories that were originally created on system B. Create a link from B to C that includes the same tenants, namespaces, and directories as the link from B to A.
+
+The following figure shows a bidirectional replication topology with disaster recovery support.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+332/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+You can combine the bidirectional and chained replication topologies to have the same result as the topology described above, which involves the bidirectional and one-to-many topologies. That is, the replicated items in the link from A to B also end up on C, and the replicated items in the link from B to A also end up on C. In this case, however, instead of the link from A to C replicating the same items as the link from A to B, the link from A to C would include the link from B to A. Likewise, instead of the link from B to C replicating the same items as the link from B to A, the link from B to C would include the link from A to B.
+
+The following figure shows this topology.
+
+This topology provides better performance than does the first topology described above. Additionally, if you need to add a tenant to the link from A to B, for example, you don’t need to also add it to the link from A to C. Instead, the tenant is automatically replicated to C because the link from A to B is included in the link from B to C. On the other hand, the first topology described above is better for assuring continuous data availability in case system A or B fails. For example, if system A is replicating to systems B and C and system B fails, the items being replicated from system A are still making it to system C. In the second topology, if system B fails, the items from system A are not replicated to system C because the replication chain is broken. Failover and failback
+
+Failover is a process that stops replication on a link and results in a situation in which, for read-write access:
+
+For an active/active link, applications should use only the HCP system to which the link was failed over For an active/passive link, applications should use only the replica
+
+Typically, you fail over a link when one of the systems involved in the link becomes unavailable. With an active/passive link, this system must be the primary system. You don’t need
+
+to fail over the link when the replica fails.
+
+You can fail over a link while both systems are available. You might do this, for example, if you need to shut down one of the systems for maintenance.

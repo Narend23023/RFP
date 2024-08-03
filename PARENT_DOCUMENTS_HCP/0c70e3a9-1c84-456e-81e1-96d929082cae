@@ -1,0 +1,73 @@
+https://192.168.210.16:8000
+
+https://[2001:0db8::101]:8000
+
+Regardless of whether you access the System Management Console by specifying a domain name or a node IP address, the Console provides administrative capabilities for the entire system.
+
+Using a hosts file
+
+Typically, the HCP system is included as a subdomain in your DNS. If this is not the case, you can specify an IP address in the System Management Console URL, as described
+
+above. Alternatively, you can specify the HCP system domain name in the URL and use a hosts file to define mappings of one or more node IP addresses to the domain name.
+
+The location of the hosts file depends on the client operating system: On Windows, by default: c:\windows\system32\drivers\etc\hosts
+
+On Unix: /etc/hosts On Mac OS® X: /private/etc/host
+
+Note: Every HCP system has a domain that’s associated with the [hcp_system] network. If HCP is not included in your DNS, this is a dummy domain with a name that follows the
+
+conventions for well-formed DNS names. Hostname mappings
+
+Each entry in a hosts file is a mapping of an IP address for a system to a fully qualified domain name (FQDN) for that system.
+
+Each hosts file entry that you create for access to the HCP System Management Console must include:
+
+A valid [hcp_system] network IP address for an HCP node
+
+The FQDN used to access the HCP System Management Console, which consists of the prefix admin. followed by the HCP system domain name
+
+For example, if the [hcp_system] network domain name is hcp‑ma.example.com and one of the HCP nodes has the IPv4 address 192.168.210.16 and the IPv6 address 2001:0db8::101 defined for that network, you could add either or both of these lines to the hosts file on the client: 192.168.210.16 admin.hcp-ma.example.com
+
+2001:0db8::101 admin.hcp-ma.example.com
+
+You can include comments in a hosts file either on separate lines or following a mapping on the same line. Each comment must start with a number sign (#). Blank lines are ignored.
+
+Hostname mapping considerations
+
+In the hosts file, you can map IP addresses for any number of nodes to a single domain name. The way a client uses multiple IP address mappings for a single domain name
+
+depends on the client platform. For information about how your client handles hosts file entries that define multiple IP address mappings for a single domain name, see your client documentation.
+
+If any of the HCP nodes listed in the hosts file are unavailable, timeouts may occur when you use a hosts file to access the System Management Console.
+
+Sample hosts file
+
+Here’s a sample hosts file that contains mappings for both IPv4 and IPv6 addresses: 192.168.210.16 admin.hcp-ma.example.com 192.168.210.17 admin.hcp-ma.example.com
+
+192.168.210.18 admin.hcp-ma.example.com
+
+192.168.210.19 admin.hcp-ma.example.com
+
+2001:0db8::101 admin.hcp-ma.example.com 2001:0db8::102 admin.hcp-ma.example.com
+
+2001:0db8::103 admin.hcp-ma.example.com
+
+2001:0db8::104 admin.hcp-ma.example.com
+
+Logging in
+
+Depending on the HCP system configuration, you can log in to the System Management Console with an HCP user account or a recognized AD user account. To log into the System Management Console:
+
+1. Open a web browser.
+
+2. In the address field, enter the URL for the System Management Console for your HCP system.
+
+If you inadvertently use http instead of https in the URL, the browser returns an error. Enter the URL again, this time using https. One of these happens:
+
+If all of these are true, you are automatically logged in to the System Management Console, and the Console Overview page appears:
+
+You are currently logged in to Windows with a recognized AD user account.
+
+HCP is configured to support AD.
+
+Your web browser is configured to support single sign-on with AD.

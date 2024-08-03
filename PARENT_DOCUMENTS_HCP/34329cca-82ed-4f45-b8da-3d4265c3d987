@@ -1,0 +1,119 @@
+<uuid>7ae4101c-6e29-426e-ae71-9a7a529f019d</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>us-ca</name> <pausedTenantsCount>4</pausedTenantsCount> <state>HEALTHY</state> <uuid>cdb7edcd-feb6-4476-8d8d-bd053e3bc2ee</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-eu.example.com</name> <name>hcp-us.example.com.com</name> </hcpSystems> <name>us-eu</name>
+
+<pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>32871da5-2355-458a-90f5-1717aa684d6f</uuid> </replicationLink> </replicationLinks> replicationService
+
+The replicationService data type describes the replication resource.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+497/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+replicationService data type properties
+
+The following table describes the properties included in the replicationService data type. Property name
+
+Data type
+
+Description
+
+Boolean
+
+allowTenantsToMonitor
+
+Specifies whether the Tenant Management Console for HCP tenants displays the status of replication of the tenant and its namespaces. Valid values are:
+
+Namespaces
+
+true
+
+The Tenant Management Console displays replication status information for all HCP tenants. false
+
+The Tenant Management Console hide replication status information for all HCP tenants.
+
+The default is false.
+
+connectivityTimeout
+
+Integer
+
+Specifies how long the HCP system should wait before reporting a replication link connectivity failure. Valid values are integers greater than or equal to zero. Seconds
+
+enableDNSFailover
+
+Boolean
+
+Specifies whether DNS failover is enabled for the HCP system. Valid values are:
+
+true
+
+DNS failover is enabled for the system.
+
+false
+
+DNS failover is disabled for the system.
+
+The default is false.
+
+Boolean
+
+enableDomainAnd
+
+Certificate
+
+Specifies whether HCP periodically sends its domains and SSL server certificates to each other HCP system with which it participates as a sending system in a replication link. Valid values are: Synchronization
+
+true
+
+HCP periodically sends its domains and SSL server certificates to each other system with which it participates as a sending system in a replication link.
+
+false
+
+HCP does not send its domains and SSL server certificates to other systems.
+
+The default is false.
+
+network
+
+String
+
+Specifies the replication network for the HCP system. Valid values are any network defined in the HCP system except [hcp_backend]. The default is [hcp_system].
+
+Network names are not case-sensitive. status
+
+String
+
+Specifies whether all activity on all replication links in which the HCP system participates is
+
+currently stopped. Possible values are:
+
+ENABLED
+
+Activity on each replication link in which the system participates is occurring according the individual link status.
+
+SHUTDOWN
+
+All activity on all replication links in which the system participates is currently stopped. verification
+
+String
+
+Specifies whether replication verification is enabled for the HCP system. Possible values are:
+
+ON
+
+Replication verification is set to continuously run.
+
+ONCE
+
+Replication verification is set to run only on.
+
+OFF
+
+Replication verification is disabled.
+
+Example
+
+Here’s an XML example of the replicationService data type:

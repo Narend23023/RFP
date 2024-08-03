@@ -1,0 +1,43 @@
+// PUT returns a 201 (Created) if it is successful. if(statusCode == 201) { success = true; }
+
+// Status codes below 500 are due to either a successful // PUT, an error by the client, or an authentication error. // Errors >= 500 are HCP server errors, so you should retry
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+538/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help // on those errors. if(statusCode < 500) { retries = 0; // Notify the user about the error. For descriptions of // the management API status codes, see Appendix A. } else { if(retries == 0) { // Notify your HCP system administrator about the // error. }
+
+// Wait two minutes; then try the request again. Thread.sleep(2*60*1000); } }
+
+} catch(IOException e) { // An IOException from the client means there was a transport // error and is likely a one-off I/O issue. Try the request // again. e.printStackTrace();
+
+if(retries == 0) { // Notify your network administrator. } } // Clean up after ourselves and release the HTTP connection to the // connection manager.EntityUtils.consume (httpResponse.getEntity()); } } catch (URISyntaxException e) { e.printStackTrace(); } catch(InterruptedException e) { e.printStackTrace(); // Wait.
+
+} } /** * Start the HTTP client. */ private void initHttpClient() throws HCPNotInitializedException { // Register the HTTPS scheme. SchemeRegistry schemeRegistry = new SchemeRegistry(); try { // The recommended protocol is TLS. SSLContext sslcontext = SSLContext.getInstance("TLS");
+
+// The trust manager used here was created for use with this sample // application. For more information about creating trust managers, see // http://java.sun.com/j2se/1.5.0/docs/guide/security/jsse/ // JSSERefGuide.html#TrustManager
+
+MyX509TrustManager trustMgr = new MyX509TrustManager(); sslcontext.init(null, new TrustManager[] {trustMgr}, null); SSLSocketFactory sslSocketFactory = new SSLSocketFactory(sslcontext);
+
+// The hostname verifier verifies that the hostname matches the one // stored in the X.509 certificate on the server (that is, the SSL // server certificate used by the HCP system). You can use // AllowAllHostnameVerifier, BrowserCompatHostnameVerifier, or // StrictHostnameVerifier. This sample application allows all hostnames. sslSocketFactory.setHostnameVerifier( SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+
+// Register the HTTPS scheme. Scheme https = new Scheme("https", sslSocketFactory, 9090); schemeRegistry.register(https);
+
+// Specify any HTTP parameters you want.
+
+HttpParams params = new BasicHttpParams(); params.setIntParameter("http.connection.timeout", 60000); // This manages a thread-safe pool of connections that are created on // first request, then persisted and leased out to subsequent requests. // By default, HCP closes a connection after ten minutes. To change // this setting, contact your authorized HCP service provider. ClientConnectionManager connMgr = new ThreadSafeClientConnManager( params, schemeRegistry);
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+539/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+ConnPerRouteBean connPerRoute = new ConnPerRouteBean(20);
+
+// HCP recommended settings: max connections per node = 20; // total max connections = 200 ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute); ConnManagerParams.setMaxTotalConnections(params, 200);

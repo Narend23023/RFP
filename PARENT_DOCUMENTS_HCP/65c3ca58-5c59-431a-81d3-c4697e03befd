@@ -1,0 +1,33 @@
+318/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The ingest tier for a namespace is the storage tier where objects in the namespace are stored when the object data is first written to HCP. The ingest tier is determined by the service plan currently associated with the namespace. Network bandwidth usage
+
+For namespaces that use whole-object protection, replication entails sending the complete data for an object to each system in the replication topology, except to systems where the object should be metadata-only. Similarly, for namespaces that use erasure-coded protection with full-copy distribution, the complete object data is sent to each system in the
+
+erasure coding topology, except to systems where the object should be metadata-only.
+
+For namespaces that use erasure-coded protection with chunk distribution, only object chunks are sent throughout the erasure coding topology. As a result, replication with this type
+
+of protection typically requires less network bandwidth than is required for whole-object protection and for erasure-coded protection with full-copy distribution.
+
+On the other hand, with whole-object protection, a client read request against a system that has the object data results in a single data transfer operation. With erasure-coded protection, a client read request results in at least one data transfer operation for each required chunk that's not on the target system in addition to the data transfer operation between the system servicing the request and the client. Therefore, read requests with erasure-coded protection typically use more network bandwidth than is used for read requests with whole-object protection.
+
+Additionally, the chunks for erasure-coded objects are transferred between systems on the replication network. Because servicing read requests takes precedence over replication processing, while any replicated namespaces are experiencing a high read rate, replication may be slow.
+
+Rehydration with whole-object protection and restore periods with erasure-coded protection can affect network bandwidth usage for read operations.
+
+PUT copy operations For a PUT copy operation where the source object is erasure coded, the new object must be reconstructed from the chunks for the source object. For a large object, this reconstruction can take a long time, increasing the potential for the PUT copy operation to time out.
+
+If large objects in a replicated namespace are likely to be sources for PUT copy operations, whole-object protection may be a better choice for the namespace than erasure-coded protection.
+
+How replication works
+
+To enable replication between two HCP systems, you create a replication link between the two systems. A replication link is a secure, trusted relationship between two systems. The link determines what is replicated and how data is transmitted between the systems. Link types
+
+A replication link can be active/active or active/passive:
+
+With an active/active link, the HCP tenants and namespaces and default-namespace directories being replicated are read-write on both systems, and data is replicated in both directions between the two systems. Active/active links are designed for use in environments where applications need seamless access to namespaces regardless of where those applications are located. All links in an erasure coding topology must be active/active links. With an active/active link, HCP gives preference to synchronizing object metadata between the two systems, followed by data synchronization. This preferential treatment enables the fastest access to objects regardless of which system they were created on. If a full copy of the data for an object or a chunk for the object has not yet been replicated to the system targeted by a client request, HCP can read all the object data from a remote system. Additionally, synchronizing metadata first ensures that object names are reserved as quickly as possible. Note: Until a full copy of the data for an object or a chunk for the object is replicated to a given system, the object is metadata-only on that system. With an active/passive link, the HCP tenants and namespaces and default-namespace directories being replicated are read-write on one system, called the primary system, and read-only on the other system, called the replica. In this case, data is replicated in one direction only: from the primary system to the replica. Active/passive links are designed to support read-only content sharing and disaster recovery.

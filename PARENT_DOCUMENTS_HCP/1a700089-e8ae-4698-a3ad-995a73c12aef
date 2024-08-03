@@ -1,0 +1,131 @@
+yyyy-MM-ddThh:mm:ssZ
+
+The namespace is selected for replication.
+
+Z represents the offset from UTC, in this format:
+
+The tenant that owns the namespace is included in a replication link.
+
+(+|-)hhmm For example:
+
+2012-02-27T14:32:19-0500
+
+retentionType
+
+String
+
+Specifies the retention type to be applied to all objects in the namespace. Valid values are:
+
+HCP
+
+HCP retention type
+
+When you set the retentionType to S3 Object Lock in a MAPI request for a namespace, versioning, delete markers, and cloud-optimized protocols are automatically enabled. You do not need to set these parameters explicitly. S3
+
+S3 Object Lock
+
+Default value is HCP retention.
+
+s3UnversionedOverwrite
+
+Boolean
+
+Specifies whether object overwrite is enabled for the namespace. Valid values are:
+
+true
+
+Object overwrite is enabled.
+
+You can set the value of this property to either true or f alse. However, if you enable versioning for the namespace, changing the value will not have any effect. This property applies only to the requests made through Hitachi API for Amazon S3. false
+
+Object overwrite is disabled.
+
+Overwriting an object will also overwrite its custom metadata.
+
+The default is false.
+
+searchEnabled
+
+Boolean
+
+Specifies whether search is enabled for the namespace. Valid values are:
+
+This property is optional on a PUT request.
+
+true
+
+Search is enabled.
+
+You can set the value of this property to true only if the owning tenant is allowed to enable search for its namespaces. false
+
+Search is disabled.
+
+Disabling search after it has been enabled:
+
+The default is the search setting specified by the namespace defaults for the tenant.
+
+Automatically disables indexing for the namespace. Removes objects in the namespace from the metadata query engine index. If you
+
+subsequently reenable search for the namespace, the namespace must be reindexed from scratch. Deletes the list of excluded annotations for the namespace. Deletes all associations the namespace has with any content classes. servicePlan
+
+String
+
+Specifies the service plan associated with the namespace. Valid values are names of existing service plans. The default is the service plan specified by the namespace defaults for the tenant.
+
+This property is valid on a PUT or POST request and returned by a GET request only if the owning tenant is allowed to select service plans for its namespaces. If valid, this property is optional on a PUT request. Boolean
+
+This property is optional on a PUT request.
+
+serviceRemoteSystemRequests
+
+Specifies whether HCP can service HTTP-based data access requests against the namespace that are redirected from other HCP systems. Valid values are:
+
+true
+
+HCP can service requests against the namespace that are redirected from other systems. false
+
+HCP cannot service requests against the namespace that are redirected from other systems.
+
+The default is true.
+
+softQuota Integer
+
+For an HCP namespace, specifies the percentage point at which HCP notifies the tenant that free storage space for the namespace is running low. Valid values are integers in the range ten through 95. The default is the soft quota specified by the namespace defaults for the tenant.
+
+This property is optional on a PUT request.
+
+This property is not valid for the default namespace.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+484/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Property
+
+Data type
+
+Description
+
+Notes
+
+tags
+
+List
+
+Associates zero, one, or more tags with the namespace. Each tag can be from one through 64 characters long and can contain any valid UTF-8 characters except commas (,). White space is allowed.
+
+Tags are not case sensitive.
+
+This property is optional on a PUT request.
+
+For an existing namespace, the set of tags specified in the request body replaces the set of tags currently associated with the namespace. To remove all tags, specify an empty set.
+
+In XML, the element that identifies each tag is tag. In JSON, the name in the name/value pair that lists the tags is tag.
+
+This property is not valid for the default namespace. versioningSettings
+
+versioning

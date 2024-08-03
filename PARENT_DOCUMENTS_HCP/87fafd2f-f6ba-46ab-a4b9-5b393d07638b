@@ -1,0 +1,35 @@
+When setting the minimum size, erasure coding delay, and restore period, consider the tradeoffs with respect to storage efficiency and read performance.
+
+Erasure coding delay
+
+The erasure coding delay is counted from the time the ingest system receives the object or part data. You specify the delay as a number of days. Even if the erasure coding delay has expired for an object, the Geo-distributed Erasure Coding service does not reduce a full copy of the data for the object or part to a chunk if doing so would leave the object or part insufficiently protected.
+
+Restore period
+
+You specify the restore period for an erasure coding topology as a number of days. If the specified number is zero, the topology does not have a restore period.
+
+When an object or part that's subject to erasure coding is read from a given system, where that system is in an erasure coding topology with a restore period:
+
+If the system currently has a full copy of the object or part data, the restore period applies to that full copy. If the system currently has a chunk for the object or part on primary running storage, on an S Series Node, or on spindown storage and the chunk has never been tiered to extended storage, a full copy of the object or part data is restored on the current tier, and the chunk is deleted. The restore period applies to the restored full copy. While the system has only a full copy of the object or part data, the object or part is not counted as an erasure-coded object on that system. If the system currently has a chunk for the object or part and the chunk is or ever was on an extended storage tier, a full copy of the object or part data is restored on the highest storage tier that could have had a full copy of the data, and the chunk is deleted. The restore period applies to the restored full copy. Note: For objects and parts that are subject to erasure coding, the storage tiers that can have a full copy of the object or part data are primary running storage, HCP S Series Node, and primary spindown storage. HCP never tiers a full copy of the object or part data to extended storage. Instead, when the Geo-distributed Erasure Coding service on a system reduces a full copy of object or part data to a chunk, if the object or part is due to be tiered, that service puts the chunk on the applicable storage tier. The restore period for an object or part starts when the object or part is read. If the object or part is read again during the restore period, the restore period restarts from the time of that read operation.
+
+The restore period for an object or part can restart only once on any given day. After the first restart on a day, subsequent reads on the same day do not cause the restore period to restart.
+
+The restore period for an object or part can start before the erasure coding delay has expired. If the erasure coding delay then expires before the restore period expires, the full copy of the object or part data is not reduced to a chunk until the restore period expires. If the restore period expires before the erasure coding delay expires, the full copy of the object or part data is not reduced to a chunk until the erasure coding delay expires. Note: Internal reads (for example, by an HCP service) do not cause object or part chunks to be restored to full copies of the object or part data and do not start or restart restore periods.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+350/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Supported replication topologies
+
+An erasure coding topology can include from three through six HCP systems. An erasure coding topology with four, five, or six systems can be based on either an active/active replication ring topology or a fully connected active/active replication topology. A three-system erasure coding topology is always based on a fully connected active/active replication topology.
+
+Before you can create an erasure coding topology, the underlying replication topology must already exist.
+
+The figures below show all the replication topologies on which an erasure coding topology can be based. Erasure coding topology retirement
+
+When you retire an erasure coding topology, the protection type for any namespaces that were using erasure-coded protection changes to whole-object protection. This change causes the Geo-distributed Erasure Coding service to, for any given object:

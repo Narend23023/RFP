@@ -1,0 +1,55 @@
+All users: read User lgreen: write User mwhite: write, delete The following list shows a sequence of events in which the ACL for the object is changed and the change is then replicated.
+
+1. On system B, a client changes the grants in the ACL to:
+
+All users: read User lgreen: write, delete User mwhite: write, delete, read ACL 2. On system A, a client changes the grants in the ACL to:
+
+All users: read User mwhite: write User pdgrey: write
+
+3. The changed ACL on system A is replicated to system B. The resulting ACL for the object on system B contains these grants:
+
+All users: read User mwhite: write User pdgrey: write Configuration collisions
+
+A configuration collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the same configuration property on each of two systems in a replication link. 2. The changed property on one of the systems is replicated to the other system.
+
+Examples of configuration properties include:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+337/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The namespace quota for a tenant The data access permission mask for a namespace The versioning setting for a namespace The default shred setting for a namespace The roles for a user account The data access permissions a group account has for a namespace The protocol optimization setting on a namespace Certain groups of properties are treated as a single unit. Generally, these groups consist of properties that are updated by a single submission in the System Management Console or Tenant Management Console. Two notable exceptions to this rule are data access permissions for user accounts and content properties for content classes. In these cases, each set of data access permissions for a namespace and each content property is treated as an individual property.
+
+If a collision occurs when a configuration change is replicated from one system (system A) in a replication topology to another system (system B) involved in the link: If the last change to the configuration on system A is more recent than the last change to the configuration on system B, HCP changes the configuration on system B to match the configuration on system A If the last change to the configuration on system B is more recent than the last change to the configuration on system A, HCP does not change the configuration on system B
+
+The rules above apply to all configuration collisions except collisions that occur when retention class properties are changed.
+
+Here are two examples of how HCP handles collisions when configuration changes are replicated from one system (system A) in a replication topology to another system (system B) involved in the link. Example 1
+
+A given tenant starts out on both system A and system B with these properties:
+
+Namespace quota: 5 Versioning: disabled
+
+The following list shows a sequence of events in which the tenant configuration is changed and the change is then replicated.
+
+1. In the System Management Console on system B, an administrator changes the namespace quota for the tenant to 10.
+
+2. In the System Management Console on system A, an administrator enables versioning for the tenant. 3. The change on system A is replicated to system B. Because namespace quota and versioning are properties in the same submission group, the resulting properties for the tenant on system B are:
+
+Namespace quota: 5 Versioning: enabled Example 2
+
+A given tenant-level user account starts out on both system A and system B with these roles and data access permissions:
+
+Roles: monitor, compliance Namespace-1 permissions: browse, read, write, delete
+
+The following list shows a sequence of events in which the user account is changed and the changes are then replicated.
+
+1. In the System Management Console on system B, an administrator changes the namespace quota for the tenant to 10. 2. In the System Management Console on system A, an administrator enables versioning for the tenant. 3. The change on system A is replicated to system B. Because namespace quota and versioning are properties in the same submission group, the resulting properties for the tenant on system B are:
+
+Namespace quota: 5 Versioning: enabled

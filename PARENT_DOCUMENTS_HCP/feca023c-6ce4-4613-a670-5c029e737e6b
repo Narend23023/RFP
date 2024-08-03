@@ -1,0 +1,45 @@
+Considerations for working with multipart uploads
+
+The following considerations apply to working with multipart uploads. Support for multipart uploads
+
+Whether a bucket supports multipart uploads depends on a bucket configuration setting. The tenant administrator determines the default for this setting for new buckets. This setting is not visible through the S3 compatible API.
+
+If a bucket is empty, the tenant administrator can change it from supporting multipart upload to not supporting multipart upload. Whether the tenant administrator can change a
+
+bucket from not supporting multipart upload to supporting multipart upload depends on which other access protocols are enabled for the bucket.
+
+To learn whether the bucket you're working with supports multipart upload, contact your tenant administrator. Part size and count
+
+The parts you upload for a multipart upload can be any size up to and including five gigabytes. However, the minimum size for the parts you include in a complete multipart upload
+
+request, except the last part, is one megabyte. The last part can be smaller than one megabyte.
+
+A multipart upload can have at most ten thousand parts. Therefore, the maximum size for the object resulting from a multipart upload is five terabytes (ten thousand times five gigabytes). Automatic abort of multipart uploads
+
+After initiating a multipart upload, the user who initiated it can upload parts at any time until the multipart upload is completed or aborted. Completing a multipart upload creates a multipart object from the uploaded parts. Aborting a multipart upload causes the uploaded parts to be deleted. After a multipart upload is aborted, no more parts can be uploaded for it, and it cannot be completed.
+
+Note: When a multipart upload is aborted, its parts may not be deleted immediately. However, an aborted multipart upload cannot be completed even if its parts have not yet been deleted.
+
+If a multipart upload is never completed or aborted, the disjointed parts can remain in HCP indefinitely. Even though the multipart upload is incomplete, these parts count toward the storage used by the bucket where they were uploaded. To prevent parts of multipart uploads from remaining in HCP indefinitely, the tenant administrator can set the maximum amount of time for which a multipart upload can remain incomplete before the multipart upload is automatically aborted. This time is counted from the time the multipart upload was initiated.
+
+Each bucket has its own automatic abort time for multipart uploads. This time is not visible through the S3 compatible API. By default, the automatic abort time for new buckets is 30 days.
+
+You can change the automatic abort time for a namespace at any time. When you change the time, the new time applies to all subsequent multipart uploads as well as to multipart uploads that are already in progress.
+
+For example, if a user initiates a multipart upload on September 9th while the automatic abort time is set to 30 days, that multipart upload will be automatically aborted on October 9th. If, before October 9th, you change the automatic abort time to 35 days, the date on which the multipart upload will be automatically aborted changes to October 14th. If you change the automatic abort time to an amount of time that has already elapsed since the multipart upload was initiated, the multipart upload is immediately aborted.
+
+Note: The value of the x-amz-abort-date header returned in response to an S3 compatible request to list the parts of a multipart upload is the date on which the multipart upload will be automatically aborted, as determined by the current automatic abort time setting. Client timeouts
+
+Uploading a part of a multipart upload by copying a large amount of data from another object can take some time. If a client times out because an upload part copy operation is taking too long, HCP continues the operation in the background.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+637/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Because the connection to the client is broken, HCP cannot report the completion of the upload part copy operation to the client. To see whether the operation has finished successfully, use a GET request with the multipart upload ID to list the parts of the multipart upload. If the operation finished successfully, the part appears in the list. If the operation is still in progress or has failed, the part does not appear in the list.
+
+If upload part copy operations are causing a client to time out, consider increasing the client timeout interval. Creation date and time for multipart objects

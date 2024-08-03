@@ -1,0 +1,97 @@
+filehandle.close()
+
+Request headers
+
+PUT /mapi/services/replication/links HTTP/1.1 Host: admin.hcp.example.com:9090 Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382 Content-Type: text/html Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 0
+
+Log resources
+
+Log resources let you prepare, download, and monitor the download of the HCP internal logs.
+
+.../logs
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+LogDownloadStatus GET
+
+Retrieve the status of the log download in progress System-level user with the administrator, service, or monitor role.
+
+N/A
+
+POST Marks the logs with a supplied
+
+message
+
+System-level user with the administrator or service role.
+
+You supply the message at the end of the command. Use the plus (+) sign or %20 to make spaces between words.
+
+N/A
+
+POST
+
+Clears the log download so that it can be reinitiated. System-level user with the administrator or service role.
+
+.../logs/prepare
+
+Data type Method Use
+
+Access
+
+Notes
+
+LogPrepare POST
+
+Post a system request to package logs for download
+
+System-level user with the administrator or service role.
+
+Packages all logs, regardless of log type. If prepared logs are not downloaded withing twenty four hours, the package is deleted. .../logs/download
+
+Data type
+
+Method Use
+
+Access
+
+Notes
+
+LogDownload POST
+
+Starts the log download
+
+System-level user with the administrator or service role.
+
+Downloaded logs come as .zip files. For HCP nodes, you have control over which log types are downloaded.
+
+Example: Start log packaging
+
+Here’s a sample POST request that packages system logs for download. The command requests to package logs between the dates of 8/19/2017 and 8/21/2017. The dates are specified in an XML file named logPrepare.xml. The request is made using a system-level user account that includes the administrator role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <logPrepare> <startDate>08/19/2017</startDate>
+
+<endDate>08/21/2017</endDate> </logPrepare> Request with cURL command line
+
+curl -iX POST -d @logPrepare.xml -k -i -H "Content-type: application/xml" -H "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382" "https://admin.hcp.example.com:9090/mapi/logs/prepare"
+
+Request in Python using PycURL
+
+import pycurl import os filename = "logPrepare.xml" filehandle = open(filename, "rb") filesize = os.path.getsize(filename) curl = pycurl.Curl() curl.setopt(pycurl.VERBOSE, True)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "POST") curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.setopt(pycurl.HTTPHEADER, ["Content-Type: application/xml", \ "Authorization: HCP YWxscm9sZXM=:04EC9F614D89FF5C7126D32ACB448382"])
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+404/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

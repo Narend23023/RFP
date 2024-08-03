@@ -1,0 +1,109 @@
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+GET /proc/retentionClasses HTTP/1.1
+
+Host: /finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-Time: 1334326410
+
+Content-Length: 1186 Response body
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="/static/xsl/proc-retention-classes.xsl"?> <retentionClasses xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="/static/xsd/proc-retention-classes.xsd" namespaceName="finance">
+
+<retentionClass name="Temporary"
+
+value="0"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+784/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+autoDelete="false">
+
+<description><![CDATA[ Can be deleted at any time. ]]></description>
+
+</retentionClass> <retentionClass
+
+name="KeepForever" value="-1"
+
+autoDelete="false"> <description><![CDATA[
+
+Deletion is permanently disallowed. ]]></description>
+
+</retentionClass> <retentionClass
+
+name="SecReg-107" value="A+21y"
+
+autoDelete="true"> <description><![CDATA[
+
+Meets securities information rule 107 for retention of 21 years. ]]></description> </retentionClass> <retentionClass
+
+name="SevenYears"
+
+value="A+7y" autoDelete="true">
+
+<description><![CDATA[ Object can be deleted after seven years.
+
+]]></description> </retentionClass>
+
+</retentionClasses>
+
+Listing namespace and user permissions
+
+You use the HTTP GET method to list the permissions for a namespace and the user making the request. Request header
+
+GET /proc/permissions HTTP/1.1
+
+Response headers
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+namespacePermissions
+
+The permissions specified for the namespace.
+
+namespaceEffectivePermissions
+
+The permissions that are in effect for the namespace. This is the logical AND of the permissions specified at the system, tenant, and namespace levels. userPermissions
+
+Your user permissions.
+
+userEffectivePermissions
+
+The permissions that result from the combination of the namespace permissions and your user permissions. This is the logical AND of the permissions specified for the system, tenant, and namespace and your user permissions.
+
+Status codes
+
+If you request information about a namespace to which you do not have access, HCP returns an HTTP 401 (Unauthorized) error code. Example: Listing permissions for a namespace and user
+
+Here’s a sample HTTP GET request that retrieves namespace and user permissions for:
+
+The finance namespace owned by the europe tenant in the hcp.example.com system.
+
+The pdgrey user account. (The account is identified by the Authorization header). Request with curl command line
+
+curl -k -H "Authorization: HCP cGRncmV5:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/proc/permissions"
+
+Request in Python using PycURL
+
+import pycurl
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP

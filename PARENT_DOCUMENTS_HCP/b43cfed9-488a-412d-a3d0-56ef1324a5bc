@@ -1,0 +1,39 @@
+When one physical path between a node and the storage array breaks, processing continues normally. If the second path for that node breaks while the first one is still broken, the node becomes unavailable, and failover occurs.
+
+To return the node to service and fail back the logical volumes, you need to fix both paths before you reboot the node. The node will not return to service while either path is broken.
+
+If a node managing failed-over storage has a path outage while its peer is still unavailable, processing continues normally. However, if the peer returns to service and takes back its storage, the node with the path outage then becomes unavailable, and failover occurs in the other direction. That is:
+
+1. Node A fails. 2. Node A storage fails over to node B. 3. Node B has a path outage. 4. Node A returns to service. 5. Node A storage fails back to node A. 6. Node B becomes unavailable. 7. Node B storage fails over to node A. SNMP MIB support
+
+You can use SNMP with HCP to view and modify system settings and receive notifications of certain types of events. HCP comes with a MIB, defined in the HCP-MIB.txt file, that includes fields and traps specific to the system. HCP also supports many of the standard Linux-based MIBs available with SNMP.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+212/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+HCP-MIB exposes information about the HCP system as a whole, so you get the same information regardless of which storage node you access.
+
+The standard MIBs, on the other hand, expose information about individual nodes, so the information you get applies only to the specific storage node that you access. You can use many of the fields in HCP-MIB to both view and modify system values. With the fields in the standard MIBs, you can view only system values. This chapter lists the supported standard MIBs and explains how to find out which fields are exposed through them. (HCP exposes all the fields in HCP-MIB.)
+
+Supported standard MIB files
+
+The standard MIBs that HCP supports contain fields in subtrees under the mib-2 and ucdavis roots. The fields HCP exposes are in the following MIBs, with exclusions as noted: With fields under mib-2:
+
+DISMAN-EVENT-MIB HOST-RESOURCES-MIB IF-MIB IP-FORWARD-MIB IP-MIB (excluding these groups: ipAddrTable, ipRouteTable, and ipNetToMediaEntry) IPV6-MIB MTA-MIB NOTIFICATION-LOG-MIB RFC1213-MIB (excluding this group: atTable)
+
+SNMPv2-MIB TCP-MIB (excluding this group: tcpConnTable) UDP-MIB (excluding this group: udpTable) With fields under ucdavis:
+
+LM-SENSORS-MIB UCD-DISKIO-MIB UCD-DLMOD-MIB UCD-SNMP-MIB
+
+You can download:
+
+Files for all these MIBs, except MTA-MIB and RFC1213-MIB, from http://www.net-snmp.org/docs/mibs The file for MTA-MIB from http://www.oidview.com/mibs/0/MTA-MIB.html The file for RFC1213-MIB from http://www.oidview.com/mibs/0/RFC1213-MIB.html. Walking the MIB
+
+To find out exactly which fields HCP exposes under mib-2 and ucdavis, you can have the SNMP client query HCP for the exposed fields. This is called walking the MIB.
+
+How you walk the MIB depends on your SNMP tool. The following instruction uses the command-line tool from the publicly available net-snmp package, which you can download from http://www.net-snmp.org. To walk the MIB with net-snmp, you use the snmpwalk command with this format: snmpwalk-v snmp-version -csnmp-community-name node-ip-address-or-hostnamemib-root

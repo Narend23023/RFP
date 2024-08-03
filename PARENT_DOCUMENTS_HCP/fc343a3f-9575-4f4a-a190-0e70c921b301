@@ -1,0 +1,127 @@
+DELETE /rest/directory/file?purge=true HTTP/1.1
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+750/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name. file
+
+Yes
+
+Name of the file, including file extension.
+
+purge
+
+Yes
+
+Use the value true to purge the object.
+
+privileged
+
+No
+
+To perform a privileged delete, the request must specify both privileged and reason URL query parameters
+
+For example:
+
+?privileged=true&reason=reason-text
+
+reason
+
+Yes, if privileged is used
+
+Use percent-encode characters in the reason parameter that have special meanings in URLs. Response header
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+Not applicable.
+
+Status codes
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully purged all versions of the object.
+
+400
+
+Bad Request
+
+The request specified a conditional header, such as If-Match.
+
+If more information about the error is available, the HTTP response headers include the HCP-specific X-HC P-ErrorMessage header.
+
+403 Forbidden
+
+One of:
+
+The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The namespace requires client authentication, and the request does not have an Authorization header or hcp-ns-auth cookie. The object is under retention, and you do not have the privileged permission. The user doesn’t have permission to perform the requested operation.
+
+The namespace does not exist. The access method (HTTP or HTTPS) is disabled.
+
+If more information about the error is available, the response headers include the HCP-specific X-HCP-Err orMessage header.
+
+404 Not Found
+
+One of:
+
+HCP could not find a directory, object, or version at the specified URL. The specified object or
+
+version does not exist, or the request specified the current version of an object that has been deleted.
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+409 Conflict
+
+HCP could not purge the specified object because it is currently being written to the namespace.
+
+Example: Purging an object
+
+Here’s a sample HTTP DELETE request that purges all versions of the object named Q1_2012.ppt from the quarterly_rpts directory. This example uses a URL query string to pass the operation parameters. Request with curl command line
+
+curl -k -iX DELETE -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+k "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt ?purge=true"
+
+Request in Python using PycURL
+
+import pycurl curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt?purge=true") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+
+curl.perform()
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+751/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

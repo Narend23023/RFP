@@ -1,0 +1,87 @@
+When you store an object with non-ASCII, nonprintable characters in its name, those characters are percent-encoded in the name displayed back to you.
+
+Regardless of how the name is displayed, the object is stored with its original name, and you can access it either by its original name or by the names with the percent-encoded characters. Object names and access through the CIFS and NFS protocols
+
+The CIFS and NFS protocols cannot handle object or folder names that are longer than 255 bytes. An object stored through the S3 compatible API is inaccessible through CIFS and
+
+NFS if:
+
+The object name is longer than 255 bytes and does not include any forward slashes. The object name includes one or more forward slashes and any part of the name is longer than 255 bytes. In this case, a part of an object name is any character string that either precedes the first forward slash, comes between two forward slashes, or follows the last forward slash. Percent-encoding special characters
+
+With the S3 compatible API, object names are specified in URLs. Some characters have special meaning in URLs and may be interpreted incorrectly when used for other purposes. To avoid ambiguity, percent-encode the special characters listed in the table below.
+
+Character Percent-encoded values
+
+Space
+
+%20
+
+Tab
+
+%09
+
+New line
+
+%0A
+
+Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C
+
+Percent-encoded values are not case sensitive.
+
+UTF-8 encoding
+
+These considerations apply to using UTF-8 encoding for object names:
+
+Some character-set encoding schemes, such as UTF-8, can require more than one byte to encode a single character. As a result, such encoding can invisibly increase the
+
+length of an object name, causing it to exceed the HCP limit of 4,095 bytes. When the metadata query engine or HCP search facility indexes an object with a name that includes certain characters that cannot be UTF‑8 encoded, it percent-encodes those characters. Searches for such objects by name must explicitly include the percent-encoded characters in the name. Retention
+
+The retention setting determines how long the object must remain in the bucket before it can be deleted. This can range from allowing the object to be deleted at any time to preventing the object from ever being deleted. While an object cannot be deleted due to retention, it is said to be under retention. You can use the S3 compatible API to change the retention setting for an object. Retention terms
+
+Default retention setting
+
+In HCP retention mode, each bucket in HCP has a default retention setting. This is the setting that is applied to objects when they are first stored in the bucket. When you create a bucket, its default retention setting is to allow deletion at any time. S3 Object Lock supports default retention setting. Hold
+
+Objects can be placed on hold in HCP retention mode. An object on hold cannot be deleted. You can use the S3 compatible API to place an object on hold or release an object from hold.
+
+S3 Object Lock supports placing objects on hold.
+
+Labeled hold
+
+An object can also be placed on one or more labeled holds in HCP retention mode. A labeled hold is a named retention hold that has a unique identifier. An object can have both a single, unlabeled hold and one or more labeled holds at the same time.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+546/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+An object on labeled hold cannot be deleted or have its metadata modified until all holds (labeled and unlabeled) are explicitly released. You can use either the S3 compatible API or REST API to place one or more labeled holds on an object or release an object from labeled hold. S3 Object Lock does not support labeled hold. Privileged delete

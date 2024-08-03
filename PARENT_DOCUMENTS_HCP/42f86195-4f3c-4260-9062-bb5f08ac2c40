@@ -1,0 +1,31 @@
+Active/passive many-to-one replication supports a scenario in which the outlying sites are branch offices of an enterprise that has an HCP system at a primary data center. Applications running at each of those offices connect over a local area network (LAN) to an HCP system at the local data center. Because they are close to the storage they use, the applications perform better than they would if they were using a wide area network (WAN) to connect to the HCP system at the hub. Also, the distribution of the network load among the outlying sites further enhances application performance. With active/passive many-to-one replication, you can consolidate similar data from multiple sources in a single HCP system. Using a search application, you can then perform federated queries across the replicated namespaces on that system. For example, suppose each of the branch offices of an enterprise stores completed orders in a namespace in its own HCP system. If each of those namespaces is replicated to a single HCP system, you could query that system to find all orders placed for a specific product at any of the branch offices.
+
+Active/passive many-to-one replication enables a single HCP system to be used for backup and recovery of multiple other HCP systems, so the outlying sites don’t need backup systems of their own. For additional data protection, the hub system can be backed up, for example, to tape or to another HCP system .
+
+Active/passive chained replication In an active/passive chained replication topology, HCP tenants and namespaces and default-namespace directories in one HCP system (A) are replicated to a second HCP system (B) and then from the second system to a third HCP system (C). Both the replication link from A to B and the replication link from B to C are active/passive links.
+
+Configuring an active/passive chained replication
+
+To configure an active/passive chained replication topology:
+
+1. When you create the replication link from A to B, select the tenants, namespaces, and directories you want to replicate. In this link, A is the primary system and B is the replica.
+
+2. When you create the replication link from B to C, select the link from A to B to be included in that link. This causes the HCP tenants, namespaces, and directories replicated
+
+on the link from A to B to be replicated again from B to C. In this link, B is the primary system and C is the replica. The link from B to C can also include tenants, namespaces, and directories that were originally created on B. You cannot individually select the replicated tenants, namespaces, and directories on B for inclusion in the link from B to C. In an active/passive chained replication topology with the configuration A > B > C, B is the replica for the link from A to B. Therefore, in B, the tenants and directories that were replicated from A are read-only, even though B is also the primary system for the link from B to C.
+
+HCP supports replication chains that consist of three HCP systems. Longer chains are not supported. Note: You can also create a chained replication topology in which the first link is active/active and the second link is active/passive. You cannot, however, create a chained replication topology in which the first link is active/passive and the second link is active/active or in which both links are active/active. In a replication chain A > B > C, in which the objects in a namespace on system B are supposed to be metadata-only, HCP does not remove data from those objects until that data has been replicated to system C.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+328/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Active/passive chained replication topology details
+
+What this looks like
+
+The following figure shows an active/passive chained replication topology in which system A is replicating to system B and system B is replicating to system C. In this figure:

@@ -1,0 +1,97 @@
+204
+
+No Content
+
+One of these:
+
+HCP successfully deleted the object. The specified object does not exist. The current version of the specified object is a delete marker.
+
+400 Bad Request
+
+Possible reasons include:
+
+The request includes a header that is invalid for the requested operation. The specified bucket name is invalid. The specified object name is invalid.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+635/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The credentials provided with the request are invalid. You do not have delete permission for the specified object. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+Possible reasons include that the specified object does not exist.
+
+409
+
+Conflict
+
+Possible reasons include:
+
+The object data is currently being written to HCP. The specified object is under retention.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Deleting multiple objects
+
+Here’s a sample POST request on the finance bucket to delete objects named quarterly_rpts/Q2_2019.ppt and quarterly_rpts/Q3_2019.ppt. Request with s3curl command line
+
+./s3curl.pl --id=lgreen --contentType application/xml --calculateContentMd5 --post mod.xml -- -ik -v "https://europe.hcp.example.com/finance?delete"
+
+Request headers
+
+POST /finance?delete HTTP/1.1 Host: europe.hcp.example.com/finance Date: Fri, 07 February 2020 17:19:26 +0000 Authorization: AWS bGdyZWVu:i9bRonH4gi1SrymsF0Fw84mWUeQ= Content-type: application/xml Content-MD5: BQ7HxZ32wHoDbnACnRE79w== Content-Length: 275
+
+Request body
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Delete> <Object> <Key>quarterly_rpts/Q2_2019.ppt</Key> </Object> <Object> <Key>quarterly_rpts/Q3_2019.ppt</Key> </Object> </Delete>
+
+Response headers
+
+HTTP/1.1 200 OK Date: Fri, 07 February 2020 17:19:26 GMT Content-Type: application/xml Content-Length: 731 Response body
+
+<?xml version="1.0" encoding="UTF-8"?> <DeleteResult> <Deleted> <Key>quarterly_rpts/Q2_2019.ppt</Key> <VersionId>97302435810137</VersionId> <DeleteMarker>true</DeleteMarker> <DeleteMarkerVersionId>Not Implemented</DeleteMarkerVersionId> </Deleted> <Error> <Key>quarterly_rpts/Q3_2019.ppt</Key> <Code>AccessDenied</Code> <Message>Access Denied</Message> </Error> </DeleteResult>
+
+Working with multipart uploads
+
+With the Hitachi API for Amazon S3, you can perform operations to create an individual object by uploading the object data in multiple parts. This process is called multipart upload.
+
+This section of the Help provides general information about working with multipart uploads.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+636/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

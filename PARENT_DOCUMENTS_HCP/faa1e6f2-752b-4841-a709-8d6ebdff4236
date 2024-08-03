@@ -1,0 +1,47 @@
+Table. .../services/erasureCoding/linkCandidates
+
+Data type
+
+Method Use
+
+Access
+
+repliationLinks GET
+
+Retrieve a list of the replication links that may be eligible for use in an erasure coding topology System-level user account with the monitor or
+
+that includes the local HCP system
+
+administrator role
+
+Example: Retrieving a list of eligible replication links
+
+Here's a sample GET request that retrieves a list of all the active/active replication links that directly connect the local HCP system to another HCP system or that are in a path of active/active links that indirectly connect the local system to another system. The request writes the list of links to a file named eligible-links.xml. The request is made using a system-level user account that includes the administrator role. Request with cURL command line
+
+curl -k -H "Accept: application/xml" -H "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97" "https://admin.hcp-us.example.com:9090/mapi/services/erasureCoding/ linkCandidates?verbose=true&prettyprint" > eligible-links.xml
+
+Request in Python using PycURL
+
+import pycurl filehandle = open("eligible-links.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Accept: application/xml", "Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97"]) curl.setopt(pycurl.URL, "https://admin.hcp-us.example.com:9090/mapi/services/" + "erasureCoding/linkCandidates?verbose=true&prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close() filehandle.close()
+
+Request headers
+
+GET /mapi/services/erasureCoding/linkCandidates?verbose=true&prettyprint HTTP/1.1 Host: admin.hcp-us.example.com:9090 Authorization: HCP bGdyZWVu:35dc4c4aa08fe0deab7e292e00eb8e97 Accept: application/xml
+
+Response headers
+
+HTTP/1.1 200 OK Content-Type: application/xml X-HCP-SoftwareVersion: 9.0.0.2 Content-Length: 2154 Response body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <replicationLinks> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-eu.example.com</name> </hcpSystems>
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+Notes Notes
+
+395/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<name>eu-ca</name> <pausedTenantsCount>0</pausedTenantsCount> <state>HEALTHY</state> <uuid>7ae4101c-6e29-426e-ae71-9a7a529f019d</uuid> </replicationLink> <replicationLink> <hcpSystems> <name>hcp-ca.example.com</name> <name>hcp-us.example.com</name> </hcpSystems> <name>us-ca</name> <pausedTenantsCount>0</pausedTenantsCount>

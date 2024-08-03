@@ -1,0 +1,85 @@
+You can modify some properties for a tenant by using the Settings panel for the tenant.
+
+To view the Settings panel, you need the monitor or administrator role. To modify a tenant, you need the administrator role.
+
+1. In the top-level menu of the System Management Console, click Tenants. 2. In the list of tenants, click the name of the tenant that you want to modify.
+
+3. In the row of tabs below the tenant name, click Settings. 4. In the Settings panel, make the changes you want.
+
+To remove a tag from an HCP tenant, in the Tags section in the Settings panel, click the delete control ( before submitting your changes, click again on the delete control.
+
+) for the tag. The row with the tag turns red. To revert the removal
+
+5. Click Update Settings.
+
+If all of these are true, a confirming message appears: You changed the name of the tenant. The tenant supports AD authentication.
+
+HCP cannot communicate with AD. In response to the confirming message, click Update Settings.
+
+Tenant-level CORS rules configuration
+
+You can configure CORS rules at the tenant level to serve as the default configuration for all namespaces owned by a tenant. This practice is useful in deployments where a large number of namespaces support the same CORS configuration.
+
+To configure the default CORS settings for all namespaces owned by a tenant, use either the System Management Console or the HCP management API.
+
+If a namespace managed by the tenant does not have a CORS configuration, the namespace inherits the tenant-level configuration. If a namespace has its own CORS configuration, the namespace-level configuration overrides the tenant-level configuration.
+
+This section describes how to use the System Management Console to configure the default CORS configuration for all namespaces owned by a tenant. Request elements (CORS rules)
+
+A CORS rules configuration uses the request elements described in the following table. Some of the request elements are optional.
+
+Request elements for CORS rules configuration
+
+Element
+
+Description
+
+CORSConfiguration
+
+Container for CORSRules elements.
+
+Type: Container Children: CORSRules Ancestor: None
+
+Note: A CORS rules configuration in HCP can have any number of CORSRule, AllowedMethod, AllowedOrigin, and AllowedHeader elements. However, the maximum size of the CORS configuration cannot exceed 2.5 MB. CORSRule
+
+A set of origins and methods that you want to allow to access a resource.
+
+Type: Container Children: AllowedMethod, AllowedOrigin, AllowedHeader, MaxAgeSeconds, ExposeHeader
+
+Ancestor: CORSConfiguration
+
+Id
+
+Optional. A unique identifier for the rule. The Id value assists you in finding a rule in the CORS configuration. Type: String Ancestor: CORSRule
+
+AllowedMethod
+
+HTTP methods that you want to allow the origin to execute. Each CORSRule must identify at least one origin and one method.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+96/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Element
+
+Description
+
+Type: Enum (GET, PUT, HEAD, POST, DELETE) Ancestor: CORSRule AllowedOrigin
+
+Origins that you want to allow cross-origin requests from. Each CORSRule must identify at least one origin and one method.
+
+The origin value can include at most one wildcard character "*", for example, http://*.example.com. Alternatively, you can specify the wildcard character by itself to enable all origins to send cross-origin requests. Type: String Ancestor: CORSRule
+
+AllowedHeader
+
+Optional. List of headers that are allowed in a preflight OPTIONS request through the Access-Control-Request-Headers header. This element can contain at
+
+most one wildcard character "*". Each header name in the Access-Control-Request-Headers header must have a corresponding entry in the CORSRule. The server will send only the allowed headers that were requested in a response. Type: String
+
+Ancestor: CORSRule
+
+MaxAgeSeconds

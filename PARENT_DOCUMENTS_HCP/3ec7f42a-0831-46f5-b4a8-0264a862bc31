@@ -1,0 +1,43 @@
+662/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Description
+
+The credentials provided with the request do not match the credentials used to initiate the upload. You do not have permission to complete uploads in the specified bucket. The S3 compatible API is currently disabled for the specified bucket. The request uses HCP, AD, SPENEGO, or cookie authentication.
+
+500 Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503
+
+Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: POST object upload
+
+Here’s a sample POST object upload request that initiates an object upload for an object named acctg/Checklist.txt in the bucket named finance with AWS Signature Version 2 in- form authentication. Request headers and form
+
+<html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> </head> <body>
+
+<form action="https://finance.europe.hcp.example.com" method="post" enctype="multipart/form-data"> <input type="input" name="key" value="acctg/${filename}" /><br /> <input type="hidden" name="AWSAccessKeyId" value="bGdyZWVu" /> <input type="hidden" name="Signature" value="yAk4cp0LQzNo9HMxXsiM9NNSjVs=" /> <input type="hidden" name="Policy" value='eyJleHBpcmF0aW9uIjoiMjAxOS0xMi0zMFQxMjowMDowMC4wMDBaLdwiY29uZGl0aW9ucyI6W3siYnVja2V0IjogIm5zIn0 sWyJzdGFydHMtd2l0aCIsICIka2V5IiwgImRpci9kaXIxLyJdLFsic3RhcnRzLXdpdGgiLCAiJHN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyIsICIiXSx7ImFjbCI6ICJwdWJsaWMtcmVhZCJ9LHsi eC1hbXotbWV0YS1jbGFzcyI6ICJidXNpbmVzcyJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCAwLCAxMDQ4NTc2MF1dfQ== /> <input type="hidden" name="success_action_status" value="201"/> <input type="hidden" name="acl" value="public-read"/> <input type="hidden" name="x-amz-meta-class" value="business"/> <input type="file" name="file" /> <br />
+
+<!-- The elements after this will be ignored --> <input type="submit" name="submit" value="Upload to HCP" /> </form>
+
+</html>
+
+Security policy
+
+{ "expiration": "2019-12-31T12:00:00.000Z", "conditions": [ {"bucket": "finance"}, ["starts-with", "$key", "acctg/"], {"acl": "public-read"}, {"x-amz-meta-class": "business"}, ["content-length-range", 0, 10485760] ] } Response headers

@@ -1,0 +1,75 @@
+Object-based queries search only for objects that currently exist in the repository. For objects with multiple versions, object-based queries return only the current version.
+
+Operation-based queries search not only for objects currently in the repository but also for information about objects that have been deleted by a user or application, deleted
+
+through disposition, purged, or pruned. For namespaces that support versioning, operation-based queries can return both current and old version of objects.
+
+Criteria for operation-based queries can include object status (for example, created or deleted), change time, index setting, and location.
+
+The metadata query API returns object metadata only, not object data. The metadata is returned either in XML format, with each object represented by a separate element, or in JSON format, with each object represented by a separate name/value pair. For queries that return large numbers of objects, you can use paged requests.
+
+HCP Search Console
+
+The HCP Search Console is an easy-to-use web application that lets you search for and manage objects based on specified criteria. For example, you can search for objects that
+
+were stored before a certain date or that are larger than a specified size. You can then delete the objects listed in the search results or prevent those objects from being deleted.
+
+Similar to the metadata query API, the Search Console returns only object metadata, not object data.
+
+By offering a structured environment for performing searches, the Search Console facilitates e-discovery, namespace analysis, and other activities that require the user to examine
+
+the contents of namespaces. From the Search Console, you can: Open objects.
+
+Perform bulk operations on objects.
+
+Export search results in standard file formats for use as input to other applications. Publish feeds to make search results available to web users.
+
+The Search Console works with either of these two search facilities: HCP metadata query engine
+
+This facility is integrated with HCP and works internally to perform searches and return results to the Search Console. The metadata query engine is also used by the
+
+metadata query API. When working with the metadata query engine, the Search Console is called the Metadata Query Engine Console.
+
+The Search Console can use only one search facility at any given time. The search facility is selected at the HCP system level. If no facility is selected, the HCP system does not
+
+support use of the Search Console to search namespaces.
+
+Each search facility maintains its own index of objects in each search-enabled namespace and uses this index for fast retrieval of search results. The search facilities automatically
+
+update their indexes to account for new and deleted objects and changes to object metadata.
+
+Not all namespaces support search. To find out whether a namespace is search-enabled, see your tenant administrator. Object representation
+
+HCP represents objects differently based on the namespace access protocol the client is using.
+
+Object representation with HTTP
+
+With HTTP, HCP represents each object as a URL. The root of the object path in the URL is always rest.
+
+Here’s an example of the URL for an object named wind.jpg in the images directory in a namespace named climate in a tenant named geo in an HCP system named hcp.example.com:
+
+http://climate.geo.hcp.example.com/rest/images/wind.jpg
+
+Users and applications represent system metadata and identify custom metadata by using query parameters appended to the URLs. HCP returns system metadata in HTTP response headers and returns custom metadata in the format in which it was originally specified.
+
+Object representation with the S3 compatible API
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+4/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+With the S3 compatible API, HCP represents each object as a URL. The exact format of this URL depends on how the application used to access the object handles user
+
+authentication.
+
+The S3 compatible API does not have the concept of directories. Slashes in object names are simply part of the name and are not directory separators. Thus, with the S3 compatible
+
+API, objects do not have paths. Here’s an example of one of the possible URLs for an object named images/wind.jpg in a namespace named climate in a tenant named geo in an HCP system named
+
+hcp.example.com:
+
+http://climate.geo.hcp.example.com/hs3/images/wind.jpg

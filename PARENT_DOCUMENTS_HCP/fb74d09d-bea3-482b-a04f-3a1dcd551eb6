@@ -1,0 +1,67 @@
+size usage being reported in the SMC.
+
+■ Fixed an upgrade issue where online upgrade to v9.6 or later failed in specific rare circumstances of AD settings after the first upgraded node started using newer messaging type.
+
+■ Resolved an issue where the SMC reported an error indicating missing Management
+
+network IP addresses for nodes that have been retired.
+
+■ Resolved an issue that was causing the deletion of empty parent directories to time-out.
+
+■ Resolved an issue where arc-deploy could not unmount /tmp/upgrade_root/run when an
+
+upgrade restarted after a failed attempt.
+
+■ Fixed an issue where DNS failover stopped working after the clusters involved in the
+
+replication setup were renamed.
+
+■ Resolved an issue where domain/DNS aliases were not updated after cluster rename,
+
+causing DNS failover to stop working.
+
+■ Resolved an issue where putObject and uploadPart requests were failing against HCP when the supplied requests used Transfer-Encoding: chunked and (an incorrectly calculated) content-length header at the same time. ■ Resolved an issue related to management port configuration where the configuration
+
+information was not cleaned up after the management port is disabled. This bug that was also causing issues with new VLAN creation.
+
+■ Resolved a log spam issue related to retry logic logging immediately on undetermined
+
+write results, which caused bloating of the JVM logs.
+
+■ Disabled the bash session timeout, which caused SSH sessions to terminate after 15
+
+minutes, resulting in supportability impact.
+
+■ Resolved an issue where the replication finishRecovery process on an A/P replication link
+
+experienced long delay before completion.
+
+■ Resolved a security vulnerability in the PKCS#11 where the ssh-agent in OpenSSH prior to 9.3p2 has an insufficiently trustworthy search path, leading to remote code execution. ■ Resolved a security vulnerability in Apache Struts Remote Code Execution.
+
+■ Resolved vulnerabilities with HTTP OPTIONS method on port 443 reported by Nessus
+
+scan.
+
+Upgrade notes
+
+HCP upgrades can occur with the system either online or offline. During an online upgrade, the system remains available to users and applications. Offline upgrades are faster than online upgrades, but the system is unavailable while the upgrade is in progress.
+
+Content Platform 9.6.3 Release notes - Customer
+
+Hitachi Content Platform Release Notes
+
+5
+
+Upgrade notes Observe the following increase in upgrade times:
+
+■ Online upgrades to HCP v9.6.3 from versions other than HCP v9.4.4: Upgrades may take up to two additional hours per node for HCP systems using cloud or S Series storage . The upgrade time estimate may vary based on the number of objects in the HCP system and how active the HCP system is.
+
+■ Offline upgrades to HCP v9.6.3 from versions other than HCP v9.4.4: Upgrades may take
+
+an additional 1.5 hours to complete. There is no increase in upgrade time for HCP systems that have no S Series or cloud storage in use as long as all nodes in the HCP system are being upgraded at the same time.
+
+Note: This increase in upgrade time occurs only on an HCP v9.6.3 upgrade. It will not be repeated if S Series or cloud Storage is added after upgrading to HCP v9.6.3 or if an HCP system is upgraded from v9.6.3 to a later version. Note: During an online upgrade, data outages might occur as each node is upgraded. Whether data users are affected by an outage depends on the ingest tier Data Protection Level (DPL) setting specified in the service plan that's assigned to the applicable namespace. No data is lost during a data outage, but users may experience some data-access interruptions.
+
+When upgrading to this release from a version prior to HCP version 9.6, the boot partition on the OS disk gets resized from 199 MB to 499 MB, while the swap partition size is reduced to 3.7 GB.
+
+After upgrading to this release, new password requirement rules apply to a newly created password when the Install user account’s password is changed next time. The password must be 14 characters or longer, and must include characters from 4 groups of characters. For more information, see the installation manual. In VM environments, the OS disk can now be either 64 GB or 32 GB. New installations should utilize 64 GB OS disk, but any existing system with 32 GB OS disk can be upgraded to this release.

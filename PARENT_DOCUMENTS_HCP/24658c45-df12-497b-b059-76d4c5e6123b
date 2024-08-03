@@ -1,0 +1,93 @@
+Retention class resources let you create, retrieve information about, modify, and delete retention classes. The tables below provides information about these resources. .../tenants/tenant-name/namespaces/namespace-name/retentionClasses
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+retentionClass
+
+PUT
+
+Create a retention class for a namespace
+
+For an HCP namespace, tenant-level user account with the compliance role For the default namespace, system-level user account with the compliance role List
+
+GET
+
+Retrieve a list of the retention classes defined for a namespace
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role For the default namespace, system-level user account with the monitor, administrator, or compliance role
+
+The listed retention classes are identified by retention class name.
+
+In XML, the element that identifies each retention class is name. The root element for the list of retention classes is retentionClasses.
+
+In JSON, the name in the name/value pair that lists the retention classes is name. .../tenants/tenant-name/namespaces/namespace-name/retentionClasses/retention-class-name
+
+Data type
+
+Method
+
+Use
+
+Access
+
+Notes
+
+retentionClass
+
+GET
+
+Retrieve information about a retention class
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role For the default namespace, system-level user account with the monitor, administrator, or compliance role
+
+N/A
+
+HEAD
+
+Check for the existence of a retention class
+
+For an HCP namespace, tenant-level user account with the monitor, administrator, or compliance role For the default namespace, system-level user account with the monitor, administrator, or compliance role retentionClass
+
+POST
+
+Modify a retention class
+
+For an HCP namespace, tenant-level user account with the compliance role For the default namespace, system-level user account with the compliance role
+
+N/A
+
+DELETE
+
+Delete a retention class
+
+For an HCP namespace, tenant-level user account with the compliance role For the default namespace, system-level user account with the compliance role
+
+You can delete a retention class only if the namespace is in enterprise mode.
+
+Example: Creating a retention class
+
+Here’s a sample PUT request that creates a retention class named FN-Std-42 for the Accounts-Receivable namespace. The retention class is defined in an XML file named RC-FN- Std-42.xml. The request is made using a tenant-level user account that includes the compliance role. Request body in XML
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<retentionClass> <name>FN-Std-42</name> <description>Implements Finance department standard #42 - keep for 10 years.</description> <value>A+10y</value> <allowDisposition>true</allowDisposition> </retentionClass> Request with cURL command line
+
+curl -k -iT RC-FN-Std-42.xml -H "Content-Type: application/xml" -H "Authorization: HCP bXdoaXRl:ad49ce36d0cec9634ef63b24151be0fb" "https://finance.hcp.example.com:9090/mapi/tenants/finance/namespaces/ accounts-receivable/retentionClasses"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+426/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL

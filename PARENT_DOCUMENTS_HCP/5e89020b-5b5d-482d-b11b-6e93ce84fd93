@@ -1,0 +1,63 @@
+Use the Storage Pools page to add buckets to an existing HCP S Series storage pool.
+
+To add buckets to an HCP S Series storage pool, you need the administrator role.
+
+1. On the Storage > Pools page, click the table row corresponding to the name of the pool to which you want to add one or more buckets.
+
+The Overview page opens for the selected pool.
+
+2. Click the Buckets tab. 3. Select the buckets that you want to add to the storage pool.
+
+You cannot select buckets that are used by other storage pools.
+
+4. Click Update Settings.
+
+Removing buckets from an HCP S Series storage pool
+
+Use the Storage Pools page to delete buckets from an HCP S Series storage pool. Deleting buckets from an HCP S Series storage pool does not remove them from the HCP system. S Series Node buckets that are not associated with a pool can be added to a pool.
+
+To delete buckets from an HCP S Series storage pool, you need the administrator role.
+
+1. On the Storage > Pools, click the table row corresponding to the name of the pool from which you want to delete buckets.
+
+The Overview page opens for the selected pool.
+
+2. Click the Buckets tab. 3. Click to clear the checkboxes for the buckets you want to remove from the storage pool.
+
+4. Click Update Settings. Deleting an HCP S Series storage pool
+
+If the storage represented by an HCP S Series storage pool is not used to store objects in any namespaces defined on the HCP system, you can delete the storage pool.
+
+In contrast, if the storage represented by an HCP S Series storage pool is used to store object data, you must first retire the storage pool by migrating all the data to another location.
+
+1. In the System Management Console, click Storage > Pools. The Storage Pools page opens.
+
+2. Click the delete control beside the unused storage pool that you want to delete.
+
+The Confirm: Delete dialog box opens.
+
+3. Click Delete.
+
+Working with extended storage pools
+
+HCP uses extended storage pools to represent logical groups of storage components that can be used as storage tiers.
+
+Each extended storage pool consists of one or more extended storage components that are used to access the same type of storage. A storage pool contains one or more extended storage component access points (mount points, buckets, or containers). Each storage tier that is defined for a namespace by its service plan typically consists of only one storage pool; however, a tier can be configured to use multiple storage pools. To store objects on an extended storage tier, HCP uses all of the storage that is allocated to all of the extended storage component access points (mount points, buckets, or containers) that are contained in the storage pools that are configured for the storage tier. Therefore, the capacity of a given extended storage pool is the total amount of space that can be
+
+accessed using the extended storage component access points included in the pool. You can add access points to an extended storage pool at any time, thereby increasing the capacity of the pool. Each extended storage component provides HCP with the information it needs to use one or more mount points, buckets, or containers to access and use the storage that’s represented by that extended storage component. However, HCP can actually use the storage that is represented by a given extended storage component only if at least one of its
+
+access points is contained in a storage pool that is included in at least one storage tier that is defined for a namespace by its service plan.
+
+Creating an extended storage pool
+
+Use the Create Pool wizard on the Storage page to create and configure an extended storage pool.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+52/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help Each time you use the Storage page to access the Create Pool wizard, you are prompted to select the type of extended storage pool that you want to create. The System Management Console then dynamically builds the pages in the Create Pool wizard to present only the fields you need to use to configure HCP to access and use the specified type of extended storage pool.
+
+1. On the left side of the Storage page, click the Pools tab. 2. On the Pools panel, click Create Pool. The Get Started wizard opens.

@@ -1,0 +1,69 @@
+New line
+
+%0A
+
+Carriage return
+
+%0D
+
++
+
+%2B
+
+%
+
+%25
+
+#
+
+%23
+
+?
+
+%3F
+
+&
+
+%26
+
+\
+
+&5C
+
+Quotation marks with URLs in command lines
+
+When using the HCP management API, you work in a Windows, Unix, or Mac OS X shell. Some characters in the commands you enter may have special meaning to the shell. For example, the ampersand (&) used in URLs to join multiple query parameters may indicate that a process should be put in the background.
+
+To avoid the possibility of the Windows, Unix, or Mac OS X shell misinterpreting special characters in a URL, always enclose the entire URL in double quotation marks. Authentication
+
+To use the HCP management API, you need either a system-level or tenant-level user account that’s defined in HCP. If HCP is configured to support Windows Active Directory® (AD), you can also use an AD user account that HCP recognizes to access HCP through the metadata query API.
+
+HCP also accepts Active Directory authentication provided through the SPNEGO protocol or the AD authentication header. For more information about SPNEGO, see http://tools.ietf.org/html/rfc4559.
+
+Note: To use a user account that was created in an HCP release earlier than 4.0, you need to log into the System Management Console or Tenant Management Console, as applicable, with that account at least once before you can use the account with the management API.
+
+You need to provide credentials with every management API request. If you do not provide credentials or provide invalid credentials, HCP responds with a 403 (Forbidden) error message. To provide credentials in a management API request, you specify an authentication token in an HTTP Authorization request header.
+
+HCP also accepts credentials provided in an hcp-api-auth cookie. However, this method of providing credentials has been deprecated and should not be used in new applications. HCP authentication through the management API
+
+To authenticate with HCP through the management API, you need to construct an authentication token from a system-level user account or a tenant-level user account and then submit it using a request header with all requests. Successful authentication requires encoding your account information. Authentication token
+
+An authentication token consists of a username in Base64-encoded format and a password that’s hashed using the MD5 hash algorithm, separated by a colon, like this:
+
+base64-encoded-user-name:md5-hashed-password
+
+For example, here’s the token for the Base64-encoded user name lgreen and the MD5-hashed password p4ssw0rd: bGdyZWVu:2a9d119df47ff993b662a8ef36f9ea20
+
+The GNU Core Utilities include the base64 and md5sum commands necessary to encode your account information. These commands convert text to Base64-encoded and MD5- hashed values, respectively. For more information about the GNU Core Utilities, see http://www.gnu.org/software/coreutils/.
+
+Other tools that generate Base64-encoded and MD5-hashed values are available for download on the web. For security reasons, do not use interactive public web-based tools to generate these values.
+
+The GNU Core Utilities include the base64 and md5sum commands, which convert text to Base64-encoded and MD5-hashed values, respectively. With these commands, a line such as this creates the required token:
+
+echo `echo -n username | base64`:`echo -n password | md5sum` | awk '{print $1}' The character before echo, before and after the colon, and following md5sum is a backtick (or grave accent). The -n option in the echo command prevents the command from appending a new line to the output. This is required to ensure correct Base64 and MD5 values.
+
+Authorization header
+
+You use the HTTP Authorization request header to provide the authentication token for an HCP management API request. The value of this header is HCP followed by the authentication token, in this format: Authorization: HCP authentication-token
+
+For example, here’s the Authorization header for a user named lgreen and password p4ssw0rd:

@@ -1,0 +1,35 @@
+595/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+. </CommonPrefixes> </ListBucketResult>
+
+Listing the in-progress multipart uploads in a bucket
+
+You use the HTTP GET method with the uploads query parameter to list the multipart uploads that are in progress in a bucket. An in-progress multipart upload is one that has been initiated but not yet completed or aborted. While a multipart upload is in the process of being completed, it is still considered to be in progress. To list the in-progress multipart uploads in a bucket, you must be an authenticated user. Additionally, you need browse permission for the bucket.
+
+A multipart upload listing is returned in an XML response body. The multipart uploads are listed in ascending alphanumeric order by object name. If the listing includes multiple multipart uploads for the same object, those multipart uploads are listed in ascending chronological order by the time they were initiated. Request line
+
+Depending on whether the bucket name is included in the hostname in the S3 compatible request, a request to list in-progress multipart uploads has either of these formats:
+
+With the bucket name included in the hostname:
+
+GET/?uploads[&query-parameters] HTTP/1.1
+
+With the bucket name following the hostname: GET/bucket-name?uploads[&query-parameters] HTTP/1.1
+
+The uploads query parameter is case sensitive.
+
+query-parameters can be none, one, or more of:
+
+delimiter
+
+You use the delimiter query parameter to request a multipart upload listing that includes a list of common prefixes for multipart upload object names. A common prefix is the name of an object up through the first occurrence of the character string specified by the delimiter parameter. Each common prefix is listed only once regardless of the number of multipart uploads with matching object names. The multipart uploads with object names that begin with the common prefix are not included elsewhere in the listing. The returned listing also contains multipart uploads with object names that do not include the character string specified by the delimiter parameter. In the listing, all these multipart uploads are listed first, followed by all the common prefixes. The multipart uploads and common prefixes included in a listing are subject to any other criteria specified in the request. Both the multipart uploads and the common prefixes count toward the maximum number of multipart uploads that can be included in the listing. The character string you specify for the delimiter query parameter can contain any valid UTF-8 characters. including white space. Percent-encode non-ASCII characters and reserved special characters such as ampersands (&), commas (,) and equal signs (=). If the character string contains spaces, enclose the entire string in quotation marks. The delimiter parameter name and the character string you specify are both case sensitive. encoding-type
+
+You use the encoding-type query parameter to request the S3 compatible API to encode the response. You can also use this query parameter to specify the encoding method to use. The key for an object can contain any Unicode character. Some characters, such as those with an ASCII value from 0 to 10, cannot be parsed by XML 1.0 parsers. For these characters, you can add the encoding-type query parameter to request the S3 compatible API to encode the keys in the response. The encoding-type parameter name is case sensitive. key-marker
+
+You use the key-marker query parameter without the upload-id-marker query parameter to specify a starting point for the returned multipart upload listing. That point is the first multipart upload with an object name that's alphanumerically greater than the character string specified by the key-marker parameter. For example, the multipart upload listing returned in response to a GET multipart upload listing request with the key-marker=sales/ query parameter contains this multipart upload: sales/RulesAndRegulations.pdf
+
+When more than the requested number of multipart uploads satisfy the criteria in a request for a multipart upload listing, HCP returns a partial listing. In this case, the response body includes:

@@ -1,0 +1,47 @@
+With an active/passive link, HCP replicates object data and metadata together, thereby ensuring that objects are complete on the replica and can be recovered should that become necessary. However, this approach means that the replica cannot service requests for an object until that object is fully replicated. To a primary system, an active/passive link is an outbound link; that is, the system is sending data through the link. To a replica, an active/passive link is an inbound link; that is, the system is receiving data through the link. To both systems involved in an active/active link, the link functions as both an outbound link and an inbound link. Link security
+
+Replication relies on SSL to ensure the integrity and security of transmitted data. Before you can create a replication link, the two systems involved in the link must each have a valid SSL server certificate. Each system must also have the server certificate from the other system installed as a trusted replication server certificate. Replication priority
+
+Replication is asynchronous with object ingest. An HCP system can, therefore, develop a backlog of objects to be replicated.
+
+You can choose to have the Replication service work on objects with the oldest changes first, regardless of which namespaces they’re in. Alternatively, you can have the service balance its processing time evenly across the namespaces being replicated. In this case, the service may replicate recent changes in some namespaces before older changes in others.
+
+What is replicated?
+
+Replication works by tenant. For each replication link, you can select HCP tenants to be replicated on that link. If you have administrative access to the tenant, you can also select the namespaces to include in replication of that tenant. To replicate the default tenant, you select the default-namespace directories to be replicated.
+
+Regardless of the system on which you create the link: For an active/active link, you can select items to be replicated from both systems involved in the link For an active/passive link, you can select items to be replicated only from the primary system
+
+You can select the HCP tenants to include in an erasure coding topology from any system in the topology. Each tenant you select is automatically added to every link in the underlying replication topology. You cannot include the default tenant in an erasure coding topology.
+
+What is replicated for each tenant differs between HCP tenants and the default tenant.
+
+Replication of HCP tenants
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+319/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+When creating a tenant, you specify whether it can be replicated. After creating the tenant, you can change this setting from not allowing replication to allowing replication. You cannot do the reverse. A replication link or erasure coding topology can include only HCP tenants that are configured to allow replication.
+
+Replicated tenants and namespaces
+
+When an HCP tenant is replicated, the Replication service works only on selected namespaces owned by that tenant. The tenant administrator can select and deselect namespaces for replication at any time. If the tenant is being replicated, the tenant and its selected namespaces are replicated on each link that includes the tenant. If the tenant is not being
+
+replicated, the selected namespaces are not replicated either.
+
+If an HCP tenant has granted system-level users administrative access to itself, you can select and deselect its namespaces for replication when you create the replication link or by
+
+modifying the link at a later time. You should coordinate namespace selection with the tenant administrator to ensure that you both have the same understanding of what should be replicated. Tenants can be replicated from one HCP system to another regardless of the number of tenants that already exist on the other system. However, you can create a new tenant on a
+
+system only if the total number of tenants on the system is less than 1,000.
+
+Similarly, namespaces can be replicated from one HCP system to another regardless of the number of namespaces that already exist on the other system. However, you can create
+
+a new namespace on a system only if the total number of namespaces on the system is less than ten thousand.
+
+HCP tenants created on different systems can have the same names as each other. However, every tenant has a unique internal ID, so HCP can distinguish tenants with the same name from one another. You cannot replicate a tenant from one system to another if the second system has a different tenant with the same name. To replicate the tenant in this

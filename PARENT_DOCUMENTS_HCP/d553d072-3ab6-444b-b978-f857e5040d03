@@ -1,0 +1,75 @@
+def closeConnection(self): """ Cleanup the curl connection after we are finished with it. """ self.curl.close()
+
+if __name__ == '__main__': authToken = "bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+hostName = "clusterName.com" urlName = "https://admin.%s/query" % hostName
+
+resultsPerQuery = 50 objectUrls = []
+
+queryTool = OperationBasedQueryTool() queryTool.setConnectionInfo(authToken, hostName, urlName)
+
+queryTool.setQueryParameters(resultsPerQuery, "false", {'directory':['/customers/widgetco/orders']}, {'namespace':['Default.Default']}, {'transaction':['create']})
+
+try: while not queryTool.complete:
+
+queryResults = queryTool.issueQuery()
+
+for result in queryResults['queryResult']['resultSet']: objectUrls.append(result['urlName'])
+
+resultCount = len(queryResults['queryResult']['resultSet']) queryTool.setLastResult(queryResults['queryResult']['resultSet']
+
+[resultCount-1]) print("Query completed. Total objects found: %d" % len(objectUrls)) finally: queryTool.closeConnection()
+
+Example: Checking for replication collisions
+
+Here is a sample metadata query API request that checks whether any namespaces owned by the europe tenant currently contain objects that are flagged as replication collisions. The response to the query does not include operation records for any of those objects, but the status of INCOMPLETE indicates that records for such objects exist.
+
+The query uses an XML request body and requests results in XML format.
+
+Request body in the XML file named ReplicationCollisions.xml <queryRequest>
+
+<operation> <count>0</count>
+
+<systemMetadata> <replicationCollision>true</replicationCollision>
+
+<transactions> <transaction>create</transaction>
+
+</transactions> </systemMetadata>
+
+</operation> </queryRequest>
+
+Request with cURL command line
+
+curl -i -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" -H "Content-Type: application/xml" -H "Accept: application/xml"
+
+-d @ReplicationCollisions.xml "https://europe.hcp.example.com/query?prettyprint"
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+874/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Request in Python using PycURL import pycurl import os
+
+curl = pycurl.Curl()
+
+# Set the URL, command, and headers curl.setopt(pycurl.URL, "https://europe.hcp.example.com/" +
+
+"query?prettyprint") curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+
+curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.POST, 1)
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d", "Content-Type: application/xml", "Accept: application/xml"])
+
+# Set the request body from an XML file filehandle = open("ReplicationCollisions.xml", 'rb')
+
+curl.setopt(pycurl.UPLOAD, 1) curl.setopt(pycurl.CUSTOMREQUEST, "POST")
+
+curl.setopt(pycurl.INFILESIZE,
+
+os.path.getsize("ReplicationCollisions.xml")) curl.setopt(pycurl.READFUNCTION, filehandle.read) curl.perform()
+
+print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()

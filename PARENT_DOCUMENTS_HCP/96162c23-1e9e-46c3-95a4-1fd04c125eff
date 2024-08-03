@@ -1,0 +1,45 @@
+698/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The tenant administrator enables or disables atime synchronization for a namespace. While atime synchronization is enabled, atime values are automatically synchronized with retention settings for objects subsequently added to the namespace except in these cases: The object is added through NFS with an initial retention setting of Deletion Allowed. The object is added through any protocol with an initial retention setting that is either Initial Unspecified or a retention class.
+
+In these cases, the atime value of an object is set to the time the object is stored.
+
+For any given object, if atime synchronization was not enabled automatically, you can enable it manually.
+
+While atime synchronization is enabled for a namespace, the rules for changing retention settings also apply to changing atime values. You cannot use atime to shorten a retention period, nor can you use it to specify a retention period if the current setting is Deletion Prohibited. Additionally, you cannot change the atime value if the object is on hold. atime synchronization does not work with objects in retention classes. When you assign an object to a retention class, the atime value for the object does not change, even if the at ime value had previously been synchronized with the retention setting. Triggering atime synchronization for an object in a retention class has no effect.
+
+atime synchronization is enabled on a per-namespace basis. To find out whether it’s enabled for the namespace you’re using, contact your tenant administrator.
+
+Note: With atime synchronization enabled, you cannot rename empty directories. This includes any directories you create using CIFS, which, by default, are named New Folder.
+
+Triggering atime synchronization for existing objects
+
+While atime synchronization is enabled, you can use either the atime attribute or the retention.txt metafile to trigger synchronization for an individual existing object (for which synchronization is not currently in effect): To use the atime attribute to trigger synchronization for an object with retention currently set to a specific date and time in the future, use CIFS or NFS to make a valid change to the value of the atime attribute. To use the atime attribute to trigger synchronization for an object with retention currently set to either Deletion Allowed or Initial Unspecified:
+
+To use the retention.txt metafile to trigger atime synchronization for any object, regardless of its current retention setting, change the retention setting for the object to any valid value except a retention class. Important:
+
+Some commands you can use to store objects in the namespace, such as the Unix cp command, have options for preserving the original permissions and timestamps. These commands may modify permissions and atime values in a way that causes the stored object to become read-only, thereby triggering retention. If atime synchronization is enabled, you should review the use of these commands to ensure they do not result in unexpected retention settings. Existing applications ported to HCP may remove write permissions from objects without regard to their atime values. If atime synchronization is enabled for the namespace, this can have the unintended effect of giving some objects infinite retention. Be sure to review ported applications for this behavior before running them.
+
+1. Check that the atime value is the retention setting you want.
+
+If it isn’t, be sure to change it before performing step 2.
+
+2. Take one of these actions: If the object has any POSIX write permissions for the owner, owning group, or other, use CIFS or NFS to remove them. If the object has no POSIX write permissions for the owner, owning group, or other, use CIFS or NFS to add at least one and then remove all you added.
+
+Changing permissions through WebDAV does not trigger atime synchronization.
+
+Read and execute permissions have no effect on this process.
+
+Triggering atime synchronization for an object creates an association between its atime value and retention setting. Subsequent changes to POSIX permissions do not remove this association.
+
+Removing the association
+
+The association between the atime value and retention setting for an object remains in effect until one of these happens: The retention period for the object expires.
+
+You assign the object to a retention class. The tenant administrator disables atime synchronization for the namespace. Any changes to atime attributes or retention settings made after synchronization is disabled are independent of each other. If the tenant administrator subsequently reenables atime synchronization for the namespace, these properties remain independent until you trigger synchronization again for the individual object. How atime synchronization works
+
+atime values and retention settings have these general correspondences:

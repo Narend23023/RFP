@@ -1,0 +1,31 @@
+5. Add write permissions to the wind.jpg object: chmod a+w /datamount/images/wind.jpg
+
+6. Remove all write permissions from the wind.jpg object:
+
+chmod a-w /datamount/images/wind.jpg
+
+7. (Optional) Verify that the retention setting has changed to match the atime value:
+
+cat /metadatamount/images/wind.jpg/retention.txt 1451520000 2015-12-31T00:00:00-0500 S3 Object Lock
+
+HCP supports S3 Object Lock that enables you to store objects using a write-once-read-many (WORM) models. It helps prevent objects from being deleted or overwritten for a specified period. HCP helps you meet regulatory requirements and provides protection against accidental deletion of objects.
+
+HCP supports the following S3 Object Lock features:
+
+Retention modes: You can choose one of these retention modes for any object version protected by S3 Object Lock.
+
+Governance mode: Prevents you from overwriting or deleting an object version. It helps protect objects against accidental deletions. However, users with privileged access can change the retention settings or delete the objects. Compliance mode: Prevents you from overwriting or deleting an object version for the duration of the retention period. When an object is locked in compliance mode, you can extend the retention period, but you can’t shorten it. Retention period: You can protect an object version for a fixed amount of time by specifying a retention period. After the retention period expires, you can overwrite or delete the object version unless it has a legal hold. You can set a retention period on an object version either explicitly or through a namespace default setting. HCP stores the retention date settings in the object version’s metadata and protects it until the retention period expires.
+
+Legal hold: You can use S3 Object Lock to place a legal hold on an object version. This prevents the object version from being overwritten or deleted, just like in retention period. However, a legal hold doesn’t have an expiration date and remains in effect until removed. Only a privileged user with sufficient permissions can place and remove legal holds. If S3 Object Lock is enabled for a namespace, you can place and remove legal holds regardless of whether the object version has a retention period. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+700/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Considerations when using Object Lock
+
+When using Object Lock, it is important to consider the following factors to ensure that your data is properly protected and managed. If you don’t configure retention mode for a new namespace, HCP automatically selects HCP Enterprise mode with a Deletion Allowed retention policy as the default setting. After you upgrade to HCP release 9.6, the namespaces that existed earlier will have their new Retention Type setting set to HCP retention. If you upgrade to HCP release 9.6, you cannot modify existing namespaces from an earlier version to use S3 Object Lock. Do not replicate a namespace in HCP release 9.6 that uses S3 Object Lock retention type to an older HCP release that doesn’t support S3 Object Lock. Doing so may pause the replication link. You can set the Retention Type as S3 Object Lock when you create a new namespace and apply S3 Object retention mode and retention period default values to that namespace. However, you cannot change the retention type of existing namespaces to S3 Object Lock. When configuring namespaces that use S3 Object Lock, you cannot use existing retention related namespace configuration options that conflict with S3 Object Lock. For example, retention period values that Amazon S3 does not support, initial unspecified, event-based retention, and retention classes are not allowed. HCP supports S3 APIs for configuring and retrieving retention modes, retention periods, and legal hold. The namespace permission structure will be expanded to enforce the S3 permissions required to execute these new retention related APIs. Retention periods in HCP do not offer the same level of precision as milliseconds, as observed in Amazon S3 Object Lock. However, HCP ensures data preservation with a resolution down to the level of seconds. Shredding
+
+Shredding, also called secure deletion, is the process of deleting an object and overwriting the places where its copies were stored in such a way that none of its data or metadata, including custom metadata, can be reconstructed.

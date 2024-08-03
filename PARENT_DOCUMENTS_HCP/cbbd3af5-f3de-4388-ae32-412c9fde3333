@@ -1,0 +1,127 @@
+X-HCP-ServicedBySystem X-HCP-ErrorMessage
+
+(if an error occurred and more information is available)
+
+Storing or copying objects and versions: ETag X-HCP-Hash
+
+X-HCP-VersionID
+
+Storing or copying object or version data and an annotation together:
+
+ETag
+
+X-HCP-CustomMetadataHash X-HCP-Hash
+
+X-HCP-VersionID
+
+Storing annotations:
+
+X-HCP-Hash
+
+Status codes
+
+Success: 201, 204
+
+Error: 304, 400, 403, 404, 409, 412, 413, 414, 415, 500, 503
+
+HTTP status codes with the REST API
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+818/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+200
+
+OK
+
+DELETE
+
+HCP successfully processed a request that does any of: GET
+
+Retrieve an object, system metadata, an annotation, information about annotations, an ACL, or a directory
+
+HEAD
+
+POST
+
+Delete an object, annotation, ACL, symbolic link, or directory Set a metadata value
+
+Note: For a GET request for an object or version, if the number of bytes returned does not equal the value of the Content-Length response header, try the request again later.
+
+201 Created
+
+PUT
+
+HCP successfully added an object, version, annotation, ACL, or directory to the
+
+namespace, copied an object, or replaced an annotation or ACL for an object.
+
+204
+
+No Content
+
+GET or HEAD of an annotation or a version
+
+One of:
+
+GET of information about
+
+For an annotation, the specified object does not have the requested annotation. For information about annotations, the object or version does not have any annotations
+
+annotations.
+
+DELETE of an annotation
+
+206
+
+Partial Content
+
+GET with a Range header
+
+HCP successfully retrieved the data in the byte range specified in the request.
+
+304
+
+Not Modified
+
+GET, PUT, or HEAD with If- Modified-Since
+
+One of:
+
+GET or HEAD with If-None- Match
+
+PUT with X-HCP-Copy- Source-If-Modified-Since
+
+PUT with X-HCP-Copy-
+
+Source-If-None-Match
+
+The request specified an If-Modified-Since header, and the object change time is at or before the time specified in the header. The request specified an If-None-Match header, and the ETag of the requested object or version matches the value in the header. A request to copy an object specified X-HCP-Copy-Source-If-Modified-Since header, and the source object change time is at or before the time specified in the header. A request to copy an object specified an X-HCP-Copy-Source-If-None-Match header, and the ETag of the source object matches the value in the header.
+
+400 Bad Request All
+
+The request was not valid. These are some, but not all, of the possible reasons:
+
+The URL in the request is not well-formed.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter. A GET request has both a type=whole-object query parameter and a Range request header. A PUT or POST request has a Content-Encoding header that specifies gzip, but the content is not in gzip-compressed format. The X-HCP-CopySource header in a PUT request to copy an object identifies a symbolic link to an object. A PUT request has a type=whole-object query parameter but does not have an X-HCP-Size header or the X-HCP-Size header value is greater than the content length.
+
+HCP has custom metadata XML checking enabled, and a PUT request includes an annotation that is not well-formed XML.
+
+For a PUT request that is trying to store an ACL:
+
+The ACL includes invalid entries or values or is not well-formed XM L or
+
+JSON. ACLs are not enabled for the namespace. The ACL contains more than one thousand ACEs. The ACL specifies an AD user or group, but the namespace does not

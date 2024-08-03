@@ -1,0 +1,67 @@
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt" > Q1_2012.ppt
+
+Tip: If a GET request unexpectedly returns a zero-length file, use the -i parameter with curl to return the response headers in the target file. These headers may provide helpful information for diagnosing the problem.
+
+Request in Python using PycURL import pycurl filehandle = open("Q1_2012.ppt", 'wb')
+
+curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \
+
+/rest/quarterly_rpts/Q1_2012.ppt") curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.WRITEFUNCTION, filehandle.write)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close() filehandle.close()
+
+Request headers
+
+GET /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-Time: 1336490468 X-HCP-SoftwareVersion: 7.0.0.16
+
+Content-Type: application/vnd.ms-powerpoint Content-Length: 678400
+
+X-HCP-ServicedBySystem: hcp.example.com ETag: "d45e5b124c1807d6ec4f8088b5e51f8d"
+
+X-HCP-Type: object
+
+X-HCP-Size: 678400 X-HCP-Hash: SHA-256 36728BA190BC4C377FE4C1A57AEF9B6AFDA98720422960...
+
+X-HCP-VersionId: 80205544854849 X-HCP-IngestTime: 1334829227 X-HCP-RetentionClass: X-HCP-RetentionString: Deletion Allowed
+
+X-HCP-Retention: 0 X-HCP-IngestProtocol: HTTP
+
+X-HCP-RetentionHold: false X-HCP-Shred: false
+
+X-HCP-DPL: 2 X-HCP-Index: false
+
+X-HCP-Custom-Metadata: false X-HCP-ACL: false
+
+X-HCP-Owner: lgreen X-HCP-Domain:
+
+X-HCP-UID: X-HCP-GID:
+
+X-HCP-Replicated: false X-HCP-ReplicationCollision: false X-HCP-ChangeTimeMilliseconds: 1335347627362.00
+
+X-HCP-ChangeTimeString: 2012-04-25T05:53:47-0400 Last-Modified: Wed, 25 Apr 2012 09:53:47 GMT
+
+Response body is the contents of the Q1_2012.ppt object
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+737/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Retrieving object data in compressed format (command line)
+
+Here’s a sample curl command that tells HCP to compress the Q1_2012.ppt object before sending it to the client and then decompresses the returned content. Request with curl command line
+
+curl --compressed

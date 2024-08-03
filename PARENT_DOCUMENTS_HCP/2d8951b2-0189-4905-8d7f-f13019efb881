@@ -1,0 +1,65 @@
+You can add, replace, or delete an annotation in its entirety. You cannot modify it in place.
+
+Each object can have zero or more annotations, including a special one named default.
+
+Annotations let you compartmentalize custom metadata by logical units, such as organization or application. They can also help prevent collisions between two users or applications trying to update custom metadata at the same time. You can create an annotation that has no content. Each annotation has a name. The default annotation can be created or accessed without specifying a name or by using the name default. Annotation names must be one through 32 characters long. They must contain at least one alphanumeric character and can contain periods (.), underscores (_), and hyphens (-). Annotation names are case sensitive.
+
+Annotations are typically specified in XML format, but this is not necessarily required. The namespace configuration determines whether HCP checks that annotations are well- formed XML. While checking is enabled, if you try to store an annotation that is not well-formed XML, HCP rejects it.
+
+The following list shows limits that apply to custom metadata. Maximum number of annotations per object
+
+10
+
+Maximum annotation size
+
+1 GB
+
+Largest annotation that HCP indexes
+
+1 MB
+
+Largest nondefault annotation that HCP checks for well-formed XML
+
+1 MB
+
+Largest default annotation that HCP checks for well-formed XML
+
+1 GB
+
+Maximum level of nested XML elements
+
+100 Maximum number of XML elements in an annotation
+
+10,000
+
+As specified above, the largest annotation that HCP indexes is 1 MB. This means that the cumulative size of all indexed annotations for the object cannot exceed 1 MB total. For example, if you have four separate 215 KB annotations with a cumulative size of 860 KB, HCP indexes all annotations. If you add a fifth 215 KB annotation, the cumulative size exceeds the 1 MB limit and HCP does not index any of the annotations for the object.
+
+To add, replace, or delete the default annotation, you can use the HTTP or WebDAV protocol. To add, replace, or delete any other annotation, you need to use HTTP.
+
+With HTTP, you can use a single request to store or retrieve an annotation together with the object data. With WebDAV, you store and retrieve annotations separately from object data. With WebDAV, you store the default annotation in the custom-metadata.xml metafile. You can also use the custom-metadata.xml metafile to store dead properties.
+
+With HTTP, you use a GET request to retrieve an annotation for an object. With WebDAV, CIFS, and NFS, you retrieve the default annotation for an object from the custom- metadata.xml metafile.
+
+The namespace configuration determines what you can do with custom metadata for objects that are under retention. The namespace can be set to:
+
+Allow all annotation operations for objects under retention Allow only the addition of new annotations for objects under retention and disallow replacement or deletion of existing annotations Disallow all annotation operations for objects under retention
+
+Whether annotations are indexed and how they are indexed depend on system-level and namespace-level settings. Access control lists
+
+An access control list (ACL) grants permissions to perform operations on an individual object to specified users or groups of users. An ACL can be specified as either XML or JSON. You add, replace, or delete an ACL in its entirety. You cannot modify it in place.
+
+An ACL contains up to one thousand access control entries (ACEs). Each ACE specifies one user or one group of users and the permissions granted to that user or group. In the ACL body, an ACE is represented by the grant entry.
+
+Note: This book uses the term entry to refer to an XML element and the equivalent JSON object and the term property for an XML attribute or the equivalent JSON name/value pair.
+
+When you specify an ACL for an object, you can grant only the permissions you already have. That is, you cannot use an ACL to grant permissions that exceed your own.
+
+To add, replace, or delete an ACL, you use HTTP. With HTTP, you use a GET request to retrieve an ACL for an object. With WebDAV, CIFS, and NFS, you view the ACL for an object in the acl.xml metafile.
+
+HCP provides two predefined ACLs that you can specify when storing an object:
+
+all_read
+
+Allows any user, authenticated or anonymous, to view and retrieve the object auth_read
+
+Allows any authenticated user to view and retrieve the object

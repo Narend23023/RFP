@@ -1,0 +1,51 @@
+Different changes are made to the content of a given annotation for a given object on each of the two systems in a replication topology. A change is made to the content of a given annotation for a given object on one system in a replication topology, and the same annotation is deleted on another system in the topology.
+
+2. The change made on one of the systems is replicated to the other system. If a collision occurs when a custom metadata change for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+If the last change on system A is more recent than the last change on system B, HCP applies the change from system A to the custom metadata on system B If the last change on system B is more recent than the last change on system A, HCP does not change the custom metadata on system B
+
+Here are two examples of how HCP handles collisions when custom metadata changes for a given object are replicated from one system (system A) in a replication topology to another system (system B) in the topology.
+
+Example 1
+
+The object starts out with annotations named a1 and a2 on both system A and system B.
+
+The list below shows a sequence of events in which the annotations for the object are changed and the changes are then replicated.
+
+1. On system B, a client changes the content of a1. 2. On system A, a client makes a different change to the content of a1. 3. On system A, a client adds annotation a3 to the object. 4. On system B, a client adds annotation a3 with different content from the a3 added on system A. 5. The changes on system A are replicated to system B. The resulting annotations for the object on system B are: a1 with the changed content from system A a2 (unchanged) a3 with the content added on system B
+
+6. The changes on system B are replicated to system A. The resulting annotations for the object on system A are:
+
+a1 with the changed content from system A a2 (unchanged) a3 with the content added on system B Example 2
+
+The object starts out with the annotations named a1, a2, and a3 on both system A and system B.
+
+The list below shows a sequence of events in which the annotations for the object are changed and the changes are then replicated.
+
+1. On system B, a client changes the content of a1. 2. On system A, a client deletes a1. 3. On system A, a client changes the content of a2. 4. On system B, a client changes the content of a2.
+
+5. On system A, a client deletes a3. 6. On system B, a client changes the content of a3. 7. The changes on system A are replicated to system B. The resulting annotations for the object on system B are: a2 with the changed content from system B a3 with the changed content from system B
+
+8. The changes on system B are replicated to system A, the resulting annotations for the object on system A are:
+
+a2 with the changed content from system B a3 with the changed content from system B Access control list collisions
+
+An ACL collision occurs when these events occur in the order shown:
+
+1. Different changes are made to the ACL for a given object on each of two systems in a replication topology.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+710/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+2. The changed ACL on one of the systems is replicated to the other system.
+
+An ACL is treated as a single unit. If a collision occurs when a changed ACL for a given object is replicated from one system (system A) in a replication topology to another system (system B) in the topology:
+
+If the last change to the ACL on system A is more recent than the last change to the ACL on system B, HCP changes the ACL on system B to match the changed ACL on system A If the last change to the ACL on system B is more recent than the last change to the ACL on system A, HCP does not change the ACL on system B For example, suppose the ACL for a given object starts out with these grants on both system A and system B:
+
+All users: read User lgreen: write User mwhite: write, delete

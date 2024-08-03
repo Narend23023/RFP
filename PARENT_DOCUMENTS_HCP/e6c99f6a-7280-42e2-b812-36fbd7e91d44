@@ -1,0 +1,45 @@
+1. In the top-level menu of the Tenant Management Console, click Namespaces.
+
+2. In the list of namespaces, click the delete control ( 3. In response to the confirming message, click Delete.
+
+) for the namespace you want to delete.
+
+Important: Removing a tenant from an Active-Passive replication link on the Active site followed by its deletion from the Passive site can result in lost data if, in the future, an
+
+Active/Active replication link is created between the same clusters and the same tenant is added to that link.
+
+Managing search and indexing
+
+You manage search and indexing for namespaces at both the tenant and namespace level. At the tenant level, you create content classes and content properties. At the namespace level, you enable search and indexing options. The discussion of content properties in this chapter assumes a basic understanding of XML. Search and indexing
+
+For a namespace to be searchable through either the metadata query API or the Search Console, it must be search enabled, and its effective permission mask must include the read and search permissions. Additionally, to get results from object-based queries through the metadata query API and from searches through the Search Console with any search facility, the namespace must be indexed by the applicable search facility.
+
+You can enable search for your namespaces only if allowed to do so by the tenant configuration. HCP system-level administrators can change this configuration from not allowing you to enable search to allowing it. However, they cannot do the reverse.
+
+Metadata query engine and HCP search facility indexing
+
+The metadata query engine and the HCP search facility index each namespace that has both search and indexing enabled. When you first enable search for a namespace, indexing is enabled by default. The metadata query engine index is based on system metadata, ACLs, and, optionally, custom metadata that is well-formed XML. The HCP search facility index is based on object data, system metadata, and, optionally, custom metadata.
+
+You can enable or disable indexing for a namespace at any time while search is enabled for the namespace. Disabling indexing for a namespace prevents the metadata query engine and HCP search facility from updating their indexes with new objects and metadata changes in that namespace. When indexing is reenabled, these facilities update their indexes with the backlogged objects and changes and continue indexing from there.
+
+You can enable or disable indexing of custom metadata for a namespace at any time while indexing is enabled for the namespace. Because indexing custom metadata can significantly increase the size of the indexes, you should enable it only if users need to perform searches based on custom metadata. Indexing can be disabled for the metadata query engine or HCP search facility at the HCP system level. If this indexing is disabled at the system level, enabling it at the namespace level has no effect.
+
+Similarly, custom metadata indexing can be disabled for the metadata query engine or HCP search facility at the HCP system level. If this indexing is disabled at the system level, enabling it at the namespace level has no effect.
+
+You can reduce the amount of custom metadata the metadata query engine indexes by creating content properties. Content properties not only decrease the size of the index but also enable users to query for objects more easily and intuitively.
+
+You can also reduce the size of the metadata query engine index by excluding selected custom metadata annotations from being indexed.
+
+Content properties and annotation exclusions affect only metadata query engine indexing.
+
+When indexing custom metadata, the HCP search facility indexes only annotations named default. Disabling search
+
+You can disable and reenable search for a namespace at any time. When you disable search, indexing is automatically disabled for all three search facilities.
+
+Disabling search also removes objects in the namespace from the metadata query engine and HCP search facility indexes. If you subsequently reenable search for the namespace, the namespace must be completely reindexed. The amount of time required to rebuild the indexes depends on the amount of data in the namespace. With a very large amount of
+
+data, this process can take several days. Content classes and content properties
+
+A content class is a named construct that is used to characterize objects in one or more namespaces. Content classes use object metadata to impose structure on unstructured namespace content. They do this through content properties.
+
+A content property is a named construct used to extract an element or attribute value from custom metadata that's well-formed XML. Content properties use XPath expressions to identify the metadata of interest. When content properties are indexed, users can use them to find unstructured content that matches structured patterns.

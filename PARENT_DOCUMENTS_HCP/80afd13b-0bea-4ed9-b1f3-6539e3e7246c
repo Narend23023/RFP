@@ -1,0 +1,73 @@
+If the Settings panel opens, go to step 4.
+
+If the IP Configuration panel opens, click the Settings tab at the top of the panel to display the Settings panel.
+
+3. On the Settings panel, click Downstream DNS Configuration to view the downstream DNS configuration settings.
+
+4. In the Downstream DNS Configuration section:
+
+a. To enable hidden primary, select Enable hidden primary.
+
+b. To enable notify, select Enable notify. c. If you are enabling hidden primary or notify, in the Downstream DNS Servers field, type a comma-separated list of between one and ten downstream DNS server IP addresses.
+
+Spaces are not allowed.
+
+Note:
+
+If a secondary IPv6 subnet is defined for the network, then each IPv6 address that you specify in the downstream DNS server list must either be on the secondary IPv6 subnet or be routable from the primary IPv6 gateway that’s defined for the network.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+83/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+d. To change the refresh rate, in the Refresh Rate field, type the new refresh rate.
+
+Changing the advanced downstream DNS configuration settings for a network
+
+If advanced downstream DNS configuration mode is enabled and you have the service role, you can use the Networks > Network View page to directly access the UNIX IP address
+
+management for any forward facing network you created, including [hcp_system]. Changes made in advanced downstream DNS configuration mode need to be manually applied to all nodes added to the system. HCP generates a system log message that alerts
+
+you if you need to add new nodes to the zone file. If your changes are compatible with new system versions, all modifications carry over through future system upgrades.
+
+1. On the Networks > Network View page, click the network for which you want to change the advanced downstream DNS configuration settings. 2. In the Zone Entry field, make all of your necessary changes.
+
+3. In the Forward Zone field, make all of the your necessary changes. 4. Perform one of the following actions:
+
+If you want to discard your changes, click Reset Zone Entry and File. This resets the network to its default downstream DNS configuration settings.
+
+If you want to keep your changes, click Update Settings. After you click Update, HCP performs a syntax validation check and administers your changes to the HCP system. Before they can take effect however, a system reboot is required.
+
+During the reboot, if the HCP system finds any issues with your DNS configuration, it reverts all forward facing networks to their default downstream DNS configuration value.
+
+If this occurs, advanced downstream DNS configuration mode remains enabled but your changes are not saved.
+
+After your HCP system reboots, it’s recommended that you test your DNS access to HCP. If you do not want to keep your changes, click Reset Zone Entry and File in the Advanced DNS Downstream Configuration panel.
+
+Creating a network alias
+
+1. Click Create Network Alias above the network list to open the Create Network Alias wizard.
+
+2. On the Settings page in the wizard:
+
+a. In the Network Name field, type a unique name for the network alias. Alias names follow the same rules as network names.
+
+b. In the Aliased Network field, select the network for which you’re creating the alias.
+
+3. Click Next. 4. On the Review page in the Create Network Alias wizard, review the network alias configuration settings that you entered.
+
+5. Take one of these actions:
+
+If the configuration settings that you entered are incorrect:
+
+a. Click Previous to return to the Settings page of the wizard and modify your entries as necessary. b. When you have corrected all the configuration errors, click Next to return to the Review page.
+
+c. Click Finish to exit the wizard and create the specified alias for the specified network. If the configuration settings that you entered are correct, click Finish to exit the wizard and create the specified alias for the specified network.
+
+Viewing and modifying properties of a network or network alias
+
+You can use the Networks > Network View page to view all properties of a network or network alias. You can also use this panel to modify any configurable properties of a network or network alias.

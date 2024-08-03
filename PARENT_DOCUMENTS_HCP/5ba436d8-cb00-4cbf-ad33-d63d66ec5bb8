@@ -1,0 +1,91 @@
+true
+
+The user account is authenticated locally. false
+
+The user account is authenticated by a RADIUS server.
+
+roles
+
+List
+
+Associates zero, one, or more roles with the user account. Valid values for roles are:
+
+This property is valid on a POST request and returned by a GET request only when the user making the request has the security role.
+
+ADMINISTRATOR COMPLIANCE MONITOR SECURITY
+
+For an existing user account, the set of roles specified in the request body replaces the set of roles currently associated with the user account. To remove all roles, specify an empty set.
+
+These values are not case sensitive.
+
+The default is no roles.
+
+In XML, the element that identifies each role is role. In JSON, the name in the name/value pair that lists the roles is role. userGUID
+
+String
+
+Specifies the system-supplied globally unique user ID for the user account. HCP generates this ID automatically when you create an account.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request and only when the user making the request has the security role. userID
+
+Integer
+
+Specifies the system-supplied local user ID for the user account. HCP generates this ID automatically when you create an account.
+
+This property is not valid on a PUT or POST request. It is returned only by a verbose GET request and only when the user making the request has the security role.
+
+Local user IDs are unique within an HCP system. These IDs are maintained for backward compatibility but are no longer used for user identification. username
+
+String
+
+Specifies the username for the user account. Usernames must be from one through 64 characters long and can contain any valid UTF-8 characters, including white space, but cannot start with an opening square bracket ([).
+
+This property is required on a PUT request. It is valid on a POST request only when the user making the request has the security role.
+
+Usernames are not case sensitive.
+
+The username for a user account must be unique for the tenant. Different tenants can have user accounts with the same username.
+
+You can reuse usernames that are not currently in use. So, for example, if you delete the account for a user and then create a new account for that user, you can give the user the same username as before.
+
+Tip: Consider using email addresses as user names. This
+
+enables users to more easily remember their HCP usernames. It also gives you easy access to email addresses should you need to contact any users.
+
+Query parameter for setting user account passwords You use the password query parameter to specify the password for a new user account and to change the password for an existing user account. The value of this parameter is the password you want.
+
+Example
+
+Here’s an XML example of the userAccount data type:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+527/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+<userAccount> <allowNamespaceManagement>false</allowNamespaceManagement> <description>Compliance officer.</description> <enabled>true</enabled> <forcePasswordChange>true</forcePasswordChange> <fullName>Morgan White</fullName> <localAuthentication>true</localAuthentication> <roles> <role>MONITOR</role> <role>COMPLIANCE</role>
+
+</roles> <userGUID>a8ae69dc-e2e3-44a9-aa64-9c142a38ed5d</userGUID> <userID>517</userID> <username>mwhite</username> </userAccount> versioningSettings
+
+The versioningSettings data type describes the versioningSettings resource for namespaces and the versioningSettings property of the namespace and namespaceDefaults data types.
+
+Properties
+
+The table below describes the properties included in the versioningSettings data type.
+
+Property Data type
+
+Description
+
+Notes
+
+daysOnPrimary
+
+Integer
+
+Specifies the number of days old versions of objects must remain in the namespace before they are pruned. Valid values are integers in the range zero through 36,500 (that is, 100 years). A value of zero means prune immediately.
+
+The default is zero.

@@ -1,0 +1,43 @@
+network has these properties:
+
+An IPv6 gateway. This is the IPv6 address from which system-initiated communications are sent over the network.
+
+Note: Each IPv6 gateway defined for the network can be a global address, a unique local address (ULA), or a link local address (LLA). However, if two IPv6 gateways are defined for the network, you cannot use ULAs for both gateways, and the two gateways must be on separate, non-overlapping IPv6 subnets. An IPv6 address prefix length. An IPv6 subnet. HCP derives the IPv6 subnet for the network from the IPv6 gateway and IPv6 address prefix length that you specify. Optionally, assignments of IPv6 addresses to storage nodes. The IPv6 addresses for the network must all be on the IPv6 subnet defined for that network.
+
+Each network, including the [hcp_system] and [hcp_backend], must use separate, non-overlapping subnets for IPv4 addresses, primary IPv6 addresses, and secondary IPv6 addresses.
+
+A zone definition. This is the DNS zone definition that is currently used for the network domain. HCP automatically creates and maintains a DNS zone definition for each network defined on the system.
+
+Tagged and untagged networks
+
+A tagged network is one that has a specified VLAN ID. The VLAN ID is an identifier that’s attached to each packet routed to HCP over that network. This function is performed by the switches in the physical network. The routing tables in the switches that route requests to the HCP front end must include each VLAN ID you assign to a network. The routing tables associate the VLAN IDs with the network subnets.
+
+A network carries only the packets that have its VLAN ID and ignores all other packets, thereby segregating the traffic on each tagged network from the traffic on other networks.
+
+An untagged network is one for which you don’t specify a VLAN ID. An untagged network ignores all packets that have VLAN IDs.
+
+HCP can have at most one untagged front-end network, including the [hcp_system] network. All other networks must have a VLAN ID.
+
+An untagged network uses the bond0 front-end network interface. When you assign a VLAN ID to a network, HCP creates a logical network interface for the network. This interface is named bond0.xxxx, where xxxx is the VLAN ID, with leading zeroes added if needed to create a four-digit number.
+
+The following figure shows a configuration in which: HCP uses the [hcp_system] network with VLAN ID 999 for system-level management purposes The tenant named Tenant-1 uses a network named t1 with VLAN ID 7 for tenant management purposes and a network named t1-data with VLAN ID 8 for data access
+
+purposes HCP uses a network named replication with VLAN ID 200 for replication traffic Network domains
+
+Each network you create must be associated with a domain. The domain can be unique to the network or can be shared among networks. For example, you may want to configure different tenants to use networks associated with different domains, but you may want to configure a single tenant to use management and data networks associated with the same domain.
+
+Clients use network domain names in the URLs that provide access to the HCP system. By associating different domains with different networks, you can brand the system for different customers. For example, the networks you associate with the tenants you create for Customer-1 could all have the domain named object-store.cust1.com.
+
+Assigning different domains to different networks enhances network security because each domain uses a separate certificate to authenticate access requests. If two different networks have two different domains assigned to them, a client cannot use the same credentials to access HCP over both networks. In addition, when a client request uses a
+
+domain name for access to HCP, the client making that request has visibility only into the networks that use the specified domain. Thus, a client can retrieve IP addresses only for the networks that it’s authorized to use to access the HCP system. Downstream DNS configuration settings for networks
+
+At any time after you create a network, you can change its downstream DNS configuration settings to:
+
+Enable hidden primary for one or more downstream DNS servers
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+76/907
+
+6/25/24, 11:33 AM

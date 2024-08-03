@@ -1,0 +1,41 @@
+682/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+For example:
+
+my @endpoints = ('europe.hcp.example.com',);
+
+To specify additional tenants, follow this example: my @endpoints = ('europe.hcp.example.com', 'america.hcp.example.com', 'africa.hcp.example.com',);
+
+Sample Java application
+
+This section of the Help contains a sample Java application that uses the Hitachi API for Amazon S3 and the Amazon S3 SDK to perform a series of operations in HCP.
+
+Assumptions
+
+The application makes these assumptions:
+
+The HCPsystem has a tenant named europe. The tenant has a user account with username lgreen and password p4ssw0rd. The sample application uses the credentials for this account to access HCP. By default, versioning is disabled for new buckets. The local file system has folders named input and output that are located in the current working folder for the application. The input folder contains two files, Q4_2019.ppt and Q3_2019.ppt.
+
+What the application does
+
+The sample application shown in this section uses the Hitachi API for Amazon S3 to: 1. Create a bucket named finance in the context of the tenant named europe (the service point) 2. List the buckets for the europe tenant that are owned by the user lgreen 3. Add an ACL to the finance bucket 4. Store an object named quarterly_rpts/Q4_2019.ppt in the finance bucket, associating custom metadata with the object in the process 5. Store an object named quarterly_rpts/Q3_2019.ppt in the finance bucket 6. Retrieve the object named quarterly_rpts/Q4_2019.ppt and write its content to a new file on the local file system 7. Add an ACL to the object named quarterly_rpts/Q4_2019.ppt 8. Check whether the content of the object named quarterly_rpts/Q3_2019.ppt has changed and, if it has, retrieve the object and write its content to a new file on the local file system
+
+9. Delete the quarterly_rpts/Q4_2019.ppt and quarterly_rpts/Q3_2019.ppt objects from the finance bucket 10. Delete the quarterly_rpts folder from the finance bucket (HCP created this folder automatically when the first object was stored) 11. Delete the finance bucket
+
+Required libraries
+
+To run the sample application presented in this appendix, you need to have installed these Java libraries:
+
+AWS SDK for Java, downloadable from: http://aws.amazon.com/sdkforjava Note: The sample Java application was verified using version 1.11.44 of the AWS SDK for Java. Apache Commons Codec 1.10, downloadable from: http://commons.apache.org/proper/commons-codec/download_codec.cgi Apache Commons Logging 1.2, downloadable from: http://commons.apache.org/proper/commons-logging/download_logging.cgi Apache HttpClient 4.5.2, downloadable from: http://hc.apache.org/downloads.cgi Apache HttpCore 4.4.5, downloadable from: http://hc.apache.org/downloads.cgi Java application
+
+Here’s the sample Java application.
+
+/** * This sample Java application shows how to use the Hitachi API for Amazon S3, * which is compatible with Amazon S3. The application uses the Amazon S3 SDK.
+
+/ package com.hds.hcp.examples; import java.io.File; import java.io.FileInputStream; import java.io.FileOutputStream; import java.io.IOException;
+
+import com.amazonaws.AmazonClientException; import com.amazonaws.AmazonServiceException; import com.amazonaws.ClientConfiguration; import com.amazonaws.Protocol; import com.amazonaws.auth.BasicAWSCredentials; import com.amazonaws.services.s3.AmazonS3; import com.amazonaws.services.s3.AmazonS3Client; import com.amazonaws.services.s3.model.AccessControlList; import com.amazonaws.services.s3.model.CanonicalGrantee; import com.amazonaws.services.s3.model.EmailAddressGrantee;

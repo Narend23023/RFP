@@ -1,0 +1,87 @@
+The acl query parameter is not case sensitive.
+
+Required headers Authorization
+
+Specifies user credentials or requests anonymous access.
+
+Content-Length
+
+Specifies the size, in bytes, of the request body. This header is required when you’re using an ACL request body to add an ACL to the bucket. If you’re using ACL headers to add the ACL, the Content-Length header is invalid. Date
+
+Specifies the date and time when the request is being made according to the requester. Normally, this is the current date and time. The date and time must always be specified using Greenwich Mean Time (GMT). To specify the date and time, use this format:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+573/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+DDD, dd MMM yyyy HH:mm:ss (+0000|GMT) In this format: DDD
+
+The three-letter abbreviation for the day of the week, with an uppercase first letter (for example, Mon).
+
+dd
+
+The two-digit day of the month.
+
+MMM
+
+The three-letter abbreviation for the month, with an uppercase first letter (for example, Feb).
+
+yyyy
+
+The four-digit year.
+
+HH
+
+The hour on a 24-hour clock. mm
+
+The number of minutes.
+
+ss
+
+The number of seconds.
+
+For example:
+
+Thu, 23 Mar 2017 14:27:05 +0000
+
+All S3 compatible requests must include either a Date header or an x-amz-date header. If a request includes both headers, HCP uses the date and time in the x-amz-date header.
+
+Host
+
+Specifies the hostname for the request. The host name identifies either a tenant or a bucket. For a tenant, use this format: tenant-name.hcp-domain-name
+
+For a bucket, use this format:
+
+bucket-name.tenant-name.hcp-domain-name
+
+x-amz-date
+
+Specifies the date and time at which the request is being made according to the requester. Normally, this is the current date and time. For the valid values for this header, see the description of the Date header above. Optional headers
+
+Content-Type
+
+Specifies the Internet media type of the request body. This header is valid only when the ACL is specified in the request body. The only valid values are application/xml and text/xml.
+
+x-amz-acl
+
+Adds a canned ACL to the bucket. This header is used only to add a canned ACL to a bucket. If you’re using individual x-amz-grant- headers to add the ACL, the x-amz-acl header is invalid. x-amz-grant-full-control
+
+Grants full control over the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-full-control header is invalid.
+
+x-amz-grant-read
+
+Grants the browse and read data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read header is invalid. x-amz-grant-read-acp
+
+Grants the read ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-read-acp header is invalid.
+
+x-amz-grant-write
+
+Grants the write and delete data access permissions for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write header is invalid. x-amz-grant-write-acp
+
+Grants the write ACL data access permission for the bucket to one or more specified grantees. If you’re using a canned ACL to add an ACL to a bucket, the x-amz-grant-write-acp header is invalid.
+
+Response headers

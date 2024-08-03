@@ -1,0 +1,57 @@
+downstream DNS servers. If a network domain is defined as a stub zone and:
+
+You enable hidden primary for the network, client requests routed to any of the specified DNS servers fail You enable notify for the network, the specified DNS servers do not receive the notify messages If a stub zone is already defined for a domain associated with a network, and you plan to enable hidden primary or notify for that network, change the DNS zone definition type for the domain to secondary before you modify the network.
+
+When hidden primary or notify is enabled for a network that’s configured to use a secondary IPv6 subnet, each IPv6 address that’s specified in the downstream DNS server list must either be on the secondary IPv6 subnet or be routable from the primary IPv6 gateway that’s defined for the network. Refresh rate
+
+The refresh rate for a network is the frequency with which the downstream DNS servers poll HCP to check whether the zone definition for the network domain has changed. If the definition has changed, the servers then ask HCP for the updated definition.
+
+The refresh rate always applies to all the downstream DNS servers that have a zone definition for the network domain and is used regardless of whether that zone definition has a type of secondary or stub.
+
+By default, the refresh rate is three hours. If you enable notify and specify all the applicable DNS servers, consider increasing the refresh rate to a much higher value.
+
+Notify does not work with stub zones. Therefore, if the domain is defined as a stub zone, consider decreasing the refresh rate. If DNS failover occurs, the shorter refresh rate may allow clients targeting a failed system over the network to be more quickly redirected to another system in the replication topology. You specify the refresh rate for a network as any combination of weeks (W), days (D), hours (H), minutes (M), and seconds (S), using this syntax:
+
+#W#D#H#M#S
+
+These considerations apply:
+
+In each case, # must be an integer greater than or equal to one. If an integer is specified without a time unit, the time unit is assumed to be seconds.
+
+Time units can be specified in any order. Any given time unit can be specified only once.
+
+Time units are not case-sensitive. The total time specified must be in the range one through 2,147,483,647 seconds. Advanced downstream DNS configuration
+
+A system administrator can activate advanced downstream DNS configuration mode through the HCP management API.
+
+Advanced downstream DNS configuration mode offers more control over the HCP system downstream DNS configuration for an individual network than using the Network View page of the System Management Console. This configuration enables you to work directly with the HCP DNS management files.
+
+Important: Unless you have an extensive background in networking, using advanced downstream DNS configuration mode is not recommended.
+
+Downstream DNS configuration supports 32 downstream DNS servers. Network aliases
+
+A network alias is a named pointer to another network. You can select a network alias for any purpose for which you can select a network. When a network alias is selected for a particular purpose, HCP uses the network the alias points to for that purpose.
+
+For example, suppose you have a network alias named t1-mng that points to a network named tenant-1. If you select t1-mng as the management network for a given tenant, HCP
+
+uses the tenant-1 network as the management network for that tenant.
+
+Network aliases are useful in the context of replication, particularly in situations where the network topologies differ between the two systems involved in a given replication link. The two systems, for example:
+
+May not have the same number of nodes
+
+May not both have a VLAN-capable networking environment
+
+Because network topologies can differ, HCP doesn’t replicate the definitions of networks and network aliases from one system to another. However, when replicating a tenant, HCP does replicate the names of the networks or aliases associated with that tenant. For the tenant and its namespaces to be accessible on the target system, networks or aliases with
+
+those names must be defined on that system.
+
+Here are two replication scenarios that illustrate the use of network aliases:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+77/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

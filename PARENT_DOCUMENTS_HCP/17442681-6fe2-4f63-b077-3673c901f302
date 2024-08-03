@@ -1,0 +1,85 @@
+You cannot use the S3 compatible API to change the ACL enforcement setting. However, tenant administrators can use other HCP interfaces to change this setting. ACL permissions
+
+Granting a permission in an ACL for a bucket gives the grantee certain data access permissions for that bucket. Granting a permission in an ACL for an individual object gives the user certain data access permissions just for that object.
+
+The list below lists the permissions you can grant in an ACL and shows the data access permissions that correspond to each ACL permission. Read
+
+Browse and read
+
+Read ACP
+
+Read ACL
+
+Write
+
+Write and delete
+
+Write ACP
+
+Write ACL
+
+Full control
+
+Browse, read, read ACL, write, write ACL, and delete
+
+By default, a bucket or object owner that corresponds to an HCP user account or an object owner that corresponds to an AD user account has full control over the applicable bucket or object. For a bucket owner that corresponds to an AD user account, the permissions depend on the tenant configuration.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+552/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When adding an ACL to a bucket or object, you can grant only the permissions you already have for that bucket or object. For example, suppose you have read, read ACP, and write ACP permissions for an object. In this case, you can grant read, read ACP, and write ACP permissions for the object to other users, but you cannot grant write permission or full control. Tenant administrators can change the permissions that users, including the bucket owner, have for a bucket. They cannot change the permissions users have for objects.
+
+ACL grantees
+
+An ACL can grant permissions to individual users or to groups of users. An individual user is represented by either an HCP user account or, for object ACLs only, an AD user account. A group can be either all authenticated users or all users (both authenticated and anonymous).
+
+To specify an HCP user account, you can use either the account username or the account user ID. To specify an AD user account, you can use either the account user name followed by an at sign (@) and the AD domain name (for example, sgold@ad-1.example.com) or the security ID (SID) for the account.
+
+To specify the group of all authenticated users, you can use either the name authenticated or this URI: http://acs.amazonaws.com/groups/global/AuthenticatedUsers
+
+To specify the group of all users, you use either the name all_users or this URI:
+
+http://acs.amazonaws.com/groups/global/AllUsers
+
+The names authenticated and all_users are case sensitive. In the URIs, AuthenticatedUsers and AllUsers are case sensitive.
+
+Canned ACLs
+
+When specifying an ACL for a bucket or object, you can use a canned ACL instead of specifying permission grants individually. A canned ACL is a predefined set of grants of permissions.
+
+HCP has these canned ACLs: private
+
+Grants full control to the bucket or object owner
+
+public-read
+
+Grants full control to the bucket or object owner and read permission to all users
+
+public-read-write
+
+Grants full control to the bucket or object owner and read and write permissions to all users
+
+authenticated-read
+
+Grants full control to the bucket or object owner and read permission to all authenticated users bucket-owner-read
+
+Grants full control over the object to the object owner and read permission to the bucket owner bucket-owner-full-control
+
+Grants full control over the object to the bucket owner and object owner
+
+Specifying ACLs
+
+To specify an ACL in an S3 compatible request to create a bucket or store or copy an object, you use request headers. To specify an ACL in a separate operation, you can either use request headers or specify the grants in the request body.
+
+You can also use an ACL request body to change the owner of a bucket or object. You cannot do that with request headers.
+
+Specifying an ACL with headers
+
+Using request headers, you can specify either a canned ACL or individual ACL grants of permissions. You cannot specify both a canned ACL and individual grants in the same request.
+
+Using a canned ACL

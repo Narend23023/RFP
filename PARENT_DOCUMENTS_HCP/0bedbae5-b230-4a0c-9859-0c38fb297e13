@@ -1,0 +1,149 @@
+HEAD and GET for objects, object versions, annotations, ACLs, and
+
+The version number of the HCP software.
+
+directories
+
+X-HCP-SymlinkTarget
+
+HEAD and GET
+
+The path to the target object or directory as specified when the symbolic link was created.
+
+This header is returned only if the URL specifies a symbolic link to an object or directory.
+
+X-HCP-Time
+
+All except POST
+
+The time at which HCP sent the response to the request, in seconds since January 1, 1970, at 00:00:00 UTC.
+
+X-HCP-Type
+
+HEAD and GET for objects, object versions, annotations, and
+
+The entity type. One of:
+
+directories
+
+annotation directory
+
+object
+
+X-HCP-UID HEAD and GET for objects and object versions
+
+The POSIX user ID for the object.
+
+For objects added through the NFS protocol, this value is determined by the NFS client.
+
+This value is an empty string if either of these are true:
+
+The object was added through a protocol other than NFS and neither the UID nor the GID for the object has been changed.
+
+The HCP owner of the object was changed. X-HCP-VersionId
+
+The version ID of the object.
+
+HEAD and GET for objects and
+
+object versions
+
+PUT for objects and object
+
+versions
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+824/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Standard HTTP response headers for the REST API
+
+In response to REST API requests, HCP returns some standard HTTP headers that address browser security concerns. Header
+
+Value
+
+Description
+
+Cache-Control
+
+Specifies directives that must be obeyed by all caching mechanisms along the
+
+no-cache
+
+request/response chain
+
+no-store must-revalidate
+
+Content-Security- Policy
+
+Restricts the content that the browser can load to the sources specified by the header
+
+default-src 'self' script-src 'self' value
+
+script-src 'unsafe-eval' script-src 'unsafe- inline'
+
+connect-src 'self' img-src 'self'
+
+style-src 'self' style-src 'unsafe-inline'
+
+object-src 'self' frame-ancestors 'self'
+
+Expires
+
+Thu, 01 Jan 1970 00:00:00 GMT
+
+Causes the response to become stale immediately after it is sent
+
+Pragma
+
+no-cache
+
+Prevents the response from being used for subsequent requests for the same resource without the browser first checking whether the resource has changed X-Content-Type- Options
+
+nosniff
+
+Prevents the browser from examining the returned content to determine the content MIME type
+
+X-DNS-Prefetch- Control
+
+off
+
+Prevents the browser from performing domain name resolution on URLs embedded in
+
+returned content before the URLs are requested
+
+X-Download- Options noopen
+
+Prevents the browser from opening resources that are downloaded through links in the
+
+returned content
+
+X-Frame-Options
+
+SAMEORIGIN
+
+Prevents the browser from rendering the returned content in a frame on a page
+
+containing content not returned by the HCP system
+
+X-XSS-Protection
+
+1; mode=block
+
+Stops the browser from loading the returned content if the browser detects reflected cross-site scripting (XSS) in the response
+
+HCP can also return several standard HTTP response headers that are not described in the help, including Connection, Content-Disposition, Content-Encoding, and Content -Language. For more information about HTTP response headers, see the HTTP/1.1 standards, RFCs 7230 through 7237. Java classes for examples
+
+This section of the Help contains the implementation of these Java classes that are used in examples in this book.
+
+GZIPCompressedInputStream class
+
+o.IOException; import java.io.InputStream;
+
+import java.util.zip.CRC32; import java.util.zip.Deflater; import java.util.zip.DeflaterInputStream;
+
+public class GZIPCompressedInputStream extends DeflaterInputStream {

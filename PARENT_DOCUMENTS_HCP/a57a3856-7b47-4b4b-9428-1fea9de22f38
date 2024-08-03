@@ -1,0 +1,35 @@
+In an active/passive one-to-many replication topology, one HCP system replicates to two or more other HCP systems using separate active/passive replication links. The replicating system is the primary system for each link. The other systems are replicas.
+
+Typically, in an active/passive one-to-many replication topology, the replication links include different HCP tenants and namespaces and default-namespace directories.
+
+If three systems need to have the same tenants, namespaces, and directories as each other, consider using a chained topology for them rather than a one-to-many topology. The one-to-many topology puts greater load on the single primary system than does a chained topology, which splits the load between the first and second systems in the chain.
+
+In some cases, however, replicating the same tenants and namespaces to two different replicas in a one-to-many topology may be appropriate. Note: You can also create a one-to-many replication topology that consists of a combination of active/passive and active/active links or even only active/active links.
+
+What this looks like
+
+The figure below shows an active/passive one-to-many replication topology in which one primary system (A) replicates to two replicas (B and C) over two separate replication links. In this figure:
+
+Two of three HCP tenants in system A are being replicated to system B. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication. The third HCP tenant in system A is being replicated to system C. This tenant has two namespaces, both of which are selected for replication.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+329/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Using active/passive one-to-many replication topology to upgrade HCP systems from HCP with internal storage to HCP with SAN-attached storage An active/passive one-to-many replication topology lets you replicate different tenants and default-namespace directories from a single primary system to multiple different replicas. You might do this, for example, if the replicas are at sites where users need read access to only a limited number of namespaces. Those sites can then have HCP systems that use smaller amounts of storage.
+
+You can also use an active/passive one-to-many replication topology to upgrade your HCP systems from HCP with internal storage to HCP with SAN-attached storage. This scenario assumes you currently have a HCP with internal storage primary system replicating to a HCP with internal storage replica on an active/passive link. A HCP with SAN-attached storage primary system must replicate to a HCP with SAN-attached storage replica. To make this happen: 1. Create a second active/passive link from the HCP with internal storage primary system to the HCP with SAN-attached storage system that will be the primary system after
+
+the upgrade. Use this link to replicate all the HCP tenants, HCP namespaces, and default-namespace directories in the HCP with internal storage system. 2. Create a replication link from the new HCP with SAN-attached storage primary system to the second HCP with SAN-attached storage system.
+
+Include the link created in Step 1 above in this link to create a replication chain.
+
+3. When replication is completely up to date, fail over the link from the HCP with internal storage system to the HCP with SAN-attached storage system.
+
+To enable replication to become completely up to date, you may need to stop clients from writing to the HCP with internal storage system before you fail over the link. 4. Delete the link from the HCP with internal storage system to the HCP with SAN-attached storage system. 5. Decommission the two HCP with internal storage systems. Active/active replication with disaster recovery support
+
+You can combine active/active replication with active/passive replication to create a topology in which a third system provides disaster recovery support for the two systems that participate in an active/active link. In this topology, a set of HCP tenants and namespaces and default-namespace directories is replicated on an active/active link between two

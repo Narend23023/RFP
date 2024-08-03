@@ -1,0 +1,41 @@
+volumes that are associated with storage component access points (buckets, containers, or NFS volumes). If you are retiring HCP S Series components and pools that are selected as the ingest tier of a service plan, their replacements are limited to other HCP S Series components and pools.
+
+Before retiring an HCP S Series or extended storage, you must remove the bucket(s) associated with the component, storage pool, or volume being retired from the storage pool. To do this, clear the checkbox associated with the bucket(s) in the storage pool. Clearing the checkbox renders the bucket read-only. While HCP can still read data from the bucket, it cannot write to it. HCP does not automatically remove the bucket from the storage pool marked for retirement.
+
+When you retire an HCP S Series or extended storage that’s associated with a specific storage pool, component, or volume, HCP migrates all the data off that storage and moves it to the replacement storage that you specify.
+
+You can use the Storage > Retirement page to retire an HCP S Series or extended storage pool, component, or volume.
+
+1. On the Storage > Retirement page, click Retire Storage.
+
+The Get Started wizard opens. You use this wizard to select the type of storage you want to retire. After you select a type of storage, the System Management Console
+
+dynamically builds either the Retire S Series Storage, or the Retire Extended Storage wizard, depending on the type of storage you selected. 2. In the Get Started wizard, click the arrow and select either S Series Storage or Extended Storage from the dropdown list.
+
+3. Click Go. 4. On the Select page of the Retire S Series Storage or Retire Extended Storage wizard, use the fields to specify the S Series or extended storage pool, component, or volume that you want to retire:
+
+In the What do you want to retire? field, select the applicable option to indicate whether you want to retire a storage pool, component, or volume.
+
+Depending on your selection, the wizard displays up to three different fields: Pool, Component, and Volume.
+
+Use the Pool, Component, or Volume field to select the specific storage pool, component, or volume you want to retire.
+
+If multiple fields appear, you can use the Pool field to filter the lists of components and volumes, and you can use the Component field to filter the list of volumes.
+
+5. Click Finish to exit the wizard and start the retirement process. The Migration service checks to see whether the selected pool, component, or volume is eligible for retirement.
+
+If the storage is not eligible for retirement, the Migration service reports the problem on the Retirement tab. If this happens, you need to fix the problem and then restart the storage retirement process.
+
+If the storage is eligible for retirement, the Migration service starts the retirement process:
+
+If the storage does not have any data on it, the Migration service simply deletes the selected pool, component, or volume.
+
+If a selected storage pool has data on it, the service migrates all object data off that pool and onto the replacement pool you selected. The service then deletes the storage pool you selected for retirement.
+
+If a selected storage component has data on it, the service migrates all of the data off that component. The service moves this data onto one or more of the other components that are contained in the same storage pool as the component you’re retiring. The service then deletes the storage you selected for retirement. If a selected storage volume has data on it, the service moves all of the data off that volume. The service moves that data onto one or more of the other volumes that are stored on the same storage component as the one you’re retiring. The service then deletes the volume you selected for retirement.
+
+The Migration service reports the progress of the HCP S Series or extended storage retirement on the Storage > Retirement page. You can refresh this page at any time to
+
+view the current status of the HCP S Series or extended storage pool, component, or volume retirement.
+
+If you’re retiring HCP S Series or extended storage that has data on it, you can use the Storage > Retirement page to manage the Migration service throughout the entire data migration process. At any time during the migration, you can click Retirement Settings to display the controls that you can use to change the performance level of the migration, pause and resume the migration as needed, or cancel the migration (and the retirement). You can also use the applicable field in the Retirement Settings section to modify the retirement description at any time (for example, to record when and how long the data migration was paused). About service plans

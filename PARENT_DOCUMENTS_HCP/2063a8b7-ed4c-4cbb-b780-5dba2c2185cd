@@ -1,0 +1,105 @@
+A pie chart for each service plan defined on the HCP system:
+
+In the tenant view, the number of tenants with one or more namespaces that use that service plan. Hover your cursor over a segment to see, for the applicable service plan:
+
+The percent of tenants defined on the HCP system that have namespaces using the service plan The service plan name
+
+The number of tenants with namespaces using the service plan
+
+In the namespace view, the number of namespaces that use that service plan. Hover your cursor over a bar to see, for the applicable service plan:
+
+The percent of namespaces defined on the HCP system that use the service plan The service plan name
+
+The number of namespaces using the service plan
+
+If no namespaces are defined on the HCP system, the Service Plan Usage section does not appear on the storage Overview page.
+
+Understanding the storage component list
+
+The Components page in the HCP System Management Console lists all storage components currently defined on the HCP system. You can display this page.
+
+1. In the top-level menu of the HCP System Management Console, click Storage.
+
+2. On the left side of the Storage page, click Components. For each listed component, the Components page shows:
+
+Name
+
+The component name.
+
+Type
+
+The component type, which can be:
+
+Amazon S3
+
+Google Cloud HCP HCP S Series Microsoft Azure
+
+NFS Primary running
+
+Primary spindown S3 Compatible
+
+Status
+
+The component status:
+
+Active
+
+The component is not paused, retiring, or retired. Paused
+
+A user paused the component. While a component is paused, HCP cannot write to or read from the storage represented by the component.
+
+Retired
+
+A user retired the component. All objects have been moved off the storage represented by the component.
+
+Retiring
+
+A user retired the component. HCP is in the process of moving objects off the storage represented by the component. Usage
+
+The number of bytes currently used to store objects, parts of multipart objects, chunks for erasure-coded objects, and chunks for erasure-coded parts of objects on
+
+storage represented by the component.
+
+For primary running and HCP S Series storage components, the number of bytes includes storage occupied by the parts of in-progress multipart uploads that have
+
+already been written to storage represented by the component. The number of bytes does not include storage occupied by replaced parts of multipart uploads, parts uploaded for aborted multipart uploads, or unused parts of completed multipart uploads.
+
+Note: For an NFS storage component, the number of bytes shown is the total number of bytes used on the NFS storage in the component, including bytes used for the OS, non-HCP files, and system overhead.
+
+Compliant
+
+Whether the component is marked compliant. A green checkmark indicates that the component is marked compliant.
+
+If a storage pool includes at least one component that's marked compliant, that pool is considered compliant. A service plan is considered compliant if each tier in the
+
+plan includes at least one compliant storage pool. Only compliant service plans can be associated with namespaces that are in compliance mode.
+
+In Use
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+67/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Whether any buckets, containers, or mount points associated with the component are assigned to a storage pool. A green checkmark indicates that the component includes items that are assigned to a pool.
+
+Alerts
+
+If an issue exists with the component, either a warning icon ( ) or an error icon (
+
+), depending on the severity of the issue.
+
+If the problem is with the storage network associated with the component, the page also displays an icon that indicates the type of problem.
+
+To view text describing the condition that's causing an alert, hover over the alert icon.
+
+Understanding component and pool details for primary storage
+
+The details pages for the primary running storage component or pool and the primary spindown storage component or pool show overall usage statistics for the applicable
+
+component or pool. You can display one of these pages.
+
+1. In the top-level menu of the HCP System Management Console, click Storage. 2. On the left side of the Storage page, click Components or Pools, as applicable.

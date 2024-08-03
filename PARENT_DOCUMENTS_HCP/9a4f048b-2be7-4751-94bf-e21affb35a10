@@ -1,0 +1,67 @@
+configurations; replication from the primary system to the replica restarts
+
+10
+
+If DNS failover is disabled, after you see this message in the system log, direct clients to write only to the primary system: Replication data recovery completed Replica failure workflow
+
+The table below outlines what happens when the replica for an active/passive link fails.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+374/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Step
+
+What you do
+
+What happens
+
+Replica fails
+
+1
+
+On the primary system, suspend activity on the link
+
+Replica comes back online
+
+2
+
+If the replica has been rebuilt:
+
+On the replica, upload the replication SSL server certificate from the primary system On the primary system, upload the replication SSL server certificate from the replica
+
+3
+
+On the primary system, update the link configuration as needed
+
+4
+
+If the link is broken, on the primary system, send a request to restore the link
+
+Replication link is recreated; applicable tenants and directories on the primary system remain read-write; applicable tenants and directories on the replica are read-only
+
+5 On the primary system or the replica, resume activity on the link
+
+Replication from the primary system to the replica restarts from the beginning
+
+Failing over
+
+1. In the top-level menu of the HCP System Management Console for the system you want to fail over to, select Services > Replication. 2. On the replication Links page, click the link you want to fail over.
+
+3. On the replication link details page, click Link. 4. In the replication Link panel, click the Failover tab. 5. In the link Failover panel, click Fail Over. A confirming message appears.
+
+6. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. Then click Fail Over Link. 7. For an active/passive link, if DNS failover is disabled, tell the applicable tenant administrators to direct all client access requests to the replica.
+
+Recovering from a failure During a catastrophic failure, an HCP system can lose all configuration information. In this case, if the system participates in a replication link, you need to restore the link configuration after the system is rebuilt. If the failure did not cause the system to lose the link configuration, you don’t need to restore the link.
+
+Once the link configuration exists on both systems involved in the link:
+
+For an active/active link, you need to perform the failback procedure. For an active/passive link:
+
+If the primary system failed, you need to recover namespace content and other applicable information from the replica. Note: After you fail over an active/passive link, the only way to return to normal replication is by going through the data recovery procedure. You need to perform this procedure even if you don’t need to restore the link and even if no changes have been made to the configuration or content of the replicated items. Even when nothing has change, the data recovery process can take more than five minutes. If the replica failed, replication automatically restarts, beginning again with the objects with the oldest metadata changes either across all namespaces or within each namespace, depending on the link configuration.
+
+Restoring a link

@@ -1,0 +1,117 @@
+version, or annotation
+
+cryptographic hash value of the stored object or annotation:
+
+PUT for an object or annotation
+
+X-HCP-Hash: hash-algorithmhash-value
+
+You can use the returned hash value to verify that the stored data is
+
+the same as the data you sent. To do this, compare this value with a hash value that you generate from the original data.
+
+The X-HCP-Hash header is not returned for multipart objects. X-HCP-Index
+
+HEAD and GET for objects and object versions
+
+A true or false value indicating whether the object is marked for indexing.
+
+X-HCP-IngestProtocol
+
+HEAD and GET for objects and object versions
+
+The namespace access protocol through which the object was added
+
+to the namespace. One of:
+
+CIFS_NFS HTTP SMTP
+
+WebDAV
+
+If HCP cannot determine the protocol through which the object was added, this value is UNKNOWN.
+
+X-HCP-IngestTime
+
+HEAD and GET for objects and
+
+The time when HCP stored the object, in seconds since January 1,
+
+object versions
+
+1970, at 00:00:00 UTC.
+
+X-HCP-LabelRetentionHold
+
+HEAD and GET for objects
+
+A Boolean value (true|false) indicating whether the object is on labeled hold. X-HCP-LabelRetentionHold-Labels
+
+HEAD and GET for objects
+
+If the object is on labeled hold (X-HCP-LabelRetentionHold:true) and the user has privileged data access and read permissions on the
+
+bucket, this header is returned with a list of all labeled holds.
+
+Example
+
+X-HCP-LabelRetentionHold-Labels:
+
+[{"id":"UniqueLabelHold-1","hold":true}, {"id":"UniqueLabelHold-2","hold":true}, {"id":"UniqueLabelHold-3","hold":true}]
+
+X-HCP-Owner
+
+HEAD and GET for objects and object versions
+
+The user that owns the object. This value can be one of:
+
+The username of a user account that’s defined in HCP.
+
+The username of an Active Directory user account that HCP
+
+recognizes. This can be either the user principal name or the Security Accounts Manager (SAM) account name for the AD
+
+user account. If the object has no owner, an empty string. nobody: The object was added by an authenticated user before the HCP system was upgraded from a release earlier
+
+than 5.0 to release 5.x. This object effectively has no owner. If HCP can no longer identify the object owner by username, a
+
+user account ID. For example, you would see a user account ID if the owner has been deleted. X-HCP-Replicated
+
+HEAD and GET for objects and
+
+object versions
+
+A true or false value indicating whether the object from the primary system has been successfully replicated to an outbound system. The value is true only if the current version of the object, its system metadata, annotations (if any), and ACL (if any) have been replicated to all configured replication links.
+
+HCP returns this header only if either of these is true: In an HCP system with multiple replication links (e.g., in a ring
+
+topology or GeoEC configuration), the header will return the value true for an object only when the object has been accurately copied to all the replication links associated with a
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+823/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Header
+
+Methods
+
+Description
+
+particular tenant. If even one of these replication links
+
+experiences a problem or goes offline, the header will not change to true If one of the HCP systems becomes unavailable or if a
+
+replication link experiences an outage or if there is an issue with any of the components, the header will not change to tru e, even when an alternative HCP system is available for replication. X-HCP-ReplicationCollision
+
+HEAD and GET for objects and
+
+object versions
+
+A true or false value indicating whether the object is flagged as a replication collision.
+
+X-HCP-Retention
+
+HEAD and GET for objects and object versions

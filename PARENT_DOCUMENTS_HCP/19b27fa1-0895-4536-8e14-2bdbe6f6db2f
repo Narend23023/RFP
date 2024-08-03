@@ -1,0 +1,121 @@
+owner
+
+User name of the owner of the object. If there is no owner listed, the value is nobody.
+
+entry
+
+domain
+
+Active Directory domain entry
+
+hasAcl
+
+Boolean. Whether or not ACL is present for the object.
+
+entry
+
+state
+
+Status is either created or deleted. Specifies whether the version contains data or is a marker indicating that the object was deleted.
+
+entry
+
+version
+
+Version ID of the object.
+
+entry
+
+ingestTime
+
+Seconds after 1 January 1970 that the object was either created or deleted. entry
+
+ingestTimeString
+
+Ingested date and time.
+
+entry
+
+changeTimeMilliseconds
+
+Seconds after 1 January 1970 that the object was either modified or deleted.
+
+entry
+
+changeTimeString Change date and time.
+
+If the directory that contains the object contained at some time a subdirectory with the same name as the object, the results of a version list request that includes delete records shows delete markers for both the object and the directory.
+
+For example, assume you do the following:
+
+1. Create a maintenance subdirectory of the departments directory. 2. Delete the maintenance directory.
+
+3. Save a maintenance object in the departments directory.
+
+In this case, a version listing for the maintenance entry that includes delete markers or delete records shows these items:
+
+An entry, with a version ID, for the deleted maintenance directory Entries for all versions of the maintenance object, including any delete marker entries for the object
+
+Version list entries for deleted directories look like this: <entry urlname="object-name" utf8Name="utf8-object-name"
+
+type="directory"
+
+state="deleted" version=version-id"
+
+ingestTime="ingested-seconds-after-1/1/1970" ingestTimeString="ingested-datetime"
+
+changeTimeMilliseconds="change-millseconds-after-1/1/1970.unique-integer changeTimeString="yyyy-MM-ddThh:mm:ssZ"
+
+/> Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully returned the version list.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find a directory, object, or version at the specified URL. The specified object or version does not exist, or the request specified the current version of an object that has been
+
+deleted. Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+Example: Listing the versions of an object
+
+Here’s a sample HTTP GET request that saves an XML listing of the versions of an object named Q1_2012.ppt located in the quarterly_rpts directory. The object has three versions:
+
+the original version that was ingested, a delete marker, and a version that was ingested after the original version was deleted. The request asks for all versions, including delete records. Request with curl command line
+
+curl -i -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/
+
+Q1_2012.ppt?version=list&deleted=true" > Q1_2012-versions.xml
+
+Request in Python using PycURL
+
+import pycurl
+
+filehandle = open("Q1_2012-versions.xml", 'wb') curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+730/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help

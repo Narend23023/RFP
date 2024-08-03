@@ -1,0 +1,103 @@
+Deleting the metadata query engine index
+
+You can delete the metadata query engine index at any time while indexing is disabled and completely stopped. To rebuild the index after deleting it, you need to reenable indexing.
+
+Note: To check the status of indexing, refresh the Search page. To view the Search page, you need the monitor or administrator role. To configure search, you need the administrator role. 1. On the left side of the Search Facility Settings section on the Search page, click MQE. 2. In the MQE panel, click Delete Index. A confirming message appears.
+
+3. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 4. Click Delete Index. Search facility status
+
+The Search page in the HCP System Management Console displays the current availability of each search facility and displays the current indexing status of the metadata query engine. To refresh this information without reloading the page, click Refresh Now below the Indexing Status column in the data table. Search facility availability
+
+The following table describes the possible values for search facility availability.
+
+Search facility
+
+Value
+
+Description
+
+Metadata query engine
+
+Available
+
+The metadata query engine is running on all HCP storage nodes.
+
+Partial
+
+The metadata query engine is running on at least one but not all HCP storage nodes. This is most likely because one or more storage nodes are unavailable.
+
+If this value persists while all storage nodes are available, contact your authorized HCP service provider for help. Unavailable
+
+The metadata query engine is not running on any storage nodes.
+
+If this value persists while at least one storage node is available, contact your authorized HCP service provider for help.
+
+Metadata query engine indexing status
+
+The following table describes the possible values for the indexing status of the metadata query engine. Value
+
+Description
+
+Enabled, starting
+
+Indexing is enabled and in the process of starting.
+
+Enabled, running
+
+Indexing is enabled and running.
+
+Enabled, optimizing
+
+Indexing is enabled but is temporarily not running because the metadata query engine is in the process of optimizing the index. When the optimization is complete, indexing automatically resumes.
+
+Enabled, balancing
+
+Indexing is enabled but is temporarily not running while HCP redistributes the index across the available storage. When the redistribution is complete, indexing automatically resumes.
+
+Enabled, upgrading
+
+Indexing is enabled but is temporarily not running while the HCP system is being upgraded. When the upgrade is complete, indexing automatically resumes.
+
+Enabled, paused
+
+Indexing is enabled but is currently paused. This status can appear, for example, when the metadata query engine experiences a temporary error. When the situation is resolved, indexing automatically resumes. Enabled, stopped
+
+Indexing is enabled but not running. This status can appear, for example, when the index has reached its maximum allowed size. When the situation is resolved, indexing automatically resumes.
+
+Enabled, out of space
+
+Indexing is enabled but not running because insufficient space is available on the index-enabled logical volumes. When more space becomes available, indexing automatically resumes.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+102/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Value
+
+Description
+
+Enabled, out of
+
+Indexing is enabled but not running because insufficient memory is available for the metadata query engine to continue the indexing process. When more memory
+
+memory is added to the system (typically, by adding storage nodes), indexing automatically resumes.
+
+Enabled, missing index segments
+
+Indexing is enabled but not running because at least one part of the index is unavailable. This status can appear, for example, while an index-enabled logical volume is unavailable. When the situation is resolved, indexing automatically resumes.
+
+Disabled, stopping
+
+Indexing is disabled and in the process of stopping.
+
+Disabled, stopped
+
+Indexing is disabled and has completely stopped.
+
+If indexing has stopped unexpectedly and does not automatically restart, contact your authorized HCP service provider for help.
+
+Enabling or disabling the Search Console

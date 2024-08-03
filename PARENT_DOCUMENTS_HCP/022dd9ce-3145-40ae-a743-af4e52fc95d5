@@ -1,0 +1,123 @@
+Session cookie encoding
+
+In the response to a client request, HCP includes a cookie that contains encoded session information.
+
+HCP supports two formats for encoding the session cookie:
+
+RFC2109
+
+HCP used only this format in releases 5.0 and earlier.
+
+RFC6265
+
+HCP has used this format by default in all releases since 5.0. You can use the X-HCP-CookieCompatibility request header to specify the format HCP should use to encode the session cookie. Valid values for this header are RFC2109 and RFC6265.
+
+The X-HCP-CookieCompatibility header is:
+
+Optional and typically not used for RFC6265 Required for RFC2109
+
+HTTP status codes for the HCP management API
+
+This table below explains the possible status codes for HCP management API requests. Code
+
+Meaning
+
+Methods
+
+Description
+
+200
+
+OK
+
+All
+
+HCP successfully created, retrieved, checked the existence of, modified, or deleted a resource.
+
+302
+
+Found
+
+HEAD
+
+Either the specified resource does not exist, or the specified resource exists, but the user account identified by the Authorization header or hcp-api-auth cookie doesn’t have permission to access the resource.
+
+400 Bad Request
+
+All
+
+The request was not valid. These are some, but not all, of the possible reasons:
+
+The URL in the request is not well-formed. The request is missing a required query parameter. The request contains a required or optional non-Boolean query parameter with an invalid value. For a PUT or POST request, the request body: Is missing a required property Includes a property that is invalid for the resource Has a property with an invalid value Contains XML or JSON that is not well-formed
+
+The Content-Type or Accept header in the request specifies a nonexistent Internet media type.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+401 Unauthorized
+
+All
+
+HCP was unable to handle the request. If this happens repeatedly, contact your authorized HCP service provider for help.
+
+403
+
+Forbidden All
+
+The requested operation is not allowed. These are some, but not all, of the possible reasons:
+
+The URL in the request is missing the port number (9090). The request does not include an Authorization header or hcp-ns-auth cookie. The Authorization header or hcp-ns-auth cookie specifies invalid credentials. The user account identified by the Authorization header or hcp-api-auth cookie is either a system-level account where a tenant-level account is required or a tenant-level account where a system-level account is required. The user account identified by the Authorization header or hcp-api-auth cookie doesn’t have permission to perform the requested operation. For a PUT or POST request, the request body includes a property that is valid for the resource but that cannot be modified by the requested operation. For a DELETE request: For a namespace, HCP could not delete the namespace because it contains one or more objects. For a user account, HCP could not delete the user account because it is the last locally authenticated, enabled user account with the security role,
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+530/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Code
+
+Meaning
+
+Methods
+
+Description
+
+and no group accounts have the security role.
+
+For a tenant-level request, the HCP management API is not enabled for the tenant. Use the Tenant Management Console for the applicable tenant to enable the API.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+404 Not Found
+
+All
+
+The resource identified by the URL does not exist.
+
+405
+
+Method Not Allowed
+
+The requested operation is not valid for the resource identified by the URL.
+
+PUT
+
+POST
+
+DELETE
+
+409
+
+Conflict
+
+PUT
+
+For a PUT request, HCP could not create the resource because it already exists.
+
+If more information about the error is available, the response headers include the HCP- specific X-HCP-ErrorMessage header.
+
+414 Request URI Too Large
+
+All

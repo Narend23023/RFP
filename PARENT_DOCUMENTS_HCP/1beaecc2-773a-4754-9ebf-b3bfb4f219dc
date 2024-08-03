@@ -1,0 +1,25 @@
+For example, each object in an erasure coding topology with three systems has two data chunks and one parity chunk, so the size of each chunk of a one-megabyte object is .5 MB. As a result, the total storage used for the object is, at most, 3 × 0.5 MB, which is 1.5 MB.
+
+The greater the number of systems in an erasure coding topology, the greater the storage efficiency. The maximum number of systems that can be in an erasure coding topology is six. With six systems, the total storage used for a one-megabyte object is, at most, 1.2 megabytes. Data availability
+
+Whole-object protection can provide better protection from system unavailability than erasure-coded protection provides. With whole-object protection, clients can access objects in a replicated namespace if at least one of the systems where the object data is stored is available. (HCP does not store data for objects on metadata-only storage tiers.)
+
+With erasure-coded protection, all but one of the systems in the erasure coding topology must be available for clients to access objects in a namespace that's replicated on those systems. Disaster recovery
+
+Both whole-object protection and erasure-coded protection provide support for disaster recovery in case of catastrophic system failure. Disaster recovery entails reprotecting objects in replicated namespaces to their prefailure protection level by recovering them to a replacement system.
+
+With whole-object protection, if a single system fails, the object data can be recovered to the replacement system from any remaining system where the replicated objects are not metadata-only. If two or more systems fail concurrently, whole-object protection can still provide support for disaster recovery. However, as the level of protection increases, the number of systems that must store the complete object data also increases, thereby decreasing storage efficiency. With erasure-coded protection, if a single system fails, object data can be reconstructed on the replacement system from the chunks on all the remaining systems in the erasure coding topology. If two or more systems fail concurrently, object data cannot be reconstructed and may be permanently lost. Read performance
+
+With whole-object protection, a client read request for a replicated object results in a single read operation when the request is issued against a system that has the object data. If the object is metadata-only on the target system, that system must retrieve the object data from another system in the replication topology, which may increase the response time.
+
+With erasure-coded protection, a client read request for a single erasure-coded object causes the system that's servicing the request to reconstruct the object from multiple chunks. Only one of those chunks is stored on that system. Therefore, a client read request for an erasure-coded object results in multiple read operations. These operations can be concurrent or sequential, depending on the replication topology on which the erasure coding topology is based. If sequential reads are required, the response time may be longer than if all the reads are concurrent. Rehydration with whole-object protection and restore periods with erasure-coded protection can decrease read response times.
+
+These considerations apply to choosing a protection type for a replicated namespace when read performance is a factor: If objects are likely to be read frequently throughout their lifespans and read performance is more important than storage efficiency, consider using whole-object protection for the namespace. If objects are unlikely to be read and storage efficiency is important, consider using erasure-coded protection for the namespace. If objects are likely to be read only for a limited amount of time in the short term and read performance is important, consider using erasure-coded protection with an erasure coding delay that's equal to or greater than the amount of time objects will be read for. If objects are likely to be read frequently but only for limited periods throughout their lifespans and read performance is important, consider using erasure-coded protection with a restore period. With a restore period, after an object is read, a full copy of the object data is placed on the ingest tier for the containing namespace and is kept there for a configured amount of time. https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+318/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+The ingest tier for a namespace is the storage tier where objects in the namespace are stored when the object data is first written to HCP. The ingest tier is determined by the service plan currently associated with the namespace. Network bandwidth usage

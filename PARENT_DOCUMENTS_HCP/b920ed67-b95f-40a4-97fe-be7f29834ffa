@@ -1,0 +1,107 @@
+650/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+The date and time are expressed in this format:
+
+yyyy-MM-ddTHH:mm:ss.SSSZ For example:
+
+2020-02-18T19:46:03.856Z
+
+ListPartsResult
+
+Root element.
+
+MaxParts
+
+Child of the ListPartsResult element. The MaxParts element specifies the value of the max-parts query parameter included in the request. If the request did not include the max-parts query parameter, the value of the MaxParts element is 1000. NextPartNumberMarker
+
+Child of the ListPartsResult element. The NextPartNumberMarker element specifies the number of the last part included in the returned part listing. If the returned listing doesn't include any parts, the value of the NextPartNumberMarker element is 0 (zero). If the returned listing is truncated, you can use the value of the NextPartNumberMarker element as the value of the part-number-marker query parameter in a new request to retrieve the next set of parts that satisfy the request criteria. Owner
+
+Child of the ListPartsResult element and container for the DisplayName and ID elements. The Owner element identifies the user who will own the object created by the multipart upload.
+
+Part
+
+Child of the ListPartsResult element and container for the elements that describe a part. The response body contains one Part element for each part that has been uploaded for the multipart upload. PartNumber
+
+Child of the Part element. The PartNumber element specifies the part number of the applicable part.
+
+PartNumberMarker
+
+Child of the ListPartsResult element. The PartNumberMarker element specifies the value of the part-number-marker query parameter included in the request. If the request did not include the part-number- marker query parameter, the value of the PartNumberMarker element is 0 (zero). Size
+
+Child of the ListPartsResult element. The value of the StorageClass element is always STANDARD.
+
+UploadId
+
+Child of the ListPartsResult element. The UploadId element specifies the upload ID of the multipart upload.
+
+Status codes
+
+The table below describes HTTP status codes that can be returned in response to a request to list the parts of a multipart upload. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully listed the parts of the multipart upload.
+
+400
+
+Bad Request
+
+Possible reasons include that a query parameter has an invalid value.
+
+403
+
+Forbidden
+
+Possible reasons include:
+
+The request specifies anonymous access. Only an authenticated user can list the parts of a multipart upload. The credentials provided with the request are invalid. The credentials provided with the request do not match the credentials used to initiate the multipart upload or the credentials for the owner of the bucket where the multipart upload is being performed. You do not have permission to list the parts of a multipart upload in the specified bucket. The S3 compatible API is currently disabled for the specified bucket.
+
+404 Not Found
+
+One of these:
+
+The specified multipart upload does not exist. Either the upload ID is invalid, or the multipart upload was aborted or completed. The specified bucket does not exist.
+
+500
+
+Internal Server Error
+
+An internal error occurred.
+
+If this error persists, contact your tenant administrator.
+
+503 Service Unavailable
+
+HCP is temporarily unable to handle the request, probably due to system overload, maintenance, or upgrade. Try the request again, gradually increasing the delay between each successive attempt.
+
+If this error persists, contact your tenant administrator.
+
+Example: Listing the parts of a multipart upload
+
+Here's a sample GET request for a listing of the parts of an in-progress multipart upload for an object named acctg/RulesAndRegulations.pdf in the finance bucket. The request uses these query parameters in addition to uploadId:
+
+part-number-marker=1
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+651/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Starts the list with the first part with a part number greater than one
+
+max-parts=3
+
+Lists a maximum of three parts

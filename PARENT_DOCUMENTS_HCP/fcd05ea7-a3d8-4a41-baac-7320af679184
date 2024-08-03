@@ -1,0 +1,43 @@
+Important: Disabling replication or the read-from-remote-system option for a namespace that has already been replicated may cause object data in that namespace to
+
+become inaccessible on one or more systems in the replication topology.
+
+To view the replication options for a namespace, you need the monitor or administrator role. To change the replication options for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the namespace you want.
+
+3. In the row of tabs below the namespace name, click Services. 4. On the left side of the Services panel, click Replication. 5. To enable or disable replication, select or deselect Replication. 6. (Optional) If Enable replication is selected, take one or more of these actions: To enable or disable the read-from-remote-system feature, select or deselect Enable read from remote system. To allow or disallow HCP to service redirected REST, S3 compatible requests that target the namespace, select or deselect Accept requests redirected from other systems in the replication topology. For cloud-optimized namespaces only, to allow or disallow erasure coding for the namespace, select or deselect Allow erasure coding. To change the collision handling option, click Collision Handling. Then, in the Collision Handling section:
+
+To have HCP move objects flagged as replication collisions to the .lost+found directory, select Move object to the .lost+found directory. To have HCP rename objects flagged as replication collisions, select Rename object and store in the same location.
+
+7. Click Update Settings. Note: Removing a tenant from an Active-Passive replication link on the Active site followed by its deletion from the Passive site can result in lost data if, in the future, an Active/Active replication link is created between the same clusters and the same tenant is added to that link.
+
+Changing the service plan
+
+The service plan for a namespace is set when the namespace is created. You can change this setting at any time.
+
+To view the service plan for a namespace, you need the monitor or administrator role. To change the service plan for a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Services. 4. On the left side of the Services panel, click Service Plan. 5. In the list of service plans, select the service plan you want. Note: HCP system administrators can delete service plans regardless of whether they’re associated with any namespaces. In this case, the service plan name remains associated with the applicable namespaces, but the service plan is not available to be selected for any namespaces. HCP uses the Default service plan for the namespaces associated with that service plan name.
+
+In the list of service plans, a deleted service plan has no description.
+
+6. Click Update Settings.
+
+Changing the HCP retention mode
+
+The HCP retention mode of a namespace is either enterprise or compliance. You can change a namespace in enterprise mode to compliance mode, but you cannot do the reverse.
+
+If a tenant is not allowed to create namespaces in compliance mode, the retention mode setting is not available for its namespaces.
+
+When you change the HCP retention mode of a namespace from enterprise to compliance, you have no guarantee that objects that should have been retained were not already deleted. Important: Changing the retention mode of a namespace may violate local regulations regarding data retention. Before taking this action, be sure you understand the implications.
+
+To view the retention mode setting for a namespace, you need the monitor or administrator role. To change the retention mode of a namespace, you need the administrator role.
+
+1. In the top-level menu of the Tenant Management Console, click Namespaces. 2. In the list of namespaces, click the name of the namespace you want. 3. In the row of tabs below the namespace name, click Policies. 4. On the left side of the Policies panel, click Retention.
+
+5. In the Retention Mode panel, select Compliance. 6. Click Update Settings. A confirming message appears.
+
+7. In the window with the confirming message, select I understand to confirm that you understand the consequences of your action. 8. Click Update Settings. Configuring S3 Object Lock
+
+Configuring an S3 Object Lock namespace allows you to apply retention periods or legal holds to your objects, ensuring that they remain locked for a specified period of time.

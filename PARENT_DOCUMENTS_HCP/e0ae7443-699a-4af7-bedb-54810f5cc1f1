@@ -1,0 +1,49 @@
+At any point in time, HCP is unlikely to be in a perfectly balanced state for the following reasons: Object additions and deletions to and from the system do not trigger the Capacity Balancing service to run. When all the objects in a directory have been deleted, the empty directory remains in the namespace. Directories in the default namespace, whether empty or not, have metadata that takes up space. Compression/Encryption service
+
+The Compression/Encryption service compresses object data to make more efficient use of HCP storage space. The space reclaimed by compression can be used to store additional objects.
+
+Depending on the types of objects stored, compression can provide a significant benefit. For example, email objects compress very well.
+
+The Compression/Encryption service performs several tasks based on user settings in its interface. These tasks include:
+
+Rewriting objects to match the current compression or encryption settings of the storage pool. For example, if an object is uncompressed but compression has been enabled on its pool, then the service will compress the object data to match the pool’s settings. Rewriting objects compressed prior to HCP release 8.2 to use the new compression method added in that release. This allows for efficient ranged-reads of the objects. Re-encrypting objects encrypted prior to HCP release 8.2 to use local or KM Server encryption on S Series Node and cloud storage.
+
+The Compression/Encryption service runs according to the active service schedule. Note:
+
+The Compression/Encryption service does not compress object data if:
+
+The data is stored in a namespace that has HCP S Series storage set as the ingest tier. The data is stored on extended storage.
+
+The Storage Tiering service manages the compression and encryption of object data on an S Series Node or other extended storage. For more information about data compression and encryption in storage pools, see Encryption and compression of objects in storage pools Compression/Encryption service processing
+
+When the Compression/Encryption service runs, it checks each object that’s eligible for compression. If the object isn’t already compressed, it compresses it. If compressing the
+
+object doesn’t reduce its size (for example, because it’s already in a compressed format), the Compression/Encryption service marks it as uncompressible and doesn’t try to compress it again in future runs.
+
+You control which objects are eligible for compression by setting criteria in the System Management Console.
+
+In addition to compressing whole objects, the Compression/Encryption service can compress:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+109/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help
+
+Parts of multipart objects Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects Full copies of the data for objects and parts that are subject to erasure coding before those copies are reduced to chunks
+
+For the purpose of compression:
+
+HCP treats parts of multipart objects as individual objects. Eligibility for compression is based on the individual part size, not on the size of the object as a whole. HCP treats chunks for erasure-coded objects and chunks for erasure-coded parts of multipart objects as individual objects. However, eligibility for compression is based on the size of the whole object or part before erasure coding.
+
+By default, the Compression/Encryption service runs only on primary storage. However, you can configure HCP to run the Compression/Encryption service on extended storage as well.
+
+If an object, part, or chunk that was not eligible for compression becomes eligible, the Compression/Encryption service compresses it on its next run. Similarly, if a compressed object, part, or chunk loses its eligibility for compression, the Compression/Encryption service decompresses it on its next run.
+
+Note: Multiple objects, parts, or chunks merged by the Duplicate Elimination service may have differing eligibility for compression. If any one of the objects, parts, or chunks is eligible for compression, the merged object, part, or chunk data is compressed.
+
+Understanding compression statistics The Compression page in the HCP System Management Console displays statistics about the space saved by the Compression/Encryption service. It also lets you control various aspects of compression activity.
+
+Note: To view the Compression page, you need the monitor or administrator role. To change compression settings, you need the administrator role.

@@ -1,0 +1,45 @@
+With an active/active replication ring topology, changes made on one system travel around the ring in both directions from that system until they reach a system where those changes have already occurred.
+
+Configuring an active/active replication ring
+
+To configure an active/active replication ring topology: 1. Create an active/active link between each pair of systems to be connected in the ring. 2. For each system that has locally created tenants, namespaces, and directories that you want to replicate, add those items to one of the links connected to that system. 3. After those tenants, namespaces, and directories have been replicated, add them to the second link that’s connected to the system to which the items have been replicated. 4. After the items have been replicated to that system, add them to the next link in the ring. 5. Continue adding the replicated items to successive links until you have added them to the second link that connects to the system where the items were originally created.
+
+Active/active replication ring topology An active/active replication ring topology that includes four, five, or six HCP systems can be used as the basis for an erasure coding topology. When you add a tenant to the erasure coding topology, if the tenant is not already being replicated in the ring topology, HCP automatically adds that tenant to all the links in the ring topology.
+
+What this looks like
+
+The following figure below shows an active/active replication ring topology that includes four systems (A, B, C, and D).
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+324/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help In this figure:
+
+Two of three HCP tenants created locally in system A are being replicated around the ring. In the first tenant being replicated, two of three namespaces are selected for replication. In the second tenant being replicated, one of two namespaces is selected for replication.
+
+Two tenants created locally in system D are being replicated around the ring. In the first tenant, two namespaces are selected for replication. In the second tenant, one of three namespaces is selected for replication.
+
+Using active/active replication ring topology
+
+The active/active replication ring topology supports increasingly large storage clouds. The HCP systems included in the ring are typically in geographically disperse locations, with each system providing the same functionality as all the others. Changes made on any one system are propagated to all the other systems, effectively enabling shared read-write access to the same HCP tenants and namespaces and default-namespace directories regardless of where the client applications are located.
+
+New HCP systems can be added to an active/active replication ring topology at any time. To add a new system (for example, system X) to the topology:
+
+1. Create a new active/active link between any system already in the topology (for example, system B) and system X. 2. Add the tenants, namespaces, and directories already being replicated around the ring to the new link.
+
+3. Create a new link between system X and one of the other systems with which system B participates in a link (for example, system C). 4. Add the tenants, namespaces, and directories already being replicated around the ring to that new link. 5. Delete the link between system B and system C. Fully connected active/active replication
+
+In a fully connected active/active replication topology, multiple HCP systems are connected by active/active links, where:
+
+Each system in the topology is connected to each other system in the topology by an active/active link The same HCP tenants and namespaces and default-namespace directories are replicated on each link
+
+Because each system can participate in at most five active/active links, a fully connected active/active replication topology can have up to six systems.
+
+Configuring a fully connected active/active replication topology
+
+To configure a fully connected active/active replication topology: 1. Create an active/active link between each pair of systems to be included in the topology. 2. For each system that has locally created tenants, namespaces, and directories you want to replicate, add those items to each of the links connected to that system. 3. After those tenants, namespaces, and directories have been replicated, add them to each of the other links in the topology.
+
+Fully connected active/active replication topology as erasure coding topology

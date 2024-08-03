@@ -1,0 +1,47 @@
+In this scenario:
+
+System A replicates to system B on link AB, which replicates to system C on link BC, where link AB is chained into link BC. Link AB can be either active/active or active/passive. Link BC is active/passive. System A and system C each have a tenant named T1, where T1 was created independently on each system.
+
+These events occur in the order shown:
+
+1. On system A, you add T1 to link AB. 2. T1 is replicated to system B. 3. Because link BC includes link AB, the Replication service tries to replicate T1 to system C. The replication is unsuccessful because a different tenant named T1 already exists on system C. As a result, the service automatically pauses replication of T1 on link BC. Namespace name collisions
+
+Each HCP namespace you create in an HCP system has an internal ID that uniquely identifies that namespace. As a result, two namespaces created on different systems are different from each other, even if they have the same name and are owned by the same tenant.
+
+A namespace name collision occurs when the Replication service tries to replicate a namespace from one system to another system that already has a different namespace with the same name, where both namespaces are owned by the same tenant.
+
+To recover from a namespace name collision, take one of these actions:
+
+Rename the namespace on one of the systems involved in the link. Deselect the namespace from replication. Delete the namespace on the receiving system.
+
+Here’s a scenario that shows how a namespace name collision can cause the Replication service to pause replication of a tenant. In this scenario: System A and system B replicate to each other over active/active link AB. Link AB includes tenant T1, so T1 exists on both systems. On system A, T1 owns namespace NS1, which is not selected for replication.
+
+These events occur in the order shown:
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+367/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+1. On system A, you select NS1 for replication. 2. Before NS1 is replicated to system B, you create a namespace named NS1 for T1 on system B.
+
+3. The Replication service tries to replicate NS1 to system B. The replication is unsuccessful because a different namespace named NS1 already exists on system B. As a
+
+result, the service automatically pauses replication of T1 on link AB. Namespace compliance issues
+
+Different HCP systems can have different definitions for service plans with the same name. When an HCP tenant or namespace is replicated, the name of its associated service plan, not the service plan itself, is replicated with it. As a result, the service plan that applies to a namespace can differ on the two HCP systems involved in a link on which the namespace is being replicated.
+
+Service plans can be compliant or noncompliant. However, the service plan that applies to a namespace in compliance mode must be compliant. A namespace compliance issue occurs when replication of a namespace in compliance mode would cause a noncompliant service plan to apply to the namespace on the receiving system.
+
+To recover from namespace compliance issue, take one of these actions: Redefine the noncompliant service plan on the receiving system to be compliant. If the service plan is assigned to the tenant that owns the namespace, assign a different service plan to the tenant on the sending system, where that service plan is complaint on both systems involved in the link. If the service plan is assigned to the namespace, have the tenant administrator assign a different service plan to the namespace on the sending system, where that service plan is complaint on both systems involved in the link. Deselect the namespace from replication.
+
+Here are two scenarios that show how a namespace compliance issue can cause the Replication service to pause replication of a tenant. Scenario 1
+
+In this scenario:
+
+System A replicates to system B on link AB. Link AB can be either active/active or active/passive. Link AB includes tenant T1, so T1 exists on both systems. On system A, T1 owns namespace NS1, which is in compliance mode. NS1 not selected for replication. The service plan that applies to NS1 is named SP1. SP1 is compliant on system A and noncompliant on system B.
+
+These events occur in the order shown:

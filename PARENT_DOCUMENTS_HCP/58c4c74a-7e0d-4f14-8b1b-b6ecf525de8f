@@ -1,0 +1,47 @@
+1. Fail over the link between the failed primary system and the replica. 2. When the primary system becomes available again, restore the link from the replica. 3. Begin and complete data recovery from the replica to the primary system.
+
+If more than one primary system fails in an active/passive many-to-one topology, you need to fail the link from each failed system over to the replica. Multiple inbound links on the replica can be in the failed-over state at the same time. When the failed systems become available again, you can restore the links at any time. However, you can perform data recovery on only one link at a time. (You don’t need to wait for all the failed systems to become available before recovering data to the first one.)
+
+For example, suppose systems A, B, and C all replicate to system D. If both A and B fail, you can return to normal replication with these steps after the failed systems become available again:
+
+1. On system D, restore the link from A to D. 2. On system D, begin and complete data recovery from D to A. 3. On system D, restore the link from B to D. 4. After the recovery of data from D to A is complete and replication from A to D has restarted, on system D, begin and complete data recovery from D to B.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+376/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Failover and failback in an active/passive chained topology In an active/passive chained replication topology, one HCP system replicates to a second HCP system, which replicates to a third HCP system.
+
+The way you manage failover and failback in an active/passive chained replication topology depends on which system or systems have failed. The links from the first system in the chain to the second system and from the second system to the third system function independently of each other, but order matters when you fail them over or restore and perform data recovery on them.
+
+This section of the Help outlines the steps you need to take to return an active/passive replication chain to normal operation after the failure of any one or two of the systems in the chain. These sections assume a replication topology in which, when all three systems are healthy: System A replicates to system B on link AB. Link AB includes HCP tenant T1 and default-namespace directory D1, both of which were originally created on system A. System B replicates to system C on link BC. Link BC includes link AB and HCP tenant T2, which was originally created on system B. T1 and D1 are read-write on system A and read-only on systems B and C. T2 is read-write on system B and read-only on system C.
+
+The figure below shows this topology. Scenario: System A fails
+
+To return to normal operation after system A fails:
+
+1. On system B, fail link AB over to B. T1 and D1 become read-write on B.
+
+2. When system A becomes available again, on system B, restore link AB. 3. On system A, accept the restored link. 4. On system B, begin and complete data recovery on link AB.
+
+When data recovery is complete, T1 and D1 become read-write on A and read-only on B, and replication resumes on link AB. Scenario: System B fails
+
+To return to normal operation after system B fails:
+
+1. On system C, fail link BC over to C.
+
+T1 and D1 remain read-write on A and read-only on C. T2 becomes read-write on C.
+
+2. When system B becomes available again, on system A, restore link AB. 3. On system B, accept the restored link.
+
+T1 and D1 are read-write on A and read-only on B and C, and replication restarts on link AB.
+
+4. On system C, restore link BC. 5. On system B, accept the restored link.
+
+6. On system C, begin and complete data recovery on link BC.
+
+When data recovery is complete, T1 and D1 are read-only on B and C. T2 becomes read-write on B and read-only on C, and replication resumes on link BC. Scenario: System C fails

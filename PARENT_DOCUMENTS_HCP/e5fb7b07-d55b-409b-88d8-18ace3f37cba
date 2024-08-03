@@ -1,0 +1,47 @@
+The Disposition service automatically deletes expired objects.
+
+An object is expired if either of these conditions is true:
+
+The object has a retention setting that’s a specific date and time, and that date and time is in the past.
+
+The object has a retention setting that’s a retention class, and the date and time calculated from the duration specified by the retention class is in the past. In this case, the Disposition service deletes the object only if the retention class has Disposition enabled.
+
+The service deletes only the current version of a versioned object. It does not delete old versions.
+
+The Disposition service is enabled or disabled both at the HCP system level and on a per-namespace basis. Enabling the service for a namespace has no effect if the service is disabled at the HCP system level.
+
+By default, when the HCP system is first installed, the Disposition service is disabled at the system level. The Disposition service runs according to the active service schedule. When the service runs, it checks each object to see whether the object is expired. If the object is expired, the service checks whether Disposition is enabled for the namespace that includes the object.
+
+If an object is expired and in a namespace with Disposition enabled, the service hides the object data and metadata and marks the object for deletion. The Garbage Collection service then deletes the object through its normal processing. When applicable, the deletion triggers the Shredding service. Duplicate Elimination service
+
+Duplicate elimination is the process of merging the data associated with two or more identical objects. For objects to be identical, their data content must match exactly. By
+
+eliminating duplicates, HCP increases the amount of space available for storing additional objects.
+
+For example, if the same document is added to several different directories, duplicate elimination ensures that each copy of the document content that HCP must maintain in the repository is stored in only one location. This saves the space that would have been used by the additional copies of the document.
+
+For the purpose of duplicate elimination, HCP treats these as individual objects:
+
+Parts of multipart objects Chunks for erasure-coded objects Chunks for erasure-coded parts of multipart objects
+
+Full copies of the data for objects and parts that are subject to erasure coding before those copies are reduced to chunks The Duplicate Elimination service does not merge parts of in-progress multipart uploads, parts of a multipart upload that have been replaced, parts of an aborted multipart upload, or unused parts of completed multipart uploads.
+
+The Duplicate Elimination service runs according to the active service schedule. Note:
+
+The Duplicate Elimination service does not eliminate duplicate objects stored in namespaces that use service plans that have HCP S Series storage devices set as the ingest tier.
+
+Duplicate Elimination service processing
+
+HCP performs duplicate elimination by first sorting objects, parts, and chunks according to their MD5 hash values. After sorting all the objects, parts, and chunks in the repository, the service checks for objects, parts, and chunks with the same hash value. If the service finds any, it compares the object, part, or chunk content. If the content is the same, the service merges the object, part, or chunk data but still maintains the required number of copies of the data that’s specified in the service plan for the namespace that contains the object, part, or chunk.
+
+The metadata for each merged object, part, or chunk points to the merged object, part, or chunk data. The Duplication Elimination service never deletes any of the metadata for duplicate objects, parts, or chunks.
+
+The following figure shows duplicate elimination for two objects with the same content where the DPL is two.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+113/907
+
+6/25/24, 11:33 AM
+
+Content Platform System Management Help

@@ -1,0 +1,71 @@
+Paged queries
+
+With paged queries, you issue multiple requests that each retrieve a limited number of results. You would use a paged query, for example, if:
+
+The size of the response to a single request would reduce the efficiency of the client. In this situation, you can use a paged query to prevent overloading the client. The client can process the results in each response before requesting additional data.
+
+The application issuing the query handles a limited number of objects at a time. For example, an application that lists a given number of objects at a time on a web page would use a paged query in which each request returned that number of results.
+
+The criteria for paged queries differ between object-based queries and operation-based queries. Object index
+
+To support object-based queries, HCP maintains an index of objects in the repository. This index is based on object paths, system metadata, custom metadata that’s well formed XML, and ACLs.
+
+Namespace indexing
+
+Indexing is enabled on a per-namespace basis. If a namespace is not indexed, object-based queries do not return results for objects in the namespace.
+
+HCP periodically checks indexable namespaces for new objects and for objects with metadata that has changed since the last check. When it finds new or changed information, it updates the index. The amount of time HCP takes to update the index depends on the amount of information to be indexed. New or changed information is not reflected in the
+
+results of object-based queries until the information is indexed.
+
+Indexing of custom metadata can be configured in these ways:
+
+Specific content properties can be indexed. Specific annotations can be excluded from being indexed. An annotation is a discrete unit of custom metadata Custom metadata contents can be optionally indexed for full-text searching.
+
+If indexing of custom metadata is enabled for a namespace, these rules determine whether custom metadata is indexed for an object:
+
+The custom metadata must be well-formed XML
+
+The custom metadata must be smaller than one MB. The object must have an index setting of true. If custom metadata is not indexed for an object, object-based queries that are based on custom metadata do not return results for that object. Content properties
+
+A content property is a named construct used to extract an element or attribute value from custom metadata that's well-formed XML. Each content property has a data type that determines how the property values are treated when indexing and searching.
+
+A content property is defined as either single-valued or multivalued. A multivalued property can extract the values of multiple occurrences of the same element or attribute from the
+
+XML.
+
+The XML below shows XML elements with multiple occurrences of two elements, date and rank within the element WeeklyRank. <record>
+
+<weeklyRank> <date> dd/MM/yyyy </date>
+
+<rank> (rank) </rank> </weeklyRank>
+
+<weeklyRank> <date> dd/MM/yyyy </date>
+
+<rank> (rank) </rank>
+
+</weeklyRank> <weeklyRank>
+
+<date> dd/MM/yyyy </date> <rank> (rank) </rank> </weeklyRank> </record>
+
+If the WeekyRank object property specifies the record/weeklyRank/rank entry in the XML, the property is multivalued.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+833/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Access and authentication
+
+With the HCP metadata query API, each request you make must specify a URL that represents an HCP tenant, the default tenant, or all tenants to which system-level users have
+
+access. Each request must also include the credentials for the user account you’re using to access namespaces through the metadata query API. Your user account determines which namespaces you can access.
+
+This chapter describes request URLs and explains how to include account credentials in a metadata query API request. The examples in this book use cURL and Python with PycURL, a Python interface that uses the libcurl library. cURL and PycURL are both freely available open-source software. You can download them from http://curl.haxx.se.
+
+Request URL
+
+The URL format in a metadata query API request depends on whether you use a hostname or IP address to connect to the HCP system and on the namespaces you want to query.

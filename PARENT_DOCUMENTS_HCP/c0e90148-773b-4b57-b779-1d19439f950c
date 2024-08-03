@@ -1,0 +1,55 @@
+These considerations apply to network aliases: The target network for a network alias can be a user-defined network or the [hcp_system] network. A network alias cannot point to another network alias. A network alias can point to only one network. However, multiple aliases can point to the same network.
+
+Network states
+
+To be used most effectively, a network should have IP addresses defined for each node in the HCP system. This enables HCP to spread the processing load across all nodes for
+
+clients using that network.
+
+If a node doesn’t have IP addresses for a given network, that node does not receive communications that come into the system on that network. However, a network is usable as long as at least one available node is assigned IP addresses for the IPv4 and IPv6 subnets defined for that network.
+
+Depending on the number of nodes that have IP addresses for a network, the network can be in any of these states:
+
+Fully defined
+
+A network is fully defined if all nodes in the system have IP addresses defined for the network. Partial
+
+A network is partial if at least two nodes have IP addresses defined for the network and at least one node does not have any IP addresses defined for the network.
+
+Degraded
+
+A network is degraded if exactly one node has IP addresses defined for that network
+
+A degraded network presents a single point of failure for clients using that network for system access. Empty
+
+A network is empty if no nodes have IP addresses defined for the network. An empty network is not usable.
+
+You cannot select an empty network for tenant management or data access purposes. You cannot select an empty, degraded, or partial network for use with replication.
+
+Isolating networks for storage tiering
+
+A network can be reserved for exclusive communication between an HCP system and an HCP S Series Node or an HCP supported external storage device. This increases tiering security by segregating data tiering to individual networks instead of having all data tiered over one network.
+
+The total amount of virtual networks that can tier to individual storage components is 200. In order to designate an individual network to a storage component, you need the administrator role. Users with the monitor role can see which storage components are tiering through which networks. If a network is assigned to a storage tier, it can still be used for Tenant data management, Tenant network management, and replication.
+
+In order to give storage components individual networks, Virtual network management must be enabled.
+
+A network is only accepted for an individual storage component if each node that belongs to the network has its IP address defined on HCP. Considerations for virtual networking
+
+The following considerations apply to virtual networking with HCP.
+
+The IP mode of a front-end network determines the type of IP addresses that can be used to communicate with HCP over that network. Before selecting a specific network
+
+for a specific purpose, you need to ensure that all devices that need to communicate with HCP for that purpose are configured to use at least one type of IP address supported by that network.
+
+HCP accepts communications from Active Directory only on the [hcp_system] network. Therefore, if a tenant is configured to use AD for user authentication, that tenant must also be configured to use either the [hcp_system] network or an alias for that network for both management and data access purposes. In addition, each Active Directory domain controller used for HCP user authentication must have at least one IPv4 or IPv6 address that is routable from the [hcp_system] network. After HCP is upgraded from release 6.x to release 7.0 or later, by default, the HCP system is configured to support only IPv4 addresses for front-end networks. If you need to use IPv6 addresses for communication between HCP and other devices over the [hcp_system] network or any user-defined network, you need to ensure that when the
+
+upgrade is complete, your authorized HCP service provider configures HCP to enable support for IPv6 addresses and then configures the [hcp_system] network to use IPv6 addresses.
+
+When a new node is added to the HCP system, it automatically has IP addresses on each subnet defined for the [hcp_system] network. However, it does not have any IP addresses for any user-defined front-end networks. Those networks, therefore, become partial networks. You can assign IP addresses to the new node for each of those networks at any time.
+
+About the Networks page
+
+To work with networks and network aliases, you use the Networks page in the HCP System Management Console.
+
+The Networks page has four sections:

@@ -1,0 +1,97 @@
+The following table describes the HTTP status codes that have specific meaning for this request.
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP found the specified object or version and returned its metadata. This code is also returned if the
+
+specified URL identifies a directory, not an object.
+
+304 Not Modified
+
+One of:
+
+The request specified an If-None-Match header, and the ETag of the requested object or version
+
+matches the value in the header. The request specified an If-Modified-Since header, and the object change time is at or before the
+
+time specified in the header.
+
+400
+
+Bad Request
+
+The request was not valid. These are some, but not all, of the possible reasons:
+
+The URL in the request is not well-formed. The namespace does not exist.
+
+The request included an If-Match or If-None-Match header and the object does not yet have an ETag.
+
+The request contains an unsupported query parameter or an invalid value for a query parameter.
+
+If more information about the error is available, the HTTP response headers include the HCP product- specific X‑HCP-ErrorMessage header.
+
+404 Not Found
+
+One of:
+
+HCP did not find a directory, object, or version at the specified URL. The specified object or version
+
+does not exist, or the request specified the current version of an object that has been deleted. Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+412
+
+Precondition Failed
+
+One of:
+
+The request specified an If-Match header, and the ETag of the requested object or version does not match the value in the header. The request specified an If-Unmodified-Since header, and the object change time is after the time specified in the header.
+
+Checking the existence of an object
+
+Here is a sample HTTP HEAD request that checks the existence of an object named Q2_2020.ppt in the quarterly_rpts directory. Request with curl command line
+
+curl -iI -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d" "https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q2_2020.ppt"
+
+Request in Python using PycURL
+
+import pycurl import StringIO
+
+cin = StringIO.StringIO() curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"]) curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com/ \ rest/quarterly_rpts/Q2_2020.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.HEADER, 1)
+
+curl.setopt(pycurl.NOBODY, 1) curl.setopt(pycurl.WRITEFUNCTION, cin.write)
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+726/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+print cin.getvalue() curl.close() Request headers
+
+HEAD /rest/quarterly_rpts/Q2_2020.ppt HTTP/1.1 Host: finance.europe.hcp.example.com
+
+Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers
+
+HTTP/1.1 200 OK
+
+X-HCP-CurrentStorageNode: 172.20.27.21 X-HCP-Time: 1336490468

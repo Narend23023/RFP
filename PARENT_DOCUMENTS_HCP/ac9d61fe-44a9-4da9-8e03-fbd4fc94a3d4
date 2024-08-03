@@ -1,0 +1,93 @@
+X-HCP-LastVersionId: 80232998058819 Content-Length: 678400
+
+Response body X-HCP-VersionId: 80232998058817 X-HCP-Operation: CREATE
+
+X-HCP-IngestTimeMilliseconds: X-HCP-Size: 9
+
+The contents of the requested version of the object.
+
+X-HCP-VersionId: 80232998058818 X-HCP-Operation: CREATE
+
+X-HCP-IngestTimeMilliseconds: 1493911519818 X-HCP-Size: 9
+
+The contents of the requested version of the object.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+742/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+X-HCP-VersionId: 80232998058819
+
+X-HCP-Operation: CREATE X-HCP-IngestTimeMilliseconds: 1493911519819 X-HCP-Size: 9 The contents of the requested version of the object.
+
+Example: Retrieving object data and an annotation together (Java)
+
+Here’s the partial implementation of a Java class named WholeIO. The implementation shows the ReadFromHCP method, which retrieves object data and an annotation named rep ort_data in a single data stream, splits the object data from the annotation, and stores each in a separate file.
+
+The ReadFromHCP method uses the WholeIOOutputStream helper class.
+
+This example assumes that the applicable imports are included in the full class implementation. class WholeIO { .
+
+. .
+
+void ReadFromHCP() throws Exception { /*
+
+Set up the GET request, specifying whole-object I/O. * This method assumes that the HTTP client has already been
+
+initialized. */
+
+HttpGet httpRequest = new HttpGet(sHCPURLFilePath +
+
+"?type=whole-object&annotation=report_data");
+
+// Create the HTTP Authorization Header. httpRequest.setHeader(HCPUtils.HTTP_AUTH_HEADER, "HCP " + sEncodedUserName + ":" + sEncodedPassword); // Request the annotation before the object data.
+
+// This can be useful if the application examines the annotation // to set the context for the data that will follow.
+
+httpRequest.setHeader("X-HCP-CustomMetadataFirst", "true");
+
+/* * Now execute the GET request.
+
+/ HttpResponse httpResponse = mHttpClient.execute(httpRequest);
+
+// If the status code is anything BUT 200 range indicating success
+
+// throw an exception.
+
+if (2 != (int)(httpResponse.getStatusLine().getStatusCode() / 100)) {
+
+// Clean up after ourselves and release the HTTP connection to the // connection manager. EntityUtils.consume(httpResponse.getEntity());
+
+throw new HttpResponseException( httpResponse.getStatusLine().getStatusCode(),
+
+"Unexpected status returned from " + httpRequest.getMethod() + " (" + httpResponse.getStatusLine().getStatusCode() + ": " + httpResponse.getStatusLine().getReasonPhrase() + ")"); }
+
+/*
+
+Determine whether the object data or annotation is first. */ Boolean cmFirst = new Boolean(httpResponse.getFirstHeader( "X-HCP-CustomMetadataFirst").getValue());
+
+/* * Determine the size of the first part based on whether the object
+
+data or annotation is first. */
+
+// Assume the object data is first.
+
+int firstPartSize = Integer.valueOf(httpResponse.getFirstHeader( "X-HCP-Size").getValue());
+
+// If the annotation, do the math.
+
+if (cmFirst) { // subtract the data size from the content length returned.
+
+firstPartSize = Integer.valueOf(httpResponse.getFirstHeader( "Content-Length").getValue()) - firstPartSize;
+
+}
+
+/* * Split and write the file to disk.
+
+*/
+
+WholeIOOutputStream outputCreator = new WholeIOOutputStream(

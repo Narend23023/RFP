@@ -1,0 +1,71 @@
+About Hitachi Content Platform
+
+Hitachi Content Platform is the distributed, fixed-content, data storage system from Hitachi Vantara. HCP provides a cost-effective, scalable, easy-to-use repository that can
+
+accommodate all types of data, from simple text files to medical image files to multigigabyte database images.
+
+A fixed-content storage system is one in which the data cannot be modified. HCP uses write-once, read-many (WORM) storage technology, and a variety of policies and internal processes to ensure the integrity of the stored data.
+
+Object based storage
+
+HCP stores objects in a repository. Each object permanently associates data HCP receives with information about that data; that is, each object encapsulates both object data and metadata.
+
+HCP distributes objects across its storage space but still presents them as files in a standard directory structure. Namespaces and tenants
+
+An HCP repository is partitioned into namespaces. A namespace is a logical grouping of objects such that the objects in one namespace are not visible in any other namespace.
+
+Namespaces provide a mechanism for separating the data stored for different applications, business units, or customers. For example, you could have one namespace for accounts receivable and another for accounts payable.
+
+Namespaces also enable operations to work against selected subsets of repository objects. For example, you could perform a query that targets the accounts receivable and
+
+accounts payable namespaces but not the employees namespace.
+
+Namespaces are owned and managed by administrative entities called tenants. A tenant typically corresponds to an organization such as a company or a division or department within a company. Object metadata
+
+HCP automatically generates metadata for each object. Some of this metadata is specific to HCP. Examples of this type of metadata are the retention setting, object creation date, and cryptographic hash value.
+
+Objects also have POSIX metadata. POSIX is a set of standards that defines an application programming interface (API) for software designed to run under heterogeneous operating systems. These standards include specific types of metadata, such as permissions and ownership.
+
+Users and applications can override the defaults for some HCP-specific and POSIX metadata when they add an object to a namespace. They can also change certain metadata
+
+values for existing objects.
+
+Users can create their own custom metadata to associate additional descriptive information with an object. Custom metadata is specified as annotations, where each annotation is a discrete unit of information about the object.
+
+Custom metadata enables the creation of self-describing objects. Future users and applications can use this metadata to understand and repurpose object content.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+876/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+When added to a namespace, custom metadata becomes part of the target object. Custom metadata is typically but not necessarily formatted as XML.
+
+Users can also associate access control lists (ACLs) with objects. An ACL grants permissions for an individual object to specified users or groups of users.
+
+When added to a namespace, an ACL becomes part of the target object. When viewed or specified in the Console, ACLs are formatted as XML.
+
+ACLs are enabled on a per-namespace basis. In namespaces where ACLs are enabled, the namespace can be configured to either enforce or ignore the permissions granted by ACLs. Retention settings
+
+Each object has a retention setting that specifies how long the object must remain in its namespace before it can be deleted; this duration is called the retention period. While an object cannot be deleted due to its retention setting, it is said to be under retention.
+
+The retention setting for an object can be: A specific date and time
+
+This is the time before which the object cannot be deleted. If this is a date in the past, this setting is displayed as Expired in the Search Console.
+
+Deletion Allowed
+
+The object can be deleted at any time. This value is displayed as Expired in the Search Console.
+
+Deletion Prohibited
+
+The object can never be deleted. Initial Unspecified
+
+The object does not yet have a specific retention setting and cannot be deleted until it has a setting that allows deletion.
+
+A retention class
+
+This is a named retention setting. It can be a duration (such as seven years) or one of the special values listed above.

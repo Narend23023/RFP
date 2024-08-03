@@ -1,0 +1,143 @@
+entry
+
+retentionString
+
+Retention day and time value. In the time zone of the HCP system.
+
+entry
+
+retentionClass
+
+Retention class name.
+
+entry
+
+ingestTime
+
+Seconds after 1 January 1970 that the object was either created or deleted.
+
+entry
+
+ingestTimeString
+
+Ingested date and time. In the time zone of the HCP system. entry
+
+hold
+
+Boolean. Whether or not the object has a hold.
+
+entry
+
+shred
+
+Boolean. Whether or not the object is to be shredded after it is deleted.
+
+entry
+
+index
+
+Boolean. Whether or not the object is to be indexed.
+
+entry
+
+customMetadata
+
+Boolean. Whether or not the object has custom metadata.
+
+entry customMetadataAnnotations
+
+Annotations associated with the object. Delimited by semicolons.
+
+entry
+
+replicated
+
+Boolean. Whether or not the object is replicated.
+
+entry
+
+owner
+
+User name of the owner of the object. If there is no owner listed, the value is nobody.
+
+entry
+
+domain
+
+Active Directory domain entry
+
+hasAcl
+
+Boolean. Whether or not ACL is present for the object.
+
+entry
+
+state
+
+Status is either created or deleted. Specifies whether the version contains data or is a marker indicating that the object was deleted.
+
+Status codes
+
+The table below describes the HTTP status codes that have specific meaning for this request. Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully retrieved the directory listing. This code is also returned if the URL specified an object and HCP successfully retrieved the object.
+
+404
+
+Not Found
+
+One of:
+
+HCP could not find a directory, object, or version at the specified URL. The specified object or
+
+version does not exist, or the request specified the current version of an object that has been deleted.
+
+Any component of the URL except for the last component in the path is a symbolic link to a directory.
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+759/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Example: Listing the contents of a directory that includes deleted objects
+
+Here’s a sample HTTP GET request that lists all the contents, including any deleted objects or subdirectories, of a directory named quarterly_rpts in a namespace that supports versioning.
+
+Request with curl command line
+
+curl -k -H "Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"
+
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts?deleted=true" > quarterly_rpts.xml
+
+Request in Python using PycURL
+
+import pycurl filehandle = open("quarterly_rpts.xml", 'wb') curl = pycurl.Curl() curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP
+
+bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "https://finance.europe.hcp.example.com \ /rest/quarterly_rpts?deleted=true")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+curl.setopt(pycurl.WRITEFUNCTION, filehandle.write) curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE) curl.close()
+
+filehandle.close()
+
+Request headers
+
+GET /rest/quarterly_rpts?deleted=true HTTP/1.1
+
+Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Response headers

@@ -1,0 +1,123 @@
+"https://finance.europe.hcp.example.com/rest/quarterly_rpts/Q1_2012.ppt"
+
+Request in Python using PycURL
+
+import pycurl import urllib curl = pycurl.Curl()
+
+curl.setopt(pycurl.HTTPHEADER, ["Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d"])
+
+curl.setopt(pycurl.URL, "http://finance.europe.hcp.example.com \ /rest/quarterly_rpts/Q1_2012.ppt")
+
+curl.setopt(pycurl.SSL_VERIFYPEER, 0) curl.setopt(pycurl.SSL_VERIFYHOST, 0) curl.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+
+args = {'privileged':'true', 'reason':'Deleted per Compliance Order 12323.'}
+
+args = urllib.urlencode(args) curl.setopt(pycurl.POSTFIELDS, args)
+
+curl.perform() print curl.getinfo(pycurl.RESPONSE_CODE)
+
+curl.close()
+
+Request headers
+
+DELETE /rest/quarterly_rpts/Q1_2012.ppt HTTP/1.1 Host: finance.europe.hcp.example.com Authorization: HCP bXl1c2Vy:3f3c6784e97531774380db177774ac8d
+
+Content-Length: 65 Content-Type: application/x-www-form-urlencoded
+
+Request body: Contains the privileged and reason parameters as form-encoded data.
+
+Response headers
+
+HTTP/1.1 200 OK X-HCP-ServicedBySystem: hcp.example.com X-HCP-Time: 1334425187 Content-Length: 0
+
+Purging an object and using privileged purge
+
+You can use the HTTP DELETE method to purge all versions of an object from a namespace. You can also use the DELETE method to purge an object that is under retention
+
+(privileged purge) if the namespace is configured to allow privileged operations and you have the necessary permissions.
+
+If versioning has never been enabled for the namespace, a purge request deletes the object. If versioning was enabled in the past but is no longer enabled, the purge request
+
+deletes all existing versions of the object.
+
+Tip: If an object is not under retention, you can use a privileged purge operation to specify a reason for the purge. Although the object is not under retention, the namespace must still support privileged operations, and you need the privileged permission. Access permission
+
+To purge objects you need both delete and purge permissions.
+
+To perform a privileged purge operation, even if the object is not under retention, you also need privileged permission.
+
+Request header
+
+DELETE /rest/directory/file?purge=true HTTP/1.1
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+750/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Parameter
+
+Required
+
+Description
+
+directory
+
+Yes
+
+Folder name. file
+
+Yes
+
+Name of the file, including file extension.
+
+purge
+
+Yes
+
+Use the value true to purge the object.
+
+privileged
+
+No
+
+To perform a privileged delete, the request must specify both privileged and reason URL query parameters
+
+For example:
+
+?privileged=true&reason=reason-text
+
+reason
+
+Yes, if privileged is used
+
+Use percent-encode characters in the reason parameter that have special meanings in URLs. Response header
+
+This operation does not return any request-specific response headers.
+
+Response body
+
+Not applicable.
+
+Status codes
+
+Code
+
+Meaning
+
+Description
+
+200
+
+OK
+
+HCP successfully purged all versions of the object.
+
+400
+
+Bad Request
+
+The request specified a conditional header, such as If-Match.

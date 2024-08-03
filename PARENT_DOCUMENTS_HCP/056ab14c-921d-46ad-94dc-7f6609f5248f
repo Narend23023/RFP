@@ -1,0 +1,53 @@
+The version element identifies the version of the core-metadata.xml file. The ingestProtocol element identifies the protocol through which the object was ingested. You can view the content of this metafile, but you cannot change it. To see the XML schema for this metafile, use this URL: http://tenant-name.hcp-domain-name/static/core-metadata-7_0.xsd
+
+custom-metadata.xml
+
+Contains the custom metadata for the default annotation for the object. This metafile is present only when the object has a default annotation.
+
+acl.xml
+
+Contains the ACL for the object. This metafile is present only when the object has an ACL. Objects can have an ACL only if the namespace is configured to allow it. Complete metadata structure
+
+The figure below shows the complete metadata structure, including the metafiles, generated for the sample data structure. It assumes you’ve added custom metadata and ACLs for each object.
+
+Object properties
+
+https://docs.hitachivantara.com/internal/api/webapp/print/72cda581-a515-4975-93dd-f591140b46a3
+
+693/907
+
+6/25/24, 11:34 AM
+
+Content Platform System Management Help
+
+Objects in a namespace have a variety of properties, such as a retention period and an index setting. These properties are defined for each object by the object metadata. HCP maintains both HCP product-specific and POSIX metadata for objects. You can view all the metadata for objects in a namespace and modify some of it.
+
+HCP maintains only POSIX metadata for directories and symbolic links. The namespace configuration specifies default values for several object properties. When you store an object in the namespace, the object inherits these values. You can override some of these values when using the REST API to store objects in the namespace.
+
+If only the REST API is enabled for a namespace, the namespace can be configured to allow objects to have multiple versions.
+
+With the WebDAV, CIFS, and NFS protocols, HCP displays object metadata in metafiles.
+
+For the WebDAV protocol, HCP also provides its own XML namespace with live properties that allow you to store and retrieve HCP system metadata. Data protection level
+
+The data protection level (DPL) for an object is the number of copies of the object HCP must maintain in the repository to ensure the integrity and availability of the object. Regardless of the DPL, you see each object as a single entity.
+
+Each copy of the data for an object is stored on a different HCP node. Storing the data in different locations helps ensure the availability of data in case one of those locations becomes inaccessible.
+
+The DPL is determined by the namespace configuration. You can view the DPL for an object, but you cannot change it. However, namespace configuration changes can cause the DPL to change.
+
+With the REST API, the data protection level for an object is returned by the X-HCP-DPL response header. With the WebDAV, CIFS, and NFS protocols, you view this value in the dpl.txt metafile. Cryptographic hash value
+
+The cryptographic hash value for an object is a form of fingerprint. HCP uses a cryptographic hash algorithm to calculate this value from the object data. HCP then uses this hash value to check that object data remains unchanged.
+
+You can view this value, but you cannot change it.
+
+With HTTP, cryptographic hash values are returned by the X-HCP-Hash response header. With the WebDAV, CIFS, and NFS protocols, you view this value in the hash.txt metafile.
+
+HCP does not generate cryptographic hash values for multipart objects. Therefore, the X-HCP-Hash header is not returned for these objects. Object ingest time and change time
+
+Objects in a namespace have both an ingest time and a change time.
+
+The ingest time is the time when the object or version of the object was first added to the namespace or was deleted. The change time is the time of the most recent of these events:
+
+The object was closed after being added to the namespace. The object was deleted. Any metadata, including custom metadata or an ACL, was changed. The object was recovered from a replica. An attempt by the HCP search facility to index the object failed. When this happens, the change time for the object is set to two weeks in the future, at which time the HCP search facility tries again to index it.
