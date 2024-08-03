@@ -1,0 +1,81 @@
+If you notice that the rate of consumption changes over time, select a shorter range from the Averaged over pull-down to reflect only the most recent ingest patterns. If you notice seasonal patterns, select a longer range.
+
+If you have a new StorageGRID installation, allow data and metadata to accumulate before evaluating the space usage forecasts. Steps
+
+1. On the dashboard, select Storage.
+
+2. View the dashboard cards, Forecast of data usage by storage pool and Forecast of metadata usage by site.
+
+3. Use these values to estimate when you will need to add new Storage Nodes for data and metadata storage.
+
+1062
+
+Monitor information lifecycle management
+
+The information lifecycle management (ILM) system provides data management for all objects stored on the grid. You must monitor ILM operations to understand if the grid can handle the current load, or if more resources are needed. About this task
+
+The StorageGRID system manages objects by applying the active ILM policies. The ILM policies and associated ILM rules determine how many copies are made, the type of copies that are created, where copies are placed, and the length of time each copy is retained.
+
+Object ingest and other object-related activities can exceed the rate at which StorageGRID can evaluate ILM, causing the system to queue objects whose ILM placement instructions can’t be fulfilled in near real time. You should monitor whether StorageGRID is keeping up with client actions. Use Grid Manager dashboard tab
+
+Steps
+
+Use the ILM tab on the Grid Manager dashboard to monitor ILM operations:
+
+1. Sign in to the Grid Manager.
+
+2. From the dashboard, select the ILM tab and note the values on the ILM queue (Objects) card and ILM evaluation rate card.
+
+Temporary spikes in the ILM queue (Objects) card on the dashboard are to be expected. But if the queue continues to increase and never declines, the grid needs more resources to operate efficiently: either more Storage Nodes, or, if the ILM policy places objects in remote locations, more network bandwidth.
+
+Use the NODES page Steps
+
+Additionally, investigate ILM queues using the NODES page:
+
+The charts on the NODES page will be replaced with the corresponding dashboard cards in a future StorageGRID release.
+
+1. Select NODES.
+
+2. Select grid name > ILM.
+
+3. Position your cursor over the ILM queue graph to see the value of following attributes at a given point in
+
+1063
+
+time:
+
+Objects queued (from client operations): The total number of objects awaiting ILM evaluation because of client operations (for example, ingest).
+
+Objects queued (from all operations): The total number of objects awaiting ILM evaluation. ◦ Scan rate (objects/sec): The rate at which objects in the grid are scanned and queued for ILM. ◦ Evaluation rate (objects/sec): The current rate at which objects are being evaluated against the ILM policy in the grid. Temporary spikes in the ILM queue (Objects) card on the dashboard are to be expected. But if the queue continues to increase and never declines, the grid needs more resources to operate efficiently: either more Storage Nodes, or, if the ILM policy places objects in remote locations, more network bandwidth.
+
+Use the NODES page Steps
+
+Additionally, investigate ILM queues using the NODES page:
+
+The charts on the NODES page will be replaced with the corresponding dashboard cards in a future StorageGRID release.
+
+1. Select NODES.
+
+2. Select grid name > ILM.
+
+3. Position your cursor over the ILM queue graph to see the value of following attributes at a given point in
+
+1063
+
+time:
+
+Objects queued (from client operations): The total number of objects awaiting ILM evaluation because of client operations (for example, ingest).
+
+Objects queued (from all operations): The total number of objects awaiting ILM evaluation. ◦ Scan rate (objects/sec): The rate at which objects in the grid are scanned and queued for ILM. ◦ Evaluation rate (objects/sec): The current rate at which objects are being evaluated against the ILM policy in the grid.
+
+4. In the ILM Queue section, look at the following attributes. The ILM queue section is included for the grid only. This information is not shown on the ILM tab for a site or Storage Node.
+
+Scan period - estimated: The estimated time to complete a full ILM scan of all objects.
+
+A full scan does not guarantee that ILM has been applied to all objects.
+
+Repairs attempted: The total number of object repair operations for replicated data that have been attempted. This count increments each time a Storage Node tries to repair a high-risk object. High-risk ILM repairs are prioritized if the grid becomes busy.
+
+The same object repair might increment again if replication failed after the repair.
+
+These attributes can be useful when you are monitoring the progress of Storage Node volume recovery. If the number of Repairs attempted has stopped increasing and a full scan has been completed, the repair has probably completed. Monitor networking and system resources

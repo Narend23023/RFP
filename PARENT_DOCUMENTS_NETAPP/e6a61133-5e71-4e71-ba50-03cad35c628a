@@ -1,0 +1,103 @@
+The ILM placement unachievable alert might be triggered when Storage Nodes are stopped during the upgrade to StorageGRID 11.8. This alert might persist for 1 day after the upgrade completes.
+
+After the upgrade completes, you can review any upgrade-related alerts by selecting Recently resolved alerts or Current alerts from the Grid Manager dashboard. Many SNMP notifications are generated
+
+Be aware that a large number of SNMP notifications might be generated when grid nodes are stopped and restarted during the upgrade. To avoid excessive notifications, clear the Enable SNMP Agent Notifications checkbox (CONFIGURATION > Monitoring > SNMP agent) to disable SNMP notifications before you start the upgrade. Then, re-enable notifications after the upgrade is complete.
+
+255
+
+Configuration changes are restricted
+
+This list applies specifically to upgrades from StorageGRID 11.7 to StorageGRID 11.8. If you’re upgrading to another StorageGRID release, refer to the list of restricted changes in the upgrade instructions for that release. Until the Enable New Feature task completes:
+
+Don’t make any grid configuration changes.
+
+Don’t enable or disable any new features.
+
+Don’t update the ILM configuration. Otherwise, you might experience inconsistent and unexpected ILM behavior.
+
+Don’t apply a hotfix or recover a grid node.
+
+Contact technical support if you need to recover a node during upgrade.
+
+You should not manage HA groups, VLAN interfaces, or load balancer endpoints while you’re upgrading to StorageGRID 11.8.
+
+Don’t delete any HA groups until the upgrade to StorageGRID 11.8 is complete. Virtual IP addresses in other HA groups might become inaccessible. Until the Final Upgrade Steps task completes:
+
+Don’t perform an expansion procedure.
+
+Don’t perform a decommission procedure.
+
+You can’t view bucket details or manage buckets from the Tenant Manager
+
+During the upgrade to StorageGRID 11.8 (that is, while the system is operating as a mixed-version environment), you can’t view bucket details or manage buckets using the Tenant Manager. One of the following errors appears on the Buckets page in Tenant Manager:
+
+You can’t use this API while you’re upgrading to 11.8.
+
+You can’t view bucket versioning details in the Tenant Manager while you’re upgrading to 11.8.
+
+This error will resolve after the upgrade to 11.8 is complete. Workaround
+
+While the 11.8 upgrade is in progress, use the following tools to view bucket details or manage buckets, instead of using the Tenant Manager:
+
+To perform standard S3 operations on a bucket, use either the S3 REST API or the Tenant Management API.
+
+To perform StorageGRID custom operations on a bucket (for example, viewing and modifying the bucket consistency, enabling or disabling last access time updates, or configuring search integration), use the Tenant Management API. Impact of an upgrade on groups and user accounts
+
+You might have to update groups and user accounts appropriately after the upgrade is
+
+256
+
+complete.
+
+Changes to group permissions and options
+
+After upgrading to StorageGRID 11.8, optionally assign the following new permissions to tenant user groups. Permission
+
+Description
+
+Details
+
+View all buckets
+
+Allows users to view all buckets and bucket configurations.
+
+The Manage all buckets permission supersedes the View all buckets permission.
+
+See Tenant management permissions.
+
+Verify the installed version of StorageGRID
+
+Before starting the upgrade, verify that the previous version of StorageGRID is currently installed with the latest available hotfix applied. About this task This error will resolve after the upgrade to 11.8 is complete. Workaround
+
+While the 11.8 upgrade is in progress, use the following tools to view bucket details or manage buckets, instead of using the Tenant Manager:
+
+To perform standard S3 operations on a bucket, use either the S3 REST API or the Tenant Management API.
+
+To perform StorageGRID custom operations on a bucket (for example, viewing and modifying the bucket consistency, enabling or disabling last access time updates, or configuring search integration), use the Tenant Management API. Impact of an upgrade on groups and user accounts
+
+You might have to update groups and user accounts appropriately after the upgrade is
+
+256
+
+complete.
+
+Changes to group permissions and options
+
+After upgrading to StorageGRID 11.8, optionally assign the following new permissions to tenant user groups. Permission
+
+Description
+
+Details
+
+View all buckets
+
+Allows users to view all buckets and bucket configurations.
+
+The Manage all buckets permission supersedes the View all buckets permission.
+
+See Tenant management permissions.
+
+Verify the installed version of StorageGRID
+
+Before starting the upgrade, verify that the previous version of StorageGRID is currently installed with the latest available hotfix applied. About this task

@@ -1,0 +1,93 @@
+You can control access to the user interfaces and APIs on StorageGRID Admin Nodes by opening or closing specific ports at the external firewall. For example, you might want to prevent tenants from being able to connect to the Grid Manager at the firewall, in addition to using other methods to control system access.
+
+446
+
+If you want to configure the StorageGRID internal firewall, see Configure internal firewall. Port
+
+Description
+
+If port is open…
+
+443
+
+Default HTTPS port for Admin Nodes
+
+Web browsers and management API clients can access the Grid Manager, the Grid Management API, the Tenant Manager, and the Tenant Management API.
+
+Note: Port 443 is also used for some internal traffic.
+
+8443
+
+Restricted Grid Manager port on Admin Nodes
+
+Web browsers and management API clients can access the Grid Manager and the Grid Management API using HTTPS.
+
+Web browsers and management API clients can’t access the Tenant Manager or the Tenant Management API.
+
+Requests for internal content will be rejected.
+
+9443 Restricted Tenant Manager port on Admin Nodes
+
+Web browsers and management API clients can access the Tenant Manager and the Tenant Management API using HTTPS.
+
+Web browsers and management API clients can’t access the Grid Manager or the Grid Management API.
+
+Requests for internal content will be rejected.
+
+Single sign-on (SSO) is not available on the restricted Grid Manager or Tenant Manager ports. You must use the default HTTPS port (443) if you want users to authenticate with single sign-on.
+
+Related information
+
+Sign in to the Grid Manager
+
+Create tenant account
+
+External communications Manage internal firewall controls
+
+StorageGRID includes an internal firewall on each node that enhances the security of your grid by enabling you to control network access to the node. Use the firewall to prevent network access on all ports except those necessary for your specific grid deployment. The configuration changes you make on the Firewall control page are deployed to each node.
+
+Use the three tabs on the Firewall control page to customize the access you need for your grid.
+
+Privileged address list: Use this tab to allow selected access to closed ports. You can add IP addresses or subnets in CIDR notation that can access ports closed using the Manage external access tab.
+
+Manage external access: Use this tab to close ports that are open by default, or reopen ports previously
+
+447
+
+closed.
+
+Untrusted Client Network: Use this tab to specify whether a node trusts inbound traffic from the Client Network. The settings on this tab override the settings in the Manage external access tab.
+
+A node with an untrusted Client Network will accept only connections on load balancer endpoint ports configured on that node (global, node interface and node type bound endpoints). Related information
+
+Sign in to the Grid Manager
+
+Create tenant account
+
+External communications Manage internal firewall controls
+
+StorageGRID includes an internal firewall on each node that enhances the security of your grid by enabling you to control network access to the node. Use the firewall to prevent network access on all ports except those necessary for your specific grid deployment. The configuration changes you make on the Firewall control page are deployed to each node.
+
+Use the three tabs on the Firewall control page to customize the access you need for your grid.
+
+Privileged address list: Use this tab to allow selected access to closed ports. You can add IP addresses or subnets in CIDR notation that can access ports closed using the Manage external access tab.
+
+Manage external access: Use this tab to close ports that are open by default, or reopen ports previously
+
+447
+
+closed.
+
+Untrusted Client Network: Use this tab to specify whether a node trusts inbound traffic from the Client Network. The settings on this tab override the settings in the Manage external access tab.
+
+A node with an untrusted Client Network will accept only connections on load balancer endpoint ports configured on that node (global, node interface and node type bound endpoints).
+
+Load balancer endpoint ports are the only open ports on untrusted Client Networks, regardless of the settings on the Manage external networks tab.
+
+When trusted, all ports opened under the Manage external access tab are accessible, as well as any load balancer endpoints opened on the Client Network.
+
+The settings you make on one tab can affect the access changes you make on another tab. Be sure to check the settings on all tabs to ensure your network behaves in the way you expect.
+
+To configure internal firewall controls, see Configure firewall controls.
+
+For more information about external firewalls and network security, see Control access at external firewall. Privileged address list and Manage external access tabs

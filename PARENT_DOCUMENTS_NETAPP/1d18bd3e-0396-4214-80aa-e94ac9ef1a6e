@@ -1,0 +1,69 @@
+Default retention settings for a bucket
+
+When S3 Object Lock is enabled for a bucket, you can optionally enable default retention for the bucket and specify a default retention mode and default retention period. Default retention mode
+
+In COMPLIANCE mode:
+
+The object can’t be deleted until its retain-until-date is reached. ◦ The object’s retain-until-date can be increased, but it can’t be decreased. ◦ The object’s retain-until-date can’t be removed until that date is reached.
+
+In GOVERNANCE mode:
+
+890
+
+◦ Users with the s3:BypassGovernanceRetention permission can use the x-amz-bypass-
+
+governance-retention: true request header to bypass retention settings.
+
+These users can delete an object version before its retain-until-date is reached. ◦ These users can increase, decrease, or remove an object’s retain-until-date. Default retention period
+
+Each bucket can have a default retention period specified in years or days.
+
+How to set default retention for a bucket
+
+To set the default retention for a bucket, use either of these methods:
+
+Manage bucket settings from the Tenant Manager. See Create an S3 bucket and Update S3 Object Lock default retention.
+
+Issue a PutObjectLockConfiguration request for the bucket to specify the default mode and default number of days or years. PutObjectLockConfiguration
+
+The PutObjectLockConfiguration request allows you to set and modify the default retention mode and default retention period for a bucket that has S3 Object Lock enabled. You can also remove previously configured default retention settings.
+
+When new object versions are ingested to the bucket, the default retention mode is applied if x-amz-object- lock-mode and x-amz-object-lock-retain-until-date aren’t specified. The default retention period is used to calculate the retain-until-date if x-amz-object-lock-retain-until-date is not specified.
+
+If the default retention period is modified after ingest of an object version, the retain-until-date of the object version remains the same and is not recalculated using the new default retention period.
+
+You must have the s3:PutBucketObjectLockConfiguration permission, or be account root, to complete this operation.
+
+The Content-MD5 request header must be specified in the PUT request. Request example
+
+This example enables S3 Object Lock for a bucket and sets the default retention mode to COMPLIANCE and the default retention period to 6 years.
+
+891
+
+PUT /bucket?object-lock HTTP/1.1 Accept-Encoding: identity Content-Length: 308 Host: host Content-MD5: request header User-Agent: s3sign/1.0.0 requests/2.24.0 python/3.8.2 X-Amz-Date: date X-Amz-Content-SHA256: authorization-string Authorization: authorization-string <ObjectLockConfiguration> <ObjectLockEnabled>Enabled</ObjectLockEnabled> <Rule> <DefaultRetention> <Mode>COMPLIANCE</Mode> <Years>6</Years> </DefaultRetention> </Rule> </ObjectLockConfiguration> If the default retention period is modified after ingest of an object version, the retain-until-date of the object version remains the same and is not recalculated using the new default retention period.
+
+You must have the s3:PutBucketObjectLockConfiguration permission, or be account root, to complete this operation.
+
+The Content-MD5 request header must be specified in the PUT request. Request example
+
+This example enables S3 Object Lock for a bucket and sets the default retention mode to COMPLIANCE and the default retention period to 6 years.
+
+891
+
+PUT /bucket?object-lock HTTP/1.1 Accept-Encoding: identity Content-Length: 308 Host: host Content-MD5: request header User-Agent: s3sign/1.0.0 requests/2.24.0 python/3.8.2 X-Amz-Date: date X-Amz-Content-SHA256: authorization-string Authorization: authorization-string <ObjectLockConfiguration> <ObjectLockEnabled>Enabled</ObjectLockEnabled> <Rule> <DefaultRetention> <Mode>COMPLIANCE</Mode> <Years>6</Years> </DefaultRetention> </Rule> </ObjectLockConfiguration>
+
+How to determine the default retention for a bucket
+
+To determine if S3 Object Lock is enabled for a bucket and to see the default retention mode and retention period, use either of these methods:
+
+View the bucket in the Tenant Manager. See View S3 buckets.
+
+Issue a GetObjectLockConfiguration request. GetObjectLockConfiguration
+
+The GetObjectLockConfiguration request allows you to determine if S3 Object Lock is enabled for a bucket and, if it is enabled, see if there is a default retention mode and retention period configured for the bucket.
+
+When new object versions are ingested to the bucket, the default retention mode is applied if x-amz-object- lock-mode is not specified. The default retention period is used to calculate the retain-until-date if x-amz- object-lock-retain-until-date is not specified.
+
+You must have the s3:GetBucketObjectLockConfiguration permission, or be account root, to complete this operation. Request example
+
+892

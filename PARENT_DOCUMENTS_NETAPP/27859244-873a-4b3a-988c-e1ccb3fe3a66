@@ -1,0 +1,95 @@
+3. To see the recommended minimum soft read-only watermark, enter the following Prometheus metric, and select Execute:
+
+storagegrid_storage_volume_minimum_optimized_soft_readonly_watermark
+
+1276
+
+The last column shows the minimum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node. If this value is greater than the custom setting for the Storage Volume Soft Read-Only Watermark, the Low read-only watermark override alert is triggered for the Storage Node.
+
+4. To see the recommended maximum soft read-only watermark, enter the following Prometheus metric, and select Execute: storagegrid_storage_volume_maximum_optimized_soft_readonly_watermark
+
+The last column shows the maximum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node.
+
+5. Note the maximum optimized value for each Storage Node.
+
+Determine if you can use optimized watermarks Steps
+
+1. Select NODES.
+
+2. Repeat these steps for each online Storage Node:
+
+a. Select Storage Node > Storage. b. Scroll down to the Object Stores table.
+
+c. Compare the Available value for each object store (volume) to the maximum optimized watermark you
+
+noted for that Storage Node. 3. To see the recommended minimum soft read-only watermark, enter the following Prometheus metric, and select Execute:
+
+storagegrid_storage_volume_minimum_optimized_soft_readonly_watermark
+
+1276
+
+The last column shows the minimum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node. If this value is greater than the custom setting for the Storage Volume Soft Read-Only Watermark, the Low read-only watermark override alert is triggered for the Storage Node.
+
+4. To see the recommended maximum soft read-only watermark, enter the following Prometheus metric, and select Execute: storagegrid_storage_volume_maximum_optimized_soft_readonly_watermark
+
+The last column shows the maximum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node.
+
+5. Note the maximum optimized value for each Storage Node.
+
+Determine if you can use optimized watermarks Steps
+
+1. Select NODES.
+
+2. Repeat these steps for each online Storage Node:
+
+a. Select Storage Node > Storage. b. Scroll down to the Object Stores table.
+
+c. Compare the Available value for each object store (volume) to the maximum optimized watermark you
+
+noted for that Storage Node.
+
+3. If at least one volume on every online Storage Node has more space available than maximum optimized watermark for that node, go to Use optimized watermarks to start using the optimized watermarks.
+
+Otherwise, expand the grid as soon as possible. Either add storage volumes to an existing node or add new Storage Nodes. Then, go to Use optimized watermarks to update watermark settings.
+
+4. If you need to continue using custom values for the storage volume watermarks, silence or disable the Low read-only watermark override alert.
+
+The same custom watermark values are applied to every storage volume on every Storage Node. Using smaller-than-recommended values for storage volume watermarks might cause some storage volumes to become inaccessible (automatically unmounted) when the node reaches capacity. Use optimized watermarks
+
+Steps
+
+1. Go to SUPPORT > Other > Storage watermarks.
+
+2. Select the Use optimized values checkbox.
+
+3. Select Save.
+
+Optimized storage volume watermark settings are now in effect for each storage volume, based on the size of the Storage Node and the relative capacity of the volume.
+
+1277
+
+Troubleshoot the Storage Status (SSTS) alarm
+
+The Storage Status (SSTS) alarm is triggered if a Storage Node has insufficient free space remaining for object storage.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+The SSTS (Storage Status) alarm is triggered at the Notice level when the amount of free space on every volume in a Storage Node falls below the value of the Storage Volume Soft Read Only Watermark (CONFIGURATION > System > Storage options).
+
+For example, suppose the Storage Volume Soft Read-Only Watermark is set to 10 GB, which is its default value. The SSTS alarm is triggered if less than 10 GB of usable space remains on each storage volume in the Storage Node. If any of the volumes has 10 GB or more of available space, the alarm is not triggered.
+
+If an SSTS alarm has been triggered, you can follow these steps to better understand the issue. Steps
+
+1. Select SUPPORT > Alarms (legacy) > Current alarms.
+
+2. From the Service column, select the data center, node, and service that are associated with the SSTS alarm.
+
+The Grid Topology page appears. The Alarms tab shows the active alarms for the node and service you selected.
+
+1278
+
+In this example, both the SSTS (Storage Status) and SAVP (Total Usable Space (Percent)) alarms have been triggered at the Notice level.

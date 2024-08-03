@@ -1,0 +1,103 @@
+Request headers for server-side encryption with customer-provided encryption keys (SSE-C)
+
+Use all three of the headers if the object is encrypted with a unique key that you provided.
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify your encryption key for the object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations in Use server-side encryption. Behavior of GetObject for Cloud Storage Pool objects
+
+If an object has been stored in a Cloud Storage Pool, the behavior of a GetObject request depends on the state of the object. See HeadObject for more details.
+
+If an object is stored in a Cloud Storage Pool and one or more copies of the object also exist on the grid, GetObject requests will attempt to retrieve data from the grid, before retrieving it from the Cloud Storage Pool. State of object Request headers for server-side encryption with customer-provided encryption keys (SSE-C)
+
+Use all three of the headers if the object is encrypted with a unique key that you provided.
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify your encryption key for the object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations in Use server-side encryption. Behavior of GetObject for Cloud Storage Pool objects
+
+If an object has been stored in a Cloud Storage Pool, the behavior of a GetObject request depends on the state of the object. See HeadObject for more details.
+
+If an object is stored in a Cloud Storage Pool and one or more copies of the object also exist on the grid, GetObject requests will attempt to retrieve data from the grid, before retrieving it from the Cloud Storage Pool. State of object
+
+Behavior of GetObject
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object stored in a traditional storage pool or using erasure coding
+
+200 OK
+
+A copy of the object is retrieved.
+
+Object in Cloud Storage Pool but not yet transitioned to a non-retrievable state
+
+200 OK
+
+A copy of the object is retrieved.
+
+922
+
+State of object
+
+Behavior of GetObject
+
+Object transitioned to a non-retrievable state 403 Forbidden, InvalidObjectState
+
+Use a RestoreObject request to restore the object to a retrievable state.
+
+Object in process of being restored from a non- retrievable state
+
+403 Forbidden, InvalidObjectState
+
+Wait for the RestoreObject request to complete.
+
+Object fully restored to the Cloud Storage Pool
+
+200 OK
+
+A copy of the object is retrieved.
+
+Multipart or segmented objects in a Cloud Storage Pool
+
+If you uploaded a multipart object or if StorageGRID split a large object into segments, StorageGRID determines whether the object is available in the Cloud Storage Pool by sampling a subset of the object’s parts or segments. In some cases, a GetObject request might incorrectly return 200 OK when some parts of the object have already been transitioned to a non-retrievable state or when some parts of the object have not yet been restored. In these cases:
+
+The GetObject request might return some data but stop midway through the transfer.
+
+A subsequent GetObject request might return 403 Forbidden.
+
+GetObject and cross-grid replication
+
+If you are using grid federation and cross-grid replication is enabled for a bucket, the S3 client can verify an object’s replication status by issuing a GetObject request. The response includes the StorageGRID-specific x- ntap-sg-cgr-replication-status response header, which will have one of the following values: Grid
+
+Replication status
+
+Source
+
+SUCCESS: The replication was successful.
+
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. HeadObject
+
+You can use the S3 HeadObject request to retrieve metadata from an object without
+
+923
+
+returning the object itself. If the object is stored in a Cloud Storage Pool, you can use HeadObject to determine the object’s transition state.
+
+HeadObject and multipart objects
+
+You can use the partNumber request parameter to retrieve metadata for a specific part of a multipart or segmented object. The x-amz-mp-parts-count response element indicates how many parts the object has.

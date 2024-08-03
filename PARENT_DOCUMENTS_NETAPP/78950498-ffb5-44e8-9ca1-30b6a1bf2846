@@ -1,0 +1,93 @@
+CloudMirror replication doesn’t require versioning-enabled buckets, so CloudMirror can only maintain ordering for a key within a site. There are no guarantees that ordering will be maintained for requests to an object at different site.
+
+The object is queued for replication, subject to platform services limits (see Recommendations for using platform services). Is the object’s system metadata replicated?
+
+How are objects retrieved?
+
+Cross-grid replication
+
+Objects are automatically replicated when they are added to a bucket that has cross-grid replication enabled.
+
+Cross-grid replication creates versioned objects, and it replicates the version ID from the source bucket to the destination bucket. This allows the version order to be maintained across both grids.
+
+The object is queued for replication, subject to metadata storage limits.
+
+Yes, when an object is replicated to the other grid, its system metadata is also replicated. The metadata will be identical on both grids.
+
+Applications can retrieve or read objects by making a request to the bucket on either grid.
+
+CloudMirror replication service Objects are automatically replicated when they are added to a bucket that has been configured with a CloudMirror endpoint. Objects that existed in the source bucket before the bucket was configured with the CloudMirror endpoint aren’t replicated, unless they are modified.
+
+CloudMirror replication doesn’t require versioning-enabled buckets, so CloudMirror can only maintain ordering for a key within a site. There are no guarantees that ordering will be maintained for requests to an object at different site.
+
+The object is queued for replication, subject to platform services limits (see Recommendations for using platform services).
+
+No, when an object is replicated to the external bucket, its system metadata is updated. The metadata will differ between locations, depending on time of ingest and the behavior of the independent S3 infrastructure. Applications can retrieve or read objects by making a request either to StorageGRID or to the S3 destination. For example, suppose you use CloudMirror replication to mirror objects to a partner organization. The partner can use its own applications to read or update objects directly from the S3 destination. Using StorageGRID is not required.
+
+365
+
+Cross-grid replication
+
+CloudMirror replication service
+
+What happens if an object is deleted?
+
+Delete requests that include a version ID are never replicated to the destination grid.
+
+Delete requests that don’t include a version ID add a delete marker to the source bucket, which can optionally be replicated to the destination grid.
+
+The results will vary based on the versioning state of the source and destination buckets (which don’t need to be the same):
+
+If both buckets are versioned, a delete request will add a delete marker in both locations. If cross-grid replication is configured for only one direction, objects in the destination bucket can be deleted without affecting the source.
+
+If only the source bucket is versioned, a delete request will add a delete marker to the source but not to the destination.
+
+If neither bucket is versioned, a delete request will delete the object from the source but not from the destination.
+
+Similarly, objects in the destination bucket can be deleted without affecting the source. Create grid federation connections
+
+You can create a grid federation connection between two StorageGRID systems if you want to clone tenant details and replicate object data.
+
+As shown in the figure, creating a grid federation connection includes steps on both grids. You add the connection on one grid and complete it on the other grid. You can start from either grid.
+
+Before you begin
+
+You have reviewed the considerations and requirements for configuring grid federation connections.
+
+If you plan to use fully qualified domain names (FQDNs) for each grid instead of IP or VIP addresses, you know which names to use and you have confirmed that the DNS server for each grid has the appropriate entries.
+
+You are using a supported web browser.
+
+You have Root access permission and the provisioning passphrase for both grids.
+
+366
+
+Add connection
+
+Perform these steps on either of the two StorageGRID systems. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node on either grid.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select Add connection.
+
+4. Enter details for the connection.
+
+Field
+
+Description
+
+Connection name
+
+A unique name to help you recognize this connection, for example, "Grid 1-Grid 2." FQDN or IP for this grid
+
+One of the following:
+
+The FQDN of the grid you are currently signed into
+
+A VIP address of an HA group on this grid
+
+An IP address of an Admin Node or Gateway Node on this grid. The IP can be on any network that the destination grid can reach.
+
+Port

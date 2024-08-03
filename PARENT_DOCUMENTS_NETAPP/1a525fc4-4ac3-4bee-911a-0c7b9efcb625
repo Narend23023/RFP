@@ -1,0 +1,99 @@
+3. On the Welcome page, choose Claims aware, and select Start. 4. Select Enter data about the relying party manually, and select Next.
+
+5. Complete the Relying Party Trust wizard:
+
+a. Enter a display name for this Admin Node.
+
+For consistency, use the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page in the Grid Manager. For example, SG-DC1-ADM1.
+
+b. Skip the step to configure an optional token encryption certificate.
+
+c. On the Configure URL page, select the Enable support for the SAML 2.0 WebSSO protocol checkbox.
+
+d. Type the SAML service endpoint URL for the Admin Node:
+
+https://Admin_Node_FQDN/api/saml-response
+
+For Admin_Node_FQDN, enter the fully qualified domain name for the Admin Node. (If necessary, you can use the node’s IP address instead. However, if you enter an IP address here, be aware that you must update or recreate this relying party trust if that IP address ever changes.)
+
+e. On the Configure Identifiers page, specify the Relying Party Identifier for the same Admin Node: Admin_Node_Identifier
+
+For Admin_Node_Identifier, enter the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page. For example, SG-DC1-ADM1.
+
+f. Review the settings, save the relying party trust, and close the wizard.
+
+The Edit Claim Issuance Policy dialog box appears. For consistency, use the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page in the Grid Manager. For example, SG-DC1-ADM1.
+
+b. Skip the step to configure an optional token encryption certificate.
+
+c. On the Configure URL page, select the Enable support for the SAML 2.0 WebSSO protocol checkbox.
+
+d. Type the SAML service endpoint URL for the Admin Node:
+
+https://Admin_Node_FQDN/api/saml-response
+
+For Admin_Node_FQDN, enter the fully qualified domain name for the Admin Node. (If necessary, you can use the node’s IP address instead. However, if you enter an IP address here, be aware that you must update or recreate this relying party trust if that IP address ever changes.)
+
+e. On the Configure Identifiers page, specify the Relying Party Identifier for the same Admin Node: Admin_Node_Identifier
+
+For Admin_Node_Identifier, enter the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page. For example, SG-DC1-ADM1.
+
+f. Review the settings, save the relying party trust, and close the wizard.
+
+The Edit Claim Issuance Policy dialog box appears.
+
+If the dialog box does not appear, right-click the trust, and select Edit claim issuance policy.
+
+6. To start the Claim Rule wizard, select Add rule:
+
+a. On the Select Rule Template page, select Send LDAP Attributes as Claims from the list, and select Next.
+
+b. On the Configure Rule page, enter a display name for this rule.
+
+For example, ObjectGUID to Name ID or UPN to Name ID.
+
+c. For the Attribute Store, select Active Directory.
+
+d. In the LDAP Attribute column of the Mapping table, type objectGUID or select User-Principal-Name.
+
+e. In the Outgoing Claim Type column of the Mapping table, select Name ID from the drop-down list. f. Select Finish, and select OK.
+
+343
+
+7. Right-click the relying party trust to open its properties.
+
+8. On the Endpoints tab, configure the endpoint for single logout (SLO):
+
+a. Select Add SAML.
+
+b. Select Endpoint Type > SAML Logout.
+
+c. Select Binding > Redirect.
+
+d. In the Trusted URL field, enter the URL used for single logout (SLO) from this Admin Node: https://Admin_Node_FQDN/api/saml-logout
+
+For Admin_Node_FQDN, enter the Admin Node’s fully qualified domain name. (If necessary, you can use the node’s IP address instead. However, if you enter an IP address here, be aware that you must update or recreate this relying party trust if that IP address ever changes.) e. Select OK.
+
+9. On the Signature tab, specify the signature certificate for this relying party trust:
+
+a. Add the custom certificate:
+
+▪ If you have the custom management certificate you uploaded to StorageGRID, select that
+
+certificate.
+
+▪ If you don’t have the custom certificate, log in to the Admin Node, go the /var/local/mgmt-api
+
+directory of the Admin Node, and add the custom-server.crt certificate file.
+
+Note: Using the Admin Node’s default certificate (server.crt) is not recommended. If the Admin Node fails, the default certificate will be regenerated when you recover the node, and you will need to update the relying party trust. b. Select Apply, and select OK.
+
+The Relying Party properties are saved and closed.
+
+10. Repeat these steps to configure a relying party trust for all of the Admin Nodes in your StorageGRID system.
+
+11. When you are done, return to StorageGRID and test all relying party trusts to confirm they are configured correctly. See Use sandbox mode for instructions. Create enterprise applications in Azure AD
+
+You use Azure AD to create an enterprise application for each Admin Node in your system.
+
+Before you begin

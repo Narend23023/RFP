@@ -1,0 +1,101 @@
+a. Go back to the Grid federation page.
+
+b. Select the affected tenant, and select Clear Error in the Last error column. c. Select Yes to clear the message and update the system’s status.
+
+383
+
+d. Wait 5-6 minutes and then ingest a new object into the bucket. Confirm that the error message does
+
+not reappear.
+
+To ensure the error message is cleared, wait at least 5 minutes after the timestamp in the message before ingesting a new object.
+
+It might take up to a day for the alert to clear after it is resolved.
+
+e. Go to Identify and retry failed replication operations to identify any objects or delete markers that failed
+
+to be replicated to the other grid and to retry replication as needed. Cross-grid replication resource unavailable alert
+
+Issue
+
+The Cross-grid replication resource unavailable alert was triggered.
+
+Details
+
+This alert indicates that cross-grid replication requests are pending because a resource is unavailable. For example, there might be a network error.
+
+Recommended actions
+
+1. Monitor the alert to see if the issue resolves on its own.
+
+2. If the issue persists, determine if either grid has a Grid federation connection failure alert for the same connection or an Unable to communicate with node alert for a node. This alert might be resolved when you resolve those alerts.
+
+3. To learn more about the failure, see the instructions in Monitor grid federation connections to review the cross-grid replication metrics.
+
+4. If you can’t resolve the alert, contact technical support.
+
+Cross-grid replication will proceed as normal after the issue is resolved.
+
+Identify and retry failed replication operations After resolving the Cross-grid replication permanent failure alert, you should determine if any objects or delete markers failed to be replicated to the other grid. You can then reingest these objects or use the Grid Management API to retry replication.
+
+The Cross-grid replication permanent failure alert indicates that tenant objects can’t be replicated between the buckets on two grids for a reason that requires user intervention to resolve. This alert is typically caused by a change to either the source or the destination bucket. For details, see Troubleshoot grid federation errors.
+
+Determine if any objects failed to be replicated
+
+To determine if any objects or delete markers have not been replicated to the other grid, you can search the audit log for CGRR (Cross-Grid Replication Request) messages. This message is added to the log when StorageGRID fails to replicate an object, multipart object, or delete marker to the destination bucket. You can use the audit-explain tool to translate the results into an easier-to-read format.
+
+Before you begin
+
+384
+
+• You have Root access permission.
+
+You have the Passwords.txt file. 4. If you can’t resolve the alert, contact technical support.
+
+Cross-grid replication will proceed as normal after the issue is resolved.
+
+Identify and retry failed replication operations After resolving the Cross-grid replication permanent failure alert, you should determine if any objects or delete markers failed to be replicated to the other grid. You can then reingest these objects or use the Grid Management API to retry replication.
+
+The Cross-grid replication permanent failure alert indicates that tenant objects can’t be replicated between the buckets on two grids for a reason that requires user intervention to resolve. This alert is typically caused by a change to either the source or the destination bucket. For details, see Troubleshoot grid federation errors.
+
+Determine if any objects failed to be replicated
+
+To determine if any objects or delete markers have not been replicated to the other grid, you can search the audit log for CGRR (Cross-Grid Replication Request) messages. This message is added to the log when StorageGRID fails to replicate an object, multipart object, or delete marker to the destination bucket. You can use the audit-explain tool to translate the results into an easier-to-read format.
+
+Before you begin
+
+384
+
+• You have Root access permission.
+
+You have the Passwords.txt file.
+
+You know the IP address of the primary Admin Node.
+
+Steps
+
+1. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Search the audit.log for CGRR messages, and use the audit-explain tool to format the results.
+
+For example, this command greps for all CGRR messages in the past 30 minutes and uses the audit- explain tool.
+
+# awk -vdate=$(date -d "30 minutes ago" '+%Y-%m-%dT%H:%M:%S') '$1$2 >= date { print }' audit.log | grep CGRR | audit-explain Before you begin
+
+384
+
+• You have Root access permission.
+
+You have the Passwords.txt file.
+
+You know the IP address of the primary Admin Node.
+
+Steps

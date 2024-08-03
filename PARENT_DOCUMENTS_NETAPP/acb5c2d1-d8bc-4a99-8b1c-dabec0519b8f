@@ -1,0 +1,139 @@
+1163
+
+Code
+
+Name
+
+Service
+
+Recommended action VMFI
+
+Entries Available SSM
+
+This is an indication that additional storage is required. Contact technical support.
+
+VMFR
+
+Space Available SSM A grid node has been added, but not started.
+
+During installation, a grid node has not yet connected to the Admin Node.
+
+If a service is listed as Not Running, restart the service (/etc/init.d/<service\> restart).
+
+This alarm might also indicate that the metadata store (Cassandra database) for a Storage Node requires rebuilding.
+
+If the problem persists, contact technical support. Troubleshoot the Services: Status - Cassandra (SVST) alarm
+
+Nodes running with less than 24 GiB of installed memory can lead to performance problems and system instability. The amount of memory installed on the system should be increased to at least 24 GiB.
+
+A queue of messages can indicate that the ADC service is overloaded. Too few ADC services can be connected to the StorageGRID system. In a large deployment, the ADC service can require adding computational resources, or the system can require additional ADC services.
+
+If the available RAM gets low, determine whether this is a hardware or software issue. If it is not a hardware issue, or if available memory falls below 50 MB (the default alarm threshold), contact technical support.
+
+1163
+
+Code
+
+Name
+
+Service
+
+Recommended action VMFI
+
+Entries Available SSM
+
+This is an indication that additional storage is required. Contact technical support.
+
+VMFR
+
+Space Available SSM
+
+If the value of Space Available gets too low (see alarm thresholds), it needs to be investigated as to whether there are log files growing out of proportion, or objects taking up too much disk space (see alarm thresholds) that need to be reduced or deleted.
+
+If the problem persists, contact technical support. VMST
+
+Status
+
+SSM
+
+An alarm is triggered if the value of Status for the mounted volume is Unknown. A value of Unknown or Offline can indicate that the volume can’t be mounted or accessed due to a problem with the underlying storage device.
+
+VPRI
+
+Verification Priority
+
+BLDR, BARC
+
+By default, the value of Verification Priority is Adaptive. If Verification Priority is set to High, an alarm is triggered because storage verification can slow normal operations of the service. VSTU
+
+Object Verification Status
+
+BLDR
+
+Select SUPPORT > Tools > Grid topology. Then select site > grid node > LDR > Storage > Overview > Main.
+
+Check the operating system for any signs of block- device or file system errors.
+
+If the value of Object Verification Status is Unknown Error, it usually indicates a low-level file system or hardware problem (I/O error) that prevents the Storage Verification task from accessing stored content. Contact technical support. XAMS
+
+Unreachable Audit Repositories
+
+BADC, BARC, BCLB, BCMN, BLDR, BNMS
+
+Check network connectivity to the server hosting the Admin Node.
+
+If the problem persists, contact technical support.
+
+Log files reference
+
+Log files reference: Overview
+
+StorageGRID provides logs that are used to capture events, diagnostic messages, and error conditions. You might be asked to collect log files and forward them to technical support to assist with troubleshooting.
+
+The logs are categorized as follows:
+
+1164
+
+• StorageGRID software logs
+
+Deployment and maintenance logs
+
+Logs for third-party software
+
+About the bycast.log
+
+The details provided for each log type are for reference only. The logs are intended for advanced troubleshooting by technical support. Advanced techniques that involve reconstructing the problem history using the audit logs and the application log files are beyond the scope of these instructions. Access the logs
+
+To access the logs, you can collect log files and system data from one or more nodes as a single log file archive. Or, if the primary Admin Node is unavailable or unable to reach a specific node, you can access individual log files for each grid node as follows:
+
+1. Enter the following command: ssh admin@grid_node_IP
+
+2. Enter the password listed in the Passwords.txt file.
+
+3. Enter the following command to switch to root: su -
+
+4. Enter the password listed in the Passwords.txt file. Log file categories
+
+The StorageGRID log file archive contains the logs described for each category and additional files that contain metrics and debug command output.
+
+Archive location
+
+Description
+
+audit
+
+Audit messages generated during normal system operation.
+
+base-os-logs
+
+Base operating system information, including StorageGRID image versions. bundles
+
+Global configuration information (bundles). 1164
+
+• StorageGRID software logs
+
+Deployment and maintenance logs
+
+Logs for third-party software
+
+About the bycast.log

@@ -1,0 +1,133 @@
+The following request parameters are supported:
+
+encoding-type
+
+key-marker
+
+max-uploads
+
+prefix
+
+upload-id-marker
+
+Host
+
+Date
+
+Authorization
+
+942 x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the new object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations for using server-side encryption.
+
+Unsupported request headers
+
+The following request header is not supported and returns XNotImplemented
+
+x-amz-website-redirect-location Versioning
+
+Multipart upload consists of separate operations for initiating the upload, listing uploads, uploading parts, assembling the uploaded parts, and completing the upload. Objects are created (and versioned if applicable) when the CompleteMultipartUpload operation is performed.
+
+ListMultipartUploads
+
+The ListMultipartUploads operation lists in-progress multipart uploads for a bucket.
+
+The following request parameters are supported:
+
+encoding-type
+
+key-marker
+
+max-uploads
+
+prefix
+
+upload-id-marker
+
+Host
+
+Date
+
+Authorization
+
+942
+
+Versioning
+
+Multipart upload consists of separate operations for initiating the upload, listing uploads, uploading parts, assembling the uploaded parts, and completing the upload. Objects are created (and versioned if applicable) when the CompleteMultipartUpload operation is performed. UploadPart
+
+The UploadPart operation uploads a part in a multipart upload for an object.
+
+Supported request headers
+
+The following request headers are supported:
+
+Content-Length
+
+Content-MD5
+
+Request headers for server-side encryption
+
+If you specified SSE-C encryption for the CreateMultipartUpload request, you must also include the following request headers in each UploadPart request:
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify the same encryption key that you provided in the CreateMultipartUpload request.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the same MD5 digest that you provided in the CreateMultipartUpload request.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations in Use server-side encryption. Versioning
+
+Multipart upload consists of separate operations for initiating the upload, listing uploads, uploading parts, assembling the uploaded parts, and completing the upload. Objects are created (and versioned if applicable) when the CompleteMultipartUpload operation is performed.
+
+UploadPartCopy
+
+The UploadPartCopy operation uploads a part of an object by copying data from an existing object as the data source.
+
+The UploadPartCopy operation is implemented with all Amazon S3 REST API behavior. Subject to change without notice.
+
+This request reads and writes the object data specified in x-amz-copy-source-range within the StorageGRID system.
+
+The following request headers are supported:
+
+x-amz-copy-source-if-match
+
+943
+
+• x-amz-copy-source-if-none-match
+
+x-amz-copy-source-if-unmodified-since
+
+x-amz-copy-source-if-modified-since Request headers for server-side encryption
+
+If you specified SSE-C encryption for the CreateMultipartUpload request, you must also include the following request headers in each UploadPartCopy request:
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify the same encryption key that you provided in the CreateMultipartUpload request.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the same MD5 digest that you provided in the CreateMultipartUpload request.
+
+If the source object is encrypted using a customer-provided key (SSE-C), you must include the following three headers in the UploadPartCopy request, so the object can be decrypted and then copied:
+
+x-amz-copy-source-server-side-encryption-customer-algorithm: Specify AES256. The following request headers are supported:
+
+x-amz-copy-source-if-match
+
+943
+
+• x-amz-copy-source-if-none-match
+
+x-amz-copy-source-if-unmodified-since
+
+x-amz-copy-source-if-modified-since Request headers for server-side encryption
+
+If you specified SSE-C encryption for the CreateMultipartUpload request, you must also include the following request headers in each UploadPartCopy request:
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify the same encryption key that you provided in the CreateMultipartUpload request.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the same MD5 digest that you provided in the CreateMultipartUpload request.
+
+If the source object is encrypted using a customer-provided key (SSE-C), you must include the following three headers in the UploadPartCopy request, so the object can be decrypted and then copied:

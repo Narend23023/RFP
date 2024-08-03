@@ -1,0 +1,115 @@
+The following is an example audit message as it might appear in the audit log file:
+
+2014-07-17T03:50:47.484627 [AUDT:[RSLT(FC32):VRGN][AVER(UI32):10][ATIM(UI64):1405569047484627][ATYP(F C32):SYSU][ANID(UI32):11627225][AMID(FC32):ARNI][ATID(UI64):94457363265006 03516]]
+
+Each audit message contains a string of attribute elements. The entire string is enclosed in brackets ([ ]), and each attribute element in the string has the following characteristics:
+
+Enclosed in brackets [ ]
+
+Introduced by the string AUDT, which indicates an audit message
+
+Without delimiters (no commas or spaces) before or after Terminated by a line feed character \n
+
+Each element includes an attribute code, a data type, and a value that are reported in this format:
+
+[ATTR(type):value][ATTR(type):value]... [ATTR(type):value]\n
+
+1323
+
+The number of attribute elements in the message depends on the event type of the message. The attribute elements aren’t listed in any particular order.
+
+The following list describes the attribute elements:
+
+ATTR is a four-character code for the attribute being reported. There are some attributes that are common to all audit messages and others that are event-specific. Each audit message contains a string of attribute elements. The entire string is enclosed in brackets ([ ]), and each attribute element in the string has the following characteristics:
+
+Enclosed in brackets [ ]
+
+Introduced by the string AUDT, which indicates an audit message
+
+Without delimiters (no commas or spaces) before or after Terminated by a line feed character \n
+
+Each element includes an attribute code, a data type, and a value that are reported in this format:
+
+[ATTR(type):value][ATTR(type):value]... [ATTR(type):value]\n
+
+1323
+
+The number of attribute elements in the message depends on the event type of the message. The attribute elements aren’t listed in any particular order.
+
+The following list describes the attribute elements:
+
+ATTR is a four-character code for the attribute being reported. There are some attributes that are common to all audit messages and others that are event-specific.
+
+type is a four-character identifier of the programming data type of the value, such as UI64, FC32, and so on. The type is enclosed in parentheses ( ).
+
+value is the content of the attribute, typically a numeric or text value. Values always follow a colon (:). Values of data type CSTR are surrounded by double quotes " ". Data types
+
+Different data types are used to store information in audit messages.
+
+Type
+
+Description
+
+UI32
+
+Unsigned long integer (32 bits); it can store the numbers 0 to 4,294,967,295.
+
+UI64
+
+Unsigned double long integer (64 bits); it can store the numbers 0 to 18,446,744,073,709,551,615.
+
+FC32
+
+Four-character constant; a 32-bit unsigned integer value represented as four ASCII characters such as "ABCD." IPAD
+
+Used for IP addresses.
+
+CSTR
+
+A variable-length array of UTF-8 characters. Characters can be escaped with the following conventions:
+
+Backslash is \\.
+
+Carriage return is \r. • Double quotes is \ʺ.
+
+Line feed (new line) is \n.
+
+Characters can be replaced by their hexadecimal equivalents (in the format \xHH, where HH is the hexadecimal value representing the character). Event-specific data
+
+Each audit message in the audit log records data specific to a system event.
+
+Following the opening [AUDT: container that identifies the message itself, the next set of attributes provide information about the event or action described by the audit message. These attributes are highlighted in the following example: Different data types are used to store information in audit messages.
+
+Type
+
+Description
+
+UI32
+
+Unsigned long integer (32 bits); it can store the numbers 0 to 4,294,967,295.
+
+UI64
+
+Unsigned double long integer (64 bits); it can store the numbers 0 to 18,446,744,073,709,551,615.
+
+FC32
+
+Four-character constant; a 32-bit unsigned integer value represented as four ASCII characters such as "ABCD." IPAD
+
+Used for IP addresses.
+
+CSTR
+
+A variable-length array of UTF-8 characters. Characters can be escaped with the following conventions:
+
+Backslash is \\.
+
+Carriage return is \r. • Double quotes is \ʺ.
+
+Line feed (new line) is \n.
+
+Characters can be replaced by their hexadecimal equivalents (in the format \xHH, where HH is the hexadecimal value representing the character). Event-specific data
+
+Each audit message in the audit log records data specific to a system event.
+
+Following the opening [AUDT: container that identifies the message itself, the next set of attributes provide information about the event or action described by the audit message. These attributes are highlighted in the following example:

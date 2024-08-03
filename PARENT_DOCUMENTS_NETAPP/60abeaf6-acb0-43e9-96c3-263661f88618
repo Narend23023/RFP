@@ -1,0 +1,107 @@
+Color
+
+Alarm severity Meaning
+
+Yellow
+
+Notice
+
+The node is connected to the grid, but an unusual condition exists that does not affect normal operations.
+
+Light Orange
+
+Minor
+
+The node is connected to the grid, but an abnormal condition exists that could affect operation in the future. You should investigate to prevent escalation. Dark Orange
+
+Major
+
+The node is connected to the grid, but an abnormal condition exists that currently affects operation. This requires prompt attention to prevent escalation.
+
+Red Critical
+
+The node is connected to the grid, but an abnormal condition exists that has stopped normal operations. You should address the issue immediately.
+
+The alarm severity and corresponding threshold value can be set for every numerical attribute. The NMS service on each Admin Node continuously monitors current attribute values against configured thresholds. When an alarm is triggered, a notification is sent to all designated personnel.
+
+1120 Alarm triggering logic (legacy system)
+
+A legacy alarm is triggered when a StorageGRID attribute reaches a threshold value that evaluates to true against a combination of alarm class (Default or Global Custom) and alarm severity level. Icon
+
+Color
+
+Alarm severity Meaning
+
+Yellow
+
+Notice
+
+The node is connected to the grid, but an unusual condition exists that does not affect normal operations.
+
+Light Orange
+
+Minor
+
+The node is connected to the grid, but an abnormal condition exists that could affect operation in the future. You should investigate to prevent escalation. Dark Orange
+
+Major
+
+The node is connected to the grid, but an abnormal condition exists that currently affects operation. This requires prompt attention to prevent escalation.
+
+Red Critical
+
+The node is connected to the grid, but an abnormal condition exists that has stopped normal operations. You should address the issue immediately.
+
+The alarm severity and corresponding threshold value can be set for every numerical attribute. The NMS service on each Admin Node continuously monitors current attribute values against configured thresholds. When an alarm is triggered, a notification is sent to all designated personnel.
+
+1120
+
+Note that a severity level of Normal does not trigger an alarm.
+
+Attribute values are evaluated against the list of enabled alarms defined for that attribute. The list of alarms is checked in the following order to find the first alarm class with a defined and enabled alarm for the attribute:
+
+1. Global Custom alarms with alarm severities from Critical down to Notice.
+
+2. Default alarms with alarm severities from Critical down to Notice. After an enabled alarm for an attribute is found in the higher alarm class, the NMS service only evaluates within that class. The NMS service will not evaluate against the other lower priority classes. That is, if there is an enabled Global Custom alarm for an attribute, the NMS service only evaluates the attribute value against Global Custom alarms. Default alarms aren’t evaluated. Thus, an enabled Default alarm for an attribute can meet the criteria needed to trigger an alarm, but it will not be triggered because a Global Custom alarm (that does not meet the specified criteria) for the same attribute is enabled. No alarm is triggered and no notification is sent.
+
+Alarm triggering example
+
+You can use this example to understand how Global Custom alarms and Default alarms are triggered.
+
+For the following example, an attribute has a Global Custom alarm and a Default alarm defined and enabled as shown in the following table.
+
+Global Custom alarm threshold (enabled) Default alarm threshold (enabled)
+
+Notice
+
+>= 1500
+
+>= 1000
+
+Minor
+
+>= 15,000
+
+>= 1000
+
+Major
+
+>=150,000
+
+>= 250,000
+
+If the attribute is evaluated when its value is 1000, no alarm is triggered and no notification is sent.
+
+The Global Custom alarm takes precedence over the Default alarm. A value of 1000 does not reach the threshold value of any severity level for the Global Custom alarm. As a result, the alarm level is evaluated to be Normal.
+
+After the above scenario, if the Global Custom alarm is disabled, nothing changes. The attribute value must be reevaluated before a new alarm level is triggered.
+
+With the Global Custom alarm disabled, when the attribute value is reevaluated, the attribute value is evaluated against the threshold values for the Default alarm. The alarm level triggers a Notice level alarm and an email notification is sent to the designated personnel. Alarms of same severity
+
+If two Global Custom alarms for the same attribute have the same severity, the alarms are evaluated with a "top down" priority.
+
+For instance, if UMEM drops to 50MB, the first alarm is triggered (= 50000000), but not the one below it (<=100000000).
+
+1121
+
+If the order is reversed, when UMEM drops to 100MB, the first alarm (<=100000000) is triggered, but not the one below it (= 50000000). Notifications

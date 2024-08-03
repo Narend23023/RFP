@@ -1,0 +1,105 @@
+You have the Manage alerts or Root access permission.
+
+About this task
+
+When an alert rule is disabled, its expressions aren’t evaluated and no alerts are triggered. A basic expression is usually of the form: [metric] [operator] [value]
+
+Expressions can be any length, but appear on a single line in the user interface. At least one expression is required.
+
+This expression causes an alert to be triggered if the amount of installed RAM for a node is less than 24,000,000,000 bytes (24 GB).
+
+node_memory_MemTotal_bytes < 24000000000
+
+7. In the Duration field, enter the amount of time a condition must continuously remain in effect before the
+
+1091
+
+alert is triggered, and select the unit of time.
+
+To trigger an alert immediately when a condition becomes true, enter 0. Increase this value to prevent temporary conditions from triggering alerts.
+
+The default is 5 minutes.
+
+8. Select Save.
+
+If you edited a default alert rule, Default* appears in the Type column. If you disabled a default or custom alert rule, Disabled appears in the Status column. Disable alert rules
+
+You can change the enabled/disabled state for a default or custom alert rule.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission.
+
+About this task
+
+When an alert rule is disabled, its expressions aren’t evaluated and no alerts are triggered.
+
+In general, disabling a default alert rule is not recommended. If an alert rule is disabled, you might not detect an underlying problem until it prevents a critical operation from completing. Steps
+
+1. Select ALERTS > Rules.
+
+The Alert Rules page appears.
+
+2. Select the radio button for the alert rule you want to disable or enable.
+
+3. Select Edit rule.
+
+The Edit Rule dialog box appears.
+
+4. Select or clear the Enabled checkbox to determine if this alert rule is currently enabled.
+
+If an alert rule is disabled, its expressions aren’t evaluated and no alerts are triggered.
+
+If you disable the alert rule for a current alert, you must wait a few minutes for the alert to no longer display as an active alert.
+
+5. Select Save.
+
+Disabled appears in the Status column. Remove custom alert rules
+
+You can remove a custom alert rule if you no longer want to use it.
+
+Before you begin
+
+1092
+
+• You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission.
+
+Steps
+
+1. Select ALERTS > Rules.
+
+The Alert Rules page appears.
+
+2. Select the radio button for the custom alert rule you want to remove.
+
+You can’t remove a default alert rule.
+
+3. Select Remove custom rule.
+
+A confirmation dialog box appears.
+
+4. Select OK to remove the alert rule.
+
+Any active instances of the alert will be resolved within 10 minutes. Manage alert notifications
+
+Set up SNMP notifications for alerts
+
+If you want StorageGRID to send SNMP notifications when alerts occur, you must enable the StorageGRID SNMP agent and configure one or more trap destinations.
+
+You can use the CONFIGURATION > Monitoring > SNMP agent option in the Grid Manager or the SNMP endpoints for the Grid Management API to enable and configure the StorageGRID SNMP agent. The SNMP agent supports all three versions of the SNMP protocol.
+
+To learn how to configure the SNMP agent, see Use SNMP monitoring.
+
+After you configure the StorageGRID SNMP agent, two types of event-driven notifications can be sent:
+
+Traps are notifications sent by the SNMP agent that don’t require acknowledgment by the management system. Traps serve to notify the management system that something has happened within StorageGRID, such as an alert being triggered. Traps are supported in all three versions of SNMP. Informs are similar to traps, but they require acknowledgment by the management system. If the SNMP agent does not receive an acknowledgment within a certain amount of time, it resends the inform until an acknowledgment is received or the maximum retry value has been reached. Informs are supported in SNMPv2c and SNMPv3.
+
+Trap and inform notifications are sent when a default or custom alert is triggered at any severity level. To suppress SNMP notifications for an alert, you must configure a silence for the alert. See Silence alert notifications. You can use the CONFIGURATION > Monitoring > SNMP agent option in the Grid Manager or the SNMP endpoints for the Grid Management API to enable and configure the StorageGRID SNMP agent. The SNMP agent supports all three versions of the SNMP protocol.
+
+To learn how to configure the SNMP agent, see Use SNMP monitoring.
+
+After you configure the StorageGRID SNMP agent, two types of event-driven notifications can be sent:

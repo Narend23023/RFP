@@ -1,0 +1,55 @@
+1600
+
+Error: File system consistency check retry failed on device /dev/sdd. You can see the diagnosis information in the /var/local/log/sn- remount-volumes.log.
+
+This volume could be new or damaged. If you run sn-recovery- postinstall.sh, this volume and any data on this volume will be deleted. If you only had two copies of object data, you will temporarily have only a single copy. StorageGRID Webscale will attempt to restore data redundancy by making additional replicated copies or EC fragments, according to the rules in the active ILM policies.
+
+Don't continue to the next step if you believe that the data remaining on this volume can't be rebuilt from elsewhere in the grid (for example, if your ILM policy uses a rule that makes only one copy or if volumes have failed on multiple nodes). Instead, contact support to determine how to recover your data. ====== Device /dev/sde ====== Mount and unmount device /dev/sde and checking file system consistency: The device is consistent. Check rangedb structure on device /dev/sde: Mount device /dev/sde to /tmp/sde-654321 with rangedb mount options This device has all rangedb directories. Found LDR node id 12000078, volume number 9 in the volID file Error: This volume does not belong to this node. Fix the attached volume and re-run this script.
+
+In the example output, one storage volume was remounted successfully and three storage volumes had errors.
+
+▪ /dev/sdb passed the XFS file system consistency check and had a valid volume structure, so it was remounted successfully. Data on devices that are remounted by the script is preserved.
+
+▪ /dev/sdc failed the XFS file system consistency check because the storage volume was new or corrupt.
+
+▪ /dev/sdd could not be mounted because the disk was not initialized or the disk’s superblock was corrupted. When the script can’t mount a storage volume, it asks if you want to run the file system consistency check.
+
+▪ If the storage volume is attached to a new disk, answer N to the prompt. You don’t need check the file system on a new disk.
+
+▪ If the storage volume is attached to an existing disk, answer Y to the prompt. You can use the
+
+results of the file system check to determine the source of the corruption. The results are saved in the /var/local/log/sn-remount-volumes.log log file.
+
+▪ /dev/sde passed the XFS file system consistency check and had a valid volume structure; however, the LDR node ID in the volID file did not match the ID for this Storage Node (the configured LDR noid displayed at the top). This message indicates that this volume belongs to another Storage Node.
+
+3. Review the script output and resolve any issues.
+
+If a storage volume failed the XFS file system consistency check or could not be mounted, carefully review the error messages in the output. You must understand the implications of running the sn-recovery-postinstall.sh script on these volumes. ▪ /dev/sdd could not be mounted because the disk was not initialized or the disk’s superblock was corrupted. When the script can’t mount a storage volume, it asks if you want to run the file system consistency check.
+
+▪ If the storage volume is attached to a new disk, answer N to the prompt. You don’t need check the file system on a new disk.
+
+▪ If the storage volume is attached to an existing disk, answer Y to the prompt. You can use the
+
+results of the file system check to determine the source of the corruption. The results are saved in the /var/local/log/sn-remount-volumes.log log file.
+
+▪ /dev/sde passed the XFS file system consistency check and had a valid volume structure; however, the LDR node ID in the volID file did not match the ID for this Storage Node (the configured LDR noid displayed at the top). This message indicates that this volume belongs to another Storage Node.
+
+3. Review the script output and resolve any issues.
+
+If a storage volume failed the XFS file system consistency check or could not be mounted, carefully review the error messages in the output. You must understand the implications of running the sn-recovery-postinstall.sh script on these volumes.
+
+a. Check to make sure that the results include an entry for all of the volumes you expected. If any volumes aren’t listed, rerun the script.
+
+b. Review the messages for all mounted devices. Make sure there are no errors indicating that a storage
+
+volume does not belong to this Storage Node.
+
+In the example, the output for /dev/sde includes the following error message:
+
+Error: This volume does not belong to this node. Fix the attached volume and re-run this script.
+
+If a storage volume is reported as belonging to another Storage Node, contact technical support. If you run the sn-recovery-postinstall.sh script, the storage volume will be reformatted, which might cause data loss.
+
+c. If any storage devices could not be mounted, make a note of the device name, and repair or replace the device.
+
+You must repair or replace any storage devices that could not be mounted.

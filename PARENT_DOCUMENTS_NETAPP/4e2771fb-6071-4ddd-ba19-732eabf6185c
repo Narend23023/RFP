@@ -1,0 +1,85 @@
+e. Optionally, copy the existing audit logs from the primary Admin Node to the expansion Admin Node if you want to keep the historical log information consistent on each Admin Node. See Copy audit logs. 5. To check if expansion nodes were added with an untrusted Client Network or to change whether a node’s Client Network is untrusted or trusted, go to CONFIGURATION > Security > Firewall control.
+
+1425
+
+If the Client Network on the expansion node is untrusted, then connections to the node on the Client Network must be made using a load balancer endpoint. See Configure load balancer endpoints and Manage firewall controls.
+
+6. Configure the DNS.
+
+If you have been specifying DNS settings separately for each grid node, you must add custom per-node DNS settings for the new nodes. See Modify DNS configuration for single grid node. To ensure proper operation, specify two or three DNS servers. If you specify more than three, it is possible that only three will be used because of known OS limitations on some platforms. If you have routing restrictions in your environment, you can customize the DNS server list for individual nodes (typically all nodes at a site) to use a different set of up to three DNS servers.
+
+If possible, use DNS servers that each site can access locally to ensure that an islanded site can resolve the FQDNs for external destinations.
+
+Verify that Storage Node is active
+
+After an expansion operation that adds new Storage Nodes completes, the StorageGRID system should automatically start using the new Storage Nodes. You must use the StorageGRID system to verify that the new Storage Node is active. Steps
+
+1. Sign in to the Grid Manager using a supported web browser.
+
+2. Select NODES > Expansion Storage Node > Storage.
+
+3. Position your cursor over the Storage Used - Object Data graph to view the value for Used, which is the amount of the Total usable space that has been used for object data.
+
+4. Verify that the value of Used is increasing as you move your cursor to the right on the graph. Copy Admin Node database
+
+When adding Admin Nodes through an expansion procedure, you can optionally copy the database from the primary Admin Node to the new Admin Node. Copying the database allows you to retain historical information about attributes, alerts, and alerts.
+
+Before you begin
+
+You have completed the required expansion steps to add an Admin Node.
+
+You have the Passwords.txt file.
+
+You have the provisioning passphrase. About this task
+
+The StorageGRID software activation process creates an empty database for the NMS service on the expansion Admin Node. When the NMS service starts on the expansion Admin Node, it records information for servers and services that are currently part of the system or added later. This Admin Node database includes the following information:
+
+Alert history
+
+Alarm history
+
+1426
+
+• Historical attribute data, which is used in the charts and text reports available from the SUPPORT > Tools > Grid topology page
+
+To ensure that the Admin Node database is consistent between nodes, you can copy the database from the primary Admin Node to the expansion Admin Node.
+
+Copying the database from the primary Admin Node (thesource Admin Node) to an expansion Admin Node can take up to several hours to complete. During this period, the Grid Manager is inaccessible.
+
+Use these steps to stop the MI service and the Management API service on both the primary Admin Node and the expansion Admin Node before copying the database. Steps
+
+1. Complete the following steps on the primary Admin Node:
+
+a. Log in to the Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Run the following command: recover-access-points c. Enter the provisioning passphrase.
+
+d. Stop the MI service: service mi stop
+
+e. Stop the Management Application Program Interface (mgmt-api) service: service mgmt-api stop
+
+2. Complete the following steps on the expansion Admin Node: 1426
+
+• Historical attribute data, which is used in the charts and text reports available from the SUPPORT > Tools > Grid topology page
+
+To ensure that the Admin Node database is consistent between nodes, you can copy the database from the primary Admin Node to the expansion Admin Node.
+
+Copying the database from the primary Admin Node (thesource Admin Node) to an expansion Admin Node can take up to several hours to complete. During this period, the Grid Manager is inaccessible.
+
+Use these steps to stop the MI service and the Management API service on both the primary Admin Node and the expansion Admin Node before copying the database. Steps
+
+1. Complete the following steps on the primary Admin Node:
+
+a. Log in to the Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.

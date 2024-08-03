@@ -1,0 +1,105 @@
+The "Noncurrent time" rules must appear in the policy before the rules that apply to the current object version. Otherwise, the noncurrent object versions will never be matched by the "Noncurrent time" rule. At ingest, create three replicated copies and store one copy at each of three sites. Keep copies of the current object version for 10 years.
+
+When you simulate the example policy, you would expect test objects to be evaluated as follows:
+
+Any noncurrent object versions would be matched by the first rule. If a noncurrent object version is older than 2 years, it is permanently deleted by ILM (all copies of the noncurrent version removed from the grid).
+
+The current object version would be matched by the second rule. When the current object version has been stored for 10 years, the ILM process adds a delete marker as the current version of the object, and it makes the previous object version "noncurrent". The next time ILM evaluation occurs, this noncurrent version is matched by the first rule. As a result, the copy at Site 3 is purged and the two copies at Site 1 and Site 2 are stored for 2 more years.
+
+702
+
+Example 5: ILM rules and policy for Strict ingest behavior You can use a location filter and the Strict ingest behavior in a rule to prevent objects from being saved at a particular data center location. The "Noncurrent time" rules must appear in the policy before the rules that apply to the current object version. Otherwise, the noncurrent object versions will never be matched by the "Noncurrent time" rule. At ingest, create three replicated copies and store one copy at each of three sites. Keep copies of the current object version for 10 years.
+
+When you simulate the example policy, you would expect test objects to be evaluated as follows:
+
+Any noncurrent object versions would be matched by the first rule. If a noncurrent object version is older than 2 years, it is permanently deleted by ILM (all copies of the noncurrent version removed from the grid).
+
+The current object version would be matched by the second rule. When the current object version has been stored for 10 years, the ILM process adds a delete marker as the current version of the object, and it makes the previous object version "noncurrent". The next time ILM evaluation occurs, this noncurrent version is matched by the first rule. As a result, the copy at Site 3 is purged and the two copies at Site 1 and Site 2 are stored for 2 more years.
+
+702
+
+Example 5: ILM rules and policy for Strict ingest behavior You can use a location filter and the Strict ingest behavior in a rule to prevent objects from being saved at a particular data center location.
+
+In this example, a Paris-based tenant does not want to store some objects outside of the EU because of regulatory concerns. Other objects, including all objects from other tenant accounts, can be stored at either the Paris data center or the US data center.
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+Related information
+
+Ingest options
+
+Create ILM rule: Select ingest behavior
+
+ILM rule 1 for example 5: Strict ingest to guarantee Paris data center
+
+This example ILM rule uses the Strict ingest behavior to guarantee that objects saved by a Paris-based tenant to S3 buckets with the region set to eu-west-3 region (Paris) are never stored at the US data center. This rule applies to objects that belong to the Paris tenant and that have the S3 bucket region set to eu-west-3 (Paris).
+
+Rule definition
+
+Example value
+
+Tenant account
+
+Paris tenant
+
+Advanced filter
+
+Location constraint equals eu-west-3
+
+Storage pools
+
+Site 1 (Paris)
+
+Rule name
+
+Strict ingest to guarantee Paris data center Reference time
+
+Ingest time
+
+Placements
+
+On Day 0, keep two replicated copies forever in Site 1 (Paris)
+
+Ingest behavior
+
+Strict. Always use this rule’s placements on ingest. Ingest fails if it is not possible to store two copies of the object at the Paris data center.
+
+703
+
+ILM rule 2 for example 5: Balanced ingest for other objects
+
+This example ILM rule uses the Balanced ingest behavior to provide optimum ILM efficiency for any objects not matched by the first rule. Two copies of all objects matched by this rule will be stored—one at the US data center and one at the Paris data center. If the rule can’t be satisfied immediately, interim copies are stored at any available location.
+
+This rule applies to objects that belong to any tenant and any region. Rule definition
+
+Example value
+
+Tenant account
+
+Ignore
+
+Advanced filter
+
+Not specified
+
+Storage pools
+
+Site 1 (Paris) and Site 2 (US)
+
+Rule name
+
+2 Copies 2 Data Centers
+
+Reference time
+
+Ingest time
+
+Placements
+
+On Day 0, keep two replicated copies forever at two data centers
+
+704
+
+Rule definition
+
+Example value Ingest behavior

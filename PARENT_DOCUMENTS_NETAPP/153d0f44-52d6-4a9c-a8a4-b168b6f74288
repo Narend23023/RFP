@@ -1,0 +1,89 @@
+902
+
+Operations on the service
+
+The StorageGRID system supports the following operations on the service. Operation
+
+Implementation
+
+ListBuckets
+
+Implemented with all Amazon S3 REST API behavior. Subject to change without notice.
+
+(previously named GET Service)
+
+GET Storage Usage
+
+The StorageGRID GET Storage Usage request tells you the total amount of storage in use by an account, and for each bucket associated with the account. This is an operation on the service with a path of / and a custom query parameter (?x-ntap-sg-usage) added.
+
+OPTIONS /
+
+Client applications can issue OPTIONS / requests to the S3 port on a Storage Node, without providing S3 authentication credentials, to determine whether the Storage Node is available. You can use this request for monitoring, or to allow external load balancers to identify when a Storage Node is down. Operations on buckets
+
+The StorageGRID system supports a maximum of 1,000 buckets for each S3 tenant account. You can use query parameters to add authentication information to a URL. This is known as presigning the URL, which can be used to grant temporary access to specific resources. Users with the presigned URL don’t need to know the secret access key to access the resource, which enables you to provide third-party restricted access to a resource.
+
+902
+
+Operations on the service
+
+The StorageGRID system supports the following operations on the service. Operation
+
+Implementation
+
+ListBuckets
+
+Implemented with all Amazon S3 REST API behavior. Subject to change without notice.
+
+(previously named GET Service)
+
+GET Storage Usage
+
+The StorageGRID GET Storage Usage request tells you the total amount of storage in use by an account, and for each bucket associated with the account. This is an operation on the service with a path of / and a custom query parameter (?x-ntap-sg-usage) added.
+
+OPTIONS /
+
+Client applications can issue OPTIONS / requests to the S3 port on a Storage Node, without providing S3 authentication credentials, to determine whether the Storage Node is available. You can use this request for monitoring, or to allow external load balancers to identify when a Storage Node is down. Operations on buckets
+
+The StorageGRID system supports a maximum of 1,000 buckets for each S3 tenant account.
+
+Bucket name restrictions follow the AWS US Standard region restrictions, but you should further restrict them to DNS naming conventions to support S3 virtual hosted-style requests.
+
+See the following for more information:
+
+Amazon Simple Storage Service User Guide: Bucket Restrictions and Limitations
+
+Configure S3 endpoint domain names
+
+The ListObjects (GET Bucket) and ListObjectVersions (GET Bucket object versions) operations support StorageGRID consistency values.
+
+You can check whether updates to last access time are enabled or disabled for individual buckets. See GET Bucket last access time.
+
+The following table describes how StorageGRID implements S3 REST API bucket operations. To perform any of these operations, the necessary access credentials must be provided for the account.
+
+903
+
+Operation
+
+Implementation CreateBucket
+
+Creates a new bucket. By creating the bucket, you become the bucket owner.
+
+Bucket names must comply with the following rules:
+
+Must be unique across each StorageGRID system (not just unique within the tenant account). ◦ Must be DNS compliant. ◦ Must contain at least 3 and no more than 63 characters. ◦ Can be a series of one or more labels, with adjacent labels separated by
+
+a period. Each label must start and end with a lowercase letter or a number and can only use lowercase letters, numbers, and hyphens.
+
+Must not look like a text-formatted IP address. ◦ Should not use periods in virtual hosted style requests. Periods will cause problems with server wildcard certificate verification. By default, buckets are created in the us-east-1 region; however, you can use the LocationConstraint request element in the request body to specify a different region. When using the LocationConstraint element, you must specify the exact name of a region that has been defined using the Grid Manager or the Grid Management API. Contact your system administrator if you don’t know the region name you should use. Note: An error will occur if your CreateBucket request uses a region that has not been defined in StorageGRID.
+
+You can include the x-amz-bucket-object-lock-enabled request header to create a bucket with S3 Object Lock enabled. See Use S3 REST API to configure S3 Object Lock.
+
+You must enable S3 Object Lock when you create the bucket. You can’t add or disable S3 Object Lock after a bucket is created. S3 Object Lock requires bucket versioning, which is enabled automatically when you create the bucket. DeleteBucket
+
+Deletes the bucket.
+
+DeleteBucketCors
+
+Deletes the CORS configuration for the bucket.
+
+DeleteBucketEncryption

@@ -1,0 +1,101 @@
+If the local user can’t sign in and you are confident that the credentials are correct, go to the next step.
+
+6. Use Secure Shell (ssh) to log in to the Admin Node: a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+7. View the status of all services running on the grid node: storagegrid-status
+
+Make sure the nms, mi, nginx, and mgmt api services are all running.
+
+The output is updated immediately if the status of a service changes.
+
+1292 $ storagegrid-status Host Name 99-211 IP Address 10.96.99.211 Operating System Kernel 4.19.0 Verified Operating System Environment Debian 10.1 Verified StorageGRID Webscale Release 11.4.0 Verified Networking Verified Storage Subsystem Verified Database Engine 5.5.9999+default Running Network Monitoring 11.4.0 Running Time Synchronization 1:4.2.8p10+dfsg Running ams 11.4.0 Running cmn 11.4.0 Running nms 11.4.0 Running ssm 11.4.0 Running mi 11.4.0 Running dynip 11.4.0 Running nginx 1.10.3 Running tomcat 9.0.27 Running grafana 6.4.3 Running mgmt api 11.4.0 Running prometheus 11.4.0 Running persistence 11.4.0 Running ade exporter 11.4.0 Running alertmanager 11.4.0 Running attrDownPurge 11.4.0 Running attrDownSamp1 11.4.0 Running attrDownSamp2 11.4.0 Running node exporter 0.17.0+ds Running sg snmp agent 11.4.0 Running
+
+8. Confirm that the nginx-gw service is running # service nginx-gw status
+
+9. Use Lumberjack to collect logs: # /usr/local/sbin/lumberjack.rb If the failed authentication happened in the past, you can use the --start and --end Lumberjack script options to specify the appropriate time range. Use lumberjack -h for details on these options.
+
+The output to the terminal indicates where the log archive has been copied.
+
+10. Review the following logs:
+
+/var/local/log/bycast.log ◦ /var/local/log/bycast-err.log ◦ /var/local/log/nms.log ◦ **/*commands.txt
+
+1293
+
+11. If you could not identify any issues with the Admin Node, issue either of the following commands to
+
+determine the IP addresses of the three Storage Nodes that run the ADC service at your site. Typically, these are the first three Storage Nodes that were installed at the site. # cat /etc/hosts
+
+# vi /var/local/gpt-data/specs/grid.xml
+
+Admin Nodes use the ADC service during the authentication process.
+
+12. From the Admin Node, log in to each of the ADC Storage Nodes, using the IP addresses you identified.
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+13. View the status of all services running on the grid node: storagegrid-status
+
+Make sure the idnt, acct, nginx, and cassandra services are all running. 1293
+
+11. If you could not identify any issues with the Admin Node, issue either of the following commands to
+
+determine the IP addresses of the three Storage Nodes that run the ADC service at your site. Typically, these are the first three Storage Nodes that were installed at the site. # cat /etc/hosts
+
+# vi /var/local/gpt-data/specs/grid.xml
+
+Admin Nodes use the ADC service during the authentication process.
+
+12. From the Admin Node, log in to each of the ADC Storage Nodes, using the IP addresses you identified.
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+13. View the status of all services running on the grid node: storagegrid-status
+
+Make sure the idnt, acct, nginx, and cassandra services are all running.
+
+14. Repeat steps Use Lumberjack to collect logs and Review logs to review the logs on the Storage Nodes.
+
+15. If you are unable to resolve the issue, contact technical support.
+
+Provide the logs you collected to technical support. See also Log files reference. User interface issues
+
+The user interface for the Grid Manager or the Tenant Manager might not respond as expected after StorageGRID software is upgraded.
+
+Steps
+
+1. Make sure you are using a supported web browser.
+
+Browser support can change with each StorageGRID release. Confirm you are using browser that is supported by your StorageGRID version.
+
+2. Clear your web browser cache.
+
+Clearing the cache removes outdated resources used by the previous version of StorageGRID software, and permits the user interface to operate correctly again. For instructions, see the documentation for your web browser.
+
+1294
+
+Unavailable Admin Node

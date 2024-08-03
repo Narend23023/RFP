@@ -1,0 +1,79 @@
+7. When you have approved all grid nodes, enter the Provisioning Passphrase, and select Expand.
+
+After a few minutes, this page updates to display the status of the expansion procedure. When tasks that affect individual grid nodes are in progress, the Grid Node Status section lists the current status for each grid node.
+
+During the "Installing grid nodes" step for a new appliance, the StorageGRID Appliance Installer shows installation moving from Stage 3 to Stage 4, Finalize Installation. When Stage 4 completes, the controller is rebooted.
+
+A site expansion includes an additional task to configure Cassandra for the new site.
+
+8. As soon as the Download Recovery Package link appears, download the Recovery Package file. You must download an updated copy of the Recovery Package file as soon as possible after making grid
+
+1422
+
+topology changes to the StorageGRID system. The Recovery Package file allows you to restore the system if a failure occurs.
+
+a. Select the download link. b. Enter the provisioning passphrase, and select Start Download.
+
+c. When the download completes, open the .zip file and confirm that you can access the contents,
+
+including the Passwords.txt file.
+
+d. Copy the downloaded Recovery Package file (.zip) to two safe, secure, and separate locations.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system.
+
+9. If you are adding Storage Nodes to an existing site or adding a site, monitor the Cassandra stages, which occur when services are started on the new grid nodes.
+
+Don’t reboot any Storage Nodes during either the "Expanding the Cassandra cluster" or "Starting Cassandra and streaming data" stages. These stages might take many hours to complete for each new Storage Node, especially if existing Storage Nodes contain a large amount of object metadata.
+
+1423
+
+Adding Storage Nodes If you are adding Storage Nodes to an existing site, review the percentage shown in the "Starting Cassandra and streaming data" status message.
+
+This percentage estimates how complete the Cassandra streaming operation is, based on the total amount of Cassandra data available and the amount that has already been written to the new node.
+
+Adding site
+
+If you are adding a new site, use nodetool status to monitor the progress of Cassandra streaming and to see how much metadata has been copied to the new site during the "Expanding the Cassandra cluster" stage. The total Data Load on the new site should be within about 20% of the total of a current site.
+
+10. Continue monitoring the expansion until all tasks are complete and the Configure Expansion button reappears.
+
+After you finish
+
+Depending on which types of grid nodes you added, perform additional integration and configuration steps. See Configuration steps after expansion.
+
+Configure expanded system Configuration steps after expansion
+
+After completing an expansion, you must perform additional integration and configuration steps.
+
+About this task
+
+You must complete the configuration tasks listed below for the grid nodes or sites you are adding in your expansion. Some tasks might be optional, depending on the options selected when installing and administering your system, and how you want to configure the nodes and sites added during the expansion.
+
+1424
+
+Steps
+
+1. If you added a site:
+
+Create a storage pool for the site and each storage grade you selected for the new Storage Nodes. ◦ Confirm that the ILM policy meets the new requirements. If rule changes are required, create new rules and update the ILM policy. If the rules are already correct, activate a new policy with no rule changes to ensure StorageGRID uses the new nodes. 10. Continue monitoring the expansion until all tasks are complete and the Configure Expansion button reappears.
+
+After you finish
+
+Depending on which types of grid nodes you added, perform additional integration and configuration steps. See Configuration steps after expansion.
+
+Configure expanded system Configuration steps after expansion
+
+After completing an expansion, you must perform additional integration and configuration steps.
+
+About this task
+
+You must complete the configuration tasks listed below for the grid nodes or sites you are adding in your expansion. Some tasks might be optional, depending on the options selected when installing and administering your system, and how you want to configure the nodes and sites added during the expansion.
+
+1424
+
+Steps
+
+1. If you added a site:
+
+Create a storage pool for the site and each storage grade you selected for the new Storage Nodes. ◦ Confirm that the ILM policy meets the new requirements. If rule changes are required, create new rules and update the ILM policy. If the rules are already correct, activate a new policy with no rule changes to ensure StorageGRID uses the new nodes.

@@ -1,0 +1,45 @@
+718 select CONFIGURATION > Security > Firewall control > Untrusted Client Networks and indicate that the Client Network on the Gateway Node is untrusted. The Gateway Node only accepts inbound traffic on the ports explicitly configured as load balancer endpoints. Guidelines for hardware appliance nodes
+
+StorageGRID hardware appliances are specially designed for use in a StorageGRID system. Some appliances can be used as Storage Nodes. Other appliances can be used as Admin Nodes or Gateway Nodes. You can combine appliance nodes with software-based nodes or deploy fully engineered, all-appliance grids.
+
+Follow these guidelines to secure any hardware appliance nodes in your StorageGRID system:
+
+If the appliance uses SANtricity System Manager for storage controller management, prevent untrusted clients from accessing SANtricity System Manager over the network.
+
+If the appliance has a baseboard management controller (BMC), be aware that the BMC management port allows low-level hardware access. Connect the BMC management port only to a secure, trusted, internal management network. If no such network is available, leave the BMC management port unconnected or blocked, unless a BMC connection is requested by technical support. If the appliance supports remote management of the controller hardware over Ethernet using the Intelligent Platform Management Interface (IPMI) standard, block untrusted traffic on port 623.
+
+You can enable or disable remote IPMI access for all appliances containing a BMC. The remote IPMI interface allows low-level hardware access to your StorageGRID appliances by anyone with a BMC account and password. If you do not need remote IPMI access to the BMC, disable this option using one of the following methods: In Grid Manager, go to CONFIGURATION > Security > Security settings > Appliances and clear the Enable remote IPMI access checkbox. In the Grid management API, use the private endpoint: PUT /private/bmc.
+
+For appliance models containing SED, FDE, or FIPS NL-SAS drives that you manage with SANtricity System Manager, enable and configure SANtricity Drive Security. For appliance models containing SED or FIPS NVMe SSDs that you manage using the StorageGRID Appliance Installer and Grid Manager, enable and configure StorageGRID drive encryption.
+
+For appliances without SED, FDE, or FIPS drives, enable and configure StorageGRID software node encryption using a Key Management Server (KMS).
+
+Hardening guidelines for TLS and SSH
+
+You should replace the default certificates created during installation and select the appropriate security policy for TLS and SSH connections.
+
+Hardening guidelines for certificates
+
+You should replace the default certificates created during installation with your own custom certificates. You can enable or disable remote IPMI access for all appliances containing a BMC. The remote IPMI interface allows low-level hardware access to your StorageGRID appliances by anyone with a BMC account and password. If you do not need remote IPMI access to the BMC, disable this option using one of the following methods: In Grid Manager, go to CONFIGURATION > Security > Security settings > Appliances and clear the Enable remote IPMI access checkbox. In the Grid management API, use the private endpoint: PUT /private/bmc.
+
+For appliance models containing SED, FDE, or FIPS NL-SAS drives that you manage with SANtricity System Manager, enable and configure SANtricity Drive Security. For appliance models containing SED or FIPS NVMe SSDs that you manage using the StorageGRID Appliance Installer and Grid Manager, enable and configure StorageGRID drive encryption.
+
+For appliances without SED, FDE, or FIPS drives, enable and configure StorageGRID software node encryption using a Key Management Server (KMS).
+
+Hardening guidelines for TLS and SSH
+
+You should replace the default certificates created during installation and select the appropriate security policy for TLS and SSH connections.
+
+Hardening guidelines for certificates
+
+You should replace the default certificates created during installation with your own custom certificates.
+
+For many organizations, the self-signed digital certificate for StorageGRID web access is not compliant with their information security policies. On production systems, you should install a CA-signed digital certificate for use in authenticating StorageGRID. Specifically, you should use custom server certificates instead of these default certificates:
+
+719
+
+• Management interface certificate: Used to secure access to the Grid Manager, the Tenant Manager, the
+
+Grid Management API, and the Tenant Management API.
+
+S3 and Swift API certificate: Used to secure access to Storage Nodes and Gateway Nodes, which S3 and Swift client applications use to upload and download object data. See Manage security certificates for details and instructions.

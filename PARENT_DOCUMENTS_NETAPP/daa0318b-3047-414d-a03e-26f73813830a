@@ -1,0 +1,61 @@
+To allow for continued availability, ensure that your ILM policy contains rules that specify storing multiple copies of each object. You must also ensure that all external S3 or Swift clients are configured to send requests to one of the following:
+
+A high availability (HA) group virtual IP address
+
+A high availability third-party load balancer
+
+Multiple Gateway Nodes for each client
+
+Multiple Storage Nodes for each client
+
+Client applications might experience short-term disruptions The StorageGRID system can ingest and retrieve data from client applications throughout the upgrade process; however, client connections to individual Gateway Nodes or Storage Nodes might be disrupted temporarily if the upgrade needs to restart services on those nodes. Connectivity will be restored after the upgrade process completes and services resume on the individual nodes.
+
+You might need to schedule downtime to apply an upgrade if loss of connectivity for a short period is not
+
+254
+
+acceptable. You can use selective approval to schedule when certain nodes are updated.
+
+You can use multiple gateways and high availability (HA) groups to provide automatic failover during the upgrade process. See the instructions for configuring high availability groups.
+
+Appliance firmware is upgraded During the StorageGRID 11.8 upgrade:
+
+All StorageGRID appliance nodes are automatically upgraded to StorageGRID Appliance Installer firmware version 3.8.
+
+SG6060 and SGF6024 appliances are automatically upgraded to BIOS firmware version 3B07.EX and BMC firmware version 3.99.07.
+
+SG100 and SG1000 appliances are automatically upgraded to BIOS firmware version 3B12.EC and BMC firmware version 4.73.07.
+
+SGF6112 appliance is automatically upgraded to BIOS firmware version 3A10.QD and BMC firmware version 3.15.07.
+
+SGF6112 is converted from legacy boot mode to UEFI boot mode with secure boot enabled.
+
+SG110 and SG1100 appliances were delivered with StorageGRID 11.8 compatible BIOS firmware.
+
+ILM policies are handled differently according to their status
+
+The active policy will remain the same after upgrade.
+
+Only the latest 10 historical policies are preserved on upgrade.
+
+If there is a proposed policy, it will be deleted during upgrade.
+
+Alerts might be triggered Alerts might be triggered when services start and stop and when the StorageGRID system is operating as a mixed-version environment (some grid nodes running an earlier version, while others have been upgraded to a later version). Other alerts might be triggered after the upgrade completes.
+
+For example, you might see the Unable to communicate with node alert when services are stopped, or you might see the Cassandra communication error alert when some nodes have been upgraded to StorageGRID 11.8 but other nodes are still running StorageGRID 11.7. In general, these alerts will clear when the upgrade completes.
+
+The ILM placement unachievable alert might be triggered when Storage Nodes are stopped during the upgrade to StorageGRID 11.8. This alert might persist for 1 day after the upgrade completes.
+
+After the upgrade completes, you can review any upgrade-related alerts by selecting Recently resolved alerts or Current alerts from the Grid Manager dashboard. Many SNMP notifications are generated
+
+Be aware that a large number of SNMP notifications might be generated when grid nodes are stopped and restarted during the upgrade. To avoid excessive notifications, clear the Enable SNMP Agent Notifications checkbox (CONFIGURATION > Monitoring > SNMP agent) to disable SNMP notifications before you start the upgrade. Then, re-enable notifications after the upgrade is complete.
+
+255
+
+Configuration changes are restricted Alerts might be triggered Alerts might be triggered when services start and stop and when the StorageGRID system is operating as a mixed-version environment (some grid nodes running an earlier version, while others have been upgraded to a later version). Other alerts might be triggered after the upgrade completes.
+
+For example, you might see the Unable to communicate with node alert when services are stopped, or you might see the Cassandra communication error alert when some nodes have been upgraded to StorageGRID 11.8 but other nodes are still running StorageGRID 11.7. In general, these alerts will clear when the upgrade completes.
+
+The ILM placement unachievable alert might be triggered when Storage Nodes are stopped during the upgrade to StorageGRID 11.8. This alert might persist for 1 day after the upgrade completes.
+
+After the upgrade completes, you can review any upgrade-related alerts by selecting Recently resolved alerts or Current alerts from the Grid Manager dashboard. Many SNMP notifications are generated

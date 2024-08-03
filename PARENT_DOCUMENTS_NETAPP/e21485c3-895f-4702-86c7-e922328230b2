@@ -1,0 +1,127 @@
+Copying the database from the primary Admin Node (thesource Admin Node) to an expansion Admin Node can take up to several hours to complete. During this period, the Grid Manager is inaccessible.
+
+Use these steps to stop the MI service and the Management API service on both the primary Admin Node and the expansion Admin Node before copying the database. Steps
+
+1. Complete the following steps on the primary Admin Node:
+
+a. Log in to the Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Run the following command: recover-access-points c. Enter the provisioning passphrase.
+
+d. Stop the MI service: service mi stop
+
+e. Stop the Management Application Program Interface (mgmt-api) service: service mgmt-api stop
+
+2. Complete the following steps on the expansion Admin Node:
+
+a. Log in to the expansion Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the MI service: service mi stop c. Stop the mgmt-api service: service mgmt-api stop
+
+d. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+e. Enter the SSH Access Password listed in the Passwords.txt file.
+
+f. Copy the database from the source Admin Node to the expansion Admin Node:
+
+/usr/local/mi/bin/mi-clone-db.sh Source_Admin_Node_IP
+
+g. When prompted, confirm that you want to overwrite the MI database on the expansion Admin Node.
+
+The database and its historical data are copied to the expansion Admin Node. When the copy operation is done, the script starts the expansion Admin Node.
+
+1427
+
+h. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter:ssh-add -D
+
+3. Restart the services on the primary Admin Node: service servermanager start
+
+Copy Prometheus metrics
+
+After adding a new Admin Node, you can optionally copy the historical metrics maintained by Prometheus from the primary Admin Node to the new Admin Node. Copying the metrics ensures that historical metrics are consistent between Admin Nodes.
+
+Before you begin
+
+The new Admin Node is installed and running.
+
+You have the Passwords.txt file.
+
+You have the provisioning passphrase. About this task
+
+When you add an Admin Node, the software installation process creates a new Prometheus database. You can keep the historical metrics consistent between nodes by copying the Prometheus database from the primary Admin Node (the source Admin Node) to the new Admin Node.
+
+Copying the Prometheus database might take an hour or more. Some Grid Manager features will be unavailable while services are stopped on the source Admin Node. Steps
+
+1. Log in to the source Admin Node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+2. From the source Admin Node, stop the Prometheus service: service prometheus stop
+
+3. Complete the following steps on the new Admin Node: a. Log in to the new Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file. Copying the Prometheus database might take an hour or more. Some Grid Manager features will be unavailable while services are stopped on the source Admin Node. Steps
+
+1. Log in to the source Admin Node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+2. From the source Admin Node, stop the Prometheus service: service prometheus stop
+
+3. Complete the following steps on the new Admin Node: a. Log in to the new Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the new Admin Node:
+
+/usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+1428

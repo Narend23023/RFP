@@ -1,0 +1,71 @@
+The curl workflow might time out if you perform it too slowly. You might see the error: A valid SubjectConfirmation was not found on this Response.
+
+The example curl workflow does not protect the password from being seen by other users.
+
+If you have a URL-encoding issue, you might see the error: Unsupported SAML version. Steps
+
+1. Select one of the following methods to obtain an authentication token: ◦ Use the storagegrid-ssoauth.py Python script. Go to step 2. ◦ Use curl requests. Go to step 3.
+
+2. If you want to use the storagegrid-ssoauth.py script, pass the script to the Python interpreter and run the script.
+
+When prompted, enter values for the following arguments:
+
+The SSO method. Enter ADFS or adfs. ◦ The SSO username ◦ The domain where StorageGRID is installed ◦ The address for StorageGRID ◦ The tenant account ID, if you want to access the Tenant Management API.
+
+293
+
+The StorageGRID authorization token is provided in the output. You can now use the token for other requests, similar to how you would use the API if SSO was not being used.
+
+3. If you want to use curl requests, use the following procedure.
+
+a. Declare the variables needed to sign in. export SAMLUSER='my-sso-username' export SAMLPASSWORD='my-password' export SAMLDOMAIN='my-domain' export TENANTACCOUNTID='12345' export STORAGEGRID_ADDRESS='storagegrid.example.com' export AD_FS_ADDRESS='adfs.example.com'
+
+To access the Grid Management API, use 0 as TENANTACCOUNTID.
+
+b. To receive a signed authentication URL, issue a POST request to /api/v3/authorize-saml, and
+
+remove the additional JSON encoding from the response.
+
+This example shows a POST request for a signed authentication URL for TENANTACCOUNTID. The results will be passed to python -m json.tool to remove the JSON encoding.
+
+curl -X POST "https://$STORAGEGRID_ADDRESS/api/v3/authorize-saml" \ -H "accept: application/json" -H "Content-Type: application/json" \ --data "{\"accountId\": \"$TENANTACCOUNTID\"}" | python -m json.tool 3. If you want to use curl requests, use the following procedure.
+
+a. Declare the variables needed to sign in. export SAMLUSER='my-sso-username' export SAMLPASSWORD='my-password' export SAMLDOMAIN='my-domain' export TENANTACCOUNTID='12345' export STORAGEGRID_ADDRESS='storagegrid.example.com' export AD_FS_ADDRESS='adfs.example.com'
+
+To access the Grid Management API, use 0 as TENANTACCOUNTID.
+
+b. To receive a signed authentication URL, issue a POST request to /api/v3/authorize-saml, and
+
+remove the additional JSON encoding from the response.
+
+This example shows a POST request for a signed authentication URL for TENANTACCOUNTID. The results will be passed to python -m json.tool to remove the JSON encoding.
+
+curl -X POST "https://$STORAGEGRID_ADDRESS/api/v3/authorize-saml" \ -H "accept: application/json" -H "Content-Type: application/json" \ --data "{\"accountId\": \"$TENANTACCOUNTID\"}" | python -m json.tool
+
+The response for this example includes a signed URL that is URL-encoded, but it does not include the additional JSON-encoding layer.
+
+294 { "apiVersion": "3.0", "data": "https://adfs.example.com/adfs/ls/?SAMLRequest=fZHLbsIwEEV%2FJTuv7... sSl%2BfQ33cvfwA%3D&RelayState=12345", "responseTime": "2018-11-06T16:30:23.355Z", "status": "success" }
+
+c. Save the SAMLRequest from the response for use in subsequent commands.
+
+export SAMLREQUEST='fZHLbsIwEEV%2FJTuv7...sSl%2BfQ33cvfwA%3D'
+
+d. Get a full URL that includes the client request ID from AD FS.
+
+One option is to request the login form using the URL from the previous response. curl "https://$AD_FS_ADDRESS/adfs/ls/?SAMLRequest= $SAMLREQUEST&RelayState=$TENANTACCOUNTID" | grep 'form method="post" id="loginForm"'
+
+The response includes the client request ID:
+
+<form method="post" id="loginForm" autocomplete="off" novalidate="novalidate" onKeyPress="if (event && event.keyCode == 13) Login.submitLoginRequest();" action="/adfs/ls/? SAMLRequest=fZHRToMwFIZfhb...UJikvo77sXPw%3D%3D&RelayState=12345&clie nt-request-id=00000000-0000-0000-ee02-0080000000de" > e. Save the client request ID from the response.
+
+export SAMLREQUESTID='00000000-0000-0000-ee02-0080000000de'
+
+f. Send your credentials to the form action from the previous response. curl -X POST "https://$AD_FS_ADDRESS /adfs/ls/?SAMLRequest=$SAMLREQUEST&RelayState=$TENANTACCOUNTID&client -request-id=$SAMLREQUESTID" \ --data "UserName=$SAMLUSER@$SAMLDOMAIN&Password= $SAMLPASSWORD&AuthMethod=FormsAuthentication" --include
+
+295
+
+296
+
+AD FS returns a 302 redirect, with additional information in the headers.
+
+If multi-factor authentication (MFA) is enabled for your SSO system, the form post will also contain the second password or other credentials. export SAMLREQUESTID='00000000-0000-0000-ee02-0080000000de'

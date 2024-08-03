@@ -1,0 +1,121 @@
+Management audit message Client reads
+
+Normal
+
+Client read audit messages
+
+Client writes
+
+Normal
+
+Client write audit messages
+
+ILM
+
+Normal
+
+ILM audit messages
+
+Cross-grid replication
+
+Error
+
+CGRR: Cross-Grid Replication Request
+
+These defaults apply if you initially installed StorageGRID using version 10.3 or later. If you initially used an earlier version of StorageGRID, the default for all categories is set to Normal.
+
+During upgrades, audit level configurations will not be effective immediately. Steps
+
+1. Select CONFIGURATION > Monitoring > Audit and syslog server.
+
+2. For each category of audit message, select an audit level from the drop-down list:
+
+Audit level
+
+Description
+
+Off
+
+No audit messages from the category are logged.
+
+Error
+
+Only error messages are logged—audit messages for which the result code was not "successful" (SUCS). Normal
+
+Standard transactional messages are logged—the messages listed in these instructions for the category.
+
+Debug
+
+Deprecated. This level behaves the same as the Normal audit level.
+
+The messages included for any particular level include those that would be logged at the higher levels. For example, the Normal level includes all of the Error messages.
+
+1188
+
+If you don’t require a detailed record of client read operations for your S3 applications, optionally change the Client Reads setting to Error to decrease the number of audit messages recorded in the audit log.
+
+3. Select Save.
+
+A green banner indicates your configuration has been saved. Define HTTP request headers
+
+You can optionally define any HTTP request headers you want to include in client read and write audit messages. These protocol headers apply to S3 and Swift requests only.
+
+Steps
+
+1. In the Audit protocol headers section, define the HTTP request headers you want to include in client read and write audit messages.
+
+Use an asterisk (*) as a wildcard to match zero or more characters. Use the escape sequence (\*) to match a literal asterisk.
+
+2. Select Add another header to create additional headers, if needed.
+
+When HTTP headers are found in a request, they are included in the audit message under the field HTRH.
+
+Audit protocol request headers are logged only if the audit level for Client Reads or Client Writes is not Off.
+
+3. Select Save
+
+A green banner indicates your configuration has been saved. Use an external syslog server
+
+You can optionally configure an external syslog server to save audit logs, application logs, and security event logs to a location outside of your grid.
+
+If you don’t want to use an external syslog server, skip this step and go to Select audit information destinations. 3. Select Save.
+
+A green banner indicates your configuration has been saved. Define HTTP request headers
+
+You can optionally define any HTTP request headers you want to include in client read and write audit messages. These protocol headers apply to S3 and Swift requests only.
+
+Steps
+
+1. In the Audit protocol headers section, define the HTTP request headers you want to include in client read and write audit messages.
+
+Use an asterisk (*) as a wildcard to match zero or more characters. Use the escape sequence (\*) to match a literal asterisk.
+
+2. Select Add another header to create additional headers, if needed.
+
+When HTTP headers are found in a request, they are included in the audit message under the field HTRH.
+
+Audit protocol request headers are logged only if the audit level for Client Reads or Client Writes is not Off.
+
+3. Select Save
+
+A green banner indicates your configuration has been saved. Use an external syslog server
+
+You can optionally configure an external syslog server to save audit logs, application logs, and security event logs to a location outside of your grid.
+
+If you don’t want to use an external syslog server, skip this step and go to Select audit information destinations.
+
+If the configuration options available in this procedure aren’t flexible enough to meet your requirements, additional configuration options can be applied using the audit-destinations endpoints, which are in the private API section of the Grid Management API. For example, you can use the API if you want to use different syslog servers for different groups of nodes. Enter syslog information
+
+Access the Configure external syslog server wizard and provide the information StorageGRID needs to access the external syslog server. Steps
+
+1. From the Audit and syslog server page, select Configure external syslog server. Or, if you have
+
+1189
+
+previously configured an external syslog server, select Edit external syslog server.
+
+The Configure external syslog server wizard appears.
+
+2. For the Enter syslog info step of the wizard, enter a valid fully qualified domain name or an IPv4 or IPv6 address for the external syslog server in the Host field.
+
+3. Enter the destination port on the external syslog server (must be an integer between 1 and 65535). The default port is 514.

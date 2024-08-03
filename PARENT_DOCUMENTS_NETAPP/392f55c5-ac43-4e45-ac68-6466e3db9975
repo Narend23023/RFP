@@ -1,0 +1,95 @@
+As you begin using grid federation, review the similarities and differences between cross- grid replication and the StorageGRID CloudMirror replication service.
+
+Cross-grid replication CloudMirror replication service
+
+What is the primary purpose?
+
+One StorageGRID system acts as a disaster recovery system. Objects in a bucket can be replicated between the grids in one or both directions.
+
+Enables a tenant to automatically replicate objects from a bucket in StorageGRID (source) to an external S3 bucket (destination). How segmented objects are replicated
+
+The source grid’s maximum segment size applies to objects replicated to the destination grid. When objects
+
+363
+
+are replicated to another grid, the Maximum Segment Size setting (CONFIGURATION > System > Storage options) of the source grid will be used on both grids. For example, suppose the maximum segment size for the source grid is 1 GB, while the maximum segment size of the destination grid is 50 MB. If you ingest a 2-GB object on the source grid, that object is saved as two 1-GB segments. It will also be replicated to the destination grid as two 1-GB segments, even though that grid’s maximum segment size is 50 MB. Compare cross-grid replication and CloudMirror replication
+
+As you begin using grid federation, review the similarities and differences between cross- grid replication and the StorageGRID CloudMirror replication service.
+
+Cross-grid replication CloudMirror replication service
+
+What is the primary purpose?
+
+One StorageGRID system acts as a disaster recovery system. Objects in a bucket can be replicated between the grids in one or both directions.
+
+Enables a tenant to automatically replicate objects from a bucket in StorageGRID (source) to an external S3 bucket (destination).
+
+CloudMirror replication creates an independent copy of an object in an independent S3 infrastructure. This independent copy is not used as a backup, but often further processed in the cloud.
+
+How is it set up?
+
+1. Configure a grid federation connection between two grids.
+
+2. Add new tenant accounts, which are automatically cloned to the other grid.
+
+1. A tenant user configures CloudMirror replication by defining a CloudMirror endpoint (IP address, credentials, and so on) using the Tenant Manager or the S3 API.
+
+3. Add new tenant groups and users, which are also cloned. 4. Create corresponding buckets on each grid and enable cross-grid replication to occur in one or both directions.
+
+2. Any bucket owned by that tenant account can be configured to point to the CloudMirror endpoint.
+
+Who is responsible for setting it up?
+
+A grid admin configures the connection and the tenants.
+
+A grid admin configures the connection and the tenants.
+
+Tenant users configure the groups, users, keys, and buckets.
+
+What is the destination?
+
+A corresponding and identical S3 bucket on the other StorageGRID system in the grid federation connection.
+
+Any compatible S3 infrastructure (including Amazon S3).
+
+Google Cloud Platform (GCP)
+
+Is object versioning required?
+
+Yes, both the source and destination buckets must have object versioning enabled.
+
+No, CloudMirror replication supports any combination of unversioned and versioned buckets on both the source and destination.
+
+364
+
+What causes objects to be moved to the destination?
+
+How are objects replicated? What if an object can’t be replicated?
+
+Is the object’s system metadata replicated?
+
+How are objects retrieved?
+
+Cross-grid replication
+
+Objects are automatically replicated when they are added to a bucket that has cross-grid replication enabled.
+
+Cross-grid replication creates versioned objects, and it replicates the version ID from the source bucket to the destination bucket. This allows the version order to be maintained across both grids.
+
+The object is queued for replication, subject to metadata storage limits.
+
+Yes, when an object is replicated to the other grid, its system metadata is also replicated. The metadata will be identical on both grids.
+
+Applications can retrieve or read objects by making a request to the bucket on either grid.
+
+CloudMirror replication service Objects are automatically replicated when they are added to a bucket that has been configured with a CloudMirror endpoint. Objects that existed in the source bucket before the bucket was configured with the CloudMirror endpoint aren’t replicated, unless they are modified.
+
+CloudMirror replication doesn’t require versioning-enabled buckets, so CloudMirror can only maintain ordering for a key within a site. There are no guarantees that ordering will be maintained for requests to an object at different site.
+
+The object is queued for replication, subject to platform services limits (see Recommendations for using platform services). Is the object’s system metadata replicated?
+
+How are objects retrieved?
+
+Cross-grid replication
+
+Objects are automatically replicated when they are added to a bucket that has cross-grid replication enabled.

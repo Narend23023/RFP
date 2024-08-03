@@ -1,0 +1,113 @@
+Steps
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+2. Select Create bucket.
+
+Enter details
+
+Steps
+
+1. Enter details for the bucket.
+
+Field
+
+Description
+
+Bucket name
+
+A name for the bucket that complies with these rules:
+
+Must be unique across each StorageGRID system (not just unique within the tenant account).
+
+Must be DNS compliant.
+
+Must contain at least 3 and no more than 63 characters.
+
+Each label must start and end with a lowercase letter or a number and can only use lowercase letters, numbers, and hyphens.
+
+Should not use periods in virtual hosted style requests. Periods will cause problems with server wildcard certificate verification.
+
+For more information, see the Amazon Web Services (AWS) documentation on bucket naming rules.
+
+Note: You can’t change the bucket name after creating the bucket. Region
+
+The bucket’s region.
+
+Your StorageGRID administrator manages the available regions. A bucket’s region can affect the data-protection policy applied to objects. By default, all buckets are created in the us-east-1 region.
+
+Note: You can’t change the region after creating the bucket.
+
+2. Select Continue.
+
+806
+
+Manage object settings Steps
+
+1. Optionally, enable object versioning for the bucket.
+
+Enable object versioning if you want to store every version of each object in this bucket. You can then retrieve previous versions of an object as needed. You must enable object versioning if the bucket will be used for cross-grid replication.
+
+2. If the global S3 Object Lock setting is enabled, optionally enable S3 Object Lock for the bucket to store objects using a write-once-read-many (WORM) model. Each label must start and end with a lowercase letter or a number and can only use lowercase letters, numbers, and hyphens.
+
+Should not use periods in virtual hosted style requests. Periods will cause problems with server wildcard certificate verification.
+
+For more information, see the Amazon Web Services (AWS) documentation on bucket naming rules.
+
+Note: You can’t change the bucket name after creating the bucket. Region
+
+The bucket’s region.
+
+Your StorageGRID administrator manages the available regions. A bucket’s region can affect the data-protection policy applied to objects. By default, all buckets are created in the us-east-1 region.
+
+Note: You can’t change the region after creating the bucket.
+
+2. Select Continue.
+
+806
+
+Manage object settings Steps
+
+1. Optionally, enable object versioning for the bucket.
+
+Enable object versioning if you want to store every version of each object in this bucket. You can then retrieve previous versions of an object as needed. You must enable object versioning if the bucket will be used for cross-grid replication.
+
+2. If the global S3 Object Lock setting is enabled, optionally enable S3 Object Lock for the bucket to store objects using a write-once-read-many (WORM) model.
+
+Enable S3 Object Lock for a bucket only if you need to keep objects for fixed amount of time, for example, to meet certain regulatory requirements. S3 Object Lock is a permanent setting that helps you prevent objects from being deleted or overwritten for a fixed amount of time or indefinitely. After the S3 Object Lock setting is enabled for a bucket, it can’t be disabled. Anyone with the correct permissions can add objects to this bucket that can’t be changed. You might not be able to delete these objects or the bucket itself.
+
+If you enable S3 Object Lock for a bucket, bucket versioning is enabled automatically.
+
+3. If you selected Enable S3 Object Lock, optionally enable Default retention for this bucket.
+
+When Default retention is enabled, new objects added to the bucket will be automatically protected from being deleted or overwritten. The Default retention setting does not apply to objects that have their own retention periods.
+
+a. If Default retention is enabled, specify a Default retention mode for the bucket. Default retention mode
+
+Description
+
+Compliance
+
+The object can’t be deleted until its retain-until-date is reached.
+
+The object’s retain-until-date can be increased, but it can’t be decreased.
+
+The object’s retain-until-date can’t be removed until that date is reached. Governance
+
+Users with the s3:BypassGovernanceRetention permission can use the x-amz-bypass-governance- retention: true request header to bypass retention settings.
+
+These users can delete an object version before its retain-until- date is reached.
+
+These users can increase, decrease, or remove an object’s retain-until-date.
+
+b. If Default retention is enabled, specify the Default retention period for the bucket.
+
+The Default retention period indicates how long new objects added to this bucket should be retained, starting from the time they are ingested. Specify a value between 1 and 36,500 days or between 1 and
+
+807
+
+100 years, inclusive.
+
+4. Select Create bucket.
+
+The bucket is created and added to the table on the Buckets page.

@@ -1,0 +1,125 @@
+Never attempt to rotate a key by changing the key name (alias) for the KMS. StorageGRID requires all previously used key versions (as well as any future ones) to be accessible from the KMS with the same key alias. If you change the key alias for a configured KMS, StorageGRID might not be able to decrypt your data. Manage certificates
+
+Promptly address any server or client certificate issues. If possible, replace certificates before they expire.
+
+You must address any certificate issues as soon as possible to maintain data access. Steps
+
+1. Select CONFIGURATION > Security > Key management server.
+
+2. In the table, look at the value for Certificate expiration for each KMS.
+
+3. If Certificate expiration for any KMS is Unknown, wait up to 30 minutes and then refresh your web browser.
+
+4. If the Certificate expiration column indicates that a certificate has expired or is nearing expiration, select the KMS to go to the KMS details page.
+
+a. Select Server certificate and verify the value for the "Expires on" field.
+
+b. To replace the certificate, select Edit certificate to upload a new certificate.
+
+440
+
+c. Repeat these sub-steps and select Client certificate instead of Server certificate.
+
+5. When the KMS CA certificate expiration, KMS client certificate expiration, and KMS server certificate expiration alerts are triggered, note the description of each alert and perform the recommended actions. It might take StorageGRID as long as 30 minutes to get updates to the certificate expiration. Refresh your web browser to see the current values.
+
+View encrypted nodes
+
+You can view information about the appliance nodes in your StorageGRID system that have the Node Encryption setting enabled.
+
+Steps
+
+1. Select CONFIGURATION > Security > Key management server.
+
+The Key Management Server page appears. The Configuration Details tab shows any key management servers that have been configured.
+
+2. From the top of the page, select the Encrypted nodes tab.
+
+The Encrypted nodes tab lists the appliance nodes in your StorageGRID system that have the Node Encryption setting enabled.
+
+3. Review the information in the table for each appliance node. Column
+
+Description
+
+Node name
+
+The name of the appliance node.
+
+Node type
+
+The type of node: Storage, Admin, or Gateway.
+
+Site
+
+The name of the StorageGRID site where the node is installed.
+
+KMS name
+
+The descriptive name of the KMS used for the node.
+
+If no KMS is listed, select the Configuration details tab to add a KMS.
+
+Add a key management server (KMS) Key UID
+
+The unique ID of the encryption key used to encrypt and decrypt data on the appliance node. To view an entire key UID, select the text.
+
+A dash (--) indicates the key UID is unknown, possibly because of a connection issue between the appliance node and the KMS.
+
+441
+
+Column
+
+Description Status
+
+The status of the connection between the KMS and the appliance node. If the node is connected, the timestamp updates every 30 minutes. It can take several minutes for the connection status to update after the KMS configuration changes. 2. From the top of the page, select the Encrypted nodes tab.
+
+The Encrypted nodes tab lists the appliance nodes in your StorageGRID system that have the Node Encryption setting enabled.
+
+3. Review the information in the table for each appliance node. Column
+
+Description
+
+Node name
+
+The name of the appliance node.
+
+Node type
+
+The type of node: Storage, Admin, or Gateway.
+
+Site
+
+The name of the StorageGRID site where the node is installed.
+
+KMS name
+
+The descriptive name of the KMS used for the node.
+
+If no KMS is listed, select the Configuration details tab to add a KMS.
+
+Add a key management server (KMS) Key UID
+
+The unique ID of the encryption key used to encrypt and decrypt data on the appliance node. To view an entire key UID, select the text.
+
+A dash (--) indicates the key UID is unknown, possibly because of a connection issue between the appliance node and the KMS.
+
+441
+
+Column
+
+Description Status
+
+The status of the connection between the KMS and the appliance node. If the node is connected, the timestamp updates every 30 minutes. It can take several minutes for the connection status to update after the KMS configuration changes.
+
+Note: Refresh your web browser to see the new values.
+
+4. If the Status column indicates a KMS issue, address the issue immediately.
+
+During normal KMS operations, the status will be Connected to KMS. If a node is disconnected from the grid, the node connection state is shown (Administratively Down or Unknown).
+
+Other status messages correspond to StorageGRID alerts with the same names:
+
+KMS configuration failed to load ◦ KMS connectivity error ◦ KMS encryption key name not found ◦ KMS encryption key rotation failed ◦ KMS key failed to decrypt an appliance volume ◦ KMS is not configured
+
+Perform the recommended actions for these alerts.
+
+You must address any issues immediately to ensure that your data is fully protected. Edit a KMS

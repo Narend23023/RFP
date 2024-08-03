@@ -1,0 +1,89 @@
+▪ UserPrincipalName pattern (Active Directory and Azure): [USERNAME]@example.com ▪ Down-level logon name pattern (Active Directory and Azure): example\[USERNAME] ▪ Distinguished name pattern: CN=[USERNAME],CN=Users,DC=example,DC=com
+
+Include [USERNAME] exactly as written.
+
+6. In the Transport Layer Security (TLS) section, select a security setting.
+
+Use STARTTLS: Use STARTTLS to secure communications with the LDAP server. This is the recommended option for Active Directory, OpenLDAP, or Other, but this option is not supported for Azure.
+
+313
+
+◦ Use LDAPS: The LDAPS (LDAP over SSL) option uses TLS to establish a connection to the LDAP
+
+server. You must select this option for Azure.
+
+Do not use TLS: The network traffic between the StorageGRID system and the LDAP server will not be secured. This option is not supported for Azure. Using the Do not use TLS option is not supported if your Active Directory server enforces LDAP signing. You must use STARTTLS or LDAPS.
+
+7. If you selected STARTTLS or LDAPS, choose the certificate used to secure the connection.
+
+Use operating system CA certificate: Use the default Grid CA certificate installed on the operating system to secure connections.
+
+Use custom CA certificate: Use a custom security certificate.
+
+If you select this setting, copy and paste the custom security certificate into the CA certificate text box.
+
+Test the connection and save the configuration Include [USERNAME] exactly as written.
+
+6. In the Transport Layer Security (TLS) section, select a security setting.
+
+Use STARTTLS: Use STARTTLS to secure communications with the LDAP server. This is the recommended option for Active Directory, OpenLDAP, or Other, but this option is not supported for Azure.
+
+313
+
+◦ Use LDAPS: The LDAPS (LDAP over SSL) option uses TLS to establish a connection to the LDAP
+
+server. You must select this option for Azure.
+
+Do not use TLS: The network traffic between the StorageGRID system and the LDAP server will not be secured. This option is not supported for Azure. Using the Do not use TLS option is not supported if your Active Directory server enforces LDAP signing. You must use STARTTLS or LDAPS.
+
+7. If you selected STARTTLS or LDAPS, choose the certificate used to secure the connection.
+
+Use operating system CA certificate: Use the default Grid CA certificate installed on the operating system to secure connections.
+
+Use custom CA certificate: Use a custom security certificate.
+
+If you select this setting, copy and paste the custom security certificate into the CA certificate text box.
+
+Test the connection and save the configuration
+
+After entering all values, you must test the connection before you can save the configuration. StorageGRID verifies the connection settings for the LDAP server and the bind username format, if you provided one. Steps
+
+1. Select Test connection.
+
+2. If you did not provide a bind username format:
+
+A "Test connection successful" message appears if the connection settings are valid. Select Save to save the configuration.
+
+A "test connection could not be established" message appears if the connection settings are invalid. Select Close. Then, resolve any issues and test the connection again.
+
+3. If you provided a bind username format, enter the username and password of a valid federated user.
+
+For example, enter your own username and password. Don’t include any special characters in the username, such as @ or /.
+
+314
+
+◦ A "Test connection successful" message appears if the connection settings are valid. Select Save to
+
+save the configuration.
+
+An error message appears if the connection settings, bind username format, or test username and password are invalid. Resolve any issues and test the connection again. Force synchronization with the identity source
+
+The StorageGRID system periodically synchronizes federated groups and users from the identity source. You can force synchronization to start if you want to enable or restrict user permissions as quickly as possible.
+
+Steps
+
+1. Go to the Identity federation page.
+
+2. Select Sync server at the top of the page.
+
+The synchronization process might take some time depending on your environment.
+
+The Identity federation synchronization failure alert is triggered if there is an issue synchronizing federated groups and users from the identity source. Disable identity federation
+
+You can temporarily or permanently disable identity federation for groups and users. When identity federation is disabled, there is no communication between StorageGRID and the identity source. However, any settings you have configured are retained, allowing you to easily reenable identity federation in the future. About this task
+
+Before you disable identity federation, you should be aware of the following:
+
+Federated users will be unable to sign in.
+
+Federated users who are currently signed in will retain access to the StorageGRID system until their session expires, but they will be unable to sign in after their session expires.

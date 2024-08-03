@@ -1,0 +1,113 @@
+If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery. Steps
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available.
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new log file:service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+4. Rename the source audit.log file to a unique numbered file name. For example, rename the audit.log file to 2023-10-25.txt.1.
+
+ls -l mv audit.log 2023-10-25.txt.1
+
+5. Restart the AMS service: service ams start
+
+1618 If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery. Steps
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available.
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new log file:service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+4. Rename the source audit.log file to a unique numbered file name. For example, rename the audit.log file to 2023-10-25.txt.1.
+
+ls -l mv audit.log 2023-10-25.txt.1
+
+5. Restart the AMS service: service ams start
+
+1618
+
+6. Create the directory to copy all audit log files to a temporary location on a separate grid node: ssh admin@grid_node_IP mkdir -p /var/local/tmp/saved-audit-logs
+
+When prompted, enter the password for admin.
+
+7. Copy all audit log files to the temporary location: scp -p * admin@ grid_node_IP:/var/local/tmp/saved-audit-logs
+
+When prompted, enter the password for admin.
+
+8. Log out as root: exit
+
+Replace primary Admin Node
+
+To recover a primary Admin Node, you must first replace the physical or virtual hardware.
+
+You can replace a failed primary Admin Node with a primary Admin Node running on the same platform, or you can replace a primary Admin Node running on VMware or a Linux host with a primary Admin Node hosted on a services appliance.
+
+Use the procedure that matches the replacement platform you select for the node. After you complete the node replacement procedure (which is suitable for all node types), that procedure will direct you to the next step for primary Admin Node recovery. Replacement platform
+
+Procedure
+
+VMware
+
+Replace a VMware node
+
+Linux
+
+Replace a Linux node
+
+Services appliances
+
+Replace a services appliance
+
+OpenStack
+
+NetApp-provided virtual machine disk files and scripts for OpenStack are no longer supported for recovery operations. If you need to recover a node running in an OpenStack deployment, download the files for your Linux operating system. Then, follow the procedure for replacing a Linux node. Configure replacement primary Admin Node
+
+The replacement node must be configured as the primary Admin Node for your StorageGRID system.
+
+Before you begin
+
+For primary Admin Nodes hosted on virtual machines, the virtual machine has been deployed, powered on, and initialized.
+
+For primary Admin Nodes hosted on a services appliance, you have replaced the appliance and have installed software. See the installation instructions for your appliance.
+
+You have the latest backup of the Recovery Package file (sgws-recovery-package-id- revision.zip).
+
+1619
+
+• You have the provisioning passphrase. Steps
+
+1. Open your web browser and navigate to https://primary_admin_node_ip.
+
+2. Click Recover a failed primary Admin Node.
+
+3. Upload the most recent backup of the Recovery Package: a. Click Browse.
+
+b. Locate the most recent Recovery Package file for your StorageGRID system, and click Open.
+
+4. Enter the provisioning passphrase.
+
+5. Click Start Recovery.
+
+The recovery process begins. The Grid Manager might become unavailable for a few minutes as the required services start. When the recovery is complete, the sign in page is displayed.

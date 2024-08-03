@@ -1,0 +1,91 @@
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies.
+
+810
+
+Bucket consistency guidelines
+
+The bucket consistency is used to determine the consistency for client applications affecting objects within that S3 bucket. In general, you should use the Read-after-new-write consistency for your buckets. Change bucket consistency
+
+If the Read-after-new-write consistency does not meet the client application’s requirements, you can change the consistency by setting the bucket consistency or by using the Consistency-Control header. The Consistency-Control header overrides the bucket consistency.
+
+When you change a bucket’s consistency, only those objects that are ingested after the change are guaranteed to meet the revised setting. Steps
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+2. Select the bucket name from the table.
+
+The bucket details page appears.
+
+3. From the Bucket options tab, select the ** accordion.
+
+4. Select a consistency for operations performed on the objects in this bucket.
+
+All: Provides the highest level of consistency. All nodes receive the data immediately, or the request will fail. Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies.
+
+810
+
+Bucket consistency guidelines
+
+The bucket consistency is used to determine the consistency for client applications affecting objects within that S3 bucket. In general, you should use the Read-after-new-write consistency for your buckets. Change bucket consistency
+
+If the Read-after-new-write consistency does not meet the client application’s requirements, you can change the consistency by setting the bucket consistency or by using the Consistency-Control header. The Consistency-Control header overrides the bucket consistency.
+
+When you change a bucket’s consistency, only those objects that are ingested after the change are guaranteed to meet the revised setting. Steps
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+2. Select the bucket name from the table.
+
+The bucket details page appears.
+
+3. From the Bucket options tab, select the ** accordion.
+
+4. Select a consistency for operations performed on the objects in this bucket.
+
+All: Provides the highest level of consistency. All nodes receive the data immediately, or the request will fail.
+
+Strong-global: Guarantees read-after-write consistency for all client requests across all sites. ◦ Strong-site: Guarantees read-after-write consistency for all client requests within a site. ◦ Read-after-new-write (default): Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases. Available: Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets.
+
+5. Select Save changes.
+
+What happens when you change bucket settings
+
+Buckets have multiple settings that affect the behavior of the buckets and the objects within those buckets.
+
+The following bucket settings use strong consistency by default. If two or more Storage Nodes are not available within any site, or if a site is not available, any changes to these settings might not be available.
+
+Background empty bucket deletion
+
+Last Access Time
+
+Bucket lifecycle
+
+Bucket policy
+
+Bucket tagging
+
+Bucket versioning
+
+S3 Object Lock
+
+811
+
+• Bucket encryption
+
+The consistency value for bucket versioning, S3 Object Lock, and bucket encryption cannot be set to a value that is not strongly consistent. The following bucket settings do not use strong consistency and have higher availability for changes. Changes to these settings might take some time before having an effect.
+
+Platform services configuration: Notification, Replication, or Search integration
+
+CORS configuration
+
+Change bucket consistency
+
+If the default consistency used when changing bucket settings does not meet the client application’s requirements, you can change the consistency by using the Consistency- Control header for the S3 REST API or by using the reducedConsistency or force options in the Tenant Management API. Enable or disable last access time updates

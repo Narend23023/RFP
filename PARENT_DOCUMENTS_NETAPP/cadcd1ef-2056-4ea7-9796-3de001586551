@@ -1,0 +1,87 @@
+If the /var/local/ directory used by a Storage Node with the ADC service becomes 92% full, the node will be flagged as unavailable to audit messages until the directory is only 87% full. S3 and Swift client requests to other nodes aren’t affected. The NRLY (Available Audit Relays) alarm is triggered when audit relays are unreachable.
+
+If there are no available Storage Nodes with the ADC service, the Storage Nodes store the audit messages locally in the /var/local/log/localaudit.log file.
+
+If the /var/local/ directory used by a Storage Node becomes 85% full, the node will start refusing S3 and Swift client requests with 503 Service Unavailable. The following types of issues can cause audit message queues to grow very large:
+
+1309
+
+• The outage of an Admin Node or a Storage Node with the ADC service. If one of the system’s nodes is
+
+down, the remaining nodes might become backlogged.
+
+A sustained activity rate that exceeds the audit capacity of the system. If the /var/local/ directory used by a Storage Node with the ADC service becomes 92% full, the node will be flagged as unavailable to audit messages until the directory is only 87% full. S3 and Swift client requests to other nodes aren’t affected. The NRLY (Available Audit Relays) alarm is triggered when audit relays are unreachable.
+
+If there are no available Storage Nodes with the ADC service, the Storage Nodes store the audit messages locally in the /var/local/log/localaudit.log file.
+
+If the /var/local/ directory used by a Storage Node becomes 85% full, the node will start refusing S3 and Swift client requests with 503 Service Unavailable. The following types of issues can cause audit message queues to grow very large:
+
+1309
+
+• The outage of an Admin Node or a Storage Node with the ADC service. If one of the system’s nodes is
+
+down, the remaining nodes might become backlogged.
+
+A sustained activity rate that exceeds the audit capacity of the system.
+
+The /var/local/ space on an ADC Storage Node becoming full for reasons unrelated to audit messages. When this happens, the node stops accepting new audit messages and prioritizes its current backlog, which can cause backlogs on other nodes. Large audit queue alert and Audit Messages Queued (AMQS) alarm
+
+To help you monitor the size of audit message queues over time, the Large audit queue alert and the legacy AMQS alarm are triggered when the number of messages in a Storage Node queue or Admin Node queue reaches certain thresholds.
+
+If the Large audit queue alert or the legacy AMQS alarm is triggered, start by checking the load on the system—if there have been a significant number of recent transactions, the alert and the alarm should resolve over time and can be ignored.
+
+If the alert or alarm persists and increases in severity, view a chart of the queue size. If the number is steadily increasing over hours or days, the audit load has likely exceeded the audit capacity of the system. Reduce the client operation rate or decrease the number of audit messages logged by changing the audit level for Client Writes and Client Reads to Error or Off. See Configure audit messages and log destinations. Duplicate messages
+
+The StorageGRID system takes a conservative approach if a network or node failure occurs. For this reason, duplicate messages might exist in the audit log.
+
+Access audit log file
+
+The audit share contains the active audit.log file and any compressed audit log files. You can access audit log files directly from the command line of the Admin Node.
+
+Before you begin
+
+You have specific access permissions.
+
+You must have the Passwords.txt file.
+
+You must know the IP address of an Admin Node. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Go to the directory containing the audit log files: cd /var/local/log
+
+1310
+
+3. View the current or a saved audit log file, as required.
+
+Audit log file rotation
+
+Audit logs files are saved to an Admin Node’s /var/local/log directory. The active audit log files are named audit.log.
+
+Optionally, you can change the destination of audit logs and send audit information to an external syslog server. Local logs of audit records continue to be generated and stored when an external syslog server is configured. See Configure audit messages and log destinations. Before you begin
+
+You have specific access permissions.
+
+You must have the Passwords.txt file.
+
+You must know the IP address of an Admin Node. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.

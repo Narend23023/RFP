@@ -1,0 +1,119 @@
+Determines if a bucket exists and you have permission to access it.
+
+This operation returns:
+
+x-ntap-sg-bucket-id: The UUID of the bucket in UUID format.
+
+x-ntap-sg-trace-id: The unique trace ID of the associated request.
+
+Returns some or all (up to 1,000) of the objects in a bucket. The Storage Class for objects can have either of two values, even if the object was ingested with the REDUCED_REDUNDANCY storage class option: 905
+
+Operation
+
+GetBucketVersioning GetObjectLockConfigurati on
+
+HeadBucket
+
+ListObjects and ListObjectsV2
+
+(previously named GET Bucket)
+
+ListObjectVersions
+
+(previously named GET Bucket Object versions)
+
+PutBucketCors
+
+906
+
+Implementation
+
+This implementation uses the versioning subresource to return the versioning state of a bucket.
+
+blank: Versioning has never been enabled (bucket is "Unversioned")
+
+Enabled: Versioning is enabled
+
+Suspended: Versioning was previously enabled and is suspended
+
+Returns the bucket default retention mode and default retention period, if configured. See Use S3 REST API to configure S3 Object Lock.
+
+Determines if a bucket exists and you have permission to access it.
+
+This operation returns:
+
+x-ntap-sg-bucket-id: The UUID of the bucket in UUID format.
+
+x-ntap-sg-trace-id: The unique trace ID of the associated request.
+
+Returns some or all (up to 1,000) of the objects in a bucket. The Storage Class for objects can have either of two values, even if the object was ingested with the REDUCED_REDUNDANCY storage class option:
+
+STANDARD, which indicates the object is stored in a storage pool consisting of Storage Nodes.
+
+GLACIER, which indicates that the object has been moved to the external bucket specified by the Cloud Storage Pool.
+
+If the bucket contains large numbers of deleted keys that have the same prefix, the response might include some CommonPrefixes that don’t contain keys.
+
+With READ access on a bucket, using this operation with the versions subresource lists metadata of all of the versions of objects in the bucket. Sets the CORS configuration for a bucket so that the bucket can service cross- origin requests. Cross-origin resource sharing (CORS) is a security mechanism that allows client web applications in one domain to access resources in a different domain. For example, suppose you use an S3 bucket named images to store graphics. By setting the CORS configuration for the images bucket, you can allow the images in that bucket to be displayed on the website http://www.example.com.
+
+Operation PutBucketEncryption
+
+PutBucketLifecycleConfig uration
+
+(previously named PUT Bucket lifecycle)
+
+Implementation
+
+Sets the default encryption state of an existing bucket. When bucket-level encryption is enabled, any new objects added to the bucket are encrypted.StorageGRID supports server-side encryption with StorageGRID- managed keys. When specifying the server-side encryption configuration rule, set the SSEAlgorithm parameter to AES256, and don’t use the KMSMasterKeyID parameter.
+
+Bucket default encryption configuration is ignored if the object upload request already specifies encryption (that is, if the request includes the x-amz-server- side-encryption-* request header).
+
+Creates a new lifecycle configuration for the bucket or replaces an existing lifecycle configuration. StorageGRID supports up to 1,000 lifecycle rules in a lifecycle configuration. Each rule can include the following XML elements:
+
+Expiration (Days, Date, ExpiredObjectDeleteMarker) NoncurrentVersionExpiration (NewerNoncurrentVersions, NoncurrentDays)
+
+Filter (Prefix, Tag)
+
+Status
+
+ID
+
+StorageGRID does not support these actions:
+
+AbortIncompleteMultipartUpload
+
+Transition
+
+See Create S3 lifecycle configuration. To understand how the Expiration action in a bucket lifecycle interacts with ILM placement instructions, see How ILM operates throughout an object’s life.
+
+Note: Bucket lifecycle configuration can be used with buckets that have S3 Object Lock enabled, but bucket lifecycle configuration is not supported for legacy Compliant buckets.
+
+907
+
+Operation PutBucketNotificationConf iguration
+
+(previously named PUT Bucket notification)
+
+PutBucketPolicy
+
+908
+
+Implementation
+
+Configures notifications for the bucket using the notification configuration XML included in the request body. You should be aware of the following implementation details:
+
+StorageGRID supports Amazon Simple Notification Service (Amazon SNS) or Kafka topics as destinations. Simple Queue Service (SQS) or Amazon Lambda endpoints aren’t supported.
+
+The destination for notifications must be specified as the URN of an StorageGRID endpoint. Endpoints can be created using the Tenant Manager or the Tenant Management API. Expiration (Days, Date, ExpiredObjectDeleteMarker) NoncurrentVersionExpiration (NewerNoncurrentVersions, NoncurrentDays)
+
+Filter (Prefix, Tag)
+
+Status
+
+ID
+
+StorageGRID does not support these actions:
+
+AbortIncompleteMultipartUpload
+
+Transition

@@ -1,0 +1,95 @@
+Block selected tenants
+
+The selected tenant accounts can’t use this endpoint to access their buckets. All other tenants can use this endpoint.
+
+2. If you are creating an HTTP endpoint, you don’t need to attach a certificate. Select Create to add the new load balancer endpoint. Then, go to After you finish. Otherwise, select Continue to attach the certificate. Attach certificate
+
+Steps
+
+1. If you are creating an HTTPS endpoint, select the type of security certificate you want to attach to the endpoint.
+
+The certificate secures the connections between S3 and Swift clients and the Load Balancer service on Admin Node or Gateway Nodes.
+
+Upload certificate. Select this option if you have custom certificates to upload. ◦ Generate certificate. Select this option if you have the values needed to generate a custom certificate. ◦ Use StorageGRID S3 and Swift certificate. Select this option if you want to use the global S3 and Swift API certificate, which can also be used for connections directly to Storage Nodes.
+
+You can’t select this option unless you have replaced the default S3 and Swift API certificate, which is signed by the grid CA, with a custom certificate signed by an external certificate authority. See Configure S3 and Swift API certificates. Use management interface certificate. Select this option if you want to use the global management interface certificate, which can also be used for direct connections to Admin Nodes.
+
+2. If you aren’t using the StorageGRID S3 and Swift certificate, upload or generate the certificate.
+
+504
+
+Upload certificate a. Select Upload certificate.
+
+b. Upload the required server certificate files:
+
+▪ Server certificate: The custom server certificate file in PEM encoding. ▪ Certificate private key: The custom server certificate private key file (.key).
+
+EC private keys must be 224 bits or larger. RSA private keys must be 2048 bits or larger.
+
+▪ CA bundle: A single optional file containing the certificates from each intermediate issuing Upload certificate. Select this option if you have custom certificates to upload. ◦ Generate certificate. Select this option if you have the values needed to generate a custom certificate. ◦ Use StorageGRID S3 and Swift certificate. Select this option if you want to use the global S3 and Swift API certificate, which can also be used for connections directly to Storage Nodes.
+
+You can’t select this option unless you have replaced the default S3 and Swift API certificate, which is signed by the grid CA, with a custom certificate signed by an external certificate authority. See Configure S3 and Swift API certificates. Use management interface certificate. Select this option if you want to use the global management interface certificate, which can also be used for direct connections to Admin Nodes.
+
+2. If you aren’t using the StorageGRID S3 and Swift certificate, upload or generate the certificate.
+
+504
+
+Upload certificate a. Select Upload certificate.
+
+b. Upload the required server certificate files:
+
+▪ Server certificate: The custom server certificate file in PEM encoding. ▪ Certificate private key: The custom server certificate private key file (.key).
+
+EC private keys must be 224 bits or larger. RSA private keys must be 2048 bits or larger.
+
+▪ CA bundle: A single optional file containing the certificates from each intermediate issuing
+
+certificate authority (CA). The file should contain each of the PEM-encoded CA certificate files, concatenated in certificate chain order.
+
+c. Expand Certificate details to see the metadata for each certificate you uploaded. If you uploaded an optional CA bundle, each certificate displays on its own tab.
+
+▪ Select Download certificate to save the certificate file or select Download CA bundle to
+
+save the certificate bundle.
+
+Specify the certificate file name and download location. Save the file with the extension .pem.
+
+For example: storagegrid_certificate.pem
+
+▪ Select Copy certificate PEM or Copy CA bundle PEM to copy the certificate contents for
+
+pasting elsewhere. d. Select Create.
+
+The load balancer endpoint is created. The custom certificate is used for all subsequent new connections between S3 and Swift clients or the management interface and the endpoint.
+
+Generate certificate
+
+a. Select Generate certificate.
+
+b. Specify the certificate information:
+
+Field Description
+
+Domain name
+
+One or more fully qualified domain names to include in the certificate. Use an * as a wildcard to represent multiple domain names.
+
+IP
+
+One or more IP addresses to include in the certificate.
+
+Subject (optional)
+
+X.509 subject or distinguished name (DN) of the certificate owner.
+
+If no value is entered in this field, the generated certificate uses the first domain name or IP address as the subject common name (CN).
+
+Days valid
+
+Number of days after creation that the certificate expires.
+
+505
+
+Field
+
+Description Add key usage extensions

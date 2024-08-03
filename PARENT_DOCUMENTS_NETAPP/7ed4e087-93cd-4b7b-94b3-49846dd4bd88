@@ -1,0 +1,77 @@
+If a weekly AutoSupport package fails to send, the StorageGRID system takes the following actions:
+
+1. Updates the Most Recent Result attribute to Retrying.
+
+2. Attempts to resend the AutoSupport package 15 times every four minutes for one hour.
+
+3. After one hour of send failures, updates the Most Recent Result attribute to Failed.
+
+4. Attempts to send an AutoSupport package again at the next scheduled time. After sending an User-triggered AutoSupport package, refresh the AutoSupport page in your browser after 1 minute to access the most recent results. Troubleshoot AutoSupport packages
+
+If an attempt to send an AutoSupport package fails, the StorageGRID system takes different actions depending on the type of AutoSupport package. You can check the status of AutoSupport packages by selecting SUPPORT > Tools > AutoSupport > Results.
+
+When the AutoSupport package fails to send, "Failed" appears on the Results tab of the AutoSupport page.
+
+If you configured a proxy server to forward AutoSupport packages to NetApp, you should verify that the proxy server configuration settings are correct. Weekly AutoSupport package failure
+
+If a weekly AutoSupport package fails to send, the StorageGRID system takes the following actions:
+
+1. Updates the Most Recent Result attribute to Retrying.
+
+2. Attempts to resend the AutoSupport package 15 times every four minutes for one hour.
+
+3. After one hour of send failures, updates the Most Recent Result attribute to Failed.
+
+4. Attempts to send an AutoSupport package again at the next scheduled time.
+
+5. Maintains the regular AutoSupport schedule if the package fails because the NMS service is unavailable, and if a package is sent before seven days pass.
+
+6. When the NMS service is available again, sends an AutoSupport package immediately if a package has not been sent for seven days or more. User-triggered or event-triggered AutoSupport package failure
+
+If a user-triggered or an event-triggered AutoSupport package fails to send, the StorageGRID system takes the following actions:
+
+1. Displays an error message if the error is known. For example, if a user selects the SMTP protocol without providing correct email configuration settings, the following error is displayed: AutoSupport packages cannot be sent using SMTP protocol due to incorrect settings on the E-mail Server page.
+
+2. Does not attempt to send the package again.
+
+3. Logs the error in nms.log.
+
+If a failure occurs and SMTP is the selected protocol, verify that the StorageGRID system’s email server is correctly configured and that your email server is running (SUPPORT > Alarms (legacy) > > Legacy Email Setup). The following error message might appear on the AutoSupport page: AutoSupport packages cannot be sent using SMTP protocol due to incorrect settings on the E-mail Server 541
+
+page.
+
+Learn how to configure email server settings.
+
+Correct an AutoSupport package failure
+
+If a failure occurs and SMTP is the selected protocol, verify that the StorageGRID system’s email server is correctly configured and that your email server is running. The following error message might appear on the AutoSupport page: AutoSupport packages cannot be sent using SMTP protocol due to incorrect settings on the E-mail Server page.
+
+Send E-Series AutoSupport packages through StorageGRID
+
+You can send E-Series SANtricity System Manager AutoSupport packages to technical support through a StorageGRID Admin Node rather than the storage appliance management port.
+
+See E-Series hardware AutoSupport for more information about using AutoSupport with E-Series appliances.
+
+Before you begin
+
+You are signed into the Grid Manager using a supported web browser.
+
+You have the Storage appliance administrator or Root access permission.
+
+You have configured SANtricity AutoSupport: For SG6000 and SG5700 appliances, configure AutoSupport in SANtricity System Manager
+
+You must have SANtricity firmware 8.70 or higher to access SANtricity System Manager using the Grid Manager.
+
+About this task
+
+E-Series AutoSupport packages contain details of the storage hardware and are more specific than other AutoSupport packages sent by the StorageGRID system.
+
+You can configure a special proxy server address in SANtricity System Manager to transmit AutoSupport packages through a StorageGRID Admin Node without the use of the appliance’s management port. AutoSupport packages transmitted in this way are sent by the preferred sender Admin Node, and they use any admin proxy settings that have been configured in the Grid Manager.
+
+This procedure is only for configuring a StorageGRID proxy server for E-Series AutoSupport packages. For additional details on E-Series AutoSupport configuration, see the NetApp E- Series and SANtricity Documentation. Steps
+
+1. In the Grid Manager, select NODES.
+
+2. From the list of nodes on the left, select the storage appliance node you want to configure.
+
+3. Select SANtricity System Manager. Before you begin

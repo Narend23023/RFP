@@ -1,0 +1,125 @@
+1. Log in to the host as root or using an account with sudo permission.
+
+2. Run the following command: sysctl net.ipv6.conf.all.disable_ipv6
+
+root@SG:~ # sysctl net.ipv6.conf.all.disable_ipv6
+
+The result should be 0.
+
+net.ipv6.conf.all.disable_ipv6 = 0
+
+If the result is not 0, see the documentation for your operating system for changing sysctl settings. Then, change the value to 0 before continuing.
+
+3. Enter the StorageGRID node container: storagegrid node enter node-name
+
+4. Run the following command: sysctl net.ipv6.conf.all.disable_ipv6
+
+root@DC1-S1:~ # sysctl net.ipv6.conf.all.disable_ipv6
+
+The result should be 1. net.ipv6.conf.all.disable_ipv6 = 1
+
+If the result is not 1, this procedure does not apply. Contact technical support.
+
+5. Exit the container: exit
+
+root@DC1-S1:~ # exit
+
+6. As root, edit the following file: /var/lib/storagegrid/settings/sysctl.d/net.conf.
+
+sudo vi /var/lib/storagegrid/settings/sysctl.d/net.conf
+
+7. Locate the following two lines and remove the comment tags. Then, save and close the file. net.ipv6.conf.all.disable_ipv6 = 0
+
+1303
+
+net.ipv6.conf.default.disable_ipv6 = 0
+
+8. Run these commands to restart the StorageGRID container:
+
+storagegrid node stop node-name
+
+storagegrid node start node-name
+
+Troubleshoot an external syslog server
+
+The following table describes the error messages that might be related using to an external syslog server and lists corrective actions. root@DC1-S1:~ # sysctl net.ipv6.conf.all.disable_ipv6
+
+The result should be 1. net.ipv6.conf.all.disable_ipv6 = 1
+
+If the result is not 1, this procedure does not apply. Contact technical support.
+
+5. Exit the container: exit
+
+root@DC1-S1:~ # exit
+
+6. As root, edit the following file: /var/lib/storagegrid/settings/sysctl.d/net.conf.
+
+sudo vi /var/lib/storagegrid/settings/sysctl.d/net.conf
+
+7. Locate the following two lines and remove the comment tags. Then, save and close the file. net.ipv6.conf.all.disable_ipv6 = 0
+
+1303
+
+net.ipv6.conf.default.disable_ipv6 = 0
+
+8. Run these commands to restart the StorageGRID container:
+
+storagegrid node stop node-name
+
+storagegrid node start node-name
+
+Troubleshoot an external syslog server
+
+The following table describes the error messages that might be related using to an external syslog server and lists corrective actions.
+
+For more information about sending audit information to an external syslog server, see:
+
+Considerations for using an external syslog server
+
+Configure audit messages and external syslog server Error message
+
+Description and recommended actions
+
+Cannot resolve hostname The FQDN you entered for the syslog server could not be resolved to an IP
+
+address.
+
+1. Check the hostname you entered. If you entered an IP address, make sure it is a valid IP address in W.X.Y.Z ("dotted decimal") notation.
+
+2. Check that the DNS servers are configured correctly.
+
+3. Confirm that each node can access the IP addresses for the DNS server.
+
+Connection refused
+
+A TCP or TLS connection to the syslog server was refused. There might be no service listening on the TCP or TLS port for the host, or a firewall might be blocking access.
+
+1. Check that you entered the correct FQDN or IP address, port, and protocol for the syslog server.
+
+2. Confirm that the host for the syslog service is running a syslog daemon that is listening on the specified port.
+
+3. Confirm that a firewall is not blocking access to TCP/TLS connections from the nodes to the IP and port of the syslog server.
+
+1304
+
+Error message Network unreachable
+
+Host unreachable
+
+Connection timed out
+
+Description and recommended actions
+
+The syslog server is not on a directly attached subnet. A router returned an ICMP failure message to indicate it could not forward the test messages from the listed nodes to the syslog server.
+
+1. Check that you entered the correct FQDN or IP address for the syslog server.
+
+2. For each node listed, check the Grid Network Subnet List, the Admin Networks Subnet Lists, and the Client Network gateways. Confirm these are configured to route traffic to the syslog server over the expected network interface and gateway (Grid, Admin, or Client).
+
+The syslog server is on a directly attached subnet (subnet used by the listed nodes for their Grid, Admin, or Client IP addresses). The nodes attempted to send test messages, but did not receive responses to ARP requests for the syslog server’s MAC address.
+
+1. Check that you entered the correct FQDN or IP address for the syslog server. 2. Check that the host running the syslog service is up.
+
+A TCP/TLS connection attempt was made, but no response was received from the syslog server for a long time. There might be a routing misconfiguration or a firewall might be dropping traffic without sending any response (a common configuration).
+
+1. Check that you entered the correct FQDN or IP address for the syslog server.

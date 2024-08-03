@@ -1,0 +1,65 @@
+DeleteBucketLifecycle
+
+GetBucketLifecycleConfiguration
+
+PutBucketLifecycleConfiguration Create lifecycle configuration
+
+As the first step in creating a lifecycle configuration, you create a JSON file that includes one or more rules. For example, this JSON file includes three rules, as follows:
+
+1. Rule 1 applies only to objects that match the prefix category1/ and that have a key2 value of tag2. The Expiration parameter specifies that objects matching the filter will expire at midnight on 22 August 2020.
+
+2. Rule 2 applies only to objects that match the prefix category2/. The Expiration parameter specifies that objects matching the filter will expire 100 days after they are ingested.
+
+896
+
+Rules that specify a number of days are relative to when the object was ingested. If the current date exceeds the ingest date plus the number of days, some objects might be removed from the bucket as soon as the lifecycle configuration is applied. 3. Rule 3 applies only to objects that match the prefix category3/. The Expiration parameter specifies that any noncurrent versions of matching objects will expire 50 days after they become noncurrent.
+
+897
+
+{ "Rules": [ { "ID": "rule1", "Filter": { "And": { "Prefix": "category1/", "Tags": [ { "Key": "key2", "Value": "tag2" } ] } }, "Expiration": { "Date": "2020-08-22T00:00:00Z" }, "Status": "Enabled" }, { "ID": "rule2", "Filter": { "Prefix": "category2/" }, "Expiration": { "Days": 100 }, "Status": "Enabled" }, { "ID": "rule3", "Filter": { "Prefix": "category3/" }, "NoncurrentVersionExpiration": { "NoncurrentDays": 50 }, "Status": "Enabled" } ] }
+
+898
+
+Apply lifecycle configuration to bucket
+
+After you have created the lifecycle configuration file, you apply it to a bucket by issuing a PutBucketLifecycleConfiguration request. 897
+
+{ "Rules": [ { "ID": "rule1", "Filter": { "And": { "Prefix": "category1/", "Tags": [ { "Key": "key2", "Value": "tag2" } ] } }, "Expiration": { "Date": "2020-08-22T00:00:00Z" }, "Status": "Enabled" }, { "ID": "rule2", "Filter": { "Prefix": "category2/" }, "Expiration": { "Days": 100 }, "Status": "Enabled" }, { "ID": "rule3", "Filter": { "Prefix": "category3/" }, "NoncurrentVersionExpiration": { "NoncurrentDays": 50 }, "Status": "Enabled" } ] }
+
+898
+
+Apply lifecycle configuration to bucket
+
+After you have created the lifecycle configuration file, you apply it to a bucket by issuing a PutBucketLifecycleConfiguration request.
+
+This request applies the lifecycle configuration in the example file to objects in a bucket named testbucket. aws s3api --endpoint-url <StorageGRID endpoint> put-bucket-lifecycle- configuration --bucket testbucket --lifecycle-configuration file://bktjson.json
+
+To validate that a lifecycle configuration was successfully applied to the bucket, issue a GetBucketLifecycleConfiguration request. For example: aws s3api --endpoint-url <StorageGRID endpoint> get-bucket-lifecycle- configuration --bucket testbucket
+
+A successful response lists the lifecycle configuration you just applied.
+
+Validate that bucket lifecycle expiration applies to object
+
+You can determine if an expiration rule in the lifecycle configuration applies to a specific object when issuing a PutObject, HeadObject, or GetObject request. If a rule applies, the response includes an Expiration parameter that indicates when the object expires and which expiration rule was matched.
+
+Because bucket lifecycle overrides ILM, the expiry-date shown is the actual date the object will be deleted. For details, see How object retention is determined.
+
+For example, this PutObject request was issued on 22 Jun 2020 and places an object in the testbucket bucket. aws s3api --endpoint-url <StorageGRID endpoint> put-object --bucket testbucket --key obj2test2 --body bktjson.json
+
+The success response indicates that the object will expire in 100 days (01 Oct 2020) and that it matched Rule 2 of the lifecycle configuration.
+
+{ *"Expiration": "expiry-date=\"Thu, 01 Oct 2020 09:07:49 GMT\", rule- id=\"rule2\"", "ETag": "\"9762f8a803bc34f5340579d4446076f7\"" }
+
+For example, this HeadObject request was used to get metadata for the same object in the testbucket bucket.
+
+899 aws s3api --endpoint-url <StorageGRID endpoint> head-object --bucket testbucket --key obj2test2
+
+The success response includes the object’s metadata and indicates that the object will expire in 100 days and that it matched Rule 2.
+
+{ "AcceptRanges": "bytes", *"Expiration": "expiry-date=\"Thu, 01 Oct 2020 09:07:48 GMT\", rule- id=\"rule2\"", "LastModified": "2020-06-23T09:07:48+00:00", "ContentLength": 921, "ETag": "\"9762f8a803bc34f5340579d4446076f7\"" "ContentType": "binary/octet-stream", "Metadata": {} }
+
+For versioning-enabled buckets, the x-amz-expiration response header applies only to current versions of objects. Recommendations for implementing S3 REST API
+
+You should follow these recommendations when implementing the S3 REST API for use with StorageGRID.
+
+Recommendations for HEADs to non-existent objects

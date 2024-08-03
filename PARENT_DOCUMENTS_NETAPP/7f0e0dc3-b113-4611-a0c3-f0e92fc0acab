@@ -1,0 +1,121 @@
+c. Specify the federation metadata URL for each Admin Node in the Federation metadata URL field.
+
+Use the following format: https://<Federation Service Name>:<port>/pf/federation_metadata.ping?PartnerSpId=<SP Connection ID>
+
+d. Select Save.
+
+A green check mark appears on the Save button for a few seconds.
+
+Configure relying party trusts, enterprise applications, or SP connections
+
+When the configuration is saved, the Sandbox mode confirmation notice appears. This notice confirms that sandbox mode is now enabled and provides overview instructions.
+
+StorageGRID can remain in sandbox mode as long as required. However, when Sandbox Mode is selected on the Single Sign-on page, SSO is disabled for all StorageGRID users. Only local users can sign in.
+
+Follow these steps to configure relying party trusts (Active Directory), complete enterprise applications (Azure), or configure SP connections (PingFederate).
+
+336
+
+Active Directory Steps
+
+1. Go to Active Directory Federation Services (AD FS).
+
+2. Create one or more relying party trusts for StorageGRID, using each relying party identifier shown in the table on the StorageGRID Single Sign-on page.
+
+You must create one trust for each Admin Node shown in the table.
+
+For instructions, go to Create relying party trusts in AD FS. Azure
+
+Steps
+
+1. From the Single sign-on page for the Admin Node you are currently signed in to, select the button to download and save the SAML metadata.
+
+2. Then, for any other Admin Nodes in your grid, repeat these steps:
+
+a. Sign in to the node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+c. Download and save the SAML metadata for that node.
+
+3. Go to the Azure Portal.
+
+4. Follow the steps in Create enterprise applications in Azure AD to upload the SAML metadata file for each Admin Node into its corresponding Azure enterprise application. PingFederate
+
+Steps
+
+1. From the Single sign-on page for the Admin Node you are currently signed in to, select the button to download and save the SAML metadata.
+
+2. Then, for any other Admin Nodes in your grid, repeat these steps:
+
+a. Sign in to the node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+c. Download and save the SAML metadata for that node.
+
+3. Go to PingFederate.
+
+4. Create one or more service provider (SP) connections for StorageGRID. Use the SP connection ID for each Admin Node (shown in the table on the StorageGRID Single Sign-on page) and the SAML metadata you downloaded for that Admin Node. 2. Then, for any other Admin Nodes in your grid, repeat these steps:
+
+a. Sign in to the node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+c. Download and save the SAML metadata for that node.
+
+3. Go to the Azure Portal.
+
+4. Follow the steps in Create enterprise applications in Azure AD to upload the SAML metadata file for each Admin Node into its corresponding Azure enterprise application. PingFederate
+
+Steps
+
+1. From the Single sign-on page for the Admin Node you are currently signed in to, select the button to download and save the SAML metadata.
+
+2. Then, for any other Admin Nodes in your grid, repeat these steps:
+
+a. Sign in to the node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+c. Download and save the SAML metadata for that node.
+
+3. Go to PingFederate.
+
+4. Create one or more service provider (SP) connections for StorageGRID. Use the SP connection ID for each Admin Node (shown in the table on the StorageGRID Single Sign-on page) and the SAML metadata you downloaded for that Admin Node.
+
+You must create one SP connection for each Admin Node shown in the table. Test SSO connections
+
+Before you enforce the use of single sign-on for your entire StorageGRID system, you should confirm that single sign-on and single logout are correctly configured for each Admin Node.
+
+337
+
+Active Directory Steps
+
+1. From the StorageGRID Single Sign-on page, locate the link in the Sandbox mode message.
+
+The URL is derived from the value you entered in the Federation service name field.
+
+2. Select the link, or copy and paste the URL into a browser, to access your identity provider’s sign-on page.
+
+3. To confirm you can use SSO to sign in to StorageGRID, select Sign in to one of the following sites, select the relying party identifier for your primary Admin Node, and select Sign in.
+
+4. Enter your federated username and password.
+
+If the SSO sign-in and logout operations are successful, a success message appears.
+
+If the SSO operation is unsuccessful, an error message appears. Fix the issue, clear the browser’s cookies, and try again.
+
+5. Repeat these steps to verify the SSO connection for each Admin Node in your grid. Azure
+
+Steps
+
+338
+
+1. Go to the Single sign-on page in the Azure portal.
+
+2. Select Test this application.
+
+3. Enter the credentials of a federated user.
+
+If the SSO sign-in and logout operations are successful, a success message appears.

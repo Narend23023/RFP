@@ -1,0 +1,65 @@
+), you must
+
+A connected site decommission allows you to remove an operational site from the StorageGRID system. For example, you can perform a connected site decommission to remove a site that is functional but no longer needed.
+
+When StorageGRID removes a connected site, it uses ILM to manage the object data at the site. Before
+
+1455
+
+you can start a connected site decommission, you must remove the site from all ILM rules and activate a new ILM policy. The ILM processes to migrate object data and the internal processes to remove a site can occur at the same time, but the best practice is to allow the ILM steps to complete before you start the actual decommission procedure.
+
+A disconnected site decommission allows you to remove a failed site from the StorageGRID system. For example, you can perform a disconnected site decommission to remove a site that has been destroyed by a fire or flood. When StorageGRID removes a disconnected site, it considers all nodes to be unrecoverable and makes no attempt to preserve data. However, before you can start a disconnected site decommission, you must remove the site from all ILM rules and activate a new ILM policy. If a site contains a mixture of connected ( bring all offline nodes back online.
+
+) and disconnected nodes ( or
+
+), you must
+
+A connected site decommission allows you to remove an operational site from the StorageGRID system. For example, you can perform a connected site decommission to remove a site that is functional but no longer needed.
+
+When StorageGRID removes a connected site, it uses ILM to manage the object data at the site. Before
+
+1455
+
+you can start a connected site decommission, you must remove the site from all ILM rules and activate a new ILM policy. The ILM processes to migrate object data and the internal processes to remove a site can occur at the same time, but the best practice is to allow the ILM steps to complete before you start the actual decommission procedure.
+
+A disconnected site decommission allows you to remove a failed site from the StorageGRID system. For example, you can perform a disconnected site decommission to remove a site that has been destroyed by a fire or flood. When StorageGRID removes a disconnected site, it considers all nodes to be unrecoverable and makes no attempt to preserve data. However, before you can start a disconnected site decommission, you must remove the site from all ILM rules and activate a new ILM policy.
+
+Before performing a disconnected site decommission procedure, you must contact your NetApp account representative. NetApp will review your requirements before enabling all steps in the Decommission Site wizard. You should not attempt a disconnected site decommission if you believe it might be possible to recover the site or to recover object data from the site.
+
+General requirements for removing a connected or a disconnected site
+
+Before removing a connected or disconnected site, you must be aware of the following requirements:
+
+You can’t decommission a site that includes the primary Admin Node.
+
+You can’t decommission a site that includes an Archive Node. You can’t decommission a site if any of the nodes have an interface that belongs to a high availability (HA) group. You must either edit the HA group to remove the node’s interface or remove the entire HA group.
+
+You can’t decommission a site if it contains a mixture of connected ( nodes.
+
+) and disconnected (
+
+You can’t decommission a site if any node at any other site is disconnected ( or
+
+).
+
+You can’t start the site decommission procedure if an ec-node-repair operation is in progress. See Check data repair jobs to track repairs of erasure-coded data.
+
+While the site decommission procedure is running:
+
+You can’t create ILM rules that refer to the site being decommissioned. You also can’t edit an existing ILM rule to refer to the site.
+
+You can’t perform other maintenance procedures, such as expansion or upgrade.
+
+If you need to perform another maintenance procedure during a connected site decommission, you can pause the procedure while the Storage Nodes are being removed. The Pause button is enabled only when the ILM evaluation or erasure-coded data decommissioning stages are reached; however, ILM evaluation (data migration) will continue to run in the background. After the second maintenance procedure is complete, you can resume decommissioning.
+
+If you need to recover any node after starting the site decommission procedure, you must contact support. You can’t decommission more than one site at a time.
+
+If the site includes one or more Admin Nodes and single sign-on (SSO) is enabled for your StorageGRID
+
+1456
+
+or
+
+)
+
+system, you must remove all relying party trusts for the site from Active Directory Federation Services (AD FS). Requirements for information lifecycle management (ILM)

@@ -1,0 +1,143 @@
+Notifications:
+
+arn:aws:sns:region:account-id:topic-name
+
+Search integration: The next element of the URN specifies the type of platform service, as follows: Service
+
+Type
+
+CloudMirror replication
+
+s3
+
+Notifications
+
+sns or kafka
+
+Search integration
+
+es
+
+For example, to continue specifying the URN for a CloudMirror endpoint hosted on StorageGRID, you would add s3 to get urn:sgws:s3.
+
+The final element of the URN identifies the specific target resource at the destination URI. Service
+
+Specific resource
+
+CloudMirror replication
+
+bucket-name
+
+Notifications
+
+sns-topic-name or kafka-topic-name
+
+Search integration
+
+domain-name/index-name/type-name
+
+Note: If the Elasticsearch cluster is not configured to create indexes automatically, you must create the index manually before you create the endpoint.
+
+835
+
+URNs for services hosted on AWS and GCP
+
+For AWS and GCP entities, the complete URN is a valid AWS ARN. For example:
+
+CloudMirror replication: arn:aws:s3:::bucket-name
+
+Notifications:
+
+arn:aws:sns:region:account-id:topic-name
+
+Search integration:
+
+arn:aws:es:region:account-id:domain/domain-name/index-name/type-name
+
+For an AWS search integration endpoint, the domain-name must include the literal string domain/, as shown here.
+
+URNs for locally-hosted services
+
+When using locally-hosted services instead of cloud services, you can specify the URN in any way that creates a valid and unique URN, as long as the URN includes the required elements in the third and final positions. You can leave the elements indicated by optional blank, or you can specify them in any way that helps you identify the resource and make the URN unique. For example:
+
+CloudMirror replication: urn:mysite:s3:optional:optional:bucket-name
+
+For a CloudMirror endpoint hosted on StorageGRID, you can specify a valid URN that begins with urn:sgws:
+
+urn:sgws:s3:optional:optional:bucket-name
+
+Notifications:
+
+Specify an Amazon Simple Notification Service endpoint:
+
+urn:mysite:sns:optional:optional:sns-topic-name
+
+Specify a Kafka endpoint:
+
+836
+
+urn:mysite:kafka:optional:optional:kafka-topic-name
+
+Search integration: urn:mysite:es:optional:optional:domain-name/index-name/type-name
+
+For locally-hosted search integration endpoints, the domain-name element can be any string as long as the URN of the endpoint is unique. Create platform services endpoint
+
+You must create at least one endpoint of the correct type before you can enable a platform service.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+Platform services were enabled for your tenant account by a StorageGRID administrator.
+
+You belong to a user group that has the Manage endpoints or Root access permission.
+
+The resource referenced by the platform services endpoint have been created:
+
+CloudMirror replication: S3 bucket ◦ Event notification: Amazon Simple Notification Service (Amazon SNS) or Kafka topic ◦ Search notification: Elasticsearch index, if the destination cluster is not configured to automatically create indexes.
+
+You have the information about the destination resource:
+
+Host and port for the Uniform Resource Identifier (URI) If you plan to use a bucket hosted on a StorageGRID system as an endpoint for CloudMirror replication, contact the grid administrator to determine the values you need to enter.
+
+Unique Resource Name (URN)
+
+Specify URN for platform services endpoint
+
+Authentication credentials (if required):
+
+837
+
+Search integration endpoints
+
+For search integration endpoints, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key ▪ Basic HTTP: Username and password CloudMirror replication endpoints
+
+For CloudMirror replication, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key ▪ CAP (C2S Access Portal): Temporary credentials URL, server and client certificates, client
+
+keys, and an optional client private key passphrase. Amazon SNS endpoints
+
+For Amazon SNS endpoints, you can use the following credentials: The resource referenced by the platform services endpoint have been created:
+
+CloudMirror replication: S3 bucket ◦ Event notification: Amazon Simple Notification Service (Amazon SNS) or Kafka topic ◦ Search notification: Elasticsearch index, if the destination cluster is not configured to automatically create indexes.
+
+You have the information about the destination resource:
+
+Host and port for the Uniform Resource Identifier (URI) If you plan to use a bucket hosted on a StorageGRID system as an endpoint for CloudMirror replication, contact the grid administrator to determine the values you need to enter.
+
+Unique Resource Name (URN)
+
+Specify URN for platform services endpoint
+
+Authentication credentials (if required):
+
+837
+
+Search integration endpoints
+
+For search integration endpoints, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key ▪ Basic HTTP: Username and password CloudMirror replication endpoints

@@ -1,0 +1,103 @@
+Platform services configuration: Notification, Replication, or Search integration
+
+CORS configuration
+
+Change bucket consistency
+
+If the default consistency used when changing bucket settings does not meet the client application’s requirements, you can change the consistency by using the Consistency- Control header for the S3 REST API or by using the reducedConsistency or force options in the Tenant Management API. Enable or disable last access time updates
+
+When grid administrators create the information lifecycle management (ILM) rules for a StorageGRID system, they can optionally specify that an object’s last access time be used to determine whether to move that object to a different storage location. If you are using an S3 tenant, you can take advantage of such rules by enabling last access time updates for the objects in an S3 bucket.
+
+These instructions only apply to StorageGRID systems that include at least one ILM rule that uses the Last access time option as an advanced filter or as a reference time. You can ignore these instructions if your StorageGRID system does not include such a rule. See Use Last access time in ILM rules for details.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser. You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies. About this task
+
+Last access time is one of the options available for the Reference time placement instruction for an ILM rule. Setting the Reference time for a rule to Last access time lets grid administrators specify that objects be placed in certain storage locations based on when those objects were last retrieved (read or viewed). When grid administrators create the information lifecycle management (ILM) rules for a StorageGRID system, they can optionally specify that an object’s last access time be used to determine whether to move that object to a different storage location. If you are using an S3 tenant, you can take advantage of such rules by enabling last access time updates for the objects in an S3 bucket.
+
+These instructions only apply to StorageGRID systems that include at least one ILM rule that uses the Last access time option as an advanced filter or as a reference time. You can ignore these instructions if your StorageGRID system does not include such a rule. See Use Last access time in ILM rules for details.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser. You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies. About this task
+
+Last access time is one of the options available for the Reference time placement instruction for an ILM rule. Setting the Reference time for a rule to Last access time lets grid administrators specify that objects be placed in certain storage locations based on when those objects were last retrieved (read or viewed).
+
+For example, to ensure that recently viewed objects remain on faster storage, a grid administrator can create an ILM rule specifying the following:
+
+Objects that have been retrieved in the past month should remain on local Storage Nodes.
+
+Objects that have not been retrieved in the past month should be moved to an off-site location.
+
+By default, updates to last access time are disabled. If your StorageGRID system includes an ILM rule that uses the Last access time option and you want this option to apply to objects in this bucket, you must enable updates to last access time for the S3 buckets specified in that rule. 812
+
+Updating the last access time when an object is retrieved can reduce StorageGRID performance, especially for small objects.
+
+A performance impact occurs with last access time updates because StorageGRID must perform these additional steps every time objects are retrieved:
+
+Update the objects with new timestamps
+
+Add the objects to the ILM queue, so they can be reevaluated against current ILM rules and policy
+
+The table summarizes the behavior applied to all objects in the bucket when last access time is disabled or enabled. Type of request
+
+Behavior if last access time is disabled (default)
+
+Behavior if last access time is enabled
+
+Last access time updated?
+
+Object added to ILM evaluation queue?
+
+Last access time updated?
+
+Object added to ILM evaluation queue?
+
+Request to retrieve an object, its access control list, or its metadata No
+
+No
+
+Yes
+
+Yes
+
+Request to update an object’s metadata
+
+Yes
+
+Yes
+
+Yes
+
+Yes
+
+Request to copy an object from one bucket to another
+
+No, for the source copy
+
+Yes, for the
+
+No, for the source copy
+
+Yes, for the
+
+Yes, for the source copy
+
+Yes, for the
+
+Yes, for the source copy
+
+Yes, for the
+
+destination copy destination copy
+
+destination copy
+
+destination copy
+
+Request to complete a multipart upload
+
+Yes, for the assembled object
+
+Yes, for the assembled object

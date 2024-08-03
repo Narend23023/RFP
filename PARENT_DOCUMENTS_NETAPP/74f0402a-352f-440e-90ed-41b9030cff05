@@ -1,0 +1,193 @@
+The audit messages belonging to the ILM audit category are used for events related to information lifecycle management (ILM) operations. Code S3 client
+
+SPOS: S3 POST
+
+1339
+
+Code
+
+Description
+
+Used by
+
+See
+
+SPUT
+
+S3 PUT: Logs a successful transaction to create a new object or bucket.
+
+S3 client
+
+SPUT: S3 PUT
+
+Note: If the transaction operates on a subresource, the audit message will include the field S3SR. SUPD
+
+S3 Metadata Updated: Logs a successful transaction to update the metadata for an existing object or bucket.
+
+S3 client
+
+SUPD: S3 Metadata Updated
+
+WDEL
+
+Swift DELETE: Logs a successful transaction to delete an object or container.
+
+Swift client
+
+WDEL: Swift DELETE
+
+WPUT
+
+Swift PUT: Logs a successful transaction to create a new object or container. Swift client
+
+WPUT: Swift PUT
+
+Management audit message
+
+The Management category logs user requests to the Management API.
+
+Code
+
+Message title and description
+
+See
+
+MGAU
+
+Management API audit message: A log of user requests.
+
+MGAU: Management audit message
+
+ILM audit messages
+
+The audit messages belonging to the ILM audit category are used for events related to information lifecycle management (ILM) operations. Code
+
+Message title and description
+
+See
+
+IDEL
+
+ILM Initiated Delete: This audit message is generated when ILM starts the process of deleting an object.
+
+IDEL: ILM Initiated Delete
+
+LKCU
+
+Overwritten Object Cleanup. This audit message is generated when an overwritten object is automatically removed to free up storage space. LKCU: Overwritten Object Cleanup
+
+ORLM
+
+Object Rules Met: This audit message is generated when object data is stored as specified by the ILM rules.
+
+ORLM: Object Rules Met
+
+Audit message reference
+
+1340
+
+APCT: Archive Purge from Cloud-Tier
+
+This message is generated when archived object data is deleted from an external archival storage system, which connects to the StorageGRID through the S3 API. Code
+
+Field
+
+Description
+
+CBID
+
+Content Block ID The unique identifier for the content block that was deleted.
+
+CSIZ
+
+Content Size
+
+The size of the object in bytes. Always returns 0.
+
+RSLT
+
+Result Code
+
+Returns successful (SUCS) or the error reported by the backend.
+
+SUID
+
+Storage Unique Identifier
+
+Unique identifier (UUID) of the cloud-tier from which the object was deleted. ARCB: Archive Object Retrieve Begin
+
+This message is generated when a request is made to retrieve archived object data and the retrieval process begins. Retrieval requests are processed immediately, but can be reordered to improve efficiency of retrieval from linear media such as tape.
+
+Code
+
+Field
+
+Description CBID
+
+Content Block ID The unique identifier of the Content Block to be retrieved from the
+
+external archival storage system.
+
+RSLT
+
+Result
+
+Indicates the result of starting the archive retrieval process. Currently defined value is:SUCS: The content request was received and queued for retrieval.
+
+This audit message marks the time of an archive retrieval. It allows you to match the message with a corresponding ARCE end message to determine the duration of archive retrieval, and whether the operation was successful. ARCE: Archive Object Retrieve End
+
+This message is generated when an attempt by the Archive Node to retrieve object data from an external archival storage system completes. If successful, the message indicates that the requested object data has been completely read from the archive location, and was successfully verified. After the object data has been retrieved and verified, it is delivered to the requesting service. Code
+
+Field
+
+Description
+
+CBID
+
+Content Block ID The unique identifier of the Content Block to be retrieved from the
+
+external archival storage system.
+
+1341
+
+Code
+
+Field
+
+Description
+
+VLID
+
+Volume Identifier The identifier of the volume on which the data was archived. If an
+
+archive location for the content is not found, a Volume ID of 0 is returned. RSLT
+
+Retrieval Result The completion status of the archive retrieval process:
+
+SUCS: successful
+
+VRFL: failed (object verification failure)
+
+ARUN: failed (external archival storage system unavailable)
+
+CANC: failed (retrieval operation canceled)
+
+GERR: failed (general error) This audit message marks the time of an archive retrieval. It allows you to match the message with a corresponding ARCE end message to determine the duration of archive retrieval, and whether the operation was successful. ARCE: Archive Object Retrieve End
+
+This message is generated when an attempt by the Archive Node to retrieve object data from an external archival storage system completes. If successful, the message indicates that the requested object data has been completely read from the archive location, and was successfully verified. After the object data has been retrieved and verified, it is delivered to the requesting service. Code
+
+Field
+
+Description
+
+CBID
+
+Content Block ID The unique identifier of the Content Block to be retrieved from the
+
+external archival storage system.
+
+1341
+
+Code
+
+Field

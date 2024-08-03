@@ -1,0 +1,153 @@
+If your StorageGRID installation will not use StorageGRID appliance (hardware) Storage Nodes, you must use hardware RAID storage with battery-backed write cache (BBWC). StorageGRID does not support the use of virtual storage area networks (vSANs), software RAID, or no RAID protection.
+
+202
+
+Node migration (if needed)
+
+Understand the requirements for node migration, if you want to perform scheduled maintenance on physical hosts without any service interruption.
+
+Related information NetApp Interoperability Matrix Tool
+
+Required materials
+
+NetApp StorageGRID license
+
+You must have a valid, digitally signed NetApp license.
+
+A non-production license, which can be used for testing and proof of concept grids, is included in the StorageGRID installation archive.
+
+StorageGRID installation archive
+
+Download the StorageGRID installation archive and extract the files. Service laptop
+
+The StorageGRID system is installed through a service laptop.
+
+The service laptop must have:
+
+Network port
+
+SSH client (for example, PuTTY)
+
+Supported web browser
+
+StorageGRID documentation
+
+Release notes
+
+Instructions for administering StorageGRID
+
+Download and extract the StorageGRID installation files
+
+You must download the StorageGRID installation archives and extract the files.. Steps
+
+1. Go to the NetApp Downloads page for StorageGRID.
+
+2. Select the button for downloading the latest release, or select another version from the drop-down menu and select Go.
+
+3. Sign in with the username and password for your NetApp account.
+
+4. If a Caution/MustRead statement appears, read it and select the checkbox.
+
+You must apply any required hotfixes after you install the StorageGRID release. For more information, see the hotfix procedure in the recovery and maintenance instructions
+
+5. Read the End User License Agreement, select the checkbox, and then select Accept & Continue.
+
+6. In the Install StorageGRID column, select the .tgz or .zip file for VMware.
+
+203
+
+Use the .zip file if you are running Windows on the service laptop.
+
+7. Save and extract the archive file.
+
+8. Choose the files you need from the following list.
+
+The files you need depend on your planned grid topology and how you will deploy your StorageGRID system. The paths listed in the table are relative to the top-level directory installed by the extracted installation archive.
+
+Path and file name
+
+Description
+
+./vsphere/README
+
+A text file that describes all of the files contained in the StorageGRID download file.
+
+./vsphere/NLF000000.txt
+
+A free license that does not provide any support entitlement for the product. ./vsphere/NetApp-SG-version-SHA.vmdk
+
+The virtual machine disk file that is used as a template for creating grid node virtual machines.
+
+./vsphere/vsphere-primary-admin.ovf
+
+./vsphere/vsphere-primary-admin.mf 5. Read the End User License Agreement, select the checkbox, and then select Accept & Continue.
+
+6. In the Install StorageGRID column, select the .tgz or .zip file for VMware.
+
+203
+
+Use the .zip file if you are running Windows on the service laptop.
+
+7. Save and extract the archive file.
+
+8. Choose the files you need from the following list.
+
+The files you need depend on your planned grid topology and how you will deploy your StorageGRID system. The paths listed in the table are relative to the top-level directory installed by the extracted installation archive.
+
+Path and file name
+
+Description
+
+./vsphere/README
+
+A text file that describes all of the files contained in the StorageGRID download file.
+
+./vsphere/NLF000000.txt
+
+A free license that does not provide any support entitlement for the product. ./vsphere/NetApp-SG-version-SHA.vmdk
+
+The virtual machine disk file that is used as a template for creating grid node virtual machines.
+
+./vsphere/vsphere-primary-admin.ovf
+
+./vsphere/vsphere-primary-admin.mf
+
+The Open Virtualization Format template file (.ovf) and manifest file (.mf) for deploying the primary Admin Node. ./vsphere/vsphere-non-primary-admin.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying non-primary Admin Nodes.
+
+./vsphere/vsphere-non-primary-admin.mf
+
+./vsphere/vsphere-archive.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying Archive Nodes.
+
+./vsphere/vsphere-archive.mf ./vsphere/vsphere-gateway.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying Gateway Nodes.
+
+./vsphere/vsphere-gateway.mf
+
+./vsphere/vsphere-storage.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying virtual machine-based Storage Nodes.
+
+./vsphere/vsphere-storage.mf
+
+Deployment scripting tool Description
+
+./vsphere/deploy-vsphere-ovftool.sh
+
+A Bash shell script used to automate the deployment of virtual grid nodes.
+
+./vsphere/deploy-vsphere-ovftool- sample.ini
+
+An example configuration file for use with the deploy-vsphere-ovftool.sh script.
+
+204
+
+Path and file name
+
+Description
+
+./vsphere/configure-storagegrid.py

@@ -1,0 +1,107 @@
+You must create a relying party trust for each Admin Node in your StorageGRID system. Having a relying party trust for each Admin Node ensures that users can securely sign in to and out of any Admin Node.
+
+You have experience creating relying party trusts in AD FS, or you have access to the Microsoft AD FS documentation.
+
+You are using the AD FS Management snap-in, and you belong to the Administrators group.
+
+If you are creating the relying party trust manually, you have the custom certificate that was uploaded for the StorageGRID management interface, or you know how to log in to an Admin Node from the command shell. About this task
+
+These instructions apply to Windows Server 2016 AD FS. If you are using a different version of AD FS, you will notice slight differences in the procedure. See the Microsoft AD FS documentation if you have questions.
+
+Create a relying party trust using Windows PowerShell
+
+You can use Windows PowerShell to quickly create one or more relying party trusts. Steps
+
+1. From the Windows start menu, right-select the PowerShell icon, and select Run as Administrator.
+
+2. At the PowerShell command prompt, enter the following command: `Add-AdfsRelyingPartyTrust -Name "Admin_Node_Identifer" -MetadataURL "https:// Admin_Node_FQDN/api/saml-metadata"
+
+For Admin_Node_Identifier, enter the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page. For example, SG-DC1-ADM1.
+
+340
+
+◦ For Admin_Node_FQDN, enter the fully qualified domain name for the same Admin Node. (If
+
+necessary, you can use the node’s IP address instead. However, if you enter an IP address here, be aware that you must update or recreate this relying party trust if that IP address ever changes.)
+
+3. From Windows Server Manager, select Tools > AD FS Management.
+
+The AD FS management tool appears.
+
+4. Select AD FS > Relying Party Trusts.
+
+The list of relying party trusts appears. Create a relying party trust using Windows PowerShell
+
+You can use Windows PowerShell to quickly create one or more relying party trusts. Steps
+
+1. From the Windows start menu, right-select the PowerShell icon, and select Run as Administrator.
+
+2. At the PowerShell command prompt, enter the following command: `Add-AdfsRelyingPartyTrust -Name "Admin_Node_Identifer" -MetadataURL "https:// Admin_Node_FQDN/api/saml-metadata"
+
+For Admin_Node_Identifier, enter the Relying Party Identifier for the Admin Node, exactly as it appears on the Single Sign-on page. For example, SG-DC1-ADM1.
+
+340
+
+◦ For Admin_Node_FQDN, enter the fully qualified domain name for the same Admin Node. (If
+
+necessary, you can use the node’s IP address instead. However, if you enter an IP address here, be aware that you must update or recreate this relying party trust if that IP address ever changes.)
+
+3. From Windows Server Manager, select Tools > AD FS Management.
+
+The AD FS management tool appears.
+
+4. Select AD FS > Relying Party Trusts.
+
+The list of relying party trusts appears.
+
+5. Add an Access Control Policy to the newly created relying party trust:
+
+a. Locate the relying party trust you just created. b. Right-click the trust, and select Edit Access Control Policy.
+
+c. Select an Access Control Policy.
+
+d. Select Apply, and select OK
+
+6. Add a Claim Issuance Policy to the newly created Relying Party Trust:
+
+a. Locate the relying party trust you just created.
+
+b. Right-click the trust, and select Edit claim issuance policy. c. Select Add rule.
+
+d. On the Select Rule Template page, select Send LDAP Attributes as Claims from the list, and select
+
+Next.
+
+e. On the Configure Rule page, enter a display name for this rule.
+
+For example, ObjectGUID to Name ID or UPN to Name ID.
+
+f. For the Attribute Store, select Active Directory.
+
+g. In the LDAP Attribute column of the Mapping table, type objectGUID or select User-Principal-Name.
+
+h. In the Outgoing Claim Type column of the Mapping table, select Name ID from the drop-down list. i. Select Finish, and select OK.
+
+7. Confirm that the metadata was imported successfully.
+
+a. Right-click the relying party trust to open its properties.
+
+b. Confirm that the fields on the Endpoints, Identifiers, and Signature tabs are populated.
+
+If the metadata is missing, confirm that the Federation metadata address is correct, or enter the values manually.
+
+8. Repeat these steps to configure a relying party trust for all of the Admin Nodes in your StorageGRID system.
+
+9. When you are done, return to StorageGRID and test all relying party trusts to confirm they are configured correctly. See Use Sandbox mode for instructions.
+
+Create a relying party trust by importing federation metadata
+
+You can import the values for each relying party trust by accessing the SAML metadata for each Admin Node.
+
+Steps
+
+341
+
+1. In Windows Server Manager, select Tools, and then select AD FS Management.
+
+2. Under Actions, select Add Relying Party Trust. 3. On the Welcome page, choose Claims aware, and select Start.

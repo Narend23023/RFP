@@ -1,0 +1,147 @@
+5. For S3 tenants, optionally select Yes to apply the rule only to older object versions in S3 buckets that have versioning enabled. If you select Yes, "Noncurrent time" will be automatically selected for Reference time in Step 2 of the Create an ILM rule wizard.
+
+Noncurrent time applies only to S3 objects in versioning-enabled buckets. See Operations on buckets, PutBucketVersioning and Manage objects with S3 Object Lock.
+
+You can use this option to reduce the storage impact of versioned objects by filtering for noncurrent object versions. See Example 4: ILM rules and policy for S3 versioned objects.
+
+6. Optionally, select Add an advanced filter to specify additional filters.
+
+If you don’t configure advanced filtering, the rule applies to all objects that match the basic filters. For more information about advanced filtering, see Use advanced filters in ILM rules and Specify multiple metadata types and values.
+
+7. Select Continue. Step 2 (Define placements) of the Create an ILM rule wizard appears. 655
+
+4. Optionally, specify the S3 buckets or Swift containers to which this rule applies.
+
+If applies to all buckets is selected (default), the rule applies to all S3 buckets or Swift containers.
+
+5. For S3 tenants, optionally select Yes to apply the rule only to older object versions in S3 buckets that have versioning enabled. If you select Yes, "Noncurrent time" will be automatically selected for Reference time in Step 2 of the Create an ILM rule wizard.
+
+Noncurrent time applies only to S3 objects in versioning-enabled buckets. See Operations on buckets, PutBucketVersioning and Manage objects with S3 Object Lock.
+
+You can use this option to reduce the storage impact of versioned objects by filtering for noncurrent object versions. See Example 4: ILM rules and policy for S3 versioned objects.
+
+6. Optionally, select Add an advanced filter to specify additional filters.
+
+If you don’t configure advanced filtering, the rule applies to all objects that match the basic filters. For more information about advanced filtering, see Use advanced filters in ILM rules and Specify multiple metadata types and values.
+
+7. Select Continue. Step 2 (Define placements) of the Create an ILM rule wizard appears.
+
+Use advanced filters in ILM rules Advanced filtering allows you to create ILM rules that apply only to specific objects based on their metadata. When you set up advanced filtering for a rule, you select the type of metadata you want to match, select an operator, and specify a metadata value. When objects are evaluated, the ILM rule is applied only to those objects that have metadata matching the advanced filter.
+
+The table shows the types of metadata you can specify in advanced filters, the operators you can use for each type of metadata, and the metadata values expected. Metadata type
+
+Supported operators
+
+Metadata value
+
+Ingest time
+
+is
+
+Time and date the object was ingested.
+
+is not
+
+is before
+
+is on or before
+
+is after
+
+is on or after
+
+Note: To avoid resource issues when activating an new ILM policy, you can use the Ingest time advanced filter in any rule that might change the location of large numbers of existing objects. Set Ingest time to be greater than or equal to the approximate time when the new policy will go into effect to ensure that existing objects aren’t moved unnecessarily.
+
+656
+
+Metadata type Key
+
+Last access time
+
+Location constraint (S3 only) Object size
+
+Supported operators
+
+equals
+
+does not equal
+
+contains
+
+does not contain
+
+starts with
+
+does not start with
+
+ends with
+
+does not end with
+
+is
+
+is not
+
+is before
+
+is on or before
+
+is after
+
+is on or after
+
+equals
+
+does not equal
+
+equals
+
+does not equal
+
+less than
+
+less than or equal to
+
+greater than
+
+greater than or equal to
+
+Metadata value
+
+All or part of a unique S3 or Swift object key.
+
+For example, you might want to match objects that end with .txt or start with test-object/.
+
+Time and date the object was last retrieved (read or viewed).
+
+Note: If you plan to use last access time as an advanced filter, Last access time updates must be enabled for the S3 bucket or Swift container.
+
+The region where an S3 bucket was created. Use ILM > Regions to define the regions that are shown.
+
+Note: A value of us-east-1 will match objects in buckets created in the us-east-1 region as well as objects in buckets that have no region specified. See Configure regions (optional and S3 only). The object’s size.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments.
+
+657
+
+Metadata type
+
+Supported operators
+
+Metadata value
+
+User metadata
+
+contains
+
+ends with
+
+Key-value pair, where User metadata name is the key and Metadata value is the value.
+
+equals
+
+exists
+
+starts with
+
+For example, to filter on objects that have user metadata of color=blue, specify color for User metadata name, equals for the operator, and blue for Metadata value.

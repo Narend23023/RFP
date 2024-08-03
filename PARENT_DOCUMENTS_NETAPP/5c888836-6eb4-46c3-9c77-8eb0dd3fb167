@@ -1,0 +1,107 @@
+1. For the Upgrade other nodes step, review the Summary, which provides the start time for the upgrade as a whole and the status for each major upgrade task.
+
+Start upgrade service is the first upgrade task. During this task, the software file is distributed to the grid nodes, and the upgrade service is started on each node.
+
+When the Start upgrade service task is complete, the Upgrade other grid nodes task starts, and you are prompted to download a new copy of the Recovery Package.
+
+2. When prompted, enter your provisioning passphrase and download a new copy of the Recovery Package.
+
+You should download a new copy of the Recovery Package file after the primary Admin Node is upgraded. The Recovery Package file allows you to restore the system if a failure occurs.
+
+3. Review the status tables for each type of node. There are tables for non-primary Admin Nodes, Gateway Nodes, Storage Nodes, and Archive Nodes.
+
+A grid node can be in one of these stages when the tables first appear: Unpacking the upgrade ◦ Downloading ◦ Waiting to be approved
+
+4. When you are ready to select grid nodes for upgrade (or if you need to unapprove selected nodes), use these instructions:
+
+264
+
+Task
+
+Instruction
+
+Search for specific nodes to approve, such as all nodes at a particular site
+
+Enter the search string in the Search field Select all nodes for upgrade
+
+Select Approve all nodes
+
+Select all nodes of the same type for upgrade (for example, all Storage Nodes)
+
+Select the Approve all button for the node type
+
+If you approve more than one node of the same type, the nodes will be upgraded one at a time.
+
+Select an individual node for upgrade
+
+Select the Approve button for the node
+
+Postpone the upgrade on all selected nodes Select Unapprove all nodes
+
+Postpone the upgrade on all selected nodes of the same type
+
+Select the Unapprove all button for the node type
+
+Postpone the upgrade on an individual node
+
+Select the Unapprove button for the node
+
+5. Wait for the approved nodes to proceed through these upgrade stages:
+
+Approved and waiting to be upgraded ◦ Stopping services
+
+You can’t remove a node when its Stage reaches Stopping services. The Unapprove button is disabled.
+
+Stopping container ◦ Cleaning up Docker images ◦ Upgrading base OS packages
+
+When an appliance node reaches this stage, the StorageGRID Appliance Installer software on the appliance is updated. This automated process ensures that the StorageGRID Appliance Installer version remains in sync with the StorageGRID software version.
+
+Rebooting
+
+Some appliance models might reboot multiple times to upgrade the firmware and BIOS.
+
+Performing steps after reboot ◦ Starting services ◦ Done 6. Repeat the approval step as many times as needed until all grid nodes have been upgraded.
+
+265
+
+Complete upgrade
+
+When all grid nodes have completed the upgrade stages, the Upgrade other grid nodes task is shown as Completed. The remaining upgrade tasks are performed automatically in the background. Steps Select the Approve button for the node
+
+Postpone the upgrade on all selected nodes Select Unapprove all nodes
+
+Postpone the upgrade on all selected nodes of the same type
+
+Select the Unapprove all button for the node type
+
+Postpone the upgrade on an individual node
+
+Select the Unapprove button for the node
+
+5. Wait for the approved nodes to proceed through these upgrade stages:
+
+Approved and waiting to be upgraded ◦ Stopping services
+
+You can’t remove a node when its Stage reaches Stopping services. The Unapprove button is disabled.
+
+Stopping container ◦ Cleaning up Docker images ◦ Upgrading base OS packages
+
+When an appliance node reaches this stage, the StorageGRID Appliance Installer software on the appliance is updated. This automated process ensures that the StorageGRID Appliance Installer version remains in sync with the StorageGRID software version.
+
+Rebooting
+
+Some appliance models might reboot multiple times to upgrade the firmware and BIOS.
+
+Performing steps after reboot ◦ Starting services ◦ Done 6. Repeat the approval step as many times as needed until all grid nodes have been upgraded.
+
+265
+
+Complete upgrade
+
+When all grid nodes have completed the upgrade stages, the Upgrade other grid nodes task is shown as Completed. The remaining upgrade tasks are performed automatically in the background. Steps
+
+1. As soon as the Enable features task is complete (which occurs quickly), you can start using the new features in the upgraded StorageGRID version.
+
+2. During the Upgrade database task, the upgrade process checks each node to verify that the Cassandra database does not need to be updated.
+
+The upgrade from StorageGRID 11.7 to 11.8 does not require a Cassandra database upgrade; however, the Cassandra service will be stopped and restarted on each Storage Node. For future StorageGRID feature releases, the Cassandra database update step might take several days to complete.

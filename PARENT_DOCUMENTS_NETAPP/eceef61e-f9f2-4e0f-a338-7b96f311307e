@@ -1,0 +1,63 @@
+In the Principal element, wildcard characters aren’t supported except to set anonymous access, which grants permission to everyone. For example, you set the wildcard (*) as the Principal value. "Principal":"*"
+
+"Principal":{"AWS":"*"}
+
+In the following example, the statement is using the Effect, Principal, Action, and Resource elements. This example shows a complete bucket policy statement that uses the Effect "Allow" to give the Principals, the admin group federated-group/admin and the finance group federated-group/finance, permissions to perform the Action s3:ListBucket on the bucket named mybucket and the Action s3:GetObject on all objects inside that bucket.
+
+969
+
+{ "Statement": [ { "Effect": "Allow", "Principal": { "AWS": [ "arn:aws:iam::27233906934684427525:federated-group/admin", "arn:aws:iam::27233906934684427525:federated-group/finance" ] }, "Action": [ "s3:ListBucket", "s3:GetObject" ], "Resource": [ "arn:aws:iam:s3:::mybucket", "arn:aws:iam:s3:::mybucket/*" ] } ] } In the Principal element, wildcard characters aren’t supported except to set anonymous access, which grants permission to everyone. For example, you set the wildcard (*) as the Principal value. "Principal":"*"
+
+"Principal":{"AWS":"*"}
+
+In the following example, the statement is using the Effect, Principal, Action, and Resource elements. This example shows a complete bucket policy statement that uses the Effect "Allow" to give the Principals, the admin group federated-group/admin and the finance group federated-group/finance, permissions to perform the Action s3:ListBucket on the bucket named mybucket and the Action s3:GetObject on all objects inside that bucket.
+
+969
+
+{ "Statement": [ { "Effect": "Allow", "Principal": { "AWS": [ "arn:aws:iam::27233906934684427525:federated-group/admin", "arn:aws:iam::27233906934684427525:federated-group/finance" ] }, "Action": [ "s3:ListBucket", "s3:GetObject" ], "Resource": [ "arn:aws:iam:s3:::mybucket", "arn:aws:iam:s3:::mybucket/*" ] } ] }
+
+The bucket policy has a size limit of 20,480 bytes, and the group policy has a size limit of 5,120 bytes. Consistency for policies
+
+By default, any updates you make to group policies are eventually consistent. When a group policy becomes consistent, the changes can take an additional 15 minutes to take effect, because of policy caching. By default, any updates you make to bucket policies are strongly consistent.
+
+As required, you can change the consistency guarantees for bucket policy updates. For example, you might want a change to a bucket policy to be available during a site outage.
+
+In this case, you can either set the Consistency-Control header in the PutBucketPolicy request, or you can use the PUT Bucket consistency request. When a bucket policy becomes consistent, the changes can take an additional 8 seconds to take effect, because of policy caching. If you set the consistency to a different value to work around a temporary situation, be sure to set the bucket-level setting back to its original value when you are done. Otherwise, all future bucket requests will use the modified setting.
+
+Use ARN in policy statements
+
+In policy statements, the ARN is used in Principal and Resource elements.
+
+Use this syntax to specify the S3 resource ARN:
+
+970 arn:aws:s3:::bucket-name arn:aws:s3:::bucket-name/object_key
+
+Use this syntax to specify the identity resource ARN (users and groups):
+
+arn:aws:iam::account_id:root arn:aws:iam::account_id:user/user_name arn:aws:iam::account_id:group/group_name arn:aws:iam::account_id:federated-user/user_name arn:aws:iam::account_id:federated-group/group_name Other considerations:
+
+You can use the asterisk (*) as a wildcard to match zero or more characters inside the object key.
+
+International characters, which can be specified in the object key, should be encoded using JSON UTF-8 or using JSON \u escape sequences. Percent-encoding is not supported.
+
+RFC 2141 URN Syntax
+
+The HTTP request body for the PutBucketPolicy operation must be encoded with charset=UTF-8. Specify resources in a policy
+
+In policy statements, you can use the Resource element to specify the bucket or object for which permissions are allowed or denied.
+
+Each policy statement requires a Resource element. In a policy, resources are denoted by the element Resource, or alternatively, NotResource for exclusion.
+
+You specify resources with an S3 resource ARN. For example: "Resource": "arn:aws:s3:::mybucket/*"
+
+You can also use policy variables inside the object key. For example:
+
+"Resource": "arn:aws:s3:::mybucket/home/${aws:username}/*"
+
+The resource value can specify a bucket that does not yet exist when a group policy is created.
+
+Specify principals in a policy You can use the asterisk (*) as a wildcard to match zero or more characters inside the object key.
+
+International characters, which can be specified in the object key, should be encoded using JSON UTF-8 or using JSON \u escape sequences. Percent-encoding is not supported.
+
+RFC 2141 URN Syntax

@@ -1,0 +1,117 @@
+Configure the information lifecycle management (ILM) rules and ILM policy you want to use to protect object data.
+
+If your installation includes appliance Storage Nodes, use SANtricity OS to complete the following tasks:
+
+Connect to each StorageGRID appliance. ◦ Verify receipt of AutoSupport data. See Set up hardware.
+
+Review and follow the StorageGRID system hardening guidelines to eliminate security risks.
+
+Configure email notifications for system alerts.
+
+If your StorageGRID system includes any Archive Nodes (deprecated), configure the Archive Node’s connection to the target external archival storage system. Optional tasks
+
+Update grid node IP addresses if they have changed since you planned your deployment and generated the Recovery Package.
+
+Configure storage encryption, if required.
+
+Configure storage compression to reduce the size of stored objects, if required.
+
+Troubleshoot installation issues
+
+If any problems occur while installing your StorageGRID system, you can access the installation log files. Technical support might also need to use the installation log files to resolve issues.
+
+The following installation log files are available from the container that is running each node:
+
+/var/local/log/install.log (found on all grid nodes)
+
+/var/local/log/gdu-server.log (found on the primary Admin Node)
+
+The following installation log files are available from the host:
+
+/var/log/storagegrid/daemon.log
+
+/var/log/storagegrid/nodes/node-name.log
+
+To learn how to access the log files, see Collect log files and system data.
+
+Related information Troubleshoot a StorageGRID system
+
+134
+
+Example /etc/sysconfig/network-scripts
+
+You can use the example files to aggregate four Linux physical interfaces into a single LACP bond and then establish three VLAN interfaces subtending the bond for use as StorageGRID Grid, Admin, and Client Network interfaces. Physical interfaces
+
+Note that the switches at the other ends of the links must also treat the four ports as a single LACP trunk or port channel, and must pass at least the three referenced VLANs with tags.
+
+/etc/sysconfig/network-scripts/ifcfg-ens160
+
+TYPE=Ethernet NAME=ens160 UUID=011b17dd-642a-4bb9-acae-d71f7e6c8720 DEVICE=ens160 ONBOOT=yes MASTER=bond0 SLAVE=yes /etc/sysconfig/network-scripts/ifcfg-ens192
+
+TYPE=Ethernet NAME=ens192 UUID=e28eb15f-76de-4e5f-9a01-c9200b58d19c DEVICE=ens192 ONBOOT=yes MASTER=bond0 SLAVE=yes
+
+/etc/sysconfig/network-scripts/ifcfg-ens224
+
+TYPE=Ethernet NAME=ens224 UUID=b0e3d3ef-7472-4cde-902c-ef4f3248044b DEVICE=ens224 ONBOOT=yes MASTER=bond0 SLAVE=yes /etc/sysconfig/network-scripts/ifcfg-ens256
+
+135
+
+TYPE=Ethernet NAME=ens256 UUID=7cf7aabc-3e4b-43d0-809a-1e2378faa4cd DEVICE=ens256 ONBOOT=yes MASTER=bond0 SLAVE=yes
+
+Bond interface
+
+/etc/sysconfig/network-scripts/ifcfg-bond0 TYPE=Ethernet NAME=ens192 UUID=e28eb15f-76de-4e5f-9a01-c9200b58d19c DEVICE=ens192 ONBOOT=yes MASTER=bond0 SLAVE=yes
+
+/etc/sysconfig/network-scripts/ifcfg-ens224
+
+TYPE=Ethernet NAME=ens224 UUID=b0e3d3ef-7472-4cde-902c-ef4f3248044b DEVICE=ens224 ONBOOT=yes MASTER=bond0 SLAVE=yes /etc/sysconfig/network-scripts/ifcfg-ens256
+
+135
+
+TYPE=Ethernet NAME=ens256 UUID=7cf7aabc-3e4b-43d0-809a-1e2378faa4cd DEVICE=ens256 ONBOOT=yes MASTER=bond0 SLAVE=yes
+
+Bond interface
+
+/etc/sysconfig/network-scripts/ifcfg-bond0
+
+DEVICE=bond0 TYPE=Bond BONDING_MASTER=yes NAME=bond0 ONBOOT=yes BONDING_OPTS=mode=802.3ad VLAN interfaces
+
+/etc/sysconfig/network-scripts/ifcfg-bond0.1001
+
+VLAN=yes TYPE=Vlan DEVICE=bond0.1001 PHYSDEV=bond0 VLAN_ID=1001 REORDER_HDR=0 BOOTPROTO=none UUID=296435de-8282-413b-8d33-c4dd40fca24a ONBOOT=yes
+
+/etc/sysconfig/network-scripts/ifcfg-bond0.1002
+
+136
+
+VLAN=yes TYPE=Vlan DEVICE=bond0.1002 PHYSDEV=bond0 VLAN_ID=1002 REORDER_HDR=0 BOOTPROTO=none UUID=dbaaec72-0690-491c-973a-57b7dd00c581 ONBOOT=yes /etc/sysconfig/network-scripts/ifcfg-bond0.1003
+
+VLAN=yes TYPE=Vlan DEVICE=bond0.1003 PHYSDEV=bond0 VLAN_ID=1003 REORDER_HDR=0 BOOTPROTO=none UUID=d1af4b30-32f5-40b4-8bb9-71a2fbf809a1 ONBOOT=yes
+
+Install StorageGRID on Ubuntu or Debian
+
+Quick start for installing StorageGRID on Ubuntu or Debian
+
+Follow these high-level steps to install an Ubuntu or Debian StorageGRID node. Preparation
+
+Learn about StorageGRID architecture and network topology.
+
+Learn about the specifics of StorageGRID networking.
+
+Gather and prepare the Required information and materials.
+
+Prepare the required CPU and RAM.
+
+Provide for storage and performance requirements.
+
+Prepare the Linux servers that will host your StorageGRID nodes. Deployment
+
+Deploy grid nodes. When you deploy grid nodes, they are created as part of the StorageGRID system and connected to one or more networks.
+
+137
+
+• To deploy software-based grid nodes on the hosts you prepared in step 1, use the Linux command line and
+
+node configuration files.
+
+To deploy StorageGRID appliance nodes, follow the Quick start for hardware installation. Configuration

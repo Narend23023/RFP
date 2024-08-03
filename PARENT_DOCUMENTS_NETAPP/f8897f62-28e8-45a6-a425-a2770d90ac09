@@ -1,0 +1,51 @@
+User Unique Name: The name of the attribute that contains the unique identifier of an LDAP user. This attribute is equivalent to sAMAccountName for Active Directory and uid for OpenLDAP. If you are configuring Oracle Directory Server, enter uid. User UUID: The name of the attribute that contains the permanent unique identifier of an LDAP user. This attribute is equivalent to objectGUID for Active Directory and entryUUID for OpenLDAP. If you are configuring Oracle Directory Server, enter nsuniqueid. Each user’s value for the specified attribute must be a 32-digit hexadecimal number in either 16-byte or string format, where hyphens are ignored.
+
+Group Unique Name: The name of the attribute that contains the unique identifier of an LDAP group. This attribute is equivalent to sAMAccountName for Active Directory and cn for OpenLDAP. If you are configuring Oracle Directory Server, enter cn. Group UUID: The name of the attribute that contains the permanent unique identifier of an LDAP group. This attribute is equivalent to objectGUID for Active Directory and entryUUID for OpenLDAP. If you are configuring Oracle Directory Server, enter nsuniqueid. Each group’s value for the specified attribute must be a 32-digit hexadecimal number in either 16-byte or string format, where hyphens are ignored.
+
+5. For all LDAP service types, enter the required LDAP server and network connection information in the Configure LDAP server section.
+
+Hostname: The fully qualified domain name (FQDN) or IP address of the LDAP server. ◦ Port: The port used to connect to the LDAP server. Group Unique Name: The name of the attribute that contains the unique identifier of an LDAP group. This attribute is equivalent to sAMAccountName for Active Directory and cn for OpenLDAP. If you are configuring Oracle Directory Server, enter cn. Group UUID: The name of the attribute that contains the permanent unique identifier of an LDAP group. This attribute is equivalent to objectGUID for Active Directory and entryUUID for OpenLDAP. If you are configuring Oracle Directory Server, enter nsuniqueid. Each group’s value for the specified attribute must be a 32-digit hexadecimal number in either 16-byte or string format, where hyphens are ignored.
+
+5. For all LDAP service types, enter the required LDAP server and network connection information in the Configure LDAP server section.
+
+Hostname: The fully qualified domain name (FQDN) or IP address of the LDAP server. ◦ Port: The port used to connect to the LDAP server.
+
+The default port for STARTTLS is 389, and the default port for LDAPS is 636. However, you can use any port as long as your firewall is configured correctly.
+
+Username: The full path of the distinguished name (DN) for the user that will connect to the LDAP
+
+312
+
+server. For Active Directory, you can also specify the Down-Level Logon Name or the User Principal Name.
+
+The specified user must have permission to list groups and users and to access the following attributes:
+
+▪ sAMAccountName or uid ▪ objectGUID, entryUUID, or nsuniqueid ▪ cn ▪ memberOf or isMemberOf ▪ Active Directory: objectSid, primaryGroupID, userAccountControl, and userPrincipalName
+
+▪ Azure: accountEnabled and userPrincipalName ◦ Password: The password associated with the username.
+
+If you change the password in the future, you must update it on this page.
+
+Group Base DN: The full path of the distinguished name (DN) for an LDAP subtree you want to search for groups. In the Active Directory example (below), all groups whose Distinguished Name is relative to the base DN (DC=storagegrid,DC=example,DC=com) can be used as federated groups.
+
+The Group unique name values must be unique within the Group Base DN they belong to.
+
+User Base DN: The full path of the distinguished name (DN) of an LDAP subtree you want to search for users.
+
+The User unique name values must be unique within the User Base DN they belong to.
+
+Bind username format (optional): The default username pattern StorageGRID should use if the pattern can’t be determined automatically. Providing Bind username format is recommended because it can allow users to sign in if StorageGRID is unable to bind with the service account. Enter one of these patterns:
+
+▪ UserPrincipalName pattern (Active Directory and Azure): [USERNAME]@example.com ▪ Down-level logon name pattern (Active Directory and Azure): example\[USERNAME] ▪ Distinguished name pattern: CN=[USERNAME],CN=Users,DC=example,DC=com
+
+Include [USERNAME] exactly as written.
+
+6. In the Transport Layer Security (TLS) section, select a security setting.
+
+Use STARTTLS: Use STARTTLS to secure communications with the LDAP server. This is the recommended option for Active Directory, OpenLDAP, or Other, but this option is not supported for Azure.
+
+313
+
+◦ Use LDAPS: The LDAPS (LDAP over SSL) option uses TLS to establish a connection to the LDAP
+
+server. You must select this option for Azure.

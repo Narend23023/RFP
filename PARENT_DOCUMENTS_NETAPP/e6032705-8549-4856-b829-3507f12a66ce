@@ -1,0 +1,81 @@
+NetApp does not recommend attaching a single cloud tier to local tiers in multiple clusters.
+
+For the best practices for using StorageGRID with NetApp MetroCluster™ and FabricPool Mirror, see TR-4598: FabricPool Best Practices in ONTAP. Optional: Use a different bucket for each local tier
+
+To use more than one bucket for the local tiers in an ONTAP cluster, add more than one StorageGRID cloud tier in ONTAP. Each cloud tier shares the same HA group, load balancer endpoint, tenant, and access keys, but uses a different container (StorageGRID bucket). Follow these general steps:
+
+1. From StorageGRID Grid Manager, complete the FabricPool setup wizard for the first cloud tier.
+
+2. From ONTAP System Manager, add a cloud tier and use the file you downloaded from StorageGRID to provide the required values.
+
+3. From StorageGRID Tenant Manager, sign in to the tenant that was created by the wizard, and create a second bucket.
+
+4. Complete the FabricPool wizard again. Select the existing HA group, load balancer endpoint, and tenant. Then, select the new bucket you created manually. Create a new ILM rule for the new bucket and activate an ILM policy to include that rule. 5. From ONTAP, add a second cloud tier but provide the new bucket name.
+
+Optional: Use a different tenant and bucket for each local tier
+
+To use more than one tenant and different sets of access keys for the local tiers in an ONTAP cluster, add more than one StorageGRID cloud tier in ONTAP. Each cloud tier shares the same HA group, load balancer endpoint, but uses a different tenant, access keys, and container (StorageGRID bucket). Follow these general steps:
+
+1. From StorageGRID Grid Manager, complete the FabricPool setup wizard for the first cloud tier.
+
+2. From ONTAP System Manager, add a cloud tier and use the file you downloaded from StorageGRID to provide the required values.
+
+3. Complete the FabricPool wizard again. Select the existing HA group and load balancer endpoint. Create a new tenant and bucket. Create a new ILM rule for the new bucket and activate an ILM policy to include that rule. 4. From ONTAP, add a second cloud tier but provide the new access key, secret key, and bucket name.
+
+726
+
+Access and complete the FabricPool setup wizard
+
+You can use the FabricPool setup wizard to configure StorageGRID as the object storage system for a FabricPool cloud tier.
+
+Before you begin
+
+You have reviewed the considerations and requirements for using the FabricPool setup wizard.
+
+If you want to configure StorageGRID for use with any other S3 client application, go to Use S3 setup wizard.
+
+You have the Root access permission. Access the wizard
+
+You can complete the FabricPool setup wizard when you start using the StorageGRID Grid Manager, or you can access and complete the wizard at any later time.
+
+Steps
+
+1. Sign in to the Grid Manager using a supported web browser.
+
+2. If the FabricPool and S3 setup wizard banner appears on the dashboard, select the link in the banner. If the banner no longer appears, select the help icon from the header bar in the Grid Manager and select FabricPool and S3 setup wizard.
+
+3. In the FabricPool section of the FabricPool and S3 setup wizard page, select Configure now.
+
+Step 1 of 9: Configure HA group appears. Step 1 of 9: Configure HA group 726
+
+Access and complete the FabricPool setup wizard
+
+You can use the FabricPool setup wizard to configure StorageGRID as the object storage system for a FabricPool cloud tier.
+
+Before you begin
+
+You have reviewed the considerations and requirements for using the FabricPool setup wizard.
+
+If you want to configure StorageGRID for use with any other S3 client application, go to Use S3 setup wizard.
+
+You have the Root access permission. Access the wizard
+
+You can complete the FabricPool setup wizard when you start using the StorageGRID Grid Manager, or you can access and complete the wizard at any later time.
+
+Steps
+
+1. Sign in to the Grid Manager using a supported web browser.
+
+2. If the FabricPool and S3 setup wizard banner appears on the dashboard, select the link in the banner. If the banner no longer appears, select the help icon from the header bar in the Grid Manager and select FabricPool and S3 setup wizard.
+
+3. In the FabricPool section of the FabricPool and S3 setup wizard page, select Configure now.
+
+Step 1 of 9: Configure HA group appears. Step 1 of 9: Configure HA group
+
+A high availability (HA) group is a collection of nodes that each contain the StorageGRID Load Balancer service. An HA group can contain Gateway Nodes, Admin Nodes, or both.
+
+You can use an HA group to help keep FabricPool data connections available. An HA group uses virtual IP addresses (VIPs) to provide highly available access to the Load Balancer service. If the active interface in the
+
+727
+
+HA group fails, a backup interface can manage the workload with little impact to FabricPool operations

@@ -1,0 +1,103 @@
+StorageGRID supports Amazon Simple Notification Service (Amazon SNS) or Kafka topics as destinations. Simple Queue Service (SQS) or Amazon Lambda endpoints aren’t supported.
+
+The destination for notifications must be specified as the URN of an StorageGRID endpoint. Endpoints can be created using the Tenant Manager or the Tenant Management API. Expiration (Days, Date, ExpiredObjectDeleteMarker) NoncurrentVersionExpiration (NewerNoncurrentVersions, NoncurrentDays)
+
+Filter (Prefix, Tag)
+
+Status
+
+ID
+
+StorageGRID does not support these actions:
+
+AbortIncompleteMultipartUpload
+
+Transition
+
+See Create S3 lifecycle configuration. To understand how the Expiration action in a bucket lifecycle interacts with ILM placement instructions, see How ILM operates throughout an object’s life.
+
+Note: Bucket lifecycle configuration can be used with buckets that have S3 Object Lock enabled, but bucket lifecycle configuration is not supported for legacy Compliant buckets.
+
+907
+
+Operation PutBucketNotificationConf iguration
+
+(previously named PUT Bucket notification)
+
+PutBucketPolicy
+
+908
+
+Implementation
+
+Configures notifications for the bucket using the notification configuration XML included in the request body. You should be aware of the following implementation details:
+
+StorageGRID supports Amazon Simple Notification Service (Amazon SNS) or Kafka topics as destinations. Simple Queue Service (SQS) or Amazon Lambda endpoints aren’t supported.
+
+The destination for notifications must be specified as the URN of an StorageGRID endpoint. Endpoints can be created using the Tenant Manager or the Tenant Management API.
+
+The endpoint must exist for notification configuration to succeed. If the endpoint does not exist, a 400 Bad Request error is returned with the code InvalidArgument.
+
+You can’t configure a notification for the following event types. These event types are not supported.
+
+s3:ReducedRedundancyLostObject ◦ s3:ObjectRestore:Completed Event notifications sent from StorageGRID use the standard JSON format except that they don’t include some keys and use specific values for others, as shown in the following list:
+
+eventSource
+
+sgws:s3
+
+awsRegion
+
+not included
+
+x-amz-id-2
+
+not included
+
+arn
+
+urn:sgws:s3:::bucket_name
+
+Sets the policy attached to the bucket. See Use bucket and group access policies.
+
+Operation PutBucketReplication
+
+Implementation
+
+Configures StorageGRID CloudMirror replication for the bucket using the replication configuration XML provided in the request body. For CloudMirror replication, you should be aware of the following implementation details:
+
+StorageGRID only supports V1 of the replication configuration. This means that StorageGRID does not support the use of the Filter element for rules, and follows V1 conventions for deletion of object versions. For details, see Amazon Simple Storage Service User Guide: Replication configuration.
+
+Bucket replication can be configured on versioned or unversioned buckets.
+
+You can specify a different destination bucket in each rule of the replication configuration XML. A source bucket can replicate to more than one destination bucket.
+
+Destination buckets must be specified as the URN of StorageGRID endpoints as specified in the Tenant Manager or the Tenant Management API. See Configure CloudMirror replication. The endpoint must exist for replication configuration to succeed. If the endpoint does not exist, the request fails as a 400 Bad Request. The error message states: Unable to save the replication policy. The specified endpoint URN does not exist: URN.
+
+You don’t need to specify a Role in the configuration XML. This value is not used by StorageGRID and will be ignored if submitted.
+
+If you omit the storage class from the configuration XML, StorageGRID uses the STANDARD storage class by default.
+
+If you delete an object from the source bucket or you delete the source bucket itself, the cross-region replication behavior is as follows:
+
+If you delete the object or bucket before it has been replicated, the object/bucket is not replicated and you aren’t notified.
+
+If you delete the object or bucket after it has been replicated, StorageGRID follows standard Amazon S3 delete behavior for V1 of cross-region replication.
+
+909
+
+Operation
+
+Implementation PutBucketTagging
+
+Uses the tagging subresource to add or update a set of tags for a bucket. When adding bucket tags, be aware of the following limitations:
+
+Both StorageGRID and Amazon S3 support up to 50 tags for each bucket.
+
+Tags associated with a bucket must have unique tag keys. A tag key can be up to 128 Unicode characters in length.
+
+Tag values can be up to 256 Unicode characters in length.
+
+Key and values are case sensitive. You don’t need to specify a Role in the configuration XML. This value is not used by StorageGRID and will be ignored if submitted.
+
+If you omit the storage class from the configuration XML, StorageGRID uses the STANDARD storage class by default.

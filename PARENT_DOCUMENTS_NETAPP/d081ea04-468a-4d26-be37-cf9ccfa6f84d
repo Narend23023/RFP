@@ -1,0 +1,83 @@
+Performance impact of activating this policy When the ILM policy in this example is activated, the overall performance of this StorageGRID system will be temporarily affected. Higher than normal levels of grid resources will be required to create new erasure-coded fragments for Tenant A’s existing objects and new replicated copies at Site 3 for other tenants' existing objects.
+
+As a result of the ILM policy change, client read and write requests might temporarily experience higher than normal latencies. Latencies will return to normal levels after the placement instructions are fully implemented across the grid.
+
+To avoid resource issues when activating a new ILM policy, you can use the Ingest time advanced filter in any rule that might change the location of large numbers of existing objects. Set Ingest time to be greater than or equal to the approximate time when the new policy will go into effect to ensure that existing objects aren’t moved unnecessarily. Contact technical support if you need to slow or increase the rate at which objects are processed after an ILM policy change.
+
+Example 7: Compliant ILM policy for S3 Object Lock Existing objects belonging to these other tenants are re-evaluated during the ongoing ILM scanning process. Because the existing object copies at Site 1 and Site 2 continue to satisfy the replication requirements of the new ILM rule, StorageGRID only needs to create one new copy of the object for Site 3.
+
+Performance impact of activating this policy When the ILM policy in this example is activated, the overall performance of this StorageGRID system will be temporarily affected. Higher than normal levels of grid resources will be required to create new erasure-coded fragments for Tenant A’s existing objects and new replicated copies at Site 3 for other tenants' existing objects.
+
+As a result of the ILM policy change, client read and write requests might temporarily experience higher than normal latencies. Latencies will return to normal levels after the placement instructions are fully implemented across the grid.
+
+To avoid resource issues when activating a new ILM policy, you can use the Ingest time advanced filter in any rule that might change the location of large numbers of existing objects. Set Ingest time to be greater than or equal to the approximate time when the new policy will go into effect to ensure that existing objects aren’t moved unnecessarily. Contact technical support if you need to slow or increase the rate at which objects are processed after an ILM policy change.
+
+Example 7: Compliant ILM policy for S3 Object Lock
+
+You can use the S3 bucket, ILM rules, and ILM policy in this example as a starting point when defining an ILM policy to meet the object protection and retention requirements for objects in buckets with S3 Object Lock enabled.
+
+If you used the legacy Compliance feature in previous StorageGRID releases, you can also use this example to help manage any existing buckets that have the legacy Compliance feature enabled.
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+Related information
+
+Manage objects with S3 Object Lock
+
+Create an ILM policy Bucket and objects for S3 Object Lock example
+
+In this example, an S3 tenant account named Bank of ABC has used the Tenant Manager to create a bucket with S3 Object Lock enabled to store critical bank records.
+
+709
+
+Bucket definition
+
+Example value
+
+Tenant Account Name
+
+Bank of ABC
+
+Bucket Name
+
+bank-records Bucket Region
+
+us-east-1 (default)
+
+Each object and object version that is added to the bank-records bucket will use the following values for retain-until-date and legal hold settings.
+
+Setting for each object
+
+Example value
+
+retain-until-date
+
+"2030-12-30T23:59:59Z" (December 30, 2030)
+
+Each object version has its own retain-until-date setting. This setting can be increased, but not decreased. legal hold
+
+"OFF" (Not in effect)
+
+A legal hold can be placed or lifted on any object version at any time during the retention period. If an object is under a legal hold, the object can’t be deleted even if the retain-until-date has been reached.
+
+ILM rule 1 for S3 Object Lock example: Erasure-coding profile with bucket matching
+
+This example ILM rule applies only to the S3 tenant account named Bank of ABC. It matches any object in the bank-records bucket and then uses erasure coding to store the object on Storage Nodes at three data center sites using a 6+3 erasure-coding profile. This rule satisfies the requirements of buckets with S3 Object Lock enabled: a copy is kept on Storage Nodes from day 0 to forever, using Ingest time as the reference time. Rule definition
+
+Example value
+
+Rule name
+
+Compliant Rule: EC Objects in bank-records Bucket - Bank of ABC
+
+Tenant Account
+
+Bank of ABC
+
+Bucket Name
+
+bank-records
+
+Advanced filter
+
+Object Size (MB) greater than 1

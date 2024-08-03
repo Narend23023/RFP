@@ -1,0 +1,45 @@
+It is more efficient to perform one single installation of all the nodes, rather than installing some nodes now and some nodes later. Steps
+
+1. Review the Pending Nodes list, and confirm that it shows all of the grid nodes you deployed.
+
+If a grid node is missing, confirm that it was deployed successfully.
+
+2. Select the radio button next to a pending node you want to approve.
+
+123
+
+3. Click Approve.
+
+4. In General Settings, modify settings for the following properties, as necessary:
+
+Site: The system name of the site for this grid node. ◦ Name: The system name for the node. The name defaults to the name you specified when you configured the node.
+
+System names are required for internal StorageGRID operations and can’t be changed after you complete the installation. However, during this step of the installation process, you can change system names as required. NTP Role: The Network Time Protocol (NTP) role of the grid node. The options are Automatic, Primary, and Client. Selecting Automatic assigns the Primary role to Admin Nodes, Storage Nodes with ADC services, Gateway Nodes, and any grid nodes that have non-static IP addresses. All other grid nodes are assigned the Client role.
+
+124
+
+Make sure that at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid.
+
+Storage Type (Storage Nodes only): Specify that a new Storage Node be used exclusively for metadata. The options are Objects and metadata and Metadata only. See Types of Storage Nodes for more information about metadata-only Storage Nodes. When installing a grid with metadata-only nodes, the grid must also contain a minimum number of nodes for object storage. For a single-site grid, at least two Storage Nodes are configured for objects and metadata. For a multi-site grid, at least one Storage Node per site are configured for objects and metadata.
+
+ADC service (Storage Nodes only): Select Automatic to let the system determine whether the node requires the Administrative Domain Controller (ADC) service. The ADC service keeps track of the location and availability of grid services. At least three Storage Nodes at each site must include the ADC service. You can’t add the ADC service to a node after it is deployed.
+
+5. In Grid Network, modify settings for the following properties as necessary: 124
+
+Make sure that at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid.
+
+Storage Type (Storage Nodes only): Specify that a new Storage Node be used exclusively for metadata. The options are Objects and metadata and Metadata only. See Types of Storage Nodes for more information about metadata-only Storage Nodes. When installing a grid with metadata-only nodes, the grid must also contain a minimum number of nodes for object storage. For a single-site grid, at least two Storage Nodes are configured for objects and metadata. For a multi-site grid, at least one Storage Node per site are configured for objects and metadata.
+
+ADC service (Storage Nodes only): Select Automatic to let the system determine whether the node requires the Administrative Domain Controller (ADC) service. The ADC service keeps track of the location and availability of grid services. At least three Storage Nodes at each site must include the ADC service. You can’t add the ADC service to a node after it is deployed.
+
+5. In Grid Network, modify settings for the following properties as necessary:
+
+IPv4 Address (CIDR): The CIDR network address for the Grid Network interface (eth0 inside the container). For example: 192.168.1.234/21
+
+Gateway: The Grid Network gateway. For example: 192.168.0.1 The gateway is required if there are multiple grid subnets.
+
+If you selected DHCP for the Grid Network configuration and you change the value here, the new value will be configured as a static address on the node. You must make sure the resulting IP address is not within a DHCP address pool.
+
+6. If you want to configure the Admin Network for the grid node, add or update the settings in the Admin Network section as necessary.
+
+Enter the destination subnets of the routes out of this interface in the Subnets (CIDR) text box. If there are multiple Admin subnets, the Admin gateway is required.

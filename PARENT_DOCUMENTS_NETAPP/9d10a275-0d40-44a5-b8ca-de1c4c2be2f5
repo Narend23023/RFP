@@ -1,0 +1,117 @@
+Rebooting a Linux node reboots the container.
+
+Rebooting a StorageGRID Appliance node reboots the compute controller.
+
+If you need to reboot more than one node, you can use the rolling reboot procedure. Steps
+
+1. Select NODES.
+
+2. Select the grid node you want to reboot.
+
+3. Select the Tasks tab.
+
+4. Select Reboot.
+
+A confirmation dialog box appears. If you are rebooting the primary Admin Node, the confirmation dialog box reminds you that your browser’s connection to the Grid Manager will be lost temporarily when services are stopped.
+
+5. Enter the provisioning passphrase, and select OK.
+
+6. Wait for the node to reboot.
+
+It might take some time for services to shut down.
+
+When the node is rebooting, the gray (Administratively Down) icon appears for the node on the Nodes page. When all services have started again and the node is successfully connected to the grid, the Nodes page should display normal status (no icons to the left of the node name), indicating that no alerts are active and the node is connected to the grid. Reboot grid node from command shell
+
+If you need to monitor the reboot operation more closely or if you are unable to access the Grid Manager, you can log in to the grid node and run the Server Manager reboot
+
+1499
+
+command from the command shell.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+Steps
+
+1. Log in to the grid node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Optionally, stop services: service servermanager stop
+
+Stopping services is an optional, but recommended step. Services can take up to 15 minutes to shut down, and you might want to log in to the system remotely to monitor the shutdown process before you reboot the node in the next step.
+
+3. Reboot the grid node: reboot
+
+4. Log out of the command shell: exit Shut down grid node
+
+You can shut down a grid node from the node’s command shell.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+About this task
+
+Before performing this procedure, review these considerations:
+
+In general, you should not shut down more than one node at a time to avoid disruptions.
+
+Don’t shut down a node during a maintenance procedure unless explicitly instructed to do so by the documentation or by technical support.
+
+The shutdown process is based on where the node is installed, as follows:
+
+Shutting down a VMware node shuts down the virtual machine. ◦ Shutting down a Linux node shuts down the container. ◦ Shutting down a StorageGRID appliance node shuts down the compute controller.
+
+If you plan to shut down more than one Storage Node at a site, stop ingesting objects at that site for approximately one hour before shutting down the nodes. If any ILM rule uses the Dual commit ingest option (or if a rule uses the Balanced option and all required copies can’t be created immediately), StorageGRID immediately commits any newly ingested objects to two Storage Nodes on the same site and evaluates ILM later. If more than one Storage Node at a site is shut down, you might not be able to access newly ingested objects for the duration of the shutdown. Write
+
+1500
+
+operations might also fail if too few Storage Nodes remain available at the site. See Manage objects with ILM. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop all services: service servermanager stop
+
+Services can take up to 15 minutes to shut down, and you might want to log in to the system remotely to monitor the shutdown process.
+
+3. If the node is running on a VMware virtual machine or it is an appliance node, issue the shutdown command: shutdown -h now 1500
+
+operations might also fail if too few Storage Nodes remain available at the site. See Manage objects with ILM. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop all services: service servermanager stop
+
+Services can take up to 15 minutes to shut down, and you might want to log in to the system remotely to monitor the shutdown process.
+
+3. If the node is running on a VMware virtual machine or it is an appliance node, issue the shutdown command: shutdown -h now
+
+Perform this step regardless of the outcome of the service servermanager stop command.

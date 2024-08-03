@@ -1,0 +1,53 @@
+724
+
+Use the FabricPool setup wizard unless you know you have special requirements or your implementation will require significant customization.
+
+Before using the wizard
+
+Confirm you have completed these prerequisite steps. Review best practices
+
+You have a general understanding of the information needed to attach StorageGRID as a cloud tier.
+
+You have reviewed the FabricPool best practices for:
+
+High availability (HA) groups ◦ Load balancing ◦ ILM rules and policy
+
+Obtain IP addresses and set up VLAN interfaces
+
+If you will configure an HA group, you know which nodes ONTAP will connect to and which StorageGRID network will be used. You also know which values to enter for the subnet CIDR, gateway IP address, and virtual IP (VIP) addresses.
+
+If you plan to use a virtual LAN to segregate FabricPool traffic, you have already configured the VLAN interface. See Configure VLAN interfaces. Configure identity federation and SSO
+
+If you plan to use identity federation or single sign-on (SSO) for your StorageGRID system, you have enabled these features. You also know which federated group should have root access for the tenant account that ONTAP will use. See Use identity federation and Configure single sign-on. Obtain and configure domain names
+
+You know which fully qualified domain name (FQDN) to use for StorageGRID. Domain name server (DNS) entries will map this FQDN to the virtual IP (VIP) addresses of the HA group that you create using the wizard. See Configure DNS server.
+
+If you plan to use S3 virtual hosted-style requests, you have configured S3 endpoint domain names. ONTAP uses path-style URLs by default, but using virtual hosted-style requests is recommended. Review load balancer and security certificate requirements
+
+If you plan to use the StorageGRID load balancer, you have reviewed the general considerations for load balancing. You have the certificates you will upload or the values you need to generate a certificate.
+
+If you plan to use an external (third-party) load balancer endpoint, you have the fully qualified domain name (FQDN), port, and certificate for that load balancer. Confirm ILM storage pool configuration
+
+if you initially installed StorageGRID 11.6 or earlier, you have configured the storage pool you will use. In general, you should create a storage pool for each StorageGRID site you will use to store ONTAP data.
+
+725
+
+This prerequisite does not apply if you initially installed StorageGRID 11.7 or 11.8. When you initially install either of these versions, storage pools are automatically created for each site. Relationship between ONTAP and the StorageGRID cloud tier
+
+The FabricPool wizard guides you through the process of creating a single StorageGRID cloud tier that includes one StorageGRID tenant, one set of access keys, and one StorageGRID bucket. You can attach this StorageGRID cloud tier to one or more ONTAP local tiers.
+
+Attaching a single cloud tier to multiple local tiers in a cluster is the general best practice. However, depending on your requirements, you might want to use more than one bucket or even more than one StorageGRID tenant for the local tiers in a single cluster. Using different buckets and tenants allows you to isolate data and data access between ONTAP local tiers, but is somewhat more complex to configure and manage.
+
+NetApp does not recommend attaching a single cloud tier to local tiers in multiple clusters.
+
+For the best practices for using StorageGRID with NetApp MetroCluster™ and FabricPool Mirror, see TR-4598: FabricPool Best Practices in ONTAP. Optional: Use a different bucket for each local tier 725
+
+This prerequisite does not apply if you initially installed StorageGRID 11.7 or 11.8. When you initially install either of these versions, storage pools are automatically created for each site. Relationship between ONTAP and the StorageGRID cloud tier
+
+The FabricPool wizard guides you through the process of creating a single StorageGRID cloud tier that includes one StorageGRID tenant, one set of access keys, and one StorageGRID bucket. You can attach this StorageGRID cloud tier to one or more ONTAP local tiers.
+
+Attaching a single cloud tier to multiple local tiers in a cluster is the general best practice. However, depending on your requirements, you might want to use more than one bucket or even more than one StorageGRID tenant for the local tiers in a single cluster. Using different buckets and tenants allows you to isolate data and data access between ONTAP local tiers, but is somewhat more complex to configure and manage.
+
+NetApp does not recommend attaching a single cloud tier to local tiers in multiple clusters.
+
+For the best practices for using StorageGRID with NetApp MetroCluster™ and FabricPool Mirror, see TR-4598: FabricPool Best Practices in ONTAP. Optional: Use a different bucket for each local tier

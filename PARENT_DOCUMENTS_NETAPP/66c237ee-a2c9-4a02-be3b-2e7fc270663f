@@ -1,0 +1,81 @@
+Lifecycle of objects in buckets with S3 Object Lock enabled Each object that is saved in a bucket with S3 Object Lock enabled goes through these stages:
+
+1. Object ingest
+
+When an object version is added to bucket that has S3 Object Lock enabled, retention settings are applied as follows:
+
+If retention settings are specified for the object, the object-level settings are applied. Any default bucket settings are ignored.
+
+If no retention settings are specified for the object, the default bucket settings are applied, if they exist. ◦ If no retention settings are specified for the object or the bucket, the object is not protected by S3 Object Lock.
+
+If retention settings are applied, both the object and any S3 user-defined metadata are protected.
+
+2. Object retention and deletion Multiple copies of each protected object are stored by StorageGRID for the specified retention period. The exact number and type of object copies and the storage locations are determined by the compliant rules in the active ILM policies. Whether a protected object can be deleted before its retain-until-date is reached depends on its retention mode.
+
+If an object is under a legal hold, no one can delete the object, regardless of its retention mode.
+
+Can I still manage legacy Compliant buckets?
+
+The S3 Object Lock feature replaces the Compliance feature that was available in previous StorageGRID versions. If you created compliant buckets using a previous version of StorageGRID, you can continue to manage the settings of these buckets; however, you can no longer create new compliant buckets. For instructions, see NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5. Update S3 Object Lock default retention
+
+If you enabled S3 Object Lock when you created the bucket, you can edit the bucket to change the default retention settings. You can enable (or disable) default retention and set a default retention mode and retention period.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser. If retention settings are applied, both the object and any S3 user-defined metadata are protected.
+
+2. Object retention and deletion Multiple copies of each protected object are stored by StorageGRID for the specified retention period. The exact number and type of object copies and the storage locations are determined by the compliant rules in the active ILM policies. Whether a protected object can be deleted before its retain-until-date is reached depends on its retention mode.
+
+If an object is under a legal hold, no one can delete the object, regardless of its retention mode.
+
+Can I still manage legacy Compliant buckets?
+
+The S3 Object Lock feature replaces the Compliance feature that was available in previous StorageGRID versions. If you created compliant buckets using a previous version of StorageGRID, you can continue to manage the settings of these buckets; however, you can no longer create new compliant buckets. For instructions, see NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5. Update S3 Object Lock default retention
+
+If you enabled S3 Object Lock when you created the bucket, you can edit the bucket to change the default retention settings. You can enable (or disable) default retention and set a default retention mode and retention period.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Manage all buckets or Root access permission. These permissions
+
+818
+
+override the permissions settings in group or bucket policies.
+
+S3 Object Lock is enabled globally for your StorageGRID system, and you enabled S3 Object Lock when you created the bucket. See Use S3 Object Lock to retain objects. Steps
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+2. Select the bucket name from the table.
+
+The bucket details page appears.
+
+3. From the Bucket options tab, select the S3 Object Lock accordion.
+
+4. Optionally, enable or disable Default retention for this bucket.
+
+Changes to this setting don’t apply to objects already in the bucket or to any objects that might have their own retention periods.
+
+5. If Default retention is enabled, specify a Default retention mode for the bucket. Default retention mode
+
+Description
+
+Compliance
+
+The object can’t be deleted until its retain-until-date is reached.
+
+The object’s retain-until-date can be increased, but it can’t be decreased.
+
+The object’s retain-until-date can’t be removed until that date is reached.
+
+Governance
+
+Users with the s3:BypassGovernanceRetention permission can use the x-amz-bypass-governance-retention: true request header to bypass retention settings.
+
+These users can delete an object version before its retain-until- date is reached.
+
+These users can increase, decrease, or remove an object’s retain-until-date.
+
+6. If Default retention is enabled, specify the Default retention period for the bucket.

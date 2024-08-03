@@ -1,0 +1,99 @@
+For details about this step, see Create a storage pool. Steps
+
+1. From the Site drop-down list, select the StorageGRID site you want to use for the data tiered from ONTAP.
+
+2. From the Storage pool drop-down list, select the storage pool for that site.
+
+The storage pool for a site includes all Storage Nodes at that site.
+
+3. Select Continue to go to the ILM rule step. Step 6 of 9: Review ILM rule for FabricPool
+
+Information lifecycle management (ILM) rules control the placement, duration, and ingest behavior for all objects in your StorageGRID system.
+
+The FabricPool setup wizard automatically creates the recommended ILM rule for FabricPool use. This rule applies only to the bucket you specified. It uses 2+1 erasure coding at a single site to store the data that is tiered from ONTAP.
+
+For details about this step, see Create ILM rule and Best practices for using ILM with FabricPool data. Steps
+
+735
+
+1. Review the rule details.
+
+Field
+
+Description
+
+Rule name
+
+Automatically generated and can’t be changed
+
+Description
+
+Automatically generated and can’t be changed
+
+Filter
+
+The bucket name
+
+This rule only applies to objects that are saved in the bucket you specified.
+
+Reference time
+
+Ingest time
+
+The placement instruction starts when objects are initially saved to the bucket. Placement instruction
+
+Use 2+1 erasure coding
+
+2. Sort the retention diagram by Time period and Storage pool to confirm the placement instruction.
+
+The Time period for the rule is Day 0 - forever. Day 0 means that the rule is applied when data is tiered from ONTAP. Forever means that StorageGRID ILM will not delete data that has been tiered from ONTAP.
+
+The Storage pool for the rule is the storage pool you selected. EC 2+1 means the data will stored using 2+1 erasure coding. Each object will be saved as two data fragments and one parity fragment. The three fragments for each object will be saved to different Storage Nodes at a single site.
+
+3. Select Create and Continue to create this rule and to go to the ILM policy step. Step 7 of 9: Review and activate ILM policy
+
+After the FabricPool setup wizard creates the ILM rule for FabricPool use, it creates an ILM policy. You must carefully simulate and review this policy before activating it.
+
+For details about this step, see Create ILM policy and Best practices for using ILM with FabricPool data. Filter
+
+The bucket name
+
+This rule only applies to objects that are saved in the bucket you specified.
+
+Reference time
+
+Ingest time
+
+The placement instruction starts when objects are initially saved to the bucket. Placement instruction
+
+Use 2+1 erasure coding
+
+2. Sort the retention diagram by Time period and Storage pool to confirm the placement instruction.
+
+The Time period for the rule is Day 0 - forever. Day 0 means that the rule is applied when data is tiered from ONTAP. Forever means that StorageGRID ILM will not delete data that has been tiered from ONTAP.
+
+The Storage pool for the rule is the storage pool you selected. EC 2+1 means the data will stored using 2+1 erasure coding. Each object will be saved as two data fragments and one parity fragment. The three fragments for each object will be saved to different Storage Nodes at a single site.
+
+3. Select Create and Continue to create this rule and to go to the ILM policy step. Step 7 of 9: Review and activate ILM policy
+
+After the FabricPool setup wizard creates the ILM rule for FabricPool use, it creates an ILM policy. You must carefully simulate and review this policy before activating it.
+
+For details about this step, see Create ILM policy and Best practices for using ILM with FabricPool data.
+
+When you activate a new ILM policy, StorageGRID uses that policy to manage the placement, duration, and data protection of all objects in the grid, including existing objects and newly ingested objects. In some cases, activating a new policy can cause existing objects to be moved to new locations.
+
+To avoid data loss, do not use an ILM rule that will expire or delete FabricPool cloud tier data. Set the retention period to forever to ensure that FabricPool objects aren’t deleted by StorageGRID ILM. Steps
+
+1. Optionally, update the system-generated Policy name. By default, the system appends "+ FabricPool" to the name of your active or inactive policy, but you can provide your own name.
+
+2. Review the list of rules in the inactive policy.
+
+If your grid doesn’t have an inactive ILM policy, the wizard creates an inactive policy by cloning your active policy and adding the new rule to the top.
+
+736
+
+◦ If your grid already has an inactive ILM policy and that policy uses the same rules and same order as
+
+the active ILM policy, the wizard adds the new rule to the top of the inactive policy.
+
+If your inactive policy contains different rules or a different order than the active policy, the wizard creates a new inactive policy by cloning your active policy and adding the new rule to the top.

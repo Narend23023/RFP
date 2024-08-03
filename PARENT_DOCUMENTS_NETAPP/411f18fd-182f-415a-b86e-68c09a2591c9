@@ -1,0 +1,85 @@
+1. Select CONFIGURATION > Network > High availability groups.
+
+495
+
+2. Review the Load balancer endpoints column for each HA group you want to remove. If any load balancer
+
+endpoints are listed:
+
+a. Go to CONFIGURATION > Network > Load balancer endpoints.
+
+b. Select the checkbox for the endpoint.
+
+c. Select Actions > Edit endpoint binding mode.
+
+d. Update the binding mode to remove the HA group. e. Select Save changes.
+
+3. If no load balancer endpoints are listed, select the checkbox for each HA group you want to remove.
+
+4. Select Actions > Remove HA group.
+
+5. Review the message and select Delete HA group to confirm your selection.
+
+All HA groups you selected are removed. A green success banner appears on the High availability groups page. Manage load balancing
+
+Considerations for load balancing
+
+You can use load balancing to handle ingest and retrieval workloads from S3 and Swift clients.
+
+What is load balancing? To prevent client disruptions, update any affected S3 or Swift client applications before you remove an HA group. Update each client to connect using another IP address, for example, the virtual IP address of a different HA group or the IP address that was configured for an interface during installation. Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+495
+
+2. Review the Load balancer endpoints column for each HA group you want to remove. If any load balancer
+
+endpoints are listed:
+
+a. Go to CONFIGURATION > Network > Load balancer endpoints.
+
+b. Select the checkbox for the endpoint.
+
+c. Select Actions > Edit endpoint binding mode.
+
+d. Update the binding mode to remove the HA group. e. Select Save changes.
+
+3. If no load balancer endpoints are listed, select the checkbox for each HA group you want to remove.
+
+4. Select Actions > Remove HA group.
+
+5. Review the message and select Delete HA group to confirm your selection.
+
+All HA groups you selected are removed. A green success banner appears on the High availability groups page. Manage load balancing
+
+Considerations for load balancing
+
+You can use load balancing to handle ingest and retrieval workloads from S3 and Swift clients.
+
+What is load balancing?
+
+When a client application saves or retrieves data from a StorageGRID system, StorageGRID uses a load balancer to manage the ingest and retrieval workload. Load balancing maximizes speed and connection capacity by distributing the workload across multiple Storage Nodes.
+
+The StorageGRID Load Balancer service is installed on all Admin Nodes and all Gateway Nodes and provides Layer 7 load balancing. It performs Transport Layer Security (TLS) termination of client requests, inspects the requests, and establishes new secure connections to the Storage Nodes.
+
+The Load Balancer service on each node operates independently when forwarding client traffic to the Storage Nodes. Through a weighting process, the Load Balancer service routes more requests to Storage Nodes with higher CPU availability. Although the StorageGRID Load Balancer service is the recommended load balancing mechanism, you might want to integrate a third-party load balancer instead. For information, contact your NetApp account representative or refer to TR-4626: StorageGRID third-party and global load balancers.
+
+How many load balancing nodes do I need?
+
+As a general best practice, each site in your StorageGRID system should include two or more nodes with the Load Balancer service. For example, a site might include two Gateway Nodes or both an Admin Node and a Gateway Node. Make sure that there is adequate networking, hardware, or virtualization infrastructure for each load-balancing node, whether you are using services appliances, bare metal nodes, or virtual machine (VM) based nodes.
+
+496
+
+What is a load balancer endpoint? A load balancer endpoint defines the port and the network protocol (HTTPS or HTTP) that incoming and outgoing client application requests will use to access those nodes that contain the Load Balancer service. The endpoint also defines the client type (S3 or Swift), the binding mode, and optionally a list of allowed or blocked tenants.
+
+To create a load balancer endpoint, either select CONFIGURATION > Network > Load balancer endpoints or complete the FabricPool and S3 setup wizard. For instructions:
+
+Configure load balancer endpoints
+
+Use the S3 setup wizard
+
+Use the FabricPool setup wizard Considerations for the port
+
+The port for a load balancer endpoint defaults to 10433 for the first endpoint you create, but you can specify any unused external port between 1 and 65535. If you use port 80 or 443, the endpoint will use the Load Balancer service on Gateway Nodes only. These ports are reserved on Admin Nodes. If you use the same port for more than one endpoint, you must specify a different binding mode for each endpoint.
+
+Ports used by other grid services aren’t permitted. See the Network port reference. Considerations for the network protocol

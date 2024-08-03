@@ -1,0 +1,87 @@
+Implementation PutBucketTagging
+
+Uses the tagging subresource to add or update a set of tags for a bucket. When adding bucket tags, be aware of the following limitations:
+
+Both StorageGRID and Amazon S3 support up to 50 tags for each bucket.
+
+Tags associated with a bucket must have unique tag keys. A tag key can be up to 128 Unicode characters in length.
+
+Tag values can be up to 256 Unicode characters in length.
+
+Key and values are case sensitive. You don’t need to specify a Role in the configuration XML. This value is not used by StorageGRID and will be ignored if submitted.
+
+If you omit the storage class from the configuration XML, StorageGRID uses the STANDARD storage class by default.
+
+If you delete an object from the source bucket or you delete the source bucket itself, the cross-region replication behavior is as follows:
+
+If you delete the object or bucket before it has been replicated, the object/bucket is not replicated and you aren’t notified.
+
+If you delete the object or bucket after it has been replicated, StorageGRID follows standard Amazon S3 delete behavior for V1 of cross-region replication.
+
+909
+
+Operation
+
+Implementation PutBucketTagging
+
+Uses the tagging subresource to add or update a set of tags for a bucket. When adding bucket tags, be aware of the following limitations:
+
+Both StorageGRID and Amazon S3 support up to 50 tags for each bucket.
+
+Tags associated with a bucket must have unique tag keys. A tag key can be up to 128 Unicode characters in length.
+
+Tag values can be up to 256 Unicode characters in length.
+
+Key and values are case sensitive.
+
+Caution: If a non-default ILM policy tag is set for this bucket, there will be a NTAP-SG-ILM-BUCKET-TAG bucket tag with a value assigned to it. Make sure that the NTAP-SG-ILM-BUCKET-TAG bucket tag is included with the assigned value in all PutBucketTagging requests. Do not modify or remove this tag.
+
+Note: This operation will overwrite any current tags the bucket already has. If any existing tags are omitted from the set, those tags will be removed for the bucket.
+
+PutBucketVersioning Uses the versioning subresource to set the versioning state of an existing bucket. You can set the versioning state with one of the following values:
+
+Enabled: Enables versioning for the objects in the bucket. All objects added to the bucket receive a unique version ID.
+
+Suspended: Disables versioning for the objects in the bucket. All objects added to the bucket receive the version ID null. PutObjectLockConfigurati on
+
+Configures or removes the bucket default retention mode and default retention period.
+
+If the default retention period is modified, the retain-until-date of existing object versions remains the same and is not recalculated using the new default retention period.
+
+See Use S3 REST API to configure S3 Object Lock for detailed information. Operations on objects
+
+Operations on objects
+
+This section describes how the StorageGRID system implements S3 REST API operations for objects.
+
+The following conditions apply to all object operations:
+
+StorageGRID consistency values are supported by all operations on objects, with the exception of the following:
+
+GetObjectAcl ◦ OPTIONS /
+
+910
+
+PutObjectLegalHold ◦ PutObjectRetention ◦ SelectObjectContent
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation.
+
+All objects in a StorageGRID bucket are owned by the bucket owner, including objects created by an anonymous user, or by another account.
+
+Data objects ingested to the StorageGRID system through Swift can’t be accessed through S3.
+
+The following table describes how StorageGRID implements S3 REST API object operations. Operation
+
+Implementation
+
+DeleteObject
+
+Multi-Factor Authentication (MFA) and the response header x-amz-mfa aren’t supported.
+
+When processing a DeleteObject request, StorageGRID attempts to immediately remove all copies of the object from all stored locations. If successful, StorageGRID returns a response to the client immediately. If all copies can’t be removed within 30 seconds (for example, because a location is temporarily unavailable), StorageGRID queues the copies for removal and then indicates success to the client. Versioning
+
+To remove a specific version, the requestor must be the bucket owner and use the versionId subresource. Using this subresource permanently deletes the version. If the versionId corresponds to a delete marker, the response header x-amz-delete-marker is returned set to true. All objects in a StorageGRID bucket are owned by the bucket owner, including objects created by an anonymous user, or by another account.
+
+Data objects ingested to the StorageGRID system through Swift can’t be accessed through S3.
+
+The following table describes how StorageGRID implements S3 REST API object operations. Operation

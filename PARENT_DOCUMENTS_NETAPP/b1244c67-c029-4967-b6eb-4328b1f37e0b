@@ -1,0 +1,77 @@
+Grid federation connections are bidirectional. After the connection is established, you can monitor and manage the connection from either grid.
+
+At least one grid federation connection must exist before you can use account clone or cross-grid replication. Networking and IP address requirements
+
+Grid federation connections can occur on the Grid Network, Admin Network, or Client Network.
+
+A grid federation connection connects one grid to another grid. The configuration for each grid specifies a grid federation endpoint on the other grid that consists of Admin Nodes, Gateway Nodes, or both.
+
+The best practice is to connect high availability (HA) groups of Gateway and Admin Nodes on each grid. Using HA groups helps ensure that grid federation connections will remain online if nodes become unavailable. If the active interface in either HA group fails, the connection can use a backup interface.
+
+Creating a grid federation connection that uses the IP address of a single Admin Node or Gateway Node is not recommended. If the node becomes unavailable, the grid federation connection will also become unavailable.
+
+353
+
+• Cross-grid replication of objects requires that the Storage Nodes on each grid be able to access the configured Admin and Gateway Nodes on the other grid. For each grid, confirm that all Storage Nodes have a high bandwidth route to as the Admin Nodes or Gateway Nodes used for the connection.
+
+Use FQDNs to load balance the connection
+
+For a production environment, use fully qualified domain names (FQDNs) to identify each grid in the connection. Then, create the appropriate DNS entries, as follows:
+
+The FQDN for Grid 1 mapped to one or more virtual IP (VIP) addresses for HA groups in Grid 1 or to the IP address of one or more Admin or Gateway Nodes in Grid 1.
+
+The FQDN for Grid 2 mapped to one or more VIP addresses for Grid 2 or to the IP address of one or more Admin or Gateway Nodes in Grid 2.
+
+When you use multiple DNS entries, requests to use the connection are load balanced, as follows:
+
+DNS entries that map to the VIP addresses of multiple HA groups are load balanced between the active nodes in the HA groups. DNS entries that map to the IP addresses of multiple Admin Nodes or Gateway Nodes are load balanced between the mapped nodes.
+
+Port requirements
+
+When creating a grid federation connection, you can specify any unused port number from 23000 to 23999. Both grids in this connection will use the same port.
+
+You must ensure that no node in either grid uses this port for other connections. Certificate requirements
+
+When you configure a grid federation connection, StorageGRID automatically generates four SSL certificates:
+
+Server and client certificates to authenticate and encrypt information sent from grid 1 to grid 2
+
+Server and client certificates to authenticate and encrypt information sent from grid 2 to grid 1
+
+By default, the certificates are valid for 730 days (2 years). When these certificates near their expiration date, the Expiration of grid federation certificate alert reminds you to rotate the certificates, which you can do using the Grid Manager.
+
+354
+
+If the certificates on either end of the connection expire, the connection will stop working. Data replication will be pending until the certificates are updated. Learn more
+
+Create grid federation connections
+
+Manage grid federation connections
+
+Troubleshoot grid federation errors
+
+What is account clone?
+
+Account clone is the automatic replication of a tenant account, tenant groups, tenant users, and, optionally, S3 access keys between the StorageGRID systems in a grid federation connection.
+
+Account clone is required for cross-grid replication. Cloning account information from a source StorageGRID system to a destination StorageGRID system ensures that tenant users and groups can access the corresponding buckets and objects on either grid. Workflow for account clone You must ensure that no node in either grid uses this port for other connections. Certificate requirements
+
+When you configure a grid federation connection, StorageGRID automatically generates four SSL certificates:
+
+Server and client certificates to authenticate and encrypt information sent from grid 1 to grid 2
+
+Server and client certificates to authenticate and encrypt information sent from grid 2 to grid 1
+
+By default, the certificates are valid for 730 days (2 years). When these certificates near their expiration date, the Expiration of grid federation certificate alert reminds you to rotate the certificates, which you can do using the Grid Manager.
+
+354
+
+If the certificates on either end of the connection expire, the connection will stop working. Data replication will be pending until the certificates are updated. Learn more
+
+Create grid federation connections
+
+Manage grid federation connections
+
+Troubleshoot grid federation errors
+
+What is account clone?

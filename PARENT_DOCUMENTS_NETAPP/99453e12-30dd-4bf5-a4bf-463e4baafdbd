@@ -1,0 +1,107 @@
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. HeadObject
+
+You can use the S3 HeadObject request to retrieve metadata from an object without
+
+923
+
+returning the object itself. If the object is stored in a Cloud Storage Pool, you can use HeadObject to determine the object’s transition state.
+
+HeadObject and multipart objects
+
+You can use the partNumber request parameter to retrieve metadata for a specific part of a multipart or segmented object. The x-amz-mp-parts-count response element indicates how many parts the object has.
+
+You can set partNumber to 1 for both segmented/multipart objects and non-segmented/non-multipart objects; however, the x-amz-mp-parts-count response element is only returned for segmented or multipart objects. UTF-8 characters in user metadata Replication status
+
+Source
+
+SUCCESS: The replication was successful.
+
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. HeadObject
+
+You can use the S3 HeadObject request to retrieve metadata from an object without
+
+923
+
+returning the object itself. If the object is stored in a Cloud Storage Pool, you can use HeadObject to determine the object’s transition state.
+
+HeadObject and multipart objects
+
+You can use the partNumber request parameter to retrieve metadata for a specific part of a multipart or segmented object. The x-amz-mp-parts-count response element indicates how many parts the object has.
+
+You can set partNumber to 1 for both segmented/multipart objects and non-segmented/non-multipart objects; however, the x-amz-mp-parts-count response element is only returned for segmented or multipart objects. UTF-8 characters in user metadata
+
+StorageGRID does not parse or interpret escaped UTF-8 characters in user-defined metadata. HEAD requests for an object with escaped UTF-8 characters in user-defined metadata don’t return the x-amz-missing-meta header if the key name or value includes unprintable characters.
+
+Unsupported request header
+
+The following request header is not supported and returns XNotImplemented:
+
+x-amz-website-redirect-location Versioning
+
+If a versionId subresource is not specified, the operation fetches the most recent version of the object in a versioned bucket. If the current version of the object is a delete marker, a "Not Found" status is returned with the x-amz-delete-marker response header set to true.
+
+Request headers for server-side encryption with customer-provided encryption keys (SSE-C)
+
+Use all three of these headers if the object is encrypted with a unique key that you provided.
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify your encryption key for the object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations in Use server-side encryption. HeadObject responses for Cloud Storage Pool objects
+
+If the object is stored in a Cloud Storage Pool, the following response headers are returned:
+
+x-amz-storage-class: GLACIER
+
+x-amz-restore
+
+The response headers provide information about the state of an object as it is moved to a Cloud Storage Pool, optionally transitioned to a non-retrievable state, and restored.
+
+924
+
+State of object
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object stored in a traditional storage pool or using erasure coding
+
+Object in Cloud Storage Pool but not yet transitioned to a non-retrievable state
+
+Object has transitioned to non-retrievable state, but at least one copy also exists on the grid
+
+Object transitioned to a non-retrievable state, and no copy exists on the grid
+
+Object in process of being restored from a non- retrievable state
+
+Response to HeadObject
+
+200 OK (No special response header is returned.)
+
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT"
+
+Until the object is transitioned to a non-retrievable state, the value for expiry-date is set to some distant time in the future. The exact time of transition is not controlled by the StorageGRID system.
+
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT" 924
+
+State of object
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object stored in a traditional storage pool or using erasure coding
+
+Object in Cloud Storage Pool but not yet transitioned to a non-retrievable state

@@ -1,0 +1,87 @@
+All future weekly, event-triggered, and user-triggered AutoSupport packages will be sent to the additional destination. Configure AutoSupport for appliances You can’t use the SMTP protocol to send AutoSupport packages to an additional destination. Steps
+
+1. Select SUPPORT > Tools > AutoSupport > Settings.
+
+2. Select Enable Additional AutoSupport Destination.
+
+3. Specify the following:
+
+Hostname
+
+The server hostname or IP address of an additional AutoSupport destination server.
+
+You can enter only one additional destination.
+
+Port
+
+The port used to connect to an additional AutoSupport destination server. The default is port 80 for HTTP or port 443 for HTTPS. Certificate validation
+
+Whether a TLS certificate is used to secure the connection to the additional destination.
+
+Select Verify certificate to use certificate validation. ◦ Select Do not verify certificate to send your AutoSupport packages without certificate validation.
+
+Select this choice only when you have a good reason not to use certificate validation, such as when
+
+539
+
+there is a temporary problem with a certificate.
+
+4. If you selected Verify certificate, do the following: a. Browse to the location of the CA certificate.
+
+b. Upload the CA certificate file.
+
+The CA certificate metadata appears.
+
+5. Select Save.
+
+All future weekly, event-triggered, and user-triggered AutoSupport packages will be sent to the additional destination. Configure AutoSupport for appliances
+
+AutoSupport for appliances reports StorageGRID hardware issues, and StorageGRID AutoSupport reports StorageGRID software issues, with one exception: for the SGF6112, StorageGRID AutoSupport reports both hardware and software issues. You must configure AutoSupport on each appliance except the SGF6112, which does not require additional configuration. AutoSupport is implemented differently for services appliances and storage appliances.
+
+You use SANtricity to enable AutoSupport for each storage appliance. You can configure SANtricity AutoSupport during initial appliance setup or after an appliance has been installed:
+
+For SG6000 and SG5700 appliances, configure AutoSupport in SANtricity System Manager
+
+AutoSupport packages from E-Series appliances can be included in StorageGRID AutoSupport if you configure AutoSupport delivery by proxy in SANtricity System Manager. StorageGRID AutoSupport does not report hardware issues, such as DIMM or host interface card (HIC) faults. However, some component failures might trigger hardware alerts. For StorageGRID appliances with a baseboard management controller (BMC) you can configure email and SNMP traps to report hardware failures:
+
+Set up email notifications for BMC alerts
+
+Configure SNMP settings for BMC
+
+Related information NetApp Support
+
+Manually trigger an AutoSupport package
+
+To assist technical support in troubleshooting issues with your StorageGRID system, you can manually trigger an AutoSupport package to be sent.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You must have the Root access or Other grid configuration permission. Steps
+
+1. Select SUPPORT > Tools > AutoSupport.
+
+2. On the Actions tab, select Send User-Triggered AutoSupport.
+
+540
+
+StorageGRID attempts to send an AutoSupport package to the NetApp Support Site. If the attempt is successful, the Most Recent Result and Last Successful Time values on the Results tab are updated. If there is a problem, the Most Recent Result value updates to "Failed," and StorageGRID does not try to send the AutoSupport package again.
+
+After sending an User-triggered AutoSupport package, refresh the AutoSupport page in your browser after 1 minute to access the most recent results. Troubleshoot AutoSupport packages
+
+If an attempt to send an AutoSupport package fails, the StorageGRID system takes different actions depending on the type of AutoSupport package. You can check the status of AutoSupport packages by selecting SUPPORT > Tools > AutoSupport > Results.
+
+When the AutoSupport package fails to send, "Failed" appears on the Results tab of the AutoSupport page.
+
+If you configured a proxy server to forward AutoSupport packages to NetApp, you should verify that the proxy server configuration settings are correct. Weekly AutoSupport package failure
+
+If a weekly AutoSupport package fails to send, the StorageGRID system takes the following actions:
+
+1. Updates the Most Recent Result attribute to Retrying.
+
+2. Attempts to resend the AutoSupport package 15 times every four minutes for one hour.
+
+3. After one hour of send failures, updates the Most Recent Result attribute to Failed.
+
+4. Attempts to send an AutoSupport package again at the next scheduled time. After sending an User-triggered AutoSupport package, refresh the AutoSupport page in your browser after 1 minute to access the most recent results. Troubleshoot AutoSupport packages

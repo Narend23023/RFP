@@ -1,0 +1,58 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Considerations for using CloudMirror replication service<br>
+                       <b>Bounding box:</b> x1=134, y1=157, x2=1566, y2=1892
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Consideration</td>
+      <td>Details</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Replication status</td>
+      <td>StorageGRID does not support the header. x-amz-replication-status</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Object size</td>
+      <td>The maximum size for objects that can be replicated to a destination bucket by\nthe CloudMirror replication service is 5 TiB, which is the same as the maximum\nsupported object size.\nNote: The maximum recommended size for a single PutObject operation is 5 GiB\n(5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use\nmultipart upload instead.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bucket versioning and\nversion IDs</td>
+      <td>If the source S3 bucket in StorageGRID has versioning enabled, you should also\nenable versioning for the destination bucket.\nWhen using versioning, note that the ordering of object versions in the destination\nbucket is best effort and not guaranteed by the CloudMirror service, due to\nlimitations in the S3 protocol.\nNote: Version IDs for the source bucket in StorageGRID aren’t related to the\nversion IDs for the destination bucket.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Tagging for object\nversions</td>
+      <td>The CloudMirror service does not replicate any PutObjectTagging or\nDeleteObjectTagging requests that supply a version ID, due to limitations in the\nS3 protocol. Because version IDs for the source and destination aren’t related,\nthere is no way to ensure that a tag update to a specific version ID will be\nreplicated.\nIn contrast, the CloudMirror service does replicate PutObjectTagging requests or\nDeleteObjectTagging requests that don’t specify a version ID. These requests\nupdate the tags for the latest key (or the latest version if the bucket is versioned).\nNormal ingests with tags (not tagging updates) are also replicated.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Multipart uploads and\nvalues ETag</td>
+      <td>When mirroring objects that were uploaded using a multipart upload, the\nvalue for CloudMirror service does not preserve the parts. As a result, the ETag\nthe mirrored object will be different than the value of the original object. ETag</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Objects encrypted with\nSSE-C (server-side\nencryption with customer-\nprovided keys)</td>
+      <td>The CloudMirror service does not support objects that are encrypted with SSE-C.\nIf you attempt to ingest an object into the source bucket for CloudMirror\nreplication and the request includes the SSE-C request headers, the operation\nfails.</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Bucket with S3 Object\nLock enabled</td>
+      <td>If the destination S3 bucket for CloudMirror replication has S3 Object Lock\nenabled, the attempt to configure bucket replication (PutBucketReplication) will\nfail with an AccessDenied error.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

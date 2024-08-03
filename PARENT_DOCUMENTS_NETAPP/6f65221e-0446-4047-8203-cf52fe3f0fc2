@@ -1,0 +1,259 @@
+Description
+
+CNID
+
+Connection Identifier
+
+The unique identifier of the node-to-node session/connection.
+
+CBID
+
+Content Block Identifier
+
+The unique identifier of the content block being transferred. CTDR
+
+Transfer Direction
+
+Indicates if the CBID transfer was push-initiated or pull-initiated:
+
+PUSH: The transfer operation was requested by the sending entity.
+
+PULL: The transfer operation was requested by the receiving entity.
+
+CTSR
+
+Source Entity
+
+The node ID of the source (sender) of the CBID transfer. CTDS
+
+Destination Entity
+
+The node ID of the destination (receiver) of the CBID transfer.
+
+CTSS
+
+Start Sequence Count
+
+Indicates the sequence count on which the transfer started.
+
+CTAS
+
+Actual End Sequence Count
+
+Indicates the last sequence count successfully transferred. If the Actual End Sequence Count is the same as the Start Sequence Count, and the Transfer Result was not successful, no data was exchanged.
+
+1348
+
+Code
+
+Field
+
+Description RSLT
+
+Transfer Result
+
+The result of the transfer operation (from the perspective of the sending entity):
+
+SUCS: Transfer successfully completed; all requested sequence counts were sent.
+
+CONL: connection lost during transfer
+
+CTMO: connection timed-out during establishment or transfer
+
+UNRE: destination node ID unreachable
+
+CRPT: transfer ended due to reception of corrupt or invalid data
+
+This audit message means a node-to-node data transfer operation was completed. If the Transfer Result was successful, the operation transferred data from "Start Sequence Count" to "Actual End Sequence Count". Sending and receiving nodes are identified by their node IDs. This information can be used to track system data flow and to locate, tabulate, and analyze errors. When combined with storage audit messages, it can also be used to verify replica counts. CGRR: Cross-Grid Replication Request
+
+This message is generated when StorageGRID attempts a cross-grid replication operation to replicate objects between buckets in a grid federation connection.
+
+Code
+
+Field
+
+Description
+
+CSIZ
+
+Object Size
+
+The size of the object in bytes.
+
+The CSIZ attribute was introduced in StorageGRID 11.8. As a result, cross-grid replication requests spanning a StorageGRID 11.7 to 11.8 upgrade might have an inaccurate total object size. S3AI
+
+S3 tenant account ID
+
+The ID of the tenant account that owns the bucket from which the object is being replicated.
+
+GFID
+
+Grid federation connection ID
+
+The ID of the grid federation connection being used for cross-grid replication.
+
+OPER
+
+CGR operation
+
+The type of cross-grid replication operation that was attempted:
+
+0 = Replicate object
+
+1 = Replicate multipart object
+
+2 = Replicate delete marker S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+S3KY
+
+S3 Key
+
+The S3 key name, not including the bucket name.
+
+1349
+
+Code
+
+Field
+
+Description
+
+VSID
+
+Version ID
+
+The version ID of the specific version of an object that was being replicated.
+
+RSLT
+
+Result Code
+
+Returns successful (SUCS) or general error (GERR). EBDL: Empty Bucket Delete
+
+The ILM scanner deleted an object in a bucket that is deleting all objects (performing an empty bucket operation).
+
+Code
+
+Field
+
+Description
+
+CSIZ
+
+Object Size
+
+The size of the object in bytes.
+
+PATH
+
+S3 Bucket/Key
+
+The S3 bucket name and S3 key name.
+
+SEGC
+
+Container UUID UUID of the container for the segmented object. This value is available The ID of the tenant account that owns the bucket from which the object is being replicated.
+
+GFID
+
+Grid federation connection ID
+
+The ID of the grid federation connection being used for cross-grid replication.
+
+OPER
+
+CGR operation
+
+The type of cross-grid replication operation that was attempted:
+
+0 = Replicate object
+
+1 = Replicate multipart object
+
+2 = Replicate delete marker S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+S3KY
+
+S3 Key
+
+The S3 key name, not including the bucket name.
+
+1349
+
+Code
+
+Field
+
+Description
+
+VSID
+
+Version ID
+
+The version ID of the specific version of an object that was being replicated.
+
+RSLT
+
+Result Code
+
+Returns successful (SUCS) or general error (GERR). EBDL: Empty Bucket Delete
+
+The ILM scanner deleted an object in a bucket that is deleting all objects (performing an empty bucket operation).
+
+Code
+
+Field
+
+Description
+
+CSIZ
+
+Object Size
+
+The size of the object in bytes.
+
+PATH
+
+S3 Bucket/Key
+
+The S3 bucket name and S3 key name.
+
+SEGC
+
+Container UUID UUID of the container for the segmented object. This value is available
+
+only if the object is segmented. UUID
+
+Universally Unique Identifier
+
+The identifier of the object within the StorageGRID system.
+
+RSLT
+
+Result of the delete operation
+
+The result of event, process, or transaction. If is not relevant for a message, NONE is used rather than SUCS so that the message is not accidentally filtered.
+
+EBKR: Empty Bucket Request
+
+This message indicates a user sent a request to turn empty bucket on or off (that is, to delete bucket objects or to stop deleting objects). Code
+
+Field
+
+Description
+
+BUID
+
+Bucket UUID
+
+The bucket ID.
+
+EBJS

@@ -1,0 +1,103 @@
+UEFI secure boot on both upgraded and new SGF6112 nodes.
+
+Local key manager for DAS NVMe SSD drive passwords. Configure and manage
+
+Consistency grid-wide default
+
+You can change the grid-wide default consistency using the Grid Manager or the grid-config endpoint of the Grid Management private API. The new default will be applied to buckets created after the change.
+
+ILM policy tags
+
+Allows per-bucket ILM policies controlled with bucket tags. Multiple active and inactive ILM policies can exist at the same time. See ILM policies:Overview.
+
+248
+
+Kafka endpoints Support for Kafka endpoints for bucket event notifications.
+
+Load balancer for management interface traffic
+
+Create load balancer endpoints to manage the management interface workload on Admin Nodes. See considerations for load balancing. As part of this change, you can now use Grid Manager and Tenant Manager ports 443, 8443, and 9443 when creating HTTPS load balancer endpoints for S3 or Swift client access.
+
+Manage drives tab
+
+Added Manage drives tab for the SGF6112 appliance. Metadata-only Storage Nodes
+
+You can now specify that a new software-based Storage Node will be used to store only metadata instead of both objects and metadata.
+
+SSO supports user principal names
+
+When configuring single sign-on (SSO) for Active Directory Federation Service (AD FS) or PingFederate, you can now map the user principal name to Name ID in the claims rule or to sAMAccountName=${username} in the adapter instance. TLS policy configuration and KMIP support
+
+StorageGRID now supports either the TLS 1.2 or TLS 1.3 protocol for KMIP connections. See Considerations and requirements for using a key management server.
+
+Hashicorp is now fully supported for KMIP.
+
+Enhancements were made to TLS policy configuration.
+
+Expand grid, maintain grid, recover or replace nodes Account clone improvement
+
+Existing accounts can be cloned to a remote grid. See What is account clone.
+
+Archive Nodes can be decommissioned
+
+You can now use the Decommission Nodes procedure to remove any unused Archive Nodes that are disconnected from the grid. See Decommission disconnected grid nodes.
+
+Archive Nodes were deprecated in StorageGRID 11.7. Automatic volume restoration
+
+Added a toggle for volume restoration to occur automatically. See Restore object data using Grid Manager.
+
+Erasure coding, changes to configurations and rebalance procedure
+
+Improvements to erasure coding configurations.
+
+Redistribute erasure-coded fragments among existing and new Storage Nodes. Recalculate the balance during maintenance tasks to provide better distribution when tasks are complete. See Erasure coding rebalance procedure. Management API stack trace
+
+The Management API stack trace security setting lets you control whether a stack trace is returned in Grid Manager and Tenant Manager API error responses. See Change interface security settings.
+
+249
+
+Rolling reboot procedure
+
+You can now use the rolling reboot procedure to reboot multiple grid nodes without causing a service disruption. Grid Manager
+
+Untrusted Client Networks, information about additional ports
+
+The Grid Manager list of ports open to the untrusted Client Network is now located in a column named, "Open to untrusted Client network" at CONFIGURATION > Network > Load balancer endpoints > Management interface (previously located on the Firewall control page). See Configure load balancer endpoints. Tenant Manager
+
+S3 Console no longer experimental
+
+Additional functionality described in Use S3 Console.
+
+Tenant permission
+
+The tenant management permission, View all buckets, has been added.
+
+S3 REST API
+
+Changes to S3 REST API support.
+
+S3 delete markers with UUIDs. See How objects are deleted and SDEL: S3 DELETE.
+
+S3 Select ScanRange is used when provided in requests for CSV and Parquet files.
+
+Removed or deprecated features and capabilities
+
+Some features and capabilities were removed or deprecated in this release. Review these items to understand whether you need to update client applications or modify your configuration before you upgrade. Definitions
+
+Deprecated
+
+The feature should not be used in new production environments. Existing production environments can continue using the feature.
+
+End of Life
+
+Last shipped version that contains the feature. No future versions will support the feature. You can now use the rolling reboot procedure to reboot multiple grid nodes without causing a service disruption. Grid Manager
+
+Untrusted Client Networks, information about additional ports
+
+The Grid Manager list of ports open to the untrusted Client Network is now located in a column named, "Open to untrusted Client network" at CONFIGURATION > Network > Load balancer endpoints > Management interface (previously located on the Firewall control page). See Configure load balancer endpoints. Tenant Manager
+
+S3 Console no longer experimental
+
+Additional functionality described in Use S3 Console.
+
+Tenant permission

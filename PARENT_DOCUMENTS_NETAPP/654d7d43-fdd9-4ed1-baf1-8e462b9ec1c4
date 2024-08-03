@@ -1,0 +1,87 @@
+You can specify REPLACE to overwrite the existing metadata when copying the object, or to update the object metadata.
+
+x-amz-storage-class
+
+x-amz-tagging-directive: The default value is COPY, which enables you to copy the object and all tags.
+
+You can specify REPLACE to overwrite the existing tags when copying the object, or to update the tags.
+
+S3 Object Lock request headers: ◦ x-amz-object-lock-mode ◦ x-amz-object-lock-retain-until-date ◦ x-amz-object-lock-legal-hold
+
+If a request is made without these headers, the bucket default retention settings are used to calculate the object version mode and retain-until-date. See Use S3 REST API to configure S3 Object Lock.
+
+SSE request headers: x-amz-copy-source-server-side-encryption-customer-algorithm ◦ x-amz-copy-source-server-side-encryption-customer-key ◦ x-amz-copy-source-server-side-encryption-customer-key-MD5 ◦ x-amz-server-side-encryption ◦ x-amz-server-side-encryption-customer-key-MD5 ◦ x-amz-server-side-encryption-customer-key ◦ x-amz-server-side-encryption-customer-algorithm See Request headers for server-side encryption
+
+Unsupported request headers
+
+The following request headers aren’t supported:
+
+Cache-Control
+
+Content-Disposition
+
+919
+
+• Content-Encoding
+
+Content-Language
+
+Expires
+
+x-amz-website-redirect-location Storage class options
+
+The x-amz-storage-class request header is supported, and affects how many object copies StorageGRID creates if the matching ILM rule uses the Dual commit or Balanced ingest option.
+
+STANDARD
+
+(Default) Specifies a dual-commit ingest operation when the ILM rule uses the Dual commit option, or when the Balanced option falls back to creating interim copies.
+
+REDUCED_REDUNDANCY
+
+Specifies a single-commit ingest operation when the ILM rule uses the Dual commit option, or when the Balanced option falls back to creating interim copies. Unsupported request headers
+
+The following request headers aren’t supported:
+
+Cache-Control
+
+Content-Disposition
+
+919
+
+• Content-Encoding
+
+Content-Language
+
+Expires
+
+x-amz-website-redirect-location Storage class options
+
+The x-amz-storage-class request header is supported, and affects how many object copies StorageGRID creates if the matching ILM rule uses the Dual commit or Balanced ingest option.
+
+STANDARD
+
+(Default) Specifies a dual-commit ingest operation when the ILM rule uses the Dual commit option, or when the Balanced option falls back to creating interim copies.
+
+REDUCED_REDUNDANCY
+
+Specifies a single-commit ingest operation when the ILM rule uses the Dual commit option, or when the Balanced option falls back to creating interim copies.
+
+If you are ingesting an object into a bucket with S3 Object Lock enabled, the REDUCED_REDUNDANCY option is ignored. If you are ingesting an object into a legacy Compliant bucket, the REDUCED_REDUNDANCY option returns an error. StorageGRID will always perform a dual-commit ingest to ensure that compliance requirements are satisfied.
+
+Using x-amz-copy-source in CopyObject If the source bucket and key, specified in the x-amz-copy-source header, are different from the destination bucket and key, a copy of the source object data is written to the destination.
+
+If the source and destination match, and the x-amz-metadata-directive header is specified as REPLACE, the object’s metadata is updated with the metadata values supplied in the request. In this case, StorageGRID does not re-ingest the object. This has two important consequences:
+
+You can’t use CopyObject to encrypt an existing object in place, or to change the encryption of an existing object in place. If you supply the x-amz-server-side-encryption header or the x-amz-server- side-encryption-customer-algorithm header, StorageGRID rejects the request and returns XNotImplemented.
+
+The option for Ingest Behavior specified in the matching ILM rule is not used. Any changes to object placement that are triggered by the update are made when ILM is re-evaluated by normal background ILM processes. This means that if the ILM rule uses the Strict option for ingest behavior, no action is taken if the required object placements can’t be made (for example, because a newly required location is unavailable). The updated object retains its current placement until the required placement is possible. Request headers for server-side encryption
+
+If you use server-side encryption, the request headers you provide depend on whether the source object is encrypted and on whether you plan to encrypt the target object.
+
+920
+
+• If the source object is encrypted using a customer-provided key (SSE-C), you must include the following
+
+three headers in the CopyObject request, so the object can be decrypted and then copied:
+
+x-amz-copy-source-server-side-encryption-customer-algorithm: Specify AES256. ◦ x-amz-copy-source-server-side-encryption-customer-key: Specify the encryption key you provided when you created the source object.

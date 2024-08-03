@@ -1,0 +1,173 @@
+The following tables summarize Storage Node configuration settings.
+
+559
+
+LDR Attribute Name
+
+HTTP State
+
+Auto-Start HTTP
+
+LDR > Data Store
+
+Attribute Name
+
+Reset Lost Objects Count
+
+LDR > Storage
+
+560
+
+Code
+
+HSTE If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Steps
+
+1. Select CONFIGURATION > System > Storage settings > Object compression.
+
+2. Select the Compress stored objects checkbox.
+
+3. Select Save.
+
+Storage Node configuration settings
+
+Each Storage Node uses several configuration settings and counters. You might need to view the current settings or reset counters to clear alarms (legacy system).
+
+Except when specifically instructed in documentation, you should consult with technical support before modifying any Storage Node configuration settings. As required, you can reset event counters to clear legacy alarms. Follow these steps to access a Storage Node’s configuration settings and counters.
+
+Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select site > Storage Node.
+
+3. Expand the Storage Node and select the service or component.
+
+4. Select the Configuration tab.
+
+The following tables summarize Storage Node configuration settings.
+
+559
+
+LDR Attribute Name
+
+HTTP State
+
+Auto-Start HTTP
+
+LDR > Data Store
+
+Attribute Name
+
+Reset Lost Objects Count
+
+LDR > Storage
+
+560
+
+Code
+
+HSTE
+
+HTAS
+
+Code
+
+RCOR
+
+Description
+
+The current state of HTTP for S3, Swift, and other internal StorageGRID traffic:
+
+Offline: No operations are allowed, and any client application that attempts to open an HTTP session to the LDR service receives an error message. Active sessions are gracefully closed.
+
+Online: Operation continues normally
+
+If selected, the state of the system on restart depends on the state of the LDR > Storage component. If the LDR > Storage component is Read-only on restart, the HTTP interface is also Read-only. If the LDR > Storage component is Online, then HTTP is also Online. Otherwise, the HTTP interface remains in the Offline state.
+
+If not selected, the HTTP interface remains Offline until explicitly enabled. Description
+
+Reset the counter for the number of lost objects on this service.
+
+Attribute Name
+
+Storage State — Desired
+
+Health Check Timeout
+
+LDR > Verification
+
+Attribute Name
+
+Reset Missing Objects Count
+
+Verification Rate
+
+Code
+
+SSDS
+
+SHCT
+
+Code
+
+VCMI VPRI
+
+Description
+
+A user-configurable setting for the desired state of the storage component. The LDR service reads this value and attempts to match the status indicated by this attribute. The value is persistent across restarts.
+
+For example, you can use this setting to force storage to become read-only even when there is ample available storage space. This can be useful for troubleshooting.
+
+The attribute can take one of the following values:
+
+Offline: When the desired state is Offline, the LDR service takes the LDR > Storage component offline.
+
+Read-only: When the desired state is Read-only, the LDR service moves the storage state to Read- only and stops accepting new content. However, the LDR service continues to accept S3 or ILM driven purge and delete requests. Note that content might continue to be saved to the Storage Node for a short time until open sessions are closed. Online: Leave the value at Online during normal system operations. The Storage State — Current of the storage component will be dynamically set by the service based on the condition of the LDR service, such as the amount of available object storage space. If space is low, the component becomes Read-only.
+
+The time limit in seconds within which a health check test must complete in order for a storage volume to be considered healthy. Only change this value when directed to do so by Support. Description
+
+Resets the count of Missing Objects Detected (OMIS). Use only after object existence check completes. Missing replicated object data is restored automatically by the StorageGRID system.
+
+Set the rate at which background verification takes place. See information about configuring the background verification rate.
+
+561
+
+Attribute Name Reset Corrupt Objects Count
+
+Delete Quarantined Objects
+
+LDR > Erasure Coding
+
+Attribute Name
+
+Reset Writes Failure Count
+
+Reset Reads Failure Count
+
+Reset Deletes Failure Count
+
+Reset Corrupt Copies Detected Count
+
+Reset Corrupt Fragments Detected Count
+
+Reset Missing Fragments Detected Count
+
+LDR > Replication
+
+562
+
+Code VCCR
+
+OQRT
+
+Code
+
+RSWF
+
+RSRF
+
+RSDF
+
+RSCC The time limit in seconds within which a health check test must complete in order for a storage volume to be considered healthy. Only change this value when directed to do so by Support. Description
+
+Resets the count of Missing Objects Detected (OMIS). Use only after object existence check completes. Missing replicated object data is restored automatically by the StorageGRID system.

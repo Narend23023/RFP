@@ -1,0 +1,153 @@
+2. Indicate whether you want to access the Grid Manager or the Tenant Manager:
+
+To access the Grid Manager, leave the Account ID field blank, enter 0 as the account ID, or select Grid Manager if it appears in the list of recent accounts. To access the Tenant Manager, enter the 20-digit tenant account ID or select a tenant by name if it appears in the list of recent accounts.
+
+3. Select Sign in
+
+StorageGRID redirects you to your organization’s SSO sign-in page. For example:
+
+4. Sign in with your SSO credentials.
+
+If your SSO credentials are correct:
+
+a. The identity provider (IdP) provides an authentication response to StorageGRID.
+
+b. StorageGRID validates the authentication response.
+
+c. If the response is valid and you belong to a federated group with StorageGRID access permissions, you are signed in to the Grid Manager or the Tenant Manager, depending on which account you selected.
+
+If the service account is inaccessible, you can still sign in, as long as you are an existing user that belongs to a federated group with StorageGRID access permissions.
+
+5. Optionally, access other Admin Nodes, or access the Grid Manager or the Tenant Manager, if you have adequate permissions. You don’t need to reenter your SSO credentials.
+
+Sign out when SSO is enabled
+
+When SSO is enabled for StorageGRID, what happens when you sign out depends on what you are signed in to and where you are signing out from.
+
+327
+
+Steps
+
+1. Locate the Sign out link in the top-right corner of the user interface.
+
+2. Select Sign out.
+
+The StorageGRID Sign in page appears. The Recent Accounts drop-down is updated to include Grid Manager or the name of the tenant, so you can access these user interfaces more quickly in the future.
+
+If you are signed in to…
+
+And you sign out from…
+
+You are signed out of… Grid Manager on one or more Admin Nodes
+
+Grid Manager on any Admin Node Grid Manager on all Admin Nodes
+
+Note: If you use Azure for SSO, it might take a few minutes to be signed out of all Admin Nodes.
+
+Tenant Manager on one or more Admin Nodes
+
+Tenant Manager on any Admin Node
+
+Tenant Manager on all Admin Nodes Both Grid Manager and Tenant Manager
+
+Grid Manager
+
+The Grid Manager only. You must also sign out of the Tenant Manager to sign out of SSO.
+
+Tenant Manager
+
+The Tenant Manager only. You must also sign out of the Grid Manager to sign out of SSO.
+
+The table summarizes what happens when you sign out if you are using a single browser session. If you are signed in to StorageGRID across multiple browser sessions, you must sign out of all browser sessions separately. Requirements and considerations for single sign-on
+
+Before enabling single sign-on (SSO) for a StorageGRID system, review the requirements and considerations.
+
+Identity provider requirements
+
+StorageGRID supports the following SSO identity providers (IdP):
+
+Active Directory Federation Service (AD FS)
+
+Azure Active Directory (Azure AD)
+
+PingFederate
+
+You must configure identity federation for your StorageGRID system before you can configure an SSO identity provider. The type of LDAP service you use for identity federation controls which type of SSO you can implement.
+
+328
+
+Configured LDAP service type
+
+Options for SSO identity provider Active Directory
+
+Active Directory
+
+Azure
+
+PingFederate
+
+Azure
+
+Azure
+
+AD FS requirements
+
+You can use any of the following versions of AD FS:
+
+Windows Server 2022 AD FS
+
+Windows Server 2019 AD FS
+
+Windows Server 2016 AD FS Tenant Manager
+
+The Tenant Manager only. You must also sign out of the Grid Manager to sign out of SSO.
+
+The table summarizes what happens when you sign out if you are using a single browser session. If you are signed in to StorageGRID across multiple browser sessions, you must sign out of all browser sessions separately. Requirements and considerations for single sign-on
+
+Before enabling single sign-on (SSO) for a StorageGRID system, review the requirements and considerations.
+
+Identity provider requirements
+
+StorageGRID supports the following SSO identity providers (IdP):
+
+Active Directory Federation Service (AD FS)
+
+Azure Active Directory (Azure AD)
+
+PingFederate
+
+You must configure identity federation for your StorageGRID system before you can configure an SSO identity provider. The type of LDAP service you use for identity federation controls which type of SSO you can implement.
+
+328
+
+Configured LDAP service type
+
+Options for SSO identity provider Active Directory
+
+Active Directory
+
+Azure
+
+PingFederate
+
+Azure
+
+Azure
+
+AD FS requirements
+
+You can use any of the following versions of AD FS:
+
+Windows Server 2022 AD FS
+
+Windows Server 2019 AD FS
+
+Windows Server 2016 AD FS
+
+Windows Server 2016 should be using the KB3201845 update, or higher.
+
+Additional requirements
+
+Transport Layer Security (TLS) 1.2 or 1.3
+
+Microsoft .NET Framework, version 3.5.1 or higher Considerations for Azure

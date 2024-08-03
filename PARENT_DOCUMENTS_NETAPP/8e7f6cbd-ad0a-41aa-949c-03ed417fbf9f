@@ -1,0 +1,75 @@
+Monitor object metadata capacity for each Storage Node Monitor the metadata usage for each Storage Node to ensure that adequate space remains available for essential database operations. You must add new Storage Nodes at each site before object metadata exceeds 100% of the allowed metadata space. About this task
+
+StorageGRID maintains three copies of object metadata at each site to provide redundancy and to protect object metadata from loss. The three copies are evenly distributed across all Storage Nodes at each site using the space reserved for metadata on storage volume 0 of each Storage Node.
+
+In some cases, the grid’s object metadata capacity might be consumed faster than its object storage capacity. For example, if you typically ingest large numbers of small objects, you might need to add Storage Nodes to increase metadata capacity even though sufficient object storage capacity remains.
+
+Some of the factors that can increase metadata usage include the size and quantity of user metadata and tags, the total number of parts in a multipart upload, and the frequency of changes to ILM storage locations. Steps
+
+1. Select NODES > Storage Node > Storage.
+
+2. Position your cursor over the Storage used - object metadata graph to see the values for a specific time.
+
+Used (%)
+
+The percentage of the allowed metadata space that has been used on this Storage Node.
+
+Prometheus metrics: storagegrid_storage_utilization_metadata_bytes and storagegrid_storage_utilization_metadata_allowed_bytes Used
+
+The bytes of the allowed metadata space that have been used on this Storage Node.
+
+Prometheus metric: storagegrid_storage_utilization_metadata_bytes
+
+1061
+
+Allowed
+
+The space allowed for object metadata on this Storage Node. To learn how this value is determine for each Storage Node, see the full description of Allowed metadata space. Prometheus metric: storagegrid_storage_utilization_metadata_allowed_bytes
+
+Actual reserved
+
+The actual space reserved for metadata on this Storage Node. Includes the allowed space and the required space for essential metadata operations. To learn how this value is calculated for each Storage Node, see the full description of Actual reserved space for metadata.
+
+Prometheus metric will be added in a future release.
+
+The total values for a site or the grid don’t include nodes that have not reported metrics for at least five minutes, such as offline nodes.
+
+3. If the Used (%) value is 70% or higher, expand your StorageGRID system by adding Storage Nodes to each site.
+
+The Low metadata storage alert is triggered when the Used (%) value reaches certain thresholds. Undesirable results can occur if object metadata uses more than 100% of the allowed space. When you add the new nodes, the system automatically rebalances object metadata across all Storage Nodes within the site. See the instructions for expanding a StorageGRID system.
+
+Monitor space usage forecasts Prometheus metric: storagegrid_storage_utilization_metadata_bytes
+
+1061
+
+Allowed
+
+The space allowed for object metadata on this Storage Node. To learn how this value is determine for each Storage Node, see the full description of Allowed metadata space. Prometheus metric: storagegrid_storage_utilization_metadata_allowed_bytes
+
+Actual reserved
+
+The actual space reserved for metadata on this Storage Node. Includes the allowed space and the required space for essential metadata operations. To learn how this value is calculated for each Storage Node, see the full description of Actual reserved space for metadata.
+
+Prometheus metric will be added in a future release.
+
+The total values for a site or the grid don’t include nodes that have not reported metrics for at least five minutes, such as offline nodes.
+
+3. If the Used (%) value is 70% or higher, expand your StorageGRID system by adding Storage Nodes to each site.
+
+The Low metadata storage alert is triggered when the Used (%) value reaches certain thresholds. Undesirable results can occur if object metadata uses more than 100% of the allowed space. When you add the new nodes, the system automatically rebalances object metadata across all Storage Nodes within the site. See the instructions for expanding a StorageGRID system.
+
+Monitor space usage forecasts
+
+Monitor space usage forecasts for user data and metadata to estimate when you will need to expand a grid.
+
+If you notice that the rate of consumption changes over time, select a shorter range from the Averaged over pull-down to reflect only the most recent ingest patterns. If you notice seasonal patterns, select a longer range.
+
+If you have a new StorageGRID installation, allow data and metadata to accumulate before evaluating the space usage forecasts. Steps
+
+1. On the dashboard, select Storage.
+
+2. View the dashboard cards, Forecast of data usage by storage pool and Forecast of metadata usage by site.
+
+3. Use these values to estimate when you will need to add new Storage Nodes for data and metadata storage.
+
+1062

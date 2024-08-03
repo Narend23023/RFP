@@ -1,0 +1,115 @@
+ii. For each audit message in the results, look at S3AI field to determine the tenant account ID. Use the other fields in the message to determine which IP address was used by the client, the bucket, and the object: Code
+
+Description
+
+SAIP
+
+Source IP
+
+S3AI
+
+Tenant ID
+
+S3BK
+
+Bucket
+
+S3KY
+
+Object
+
+CSIZ
+
+Size (bytes)
+
+Example audit log results 1258
+
+Steps
+
+1. Go to CONFIGURATION > Monitoring > Audit and syslog server.
+
+2. If Client Writes are Normal, access the audit log:
+
+a. Enter ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #. e. Enter cd /var/local/log
+
+f. Identify which tenants are using objects larger than 5 GiB.
+
+i. Enter zgrep SPUT * | egrep "CSIZ\(UI64\):[0-9]*[5-9][0-9]{9}"
+
+ii. For each audit message in the results, look at S3AI field to determine the tenant account ID. Use the other fields in the message to determine which IP address was used by the client, the bucket, and the object: Code
+
+Description
+
+SAIP
+
+Source IP
+
+S3AI
+
+Tenant ID
+
+S3BK
+
+Bucket
+
+S3KY
+
+Object
+
+CSIZ
+
+Size (bytes)
+
+Example audit log results
+
+audit.log:2023-01-05T18:47:05.525999 [AUDT:[RSLT(FC32):SUCS][CNID(UI64):1672943621106262][TIME(UI64):80 4317333][SAIP(IPAD):"10.96.99.127"][S3AI(CSTR):"933908492661540043 43"][SACC(CSTR):"bhavna"][S3AK(CSTR):"06OX85M40Q90Y280B7YT"][SUSR( CSTR):"urn:sgws:identity::93390849266154004343:root"][SBAI(CSTR):" 93390849266154004343"][SBAC(CSTR):"bhavna"][S3BK(CSTR):"test"][S3K Y(CSTR):"large- object"][CBID(UI64):0x077EA25F3B36C69A][UUID(CSTR):"A80219A2-CD1E- 466F-9094- B9C0FDE2FFA3"][CSIZ(UI64):6040000000][MTME(UI64):1672943621338958] [AVER(UI32):10][ATIM(UI64):1672944425525999][ATYP(FC32):SPUT][ANID (UI32):12220829][AMID(FC32):S3RQ][ATID(UI64):4333283179807659119]]
+
+1259
+
+3. If Client Writes aren’t Normal, use the tenant ID from the alert to identify the tenant:
+
+a. Go to SUPPORT > Tools > Logs. Collect application logs for the Storage Node in the alert. Specify 15 minutes before and after the alert.
+
+b. Extract the file and go to bycast.log:
+
+/GID<grid_id>_<time_stamp>/<site_node>/<time_stamp>/grid/bycast.log
+
+c. Search the log for method=PUT and identify the client in the clientIP field. Example bycast.log
+
+Jan 5 18:33:41 BHAVNAJ-DC1-S1-2-65 ADE: |12220829 1870864574 S3RQ %CEA 2023-01-05T18:33:41.208790| NOTICE 1404 af23cb66b7e3efa5 S3RQ: EVENT_PROCESS_CREATE - connection=1672943621106262 method=PUT name=</test/4MiB-0> auth=<V4> clientIP=<10.96.99.127>
+
+4. Inform tenants that the maximum PutObject size is 5 GiB and to use multipart uploads for objects greater than 5 GiB.
+
+5. Ignore the alert for one week if the application has been changed.
+
+Troubleshoot lost and missing object data
+
+Troubleshoot lost and missing object data: Overview b. Extract the file and go to bycast.log:
+
+/GID<grid_id>_<time_stamp>/<site_node>/<time_stamp>/grid/bycast.log
+
+c. Search the log for method=PUT and identify the client in the clientIP field. Example bycast.log
+
+Jan 5 18:33:41 BHAVNAJ-DC1-S1-2-65 ADE: |12220829 1870864574 S3RQ %CEA 2023-01-05T18:33:41.208790| NOTICE 1404 af23cb66b7e3efa5 S3RQ: EVENT_PROCESS_CREATE - connection=1672943621106262 method=PUT name=</test/4MiB-0> auth=<V4> clientIP=<10.96.99.127>
+
+4. Inform tenants that the maximum PutObject size is 5 GiB and to use multipart uploads for objects greater than 5 GiB.
+
+5. Ignore the alert for one week if the application has been changed.
+
+Troubleshoot lost and missing object data
+
+Troubleshoot lost and missing object data: Overview
+
+Objects can be retrieved for several reasons, including read requests from a client application, background verifications of replicated object data, ILM re-evaluations, and the restoration of object data during the recovery of a Storage Node. The StorageGRID system uses location information in an object’s metadata to determine from which location to retrieve the object. If a copy of the object is not found in the expected location, the system attempts to retrieve another copy of the object from elsewhere in the system, assuming that the ILM policy contains a rule to make two or more copies of the object.
+
+If this retrieval is successful, the StorageGRID system replaces the missing copy of the object. Otherwise, the Objects lost alert is triggered, as follows:
+
+For replicated copies, if another copy can’t be retrieved, the object is considered lost, and the alert is triggered.

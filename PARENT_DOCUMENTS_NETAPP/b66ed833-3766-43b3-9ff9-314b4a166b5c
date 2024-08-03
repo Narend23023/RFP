@@ -1,0 +1,91 @@
+What is a tenant account?
+
+Each tenant account has its own federated or local groups, users, S3 buckets or Swift containers, and objects. Tenant accounts can be used to segregate stored objects by different entities. For example, multiple tenant accounts can be used for either of these use cases:
+
+Enterprise use case: If the StorageGRID system is being used within an enterprise, the grid’s object storage might be segregated by the different departments in the organization. For example, there might be tenant accounts for the Marketing department, the Customer Support department, the Human Resources department, and so on.
+
+If you use the S3 client protocol, you can also use S3 buckets and bucket policies to segregate objects between the departments in an enterprise. You don’t need to create separate tenant accounts. See instructions for implementing S3 buckets and bucket policies for more information. Service provider use case: If the StorageGRID system is being used by a service provider, the grid’s object storage might be segregated by the different entities that lease the storage. For example, there might be tenant accounts for Company A, Company B, Company C, and so on.
+
+How to create a tenant account
+
+Tenant accounts are created by a StorageGRID grid administrator using the Grid Manager. When creating a tenant account, the grid administrator specifies the following:
+
+Basic information including the tenant name, client type (S3 or Swift) and optional storage quota.
+
+Permissions for the tenant account, such as whether the tenant account can use S3 platform services, configure its own identity source, use S3 Select, or use a grid federation connection.
+
+The initial root access for the tenant, based on whether the StorageGRID system uses local groups and users, identity federation, or single sign-on (SSO). In addition, grid administrators can enable the S3 Object Lock setting for the StorageGRID system if S3 tenant accounts need to comply with regulatory requirements. When S3 Object Lock is enabled, all S3 tenant accounts can create and manage compliant buckets.
+
+Configure S3 tenants
+
+After an S3 tenant account is created, you can access the Tenant Manager to perform tasks such as the following:
+
+Set up identity federation (unless the identity source is shared with the grid)
+
+755
+
+• Manage groups and users
+
+Use grid federation for account clone and cross-grid replication
+
+Manage S3 access keys
+
+Create and manage S3 buckets
+
+Use S3 platform services
+
+Use S3 Select
+
+Monitor storage usage
+
+Although you can create and manage S3 buckets with the Tenant Manager, you must use an S3 client or S3 Console to ingest and manage objects. Configure Swift tenants
+
+After a Swift tenant account is created, you can access the Tenant Manager to perform tasks such as the following: Permissions for the tenant account, such as whether the tenant account can use S3 platform services, configure its own identity source, use S3 Select, or use a grid federation connection.
+
+The initial root access for the tenant, based on whether the StorageGRID system uses local groups and users, identity federation, or single sign-on (SSO). In addition, grid administrators can enable the S3 Object Lock setting for the StorageGRID system if S3 tenant accounts need to comply with regulatory requirements. When S3 Object Lock is enabled, all S3 tenant accounts can create and manage compliant buckets.
+
+Configure S3 tenants
+
+After an S3 tenant account is created, you can access the Tenant Manager to perform tasks such as the following:
+
+Set up identity federation (unless the identity source is shared with the grid)
+
+755
+
+• Manage groups and users
+
+Use grid federation for account clone and cross-grid replication
+
+Manage S3 access keys
+
+Create and manage S3 buckets
+
+Use S3 platform services
+
+Use S3 Select
+
+Monitor storage usage
+
+Although you can create and manage S3 buckets with the Tenant Manager, you must use an S3 client or S3 Console to ingest and manage objects. Configure Swift tenants
+
+After a Swift tenant account is created, you can access the Tenant Manager to perform tasks such as the following:
+
+Set up identity federation (unless the identity source is shared with the grid)
+
+Manage groups and users
+
+Monitor storage usage
+
+Swift users must have the Root access permission to access the Tenant Manager. However, the Root access permission does not allow users to authenticate into the Swift REST API to create containers and ingest objects. Users must have the Swift Administrator permission to authenticate into the Swift REST API.
+
+How to sign in and sign out Sign in to Tenant Manager
+
+You access the Tenant Manager by entering the URL for the tenant into the address bar of a supported web browser.
+
+Before you begin
+
+You have your login credentials.
+
+You have a URL for accessing the Tenant Manager, as supplied by your grid administrator. The URL will look like one of these examples: https://FQDN_or_Admin_Node_IP/
+
+https://FQDN_or_Admin_Node_IP:port/

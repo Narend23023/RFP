@@ -1,0 +1,109 @@
+3. Select NODES to access the Nodes page.
+
+4. From the Nodes home page (grid level), select the Objects tab.
+
+The chart shows S3 and Swift ingest and retrieve rates for your entire StorageGRID system in bytes per second and the amount of data ingested or retrieved. You can select a time interval or apply a custom interval.
+
+5. To see information for a particular Storage Node, select the node from the list on the left, and select the Objects tab.
+
+The chart shows the ingest and retrieve rates for the node. The tab also includes metrics for object counts, metadata queries, and verification operations.
+
+1072 Monitor load balancing operations
+
+If you are using a load balancer to manage client connections to StorageGRID, you should monitor load balancing operations after you configure the system initially and after you make any configuration changes or perform an expansion.
+
+About this task
+
+You can use the Load Balancer service on Admin Nodes or Gateway Nodes or an external third-party load balancer to distribute client requests across multiple Storage Nodes.
+
+1073
+
+After configuring load balancing, you should confirm that object ingest and retrieval operations are being evenly distributed across Storage Nodes. Evenly distributed requests ensure that StorageGRID remains responsive to client requests under load and can help maintain client performance.
+
+If you configured a high availability (HA) group of Gateway Nodes or Admin Nodes in active-backup mode, only one node in the group actively distributes client requests.
+
+For more information, see Configure S3 and Swift client connections. Steps
+
+1. If S3 or Swift clients connect using the Load Balancer service, check that Admin Nodes or Gateway Nodes are actively distributing traffic as you expect:
+
+a. Select NODES.
+
+b. Select a Gateway Node or Admin Node.
+
+c. On the Overview tab, check if a node interface is in an HA group and if the node interface has the role of Primary.
+
+Nodes with the role of Primary and nodes that aren’t in an HA group should be actively distributing requests to clients.
+
+d. For each node that should be actively distributing client requests, select the Load Balancer tab.
+
+e. Review the chart of Load Balancer Request Traffic for the last week to ensure that the node has been
+
+actively distributing requests.
+
+Nodes in an active-backup HA group might take the Backup role from time to time. During that time the nodes don’t distribute client requests.
+
+f. Review the chart of Load Balancer Incoming Request Rate for the last week to review the object throughput of the node.
+
+g. Repeat these steps for each Admin Node or Gateway Node in the StorageGRID system.
+
+h. Optionally, use traffic classification policies to view a more detailed analysis of traffic being served by
+
+the Load Balancer service.
+
+2. Verify that these requests are being evenly distributed to Storage Nodes. a. Select Storage Node > LDR > HTTP.
+
+b. Review the number of Currently Established incoming Sessions.
+
+c. Repeat for each Storage Node in the grid.
+
+The number of sessions should be roughly equal across all Storage Nodes.
+
+Monitor grid federation connections
+
+You can monitor basic information about all grid federation connections, detailed information about a specific connection, or Prometheus metrics about cross-grid replication operations. You can monitor a connection from either grid.
+
+Before you begin
+
+You are signed in to the Grid Manager on either grid using a supported web browser.
+
+You have the Root access permission for the grid you are signed in to.
+
+1074
+
+View all connections
+
+The Grid federation page shows basic information about all grid federation connections and about all tenant accounts that are permitted to use grid federation connections. Steps
+
+1. Select CONFIGURATION > System > Grid federation.
+
+The Grid federation page appears.
+
+2. To see basic information for all connections on this grid, select the Connections tab.
+
+From this tab, you can:
+
+Create a new connection. ◦ Select an existing connection to edit or test. h. Optionally, use traffic classification policies to view a more detailed analysis of traffic being served by
+
+the Load Balancer service.
+
+2. Verify that these requests are being evenly distributed to Storage Nodes. a. Select Storage Node > LDR > HTTP.
+
+b. Review the number of Currently Established incoming Sessions.
+
+c. Repeat for each Storage Node in the grid.
+
+The number of sessions should be roughly equal across all Storage Nodes.
+
+Monitor grid federation connections
+
+You can monitor basic information about all grid federation connections, detailed information about a specific connection, or Prometheus metrics about cross-grid replication operations. You can monitor a connection from either grid.
+
+Before you begin
+
+You are signed in to the Grid Manager on either grid using a supported web browser.
+
+You have the Root access permission for the grid you are signed in to.
+
+1074
+
+View all connections

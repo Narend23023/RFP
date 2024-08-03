@@ -1,0 +1,91 @@
+The user interface for the Grid Manager or the Tenant Manager might not respond as expected after StorageGRID software is upgraded.
+
+Steps
+
+1. Make sure you are using a supported web browser.
+
+Browser support can change with each StorageGRID release. Confirm you are using browser that is supported by your StorageGRID version.
+
+2. Clear your web browser cache.
+
+Clearing the cache removes outdated resources used by the previous version of StorageGRID software, and permits the user interface to operate correctly again. For instructions, see the documentation for your web browser.
+
+1294
+
+Unavailable Admin Node
+
+If the StorageGRID system includes multiple Admin Nodes, you can use another Admin Node to check the status of an unavailable Admin Node.
+
+Before you begin
+
+You have specific access permissions. Steps
+
+1. From an available Admin Node, sign in to the Grid Manager using a supported web browser.
+
+2. Select SUPPORT > Tools > Grid topology.
+
+3. Select Site > unavailable Admin Node > SSM > Services > Overview > Main.
+
+4. Look for services that have a status of Not Running and that might also be displayed in blue.
+
+5. Determine if alarms have been triggered.
+
+6. Take the appropriate actions to resolve the issue.
+
+1295
+
+Troubleshoot network, hardware, and platform issues
+
+There are several tasks you can perform to help determine the source of issues related to StorageGRID network, hardware, and platform issues. "422: Unprocessable Entity" errors
+
+The error 422: Unprocessable Entity can occur for different reasons. Check the error message to determine what caused your issue.
+
+If you see one of the listed error messages, take the recommended action.
+
+Error message
+
+Root cause and corrective action 422: Unprocessable Entity
+
+Validation failed. Please check the values you entered for errors. Test connection failed. Please verify your configuration. Unable to authenticate, please verify your username and password: LDAP Result Code 8 "Strong Auth Required": 00002028: LdapErr: DSID-0C090256, comment: The server requires binds to turn on integrity checking if SSL\TLS are not already active on the connection, data 0, v3839
+
+This message might occur if you select the Do not use TLS option for Transport Layer Security (TLS) when configuring identity federation using Windows Active Directory (AD).
+
+Using the Do not use TLS option is not supported for use with AD servers that enforce LDAP signing. You must select either the Use STARTTLS option or the Use LDAPS option for TLS.
+
+1296
+
+Error message
+
+Root cause and corrective action 422: Unprocessable Entity
+
+Validation failed. Please check the values you entered for errors. Test connection failed. Please verify your configuration.Unable to begin TLS, verify your certificate and TLS configuration: LDAP Result Code 200 "Network Error": TLS handshake failed (EOF) If you see one of the listed error messages, take the recommended action.
+
+Error message
+
+Root cause and corrective action 422: Unprocessable Entity
+
+Validation failed. Please check the values you entered for errors. Test connection failed. Please verify your configuration. Unable to authenticate, please verify your username and password: LDAP Result Code 8 "Strong Auth Required": 00002028: LdapErr: DSID-0C090256, comment: The server requires binds to turn on integrity checking if SSL\TLS are not already active on the connection, data 0, v3839
+
+This message might occur if you select the Do not use TLS option for Transport Layer Security (TLS) when configuring identity federation using Windows Active Directory (AD).
+
+Using the Do not use TLS option is not supported for use with AD servers that enforce LDAP signing. You must select either the Use STARTTLS option or the Use LDAPS option for TLS.
+
+1296
+
+Error message
+
+Root cause and corrective action 422: Unprocessable Entity
+
+Validation failed. Please check the values you entered for errors. Test connection failed. Please verify your configuration.Unable to begin TLS, verify your certificate and TLS configuration: LDAP Result Code 200 "Network Error": TLS handshake failed (EOF)
+
+This message appears if you try to use an unsupported cipher to make a Transport Layer Security (TLS) connection from StorageGRID to an external system used for identify federation or Cloud Storage Pools.
+
+Check the ciphers that are offered by the external system. The system must use one of the ciphers supported by StorageGRID for outgoing TLS connections, as shown in the instructions for administering StorageGRID. Grid Network MTU mismatch alert
+
+The Grid Network MTU mismatch alert is triggered when the maximum transmission unit (MTU) setting for the Grid Network interface (eth0) differs significantly across nodes in the grid.
+
+About this task
+
+The differences in MTU settings could indicate that some, but not all, eth0 networks are configured for jumbo frames. An MTU size mismatch of greater than 1000 might cause network performance problems. Steps
+
+1. List the MTU settings for eth0 on all nodes.

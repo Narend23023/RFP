@@ -1,0 +1,81 @@
+Formula
+
+Replication: Audit levels all set to Debug or Normal
+
+Audit log rate = 8 x S3 Operations Rate
+
+Erasure coding: audit levels all set to Debug or Normal
+
+Use same formula as for default settings
+
+Estimation formulas for security events
+
+Security events aren’t correlated with S3 operations and typically produce a negligible volume of logs and data. For these reasons, no estimation formulas are provided. Estimation formulas for application logs
+
+If you have no information about your S3 workload other than the number of S3 operations per second your grid is expected to support, you can estimate the volume of applications logs your external syslog server will need to handle using the following formulas:
+
+Application Log Rate = 3.3 x S3 Operations Rate Application Log Average Size = 350 bytes
+
+1185
+
+So, for example, if your grid is sized for 1,000 S3 operations per second, your external syslog server should be sized to support 3,300 application logs per second and be able to receive (and store) application log data at a rate of about 1.2 MB per second. If you know more about your workload, more accurate estimations are possible. For application logs, the most important additional variables are the data protection strategy (replication vs. erasure coding), the percentage of S3 operations that are PUTs (vs. GETs/other), and the average size, in bytes, of the following S3 fields (4- character abbreviations used in table are audit log field names): Code
+
+Field
+
+Description
+
+SACC
+
+S3 tenant account name (request sender)
+
+The name of the tenant account for the user who sent the request. Empty for anonymous requests.
+
+SBAC
+
+S3 tenant account name (bucket owner)
+
+The tenant account name for the bucket owner. Used to identify cross-account or anonymous access. S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+S3KY
+
+S3 key
+
+The S3 key name, not including the bucket name. Operations on buckets don’t include this field. Example sizing estimations
+
+This section explains example cases of how to use the estimation formulas for grids with the following methods of data protection:
+
+Replication
+
+Erasure coding
+
+If you use replication for data protection
+
+Let P represent the percentage of S3 operations that are PUTs, where 0 ≤ P ≤ 1 (so for a 100% PUT workload, P = 1, and for a 100% GET workload, P = 0).
+
+Let K represent the average size of the sum of the S3 account names, S3 bucket, and S3 key. Suppose the S3 account name is always my-s3-account (13 bytes), buckets have fixed-length names like /my/application/bucket-12345 (28 bytes), and objects have fixed-length keys like 5733a5d7-f069-41ef-8fbd- 13247494c69c (36 bytes). Then K has a value of 90 (13+13+28+36).
+
+If you can determine values for P and K, you can estimate the volume of application logs your external syslog server will have to be able to handle using the following formulas. Application Log Rate = ((1.1 x P) + (2.5 x (1 - P))) x S3 Operations Rate Application Log Average Size = (P x (220 + K)) + ((1 - P) x (240 + (0.2 x K))) Bytes
+
+1186 Replication
+
+Erasure coding
+
+If you use replication for data protection
+
+Let P represent the percentage of S3 operations that are PUTs, where 0 ≤ P ≤ 1 (so for a 100% PUT workload, P = 1, and for a 100% GET workload, P = 0).
+
+Let K represent the average size of the sum of the S3 account names, S3 bucket, and S3 key. Suppose the S3 account name is always my-s3-account (13 bytes), buckets have fixed-length names like /my/application/bucket-12345 (28 bytes), and objects have fixed-length keys like 5733a5d7-f069-41ef-8fbd- 13247494c69c (36 bytes). Then K has a value of 90 (13+13+28+36).
+
+If you can determine values for P and K, you can estimate the volume of application logs your external syslog server will have to be able to handle using the following formulas. Application Log Rate = ((1.1 x P) + (2.5 x (1 - P))) x S3 Operations Rate Application Log Average Size = (P x (220 + K)) + ((1 - P) x (240 + (0.2 x K))) Bytes
+
+1186
+
+So, for example, if your grid is sized for 1,000 S3 operations per second, your workload is 50% PUTs, and your S3 account names, bucket names, and object names average 90 bytes, your external syslog server should be sized to support 1800 application logs per second, and will be receiving (and typically storing) application data at a rate of 0.5 MB per second.
+
+If you use erasure coding for data protection
+
+Let P represent the percentage of S3 operations that are PUTs, where 0 ≤ P ≤ 1 (so for a 100% PUT workload, P = 1, and for a 100% GET workload, P = 0). Let K represent the average size of the sum of the S3 account names, S3 bucket, and S3 key. Suppose the S3 account name is always my-s3-account (13 bytes), buckets have fixed-length names like /my/application/bucket-12345 (28 bytes), and objects have fixed-length keys like 5733a5d7-f069-41ef-8fbd- 13247494c69c (36 bytes). Then K has a value of 90 (13+13+28+36).

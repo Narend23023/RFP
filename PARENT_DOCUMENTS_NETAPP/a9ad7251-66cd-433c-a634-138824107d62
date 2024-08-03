@@ -1,0 +1,81 @@
+Steps
+
+1. Select MAINTENANCE > Network > Grid Network.
+
+2. Select Add another subnet to add a new subnet in CIDR notation.
+
+For example, enter 10.96.104.0/22.
+
+3. Enter the provisioning passphrase, and select Save.
+
+4. Wait until the changes are applied, then download a new Recovery Package. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the Provisioning Passphrase.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system. It is also used to recover the primary Admin Node.
+
+The subnets you have specified are configured automatically for your StorageGRID system. Deploy new grid nodes
+
+The steps for deploying new grid nodes in an expansion are the same as the steps used when the grid was first installed. You must deploy all new grid nodes before you can perform the expansion.
+
+When you expand a grid, the nodes you add don’t have to match the existing node types. You can add VMware nodes, Linux container-based nodes, or appliance nodes. VMware: Deploy grid nodes
+
+You must deploy a virtual machine in VMware vSphere for each VMware node you want to add in the expansion.
+
+Steps
+
+1. Deploy the new node as virtual machine and connect it to one or more StorageGRID networks.
+
+When you deploy the node, you can optionally remap node ports or increase CPU or memory settings.
+
+2. After you have deployed all new VMware nodes, perform the expansion procedure. Linux: Deploy grid nodes
+
+You can deploy grid nodes on new Linux hosts or on existing Linux hosts. If you need additional Linux hosts to support the CPU, RAM, and storage requirements of the StorageGRID nodes you want to add to your grid, you prepare them in the same way you prepared the hosts when you first installed them. Then, you deploy the
+
+1411
+
+expansion nodes in the same way you deployed grid nodes during installation.
+
+Before you begin
+
+You have the instructions for installing StorageGRID for your version of Linux, and you have reviewed the hardware and storage requirements.
+
+Install StorageGRID on Red Hat Enterprise Linux ◦ Install StorageGRID on Ubuntu or Debian
+
+If you plan to deploy new grid nodes on existing hosts, you have confirmed the existing hosts have enough CPU, RAM, and storage capacity for the additional nodes.
+
+You have a plan to minimize failure domains. For example, you should not deploy all Gateway Nodes on a single physical host. In a production deployment, don’t run more than one Storage Node on a single physical or virtual host. Using a dedicated host for each Storage Node provides an isolated failure domain.
+
+If the StorageGRID node uses storage assigned from a NetApp ONTAP system, confirm that the volume does not have a FabricPool tiering policy enabled. Disabling FabricPool tiering for volumes used with StorageGRID nodes simplifies troubleshooting and storage operations. Steps
+
+1. If you are adding new hosts, access the installation instructions for deploying StorageGRID nodes.
+
+2. To deploy the new hosts, follow the instructions for preparing the hosts.
+
+3. To create node configuration files and to validate the StorageGRID configuration, follow the instructions for deploying grid nodes.
+
+4. If you are adding nodes to a new Linux host, start the StorageGRID host service.
+
+5. If you are adding nodes to an existing Linux host, start the new nodes using the storagegrid host service CLI:sudo storagegrid node start [<node name\>]
+
+After you finish
+
+After deploying all new grid nodes, you can perform the expansion. Appliances: Deploying Storage, Gateway, or non-primary Admin Nodes
+
+To install the StorageGRID software on an appliance node, you use the StorageGRID Appliance Installer, which is included on the appliance. In an expansion, each storage appliance functions as a single Storage Node, and each services appliance functions as a single Gateway Node or non-primary Admin Node. Any appliance can connect to the Grid Network, the Admin Network, and the Client Network.
+
+Before you begin
+
+The appliance has been installed in a rack or cabinet, connected to your networks, and powered on. 1. If you are adding new hosts, access the installation instructions for deploying StorageGRID nodes.
+
+2. To deploy the new hosts, follow the instructions for preparing the hosts.
+
+3. To create node configuration files and to validate the StorageGRID configuration, follow the instructions for deploying grid nodes.
+
+4. If you are adding nodes to a new Linux host, start the StorageGRID host service.
+
+5. If you are adding nodes to an existing Linux host, start the new nodes using the storagegrid host service CLI:sudo storagegrid node start [<node name\>]
+
+After you finish
+
+After deploying all new grid nodes, you can perform the expansion. Appliances: Deploying Storage, Gateway, or non-primary Admin Nodes

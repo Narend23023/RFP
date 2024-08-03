@@ -1,0 +1,105 @@
+4. Enter your federated username and password.
+
+If the SSO sign-in and logout operations are successful, a success message appears.
+
+If the SSO operation is unsuccessful, an error message appears. Fix the issue, clear the browser’s cookies, and try again.
+
+5. Repeat these steps to verify the SSO connection for each Admin Node in your grid. Azure
+
+Steps
+
+338
+
+1. Go to the Single sign-on page in the Azure portal.
+
+2. Select Test this application.
+
+3. Enter the credentials of a federated user.
+
+If the SSO sign-in and logout operations are successful, a success message appears.
+
+If the SSO operation is unsuccessful, an error message appears. Fix the issue, clear the browser’s cookies, and try again.
+
+4. Repeat these steps to verify the SSO connection for each Admin Node in your grid. PingFederate
+
+Steps
+
+1. From the StorageGRID Single Sign-on page, select the first link in the Sandbox mode message.
+
+Select and test one link at a time.
+
+2. Enter the credentials of a federated user.
+
+If the SSO sign-in and logout operations are successful, a success message appears.
+
+If the SSO operation is unsuccessful, an error message appears. Fix the issue, clear the browser’s cookies, and try again.
+
+3. Select the next link to verify the SSO connection for each Admin Node in your grid.
+
+If you see a Page Expired message, select the Back button in your browser and resubmit your credentials. Enable single sign-on
+
+When you have confirmed you can use SSO to sign in to each Admin Node, you can enable SSO for your entire StorageGRID system.
+
+When SSO is enabled, all users must use SSO to access the Grid Manager, the Tenant Manager, the Grid Management API, and the Tenant Management API. Local users can no longer access StorageGRID. Steps
+
+1. Select CONFIGURATION > Access control > Single sign-on.
+
+2. Change the SSO Status to Enabled.
+
+3. Select Save.
+
+4. Review the warning message, and select OK.
+
+339
+
+Single sign-on is now enabled. Steps
+
+1. From the StorageGRID Single Sign-on page, select the first link in the Sandbox mode message.
+
+Select and test one link at a time.
+
+2. Enter the credentials of a federated user.
+
+If the SSO sign-in and logout operations are successful, a success message appears.
+
+If the SSO operation is unsuccessful, an error message appears. Fix the issue, clear the browser’s cookies, and try again.
+
+3. Select the next link to verify the SSO connection for each Admin Node in your grid.
+
+If you see a Page Expired message, select the Back button in your browser and resubmit your credentials. Enable single sign-on
+
+When you have confirmed you can use SSO to sign in to each Admin Node, you can enable SSO for your entire StorageGRID system.
+
+When SSO is enabled, all users must use SSO to access the Grid Manager, the Tenant Manager, the Grid Management API, and the Tenant Management API. Local users can no longer access StorageGRID. Steps
+
+1. Select CONFIGURATION > Access control > Single sign-on.
+
+2. Change the SSO Status to Enabled.
+
+3. Select Save.
+
+4. Review the warning message, and select OK.
+
+339
+
+Single sign-on is now enabled.
+
+If you are using the Azure Portal and you access StorageGRID from the same computer you use to access Azure, ensure that the Azure Portal user is also an authorized StorageGRID user (a user in a federated group that has been imported into StorageGRID) or log out of the Azure Portal before attempting to sign in to StorageGRID.
+
+Create relying party trusts in AD FS
+
+You must use Active Directory Federation Services (AD FS) to create a relying party trust for each Admin Node in your system. You can create relying party trusts using PowerShell commands, by importing SAML metadata from StorageGRID, or by entering the data manually.
+
+Before you begin
+
+You have configured single sign-on for StorageGRID and you selected AD FS as the SSO type. Sandbox mode is selected on the Single sign-on page in Grid Manager. See Use sandbox mode.
+
+You know the fully qualified domain name (or the IP address) and the relying party identifier for each Admin Node in your system. You can find these values in the Admin Nodes detail table on the StorageGRID Single Sign-on page.
+
+You must create a relying party trust for each Admin Node in your StorageGRID system. Having a relying party trust for each Admin Node ensures that users can securely sign in to and out of any Admin Node.
+
+You have experience creating relying party trusts in AD FS, or you have access to the Microsoft AD FS documentation.
+
+You are using the AD FS Management snap-in, and you belong to the Administrators group.
+
+If you are creating the relying party trust manually, you have the custom certificate that was uploaded for the StorageGRID management interface, or you know how to log in to an Admin Node from the command shell. About this task

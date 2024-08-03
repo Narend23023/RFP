@@ -1,0 +1,59 @@
+Having a Client Network is optional. Using a Client Network allows client network traffic (for example, S3 and Swift) to be separated from grid internal traffic, which allows grid networking to be more secure. Administrative traffic can be handled by either the Client or Grid Network when the Admin Network is not configured. 48
+
+Admin Network topology
+
+Having an Admin Network is optional. One way that you can use an Admin Network and a Grid Network is to configure a routable Grid Network and a bounded Admin Network for each node. When you configure the Admin Network, you establish the host IP address, subnet mask, and Gateway IP address for the eth1 interface for each grid node.
+
+The Admin Network can be unique to each node and can consist of multiple subnets. Each node can be configured with an Admin External Subnet List (AESL). The AESL lists the subnets reachable over the Admin Network for each node. The AESL must also include the subnets of any services the grid will access over the Admin Network, such as NTP, DNS, KMS, and LDAP. Static routes are applied for each subnet in the AESL.
+
+In this example, the Grid Network is used for traffic related to S3 and Swift client requests and object management. while the Admin Network is used for administrative functions.
+
+49 Client Network topology
+
+Having a Client Network is optional. Using a Client Network allows client network traffic (for example, S3 and Swift) to be separated from grid internal traffic, which allows grid networking to be more secure. Administrative traffic can be handled by either the Client or Grid Network when the Admin Network is not configured.
+
+When you configure the Client Network, you establish the host IP address, subnet mask, and Gateway IP address for the eth2 interface for the configured node. Each node’s Client Network can be independent of the Client Network on any other node.
+
+If you configure a Client Network for a node during installation, the node’s default gateway switches from the Grid Network gateway to the Client Network gateway when installation is complete. If a Client Network is added later, the node’s default gateway switches in the same way. In this example, the Client Network is used for S3 and Swift client requests and for administrative functions, while the Grid Network is dedicated to internal object management operations.
+
+50
+
+51
+
+Topology for all three networks
+
+You can configure all three networks into a network topology consisting of a private Grid Network, bounded site-specific Admin Networks, and open Client Networks. Using load balancer endpoints and untrusted Client Networks can provide additional security if needed. In this example:
+
+The Grid Network is used for network traffic related to internal object management operations.
+
+The Admin Network is used for traffic related to administrative functions.
+
+The Client Network is used for traffic related to S3 and Swift client requests.
+
+52 Networking requirements
+
+You must verify that the current networking infrastructure and configuration can support the planned StorageGRID network design.
+
+53
+
+General networking requirements
+
+All StorageGRID deployments must be able to support the following connections.
+
+These connections can occur through the Grid, Admin, or Client Networks, or the combinations of these networks as illustrated in the network topology examples.
+
+Management connections: Inbound connections from an administrator to the node, usually through SSH. Web browser access to the Grid Manager, the Tenant Manager, and the StorageGRID Appliance Installer.
+
+NTP server connections: Outbound UDP connection that receives an inbound UDP response.
+
+At least one NTP server must be reachable by the primary Admin Node.
+
+DNS server connections: Outbound UDP connection that receives an inbound UDP response.
+
+LDAP/Active Directory server connections: Outbound TCP connection from the Identity service on Storage Nodes. AutoSupport: Outbound TCP connection from the Admin Nodes to either support.netapp.com or a customer-configured proxy.
+
+External key management server: Outbound TCP connection from each appliance node with node encryption enabled.
+
+Inbound TCP connections from S3 and Swift clients.
+
+Outbound requests from StorageGRID platform services such as CloudMirror replication or from Cloud Storage Pools.

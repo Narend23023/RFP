@@ -1,0 +1,85 @@
+Every object version stored will contribute to the ObjectCount and DataBytes values in the response. Delete markers aren’t added to the ObjectCount total.
+
+Related information Consistency values
+
+Deprecated bucket requests for legacy Compliance
+
+Deprecated bucket requests for legacy Compliance
+
+You might need to use the StorageGRID S3 REST API to manage buckets that were created using the legacy Compliance feature.
+
+Compliance feature deprecated
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock.
+
+962 <?xml version="1.0" encoding="UTF-8"?> <UsageResult xmlns="http://s3.storagegrid.com/doc/2015-02-01"> <CalculationTime>2014-11-19T05:30:11.000000Z</CalculationTime> <ObjectCount>4</ObjectCount> <DataBytes>12</DataBytes> <Buckets> <Bucket> <Name>bucket1</Name> <ObjectCount>2</ObjectCount> <DataBytes>6</DataBytes> </Bucket> <Bucket> <Name>bucket2</Name> <ObjectCount>2</ObjectCount> <DataBytes>6</DataBytes> </Bucket> </Buckets> </UsageResult> Versioning
+
+Every object version stored will contribute to the ObjectCount and DataBytes values in the response. Delete markers aren’t added to the ObjectCount total.
+
+Related information Consistency values
+
+Deprecated bucket requests for legacy Compliance
+
+Deprecated bucket requests for legacy Compliance
+
+You might need to use the StorageGRID S3 REST API to manage buckets that were created using the legacy Compliance feature.
+
+Compliance feature deprecated
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock.
+
+962
+
+If you previously enabled the global Compliance setting, the global S3 Object Lock setting is enabled in StorageGRID 11.6. You can no longer create new buckets with Compliance enabled; however, as required, you can use the StorageGRID S3 REST API to manage any existing legacy Compliant buckets.
+
+Use S3 REST API to configure S3 Object Lock
+
+Manage objects with ILM
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+Deprecated compliance requests:
+
+Deprecated - PUT Bucket request modifications for compliance The SGCompliance XML element is deprecated. Previously, you could include this StorageGRID custom element in the optional XML request body of PUT Bucket requests to create a Compliant bucket.
+
+Deprecated - GET Bucket compliance
+
+The GET Bucket compliance request is deprecated. However, you can continue to use this request to determine the compliance settings currently in effect for an existing legacy Compliant bucket.
+
+Deprecated - PUT Bucket compliance
+
+The PUT Bucket compliance request is deprecated. However, you can continue to use this request to modify the compliance settings for an existing legacy Compliant bucket. For example, you can place an existing bucket on legal hold or increase its retention period.
+
+Deprecated: CreateBucket request modifications for compliance
+
+The SGCompliance XML element is deprecated. Previously, you could include this StorageGRID custom element in the optional XML request body of CreateBucket requests to create a Compliant bucket. The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock. See the following for more details:
+
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You can no longer create new buckets with Compliance enabled. The following error message is returned if you attempt to use the CreateBucket request modifications for compliance to create a new Compliant bucket:
+
+The Compliance feature is deprecated. Contact your StorageGRID administrator if you need to create new Compliant buckets. Deprecated: GET Bucket compliance request
+
+The GET Bucket compliance request is deprecated. However, you can continue to use this request to determine the compliance settings currently in effect for an existing legacy
+
+963
+
+Compliant bucket.
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock. See the following for more details:
+
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:GetBucketCompliance permission, or be account root, to complete this operation. Request example
+
+This example request allows you to determine the compliance settings for the bucket named mybucket.
+
+GET /mybucket/?x-ntap-sg-compliance HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response example Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5

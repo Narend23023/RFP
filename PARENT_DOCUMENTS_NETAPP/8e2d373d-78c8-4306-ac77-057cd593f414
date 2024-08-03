@@ -1,0 +1,113 @@
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. PutObject
+
+You can use the S3 PutObject request to add an object to a bucket. Resolve conflicts
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation.
+
+926
+
+Object size
+
+The maximum recommended size for a single PutObject operation is 5 GiB (5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use multipart upload instead.
+
+The maximum supported size for a single PutObject operation is 5 TiB (5,497,558,138,880 bytes).
+
+If you upgraded from StorageGRID 11.6 or earlier, the S3 PUT Object size too large alert will be triggered if you attempt to upload an object that exceeds 5 GiB. If you have a new installation of StorageGRID 11.7 or 11.8, the alert won’t be triggered in this case. However, to align with the AWS S3 standard, future releases of StorageGRID won’t support uploads of objects larger than 5 GiB. User metadata size
+
+Amazon S3 limits the size of user-defined metadata within each PUT request header to 2 KB. StorageGRID limits user metadata to 24 KiB. The size of user-defined metadata is measured by taking the sum of the number of bytes in the UTF-8 encoding of each key and value.
+
+UTF-8 characters in user metadata
+
+If a request includes (unescaped) UTF-8 values in the key name or value of user-defined metadata, StorageGRID behavior is undefined.
+
+StorageGRID does not parse or interpret escaped UTF-8 characters included in the key name or value of user- defined metadata. Escaped UTF-8 characters are treated as ASCII characters:
+
+PutObject, CopyObject, GetObject, and HeadObject requests succeed if user-defined metadata includes escaped UTF-8 characters.
+
+StorageGRID does not return the x-amz-missing-meta header if the interpreted value of the key name or value includes unprintable characters. Object tag limits
+
+You can add tags to new objects when you upload them, or you can add them to existing objects. Both StorageGRID and Amazon S3 support up to 10 tags for each object. Tags associated with an object must have unique tag keys. A tag key can be up to 128 Unicode characters in length and tag values can be up to 256 Unicode characters in length. Key and values are case sensitive. Object ownership
+
+In StorageGRID, all objects are owned by the bucket owner account, including objects created by a non-owner account or an anonymous user.
+
+Supported request headers
+
+The following request headers are supported:
+
+Cache-Control
+
+Content-Disposition
+
+Content-Encoding
+
+927
+
+When you specify aws-chunked for Content-EncodingStorageGRID does not verify the following items:
+
+StorageGRID does not verify the chunk-signature against the chunk data. ◦ StorageGRID does not verify the value that you provide for x-amz-decoded-content-length against the object.
+
+Content-Language
+
+Content-Length
+
+Content-MD5
+
+Content-Type
+
+Expires
+
+Transfer-Encoding
+
+Chunked transfer encoding is supported if aws-chunked payload signing is also used.
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata.
+
+When specifying the name-value pair for user-defined metadata, use this general format: x-amz-meta-name: value
+
+If you want to use the User defined creation time option as the Reference time for an ILM rule, you must use creation-time as the name of the metadata that records when the object was created. For example: x-amz-meta-creation-time: 1443399726
+
+The value for creation-time is evaluated as seconds since January 1, 1970. Supported request headers
+
+The following request headers are supported:
+
+Cache-Control
+
+Content-Disposition
+
+Content-Encoding
+
+927
+
+When you specify aws-chunked for Content-EncodingStorageGRID does not verify the following items:
+
+StorageGRID does not verify the chunk-signature against the chunk data. ◦ StorageGRID does not verify the value that you provide for x-amz-decoded-content-length against the object.
+
+Content-Language
+
+Content-Length
+
+Content-MD5
+
+Content-Type
+
+Expires
+
+Transfer-Encoding
+
+Chunked transfer encoding is supported if aws-chunked payload signing is also used.
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata.
+
+When specifying the name-value pair for user-defined metadata, use this general format: x-amz-meta-name: value
+
+If you want to use the User defined creation time option as the Reference time for an ILM rule, you must use creation-time as the name of the metadata that records when the object was created. For example: x-amz-meta-creation-time: 1443399726
+
+The value for creation-time is evaluated as seconds since January 1, 1970.

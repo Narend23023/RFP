@@ -1,0 +1,89 @@
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Run the following script to unmount a failed storage volume: sn-unmount-volume object_store_ID
+
+The object_store_ID is the ID of the failed storage volume. For example, specify 0 in the command for an object store with ID 0000.
+
+4. If prompted, press y to stop the Cassandra service depending on storage volume 0.
+
+If the Cassandra service is already stopped, you aren’t prompted. The Cassandra service is stopped only for volume 0. point and volume size of each failed storage volume identified in the previous step.
+
+Object stores are numbered in hex notation. For example, 0000 is the first volume and 000F is the sixteenth volume. In the example, the object store with an ID of 0000 corresponds to /var/local/rangedb/0 with device name sdc and a size of 107 GB.
+
+2. Log in to the failed Storage Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+1581
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Run the following script to unmount a failed storage volume: sn-unmount-volume object_store_ID
+
+The object_store_ID is the ID of the failed storage volume. For example, specify 0 in the command for an object store with ID 0000.
+
+4. If prompted, press y to stop the Cassandra service depending on storage volume 0.
+
+If the Cassandra service is already stopped, you aren’t prompted. The Cassandra service is stopped only for volume 0.
+
+root@Storage-180:~/var/local/tmp/storage~ # sn-unmount-volume 0 Services depending on storage volume 0 (cassandra) aren't down. Services depending on storage volume 0 must be stopped before running this script. Stop services that require storage volume 0 [y/N]? y Shutting down services that require storage volume 0. Services requiring storage volume 0 stopped. Unmounting /var/local/rangedb/0 /var/local/rangedb/0 is unmounted.
+
+In a few seconds, the volume is unmounted. Messages appear indicating each step of the process. The final message indicates that the volume is unmounted. 5. If the unmount fails because the volume is busy, you can force an unmount using the --use-umountof option:
+
+Forcing an unmount using the --use-umountof option might cause processes or services using the volume to behave unexpectedly or crash.
+
+root@Storage-180:~ # sn-unmount-volume --use-umountof /var/local/rangedb/2 Unmounting /var/local/rangedb/2 using umountof /var/local/rangedb/2 is unmounted. Informing LDR service of changes to storage volumes
+
+Recover failed storage volumes and rebuild Cassandra database
+
+You must run a script that reformats and remounts storage on failed storage volumes, and rebuilds the Cassandra database on the Storage Node if the system determines that
+
+1582
+
+it is necessary.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+The system drives on the server are intact.
+
+The cause of the failure has been identified and, if necessary, replacement storage hardware has already been acquired. The total size of the replacement storage is the same as the original.
+
+You have checked that a Storage Node decommissioning is not in progress, or you have paused the node decommission procedure. (In the Grid Manager, select MAINTENANCE > Tasks > Decommission.)
+
+You have checked that an expansion is not in progress. (In the Grid Manager, select MAINTENANCE > Tasks > Expansion.)
+
+You have reviewed the warnings about storage volume recovery. Steps
+
+1. As needed, replace failed physical or virtual storage associated with the failed storage volumes that you identified and unmounted earlier.
+
+Don’t remount the volumes in this step. The storage is remounted and added to /etc/fstab in a later step.
+
+2. In the Grid Manager, go to NODES > appliance Storage Node > Hardware. In the StorageGRID Appliance section of the page, verify that the Storage RAID mode is healthy.
+
+3. Log in to the failed Storage Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+4. Use a text editor (vi or vim) to delete failed volumes from the /etc/fstab file and then save the file. You have checked that an expansion is not in progress. (In the Grid Manager, select MAINTENANCE > Tasks > Expansion.)
+
+You have reviewed the warnings about storage volume recovery. Steps
+
+1. As needed, replace failed physical or virtual storage associated with the failed storage volumes that you identified and unmounted earlier.
+
+Don’t remount the volumes in this step. The storage is remounted and added to /etc/fstab in a later step.

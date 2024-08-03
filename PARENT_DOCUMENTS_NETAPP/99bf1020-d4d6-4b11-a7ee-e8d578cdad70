@@ -1,0 +1,133 @@
+4. Perform ongoing tasks in the application and in StorageGRID to manage and monitor object storage over time.
+
+472
+
+Information needed to attach StorageGRID to a client application
+
+Before you can attach StorageGRID to an S3 or Swift client application, you must perform configuration steps in StorageGRID and obtain certain value.
+
+What values do I need? The following table shows the values you must configure in StorageGRID and where those values are used by the S3 or Swift application and the DNS server.
+
+473
+
+Value
+
+Where value is configured
+
+Where value is used
+
+Virtual IP (VIP) addresses
+
+StorageGRID > HA group
+
+DNS entry
+
+Port
+
+StorageGRID > Load balancer endpoint Client application
+
+SSL certificate
+
+StorageGRID > Load balancer endpoint
+
+Client application
+
+Server name (FQDN)
+
+StorageGRID > Load balancer endpoint
+
+Client application
+
+DNS entry
+
+S3 access key ID and secret access key
+
+StorageGRID > Tenant and bucket Client application
+
+Bucket/Container name StorageGRID > Tenant and bucket Client application
+
+How do I get these values?
+
+Depending on your requirements, you can do either of the following to obtain the information you need:
+
+Use the S3 setup wizard. The S3 setup wizard helps you to quickly configure the required values in StorageGRID and outputs one or two files that you can use when you configure the S3 application. The wizard guides you through the required steps and helps to make sure your settings conform to StorageGRID best practices. What values do I need? The following table shows the values you must configure in StorageGRID and where those values are used by the S3 or Swift application and the DNS server.
+
+473
+
+Value
+
+Where value is configured
+
+Where value is used
+
+Virtual IP (VIP) addresses
+
+StorageGRID > HA group
+
+DNS entry
+
+Port
+
+StorageGRID > Load balancer endpoint Client application
+
+SSL certificate
+
+StorageGRID > Load balancer endpoint
+
+Client application
+
+Server name (FQDN)
+
+StorageGRID > Load balancer endpoint
+
+Client application
+
+DNS entry
+
+S3 access key ID and secret access key
+
+StorageGRID > Tenant and bucket Client application
+
+Bucket/Container name StorageGRID > Tenant and bucket Client application
+
+How do I get these values?
+
+Depending on your requirements, you can do either of the following to obtain the information you need:
+
+Use the S3 setup wizard. The S3 setup wizard helps you to quickly configure the required values in StorageGRID and outputs one or two files that you can use when you configure the S3 application. The wizard guides you through the required steps and helps to make sure your settings conform to StorageGRID best practices.
+
+If you are configuring an S3 application, using the S3 setup wizard is recommended unless you know you have special requirements or your implementation will require significant customization.
+
+Use the FabricPool setup wizard. Similar to the S3 setup wizard, the FabricPool setup wizard helps you to quickly configure required values and outputs a file that you can use when you configure a FabricPool cloud tier in ONTAP. If you plan to use StorageGRID as the object storage system for a FabricPool cloud tier, using the FabricPool setup wizard is recommended unless you know you have special requirements or your implementation will require significant customization.
+
+Configure items manually. If you are connecting to a Swift application (or you are connecting to an S3 application and prefer not to use the S3 setup wizard), you can obtain the required values by performing the configuration manually. Follow these steps:
+
+1. Configure the high availability (HA) group you want to use for the S3 or Swift application. See Configure high availability groups.
+
+2. Create the load balancer endpoint that the S3 or Swift application will use. See Configure load balancer endpoints.
+
+3. Create the tenant account that the S3 or Swift application will use. See Create a tenant account.
+
+4. For an S3 tenant, sign in to the tenant account, and generate an access key ID and secret access key 474
+
+for each user that will access the application. See Create your own access keys.
+
+5. Create one or more S3 buckets or Swift containers within the tenant account. For S3, see Create S3 bucket. For Swift, use the PUT container request.
+
+6. To add specific placement instructions for the objects belonging to the new tenant or bucket/container, create a new ILM rule and activate a new ILM policy to use that rule. See Create ILM rule and Create ILM policy. Security for S3 or Swift clients
+
+StorageGRID tenant accounts use S3 or Swift client applications to save object data to StorageGRID. You should review the security measures implemented for client applications.
+
+Summary
+
+The following table summarizes how security is implemented for the S3 and Swift REST APIs: Security issue
+
+Implementation for REST API
+
+Connection security
+
+TLS
+
+Server authentication
+
+X.509 server certificate signed by system CA or custom server certificate supplied by administrator

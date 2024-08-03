@@ -1,0 +1,93 @@
+You must understand that you will no longer be able to use StorageGRID to view or retrieve any object data that was stored at the site. When StorageGRID performs this procedure, it makes no attempt to preserve any data from the disconnected site.
+
+If your ILM rules and policy were designed to protect against the loss of a single site, copies of your objects still exist on the remaining sites.
+
+You must understand that if the site contained the only copy of an object, the object is lost and can’t be retrieved.
+
+Considerations for consistency when you remove a site All nodes at the site must have a Connection State of one of the following:
+
+1458
+
+◦
+
+Unknown ( unexpectedly down. For example, a service on the node might be stopped, or the node might have lost its network connection because of a power failure or unexpected outage.
+
+): For an unknown reason, a node is disconnected or services on the node are
+
+Administratively Down ( example, the node or services on the node have been gracefully shut down. ): The node is not connected to the grid for an expected reason. For
+
+All nodes at all other sites must have a Connection State of Connected ( can have active alerts. ); however, these other nodes
+
+You must understand that you will no longer be able to use StorageGRID to view or retrieve any object data that was stored at the site. When StorageGRID performs this procedure, it makes no attempt to preserve any data from the disconnected site.
+
+If your ILM rules and policy were designed to protect against the loss of a single site, copies of your objects still exist on the remaining sites.
+
+You must understand that if the site contained the only copy of an object, the object is lost and can’t be retrieved.
+
+Considerations for consistency when you remove a site
+
+The consistency for an S3 bucket or Swift container determines whether StorageGRID fully replicates object metadata to all nodes and sites before telling a client that object ingest was successful. Consistency provides a balance between the availability of the objects and the consistency of those objects across different Storage Nodes and sites. When StorageGRID removes a site, it needs to ensure that no data is written to the site being removed. As a result, it temporarily overrides the consistency for each bucket or container. After you start the site decommission process, StorageGRID temporarily uses strong-site consistency to prevent object metadata from being written to the site being removed.
+
+As a result of this temporary override, be aware that any client write, update, and delete operations that occur during a site decommission can fail if multiple nodes become unavailable at the remaining sites.
+
+Gather required materials
+
+Before you decommission a site, you must obtain the following materials. Item
+
+Notes
+
+Recovery Package .zip file
+
+You must download the most recent Recovery Package .zip file (sgws-recovery-package-id-revision.zip). You can use the Recovery Package file to restore the system if a failure occurs.
+
+Download the Recovery Package
+
+Passwords.txt file
+
+This file contains the passwords required to access grid nodes on the command line and is included in the Recovery Package.
+
+1459
+
+Item
+
+Notes
+
+Provisioning passphrase
+
+The passphrase is created and documented when the StorageGRID system is first installed. The provisioning passphrase is not in the Passwords.txt file.
+
+Description of StorageGRID system’s topology before decommissioning
+
+If available, obtain any documentation that describes the system’s current topology.
+
+Related information Web browser requirements
+
+Step 1: Select Site
+
+To determine if a site can be decommissioned, start by accessing the Decommission Site wizard.
+
+Before you begin
+
+You have obtained all required materials.
+
+You have reviewed the considerations for removing a site.
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission or the Maintenance and ILM permissions. Steps
+
+1. Select MAINTENANCE > Tasks > Decommission.
+
+2. Select Decommission Site.
+
+Step 1 (Select Site) of the Decommission Site wizard appears. This step includes an alphabetic list of the sites in your StorageGRID system.
+
+1460
+
+3. View the values in the Used Storage Capacity column to determine how much storage is currently being used for object data at each site.
+
+The Used Storage Capacity is an estimate. If nodes are offline, the Used Storage Capacity is the last known value for the site.
+
+For a connected site decommission, this value represents how much object data will need to be moved to other sites or deleted by ILM before you can safely decommission this site.
+
+For a disconnected site decommission, this value represents how much of your system’s data storage will become inaccessible when you decommission this site.

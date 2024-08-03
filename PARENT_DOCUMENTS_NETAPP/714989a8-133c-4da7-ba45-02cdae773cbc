@@ -1,0 +1,69 @@
+If you need to access buckets with the same access keys on both grids, create the access keys on the source grid and then use the Tenant Manager API to manually clone them to the destination grid. For instructions, see Clone S3 access keys using the API.
+
+How are groups, users, and S3 access keys cloned?
+
+Review this section to understand how groups, users, and S3 access keys are cloned between the tenant source grid and the tenant destination grid.
+
+Local groups created on source grid are cloned
+
+After a tenant account is created and replicated to the destination grid, StorageGRID automatically clones any local groups you add to the tenant’s source grid to the tenant’s destination grid.
+
+Both the original group and its clone have the same access mode, group permissions, and S3 group policy. For instructions, see Create groups for S3 tenant. Any users you select when you create a local group on the source grid aren’t included when the group is cloned to the destination grid. For this reason, don’t select users when you create the group. Instead, select the group when you create the users.
+
+Local users created on source grid are cloned
+
+When you create a new local user on the source grid, StorageGRID automatically clones that user to the destination grid. Both the original user and its clone have the same full name, username, and Deny access setting. Both users also belong to the same groups. For instructions, see Manage local users.
+
+For security reasons, local user passwords aren’t cloned to the destination grid. If a local user needs to access Tenant Manager on the destination grid, the root user for the tenant account must add a password for that user on the destination grid. For instructions, see Manage local users.
+
+771
+
+Federated groups created on source grid are cloned Assuming the requirements for using account clone with single sign-on and identity federation have been met, federated groups that you create (import) for the tenant on the source grid are automatically cloned to the tenant on the destination grid.
+
+Both groups have the same access mode, group permissions and S3 group policy.
+
+After federated groups are created for the source tenant and cloned to the destination tenant, federated users can sign in to the tenant on either grid.
+
+S3 access keys can be manually cloned
+
+StorageGRID does not automatically clone S3 access keys because security is improved by having different keys on each grid.
+
+To manage access keys on the two grids, you can do either of the following:
+
+If you don’t need to use the same keys for each grid, you can create your own access keys or create another user’s access keys on each grid. If you need to use the same keys on both grids, you can create keys on the source grid and then use the Tenant Manager API to manually clone the keys to the destination grid.
+
+772
+
+When you clone S3 access keys for a federated user, both the user and the S3 access keys are cloned to the destination tenant.
+
+Groups and users added to destination grid aren’t cloned 771
+
+Federated groups created on source grid are cloned Assuming the requirements for using account clone with single sign-on and identity federation have been met, federated groups that you create (import) for the tenant on the source grid are automatically cloned to the tenant on the destination grid.
+
+Both groups have the same access mode, group permissions and S3 group policy.
+
+After federated groups are created for the source tenant and cloned to the destination tenant, federated users can sign in to the tenant on either grid.
+
+S3 access keys can be manually cloned
+
+StorageGRID does not automatically clone S3 access keys because security is improved by having different keys on each grid.
+
+To manage access keys on the two grids, you can do either of the following:
+
+If you don’t need to use the same keys for each grid, you can create your own access keys or create another user’s access keys on each grid. If you need to use the same keys on both grids, you can create keys on the source grid and then use the Tenant Manager API to manually clone the keys to the destination grid.
+
+772
+
+When you clone S3 access keys for a federated user, both the user and the S3 access keys are cloned to the destination tenant.
+
+Groups and users added to destination grid aren’t cloned
+
+Cloning occurs only from the tenant’s source grid to the tenant’s destination grid. If you create or import groups and users on the tenant’s destination grid, StorageGRID will not clone these items back the tenant’s source grid.
+
+Edited or deleted groups, users, and access keys aren’t cloned
+
+Cloning occurs only when you create new groups and users.
+
+If you edit or delete groups, users, or access keys on either grid, your changes will not be cloned to the other grid.
+
+773

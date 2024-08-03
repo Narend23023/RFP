@@ -1,0 +1,69 @@
+If you need to remap any of the node’s ports, don’t power on the new node until the port remap configuration is complete. Steps
+
+1. Using VCenter, deploy an OVF template.
+
+If you specify a URL, point to a folder containing the following files. Otherwise, select each of these files from a local directory.
+
+NetApp-SG-version-SHA.vmdk vsphere-node.ovf vsphere-node.mf
+
+For example, if this is the first node you are deploying, use these files to deploy the primary Admin Node for your StorageGRID system: NetApp-SG-version-SHA.vmdk vsphere-primary-admin.ovf vsphere-primary-admin.mf
+
+2. Provide a name for the virtual machine.
+
+228
+
+The standard practice is to use the same name for both the virtual machine and the grid node.
+
+3. Place the virtual machine in the appropriate vApp or resource pool.
+
+4. If you are deploying the primary Admin Node, read and accept the End User License Agreement.
+
+Depending on your version of vCenter, the order of the steps will vary for accepting the End User License Agreement, specifying the name of the virtual machine, and selecting a datastore.
+
+5. Select storage for the virtual machine.
+
+If you are deploying a node as part of recovery operation, perform the instructions in the storage recovery step to add new virtual disks, reattach virtual hard disks from the failed grid node, or both.
+
+When deploying a Storage Node, use 3 or more storage volumes, with each storage volume being 4 TB or larger. You must assign at least 4 TB to volume 0. The Storage Node .ovf file defines several VMDKs for storage. Unless these VMDKs meet your storage requirements, you should remove them and assign appropriate VMDKs or RDMs for storage before powering up the node. VMDKs are more commonly used in VMware environments and are easier to manage, while RDMs might provide better performance for workloads that use larger object sizes (for example, greater than 100 MB).
+
+Some StorageGRID installations might use larger, more active storage volumes than typical virtualized workloads. You might need to tune some hypervisor parameters, such as MaxAddressableSpaceTB, to achieve optimal performance. If you encounter poor performance, contact your virtualization support resource to determine whether your environment could benefit from workload-specific configuration tuning.
+
+6. Select networks.
+
+Determine which StorageGRID networks the node will use by selecting a destination network for each source network. The Grid Network is required. You must select a destination network in the vSphere environment. ◦ If you use the Admin Network, select a different destination network in the vSphere environment. If you don’t use the Admin Network, select the same destination you selected for the Grid Network.
+
+If you use the Client Network, select a different destination network in the vSphere environment. If you don’t use the Client Network, select the same destination you selected for the Grid Network.
+
+7. For Customize Template, configure the required StorageGRID node properties. a. Enter the Node name.
+
+If you are recovering a grid node, you must enter the name of the node you are recovering.
+
+b. Use the Temporary installation password drop-down to specify a temporary installation password, so
+
+that you can access the VM console or use SSH before the new node joins the grid.
+
+The temporary installation password is only used during node installation. After a node has been added to the grid, you can access it using the node console password, which is listed in the Passwords.txt file in the Recovery Package.
+
+229
+
+▪ Use node name: The value you provided for the Node name field is used as the temporary installation password.
+
+▪ Use custom password: A custom password is used as the temporary installation password. ▪ Disable password: No temporary installation password will be used. If you need to access the VM
+
+to debug installation issues, see Troubleshoot installation issues.
+
+c. If you selected Use custom password, specify the temporary installation password you want to use in the Custom password field.
+
+d. In the Grid Network (eth0) section, select STATIC or DHCP for the Grid network IP configuration. 7. For Customize Template, configure the required StorageGRID node properties. a. Enter the Node name.
+
+If you are recovering a grid node, you must enter the name of the node you are recovering.
+
+b. Use the Temporary installation password drop-down to specify a temporary installation password, so
+
+that you can access the VM console or use SSH before the new node joins the grid.
+
+The temporary installation password is only used during node installation. After a node has been added to the grid, you can access it using the node console password, which is listed in the Passwords.txt file in the Recovery Package.
+
+229
+
+▪ Use node name: The value you provided for the Node name field is used as the temporary installation password.

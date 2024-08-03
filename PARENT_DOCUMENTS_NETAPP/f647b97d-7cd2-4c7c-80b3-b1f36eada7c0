@@ -1,0 +1,103 @@
+You can temporarily revert to the default security policy. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following command: restore-default-cipher-configurations
+
+3. From a web browser, access the Grid Manager on the same Admin Node.
+
+4. Follow the steps in Select a security policy to configure the policy again. Configure network and object security
+
+You can configure network and object security to encrypt stored objects, to prevent certain S3 and Swift requests, or to allow client connections to Storage Nodes to use HTTP instead of HTTPS.
+
+Stored object encryption
+
+Stored object encryption enables the encryption of all object data as it is ingested through S3. By default, stored objects aren’t encrypted but you can choose to encrypt objects using the AES‐128 or AES‐256 encryption algorithm. When you enable the setting, all newly ingested objects are encrypted but no change is made to existing stored objects. If you disable encryption, currently encrypted objects remain encrypted but newly ingested objects aren’t encrypted.
+
+The Stored object encryption setting applies only to S3 objects that have not been encrypted by bucket-level or object-level encryption.
+
+For more details on StorageGRID encryption methods, see Review StorageGRID encryption methods. 424
+
+Prevent client modification
+
+Prevent client modification is a system wide setting. When the Prevent client modification option is selected, the following requests are denied.
+
+S3 REST API
+
+DeleteBucket requests
+
+Any requests to modify an existing object’s data, user-defined metadata, or S3 object tagging Swift REST API
+
+Delete Container requests
+
+Requests to modify any existing object. For example, the following operations are denied: Put Overwrite, Delete, Metadata Update, and so on.
+
+Enable HTTP for Storage Node connections
+
+By default, client applications use the HTTPS network protocol for any direct connections to Storage Nodes. You can optionally enable HTTP for these connections, for example, when testing a non-production grid.
+
+Use HTTP for Storage Node connections only if S3 and Swift clients need to make HTTP connections directly to Storage Nodes. You don’t need to use this option for clients that only use HTTPS connections or for clients that connect to the Load Balancer service (because you can configure each load balancer endpoint to use either HTTP or HTTPS).
+
+See Summary: IP addresses and ports for client connections to learn which ports S3 and Swift clients use when connecting to Storage Nodes using HTTP or HTTPS. Select options
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have Root access permission.
+
+Steps
+
+1. Select CONFIGURATION > Security > Security settings.
+
+2. Select the Network and objects tab.
+
+3. For Stored object encryption, use the None (default) setting if you don’t want stored objects to be encrypted, or select AES-128 or AES-256 to encrypt stored objects.
+
+4. Optionally select Prevent client modification if you want to prevent S3 and Swift clients from making specific requests.
+
+If you change this setting, it will take about one minute for the new setting to be applied. The configured value is cached for performance and scaling.
+
+5. Optionally select Enable HTTP for Storage Node connections if clients connect directly to Storage Nodes and you want to use HTTP connections.
+
+425
+
+Be careful when enabling HTTP for a production grid because requests will be sent unencrypted.
+
+6. Select Save. Change interface security settings See Summary: IP addresses and ports for client connections to learn which ports S3 and Swift clients use when connecting to Storage Nodes using HTTP or HTTPS. Select options
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have Root access permission.
+
+Steps
+
+1. Select CONFIGURATION > Security > Security settings.
+
+2. Select the Network and objects tab.
+
+3. For Stored object encryption, use the None (default) setting if you don’t want stored objects to be encrypted, or select AES-128 or AES-256 to encrypt stored objects.
+
+4. Optionally select Prevent client modification if you want to prevent S3 and Swift clients from making specific requests.
+
+If you change this setting, it will take about one minute for the new setting to be applied. The configured value is cached for performance and scaling.
+
+5. Optionally select Enable HTTP for Storage Node connections if clients connect directly to Storage Nodes and you want to use HTTP connections.
+
+425
+
+Be careful when enabling HTTP for a production grid because requests will be sent unencrypted.
+
+6. Select Save. Change interface security settings

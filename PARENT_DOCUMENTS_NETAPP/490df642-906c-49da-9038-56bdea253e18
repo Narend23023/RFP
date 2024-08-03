@@ -1,0 +1,97 @@
+In this example, the ILM rule stores one replicated copy in Site 1 and one replicated copy in Site 2 for the first year. After one year, a 2+1 erasure-coded copy is made and saved at only one site.
+
+Steps
+
+659
+
+1. For Reference time, select the type of time to use when calculating the start time for a placement instruction.
+
+Option
+
+Description
+
+Ingest time
+
+The time when the object was ingested.
+
+Last access time
+
+The time when the object was last retrieved (read or viewed).
+
+Note: To use this option, updates to Last access time must be enabled for the S3 bucket or Swift container. See Use Last access time in ILM rules.
+
+User defined creation time
+
+A time specified in user-defined metadata. Noncurrent time An ILM rule can include one or more placement instructions. Each placement instruction applies to a single period of time. When you use more than one instruction, the time periods must be contiguous, and at least one instruction must start on day 0. The instructions can continue either forever, or until you no longer require any object copies.
+
+Each placement instruction can have multiple lines if you want to create different types of copies or use different locations during that time period.
+
+In this example, the ILM rule stores one replicated copy in Site 1 and one replicated copy in Site 2 for the first year. After one year, a 2+1 erasure-coded copy is made and saved at only one site.
+
+Steps
+
+659
+
+1. For Reference time, select the type of time to use when calculating the start time for a placement instruction.
+
+Option
+
+Description
+
+Ingest time
+
+The time when the object was ingested.
+
+Last access time
+
+The time when the object was last retrieved (read or viewed).
+
+Note: To use this option, updates to Last access time must be enabled for the S3 bucket or Swift container. See Use Last access time in ILM rules.
+
+User defined creation time
+
+A time specified in user-defined metadata. Noncurrent time
+
+"Noncurrent time" is automatically selected if you selected Yes for the question, "Apply this rule to older object versions only (in S3 buckets with versioning enabled)?" in Step 1 of the Create an ILM rule wizard.
+
+If you want to create a compliant rule, you must select Ingest time. See Manage objects with S3 Object Lock.
+
+2. In the Time period and placements section, enter a starting time and a duration for the first time period.
+
+For example, you might want to specify where to store objects for the first year (From day 0 store for 365 days). At least one instruction must start at day 0.
+
+3. If you want to create replicated copies: a. From the Store objects by drop-down list, select replicating.
+
+b. Select the number of copies you want to make.
+
+A warning appears if you change the number of copies to 1. An ILM rule that creates only one replicated copy for any time period puts data at risk of permanent loss. See Why you should not use single-copy replication.
+
+To avoid the risk, do one or more of the following:
+
+▪ Increase the number of copies for the time period. ▪ Add copies to other storage pools or to a Cloud Storage Pool. ▪ Select erasure coding instead of replicating.
+
+You can safely ignore this warning if this rule already creates multiple copies for all time periods.
+
+c. In the copies at field, select the storage pools you want to add. If you specify only one storage pool, be aware that StorageGRID can store only one replicated copy of an object on any given Storage Node. If your grid includes three Storage Nodes and you select 4 as the number of copies, only three copies will be made—one copy for each Storage Node.
+
+660
+
+The ILM placement unachievable alert is triggered to indicate that the ILM rule could not be completely applied.
+
+If you specify more than one storage pool, keep these rules in mind:
+
+▪ The number of copies can’t be greater than the number of storage pools. ▪ If the number of copies equals the number of storage pools, one copy of the object is stored in each storage pool.
+
+▪ If the number of copies is less than the number of storage pools, one copy is stored at the ingest site, and then the system distributes the remaining copies to keep disk usage among the pools balanced, while ensuring that no site gets more than one copy of an object.
+
+▪ If the storage pools overlap (contain the same Storage Nodes), all copies of the object might be
+
+saved at only one site. For this reason, don’t specify the All Storage Nodes storage pool (StorageGRID 11.6 and earlier) and another storage pool.
+
+4. If you want to create an erasure-coded copy: a. From the Store objects by drop-down list, select erasure coding.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure- coded fragments. 660
+
+The ILM placement unachievable alert is triggered to indicate that the ILM rule could not be completely applied.
+
+If you specify more than one storage pool, keep these rules in mind:

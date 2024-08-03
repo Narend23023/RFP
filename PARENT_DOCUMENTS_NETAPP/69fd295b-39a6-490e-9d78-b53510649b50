@@ -1,0 +1,89 @@
+Lifecycle of objects in buckets with S3 Object Lock enabled
+
+Each object that is saved in a bucket with S3 Object Lock enabled goes through these stages:
+
+1. Object ingest
+
+When an object version is added to bucket that has S3 Object Lock enabled, retention settings are applied as follows: If retention settings are specified for the object, the object-level settings are applied. Any default bucket settings are ignored.
+
+If no retention settings are specified for the object, the default bucket settings are applied, if they exist. ◦ If no retention settings are specified for the object or the bucket, the object is not protected by S3 Object Lock.
+
+If retention settings are applied, both the object and any S3 user-defined metadata are protected.
+
+2. Object retention and deletion
+
+692
+
+Multiple copies of each protected object are stored by StorageGRID for the specified retention period. The exact number and type of object copies and the storage locations are determined by the compliant rules in the active ILM policies. Whether a protected object can be deleted before its retain-until-date is reached depends on its retention mode.
+
+If an object is under a legal hold, no one can delete the object, regardless of its retention mode. Related information
+
+Create an S3 bucket
+
+Update S3 Object Lock default retention
+
+Use S3 REST API to configure S3 Object Lock
+
+Example 7: Compliant ILM policy for S3 Object Lock
+
+Enable S3 Object Lock globally 1. Object ingest
+
+When an object version is added to bucket that has S3 Object Lock enabled, retention settings are applied as follows: If retention settings are specified for the object, the object-level settings are applied. Any default bucket settings are ignored.
+
+If no retention settings are specified for the object, the default bucket settings are applied, if they exist. ◦ If no retention settings are specified for the object or the bucket, the object is not protected by S3 Object Lock.
+
+If retention settings are applied, both the object and any S3 user-defined metadata are protected.
+
+2. Object retention and deletion
+
+692
+
+Multiple copies of each protected object are stored by StorageGRID for the specified retention period. The exact number and type of object copies and the storage locations are determined by the compliant rules in the active ILM policies. Whether a protected object can be deleted before its retain-until-date is reached depends on its retention mode.
+
+If an object is under a legal hold, no one can delete the object, regardless of its retention mode. Related information
+
+Create an S3 bucket
+
+Update S3 Object Lock default retention
+
+Use S3 REST API to configure S3 Object Lock
+
+Example 7: Compliant ILM policy for S3 Object Lock
+
+Enable S3 Object Lock globally
+
+If an S3 tenant account needs to comply with regulatory requirements when saving object data, you must enable S3 Object Lock for your entire StorageGRID system. Enabling the global S3 Object Lock setting allows any S3 tenant user to create and manage buckets and objects with S3 Object Lock.
+
+Before you begin
+
+You have the Root access permission.
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have reviewed the S3 Object Lock workflow, and you understand the considerations.
+
+You have confirmed that the default rule in the active ILM policy is compliant. See Create a default ILM rule for details. About this task
+
+A grid administrator must enable the global S3 Object Lock setting to allow tenant users to create new buckets that have S3 Object Lock enabled. After this setting is enabled, it can’t be disabled.
+
+The global Compliance setting is deprecated. If you enabled this setting using a previous version of StorageGRID, the S3 Object Lock setting is enabled automatically. You can continue to use StorageGRID to manage the settings of existing compliant buckets; however, you can’t create new compliant buckets. For details, see NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5. Steps
+
+1. Select CONFIGURATION > System > S3 Object Lock.
+
+The S3 Object Lock Settings page appears.
+
+2. Select Enable S3 Object Lock.
+
+3. Select Apply.
+
+A confirmation dialog box appears and reminds you that you can’t disable S3 Object Lock after it is enabled.
+
+4. If you are sure you want to permanently enable S3 Object Lock for your entire system, select OK.
+
+693
+
+When you select OK:
+
+If the default rule in the active ILM policy is compliant, S3 Object Lock is now enabled for the entire grid and can’t be disabled.
+
+If the default rule is not compliant, an error appears. You must create and activate a new ILM policy that includes a compliant rule as its default rule. Select OK. Then, create a new policy, simulate it, and activate it. See Create ILM policy for instructions.

@@ -1,0 +1,123 @@
+9. Log out of the command shell: exit
+
+NFS audit clients are granted access to an audit share based on their IP address. Grant access to the audit share to a new NFS audit client by adding its IP address to the share, or remove an existing audit client by removing its IP address. Add an NFS audit client to an audit share
+
+NFS audit clients are granted access to an audit share based on their IP address. Grant access to the audit share to a new NFS audit client by adding its IP address to the audit share.
+
+Support for NFS has been deprecated and will be removed in a future release.
+
+Before you begin
+
+You have the Passwords.txt file with the root/admin account password.
+
+You have the Configuration.txt file (available in the Recovery Package).
+
+The audit client is using NFS Version 3 (NFSv3). Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Start the NFS configuration utility: config_nfs.rb
+
+----------------------------------------------------------------- | Shares | Clients | Config | ----------------------------------------------------------------- | add-audit-share | add-ip-to-share | validate-config | | enable-disable-share | remove-ip-from-share | refresh-config | | | | help | | | | exit | -----------------------------------------------------------------
+
+3. Enter: add-ip-to-share
+
+A list of NFS audit shares enabled on the Admin Node is displayed. The audit share is listed as:
+
+569
+
+/var/local/log
+
+4. Enter the number of the audit share: audit_share_number 5. When prompted, enter the audit client’s IP address or IP address range for the audit share:
+
+client_IP_address
+
+The audit client is added to the audit share.
+
+6. When prompted, press Enter.
+
+The NFS configuration utility is displayed.
+
+7. Repeat the steps for each audit client that should be added to the audit share.
+
+8. Optionally, verify your configuration: validate-config
+
+The services are checked and displayed.
+
+a. When prompted, press Enter.
+
+The NFS configuration utility is displayed.
+
+9. Close the NFS configuration utility: exit
+
+10. If the StorageGRID deployment is a single site, go to the next step.
+
+Otherwise, if the StorageGRID deployment includes Admin Nodes at other sites, optionally enable these audit shares as required: a. Remotely log in to a site’s Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Repeat these steps to configure the audit shares for each Admin Node.
+
+c. Close the remote secure shell login to the remote Admin Node: exit
+
+11. Log out of the command shell: exit Verify NFS audit integration
+
+After you configure an audit share and add an NFS audit client, you can mount the audit client share and verify that the files are available from the audit share.
+
+Support for NFS has been deprecated and will be removed in a future release.
+
+Steps
+
+1. Verify connectivity (or variant for the client system) using the client-side IP address of the Admin Node hosting the AMS service. Enter: ping IP_address
+
+Verify that the server responds, indicating connectivity.
+
+570
+
+2. Mount the audit read-only share using a command appropriate to the client operating system. An example
+
+Linux command is (enter on one line): mount -t nfs -o hard,intr Admin_Node_IP_address:/var/local/log myAudit i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Repeat these steps to configure the audit shares for each Admin Node.
+
+c. Close the remote secure shell login to the remote Admin Node: exit
+
+11. Log out of the command shell: exit Verify NFS audit integration
+
+After you configure an audit share and add an NFS audit client, you can mount the audit client share and verify that the files are available from the audit share.
+
+Support for NFS has been deprecated and will be removed in a future release.
+
+Steps
+
+1. Verify connectivity (or variant for the client system) using the client-side IP address of the Admin Node hosting the AMS service. Enter: ping IP_address
+
+Verify that the server responds, indicating connectivity.
+
+570
+
+2. Mount the audit read-only share using a command appropriate to the client operating system. An example
+
+Linux command is (enter on one line): mount -t nfs -o hard,intr Admin_Node_IP_address:/var/local/log myAudit

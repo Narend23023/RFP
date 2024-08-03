@@ -1,0 +1,93 @@
+To monitor the repair of erasure-coded data and retry any requests that might have failed:
+
+1. Determine the status of erasure-coded data repairs:
+
+Select SUPPORT > Tools > Metrics to view the estimated time to completion and the completion percentage for the current job. Then, select EC Overview in the Grafana section. Look at the Grid EC Job Estimated Time to Completion and Grid EC Job Percentage Completed dashboards.
+
+Use this command to see the status of a specific repair-data operation: repair-data show-ec-repair-status --repair-id repair ID
+
+Use this command to list all repairs:
+
+1610
+
+repair-data show-ec-repair-status
+
+The output lists information, including repair ID, for all previously and currently running repairs.
+
+2. If the output shows that the repair operation failed, use the --repair-id option to retry the repair.
+
+This command retries a failed node repair, using the repair ID 6949309319275667690: repair-data start-ec-node-repair --repair-id 6949309319275667690
+
+This command retries a failed volume repair, using the repair ID 6949309319275667690:
+
+repair-data start-ec-volume-repair --repair-id 6949309319275667690
+
+Check storage state after recovering Storage Node system drive 1. Determine the status of erasure-coded data repairs:
+
+Select SUPPORT > Tools > Metrics to view the estimated time to completion and the completion percentage for the current job. Then, select EC Overview in the Grafana section. Look at the Grid EC Job Estimated Time to Completion and Grid EC Job Percentage Completed dashboards.
+
+Use this command to see the status of a specific repair-data operation: repair-data show-ec-repair-status --repair-id repair ID
+
+Use this command to list all repairs:
+
+1610
+
+repair-data show-ec-repair-status
+
+The output lists information, including repair ID, for all previously and currently running repairs.
+
+2. If the output shows that the repair operation failed, use the --repair-id option to retry the repair.
+
+This command retries a failed node repair, using the repair ID 6949309319275667690: repair-data start-ec-node-repair --repair-id 6949309319275667690
+
+This command retries a failed volume repair, using the repair ID 6949309319275667690:
+
+repair-data start-ec-volume-repair --repair-id 6949309319275667690
+
+Check storage state after recovering Storage Node system drive
+
+After recovering the system drive for a Storage Node, you must verify that the desired state of the Storage Node is set to online and ensure that the state will be online by default whenever the Storage Node server is restarted.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+The Storage Node has been recovered, and data recovery is complete. Steps
+
+1. Select SUPPORT > Tools > Grid topology. 2. Check the values of Recovered Storage Node > LDR > Storage > Storage State — Desired and Storage State — Current.
+
+The value of both attributes should be Online.
+
+3. If the Storage State — Desired is set to Read-only, complete the following steps:
+
+a. Click the Configuration tab. b. From the Storage State — Desired drop-down list, select Online.
+
+c. Click Apply Changes. d. Click the Overview tab and confirm that the values of Storage State — Desired and Storage
+
+State — Current are updated to Online.
+
+Restore object data using Grid Manager
+
+You can restore object data for a failed storage volume or Storage Node using Grid Manager. You can also use Grid Manager to monitor restoration processes in progress and display a restoration history.
+
+Before you begin
+
+You have completed either of these procedures to format failed volumes: ◦ Remount and reformat appliance storage volumes (manual steps) 1611
+
+◦ Remount and reformat storage volumes (manual steps)
+
+You have confirmed that the Storage Node where you are restoring objects has a Connection State of
+
+Connected
+
+on the NODES > Overview tab in the Grid Manager.
+
+You have confirmed the following:
+
+A grid expansion to add a Storage Node is not in process. ◦ A Storage Node decommission is not in process or failed. ◦ A recovery of a failed storage volume is not in process. ◦ A recovery of a Storage Node with a failed system drive is not in process. ◦ An EC rebalance job is not in process. ◦ Appliance node cloning is not in process. About this task
+
+After you have replaced the drives and performed the manual steps to format the volumes, Grid Manager displays the volumes as candidates for restoration on the MAINTENANCE > Volume restoration > Nodes to restore tab.
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager. You can either enable automatic restore mode to automatically start volume restoration when the volumes are ready to be restored or manually perform volume restoration. Follow these guidelines:
+
+If the volumes are listed at MAINTENANCE > Volume restoration > Nodes to restore, restore object data as described in the steps below. The volumes will be listed if:

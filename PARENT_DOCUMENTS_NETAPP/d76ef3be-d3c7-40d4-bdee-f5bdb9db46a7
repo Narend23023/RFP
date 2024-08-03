@@ -1,0 +1,117 @@
+x-amz-copy-source-if-none-match
+
+x-amz-copy-source-if-unmodified-since
+
+884
+
+• x-amz-copy-source-range
+
+x-amz-server-side-encryption-customer-algorithm
+
+x-amz-server-side-encryption-customer-key
+
+x-amz-server-side-encryption-customer-key-MD5
+
+x-amz-copy-source-server-side-encryption-customer-algorithm
+
+x-amz-copy-source-server-side-encryption-customer-key
+
+x-amz-copy-source-server-side-encryption-customer-key-MD5 Request body
+
+None
+
+StorageGRID documentation
+
+UploadPartCopy
+
+Test S3 REST API configuration
+
+You can use the Amazon Web Services Command Line Interface (AWS CLI) to test your connection to the system and to verify that you can read and write objects.
+
+Before you begin
+
+You have downloaded and installed the AWS CLI from aws.amazon.com/cli.
+
+Optionally, you have created a load balancer endpoint. Otherwise, you know the IP address of the Storage Node you want to connect to and the port number to use. See IP addresses and ports for client connections.
+
+You have created an S3 tenant account.
+
+You have signed in to the tenant and created an access key.
+
+For details on these steps, see Configure client connections. Steps
+
+1. Configure the AWS CLI settings to use the account you created in the StorageGRID system:
+
+a. Enter configuration mode: aws configure
+
+b. Enter the access key ID for the account you created.
+
+c. Enter the secret access key for the account you created.
+
+d. Enter the default region to use. For example, us-east-1.
+
+e. Enter the default output format to use, or press Enter to select JSON.
+
+2. Create a bucket.
+
+This example assumes you configured a load balancer endpoint to use IP address 10.96.101.17 and port 10443. aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl create-bucket --bucket testbucket
+
+885
+
+If the bucket is created successfully, the location of the bucket is returned, as seen in the following example:
+
+"Location": "/testbucket"
+
+3. Upload an object.
+
+aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl put-object --bucket testbucket --key s3.pdf --body C:\s3- test\upload\s3.pdf
+
+If the object is uploaded successfully, an Etag is returned which is a hash of the object data.
+
+4. List the contents of the bucket to verify that the object was uploaded. aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl list-objects --bucket testbucket
+
+5. Delete the object.
+
+aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl delete-object --bucket testbucket --key s3.pdf
+
+6. Delete the bucket.
+
+aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl delete-bucket --bucket testbucket How StorageGRID implements S3 REST API
+
+Conflicting client requests
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis.
+
+The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation. Consistency values
+
+Consistency provides a balance between the availability of the objects and the consistency of those objects across different Storage Nodes and sites. You can change the consistency as required by your application.
+
+886 4. List the contents of the bucket to verify that the object was uploaded. aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl list-objects --bucket testbucket
+
+5. Delete the object.
+
+aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl delete-object --bucket testbucket --key s3.pdf
+
+6. Delete the bucket.
+
+aws s3api --endpoint-url https://10.96.101.17:10443 --no-verify-ssl delete-bucket --bucket testbucket How StorageGRID implements S3 REST API
+
+Conflicting client requests
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis.
+
+The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation. Consistency values
+
+Consistency provides a balance between the availability of the objects and the consistency of those objects across different Storage Nodes and sites. You can change the consistency as required by your application.
+
+886
+
+By default, StorageGRID guarantees read-after-write consistency for newly created objects. Any GET following a successfully completed PUT will be able to read the newly written data. Overwrites of existing objects, metadata updates, and deletes are eventually consistent. Overwrites generally take seconds or minutes to propagate, but can take up to 15 days.
+
+If you want to perform object operations at a different consistency, you can:
+
+Specify a consistency for each bucket.
+
+Specify a consistency for each API operation.
+
+Change the default grid-wide consistency by performing one of the following tasks: In the Grid Manager, go to CONFIGURATION > System > Storage settings > Default consistency. ◦ Use the grid-config endpoint of the Grid Management private API.

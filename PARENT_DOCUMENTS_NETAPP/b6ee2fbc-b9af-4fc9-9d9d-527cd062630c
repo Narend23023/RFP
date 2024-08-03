@@ -1,0 +1,135 @@
+1486 to
+
+Node procedures
+
+Node procedures: Overview
+
+You might need to perform maintenance procedures related to specific grid nodes or node services.
+
+Server Manager procedures
+
+Server Manager runs on every grid node to supervise the starting and stopping of services and to ensure that services gracefully join and leave the StorageGRID system. Server Manager also monitors the services on every grid node and will automatically attempt to restart any services that report faults.
+
+To perform Server Manager procedures, you typically need to access the node’s command line.
+
+You should access Server Manager only if technical support has directed you to do so.
+
+You must close the current command shell session and log out after you are finished with Server Manager. Enter: exit
+
+Node reboot, shut down, and power procedures
+
+You use these procedures to reboot one or more nodes, to shut down and restart nodes, or to power nodes off and power them back on. Port remap procedures
+
+You can use the port remap procedures to remove the port remaps from a node, for example, if you want to configure a load balancer endpoint using a port that was previously remapped.
+
+Server Manager procedures
+
+View Server Manager status and version
+
+For each grid node, you can view the current status and version of Server Manager running on that grid node. You can also obtain the current status of all services running on that grid node.
+
+Before you begin
+
+You have the Passwords.txt file. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+1487 You should access Server Manager only if technical support has directed you to do so.
+
+You must close the current command shell session and log out after you are finished with Server Manager. Enter: exit
+
+Node reboot, shut down, and power procedures
+
+You use these procedures to reboot one or more nodes, to shut down and restart nodes, or to power nodes off and power them back on. Port remap procedures
+
+You can use the port remap procedures to remove the port remaps from a node, for example, if you want to configure a load balancer endpoint using a port that was previously remapped.
+
+Server Manager procedures
+
+View Server Manager status and version
+
+For each grid node, you can view the current status and version of Server Manager running on that grid node. You can also obtain the current status of all services running on that grid node.
+
+Before you begin
+
+You have the Passwords.txt file. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+1487
+
+2. View the current status of Server Manager running on the grid node: service servermanager status
+
+The current status of Server Manager running on the grid node is reported (running or not). If Server Manager’s status is running, the time it has been running since last it was started is listed. For example:
+
+servermanager running for 1d, 13h, 0m, 30s
+
+3. View the current version of Server Manager running on a grid node: service servermanager version
+
+The current version is listed. For example:
+
+11.1.0-20180425.1905.39c9493
+
+4. Log out of the command shell: exit View current status of all services
+
+You can view the current status of all services running on a grid node at any time.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. View the status of all services running on the grid node: storagegrid-status
+
+For example, the output for the primary Admin Node shows the current status of the AMS, CMN, and NMS services as Running. This output is updated immediately if the status of a service changes.
+
+1488
+
+3. Return to the command line, press Ctrl+C.
+
+4. Optionally, view a static report for all services running on the grid node: /usr/local/servermanager/reader.rb
+
+This report includes the same information as the continuously updated report, but it is not updated if the status of a service changes.
+
+5. Log out of the command shell: exit
+
+Start Server Manager and all services
+
+You might need to start Server Manager, which also starts all services on the grid node.
+
+Before you begin
+
+You have the Passwords.txt file. About this task

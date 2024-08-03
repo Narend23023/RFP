@@ -1,0 +1,77 @@
+Replication in one direction
+
+If you enable cross-grid replication for a bucket on only one grid, objects added to that bucket (the source bucket) are replicated to the corresponding bucket on the other grid (the destination bucket). However, objects added to the destination bucket aren’t replicated back to the source. In the figure, cross-grid replication is enabled for my-bucket from Grid 1 to Grid 2, but it is not enabled in the other direction. Replication in both directions The workflow diagram summarize the steps for configuring cross-grid replication between buckets on two grids.
+
+358
+
+Requirements for cross-grid replication
+
+If a tenant account has the Use grid federation connection permission to use one or more grid federation connections, a tenant user with Root access permission can create identical buckets in the corresponding tenant accounts on each grid. These buckets:
+
+Must have the same name but can have different regions
+
+Must have versioning enabled
+
+Must have S3 Object Lock disabled
+
+Must be empty
+
+After both buckets have been created, cross-grid replication can be configured for either or both buckets. Learn more
+
+Manage cross-grid replication
+
+359
+
+How cross-grid replication works
+
+Cross-grid replication can be configured to occur in one direction or in both directions.
+
+Replication in one direction
+
+If you enable cross-grid replication for a bucket on only one grid, objects added to that bucket (the source bucket) are replicated to the corresponding bucket on the other grid (the destination bucket). However, objects added to the destination bucket aren’t replicated back to the source. In the figure, cross-grid replication is enabled for my-bucket from Grid 1 to Grid 2, but it is not enabled in the other direction. Replication in both directions
+
+If you enable cross-grid replication for the same bucket on both grids, objects added to either bucket are replicated to the other grid. In the figure, cross-grid replication is enabled for my-bucket in both directions.
+
+360
+
+What happens when objects are ingested?
+
+When an S3 client adds an object to a bucket that has cross-grid replication enabled, the following happens:
+
+1. StorageGRID automatically replicates the object from the source bucket to the destination bucket. The time to perform this background replication operation depends on several factors, including the number of other replication operations that are pending. The S3 client can verify an object’s replication status by issuing a GetObject or HeadObject request. The response includes a StorageGRID-specific x-ntap-sg-cgr-replication-status response header, which will have one of the following values: The S3 client can verify an object’s replication status by issuing a GetObject or HeadObject request. The response includes a StorageGRID-specific x-ntap-sg-cgr-replication-status response header, which will have one of the following values: Grid
+
+Replication status
+
+Source
+
+SUCCESS: The replication was successful for all grid connections.
+
+PENDING: The object hasn’t been replicated to at least one grid connection.
+
+FAILURE: Replication is not pending for any grid connection and at least one failed with a permanent failure. A user must resolve the error. Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header.
+
+2. StorageGRID uses each grid’s active ILM policies to manage the objects, just as it would any other object. For example, Object A on Grid 1 might be stored as two replicated copies and retained forever, while the copy of Object A that was replicated to Grid 2 might be stored using 2+1 erasure coding and deleted after three years.
+
+What happens when objects are deleted?
+
+As described in Delete data flow, StorageGRID can delete an object for any of these reasons:
+
+The S3 client issues a delete request.
+
+A Tenant Manager user selects the Delete objects in bucket option to remove all objects from a bucket.
+
+The bucket has a lifecycle configuration, which expires.
+
+The last time period in the ILM rule for the object ends, and there are no further placements specified. When StorageGRID deletes an object because of a Delete objects in bucket operation, bucket lifecycle expiration, or ILM placement expiration, the replicated object is never deleted from the other grid in a grid federation connection. However, delete markers added to the source bucket by S3 client deletes can optionally be replicated to the destination bucket.
+
+To understand what happens when an S3 client deletes objects from a bucket that has cross-grid replication enabled, review how S3 clients delete objects from buckets that have versioning enabled, as follows:
+
+361
+
+• If an S3 client issues a delete request that includes a version ID, that version of the object is permanently
+
+removed. No delete marker is added to the bucket. What happens when objects are deleted?

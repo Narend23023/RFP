@@ -1,0 +1,131 @@
+1625
+
+4. Rename the source audit.log file to a unique numbered file name. For example, rename the audit.log file to
+
+2023-10-25.txt.1.
+
+ls -l mv audit.log 2023-10-25.txt.1
+
+5. Restart the AMS service: service ams start If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery.
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available. a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new log file:service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+1625
+
+4. Rename the source audit.log file to a unique numbered file name. For example, rename the audit.log file to
+
+2023-10-25.txt.1.
+
+ls -l mv audit.log 2023-10-25.txt.1
+
+5. Restart the AMS service: service ams start
+
+6. Create the directory to copy all audit log files to a temporary location on a separate grid node: ssh admin@grid_node_IP mkdir -p /var/local/tmp/saved-audit-logs
+
+When prompted, enter the password for admin.
+
+7. Copy all audit log files to the temporary location: scp -p * admin@grid_node_IP:/var/local/tmp/saved-audit-logs
+
+When prompted, enter the password for admin.
+
+8. Log out as root: exit Replace non-primary Admin Node
+
+To recover a non-primary Admin Node, you first must replace the physical or virtual hardware.
+
+You can replace a failed non-primary Admin Node with a non-primary Admin Node running on the same platform, or you can replace a non-primary Admin Node running on VMware or a Linux host with a non-primary Admin Node hosted on a services appliance.
+
+Use the procedure that matches the replacement platform you select for the node. After you complete the node replacement procedure (which is suitable for all node types), that procedure will direct you to the next step for non-primary Admin Node recovery. Replacement platform
+
+Procedure
+
+VMware
+
+Replace a VMware node
+
+Linux
+
+Replace a Linux node
+
+Services appliances
+
+Replace a services appliance
+
+OpenStack
+
+NetApp-provided virtual machine disk files and scripts for OpenStack are no longer supported for recovery operations. If you need to recover a node running in an OpenStack deployment, download the files for your Linux operating system. Then, follow the procedure for replacing a Linux node. Select Start Recovery to configure non-primary Admin Node
+
+After replacing a non-primary Admin Node, you must select Start Recovery in the Grid
+
+1626
+
+Manager to configure the new node as a replacement for the failed node.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+You have deployed and configured the replacement node. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+1627
+
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node. 1626
+
+Manager to configure the new node as a replacement for the failed node.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+You have deployed and configured the replacement node. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+1627

@@ -1,0 +1,97 @@
+224
+
+• The network name.
+
+The method used to assign IP addresses, either static or DHCP. StorageGRID has been configured and installed.
+
+Related information Navigate to the Grid Manager
+
+Overview of the installation REST API
+
+Deploy virtual machine grid nodes (VMware)
+
+Collect information about your deployment environment
+
+Before deploying grid nodes, you must collect information about your network configuration and VMware environment.
+
+It is more efficient to perform one single installation of all the nodes, rather than installing some nodes now and some nodes later. VMware information
+
+You must access the deployment environment and collect information about the VMware environment; the networks that were created for the Grid, Admin, and Client Networks; and the storage volume types you plan to use for Storage Nodes.
+
+You must collect information about your VMware environment, including the following:
+
+The username and password for a VMware vSphere account that has appropriate permissions to complete the deployment.
+
+Host, datastore, and network configuration information for each StorageGRID node virtual machine.
+
+VMware live vMotion causes the virtual machine clock time to jump and is not supported for grid nodes of any type. Though rare, incorrect clock times can result in loss of data or configuration updates. Grid Network information
+
+You must collect information about the VMware network created for the StorageGRID Grid Network (required), including:
+
+224
+
+• The network name.
+
+The method used to assign IP addresses, either static or DHCP.
+
+If you are using static IP addresses, the required networking details for each grid node (IP address, gateway, network mask).
+
+If you are using DHCP, the IP address of the primary Admin Node on the Grid Network. See How grid nodes discover the primary Admin Node for more information. Admin Network information
+
+For nodes that will be connected to the optional StorageGRID Admin Network, you must collect information about the VMware network created for this network, including:
+
+The network name.
+
+The method used to assign IP addresses, either static or DHCP.
+
+If you are using static IP addresses, the required networking details for each grid node (IP address, gateway, network mask).
+
+If you are using DHCP, the IP address of the primary Admin Node on the Grid Network. See How grid nodes discover the primary Admin Node for more information.
+
+The external subnet list (ESL) for the Admin Network. Client Network information
+
+For nodes that will be connected to the optional StorageGRID Client Network, you must collect information about the VMware network created for this network, including:
+
+The network name.
+
+The method used to assign IP addresses, either static or DHCP.
+
+If you are using static IP addresses, the required networking details for each grid node (IP address, gateway, network mask). Information about additional interfaces
+
+You can optionally add trunk or access interfaces to the VM in vCenter after you install the node. For example, you might want to add a trunk interface to an Admin or Gateway Node, so you can use VLAN interfaces to segregate the traffic belonging to different applications or tenants. Or, you might want to add an access interface to use in a high availability (HA) group.
+
+The interfaces you add are displayed on the VLAN interfaces page and on the HA groups page in the Grid Manager.
+
+If you add a trunk interface, configure one or more VLAN interfaces for each new parent interface. See configure VLAN interfaces.
+
+If you add an access interface, you must add it directly to HA groups. See configure high availability groups. Storage volumes for virtual Storage Nodes
+
+You must collect the following information for virtual machine-based Storage Nodes:
+
+The number and size of storage volumes (storage LUNs) you plan to add. See Storage and performance
+
+225
+
+requirements."
+
+Grid configuration information
+
+You must collect information to configure your grid:
+
+Grid license
+
+Network Time Protocol (NTP) server IP addresses
+
+DNS server IP addresses How grid nodes discover the primary Admin Node
+
+Grid nodes communicate with the primary Admin Node for configuration and management. Each grid node must know the IP address of the primary Admin Node on the Grid Network.
+
+To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually. The interfaces you add are displayed on the VLAN interfaces page and on the HA groups page in the Grid Manager.
+
+If you add a trunk interface, configure one or more VLAN interfaces for each new parent interface. See configure VLAN interfaces.
+
+If you add an access interface, you must add it directly to HA groups. See configure high availability groups. Storage volumes for virtual Storage Nodes
+
+You must collect the following information for virtual machine-based Storage Nodes:

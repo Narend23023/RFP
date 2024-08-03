@@ -1,0 +1,95 @@
+The bucket details page appears.
+
+4. From the Bucket access tab, select the Cross-Origin Resource Sharing (CORS) accordion.
+
+5. Select the Enable CORS checkbox.
+
+6. Paste the CORS configuration XML into the text box.
+
+7. Select Save changes.
+
+820
+
+Modify CORS setting Steps
+
+1. Update the CORS configuration XML in the text box, or select Clear to start over.
+
+2. Select Save changes.
+
+Disable CORS setting
+
+Steps
+
+1. Clear the Enable CORS checkbox.
+
+2. Select Save changes.
+
+Delete objects in bucket
+
+You can use the Tenant Manager to delete the objects in one or more buckets. Considerations and requirements
+
+Before performing these steps, note the following:
+
+When you delete the objects in a bucket, StorageGRID permanently removes all objects and all object versions in each selected bucket from all nodes and sites in your StorageGRID system. StorageGRID also removes any related object metadata. You will not be able to recover this information.
+
+Deleting all of the objects in a bucket might take minutes, days, or even weeks, based on the number of objects, object copies, and concurrent operations.
+
+If a bucket has S3 Object Lock enabled, it might remain in the Deleting objects: read-only state for years.
+
+A bucket that uses S3 Object Lock will remain in the Deleting objects: read-only state until the retention date is reached for all objects and any legal holds are removed.
+
+While objects are being deleted, the bucket’s state is Deleting objects: read-only. In this state, you can’t add new objects to the bucket. When all objects have been deleted, the bucket remains in the read-only state. You can do one of the following:
+
+Return the bucket to write mode and reuse it for new objects ◦ Delete the bucket ◦ Keep the bucket in read-only mode to reserve its name for future use Delete objects in bucket
+
+You can use the Tenant Manager to delete the objects in one or more buckets. Considerations and requirements
+
+Before performing these steps, note the following:
+
+When you delete the objects in a bucket, StorageGRID permanently removes all objects and all object versions in each selected bucket from all nodes and sites in your StorageGRID system. StorageGRID also removes any related object metadata. You will not be able to recover this information.
+
+Deleting all of the objects in a bucket might take minutes, days, or even weeks, based on the number of objects, object copies, and concurrent operations.
+
+If a bucket has S3 Object Lock enabled, it might remain in the Deleting objects: read-only state for years.
+
+A bucket that uses S3 Object Lock will remain in the Deleting objects: read-only state until the retention date is reached for all objects and any legal holds are removed.
+
+While objects are being deleted, the bucket’s state is Deleting objects: read-only. In this state, you can’t add new objects to the bucket. When all objects have been deleted, the bucket remains in the read-only state. You can do one of the following:
+
+Return the bucket to write mode and reuse it for new objects ◦ Delete the bucket ◦ Keep the bucket in read-only mode to reserve its name for future use
+
+If a bucket has object versioning enabled, delete markers that were created in StorageGRID 11.8 or later can be removed using the Delete objects in bucket operations.
+
+If a bucket has object versioning enabled, the delete objects operation will not remove delete markers that were created in StorageGRID 11.7 or earlier. See information about deleting objects in a bucket in How S3 versioned objects are deleted.
+
+If you use cross-grid replication, note the following: Using this option does not delete any objects from the bucket on the other grid. ◦ If you select this option for the source bucket, the Cross-grid replication failure alert will be triggered if you add objects to the destination bucket on the other grid. If you can’t guarantee no one will add objects to the bucket on the other grid, disable cross-grid replication for that bucket before deleting all bucket objects.
+
+821
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access permission. This permission overrides the permissions settings in group or bucket policies. Steps
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+The Buckets page appears and shows all existing S3 buckets.
+
+2. Use the Actions menu or the details page for a specific bucket.
+
+Actions menu
+
+a. Select the checkbox for each bucket you want to delete objects from.
+
+b. Select Actions > Delete objects in bucket. Details page
+
+a. Select a bucket name to display its details.
+
+b. Select Delete objects in bucket.
+
+3. When the confirmation dialog box appears, review the details, enter Yes, and select OK.
+
+4. Wait for the delete operation to begin. After a few minutes:
+
+A yellow status banner appears on the bucket details page. The progress bar represents what percentage of objects have been deleted.

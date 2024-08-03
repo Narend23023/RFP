@@ -1,0 +1,75 @@
+See Configuration file settings for information.
+
+4. When you have entered and verified all of the necessary information, save and close the file. Configuration file settings
+
+The deploy-vsphere-ovftool.ini configuration file contains the settings that are required to deploy virtual grid nodes.
+
+The configuration file first lists global parameters, and then lists node-specific parameters in sections defined by node name. When the file is used:
+
+Global parameters are applied to all grid nodes. The example configuration file for use with the deploy-vsphere-ovftool.sh script.
+
+Define the configuration file for your deployment
+
+You specify the information needed to deploy virtual grid nodes for StorageGRID in a configuration file, which is used by the deploy-vsphere-ovftool.sh Bash script. You can modify an example configuration file, so that you don’t have to create the file from scratch. Steps
+
+1. Make a copy of the example configuration file (deploy-vsphere-ovftool.sample.ini). Save the new file as deploy-vsphere-ovftool.ini in the same directory as deploy-vsphere-ovftool.sh.
+
+2. Open deploy-vsphere-ovftool.ini.
+
+3. Enter all of the information required to deploy VMware virtual grid nodes.
+
+See Configuration file settings for information.
+
+4. When you have entered and verified all of the necessary information, save and close the file. Configuration file settings
+
+The deploy-vsphere-ovftool.ini configuration file contains the settings that are required to deploy virtual grid nodes.
+
+The configuration file first lists global parameters, and then lists node-specific parameters in sections defined by node name. When the file is used:
+
+Global parameters are applied to all grid nodes.
+
+Node-specific parameters override global parameters. Global parameters
+
+Global parameters are applied to all grid nodes, unless they are overridden by settings in individual sections. Place the parameters that apply to multiple nodes in the global parameter section, and then override these settings as necessary in the sections for individual nodes.
+
+212
+
+• OVFTOOL_ARGUMENTS: You can specify OVFTOOL_ARGUMENTS as global settings, or you can apply arguments individually to specific nodes. For example:
+
+OVFTOOL_ARGUMENTS = --powerOn --noSSLVerify --diskMode=eagerZeroedThick --datastore='datastore_name'
+
+You can use the --powerOffTarget and --overwrite options to shut down and replace existing virtual machines.
+
+You should deploy nodes to different datastores and specify OVFTOOL_ARGUMENTS for each node, instead of globally.
+
+SOURCE: The path to the StorageGRID virtual machine template (.vmdk) file and the .ovf and .mf files for individual grid nodes. This defaults to the current directory. SOURCE = /downloads/StorageGRID-Webscale-version/vsphere
+
+TARGET: The VMware vSphere virtual infrastructure (vi) URL for the location where StorageGRID will be deployed. For example:
+
+TARGET = vi://vcenter.example.com/vm/sgws
+
+GRID_NETWORK_CONFIG: The method used to acquire IP addresses, either STATIC or DHCP. The default is STATIC. If all or most of the nodes use the same method for acquiring IP addresses, you can specify that method here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: GRID_NETWORK_CONFIG = DHCP
+
+GRID_NETWORK_TARGET: The name of an existing VMware network to use for the Grid Network. If all or most of the nodes use the same network name, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: GRID_NETWORK_TARGET = SG-Admin-Network
+
+GRID_NETWORK_MASK: The network mask for the Grid Network. If all or most of the nodes use the same network mask, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example:
+
+GRID_NETWORK_MASK = 255.255.255.0
+
+GRID_NETWORK_GATEWAY: The network gateway for the Grid Network. If all or most of the nodes use the same network gateway, you can specify it here. You can then override the global setting by specifying
+
+213
+
+different settings for one or more individual nodes. For example: GRID_NETWORK_GATEWAY = 10.1.0.1
+
+GRID_NETWORK_MTU: Optional. The maximum transmission unit (MTU) on the Grid Network. If specified, the value must be between 1280 and 9216. For example:
+
+GRID_NETWORK_MTU = 8192
+
+If omitted, 1400 is used. GRID_NETWORK_MASK: The network mask for the Grid Network. If all or most of the nodes use the same network mask, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example:
+
+GRID_NETWORK_MASK = 255.255.255.0
+
+GRID_NETWORK_GATEWAY: The network gateway for the Grid Network. If all or most of the nodes use the same network gateway, you can specify it here. You can then override the global setting by specifying
+
+213

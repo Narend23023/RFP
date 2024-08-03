@@ -1,0 +1,157 @@
+You have the information about the destination resource:
+
+Host and port for the Uniform Resource Identifier (URI) If you plan to use a bucket hosted on a StorageGRID system as an endpoint for CloudMirror replication, contact the grid administrator to determine the values you need to enter.
+
+Unique Resource Name (URN)
+
+Specify URN for platform services endpoint
+
+Authentication credentials (if required):
+
+837
+
+Search integration endpoints
+
+For search integration endpoints, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key ▪ Basic HTTP: Username and password CloudMirror replication endpoints
+
+For CloudMirror replication, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key ▪ CAP (C2S Access Portal): Temporary credentials URL, server and client certificates, client
+
+keys, and an optional client private key passphrase. Amazon SNS endpoints
+
+For Amazon SNS endpoints, you can use the following credentials:
+
+▪ Access Key: Access key ID and secret access key
+
+Kafka endpoints
+
+For Kafka endpoints, you can use the following credentials:
+
+▪ SASL/PLAIN: Username and password ▪ SASL/SCRAM-SHA-256: Username and password ▪ SASL/SCRAM-SHA-512: Username and password
+
+Security certificate (if using a custom CA certificate)
+
+If the Elasticsearch security features are enabled, you have the monitor cluster privilege for connectivity testing, and either the write index privilege or both the index and delete index privileges for document updates. Steps
+
+1. Select STORAGE (S3) > Platform services endpoints. The Platform services endpoints page appears.
+
+2. Select Create endpoint.
+
+3. Enter a display name to briefly describe the endpoint and its purpose.
+
+The type of platform service that the endpoint supports is shown beside the endpoint name when it is listed on the Endpoints page, so you don’t need to include that information in the name.
+
+4. In the URI field, specify the Unique Resource Identifier (URI) of the endpoint. Use one of the following formats:
+
+https://host:port http://host:port
+
+If you don’t specify a port, the following default ports are used:
+
+838
+
+◦ Port 443 for HTTPS URIs and port 80 for HTTP URIs (most endpoints) ◦ Port 9092 for HTTPS and HTTP URIs (Kafka endpoints only)
+
+For example, the URI for a bucket hosted on StorageGRID might be: https://s3.example.com:10443
+
+In this example, s3.example.com represents the DNS entry for the virtual IP (VIP) of the StorageGRID high availability (HA) group, and 10443 represents the port defined in the load balancer endpoint.
+
+Whenever possible, you should connect to an HA group of load-balancing nodes to avoid a single point of failure.
+
+Similarly, the URI for a bucket hosted on AWS might be: https://s3-aws-region.amazonaws.com
+
+If the endpoint is used for the CloudMirror replication service, don’t include the bucket name in the URI. You include the bucket name in the URN field.
+
+5. Enter the Unique Resource Name (URN) for the endpoint.
+
+You can’t change an endpoint’s URN after the endpoint has been created.
+
+6. Select Continue.
+
+7. Select a value for Authentication type.
+
+839
+
+840
+
+Search integration endpoints
+
+Enter or upload the credentials for a search integration endpoint.
+
+The credentials that you supply must have write permissions for the destination resource. Authentication type
+
+Description
+
+Credentials
+
+Anonymous
+
+Provides anonymous access to the destination. Only works for endpoints that have security disabled.
+
+No authentication.
+
+Access Key
+
+Uses AWS-style credentials to authenticate connections with the destination.
+
+Access key ID
+
+Secret access key Basic HTTP
+
+Uses a username and password to authenticate connections to the destination.
+
+Username
+
+Password
+
+CloudMirror replication endpoints
+
+Enter or upload the credentials for a CloudMirror replication endpoint. Similarly, the URI for a bucket hosted on AWS might be: https://s3-aws-region.amazonaws.com
+
+If the endpoint is used for the CloudMirror replication service, don’t include the bucket name in the URI. You include the bucket name in the URN field.
+
+5. Enter the Unique Resource Name (URN) for the endpoint.
+
+You can’t change an endpoint’s URN after the endpoint has been created.
+
+6. Select Continue.
+
+7. Select a value for Authentication type.
+
+839
+
+840
+
+Search integration endpoints
+
+Enter or upload the credentials for a search integration endpoint.
+
+The credentials that you supply must have write permissions for the destination resource. Authentication type
+
+Description
+
+Credentials
+
+Anonymous
+
+Provides anonymous access to the destination. Only works for endpoints that have security disabled.
+
+No authentication.
+
+Access Key
+
+Uses AWS-style credentials to authenticate connections with the destination.
+
+Access key ID
+
+Secret access key Basic HTTP
+
+Uses a username and password to authenticate connections to the destination.
+
+Username
+
+Password
+
+CloudMirror replication endpoints

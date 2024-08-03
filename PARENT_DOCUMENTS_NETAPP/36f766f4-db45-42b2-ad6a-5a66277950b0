@@ -1,0 +1,129 @@
+This field is evaluated as seconds since January 1, 1970.
+
+X-Storage-Class: reduced_redundancy
+
+This header affects how many object copies StorageGRID creates if the ILM rule that matches an ingested object specifies an Ingest Behavior of Dual Commit or Balanced.
+
+Dual commit: If the ILM rule specifies the Dual commit option for Ingest Behavior, StorageGRID creates a single interim copy as the object is ingested (single commit).
+
+Balanced: If the ILM rule specifies the Balanced option, StorageGRID makes a single interim copy only if the system can’t immediately make all copies specified in the rule. If StorageGRID can perform synchronous placement, this header has no effect.
+
+The reduced_redundancy header is best used when the ILM rule that matches the object creates a single replicated copy. In this case using reduced_redundancy eliminates the unnecessary creation and deletion of an extra object copy for every ingest operation. Using the reduced_redundancy header is not recommended in other circumstances because it increases the risk the loss of object data during ingest. For example, you might lose data if the single copy is initially stored on a Storage Node that fails before ILM evaluation can occur.
+
+Having only one replicated copy for any time period puts data at risk of permanent loss. If only one replicated copy of an object exists, that object is lost if a Storage Node fails or has a significant error. You also temporarily lose access to the object during maintenance procedures such as upgrades.
+
+1007
+
+Note that specifying reduced_redundancy only affects how many copies are created when an object is first ingested. It does not affect how many copies of the object are made when the object is evaluated by the active ILM policies and does not result in data being stored at lower levels of redundancy in the StorageGRID system. A successful execution returns the following headers with an "HTTP/1.1 201 Created" response:
+
+Content-Length
+
+Content-Type
+
+Date
+
+ETag
+
+Last-Modified
+
+X-Trans-Id
+
+OPTIONS request
+
+The OPTIONS request checks the availability of an individual Swift service. The OPTIONS request is processed by the Storage Node or Gateway Node specified in the URL. OPTIONS method
+
+For example, client applications can issue an OPTIONS request to the Swift port on a Storage Node, without providing Swift authentication credentials, to determine whether the Storage Node is available. You can use this request for monitoring or to allow external load balancers to identify when a Storage Node is down.
+
+When used with the info URL or the storage URL, the OPTIONS method returns a list of supported verbs for the given URL (for example, HEAD, GET, OPTIONS, and PUT). The OPTIONS method can’t be used with the auth URL.
+
+The following request parameter is required:
+
+Account
+
+The following request parameters are optional:
+
+Container
+
+Object Content-Length
+
+Content-Type
+
+Date
+
+ETag
+
+Last-Modified
+
+X-Trans-Id
+
+OPTIONS request
+
+The OPTIONS request checks the availability of an individual Swift service. The OPTIONS request is processed by the Storage Node or Gateway Node specified in the URL. OPTIONS method
+
+For example, client applications can issue an OPTIONS request to the Swift port on a Storage Node, without providing Swift authentication credentials, to determine whether the Storage Node is available. You can use this request for monitoring or to allow external load balancers to identify when a Storage Node is down.
+
+When used with the info URL or the storage URL, the OPTIONS method returns a list of supported verbs for the given URL (for example, HEAD, GET, OPTIONS, and PUT). The OPTIONS method can’t be used with the auth URL.
+
+The following request parameter is required:
+
+Account
+
+The following request parameters are optional:
+
+Container
+
+Object
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response. The OPTIONS request to the storage URL does not require that the target exists.
+
+Allow (a list of supported verbs for the given URL, for example, HEAD, GET, OPTIONS, and PUT)
+
+Content-Length Content-Type
+
+Date
+
+X-Trans-Id
+
+1008
+
+Related information
+
+Supported Swift API endpoints
+
+Error responses to Swift API operations
+
+Understanding the possible error responses can help you troubleshoot operations.
+
+The following HTTP status codes might be returned when errors occur during an operation: Swift error name
+
+HTTP status
+
+AccountNameTooLong, ContainerNameTooLong, HeaderTooBig, InvalidContainerName, InvalidRequest, InvalidURI, MetadataNameTooLong, MetadataValueTooBig, MissingSecurityHeader, ObjectNameTooLong, TooManyContainers, TooManyMetadataItems, TotalMetadataTooLarge
+
+400 Bad Request AccessDenied
+
+403 Forbidden
+
+ContainerNotEmpty, ContainerAlreadyExists
+
+409 Conflict
+
+InternalError
+
+500 Internal Server Error
+
+InvalidRange
+
+416 Requested Range Not Satisfiable
+
+MethodNotAllowed
+
+405 Method Not Allowed
+
+MissingContentLength
+
+411 Length Required
+
+NotFound
+
+404 Not Found

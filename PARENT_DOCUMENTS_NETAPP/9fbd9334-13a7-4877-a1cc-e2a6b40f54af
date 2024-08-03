@@ -1,0 +1,93 @@
+2. Select the Nodes to restore tab, then slide the toggle for Automatic restore mode to the enabled position.
+
+3. When the confirmation dialog box appears, review the details.
+
+You will not be able to start volume restoration jobs manually on any nodes. ◦ Volume restorations will begin automatically only when no other maintenance procedures are in progress.
+
+You can monitor the status of the job from the progress monitoring page. ◦ StorageGRID automatically retries volume restorations that fail to start.
+
+4. When you understand the results of enabling Automatic restore mode, select Yes in the confirmation dialog box.
+
+You can disable Automatic restore mode at any time.
+
+Manually restore failed volume or node
+
+Follow these steps to restore a failed volume or node. Steps
+
+1. In Grid Manager go to MAINTENANCE > Volume restoration.
+
+2. Select the Nodes to restore tab, then slide the toggle for Automatic restore mode to the disabled position.
+
+The number on the tab indicates the number of nodes with volumes requiring restoration.
+
+1613
+
+3. Expand each node to see the volumes in it that need restoration and their status.
+
+4. Correct any issues preventing restoration of each volume. Issues will be indicated when you select Waiting for manual steps, if it displays as the volume status.
+
+5. Select a node to restore where all the volumes indicate a Ready to restore status.
+
+You can only restore the volumes for one node at a time.
+
+Each volume in the node must indicate that it is ready to restore.
+
+6. Select Start restore. You can monitor the status of the job from the progress monitoring page. ◦ StorageGRID automatically retries volume restorations that fail to start.
+
+4. When you understand the results of enabling Automatic restore mode, select Yes in the confirmation dialog box.
+
+You can disable Automatic restore mode at any time.
+
+Manually restore failed volume or node
+
+Follow these steps to restore a failed volume or node. Steps
+
+1. In Grid Manager go to MAINTENANCE > Volume restoration.
+
+2. Select the Nodes to restore tab, then slide the toggle for Automatic restore mode to the disabled position.
+
+The number on the tab indicates the number of nodes with volumes requiring restoration.
+
+1613
+
+3. Expand each node to see the volumes in it that need restoration and their status.
+
+4. Correct any issues preventing restoration of each volume. Issues will be indicated when you select Waiting for manual steps, if it displays as the volume status.
+
+5. Select a node to restore where all the volumes indicate a Ready to restore status.
+
+You can only restore the volumes for one node at a time.
+
+Each volume in the node must indicate that it is ready to restore.
+
+6. Select Start restore.
+
+7. Address any warnings that might appear or select Start anyway to ignore the warnings and start the restoration.
+
+Nodes are moved from the Nodes to restore tab to the Restoration progress tab when the restoration starts. If a volume restoration can’t be started, the node returns to the Nodes to restore tab. View restoration progress
+
+The Restoration progress tab shows the status of the volume restoration process and information about the volumes for a node being restored.
+
+Data repair rates for replicated and erasure-coded objects in all volumes are averages summarizing all restorations in process, including those restorations initiated using the repair-data script. The percentage of objects in those volumes that are intact and don’t require restoration is also indicated.
+
+Replicated data restoration is dependent on the availability of resources where the replicated copies are stored. Progress of replicated data restoration is nonlinear and might take days or weeks to complete.
+
+The Restoration jobs section displays information about volume restorations started from Grid Manager.
+
+The number in the Restoration jobs section heading indicates the number of volumes that are either being restored or queued for restoration. The table displays information about each volume in a node being restored and its progress.
+
+The progress for each node displays the percentage for each job. ◦ Expand the Details column to display the restoration start time and job ID.
+
+If a volume restoration fails:
+
+The Status column indicates failed (attempting retry), and will be retried automatically. ◦ If multiple restoration jobs have failed, the most recent job will be retried automatically first. ◦ The EC repair failure alert is triggered if the retries continue to fail. Follow the steps in the alert to resolve the issue. View restoration history
+
+The Restoration history tab shows information about all volume restorations that have successfully completed.
+
+1614
+
+Sizes aren’t applicable for replicated objects and appear only for restorations that contain erasure-coded (EC) data objects.
+
+Monitor repair-data jobs
+
+You can monitor the status of repair jobs by using the repair-data script from the command line.

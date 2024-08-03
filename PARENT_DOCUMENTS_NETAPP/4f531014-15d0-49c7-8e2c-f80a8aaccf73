@@ -1,0 +1,53 @@
+For a multi-site grid, at least one Storage Node per site are configured for objects and metadata.
+
+When you assign space to volume 0 of a new Storage Node, you must ensure there is adequate space for that node’s portion of all object metadata.
+
+82
+
+• At a minimum, you must assign at least 4 TB to volume 0.
+
+If you use only one storage volume for a Storage Node and you assign 4 TB or less to the volume, the Storage Node might enter the Storage Read-Only state on startup and store object metadata only.
+
+If you assign less than 500 GB to volume 0 (non-production use only), 10% of the storage volume’s capacity is reserved for metadata.
+
+If you are installing a new system (StorageGRID 11.6 or higher) and each Storage Node has 128 GB or more of RAM, assign 8 TB or more to volume 0. Using a larger value for volume 0 can increase the space allowed for metadata on each Storage Node. When configuring different Storage Nodes for a site, use the same setting for volume 0 if possible. If a site contains Storage Nodes of different sizes, the Storage Node with the smallest volume 0 will determine the metadata capacity of that site.
+
+For details, go to Manage object metadata storage. Node container migration requirements
+
+The node migration feature allows you to manually move a node from one host to another. Typically, both hosts are in the same physical data center.
+
+Node migration allows you to perform physical host maintenance without disrupting grid operations. You move all StorageGRID nodes, one at a time, to another host before taking the physical host offline. Migrating nodes requires only a short downtime for each node and should not affect operation or availability of grid services.
+
+If you want to use the StorageGRID node migration feature, your deployment must meet additional requirements:
+
+Consistent network interface names across hosts in a single physical data center
+
+Shared storage for StorageGRID metadata and object repository volumes that is accessible by all hosts in a single physical data center. For example, you might use NetApp E-Series storage arrays. If you are using virtual hosts and the underlying hypervisor layer supports VM migration, you might want to use this capability instead of the node migration feature in StorageGRID. In this case, you can ignore these additional requirements.
+
+Before performing migration or hypervisor maintenance, shut down the nodes gracefully. See the instructions for shutting down a grid node.
+
+VMware Live Migration not supported For details, go to Manage object metadata storage. Node container migration requirements
+
+The node migration feature allows you to manually move a node from one host to another. Typically, both hosts are in the same physical data center.
+
+Node migration allows you to perform physical host maintenance without disrupting grid operations. You move all StorageGRID nodes, one at a time, to another host before taking the physical host offline. Migrating nodes requires only a short downtime for each node and should not affect operation or availability of grid services.
+
+If you want to use the StorageGRID node migration feature, your deployment must meet additional requirements:
+
+Consistent network interface names across hosts in a single physical data center
+
+Shared storage for StorageGRID metadata and object repository volumes that is accessible by all hosts in a single physical data center. For example, you might use NetApp E-Series storage arrays. If you are using virtual hosts and the underlying hypervisor layer supports VM migration, you might want to use this capability instead of the node migration feature in StorageGRID. In this case, you can ignore these additional requirements.
+
+Before performing migration or hypervisor maintenance, shut down the nodes gracefully. See the instructions for shutting down a grid node.
+
+VMware Live Migration not supported
+
+When performing bare-metal installation on VMware VMs, OpenStack Live Migration and VMware live vMotion cause the virtual machine clock time to jump and aren’t supported for grid nodes of any type. Though rare, incorrect clock times can result in loss of data or configuration updates.
+
+Cold migration is supported. In cold migration, you shut down the StorageGRID nodes before migrating them between hosts. See the instructions for shutting down a grid node.
+
+83
+
+Consistent network interface names To move a node from one host to another, the StorageGRID host service needs to have some confidence that the external network connectivity the node has at its current location can be duplicated at the new location. It gets this confidence through the use of consistent network interface names in the hosts.
+
+Suppose, for example, that StorageGRID NodeA running on Host1 has been configured with the following interface mappings:

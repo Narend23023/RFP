@@ -1,0 +1,41 @@
+This example shows the active audit.log file, the previous day’s file (2018-04-15.txt), and the compressed file for the prior day (2018-04-14.txt.gz).
+
+audit.log 2018-04-15.txt 2018-04-14.txt.gz Audit log file format
+
+Audit log file format: Overview
+
+The audit log files are found on every Admin Node and contain a collection of individual audit messages.
+
+Each audit message contains the following:
+
+The Coordinated Universal Time (UTC) of the event that triggered the audit message (ATIM) in ISO 8601 format, followed by a space:
+
+YYYY-MM-DDTHH:MM:SS.UUUUUU, where UUUUUU are microseconds.
+
+The audit message itself, enclosed within square brackets and beginning with AUDT.
+
+The following example shows three audit messages in an audit log file (line breaks added for readability). These messages were generated when a tenant created an S3 bucket and added two objects to that bucket. 1311 2019-08-07T18:43:30.247711 [AUDT:[RSLT(FC32):SUCS][CNID(UI64):1565149504991681][TIME(UI64):73520][SAI P(IPAD):"10.224.2.255"][S3AI(CSTR):"17530064241597054718"] [SACC(CSTR):"s3tenant"][S3AK(CSTR):"SGKH9100SCkNB8M3MTWNt- PhoTDwB9JOk7PtyLkQmA=="][SUSR(CSTR):"urn:sgws:identity::175300642415970547 18:root"] [SBAI(CSTR):"17530064241597054718"][SBAC(CSTR):"s3tenant"][S3BK(CSTR):"buc ket1"][AVER(UI32):10][ATIM(UI64):1565203410247711] [ATYP(FC32):SPUT][ANID(UI32):12454421][AMID(FC32):S3RQ][ATID(UI64):7074142 142472611085]] 2019-08-07T18:43:30.783597 [AUDT:[RSLT(FC32):SUCS][CNID(UI64):1565149504991696][TIME(UI64):120713][SA IP(IPAD):"10.224.2.255"][S3AI(CSTR):"17530064241597054718"] [SACC(CSTR):"s3tenant"][S3AK(CSTR):"SGKH9100SCkNB8M3MTWNt- PhoTDwB9JOk7PtyLkQmA=="][SUSR(CSTR):"urn:sgws:identity::175300642415970547 18:root"] [SBAI(CSTR):"17530064241597054718"][SBAC(CSTR):"s3tenant"][S3BK(CSTR):"buc ket1"][S3KY(CSTR):"fh-small-0"] [CBID(UI64):0x779557A069B2C037][UUID(CSTR):"94BA6949-38E1-4B0C-BC80- EB44FB4FCC7F"][CSIZ(UI64):1024][AVER(UI32):10] [ATIM(UI64):1565203410783597][ATYP(FC32):SPUT][ANID(UI32):12454421][AMID(F C32):S3RQ][ATID(UI64):8439606722108456022]] 2019-08-07T18:43:30.784558 [AUDT:[RSLT(FC32):SUCS][CNID(UI64):1565149504991693][TIME(UI64):121666][SA IP(IPAD):"10.224.2.255"][S3AI(CSTR):"17530064241597054718"] [SACC(CSTR):"s3tenant"][S3AK(CSTR):"SGKH9100SCkNB8M3MTWNt- PhoTDwB9JOk7PtyLkQmA=="][SUSR(CSTR):"urn:sgws:identity::175300642415970547 18:root"] [SBAI(CSTR):"17530064241597054718"][SBAC(CSTR):"s3tenant"][S3BK(CSTR):"buc ket1"][S3KY(CSTR):"fh-small-2000"] [CBID(UI64):0x180CBD8E678EED17][UUID(CSTR):"19CE06D0-D2CF-4B03-9C38- E578D66F7ADD"][CSIZ(UI64):1024][AVER(UI32):10] [ATIM(UI64):1565203410784558][ATYP(FC32):SPUT][ANID(UI32):12454421][AMID(F IP(IPAD):"10.224.2.255"][S3AI(CSTR):"17530064241597054718"] [SACC(CSTR):"s3tenant"][S3AK(CSTR):"SGKH9100SCkNB8M3MTWNt- PhoTDwB9JOk7PtyLkQmA=="][SUSR(CSTR):"urn:sgws:identity::175300642415970547 18:root"] [SBAI(CSTR):"17530064241597054718"][SBAC(CSTR):"s3tenant"][S3BK(CSTR):"buc ket1"][S3KY(CSTR):"fh-small-2000"] [CBID(UI64):0x180CBD8E678EED17][UUID(CSTR):"19CE06D0-D2CF-4B03-9C38- E578D66F7ADD"][CSIZ(UI64):1024][AVER(UI32):10] [ATIM(UI64):1565203410784558][ATYP(FC32):SPUT][ANID(UI32):12454421][AMID(F C32):S3RQ][ATID(UI64):13489590586043706682]] In their default format, the audit messages in the audit log files aren’t easy to read or interpret. You can use the audit-explain tool to obtain simplified summaries of the audit messages in the audit log. You can use the audit- sum tool to summarize how many write, read, and delete operations were logged and how long these operations took. Use audit-explain tool
+
+You can use the audit-explain tool to translate the audit messages in the audit log in to an easy-to-read format.
+
+1312
+
+Before you begin
+
+You have specific access permissions.
+
+You must have the Passwords.txt file.
+
+You must know the IP address of the primary Admin Node. About this task
+
+The audit-explain tool, available on the primary Admin Node, provides simplified summaries of the audit messages in an audit log.
+
+The audit-explain tool is primarily intended for use by technical support during troubleshooting operations. Processing audit-explain queries can consume a large amount of CPU power, which might impact StorageGRID operations.
+
+This example shows typical output from the audit-explain tool. These four SPUT audit messages were generated when the S3 tenant with account ID 92484777680322627870 used S3 PUT requests to create a bucket named "bucket1" and add three objects to that bucket.
+
+SPUT S3 PUT bucket bucket1 account:92484777680322627870 usec:124673 SPUT S3 PUT object bucket1/part1.txt tenant:92484777680322627870 cbid:9DCB157394F99FE5 usec:101485 SPUT S3 PUT object bucket1/part2.txt tenant:92484777680322627870 cbid:3CFBB07AB3D32CA9 usec:102804 SPUT S3 PUT object bucket1/part3.txt tenant:92484777680322627870 cbid:5373D73831ECC743 usec:93874 The audit-explain tool can do the following:
+
+Process plain or compressed audit logs. For example:
+
+audit-explain audit.log

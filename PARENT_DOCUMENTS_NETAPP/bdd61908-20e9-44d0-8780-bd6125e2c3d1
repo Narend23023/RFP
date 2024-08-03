@@ -1,0 +1,59 @@
+Which version of KMIP is supported?
+
+StorageGRID supports KMIP version 1.4. Key Management Interoperability Protocol Specification Version 1.4
+
+What are the network considerations?
+
+The network firewall settings must allow each appliance node to communicate through the port used for Key Management Interoperability Protocol (KMIP) communications. The default KMIP port is 5696.
+
+You must ensure that each appliance node that uses node encryption has network access to the KMS or KMS cluster you configured for the site.
+
+Which versions of TLS are supported?
+
+Communications between the appliance nodes and the configured KMS use secure TLS connections. StorageGRID can support either the TLS 1.2 or TLS 1.3 protocol when it makes KMIP connections to a KMS or KMS cluster, based on what the KMS supports and which TLS and SSH policy you are using. StorageGRID negotiates the protocol and cipher (TLS 1.2) or cipher suite (TLS 1.3) with the KMS when it makes the connection. To see which protocol versions and ciphers/cipher suites are available, review the tlsOutbound section of the grid’s active TLS and SSH policy (CONFIGURATION > Security Security settings).
+
+Which appliances are supported?
+
+You can use a key management server (KMS) to manage encryption keys for any StorageGRID appliance in your grid that has the Node Encryption setting enabled. This setting can only be enabled during the hardware configuration stage of appliance installation using the StorageGRID Appliance Installer.
+
+You can’t enable node encryption after an appliance is added to the grid, and you can’t use external key management for appliances that don’t have node encryption enabled.
+
+You can use the configured KMS for StorageGRID appliances and appliance nodes.
+
+430 You can’t use the configured KMS for software-based (non-appliance) nodes, including the following:
+
+Nodes deployed as virtual machines (VMs)
+
+Nodes deployed within container engines on Linux hosts
+
+Nodes deployed on these other platforms can use encryption outside of StorageGRID at the datastore or disk level.
+
+When should I configure key management servers?
+
+For a new installation, you should typically set up one or more key management servers in the Grid Manager before creating tenants. This order ensures that the nodes are protected before any object data is stored on them.
+
+You can configure the key management servers in the Grid Manager before or after you install the appliance nodes.
+
+How many key management servers do I need? You can configure one or more external key management servers to provide encryption keys to the appliance nodes in your StorageGRID system. Each KMS provides a single encryption key to the StorageGRID appliance nodes at a single site or at a group of sites.
+
+StorageGRID supports the use of KMS clusters. Each KMS cluster contains multiple, replicated key management servers that share configuration settings and encryption keys. Using KMS clusters for key management is recommended because it improves the failover capabilities of a high availability configuration.
+
+For example, suppose your StorageGRID system has three data center sites. You might configure one KMS cluster to provide a key to all appliance nodes at Data Center 1 and a second KMS cluster to provide a key to all appliance nodes at all other sites. When you add the second KMS cluster, you can configure a default KMS for Data Center 2 and Data Center 3. Note that you can’t use a KMS for non-appliance nodes or for any appliance nodes that did not have the Node Encryption setting enabled during installation.
+
+431
+
+What happens when a key is rotated?
+
+As a security best practice, you should periodically rotate the encryption key used by each configured KMS.
+
+When the new key version is available:
+
+It is automatically distributed to the encrypted appliance nodes at the site or sites associated with the KMS. The distribution should occur within an hour of when the key is rotated.
+
+If the encrypted appliance node is offline when the new key version is distributed, the node will receive the new key as soon as it reboots.
+
+If the new key version can’t be used to encrypt appliance volumes for any reason, the KMS encryption key rotation failed alert is triggered for the appliance node. You might need to contact technical support for help in resolving this alert. For example, suppose your StorageGRID system has three data center sites. You might configure one KMS cluster to provide a key to all appliance nodes at Data Center 1 and a second KMS cluster to provide a key to all appliance nodes at all other sites. When you add the second KMS cluster, you can configure a default KMS for Data Center 2 and Data Center 3. Note that you can’t use a KMS for non-appliance nodes or for any appliance nodes that did not have the Node Encryption setting enabled during installation.
+
+431
+
+What happens when a key is rotated?

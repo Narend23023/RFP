@@ -1,0 +1,83 @@
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:GetBucketCompliance permission, or be account root, to complete this operation. Request example
+
+This example request allows you to determine the compliance settings for the bucket named mybucket.
+
+GET /mybucket/?x-ntap-sg-compliance HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response example Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You can no longer create new buckets with Compliance enabled. The following error message is returned if you attempt to use the CreateBucket request modifications for compliance to create a new Compliant bucket:
+
+The Compliance feature is deprecated. Contact your StorageGRID administrator if you need to create new Compliant buckets. Deprecated: GET Bucket compliance request
+
+The GET Bucket compliance request is deprecated. However, you can continue to use this request to determine the compliance settings currently in effect for an existing legacy
+
+963
+
+Compliant bucket.
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock. See the following for more details:
+
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:GetBucketCompliance permission, or be account root, to complete this operation. Request example
+
+This example request allows you to determine the compliance settings for the bucket named mybucket.
+
+GET /mybucket/?x-ntap-sg-compliance HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response example
+
+In the response XML, <SGCompliance> lists the compliance settings in effect for the bucket. This example response shows the compliance settings for a bucket in which each object will be retained for one year (525,600 minutes), starting from when the object is ingested into the grid. There is currently no legal hold on this bucket. Each object will be automatically deleted after one year.
+
+HTTP/1.1 200 OK Date: date Connection: connection Server: StorageGRID/11.1.0 x-amz-request-id: request ID Content-Length: length Content-Type: application/xml
+
+<SGCompliance> <RetentionPeriodMinutes>525600</RetentionPeriodMinutes> <LegalHold>false</LegalHold> <AutoDelete>true</AutoDelete> </SGCompliance> Name
+
+Description
+
+RetentionPeriodMinutes
+
+The length of the retention period for objects added to this bucket, in minutes. The retention period starts when the object is ingested into the grid.
+
+964
+
+Name
+
+Description
+
+LegalHold
+
+True: This bucket is currently under a legal hold. Objects in this bucket can’t be deleted until the legal hold is lifted, even if their retention period has expired.
+
+False: This bucket is not currently under a legal hold. Objects in this bucket can be deleted when their retention period expires. AutoDelete
+
+True: The objects in this bucket will be deleted automatically when their retention period expires, unless the bucket is under a legal hold.
+
+False: The objects in this bucket will not be deleted automatically when the retention period expires. You must delete these objects manually if you need to delete them. Error responses
+
+If the bucket was not created to be compliant, the HTTP status code for the response is 404 Not Found, with an S3 error code of XNoSuchBucketCompliance. Deprecated: PUT Bucket compliance request
+
+The PUT Bucket compliance request is deprecated. However, you can continue to use this request to modify the compliance settings for an existing legacy Compliant bucket. For example, you can place an existing bucket on legal hold or increase its retention period.
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock. See the following for more details:
+
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:PutBucketCompliance permission, or be account root, to complete this operation.
+
+You must specify a value for every field of the compliance settings when issuing a PUT Bucket compliance request. Request example
+
+This example request modifies the compliance settings for the bucket named mybucket. In this example, objects in mybucket will now be retained for two years (1,051,200 minutes) instead of one year, starting from when the object is ingested into the grid. There is no legal hold on this bucket. Each object will be automatically deleted after two years.
+
+965

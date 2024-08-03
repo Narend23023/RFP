@@ -1,0 +1,121 @@
+MAXIMUM_RAM
+
+Value
+
+The maximum amount of RAM that this node is allowed to consume. If this key is omitted, the node has no memory restrictions. When setting this field for a production-level node, specify a value that is at least 24 GB and 16 to 32 GB less than the total system RAM.
+
+Note: The RAM value affects a node’s actual metadata reserved space. See the description of what Metadata Reserved Space is.
+
+The format for this field is numberunit, where unit can be b, k, m, or g. Examples:
+
+24g
+
+38654705664b
+
+Note: If you want to use this option, you must enable kernel support for memory cgroups.
+
+Node type key
+
+NODE_TYPE
+
+Value
+
+Optional
+
+Designation
+
+Optional
+
+Designation
+
+113
+
+Type of node:
+
+VM_Admin_Node VM_Storage_Node VM_Archive_Node VM_API_Gateway
+
+Port remap keys
+
+PORT_REMAP Value
+
+Remaps any port used by a node for internal grid node communications or external communications. Remapping ports is necessary if enterprise networking policies restrict one or more ports used by StorageGRID, as described in Internal grid node communications or External communications.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+Note: If only PORT_REMAP is set, the mapping that you specify is used for both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications.
+
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP = client/tcp/18082/443 38654705664b
+
+Note: If you want to use this option, you must enable kernel support for memory cgroups.
+
+Node type key
+
+NODE_TYPE
+
+Value
+
+Optional
+
+Designation
+
+Optional
+
+Designation
+
+113
+
+Type of node:
+
+VM_Admin_Node VM_Storage_Node VM_Archive_Node VM_API_Gateway
+
+Port remap keys
+
+PORT_REMAP Value
+
+Remaps any port used by a node for internal grid node communications or external communications. Remapping ports is necessary if enterprise networking policies restrict one or more ports used by StorageGRID, as described in Internal grid node communications or External communications.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+Note: If only PORT_REMAP is set, the mapping that you specify is used for both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications.
+
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP = client/tcp/18082/443
+
+PORT_REMAP_INBOUND
+
+Value
+
+Remaps inbound communications to the specified port. If you specify PORT_REMAP_INBOUND but don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+The format used is: network type/protocol/remapped port /default port used by grid node, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP_INBOUND = grid/tcp/3022/22
+
+114
+
+Required
+
+Designation
+
+Optional
+
+Designation
+
+Optional
+
+How grid nodes discover the primary Admin Node
+
+Grid nodes communicate with the primary Admin Node for configuration and management. Each grid node must know the IP address of the primary Admin Node on the Grid Network.
+
+To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually.
+
+You can omit the ADMIN_IP parameter to have the grid node discover the value automatically. Automatic discovery is especially useful when the Grid Network uses DHCP to assign the IP address to the primary Admin Node. Automatic discovery of the primary Admin Node is accomplished using a multicast domain name system (mDNS). When the primary Admin Node first starts up, it publishes its IP address using mDNS. Other nodes on the same subnet can then query for the IP address and acquire it automatically. However, because multicast IP traffic is not normally routable across subnets, nodes on other subnets can’t acquire the primary Admin Node’s IP address directly.
+
+If you use automatic discovery:
+
+You must include the ADMIN_IP setting for at least one grid node on any subnets that the primary Admin Node is not directly attached to. This grid node will then publish the primary Admin Node’s IP address for other nodes on the subnet to discover with mDNS.
+
+Ensure that your network infrastructure supports passing multi-cast IP traffic within a subnet. Example node configuration files
+
+You can use the example node configuration files to help set up the node configuration files for your StorageGRID system. The examples show node configuration files for all types of grid nodes.

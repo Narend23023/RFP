@@ -1,0 +1,115 @@
+772
+
+When you clone S3 access keys for a federated user, both the user and the S3 access keys are cloned to the destination tenant.
+
+Groups and users added to destination grid aren’t cloned
+
+Cloning occurs only from the tenant’s source grid to the tenant’s destination grid. If you create or import groups and users on the tenant’s destination grid, StorageGRID will not clone these items back the tenant’s source grid.
+
+Edited or deleted groups, users, and access keys aren’t cloned
+
+Cloning occurs only when you create new groups and users.
+
+If you edit or delete groups, users, or access keys on either grid, your changes will not be cloned to the other grid.
+
+773
+
+Clone S3 access keys using the API If your tenant account has the Use grid federation connection permission, you can use the Tenant Management API to manually clone S3 access keys from the tenant on the source grid to the tenant on the destination grid.
+
+Before you begin
+
+The tenant account has the Use grid federation connection permission.
+
+The grid federation connection has a Connection status of Connected.
+
+You are signed in to the Tenant Manager on the tenant’s source grid using a supported web browser.
+
+You belong to a user group that has the Manage your own S3 credentials or Root access permission.
+
+If you are cloning access keys for a local user, the user already exists on both grids.
+
+When you clone S3 access keys for a federated user, both the user and the S3 access keys are added to the destination tenant.
+
+Clone your own access keys
+
+You can clone your own access keys if you need to access the same buckets on both grids. Steps
+
+1. Using the Tenant Manager on the source grid, create your own access keys and download the .csv file.
+
+2. From the top of the Tenant Manager, select the help icon and select API documentation.
+
+3. In the s3 section, select the following endpoint:
+
+POST /org/users/current-user/replicate-s3-access-key
+
+4. Select Try it out.
+
+5. In the body text box, replace the example entries for accessKey and secretAccessKey with the values from the .csv file you downloaded.
+
+Be sure to retain the double quotes around each string.
+
+774
+
+6. If the key will expire, replace the example entry for expires with the expiration date and time as a string in ISO 8601 data-time format (for example, 2024-02-28T22:46:33-08:00). If the key will not expire, enter null as the value for the expires entry (or remove the Expires line and the preceding comma).
+
+7. Select Execute.
+
+8. Confirm that the server response code is 204, indicating that the key was successfully cloned to the destination grid. Clone another user’s access keys
+
+You can clone another user’s access keys if they need to access the same buckets on both grids.
+
+Steps
+
+1. Using the Tenant Manager on the source grid, create the other user’s S3 access keys and download the .csv file.
+
+2. From the top of the Tenant Manager, select the help icon and select API documentation. 3. In the s3 section, select the following endpoint:
+
+POST /org/users/current-user/replicate-s3-access-key
+
+4. Select Try it out.
+
+5. In the body text box, replace the example entries for accessKey and secretAccessKey with the values from the .csv file you downloaded.
+
+Be sure to retain the double quotes around each string.
+
+774
+
+6. If the key will expire, replace the example entry for expires with the expiration date and time as a string in ISO 8601 data-time format (for example, 2024-02-28T22:46:33-08:00). If the key will not expire, enter null as the value for the expires entry (or remove the Expires line and the preceding comma).
+
+7. Select Execute.
+
+8. Confirm that the server response code is 204, indicating that the key was successfully cloned to the destination grid. Clone another user’s access keys
+
+You can clone another user’s access keys if they need to access the same buckets on both grids.
+
+Steps
+
+1. Using the Tenant Manager on the source grid, create the other user’s S3 access keys and download the .csv file.
+
+2. From the top of the Tenant Manager, select the help icon and select API documentation.
+
+3. Obtain the user ID. You will need this value to clone the other user’s access keys.
+
+a. From the users section, select the following endpoint: GET /org/users
+
+b. Select Try it out.
+
+c. Specify any parameters you want to use when looking up users.
+
+d. Select Execute.
+
+e. Find the user whose keys you want to clone, and copy the number in the id field.
+
+4. In the s3 section, select the following endpoint: POST /org/users/{userId}/replicate-s3-access-key
+
+5. Select Try it out.
+
+6. In the userId text box, paste the user ID you copied.
+
+7. In the body text box, replace the example entries for example access key and secret access key with the values from the .csv file for that user.
+
+Be sure to retain the double quotes around the string.
+
+8. If the key will expire, replace the example entry for expires with the expiration date and time as a string in
+
+775

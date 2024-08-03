@@ -1,0 +1,79 @@
+GET https://{{IP-Address}}/api/versions { "responseTime": "2023-06-27T22:13:50.750Z", "status": "success", "apiVersion": "4.0", "data": [ 2, 3, 4 ] }
+
+291
+
+Specify an API version for a request
+
+You can specify the API version using a path parameter (/api/v4) or a header (Api-Version: 4). If you provide both values, the header value overrides the path value. curl https://[IP-Address]/api/v4/grid/accounts
+
+curl -H "Api-Version: 4" https://[IP-Address]/api/grid/accounts
+
+Protect against Cross-Site Request Forgery (CSRF)
+
+You can help protect against Cross-Site Request Forgery (CSRF) attacks against StorageGRID by using CSRF tokens to enhance authentication that uses cookies. The Grid Manager and Tenant Manager automatically enable this security feature; other API clients can choose whether to enable it when they sign in.
+
+An attacker that can trigger a request to a different site (such as with an HTTP form POST) can cause certain requests to be made using the signed-in user’s cookies.
+
+StorageGRID helps protect against CSRF attacks by using CSRF tokens. When enabled, the contents of a specific cookie must match the contents of either a specific header or a specific POST body parameter.
+
+To enable the feature, set the csrfToken parameter to true during authentication. The default is false. curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{ \"username\": \"MyUserName\", \"password\": \"MyPassword\", \"cookie\": true, \"csrfToken\": true }" "https://example.com/api/v3/authorize"
+
+When true, a GridCsrfToken cookie is set with a random value for sign-ins to the Grid Manager, and the AccountCsrfToken cookie is set with a random value for sign-ins to the Tenant Manager.
+
+If the cookie is present, all requests that can modify the state of the system (POST, PUT, PATCH, DELETE) must include one of the following:
+
+The X-Csrf-Token header, with the value of the header set to the value of the CSRF token cookie.
+
+For endpoints that accept a form-encoded body: A csrfToken form-encoded request body parameter.
+
+See the online API documentation for additional examples and details. Requests that have a CSRF token cookie set will also enforce the "Content-Type: application/json" header for any request that expects a JSON request body as an additional protection against CSRF attacks.
+
+292
+
+Use the API if single sign-on is enabled
+
+Use the API if single sign-on is enabled (Active Directory) When true, a GridCsrfToken cookie is set with a random value for sign-ins to the Grid Manager, and the AccountCsrfToken cookie is set with a random value for sign-ins to the Tenant Manager.
+
+If the cookie is present, all requests that can modify the state of the system (POST, PUT, PATCH, DELETE) must include one of the following:
+
+The X-Csrf-Token header, with the value of the header set to the value of the CSRF token cookie.
+
+For endpoints that accept a form-encoded body: A csrfToken form-encoded request body parameter.
+
+See the online API documentation for additional examples and details. Requests that have a CSRF token cookie set will also enforce the "Content-Type: application/json" header for any request that expects a JSON request body as an additional protection against CSRF attacks.
+
+292
+
+Use the API if single sign-on is enabled
+
+Use the API if single sign-on is enabled (Active Directory)
+
+If you have configured and enabled single sign-on (SSO) and you use Active Directory as the SSO provider, you must issue a series of API requests to obtain an authentication token that is valid for the Grid Management API or the Tenant Management API.
+
+Sign in to the API if single sign-on is enabled
+
+These instructions apply if you are using Active Directory as the SSO identity provider.
+
+Before you begin
+
+You know the SSO username and password for a federated user who belongs to a StorageGRID user group.
+
+If you want to access the Tenant Management API, you know the tenant account ID. About this task
+
+To obtain an authentication token, you can use one of the following examples:
+
+The storagegrid-ssoauth.py Python script, which is located in the StorageGRID installation files directory (./rpms for Red Hat Enterprise Linux, ./debs for Ubuntu or Debian, and ./vsphere for VMware).
+
+An example workflow of curl requests.
+
+The curl workflow might time out if you perform it too slowly. You might see the error: A valid SubjectConfirmation was not found on this Response.
+
+The example curl workflow does not protect the password from being seen by other users.
+
+If you have a URL-encoding issue, you might see the error: Unsupported SAML version. Steps
+
+1. Select one of the following methods to obtain an authentication token: ◦ Use the storagegrid-ssoauth.py Python script. Go to step 2. ◦ Use curl requests. Go to step 3.
+
+2. If you want to use the storagegrid-ssoauth.py script, pass the script to the Python interpreter and run the script.
+
+When prompted, enter values for the following arguments:

@@ -1,0 +1,57 @@
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:PutBucketCompliance permission, or be account root, to complete this operation.
+
+You must specify a value for every field of the compliance settings when issuing a PUT Bucket compliance request. Request example
+
+This example request modifies the compliance settings for the bucket named mybucket. In this example, objects in mybucket will now be retained for two years (1,051,200 minutes) instead of one year, starting from when the object is ingested into the grid. There is no legal hold on this bucket. Each object will be automatically deleted after two years.
+
+965
+
+PUT /mybucket/?x-ntap-sg-compliance HTTP/1.1 Date: date Authorization: authorization name Host: host Content-Length: 152 The PUT Bucket compliance request is deprecated. However, you can continue to use this request to modify the compliance settings for an existing legacy Compliant bucket. For example, you can place an existing bucket on legal hold or increase its retention period.
+
+The StorageGRID Compliance feature that was available in previous StorageGRID versions is deprecated and has been replaced by S3 Object Lock. See the following for more details:
+
+Use S3 REST API to configure S3 Object Lock
+
+NetApp Knowledge Base: How to manage legacy Compliant buckets in StorageGRID 11.5
+
+You must have the s3:PutBucketCompliance permission, or be account root, to complete this operation.
+
+You must specify a value for every field of the compliance settings when issuing a PUT Bucket compliance request. Request example
+
+This example request modifies the compliance settings for the bucket named mybucket. In this example, objects in mybucket will now be retained for two years (1,051,200 minutes) instead of one year, starting from when the object is ingested into the grid. There is no legal hold on this bucket. Each object will be automatically deleted after two years.
+
+965
+
+PUT /mybucket/?x-ntap-sg-compliance HTTP/1.1 Date: date Authorization: authorization name Host: host Content-Length: 152
+
+<SGCompliance> <RetentionPeriodMinutes>1051200</RetentionPeriodMinutes> <LegalHold>false</LegalHold> <AutoDelete>true</AutoDelete> </SGCompliance> Name
+
+Description
+
+RetentionPeriodMinutes
+
+The length of the retention period for objects added to this bucket, in minutes. The retention period starts when the object is ingested into the grid.
+
+Important When specifying a new value for RetentionPeriodMinutes, you must specify a value that is equal to or greater than the bucket’s current retention period. After the bucket’s retention period is set, you can’t decrease that value; you can only increase it. LegalHold
+
+True: This bucket is currently under a legal hold. Objects in this bucket can’t be deleted until the legal hold is lifted, even if their retention period has expired.
+
+False: This bucket is not currently under a legal hold. Objects in this bucket can be deleted when their retention period expires. AutoDelete
+
+True: The objects in this bucket will be deleted automatically when their retention period expires, unless the bucket is under a legal hold.
+
+False: The objects in this bucket will not be deleted automatically when the retention period expires. You must delete these objects manually if you need to delete them. Consistency for compliance settings
+
+When you update the compliance settings for an S3 bucket with a PUT Bucket compliance request, StorageGRID attempts to update the bucket’s metadata across the grid. By default, StorageGRID uses the Strong-global consistency to guarantee that all data center sites and all Storage Nodes that contain bucket metadata have read-after-write consistency for the changed compliance settings.
+
+If StorageGRID can’t achieve the Strong-global consistency because a data center site or multiple Storage Nodes at a site are unavailable, the HTTP status code for the response is 503 Service Unavailable.
+
+If you receive this response, you must contact the grid administrator to ensure that the required storage services are made available as soon as possible. If the grid administrator is unable to make enough of the
+
+966
+
+Storage Nodes at each site available, technical support might direct you to retry the failed request by forcing the Strong-site consistency. Never force the Strong-site consistency for PUT bucket compliance unless you have been directed to do so by technical support and unless you understand the potential consequences of using this level. True: The objects in this bucket will be deleted automatically when their retention period expires, unless the bucket is under a legal hold.
+
+False: The objects in this bucket will not be deleted automatically when the retention period expires. You must delete these objects manually if you need to delete them. Consistency for compliance settings

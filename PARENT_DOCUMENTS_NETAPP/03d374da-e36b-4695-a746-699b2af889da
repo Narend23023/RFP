@@ -1,0 +1,367 @@
+Install StorageGRID on Red Hat Enterprise Linux
+
+64
+
+• Install StorageGRID on Ubuntu or Debian
+
+Install StorageGRID on VMware
+
+Optional: Remap network ports for appliance
+
+Ports used for external communications
+
+The following table shows the ports used for traffic into the nodes.
+
+This list does not include ports that might be configured as load balancer endpoints. Port
+
+TCP or UDP
+
+Protocol
+
+From
+
+To
+
+Details
+
+22
+
+TCP
+
+SSH
+
+Service laptop
+
+All nodes
+
+SSH or console access is required for procedures with console steps. Optionally, you can use port 2022 instead of 22.
+
+25
+
+TCP
+
+SMTP
+
+Admin Nodes
+
+Email server
+
+Used for alerts and email-based AutoSupport. You can override the default port setting of 25 using the Email Servers page.
+
+53 TCP/ UDP DNS
+
+All nodes DNS
+
+Used for DNS.
+
+servers
+
+67
+
+UDP
+
+DHCP
+
+All nodes DHCP service
+
+Optionally used to support DHCP-based network configuration. The dhclient service does not run for statically-configured grids.
+
+68
+
+UDP
+
+DHCP
+
+DHCP service
+
+All nodes Optionally used to support DHCP-based
+
+network configuration. The dhclient service does not run for grids that use static IP addresses.
+
+80 TCP
+
+HTTP
+
+Browser
+
+Admin Nodes
+
+Port 80 redirects to port 443 for the Admin Node user interface.
+
+80
+
+TCP
+
+HTTP
+
+Browser
+
+Appliance s
+
+Port 80 redirects to port 8443 for the StorageGRID Appliance Installer.
+
+80
+
+TCP
+
+HTTP
+
+Storage Nodes with ADC
+
+AWS
+
+Used for platform services messages sent to AWS or other external services that use HTTP. Tenants can override the default HTTP port setting of 80 when creating an endpoint.
+
+80 TCP
+
+HTTP
+
+Storage Nodes
+
+AWS
+
+Cloud Storage Pools requests sent to AWS targets that use HTTP. Grid administrators can override the default HTTP port setting of 80 when configuring a Cloud Storage Pool.
+
+65 53 TCP/ UDP DNS
+
+All nodes DNS
+
+Used for DNS.
+
+servers
+
+67
+
+UDP
+
+DHCP
+
+All nodes DHCP service
+
+Optionally used to support DHCP-based network configuration. The dhclient service does not run for statically-configured grids.
+
+68
+
+UDP
+
+DHCP
+
+DHCP service
+
+All nodes Optionally used to support DHCP-based
+
+network configuration. The dhclient service does not run for grids that use static IP addresses.
+
+80 TCP
+
+HTTP
+
+Browser
+
+Admin Nodes
+
+Port 80 redirects to port 443 for the Admin Node user interface.
+
+80
+
+TCP
+
+HTTP
+
+Browser
+
+Appliance s
+
+Port 80 redirects to port 8443 for the StorageGRID Appliance Installer.
+
+80
+
+TCP
+
+HTTP
+
+Storage Nodes with ADC
+
+AWS
+
+Used for platform services messages sent to AWS or other external services that use HTTP. Tenants can override the default HTTP port setting of 80 when creating an endpoint.
+
+80 TCP
+
+HTTP
+
+Storage Nodes
+
+AWS
+
+Cloud Storage Pools requests sent to AWS targets that use HTTP. Grid administrators can override the default HTTP port setting of 80 when configuring a Cloud Storage Pool.
+
+65
+
+Port
+
+111
+
+123
+
+137
+
+138
+
+139
+
+161
+
+66
+
+TCP or UDP
+
+Protocol
+
+From
+
+To
+
+Details
+
+TCP/ UDP RPCBind NFS client Admin Nodes
+
+Used by NFS-based audit export (portmap).
+
+Note: This port is required only if NFS-based audit export is enabled.
+
+Note: Support for NFS has been deprecated and will be removed in a future release. UDP
+
+NTP
+
+Primary NTP nodes
+
+External NTP
+
+Network time protocol service. Nodes selected as primary NTP sources also synchronize clock times with the external NTP time sources.
+
+UDP
+
+NetBIOS
+
+SMB client Admin Nodes
+
+Used by SMB-based audit export for clients that require NetBIOS support.
+
+Note: This port is required only if SMB-based audit export is enabled. UDP
+
+NetBIOS
+
+SMB client Admin Nodes
+
+Used by SMB-based audit export for clients that require NetBIOS support.
+
+Note: This port is required only if SMB-based audit export is enabled.
+
+TCP
+
+SMB
+
+SMB client Admin Nodes
+
+Used by SMB-based audit export for clients that require NetBIOS support.
+
+Note: This port is required only if SMB-based audit export is enabled. TCP/ UDP SNMP
+
+SNMP client
+
+All nodes Used for SNMP polling. All nodes provide basic
+
+information; Admin Nodes also provide alert and alarm data. Defaults to UDP port 161 when configured.
+
+Note: This port is only required, and is only opened on the node firewall if SNMP is configured. If you plan to use SNMP, you can configure alternate ports.
+
+Note: For information about using SNMP with StorageGRID, contact your NetApp account representative.
+
+Port
+
+162
+
+389
+
+443
+
+443
+
+443
+
+443
+
+443
+
+445
+
+TCP or UDP
+
+Protocol TCP/ UDP SNMP
+
+Notificatio ns
+
+TCP/ UDP LDAP
+
+TCP
+
+HTTPS
+
+TCP
+
+HTTPS
+
+TCP
+
+HTTPS
+
+TCP
+
+HTTPS
+
+TCP
+
+HTTPS
+
+TCP
+
+SMB
+
+From
+
+To
+
+All nodes Notificatio
+
+n destination s
+
+Storage Nodes with ADC
+
+Active Directory/L DAP
+
+Browser
+
+Admin Nodes
+
+Admin Nodes
+
+Active Directory
+
+Archive Nodes
+
+Amazon S3
+
+Storage Nodes with ADC AWS
+
+Storage Nodes
+
+AWS
+
+SMB client Admin Nodes
+
+Details
+
+Outbound SNMP notifications and traps default to UDP port 162.
+
+Note: This port is only required if SNMP is enabled and notification destinations are configured. If you plan to use SNMP, you can configure alternate ports.

@@ -1,0 +1,63 @@
+Archive Nodes don’t make use of the Hierarchical Storage Management (HSM) component of TSM. Configuration best practices
+
+When you are sizing and configuring your TSM server there are best practices you
+
+587
+
+should apply to optimize it to work with the Archive Node.
+
+When sizing and configuring the TSM server, you should consider the following factors:
+
+Because the Archive Node does not aggregate objects before saving them to the TSM server, the TSM database must be sized to hold references to all objects that will be written to the Archive Node.
+
+Archive Node software can’t tolerate the latency involved in writing objects directly to tape or other removable media. Therefore, the TSM server must be configured with a disk storage pool for the initial storage of data saved by the Archive Node whenever removable media are used. You must configure TSM retention policies to use event‐based retention. The Archive Node does not support creation-based TSM retention policies. Use the following recommended settings of retmin=0 and retver=0 in the retention policy (which indicates that retention begins when the Archive Node triggers a retention event, and is retained for 0 days after that). However, these values for retmin and retver are optional.
+
+The disk pool must be configured to migrate data to the tape pool (that is, the tape pool must be the NXTSTGPOOL of the disk pool). The tape pool must not be configured as a copy pool of the disk pool with simultaneous write to both pools (that is, the tape pool can’t be a COPYSTGPOOL for the disk pool). To create offline copies of the tapes containing Archive Node data, configure the TSM server with a second tape pool that is a copy pool of the tape pool used for Archive Node data. Complete the Archive Node setup
+
+The Archive Node is not functional after you complete the installation process. Before the StorageGRID system can save objects to the TSM Archive Node, you must complete the installation and configuration of the TSM server and configure the Archive Node to communicate with the TSM server.
+
+Refer to the following IBM documentation, as necessary, as you prepare your TSM server for integration with the Archive Node in a StorageGRID system:
+
+IBM Tape Device Drivers Installation and User’s Guide
+
+IBM Tape Device Drivers Programming Reference
+
+Install a new TSM server
+
+You can integrate the Archive Node with either a new or an existing TSM server. If you are installing a new TSM server, follow the instructions in your TSM documentation to complete the installation.
+
+An Archive Node can’t be co-hosted with a TSM server. Configure the TSM server
+
+This section includes example instructions for preparing a TSM server following TSM best practices.
+
+The following instructions guide you through the process of:
+
+Defining a disk storage pool, and a tape storage pool (if required) on the TSM server
+
+588
+
+• Defining a domain policy that uses the TSM management class for the data saved from the Archive Node,
+
+and registering a node to use this domain policy
+
+These instructions are provided for your guidance only; they aren’t intended to replace TSM documentation, or to provide complete and comprehensive instructions suitable for all configurations. Deployment specific instructions should be provided by a TSM administrator who is familiar both with your detailed requirements, and with the complete set of TSM Server documentation. Define TSM tape and disk storage pools
+
+The Archive Node writes to a disk storage pool. To archive content to tape, you must configure the disk storage pool to move content to a tape storage pool. About this task
+
+For a TSM server, you must define a tape storage pool and a disk storage pool within Tivoli Storage Manager. After the disk pool is defined, create a disk volume and assign it to the disk pool. A tape pool is not required if your TSM server uses disk‐only storage. An Archive Node can’t be co-hosted with a TSM server. Configure the TSM server
+
+This section includes example instructions for preparing a TSM server following TSM best practices.
+
+The following instructions guide you through the process of:
+
+Defining a disk storage pool, and a tape storage pool (if required) on the TSM server
+
+588
+
+• Defining a domain policy that uses the TSM management class for the data saved from the Archive Node,
+
+and registering a node to use this domain policy
+
+These instructions are provided for your guidance only; they aren’t intended to replace TSM documentation, or to provide complete and comprehensive instructions suitable for all configurations. Deployment specific instructions should be provided by a TSM administrator who is familiar both with your detailed requirements, and with the complete set of TSM Server documentation. Define TSM tape and disk storage pools
+
+The Archive Node writes to a disk storage pool. To archive content to tape, you must configure the disk storage pool to move content to a tape storage pool. About this task

@@ -1,0 +1,99 @@
+Change the background verification rate You can change the rate at which background verification checks replicated object data on a Storage Node if you have concerns about data integrity.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+You can change the Verification Rate for background verification on a Storage Node:
+
+Adaptive: Default setting. The task is designed to verify at a maximum of 4 MB/s or 10 objects/s (whichever is exceeded first).
+
+High: Storage verification proceeds quickly, at a rate that can slow ordinary system activities.
+
+Use the High verification rate only when you suspect that a hardware or software fault might have corrupted object data. After the High priority background verification completes, the Verification Rate automatically resets to Adaptive. Steps Alerts and alarms (legacy) related to background verification
+
+If the system detects a corrupt object that it can’t correct automatically (because the corruption prevents the object from being identified), the Unidentified corrupt object detected alert is triggered.
+
+If background verification can’t replace a corrupted object because it can’t locate another copy, the Objects lost alert is triggered.
+
+Change the background verification rate You can change the rate at which background verification checks replicated object data on a Storage Node if you have concerns about data integrity.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+You can change the Verification Rate for background verification on a Storage Node:
+
+Adaptive: Default setting. The task is designed to verify at a maximum of 4 MB/s or 10 objects/s (whichever is exceeded first).
+
+High: Storage verification proceeds quickly, at a rate that can slow ordinary system activities.
+
+Use the High verification rate only when you suspect that a hardware or software fault might have corrupted object data. After the High priority background verification completes, the Verification Rate automatically resets to Adaptive. Steps
+
+1252
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Storage Node > LDR > Verification.
+
+3. Select Configuration > Main.
+
+4. Go to LDR > Verification > Configuration > Main.
+
+5. Under Background Verification, select Verification Rate > High or Verification Rate > Adaptive.
+
+Setting the Verification Rate to High triggers the VPRI (Verification Rate) legacy alarm at the Notice level.
+
+6. Click Apply Changes.
+
+7. Monitor the results of background verification for replicated objects. a. Go to NODES > Storage Node > Objects.
+
+b. In the Verification section, monitor the values for Corrupt Objects and Corrupt Objects Unidentified.
+
+If background verification finds corrupt replicated object data, the Corrupt Objects metric is incremented, and StorageGRID attempts to extract the object identifier from the data, as follows:
+
+▪ If the object identifier can be extracted, StorageGRID automatically creates a new copy of the
+
+object data. The new copy can be made anywhere in the StorageGRID system that satisfies the active ILM policies.
+
+▪ If the object identifier can’t be extracted (because it has been corrupted), the Corrupt Objects Unidentified metric is incremented, and the Unidentified corrupt object detected alert is triggered.
+
+c. If corrupt replicated object data is found, contact technical support to determine the root cause of the corruption.
+
+8. Monitor the results of background verification for erasure-coded objects.
+
+1253
+
+If background verification finds corrupt fragments of erasure-coded object data, the Corrupt Fragments Detected attribute is incremented. StorageGRID recovers by rebuilding the corrupt fragment in place on the same Storage Node. a. Select SUPPORT > Tools > Grid topology.
+
+b. Select Storage Node > LDR > Erasure Coding.
+
+c. In the Verification Results table, monitor the Corrupt Fragments Detected (ECCD) attribute.
+
+9. After corrupt objects have been automatically restored by the StorageGRID system, reset the count of corrupt objects. a. Select SUPPORT > Tools > Grid topology.
+
+b. Select Storage Node > LDR > Verification > Configuration.
+
+c. Select Reset Corrupt Object Count.
+
+d. Click Apply Changes.
+
+10. If you are confident that quarantined objects aren’t required, you can delete them.
+
+If the Objects lost alert or the LOST (Lost Objects) legacy alarm was triggered, technical support might want to access quarantined objects to help debug the underlying issue or to attempt data recovery. a. Select SUPPORT > Tools > Grid topology.
+
+b. Select Storage Node > LDR > Verification > Configuration.
+
+c. Select Delete Quarantined Objects.
+
+d. Select Apply Changes.
+
+What is object existence check?

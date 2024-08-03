@@ -1,0 +1,171 @@
+5. Select Create.
+
+The trap destination is created and added to the table. Create agent addresses
+
+Optionally, use the Agent addresses tab in the Other configurations section to specify one or more "listening addresses." These are the StorageGRID addresses on which the SNMP agent can receive queries.
+
+If you don’t configure an agent address, the default listening address is UDP port 161 on all StorageGRID networks. Steps
+
+1. Select Create.
+
+2. Enter the following information.
+
+Field
+
+Description
+
+Internet protocol
+
+Whether this address will use IPv4 or IPv6.
+
+By default, SNMP uses IPv4.
+
+1201
+
+Field
+
+Description
+
+Transport protocol
+
+Whether this address will use UDP or TCP.
+
+By default, SNMP uses UDP.
+
+StorageGRID network
+
+Which StorageGRID network the agent will listen on.
+
+Grid, Admin, and Client Networks: The SNMP agent will listen for queries on all three networks.
+
+Grid Network
+
+Admin Network
+
+Client Network
+
+Note: If you use the Client Network for insecure data and you create an agent address for the Client Network, be aware that SNMP traffic will also be insecure. Port
+
+Optionally, the port number that the SNMP agent should listen on. 4. Select the user.
+
+5. Select Create.
+
+The trap destination is created and added to the table. Create agent addresses
+
+Optionally, use the Agent addresses tab in the Other configurations section to specify one or more "listening addresses." These are the StorageGRID addresses on which the SNMP agent can receive queries.
+
+If you don’t configure an agent address, the default listening address is UDP port 161 on all StorageGRID networks. Steps
+
+1. Select Create.
+
+2. Enter the following information.
+
+Field
+
+Description
+
+Internet protocol
+
+Whether this address will use IPv4 or IPv6.
+
+By default, SNMP uses IPv4.
+
+1201
+
+Field
+
+Description
+
+Transport protocol
+
+Whether this address will use UDP or TCP.
+
+By default, SNMP uses UDP.
+
+StorageGRID network
+
+Which StorageGRID network the agent will listen on.
+
+Grid, Admin, and Client Networks: The SNMP agent will listen for queries on all three networks.
+
+Grid Network
+
+Admin Network
+
+Client Network
+
+Note: If you use the Client Network for insecure data and you create an agent address for the Client Network, be aware that SNMP traffic will also be insecure. Port
+
+Optionally, the port number that the SNMP agent should listen on.
+
+The default UDP port for an SNMP agent is 161, but you can enter any unused port number.
+
+Note: When you save the SNMP agent, StorageGRID automatically opens the agent address ports on the internal firewall. You must ensure that any external firewalls allow access to these ports.
+
+3. Select Create.
+
+The agent address is created and added to the table. Create USM users
+
+If you are using SNMPv3, use the USM users tab in the Other configurations section to define the USM users who are authorized to query the MIB or to receive traps and informs.
+
+SNMPv3 inform destinations must have users with engine IDs. SNMPv3 trap destination can’t have users with engine IDs.
+
+These steps don’t apply if you are only using SNMPv1 or SNMPv2c. Steps
+
+1. Select Create.
+
+2. Enter the following information.
+
+1202
+
+Field
+
+Description
+
+Username
+
+A unique name for this USM user.
+
+Usernames can have a maximum of 32 characters and can’t contain whitespace characters. The username can’t be changed after the user is created.
+
+Read-only MIB access
+
+If selected, this user should have read-only access to the MIB. Authoritative engine ID
+
+If this user will be used in an inform destination, the authoritative engine ID for this user.
+
+Enter 10 to 64 hex characters (5 to 32 bytes) with no spaces. This value is required for USM users that will be selected in trap destinations for informs. This value is not allowed for USM users that will be selected in trap destinations for traps.
+
+Note: This field is not shown if you selected Read-only MIB access because USM users who have read-only MIB access can’t have engine IDs. Security level
+
+The security level for the USM user:
+
+authPriv: This user communicates with authentication and privacy (encryption). You must specify an authentication protocol and password and a privacy protocol and password.
+
+authNoPriv: This user communicates with authentication and without privacy (no encryption). You must specify an authentication protocol and password. Authentication protocol
+
+Always set to SHA, which is the only protocol supported (HMAC-SHA- 96).
+
+Password
+
+The password this user will use for authentication.
+
+Privacy protocol
+
+Shown only if you selected authPriv and always set to AES, which is the only privacy protocol supported.
+
+Password
+
+Shown only if you selected authPriv. The password this user will use for privacy.
+
+3. Select Create.
+
+The USM user is created and added to the table.
+
+4. When you have completed the SNMP agent configuration, select Save.
+
+The new SNMP agent configuration becomes active.
+
+1203
+
+Update the SNMP agent

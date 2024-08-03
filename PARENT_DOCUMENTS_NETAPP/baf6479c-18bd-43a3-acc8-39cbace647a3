@@ -1,0 +1,91 @@
+If ranges are read from compressed objects, client requests can time out.
+
+If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Support for Amazon S3 REST API
+
+S3 REST API implementation details
+
+The StorageGRID system implements the Simple Storage Service API (API Version 2006-03-01) with support for most operations, and with some limitations. You need to understand the implementation details when you are integrating S3 REST API client applications.
+
+The StorageGRID system supports both virtual hosted-style requests and path-style requests. Date handling
+
+The StorageGRID implementation of the S3 REST API only supports valid HTTP date formats. If the global option to compress stored objects is enabled, S3 client applications should avoid performing GetObject operations that specify a range of bytes be returned. These "range read" operations are inefficient because StorageGRID must effectively uncompress the objects to access the requested bytes. GetObject operations that request a small range of bytes from a very large object are especially inefficient; for example, it is inefficient to read a 10 MB range from a 50 GB compressed object.
+
+If ranges are read from compressed objects, client requests can time out.
+
+If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Support for Amazon S3 REST API
+
+S3 REST API implementation details
+
+The StorageGRID system implements the Simple Storage Service API (API Version 2006-03-01) with support for most operations, and with some limitations. You need to understand the implementation details when you are integrating S3 REST API client applications.
+
+The StorageGRID system supports both virtual hosted-style requests and path-style requests. Date handling
+
+The StorageGRID implementation of the S3 REST API only supports valid HTTP date formats.
+
+The StorageGRID system only supports valid HTTP date formats for any headers that accept date values. The time portion of the date can be specified in Greenwich Mean Time (GMT) format, or in Universal Coordinated Time (UTC) format with no time zone offset (+0000 must be specified). If you include the x-amz-date header in your request, it overrides any value specified in the Date request header. When using AWS Signature Version 4, the x-amz-date header must be present in the signed request because the date header is not supported.
+
+901
+
+Common request headers
+
+The StorageGRID system supports the common request headers defined by Amazon Simple Storage Service API Reference: Common Request Headers, with one exception. Request header
+
+Implementation
+
+Authorization
+
+Full support for AWS Signature Version 2
+
+Support for AWS Signature Version 4, with the following exceptions:
+
+The SHA256 value is not calculated for the body of the request. The user-submitted value is accepted without validation, as if the value UNSIGNED-PAYLOAD had been provided for the x-amz-content- sha256 header. x-amz-security-token
+
+Not implemented. Returns XNotImplemented.
+
+Common response headers
+
+The StorageGRID system supports all of the common response headers defined by the Simple Storage Service API Reference, with one exception.
+
+Response header
+
+Implementation
+
+x-amz-id-2
+
+Not used
+
+Authenticate requests
+
+The StorageGRID system supports both authenticated and anonymous access to objects using the S3 API.
+
+The S3 API supports Signature version 2 and Signature version 4 for authenticating S3 API requests.
+
+Authenticated requests must be signed using your access key ID and secret access key.
+
+The StorageGRID system supports two authentication methods: the HTTP Authorization header and using query parameters. Use the HTTP Authorization header
+
+The HTTP Authorization header is used by all S3 API operations except Anonymous requests where permitted by the bucket policy. The Authorization header contains all of the required signing information to authenticate a request.
+
+Use query parameters
+
+You can use query parameters to add authentication information to a URL. This is known as presigning the URL, which can be used to grant temporary access to specific resources. Users with the presigned URL don’t need to know the secret access key to access the resource, which enables you to provide third-party restricted access to a resource.
+
+902
+
+Operations on the service
+
+The StorageGRID system supports the following operations on the service. Operation
+
+Implementation
+
+ListBuckets
+
+Implemented with all Amazon S3 REST API behavior. Subject to change without notice.
+
+(previously named GET Service)
+
+GET Storage Usage
+
+The StorageGRID GET Storage Usage request tells you the total amount of storage in use by an account, and for each bucket associated with the account. This is an operation on the service with a path of / and a custom query parameter (?x-ntap-sg-usage) added.
+
+OPTIONS /

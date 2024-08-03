@@ -1,0 +1,65 @@
+Access key and secret key
+
+Enter the access key ID and secret access key for the root user of the StorageGRID tenant account.
+
+Tip: If you generate a new access key and secret access key in StorageGRID in the future, enter the new keys into ONTAP before deleting the old values from StorageGRID. Otherwise, ONTAP might temporarily lose its access to StorageGRID. Container name
+
+Enter the name of the StorageGRID bucket you created for use with this ONTAP tier.
+
+2. Complete the final FabricPool configuration in ONTAP.
+
+a. Attach one or more aggregates to the cloud tier.
+
+b. Optionally, create a volume tiering policy.
+
+Configure the DNS server
+
+After configuring high availability groups, load balancer endpoints, and S3 endpoint domain names, you must ensure that the DNS includes the necessary entries for StorageGRID. You must include a DNS entry for each name in the security certificate and for each IP address you might use.
+
+See Considerations for load balancing. DNS entries for StorageGRID server name
+
+Add DNS entries to associate the StorageGRID server name (fully qualified domain name) to each StorageGRID IP address you will use. The IP addresses you enter in the DNS depend on whether you are using an HA group of load-balancing nodes:
+
+If you have configured an HA group, ONTAP will connect to the virtual IP addresses of that HA group.
+
+If you aren’t using an HA group, ONTAP can connect to the StorageGRID Load Balancer service using the IP address of any Gateway Node or Admin Node.
+
+If the server name resolves to more than one IP address, ONTAP establishes client connections with all IP addresses (up to a maximum of 16 IP addresses). The IP addresses are picked up in a round-robin method when connections are established. DNS entries for virtual hosted-style requests a. Attach one or more aggregates to the cloud tier.
+
+b. Optionally, create a volume tiering policy.
+
+Configure the DNS server
+
+After configuring high availability groups, load balancer endpoints, and S3 endpoint domain names, you must ensure that the DNS includes the necessary entries for StorageGRID. You must include a DNS entry for each name in the security certificate and for each IP address you might use.
+
+See Considerations for load balancing. DNS entries for StorageGRID server name
+
+Add DNS entries to associate the StorageGRID server name (fully qualified domain name) to each StorageGRID IP address you will use. The IP addresses you enter in the DNS depend on whether you are using an HA group of load-balancing nodes:
+
+If you have configured an HA group, ONTAP will connect to the virtual IP addresses of that HA group.
+
+If you aren’t using an HA group, ONTAP can connect to the StorageGRID Load Balancer service using the IP address of any Gateway Node or Admin Node.
+
+If the server name resolves to more than one IP address, ONTAP establishes client connections with all IP addresses (up to a maximum of 16 IP addresses). The IP addresses are picked up in a round-robin method when connections are established. DNS entries for virtual hosted-style requests
+
+If you have defined S3 endpoint domain names and you will use virtual hosted-style requests, add DNS entries for all required S3 endpoint domain names, including any wildcard names.
+
+749
+
+StorageGRID best practices for FabricPool Best practices for high availability (HA) groups
+
+Before attaching StorageGRID as a FabricPool cloud tier, learn about StorageGRID high availability (HA) groups and review the best practices for using HA groups with FabricPool.
+
+What is an HA group?
+
+A high availability (HA) group is a collection of interfaces from multiple StorageGRID Gateway Nodes, Admin Nodes, or both. An HA group helps to keep client data connections available. If the active interface in the HA group fails, a backup interface can manage the workload with little impact on FabricPool operations.
+
+Each HA group provides highly available access to the shared services on the associated nodes. For example, an HA group that consists of interfaces only on Gateway Nodes or on both Admin Nodes and Gateway Nodes provides highly available access to the shared Load Balancer service.
+
+To learn more about high availability groups, see Manage high availability (HA) groups. Using HA groups
+
+The best practices for creating a StorageGRID HA group for FabricPool depend on the workload.
+
+If you plan to use FabricPool with primary workload data, you must create an HA group that includes at least two load-balancing nodes to prevent data retrieval interruption.
+
+If you plan to use the FabricPool snapshot-only volume tiering policy or non-primary local performance tiers (for example, disaster recovery locations or NetApp SnapMirror® destinations), you can configure an HA group with only one node.

@@ -1,0 +1,93 @@
+These instructions describe how to install the host services from the DEB packages. As an alternative, you can use the APT repository metadata included in the installation archive to install the DEB packages remotely. See the APT repository instructions for your Linux operating system. Steps
+
+1. Copy the StorageGRID DEB packages to each of your hosts, or make them available on shared storage.
+
+For example, place them in the /tmp directory, so you can use the example command in the next step.
+
+2. Log in to each host as root or using an account with sudo permission, and run the following commands. Steps
+
+1. Install Docker by following the instructions for your Linux distribution.
+
+If Docker is not included with your Linux distribution, you can download it from the Docker website.
+
+2. Ensure Docker has been enabled and started by running the following two commands: sudo systemctl enable docker
+
+sudo systemctl start docker
+
+3. Confirm you have installed the expected version of Docker by entering the following:
+
+sudo docker version
+
+160
+
+The Client and Server versions must be 1.11.0 or later.
+
+Related information
+
+Configure host storage
+
+Install StorageGRID host services
+
+You use the StorageGRID DEB package to install the StorageGRID host services. About this task
+
+These instructions describe how to install the host services from the DEB packages. As an alternative, you can use the APT repository metadata included in the installation archive to install the DEB packages remotely. See the APT repository instructions for your Linux operating system. Steps
+
+1. Copy the StorageGRID DEB packages to each of your hosts, or make them available on shared storage.
+
+For example, place them in the /tmp directory, so you can use the example command in the next step.
+
+2. Log in to each host as root or using an account with sudo permission, and run the following commands.
+
+You must install the images package first, and the service package second. If you placed the packages in a directory other than /tmp, modify the command to reflect the path you used. sudo dpkg --install /tmp/storagegrid-webscale-images-version-SHA.deb
+
+sudo dpkg --install /tmp/storagegrid-webscale-service-version-SHA.deb
+
+Python 2.7 must already be installed before the StorageGRID packages can be installed. The sudo dpkg --install /tmp/storagegrid-webscale-images-version- SHA.deb command will fail until you have done so.
+
+Automate the installation (Ubuntu or Debian)
+
+You can automate the installation of the StorageGRID host service and the configuration of grid nodes. About this task
+
+Automating the deployment might be useful in any of the following cases:
+
+You already use a standard orchestration framework, such as Ansible, Puppet, or Chef, to deploy and configure physical or virtual hosts.
+
+You intend to deploy multiple StorageGRID instances.
+
+You are deploying a large, complex StorageGRID instance.
+
+The StorageGRID host service is installed by a package and driven by configuration files that can be created interactively during a manual installation, or prepared ahead of time (or programmatically) to enable automated
+
+161
+
+installation using standard orchestration frameworks. StorageGRID provides optional Python scripts for automating the configuration of StorageGRID appliances, and the whole StorageGRID system (the "grid"). You can use these scripts directly, or you can inspect them to learn how to use the StorageGRID Installation REST API in grid deployment and configuration tools you develop yourself. Automate the installation and configuration of the StorageGRID host service
+
+You can automate the installation of the StorageGRID host service using standard orchestration frameworks such as Ansible, Puppet, Chef, Fabric, or SaltStack.
+
+The StorageGRID host service is packaged in a DEB and is driven by configuration files that can be prepared ahead of time (or programmatically) to enable automated installation. If you already use a standard orchestration framework to install and configure Ubuntu or Debian, adding StorageGRID to your playbooks or recipes should be straightforward.
+
+You can automate these tasks:
+
+1. Installing Linux
+
+2. Configuring Linux
+
+3. Configuring host network interfaces to meet StorageGRID requirements
+
+4. Configuring host storage to meet StorageGRID requirements
+
+5. Installing Docker
+
+6. Installing the StorageGRID host service
+
+7. Creating StorageGRID node configuration files in /etc/storagegrid/nodes
+
+8. Validating StorageGRID node configuration files 9. Starting the StorageGRID host service
+
+Example Ansible role and playbook
+
+Example Ansible role and playbook are supplied with the installation archive in the /extras folder. The Ansible playbook shows how the storagegrid role prepares the hosts and installs StorageGRID onto the target servers. You can customize the role or playbook as necessary.
+
+Automate the configuration of StorageGRID
+
+After deploying the grid nodes, you can automate the configuration of the StorageGRID system.

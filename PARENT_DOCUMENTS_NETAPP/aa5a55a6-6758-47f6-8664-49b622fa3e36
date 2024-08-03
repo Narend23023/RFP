@@ -1,0 +1,43 @@
+By default, AppArmor profiles are installed for packages that you install on the base operating system. When you run these packages from the StorageGRID system container, the AppArmor profiles are blocked. The DHCP, MySQL, NTP, and tcdump base packages conflict with AppArmor, and other base packages might also conflict.
+
+You have two choices for handling AppArmor profiles:
+
+Disable individual profiles for the packages installed on the base system that overlap with the packages in the StorageGRID system container. When you disable individual profiles, an entry appears in the StorageGRID log files indicating that AppArmor is enabled.
+
+Use the following commands: sudo ln -s /etc/apparmor.d/<profile.name> /etc/apparmor.d/disable/ sudo apparmor_parser -R /etc/apparmor.d/<profile.name>
+
+Example:
+
+sudo ln -s /etc/apparmor.d/bin.ping /etc/apparmor.d/disable/ sudo apparmor_parser -R /etc/apparmor.d/bin.ping
+
+Disable AppArmor altogether. For Ubuntu 9.10 or later, follow the instructions in the Ubuntu online community: Disable AppArmor. Disabling AppArmor altogether might not be possible on newer Ubuntu versions. By default, AppArmor profiles are installed for packages that you install on the base operating system. When you run these packages from the StorageGRID system container, the AppArmor profiles are blocked. The DHCP, MySQL, NTP, and tcdump base packages conflict with AppArmor, and other base packages might also conflict.
+
+You have two choices for handling AppArmor profiles:
+
+Disable individual profiles for the packages installed on the base system that overlap with the packages in the StorageGRID system container. When you disable individual profiles, an entry appears in the StorageGRID log files indicating that AppArmor is enabled.
+
+Use the following commands: sudo ln -s /etc/apparmor.d/<profile.name> /etc/apparmor.d/disable/ sudo apparmor_parser -R /etc/apparmor.d/<profile.name>
+
+Example:
+
+sudo ln -s /etc/apparmor.d/bin.ping /etc/apparmor.d/disable/ sudo apparmor_parser -R /etc/apparmor.d/bin.ping
+
+Disable AppArmor altogether. For Ubuntu 9.10 or later, follow the instructions in the Ubuntu online community: Disable AppArmor. Disabling AppArmor altogether might not be possible on newer Ubuntu versions.
+
+After you disable AppArmor, no entries indicating that AppArmor is enabled will appear in the StorageGRID log files. Configure the host network (Ubuntu or Debian)
+
+After completing the Linux installation on your hosts, you might need to perform some additional configuration to prepare a set of network interfaces on each host that are suitable for mapping into the StorageGRID nodes you will deploy later.
+
+Before you begin
+
+You have reviewed the StorageGRID networking guidelines.
+
+152
+
+• You have reviewed the information about node container migration requirements.
+
+If you are using virtual hosts, you have read the considerations and recommendations for MAC address cloning before configuring the host network.
+
+If you are using VMs as hosts, you should select VMXNET 3 as the virtual network adapter. The VMware E1000 network adapter has caused connectivity issues with StorageGRID containers deployed on certain distributions of Linux. About this task
+
+Grid nodes must be able to access the Grid Network and, optionally, the Admin and Client Networks. You provide this access by creating mappings that associate the host’s physical interface to the virtual interfaces for each grid node. When creating host interfaces, use friendly names to facilitate deployment across all hosts, and to enable migration.

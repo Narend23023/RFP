@@ -1,0 +1,97 @@
+Where to go next
+
+After completing an installation, perform the required integration and configuration tasks.
+
+245
+
+You can perform the optional tasks as needed.
+
+Required tasks
+
+Configure VMware vSphere Hypervisor for automatic restart. You must configure the hypervisor to restart the virtual machines when the server restarts. Without an automatic restart, the virtual machines and grid nodes remain shut down after the server restarts. For details, see the VMware vSphere Hypervisor documentation.
+
+Create a tenant account for each client protocol (Swift or S3) that will be used to store objects on your StorageGRID system.
+
+Control system access by configuring groups and user accounts. Optionally, you can configure a federated identity source (such as Active Directory or OpenLDAP), so you can import administration groups and users. Or, you can create local groups and users.
+
+Integrate and test the S3 API or Swift API client applications you will use to upload objects to your StorageGRID system.
+
+Configure the information lifecycle management (ILM) rules and ILM policy you want to use to protect object data.
+
+If your installation includes appliance Storage Nodes, use SANtricity OS to complete the following tasks: Connect to each StorageGRID appliance. ◦ Verify receipt of AutoSupport data.
+
+See Set up hardware.
+
+Review and follow the StorageGRID system hardening guidelines to eliminate security risks.
+
+Configure email notifications for system alerts.
+
+If your StorageGRID system includes any Archive Nodes (deprecated), configure the Archive Node’s connection to the target external archival storage system. Optional tasks
+
+Update grid node IP addresses if they have changed since you planned your deployment and generated the Recovery Package.
+
+Configure storage encryption, if required.
+
+Configure storage compression to reduce the size of stored objects, if required. Troubleshoot installation issues
+
+If any problems occur while installing your StorageGRID system, you can access the installation log files.
+
+The following are the main installation log files, which technical support might need to resolve issues.
+
+/var/local/log/install.log (found on all grid nodes)
+
+/var/local/log/gdu-server.log (found on the primary Admin Node)
+
+Related information
+
+246
+
+To learn how to access the log files, see Log files reference.
+
+If you need additional help, contact NetApp Support.
+
+Virtual machine resource reservation requires adjustment
+
+OVF files include a resource reservation designed to ensure that each grid node has sufficient RAM and CPU to operate efficiently. If you create virtual machines by deploying these OVF files on VMware and the predefined number of resources aren’t available, the virtual machines will not start. About this task
+
+If you are certain that the VM host has sufficient resources for each grid node, manually adjust the resources allocated for each virtual machine, and then try starting the virtual machines. Steps
+
+1. In the VMware vSphere Hypervisor client tree, select the virtual machine that is not started.
+
+2. Right‐click the virtual machine, and select Edit Settings.
+
+3. From the Virtual Machines Properties window, select the Resources tab.
+
+4. Adjust the resources allocated to the virtual machine:
+
+a. Select CPU, and then use the Reservation slider to adjust the MHz reserved for this virtual machine.
+
+b. Select Memory, and then use the Reservation slider to adjust the MB reserved for this virtual machine.
+
+5. Click OK.
+
+6. Repeat as required for other virtual machines hosted on the same VM host.
+
+Temporary installation password was disabled
+
+When you deploy a VMware node, you can optionally specify a temporary installation password. You must have this password to access the VM console or use SSH before the new node joins the grid.
+
+If you opted to disable the temporary installation password, you must perform additional steps to debug installation issues. You can do either of the following: If you are certain that the VM host has sufficient resources for each grid node, manually adjust the resources allocated for each virtual machine, and then try starting the virtual machines. Steps
+
+1. In the VMware vSphere Hypervisor client tree, select the virtual machine that is not started.
+
+2. Right‐click the virtual machine, and select Edit Settings.
+
+3. From the Virtual Machines Properties window, select the Resources tab.
+
+4. Adjust the resources allocated to the virtual machine:
+
+a. Select CPU, and then use the Reservation slider to adjust the MHz reserved for this virtual machine.
+
+b. Select Memory, and then use the Reservation slider to adjust the MB reserved for this virtual machine.
+
+5. Click OK.
+
+6. Repeat as required for other virtual machines hosted on the same VM host.
+
+Temporary installation password was disabled

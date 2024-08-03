@@ -1,0 +1,95 @@
+If you want to create the default ILM rule for a policy, follow the instructions for creating a default ILM rule instead.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+If you want to specify which tenant accounts this rule applies to, you have the Tenant accounts permission or you know the account ID for each account.
+
+If you want the rule to filter objects on last access time metadata, Last access time updates must be enabled by bucket for S3 or by container for Swift.
+
+You have configured any Cloud Storage Pools you plan to use. See Create Cloud Storage Pool.
+
+You are familiar with the ingest options.
+
+If you need to create a compliant rule for use with S3 Object Lock, you are familiar with the requirements for S3 Object Lock. Optionally, you have watched the video: Video: Information lifecycle management rules in StorageGRID 11.8.
+
+654
+
+About this task
+
+When creating ILM rules:
+
+Consider the StorageGRID system’s topology and storage configurations.
+
+Consider what types of object copies you want to make (replicated or erasure-coded) and the number of copies of each object that are required. If you want to create the default ILM rule for a policy, follow the instructions for creating a default ILM rule instead.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+If you want to specify which tenant accounts this rule applies to, you have the Tenant accounts permission or you know the account ID for each account.
+
+If you want the rule to filter objects on last access time metadata, Last access time updates must be enabled by bucket for S3 or by container for Swift.
+
+You have configured any Cloud Storage Pools you plan to use. See Create Cloud Storage Pool.
+
+You are familiar with the ingest options.
+
+If you need to create a compliant rule for use with S3 Object Lock, you are familiar with the requirements for S3 Object Lock. Optionally, you have watched the video: Video: Information lifecycle management rules in StorageGRID 11.8.
+
+654
+
+About this task
+
+When creating ILM rules:
+
+Consider the StorageGRID system’s topology and storage configurations.
+
+Consider what types of object copies you want to make (replicated or erasure-coded) and the number of copies of each object that are required.
+
+Determine what types of object metadata are used in the applications that connect to the StorageGRID system. ILM rules filter objects based on their metadata.
+
+Consider where you want object copies to be placed over time.
+
+Decide which ingest option to use (Balanced, Strict, or Dual commit). Steps
+
+1. Select ILM > Rules.
+
+2. Select Create. Step 1 (Enter details) of the Create an ILM rule wizard appears.
+
+Step 1 of 3: Enter details
+
+The Enter details step of the Create an ILM rule wizard allows you to enter a name and description for the rule and to define filters for the rule.
+
+Entering a description and defining filters for the rule are optional. About this task
+
+When evaluating an object against an ILM rule, StorageGRID compares the object metadata to the rule’s filters. If the object metadata matches all filters, StorageGRID uses the rule to place the object. You can design a rule to apply to all objects, or you can specify basic filters, such as one or more tenant accounts or bucket names, or advanced filters, such as the object’s size or user metadata. Steps
+
+1. Enter a unique name for the rule in the Name field.
+
+2. Optionally, enter a short description for the rule in the Description field.
+
+You should describe the rule’s purpose or function so you can recognize the rule later.
+
+3. Optionally, select one or more S3 or Swift tenant accounts to which this rule applies. If this rule applies to all tenants, leave this field blank.
+
+If you don’t have either the Root access permission or the Tenant accounts permission, you can’t select tenants from the list. Instead, enter the tenant ID or enter multiple IDs as a comma-delimited string.
+
+655
+
+4. Optionally, specify the S3 buckets or Swift containers to which this rule applies.
+
+If applies to all buckets is selected (default), the rule applies to all S3 buckets or Swift containers.
+
+5. For S3 tenants, optionally select Yes to apply the rule only to older object versions in S3 buckets that have versioning enabled. If you select Yes, "Noncurrent time" will be automatically selected for Reference time in Step 2 of the Create an ILM rule wizard.
+
+Noncurrent time applies only to S3 objects in versioning-enabled buckets. See Operations on buckets, PutBucketVersioning and Manage objects with S3 Object Lock.
+
+You can use this option to reduce the storage impact of versioned objects by filtering for noncurrent object versions. See Example 4: ILM rules and policy for S3 versioned objects.
+
+6. Optionally, select Add an advanced filter to specify additional filters.

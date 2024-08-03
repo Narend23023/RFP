@@ -1,0 +1,55 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> No title detected<br>
+                       <b>Bounding box:</b> x1=134, y1=100, x2=1566, y2=1483
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>Cross-grid replication</td>
+      <td>CloudMirror replication service</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>What causes\nobjects to be\nmoved to the\ndestination?</td>
+      <td>Objects are automatically replicated when\nthey are added to a bucket that has cross-grid\nreplication enabled.</td>
+      <td>Objects are automatically replicated when\nthey are added to a bucket that has been\nconfigured with a CloudMirror endpoint.\nObjects that existed in the source bucket\nbefore the bucket was configured with the\nCloudMirror endpoint aren’t replicated, unless\nthey are modified.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>How are\nobjects\nreplicated?</td>
+      <td>Cross-grid replication creates versioned\nobjects, and it replicates the version ID from\nthe source bucket to the destination bucket.\nThis allows the version order to be maintained\nacross both grids.</td>
+      <td>CloudMirror replication doesn’t require\nversioning-enabled buckets, so CloudMirror\ncan only maintain ordering for a key within a\nsite. There are no guarantees that ordering\nwill be maintained for requests to an object at\ndifferent site.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>What if an\nobject can’t\nbe replicated?</td>
+      <td>The object is queued for replication, subject to\nmetadata storage limits.</td>
+      <td>The object is queued for replication, subject to\nplatform services limits (see\nRecommendations for using platform\nservices).</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Is the object’s\nsystem\nmetadata\nreplicated?</td>
+      <td>Yes, when an object is replicated to the other\ngrid, its system metadata is also replicated.\nThe metadata will be identical on both grids.</td>
+      <td>No, when an object is replicated to the\nexternal bucket, its system metadata is\nupdated. The metadata will differ between\nlocations, depending on time of ingest and the\nbehavior of the independent S3 infrastructure.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>How are\nobjects\nretrieved?</td>
+      <td>Applications can retrieve or read objects by\nmaking a request to the bucket on either grid.</td>
+      <td>Applications can retrieve or read objects by\nmaking a request either to StorageGRID or to\nthe S3 destination. For example, suppose you\nuse CloudMirror replication to mirror objects\nto a partner organization. The partner can use\nits own applications to read or update objects\ndirectly from the S3 destination. Using\nStorageGRID is not required.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

@@ -1,0 +1,65 @@
+If you need to edit a tenant that has the Use grid federation connection permission, follow the general instructions for editing a tenant account and note the following:
+
+If a tenant has the Use grid federation connection permission, you can edit tenant details from either grid in the connection. However, any changes you make will not be copied to the other grid. If you want to keep the tenant details synchronized between grids, you must make the same edits on both grids. 375
+
+• You can’t clear the Use grid federation connection permission when you are editing a tenant.
+
+You can’t select a different grid federation connection when you are editing a tenant. Delete a permitted tenant
+
+If you need to remove a tenant that has the Use grid federation connection permission, follow the general instructions for deleting a tenant account and note the following:
+
+Before you can remove the original tenant on the source grid, you must remove all buckets for the account on the source grid.
+
+Before you can remove the cloned tenant on the destination grid, you must remove all buckets for the account on the destination grid.
+
+If you remove either the original or the cloned tenant, the account can no longer be used for cross-grid replication.
+
+If you are removing the original tenant on the source grid, any tenant groups, users, or keys that were cloned to the destination grid will be unaffected. You can either delete the cloned tenant or allow it to manage its own groups, users, access keys, and buckets.
+
+If you are removing the cloned tenant on the destination grid, clone errors will occur if new groups or users are added to the original tenant. To avoid these errors, remove the tenant’s permission to use the grid federation connection before deleting the tenant from this grid.
+
+Remove Use grid federation connection permission
+
+To prevent a tenant from using a grid federation connection, you must remove the Use grid federation connection permission.
+
+Before removing a tenant’s permission to use a grid federation connection, note the following:
+
+You can’t remove the Use grid federation connection permission if any of the tenant’s buckets have cross-grid replication enabled. The tenant account must disable cross-grid replication for all of their buckets first. Before you can remove the original tenant on the source grid, you must remove all buckets for the account on the source grid.
+
+Before you can remove the cloned tenant on the destination grid, you must remove all buckets for the account on the destination grid.
+
+If you remove either the original or the cloned tenant, the account can no longer be used for cross-grid replication.
+
+If you are removing the original tenant on the source grid, any tenant groups, users, or keys that were cloned to the destination grid will be unaffected. You can either delete the cloned tenant or allow it to manage its own groups, users, access keys, and buckets.
+
+If you are removing the cloned tenant on the destination grid, clone errors will occur if new groups or users are added to the original tenant. To avoid these errors, remove the tenant’s permission to use the grid federation connection before deleting the tenant from this grid.
+
+Remove Use grid federation connection permission
+
+To prevent a tenant from using a grid federation connection, you must remove the Use grid federation connection permission.
+
+Before removing a tenant’s permission to use a grid federation connection, note the following:
+
+You can’t remove the Use grid federation connection permission if any of the tenant’s buckets have cross-grid replication enabled. The tenant account must disable cross-grid replication for all of their buckets first.
+
+Removing the Use grid federation connection permission does not delete any items that have already been replicated between grids. For example, any tenant users, groups, and objects that exist on both grids aren’t deleted from either grid when the tenant’s permission is removed. If you want to delete these items, you must manually delete them from both grids. If you want to re-enable this permission with the same grid federation connection, delete this tenant on the destination grid first; otherwise, re-enabling this permission will result in an error.
+
+Re-enabling the Use grid federation connection permission makes the local grid the source grid and triggers cloning to the remote grid specified by the selected grid federation connection. If the tenant account already exists on the remote grid, cloning will result in a conflict error.
+
+376
+
+Before you begin
+
+You are using a supported web browser.
+
+You have the Root access permission for both grids. Disable replication for tenant buckets
+
+As a first step, disable cross-grid replication for all tenant buckets.
+
+Steps
+
+1. Starting from either grid, sign in to the Grid Manager from the primary Admin Node.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select the connection name to display its details.

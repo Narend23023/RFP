@@ -1,0 +1,119 @@
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT"
+
+Until the object is transitioned to a non-retrievable state, the value for expiry-date is set to some distant time in the future. The exact time of transition is not controlled by the StorageGRID system.
+
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT" 924
+
+State of object
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object stored in a traditional storage pool or using erasure coding
+
+Object in Cloud Storage Pool but not yet transitioned to a non-retrievable state
+
+Object has transitioned to non-retrievable state, but at least one copy also exists on the grid
+
+Object transitioned to a non-retrievable state, and no copy exists on the grid
+
+Object in process of being restored from a non- retrievable state
+
+Response to HeadObject
+
+200 OK (No special response header is returned.)
+
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT"
+
+Until the object is transitioned to a non-retrievable state, the value for expiry-date is set to some distant time in the future. The exact time of transition is not controlled by the StorageGRID system.
+
+200 OK x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2030 00:00:00 GMT"
+
+The value for expiry-date is set to some distant time in the future.
+
+Note: If the copy on the grid is not available (for example, a Storage Node is down), you must issue a RestoreObject request to restore the copy from the Cloud Storage Pool before you can successfully retrieve the object.
+
+200 OK x-amz-storage-class: GLACIER
+
+200 OK
+
+x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="true"
+
+925
+
+State of object
+
+Response to HeadObject
+
+Object fully restored to the Cloud Storage Pool
+
+200 OK
+
+x-amz-storage-class: GLACIER
+
+`x-amz-restore: ongoing-request="false", expiry- date="Sat, 23 July 20 2018 00:00:00 GMT"
+
+The expiry-date indicates when the object in the Cloud Storage Pool will be returned to a non- retrievable state.
+
+Multipart or segmented objects in Cloud Storage Pool
+
+If you uploaded a multipart object or if StorageGRID split a large object into segments, StorageGRID determines whether the object is available in the Cloud Storage Pool by sampling a subset of the object’s parts or segments. In some cases, a HeadObject request might incorrectly return `x-amz-restore: ongoing- request="false" when some parts of the object have already been transitioned to a non-retrievable state or when some parts of the object have not yet been restored. HeadObject and cross-grid replication
+
+If you are using grid federation and cross-grid replication is enabled for a bucket, the S3 client can verify an object’s replication status by issuing a HeadObject request. The response includes the StorageGRID-specific x-ntap-sg-cgr-replication-status response header, which will have one of the following values: Grid
+
+Replication status
+
+Source
+
+SUCCESS: The replication was successful.
+
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. PutObject
+
+You can use the S3 PutObject request to add an object to a bucket. Resolve conflicts
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation.
+
+926
+
+Object size
+
+The maximum recommended size for a single PutObject operation is 5 GiB (5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use multipart upload instead.
+
+The maximum supported size for a single PutObject operation is 5 TiB (5,497,558,138,880 bytes). Replication status
+
+Source
+
+SUCCESS: The replication was successful.
+
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+StorageGRID does not support the x-amz-replication-status header. PutObject
+
+You can use the S3 PutObject request to add an object to a bucket. Resolve conflicts
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation.
+
+926
+
+Object size

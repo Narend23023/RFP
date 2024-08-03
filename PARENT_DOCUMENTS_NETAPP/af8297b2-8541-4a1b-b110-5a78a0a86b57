@@ -1,0 +1,213 @@
+VLID
+
+Volume Identifier The unique identifier of the archive volume to which the object data is
+
+written. VREN
+
+Verification Enabled
+
+Indicates if verification is performed for content blocks. Currently defined values are:
+
+VENA: verification is enabled
+
+VDSA: verification is disabled
+
+MCLS
+
+Management Class
+
+A string identifying the TSM Management Class to which the content block is assigned if applicable. RSLT
+
+Result
+
+Indicates the result of the archive process. Currently defined values are:
+
+SUCS: successful (archiving process succeeded)
+
+OFFL: failed (archiving is offline)
+
+VRFL: failed (object verification failed)
+
+ARUN: failed (external archival storage system unavailable)
+
+GERR: failed (general error)
+
+This audit message means that the specified content block has been written to the external archival storage system. If the write fails, the result provides basic troubleshooting information about where the failure occurred. More detailed information about archive failures can be found by examining Archive Node attributes in the StorageGRID system.
+
+1343
+
+ASCT: Archive Store Cloud-Tier
+
+This message is generated when archived object data is stored to an external archival storage system, which connects to StorageGRID through the S3 API. Code
+
+Field
+
+Description
+
+CBID
+
+Content Block ID The unique identifier for the content block that was retrieved.
+
+CSIZ
+
+Content Size
+
+The size of the object in bytes.
+
+RSLT
+
+Result Code
+
+Returns successful (SUCS) or the error reported by the backend.
+
+SUID
+
+Storage Unique Identifier
+
+Unique identifier (UUID) of the cloud-tier the content was stored to. TIME
+
+Time
+
+Total processing time for the request in microseconds.
+
+ATCE: Archive Object Store Begin
+
+This message indicates that writing a content block to an external archival storage has started.
+
+Code
+
+Field
+
+Description
+
+CBID
+
+Content Block ID The unique identifier of the content block to be archived. VLID
+
+Volume Identifier The unique identifier of the volume to which the content block is written.
+
+If the operation fails, a volume ID of 0 is returned.
+
+RSLT
+
+Result
+
+Indicates the result of the transfer of the content block. Currently defined values are:
+
+SUCS: success (content block stored successfully)
+
+EXIS: ignored (content block was already stored)
+
+ISFD: failed (insufficient disk space)
+
+STER: failed (error storing the CBID)
+
+OFFL: failed (archiving is offline)
+
+GERR: failed (general error) AVCC: Archive Validate Cloud-Tier Configuration
+
+This message is generated when the configuration settings are validated for a Cloud Tiering - Simple Storage Service (S3) target type.
+
+1344
+
+Code
+
+Field
+
+Description
+
+RSLT
+
+Result Code
+
+Returns successful (SUCS) or the error reported by the backend.
+
+SUID Storage Unique Identifier
+
+UUID associated with the external archival storage system being validated.
+
+BROR: Bucket Read Only Request
+
+The LDR service generates this audit message when a bucket enters or exits read-only mode. For example, a bucket enters read-only mode while all objects are being deleted. Code
+
+Field
+
+Description
+
+BKHD
+
+Bucket UUID
+
+The bucket ID.
+
+BROV
+
+Bucket read-only request value
+
+Whether the bucket is being made read-only or is leaving the read-only state (1 = read-only, 0 = not-read-only).
+
+BROS
+
+Bucket read-only reason
+
+The reason the bucket is being made read-only or leaving the read-only state. For example, emptyBucket. S3AI
+
+S3 tenant account ID
+
+The ID of the tenant account that sent the request. An empty value indicates anonymous access.
+
+S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+CBRB: Object Receive Begin
+
+During normal system operations, content blocks are continuously transferred between different nodes as data is accessed, replicated and retained. When transfer of a content block from one node to another is initiated, this message is issued by the destination entity. Code
+
+Field
+
+Description
+
+CNID SUID Storage Unique Identifier
+
+UUID associated with the external archival storage system being validated.
+
+BROR: Bucket Read Only Request
+
+The LDR service generates this audit message when a bucket enters or exits read-only mode. For example, a bucket enters read-only mode while all objects are being deleted. Code
+
+Field
+
+Description
+
+BKHD
+
+Bucket UUID
+
+The bucket ID.
+
+BROV
+
+Bucket read-only request value
+
+Whether the bucket is being made read-only or is leaving the read-only state (1 = read-only, 0 = not-read-only).
+
+BROS
+
+Bucket read-only reason
+
+The reason the bucket is being made read-only or leaving the read-only state. For example, emptyBucket. S3AI
+
+S3 tenant account ID
+
+The ID of the tenant account that sent the request. An empty value indicates anonymous access.
+
+S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+CBRB: Object Receive Begin

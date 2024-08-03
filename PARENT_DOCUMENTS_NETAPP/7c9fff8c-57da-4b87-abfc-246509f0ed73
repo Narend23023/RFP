@@ -1,0 +1,161 @@
+This example shows an example of the JSON that could be generated when an object with the key SGWS/Tagging.txt is created in a bucket named test. The test bucket is not versioned, so the versionId tag is empty. { "bucket": "test", "key": "SGWS/Tagging.txt", "versionId": "", "accountId": "86928401983529626822", "size": 38, "md5": "3d6c7634a85436eee06d43415012855", "region":"us-east-1", "metadata": { "age": "25" }, "tags": { "color": "yellow" } }
+
+Object metadata included in metadata notifications
+
+The table lists all the fields that are included in the JSON document that is sent to the destination endpoint when search integration is enabled.
+
+The document name includes the bucket name, object name, and version ID if present. Type
+
+Item name
+
+Description
+
+Bucket and object information
+
+bucket
+
+Name of the bucket
+
+Bucket and object information
+
+key
+
+Object key name
+
+Bucket and object information
+
+versionID
+
+Object version, for objects in versioned buckets
+
+Bucket and object information
+
+region
+
+Bucket region, for example us- east-1 System metadata
+
+size
+
+Object size (in bytes) as visible to an HTTP client
+
+960
+
+Type
+
+Item name
+
+Description
+
+System metadata
+
+md5
+
+Object hash
+
+User metadata
+
+metadata key:value
+
+All user metadata for the object, as key-value pairs
+
+Tags
+
+tags key:value
+
+All object tags defined for the object, as key-value pairs Object metadata included in metadata notifications
+
+The table lists all the fields that are included in the JSON document that is sent to the destination endpoint when search integration is enabled.
+
+The document name includes the bucket name, object name, and version ID if present. Type
+
+Item name
+
+Description
+
+Bucket and object information
+
+bucket
+
+Name of the bucket
+
+Bucket and object information
+
+key
+
+Object key name
+
+Bucket and object information
+
+versionID
+
+Object version, for objects in versioned buckets
+
+Bucket and object information
+
+region
+
+Bucket region, for example us- east-1 System metadata
+
+size
+
+Object size (in bytes) as visible to an HTTP client
+
+960
+
+Type
+
+Item name
+
+Description
+
+System metadata
+
+md5
+
+Object hash
+
+User metadata
+
+metadata key:value
+
+All user metadata for the object, as key-value pairs
+
+Tags
+
+tags key:value
+
+All object tags defined for the object, as key-value pairs
+
+For tags and user metadata, StorageGRID passes dates and numbers to Elasticsearch as strings or as S3 event notifications. To configure Elasticsearch to interpret these strings as dates or numbers, follow the Elasticsearch instructions for dynamic field mapping and for mapping date formats. You must enable the dynamic field mappings on the index before you configure the search integration service. After a document is indexed, you can’t edit the document’s field types in the index.
+
+Related information
+
+Use a tenant account GET Storage Usage request
+
+The GET Storage Usage request tells you the total amount of storage in use by an account, and for each bucket associated with the account.
+
+The amount of storage used by an account and its buckets can be obtained by a modified ListBuckets request with the x-ntap-sg-usage query parameter. Bucket storage usage is tracked separately from the PUT and DELETE requests processed by the system. There might be some delay before the usage values match the expected values based on the processing of requests, particularly if the system is under heavy load.
+
+By default, StorageGRID attempts to retrieve usage information using strong-global consistency. If strong- global consistency can’t be achieved, StorageGRID attempts to retrieve the usage information at a strong-site consistency.
+
+You must have the s3:ListAllMyBuckets permission, or be account root, to complete this operation. Request example
+
+GET /?x-ntap-sg-usage HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response example
+
+This example shows an account that has four objects and 12 bytes of data in two buckets. Each bucket contains two objects and six bytes of data.
+
+961
+
+HTTP/1.1 200 OK Date: Sat, 29 Nov 2015 00:49:05 GMT Connection: KEEP-ALIVE Server: StorageGRID/10.2.0 x-amz-request-id: 727237123 Content-Length: 427 Content-Type: application/xml
+
+<?xml version="1.0" encoding="UTF-8"?> <UsageResult xmlns="http://s3.storagegrid.com/doc/2015-02-01"> <CalculationTime>2014-11-19T05:30:11.000000Z</CalculationTime> <ObjectCount>4</ObjectCount> <DataBytes>12</DataBytes> <Buckets> <Bucket> <Name>bucket1</Name> <ObjectCount>2</ObjectCount> <DataBytes>6</DataBytes> </Bucket> <Bucket> <Name>bucket2</Name> <ObjectCount>2</ObjectCount> <DataBytes>6</DataBytes> </Bucket> </Buckets> </UsageResult> Versioning
+
+Every object version stored will contribute to the ObjectCount and DataBytes values in the response. Delete markers aren’t added to the ObjectCount total.
+
+Related information Consistency values
+
+Deprecated bucket requests for legacy Compliance
+
+Deprecated bucket requests for legacy Compliance

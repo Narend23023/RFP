@@ -1,0 +1,65 @@
+Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+If only PORT_REMAP is set, the mapping that you specify is used for both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications.
+
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. For example:
+
+PORT_REMAP = client/tcp/18082/443
+
+If used alone, this example setting symmetrically maps both inbound and outbound communications for the grid node from port 18082 to port 443. If used in conjunction with PORT_REMAP_INBOUND, this example setting maps outbound communications from port 18082 to port 443.
+
+PORT_REMAP_INBOUND: Remaps inbound communications for the specified port. If you specify PORT_REMAP_INBOUND but don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+The format used is: network type/protocol/_default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. For example:
+
+216
+
+PORT_REMAP_INBOUND = client/tcp/443/18082
+
+This example takes traffic that is sent to port 443 to pass an internal firewall and directs it to port 18082, where the grid node is listening for S3 requests.
+
+TEMPORARY_PASSWORD_TYPE: The type of temporary installation password to be used when accessing the VM console or using SSH before the node joins the grid.
+
+If all or most of the nodes use the same type of temporary installation password, specify the type in the global parameter section. Then, optionally use a different setting for an individual node. For example, if you select Use Custom Password globally, you can use CUSTOM_TEMPORARY_PASSWORD=<password> to set the password for each node.
+
+TEMPORARY_PASSWORD_TYPE can be one of the following: Use node name: The node name is used as the temporary installation password. ◦ Disable password: No temporary installation password will be used. If you need to access the VM to debug installation issues, see Troubleshoot installation issues.
+
+Use custom password: The value provided with
+
+CUSTOM_TEMPORARY_PASSWORD=<password> is used as the temporary installation password.
+
+Optionally, you can omit the TEMPORARY_PASSWORD_TYPE parameter and only specify CUSTOM_TEMPORARY_PASSWORD=<password>.
+
+CUSTOM_TEMPORARY_PASSWORD=<password>
+
+Optional. The temporary password to use when accessing this VM and using SSH during installation. Ignored if TEMPORARY_PASSWORD_TYPE is set to Use node name or Disable password. Node-specific parameters
+
+Each node is in its own section of the configuration file. Each node requires the following settings:
+
+The section head defines the node name that will be displayed in the Grid Manager. You can override that value by specifying the optional NODE_NAME parameter for the node. TEMPORARY_PASSWORD_TYPE can be one of the following: Use node name: The node name is used as the temporary installation password. ◦ Disable password: No temporary installation password will be used. If you need to access the VM to debug installation issues, see Troubleshoot installation issues.
+
+Use custom password: The value provided with
+
+CUSTOM_TEMPORARY_PASSWORD=<password> is used as the temporary installation password.
+
+Optionally, you can omit the TEMPORARY_PASSWORD_TYPE parameter and only specify CUSTOM_TEMPORARY_PASSWORD=<password>.
+
+CUSTOM_TEMPORARY_PASSWORD=<password>
+
+Optional. The temporary password to use when accessing this VM and using SSH during installation. Ignored if TEMPORARY_PASSWORD_TYPE is set to Use node name or Disable password. Node-specific parameters
+
+Each node is in its own section of the configuration file. Each node requires the following settings:
+
+The section head defines the node name that will be displayed in the Grid Manager. You can override that value by specifying the optional NODE_NAME parameter for the node.
+
+NODE_TYPE: VM_Admin_Node, VM_Storage_Node, VM_Archive_Node, or VM_API_Gateway_Node
+
+GRID_NETWORK_IP: The IP address for the node on the Grid Network.
+
+ADMIN_NETWORK_IP: The IP address for the node on the Admin Network. Required only if the node is attached to the Admin Network and ADMIN_NETWORK_CONFIG is set to STATIC.
+
+CLIENT_NETWORK_IP: The IP address for the node on the Client Network. Required only if the node is attached to the Client Network and CLIENT_NETWORK_CONFIG for this node is set to STATIC. ADMIN_IP: The IP address for the primary Admin node on the Grid Network. Use the value that you specify as the GRID_NETWORK_IP for the primary Admin Node. If you omit this parameter, the node attempts to discover the primary Admin Node IP using mDNS. For more information, see How grid nodes discover the primary Admin Node.
+
+The ADMIN_IP parameter is ignored for the primary Admin Node.

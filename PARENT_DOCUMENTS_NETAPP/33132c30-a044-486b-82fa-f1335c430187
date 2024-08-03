@@ -1,0 +1,117 @@
+FabricPool tenants don’t typically need to use platform services, such as CloudMirror replication.
+
+b. Optionally, select Use own identity source. c. Don’t select Allow S3 Select.
+
+FabricPool tenants don’t typically need to use S3 Select.
+
+d. Optionally, select Use grid federation connection to allow the tenant to use a grid federation
+
+connection for account clone and cross-grid replication. Then, select the grid federation connection to use.
+
+5. For the Define root access step, specify which user will have the initial Root access permission for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both.
+
+742
+
+Option
+
+Do this
+
+If identity federation is not enabled Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.
+
+6. Select Create tenant.
+
+Create an S3 bucket and obtain access keys
+
+Before using StorageGRID with a FabricPool workload, you must create an S3 bucket for your FabricPool data. You also need to obtain an access key and secret access key for the tenant account you will use for FabricPool.
+
+For details about this task, see Create S3 bucket and Create your own S3 access keys. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You have created a tenant account for FabricPool use. You have Root access to the tenant account.
+
+Steps
+
+1. Sign in to the Tenant Manager.
+
+You can do either of the following:
+
+From the Tenant Accounts page in the Grid Manager, select the Sign in link for the tenant, and enter your credentials.
+
+Enter the URL for the tenant account in a web browser, and enter your credentials.
+
+2. Create an S3 bucket for FabricPool data.
+
+You must create a unique bucket for each ONTAP cluster you plan to use.
+
+a. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets. b. Select Create bucket.
+
+c. Enter the name of the StorageGRID bucket you want to use with FabricPool. For example,
+
+fabricpool-bucket. Create an S3 bucket and obtain access keys
+
+Before using StorageGRID with a FabricPool workload, you must create an S3 bucket for your FabricPool data. You also need to obtain an access key and secret access key for the tenant account you will use for FabricPool.
+
+For details about this task, see Create S3 bucket and Create your own S3 access keys. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You have created a tenant account for FabricPool use. You have Root access to the tenant account.
+
+Steps
+
+1. Sign in to the Tenant Manager.
+
+You can do either of the following:
+
+From the Tenant Accounts page in the Grid Manager, select the Sign in link for the tenant, and enter your credentials.
+
+Enter the URL for the tenant account in a web browser, and enter your credentials.
+
+2. Create an S3 bucket for FabricPool data.
+
+You must create a unique bucket for each ONTAP cluster you plan to use.
+
+a. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets. b. Select Create bucket.
+
+c. Enter the name of the StorageGRID bucket you want to use with FabricPool. For example,
+
+fabricpool-bucket.
+
+You can’t change the bucket name after creating the bucket.
+
+d. Select the region for this bucket.
+
+743
+
+By default, all buckets are created in the us-east-1 region. e. Select Continue.
+
+f. Select Create bucket.
+
+Don’t select Enable object versioning for the FabricPool bucket. Similarly, don’t edit a FabricPool bucket to use Available or a non-default consistency. The recommended bucket consistency for FabricPool buckets is Read-after-new-write, which is the default consistency for a new bucket.
+
+3. Create an access key and a secret access key.
+
+a. Select STORAGE (S3) > My access keys. b. Select Create key.
+
+c. Select Create access key.
+
+d. Copy the access key ID and the secret access key to a safe location, or select Download .csv to save
+
+a spreadsheet file containing the access key ID and secret access key.
+
+You will enter these values in ONTAP when you configure StorageGRID as a FabricPool cloud tier.
+
+If you generate a new access key and secret access key in StorageGRID in the future, enter the new keys into ONTAP before deleting the old values from StorageGRID. Otherwise, ONTAP might temporarily lose its access to StorageGRID. Configure ILM for FabricPool data
+
+You can use this simple example policy as a starting point for your own ILM rules and policy.

@@ -1,0 +1,201 @@
+GNRG: GNDS Registration
+
+The CMN service generates this audit message when a service has updated or registered information about itself in the StorageGRID system. Code
+
+Field
+
+Description
+
+RSLT
+
+Result
+
+The result of the update request:
+
+SUCS: Successful
+
+SUNV: Service Unavailable
+
+GERR: Other failure
+
+GNID
+
+Node ID
+
+The node ID of the service that initiated the update request.
+
+GNTP
+
+Device Type
+
+The grid node’s device type (for example, BLDR for an LDR service).
+
+1352
+
+Code
+
+Field
+
+Description GNDV
+
+Device Model version
+
+The string identifying the grid node’s device model version in the DMDL bundle.
+
+GNGP
+
+Group
+
+The group to which the grid node belongs (in the context of link costs and service-query ranking).
+
+GNIA
+
+IP Address
+
+The grid node’s IP address.
+
+This message is generated whenever a grid node updates its entry in the Grid Nodes Bundle. GNUR: GNDS Unregistration
+
+The CMN service generates this audit message when a service has unregistered information about itself from the StorageGRID system.
+
+Code
+
+Field
+
+Description
+
+RSLT
+
+Result
+
+The result of the update request:
+
+SUCS: Successful
+
+SUNV: Service Unavailable
+
+GERR: Other failure
+
+GNID Node ID
+
+The node ID of the service that initiated the update request.
+
+GTED: Grid Task Ended
+
+This audit message indicates that the CMN service has finished processing the specified grid task and has moved the task to the Historical table. If the result is SUCS, ABRT, or ROLF, there will be a corresponding Grid Task Started audit message. The other results indicate that processing of this grid task never started. Code
+
+Field
+
+Description
+
+TSID
+
+Task ID
+
+This field uniquely identifies a generated grid task and allows the grid task to be managed over its lifecycle.
+
+Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages. The CMN service generates this audit message when a service has unregistered information about itself from the StorageGRID system.
+
+Code
+
+Field
+
+Description
+
+RSLT
+
+Result
+
+The result of the update request:
+
+SUCS: Successful
+
+SUNV: Service Unavailable
+
+GERR: Other failure
+
+GNID Node ID
+
+The node ID of the service that initiated the update request.
+
+GTED: Grid Task Ended
+
+This audit message indicates that the CMN service has finished processing the specified grid task and has moved the task to the Historical table. If the result is SUCS, ABRT, or ROLF, there will be a corresponding Grid Task Started audit message. The other results indicate that processing of this grid task never started. Code
+
+Field
+
+Description
+
+TSID
+
+Task ID
+
+This field uniquely identifies a generated grid task and allows the grid task to be managed over its lifecycle.
+
+Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages.
+
+1353
+
+Code
+
+Field
+
+Description RSLT
+
+Result
+
+The final status result of the grid task:
+
+SUCS: The grid task completed successfully.
+
+ABRT: The grid task was terminated without a rollback error.
+
+ROLF: The grid task was terminated and was unable to complete the rollback process.
+
+CANC: The grid task was canceled by the user before it was started.
+
+EXPR: The grid task expired before it was started.
+
+IVLD: The grid task was invalid.
+
+AUTH: The grid task was unauthorized.
+
+DUPL: The grid task was rejected as a duplicate. GTST: Grid Task Started
+
+This audit message indicates that the CMN service has started to process the specified grid task. The audit message immediately follows the Grid Task Submitted message for grid tasks initiated by the internal Grid Task Submission service and selected for automatic activation. For grid tasks submitted into the Pending table, this message is generated when the user starts the grid task. Code
+
+Field
+
+Description
+
+TSID
+
+Task ID
+
+This field uniquely identifies a generated grid task and allows the task to be managed over its lifecycle.
+
+Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages. RSLT
+
+Result
+
+The result. This field has only one value:
+
+SUCS: The grid task was started successfully.
+
+GTSU: Grid Task Submitted
+
+This audit message indicates that a grid task has been submitted to the CMN service.
+
+1354
+
+Code
+
+Field
+
+Description
+
+TSID
+
+Task ID
+
+Uniquely identifies a generated grid task and allows the task to be managed over its lifecycle.

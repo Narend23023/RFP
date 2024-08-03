@@ -1,0 +1,93 @@
+Although you can use these automatically discovered host routes, in general you should manually configure the DNS and NTP routes to ensure connectivity.
+
+9. Select option 7 to validate all staged changes. When you attempt to change the subnet list, the following message is displayed:
+
+1520 CAUTION: The Admin Network subnet list on the node might contain /32 subnets derived from automatically applied routes that aren't persistent. Host routes (/32 subnets) are applied automatically if the IP addresses provided for external services such as NTP or DNS aren't reachable using default StorageGRID routing, but are reachable using a different interface and gateway. Making and applying changes to the subnet list will make all automatically applied subnets persistent. If you don't want that to happen, delete the unwanted subnets before applying changes. If you know that all /32 subnets in the list were added intentionally, you can ignore this caution. If you did not specifically assign the NTP and DNS server subnets to a network, StorageGRID creates a host route (/32) for the connection automatically. If, for example, you would rather have a /16 or /24 route for outbound connection to a DNS or NTP server, you should delete the automatically created /32 route and add the routes you want. If you don’t delete the automatically created host route, it will be persisted after you apply any changes to the subnet list.
+
+Although you can use these automatically discovered host routes, in general you should manually configure the DNS and NTP routes to ensure connectivity.
+
+9. Select option 7 to validate all staged changes.
+
+This validation ensures that the rules for the Grid, Admin, and Client Networks are followed, such as using overlapping subnets.
+
+10. Optionally, select option 8 to save all staged changes and return later to continue making changes. This option allows you to quit the Change IP tool and start it again later, without losing any unapplied changes.
+
+11. Do one of the following:
+
+Select option 9 if you want to clear all changes without saving or applying the new network configuration.
+
+Select option 10 if you are ready to apply changes and provision the new network configuration. During provisioning, the output displays the status as updates are applied as shown in the following example output:
+
+Generating new grid networking description file...
+
+Running provisioning...
+
+Updating grid network configuration on Name
+
+12. Download a new Recovery Package from the Grid Manager. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the provisioning passphrase.
+
+1521
+
+Add to or change subnet lists on Grid Network
+
+You can use the Change IP tool to add or change subnets on the Grid Network.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+You can add, delete, or change subnets in the Grid Network Subnet List. Changes will affect routing on all nodes in the grid.
+
+If you are making changes to the Grid Network Subnet List only, use the Grid Manager to add or change the network configuration. Otherwise, use the Change IP tool if the Grid Manager is inaccessible due to a network configuration issue, or you are performing both a Grid Network routing change and other network changes at the same time. Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Start the Change IP tool by entering the following command: change-ip
+
+3. Enter the provisioning passphrase at the prompt.
+
+The main menu appears.
+
+4. On the main menu, select the option to edit subnets for the Grid Network (option 4). Changes to the Grid Network Subnet List are grid-wide.
+
+5. Choose one of the following:
+
+Add a subnet by entering this command: add CIDR
+
+1522
+
+◦ Delete a subnet by entering this command: del CIDR ◦ Set the list of subnets by entering this command: set CIDR
+
+For all commands, you can enter multiple addresses using this format: add CIDR, CIDR
+
+Example: add 172.14.0.0/16, 172.15.0.0/16, 172.16.0.0/16
+
+You can reduce the amount of typing required by using "up arrow" to recall previously typed values to the current input prompt, and then edit them if necessary. b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Start the Change IP tool by entering the following command: change-ip
+
+3. Enter the provisioning passphrase at the prompt.
+
+The main menu appears.
+
+4. On the main menu, select the option to edit subnets for the Grid Network (option 4). Changes to the Grid Network Subnet List are grid-wide.
+
+5. Choose one of the following:

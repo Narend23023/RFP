@@ -1,0 +1,133 @@
+Manage the TLS and SSH policy
+
+The TLS and SSH policy determines which protocols and ciphers are used to establish secure TLS connections with client applications and secure SSH connections to internal StorageGRID services.
+
+The security policy controls how TLS and SSH encrypt data in motion. In general, use the Modern compatibility (default) policy, unless your system needs to be Common Criteria-compliant or you need to use other ciphers.
+
+Some StorageGRID services have not been updated to use the ciphers in these policies.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission.
+
+Select a security policy Steps
+
+1. Select CONFIGURATION > Security > Security settings.
+
+The TLS and SSH policies tab shows the available policies. The currently active policy is noted by a green check mark on the policy tile.
+
+2. Review the tiles to learn about the available policies.
+
+Policy
+
+Description
+
+Modern compatibility (default)
+
+Use the default policy if you need strong encryption and unless you have special requirements. This policy is compatible with most TLS and SSH clients.
+
+422
+
+Policy
+
+Description Legacy compatibility
+
+Use this policy if you need additional compatibility options for older clients. The additional options in this policy might make it less secure than the Modern compatibility policy.
+
+Common Criteria
+
+Use this policy if you require Common Criteria certification.
+
+FIPS strict
+
+Use this policy if you require Common Criteria certification and need to use the NetApp Cryptographic Security Module 3.0.8 for external client connections to load balancer endpoints, Tenant Manager, and Grid Manager. Using this policy might reduce performance.
+
+Note: After you select this policy, all nodes must be rebooted in a rolling fashion to activate the NetApp Cryptographic Security Module. Use Maintenance > Rolling reboot to initiate and monitor reboots. Custom
+
+Create a custom policy if you need to apply your own ciphers.
+
+3. To see details about each policy’s ciphers, protocols, and algorithms, select View details.
+
+4. To change the current policy, select Use policy.
+
+A green check mark appears next to Current policy on the policy tile.
+
+Create a custom security policy
+
+You can create a custom policy if you need to apply your own ciphers. Steps
+
+1. From the tile of the policy that is the most similar to the custom policy you want to create, select View details.
+
+2. Select Copy to clipboard, and then select Cancel.
+
+3. From the Custom policy tile, select Configure and use.
+
+423
+
+4. Paste the JSON you copied and make any changes required.
+
+5. Select Use policy.
+
+A green check mark appears next to Current policy on the Custom policy tile.
+
+6. Optionally, select Edit configuration to make more changes to the new custom policy.
+
+Temporarily revert to the default security policy
+
+If you configured a custom security policy, you might not be able to sign in to the Grid Manager if the configured TLS policy is incompatible with the configured server certificate.
+
+You can temporarily revert to the default security policy. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following command: restore-default-cipher-configurations
+
+3. From a web browser, access the Grid Manager on the same Admin Node.
+
+4. Follow the steps in Select a security policy to configure the policy again. Configure network and object security 3. From the Custom policy tile, select Configure and use.
+
+423
+
+4. Paste the JSON you copied and make any changes required.
+
+5. Select Use policy.
+
+A green check mark appears next to Current policy on the Custom policy tile.
+
+6. Optionally, select Edit configuration to make more changes to the new custom policy.
+
+Temporarily revert to the default security policy
+
+If you configured a custom security policy, you might not be able to sign in to the Grid Manager if the configured TLS policy is incompatible with the configured server certificate.
+
+You can temporarily revert to the default security policy. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following command: restore-default-cipher-configurations
+
+3. From a web browser, access the Grid Manager on the same Admin Node.
+
+4. Follow the steps in Select a security policy to configure the policy again. Configure network and object security

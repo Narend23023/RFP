@@ -1,0 +1,69 @@
+Swift container and object name: When an object is ingested through the Swift interface, the client application uses a container and object name combination to store and identify the object. Steps
+
+1. Ingest the object.
+
+2. Select ILM > Object metadata lookup.
+
+3. Type the object’s identifier in the Identifier field. You can enter a UUID, CBID, S3 bucket/object-key, or Swift container/object-name.
+
+4. Optionally, enter a version ID for the object (S3 only).
+
+5. Select Look Up.
+
+The object metadata lookup results appear. This page lists the following types of information:
+
+System metadata, including:
+
+▪ object ID (UUID) ▪ object name ▪ name of the container ▪ result type (object, delete marker, S3 bucket or Swift container) ▪ tenant account name or ID ▪ logical size of the object ▪ date and time the object was first created ▪ date and time the object was last modified
+
+680 Any custom user metadata key-value pairs associated with the object. ◦ For S3 objects, any object tag key-value pairs associated with the object. ◦ For replicated object copies, the current storage location of each copy. ◦ For erasure-coded object copies, the current storage location of each fragment. ◦ For object copies in a Cloud Storage Pool, the location of the object, including the name of the external bucket and the object’s unique identifier.
+
+For segmented objects and multipart objects, a list of object segments including segment identifiers and data sizes. For objects with more than 100 segments, only the first 100 segments are shown. ◦ All object metadata in the unprocessed, internal storage format. This raw metadata includes internal system metadata that is not guaranteed to persist from release to release.
+
+The following example shows the object metadata lookup results for an S3 test object that is stored as two replicated copies. The following screenshot is an example. Your results will vary depending on your StorageGRID version.
+
+681
+
+6. Confirm that the object is stored in the correct location or locations and that it is the correct type of copy. 680 Any custom user metadata key-value pairs associated with the object. ◦ For S3 objects, any object tag key-value pairs associated with the object. ◦ For replicated object copies, the current storage location of each copy. ◦ For erasure-coded object copies, the current storage location of each fragment. ◦ For object copies in a Cloud Storage Pool, the location of the object, including the name of the external bucket and the object’s unique identifier.
+
+For segmented objects and multipart objects, a list of object segments including segment identifiers and data sizes. For objects with more than 100 segments, only the first 100 segments are shown. ◦ All object metadata in the unprocessed, internal storage format. This raw metadata includes internal system metadata that is not guaranteed to persist from release to release.
+
+The following example shows the object metadata lookup results for an S3 test object that is stored as two replicated copies. The following screenshot is an example. Your results will vary depending on your StorageGRID version.
+
+681
+
+6. Confirm that the object is stored in the correct location or locations and that it is the correct type of copy.
+
+If the Audit option is enabled, you can also monitor the audit log for the ORLM Object Rules Met message. The ORLM audit message can provide you with more information about the status of the ILM evaluation process, but it can’t give you information about the correctness of the object data’s placement or the completeness of the ILM policy. You must evaluate this yourself. For details, see Review audit logs.
+
+Related information
+
+Use S3 REST API
+
+Use Swift REST API Work with ILM policies and ILM rules
+
+As your storage requirements change, you might need to put additional policies in place or modify the ILM rules associated with a policy. You can view ILM metrics to determine system performance.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. View ILM policies
+
+To view active and inactive ILM policies and policy activation history:
+
+1. Select ILM > Policies.
+
+2. Select Policies to view a list of active and inactive policies. The table lists the name of each policy, the tags the policy is assigned to, and whether the policy is active or inactive.
+
+3. Select Activation history to view a list of activation start and end dates for policies.
+
+4. Select a policy name to view the details for the policy.
+
+If you view the details for a policy whose status is Edited or Deleted, a message appears explaining that you are viewing the version of the policy that was active for the specified time span and has since been edited or deleted. Edit an ILM policy
+
+You can only edit an inactive policy. If you want to edit an active policy, deactivate it or create a clone and edit the clone.
+
+To edit a policy:
+
+1. Select ILM > Policies.

@@ -1,0 +1,45 @@
+Use multiple encryption methods
+
+Depending on your requirements, you can use more than one encryption method at a time. For example:
+
+You can use a KMS to protect appliance nodes and also use the drive security feature in SANtricity System Manager to "double encrypt" data on the self-encrypting drives in the same appliances.
+
+You can use a KMS to secure data on appliance nodes and also use the Stored object encryption option to encrypt all objects when they are ingested.
+
+If only a small portion of your objects require encryption, consider controlling encryption at the bucket or individual object level instead. Enabling multiple levels of encryption has an additional performance cost.
+
+391
+
+Manage certificates Manage security certificates: Overview
+
+Security certificates are small data files used to create secure, trusted connections between StorageGRID components and between StorageGRID components and external systems. StorageGRID uses two types of security certificates:
+
+Server certificates are required when you use HTTPS connections. Server certificates are used to establish secure connections between clients and servers, authenticating the identity of a server to its clients and providing a secure communication path for data. The server and the client each have a copy of the certificate.
+
+Client certificates authenticate a client or user identity to the server, providing more secure authentication than passwords alone. Client certificates don’t encrypt data.
+
+When a client connects to the server using HTTPS, the server responds with the server certificate, which contains a public key. The client verifies this certificate by comparing the server signature to the signature on its copy of the certificate. If the signatures match, the client starts a session with the server using the same public key. StorageGRID functions as the server for some connections (such as the load balancer endpoint) or as the client for other connections (such as the CloudMirror replication service). Default Grid CA certificate
+
+StorageGRID includes a built-in certificate authority (CA) that generates an internal Grid CA certificate during system installation. The Grid CA certificate is used, by default, to secure internal StorageGRID traffic. An external certificate authority (CA) can issue custom certificates that are fully compliant with your organization’s information security policies. Although you can use the Grid CA certificate for a non-production environment, the best practice for a production environment is to use custom certificates signed by an external certificate authority. Unsecured connections with no certificate are also supported but aren’t recommended.
+
+Custom CA certificates don’t remove the internal certificates; however, the custom certificates should be the ones specified for verifying server connections.
+
+All custom certificates must meet the system hardening guidelines for server certificates. StorageGRID supports bundling of certificates from a CA into a single file (known as a CA certificate bundle).
+
+StorageGRID also includes operating system CA certificates that are the same on all grids. In production environments, make sure that you specify a custom certificate signed by an external certificate authority in place of the operating system CA certificate.
+
+Variants of the server and client certificate types are implemented in several ways. You should have all the certificates needed for your specific StorageGRID configuration ready before you configure the system. Access security certificates
+
+You can access information about all StorageGRID certificates in a single location, along with links to the configuration workflow for each certificate. Steps
+
+392
+
+1. From Grid Manager, select CONFIGURATION > Security > Certificates.
+
+2. Select a tab on the Certificates page for information about each certificate category and to access the certificate settings. You can access a tab if you have the appropriate permission.
+
+Global: Secures StorageGRID access from web browsers and external API clients. ◦ Grid CA: Secures internal StorageGRID traffic. ◦ Client: Secures connections between external clients and the StorageGRID Prometheus database. ◦ Load balancer endpoints: Secures connections between S3 and Swift clients and the StorageGRID Load Balancer.
+
+Tenants: Secures connections to identity federation servers or from platform service endpoints to S3 storage resources. StorageGRID also includes operating system CA certificates that are the same on all grids. In production environments, make sure that you specify a custom certificate signed by an external certificate authority in place of the operating system CA certificate.
+
+Variants of the server and client certificate types are implemented in several ways. You should have all the certificates needed for your specific StorageGRID configuration ready before you configure the system. Access security certificates

@@ -1,0 +1,87 @@
+5. Select a specific grid federation connection. If you assign Root access permission to a federated group that doesn’t exist on both grids, the tenant isn’t replicated to the destination grid.
+
+3. If you don’t want a federated group to have initial Root access permission for both accounts, specify a password for the local root user.
+
+Create permitted S3 tenant account
+
+After optionally configuring SSO or identity federation, a grid admin performs these steps to determine which tenants can replicate bucket objects to other StorageGRID systems. Steps
+
+1. Determine which grid you want to be the tenant’s source grid for account clone operations.
+
+The grid where the tenant is originally created is known as the tenant’s source grid. The grid where the tenant is replicated is known as the tenant’s destination grid.
+
+2. On that grid, create a new S3 tenant account or edit an existing account.
+
+3. Assign the Use grid federation connection permission.
+
+4. If the tenant account will manage its own federated users, assign the Use own identity source permission.
+
+If this permission is assigned, both the source and destination tenant accounts must configure the same identity source before creating federated groups. Federated groups added to the source tenant can’t be cloned to the destination tenant unless both grids use the same identity source.
+
+5. Select a specific grid federation connection.
+
+6. Save the new or modified tenant. When a new tenant with the Use grid federation connection permission is saved, StorageGRID automatically creates a replica of that tenant on the other grid, as follows:
+
+Both tenant accounts have the same account ID, name, storage quota, and assigned permissions. ◦ If you selected a federated group to have Root access permission for the tenant, that group is cloned to the destination tenant.
+
+If you selected a local user to have Root access permission for the tenant, that user is cloned to the destination tenant. However, the password for that user is not cloned.
+
+For details, see Manage permitted tenants for grid federation.
+
+357
+
+Permitted tenant account workflow
+
+After a tenant with the Use grid federation connection permission is replicated to the destination grid, permitted tenant accounts can perform these steps to clone tenant groups, users, and S3 access keys. Steps
+
+1. Sign in to the tenant account on the tenant’s source grid.
+
+2. If permitted, configure identify federation on both the source and destination tenant accounts.
+
+3. Create groups and users on the source tenant.
+
+When new groups or users are created on the source tenant, StorageGRID automatically clones them to the destination tenant, but no cloning occurs from the destination back to the source.
+
+4. Create S3 access keys.
+
+5. Optionally, clone S3 access keys from the source tenant to the destination tenant.
+
+For details about the permitted tenant account workflow and to learn how groups, users, and S3 access keys are cloned, see Clone tenant groups and users and Clone S3 access keys using the API.
+
+What is cross-grid replication?
+
+Cross-grid replication is the automatic replication of objects between selected S3 buckets in two StorageGRID systems that are connected in a grid federation connection. Account clone is required for cross-grid replication. Workflow for cross-grid replication
+
+The workflow diagram summarize the steps for configuring cross-grid replication between buckets on two grids.
+
+358
+
+Requirements for cross-grid replication
+
+If a tenant account has the Use grid federation connection permission to use one or more grid federation connections, a tenant user with Root access permission can create identical buckets in the corresponding tenant accounts on each grid. These buckets:
+
+Must have the same name but can have different regions
+
+Must have versioning enabled
+
+Must have S3 Object Lock disabled
+
+Must be empty
+
+After both buckets have been created, cross-grid replication can be configured for either or both buckets. Learn more
+
+Manage cross-grid replication
+
+359
+
+How cross-grid replication works
+
+Cross-grid replication can be configured to occur in one direction or in both directions.
+
+Replication in one direction
+
+If you enable cross-grid replication for a bucket on only one grid, objects added to that bucket (the source bucket) are replicated to the corresponding bucket on the other grid (the destination bucket). However, objects added to the destination bucket aren’t replicated back to the source. In the figure, cross-grid replication is enabled for my-bucket from Grid 1 to Grid 2, but it is not enabled in the other direction. Replication in both directions The workflow diagram summarize the steps for configuring cross-grid replication between buckets on two grids.
+
+358
+
+Requirements for cross-grid replication

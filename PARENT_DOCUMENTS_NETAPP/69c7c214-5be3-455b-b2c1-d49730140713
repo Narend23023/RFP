@@ -1,0 +1,99 @@
+7. Restore the original audit.log file: mv new_name.txt audit.log
+
+8. Start the AMS service:
+
+service ams start
+
+9. Log out from the server:
+
+exit
+
+10. Log in to the expansion Admin Node:
+
+a. Enter the following command: ssh admin@expansion_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+11. Update the user and group settings for the audit log files: cd /var/local/log chown ams-user:bycast *
+
+12. Log out from the server:
+
+exit
+
+1430
+
+Rebalance erasure-coded data after adding Storage Nodes
+
+After you add Storage Nodes, you can use the EC rebalance procedure to redistribute erasure-coded fragments among the existing and new Storage Nodes.
+
+Before you begin
+
+You have completed the expansion steps to add the new Storage Nodes.
+
+You have reviewed the considerations for rebalancing erasure-coded data.
+
+You understand that replicated object data will not be moved by this procedure and that the EC rebalance procedure does not consider the replicated data usage on each Storage Node when determining where to move erasure-coded data.
+
+You have the Passwords.txt file.
+
+What happens when this procedure runs
+
+Before starting the procedure, note the following:
+
+The EC rebalance procedure will not start if one or more volumes are offline (unmounted) or if they are online (mounted) but in an error state. The EC rebalance procedure temporarily reserves a large amount of storage. Storage alerts might be triggered, but will resolve when the rebalance is complete. If there is not enough storage for the reservation, the EC rebalance procedure will fail. Storage reservations are released when the EC rebalance procedure completes, whether the procedure failed or succeeded.
+
+If a volume goes offline while the EC rebalance procedure is in process, the rebalance procedure will terminate. Any data fragments that were already moved will remain in their new locations, and no data will be lost.
+
+You can rerun the procedure after all volumes are back online.
+
+When the EC rebalance procedure is running, the performance of ILM operations and S3 and Swift client operations might be impacted. S3 and Swift API operations to upload objects (or object parts) might fail during the EC rebalance procedure if they require more than 24 hours to complete. Long-duration PUT operations will fail if the applicable ILM rule uses Balanced or Strict placement on ingest. The following error will be reported: 500 Internal Server Error.
+
+During this procedure all nodes have a storage capacity limit of 80%. Nodes that exceed this limit, but still store below the target data partition, are excluded from:
+
+The site imbalance value ◦ Any job completion conditions
+
+The target data partition is calculated by dividing the total data for a site by the number of nodes.
+
+Job completion conditions. The EC rebalance procedure is considered complete when any of the following is true:
+
+It can’t move any more erasure-coded data. ◦ The data in all nodes is within a 5% deviation of the target data partition.
+
+1431 If a volume goes offline while the EC rebalance procedure is in process, the rebalance procedure will terminate. Any data fragments that were already moved will remain in their new locations, and no data will be lost.
+
+You can rerun the procedure after all volumes are back online.
+
+When the EC rebalance procedure is running, the performance of ILM operations and S3 and Swift client operations might be impacted. S3 and Swift API operations to upload objects (or object parts) might fail during the EC rebalance procedure if they require more than 24 hours to complete. Long-duration PUT operations will fail if the applicable ILM rule uses Balanced or Strict placement on ingest. The following error will be reported: 500 Internal Server Error.
+
+During this procedure all nodes have a storage capacity limit of 80%. Nodes that exceed this limit, but still store below the target data partition, are excluded from:
+
+The site imbalance value ◦ Any job completion conditions
+
+The target data partition is calculated by dividing the total data for a site by the number of nodes.
+
+Job completion conditions. The EC rebalance procedure is considered complete when any of the following is true:
+
+It can’t move any more erasure-coded data. ◦ The data in all nodes is within a 5% deviation of the target data partition.
+
+1431
+
+◦ The procedure has been running for 30 days. Steps
+
+1. Review the current object storage details for the site you plan to rebalance.
+
+a. Select NODES.
+
+b. Select the first Storage Node at the site.
+
+c. Select the Storage tab.
+
+d. Position your cursor over the Storage Used - Object Data chart to see the current amount of replicated
+
+data and erasure-coded data on the Storage Node.
+
+e. Repeat these steps to view the other Storage Nodes at the site.

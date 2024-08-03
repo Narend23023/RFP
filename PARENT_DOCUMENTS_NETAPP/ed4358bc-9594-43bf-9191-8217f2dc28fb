@@ -1,0 +1,117 @@
+Error: Proxy encountered an external error while trying to reach the Cloud Storage Pool
+
+You might encounter this error if you have configured a non-transparent storage proxy between Storage Nodes and the external S3 endpoint used for the Cloud Storage Pool. This error occurs if the external proxy server can’t reach the Cloud Storage Pool endpoint. For example, the DNS server might not be able to resolve the hostname or there might be an external networking issue.
+
+Try one or more of these steps to correct the issue:
+
+Check the settings for the Cloud Storage Pool (ILM > Storage pools).
+
+Check the networking configuration of the storage proxy server.
+
+Related information Lifecycle of a Cloud Storage Pool object
+
+Manage erasure-coding profiles
+
+You can view the details for an erasure-coding profile and rename a profile if needed. You can deactivate an erasure-coding profile if it is not currently used in any ILM rules.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permissions. View erasure-coding profile details
+
+You can view the details of an erasure-coding profile to determine its status, the erasure-coding scheme used, and other information.
+
+Steps
+
+1. Select ILM > Erasure coding.
+
+2. Select the profile. The detail page for the profile appears.
+
+3. Optionally, view the ILM rules tab for a list of ILM rules that use the profile, and the ILM policies that use those rules.
+
+4. Optionally, view the Storage Nodes tab for details about each Storage Node in the profile’s storage pool, such as the site where it’s located and the storage usage.
+
+Rename an erasure-coding profile
+
+You might want to rename an erasure-coding profile to make it more obvious what the profile does. Steps
+
+646 Check the networking configuration of the storage proxy server.
+
+Related information Lifecycle of a Cloud Storage Pool object
+
+Manage erasure-coding profiles
+
+You can view the details for an erasure-coding profile and rename a profile if needed. You can deactivate an erasure-coding profile if it is not currently used in any ILM rules.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permissions. View erasure-coding profile details
+
+You can view the details of an erasure-coding profile to determine its status, the erasure-coding scheme used, and other information.
+
+Steps
+
+1. Select ILM > Erasure coding.
+
+2. Select the profile. The detail page for the profile appears.
+
+3. Optionally, view the ILM rules tab for a list of ILM rules that use the profile, and the ILM policies that use those rules.
+
+4. Optionally, view the Storage Nodes tab for details about each Storage Node in the profile’s storage pool, such as the site where it’s located and the storage usage.
+
+Rename an erasure-coding profile
+
+You might want to rename an erasure-coding profile to make it more obvious what the profile does. Steps
+
+646
+
+1. Select ILM > Erasure coding.
+
+2. Select the profile you want to rename.
+
+3. Select Rename.
+
+4. Enter a unique name for the erasure-coding profile.
+
+The erasure-coding profile name is appended to the storage pool name in the placement instruction for an ILM rule.
+
+Erasure-coding profile names must be unique. A validation error occurs if you use the name of an existing profile, even if that profile has been deactivated.
+
+5. Select Save. Deactivate an erasure-coding profile
+
+You can deactivate an erasure-coding profile if you no longer plan to use it and if the profile is not currently used in any ILM rules.
+
+Confirm that no erasure-coded data repair operations or decommission procedures are in process. An error message is returned if you attempt to deactivate an erasure-coding profile while either of these operations are in progress. About this task
+
+StorageGRID prevents you from deactivating an erasure-coding profile if either of the following is true:
+
+The erasure-coding profile is currently used in an ILM rule.
+
+The erasure-coding profile is no longer used in any ILM rules, but object data and parity fragments for the profile still exist. Steps
+
+1. Select ILM > Erasure coding.
+
+2. On the Active tab, review the Status column to confirm that the erasure-coding profile you want to deactivate is not used in any ILM rules.
+
+You can’t deactivate an erasure-coding profile if it is used in any ILM rule. In the example, the 2+1 Data Center 1 profile is used in at least one ILM rule.
+
+3. If the profile is used in an ILM rule, follow these steps: a. Select ILM > Rules.
+
+b. Select each rule and review the retention diagram to determine if the rule uses the erasure-coding
+
+profile you want to deactivate.
+
+647
+
+648
+
+c. If the ILM rule uses the erasure-coding profile you want to deactivate, determine if the rule is used in
+
+any ILM policy.
+
+d. Complete the additional steps in the table, based on where the erasure-coding profile is used.
+
+Where has the profile been used?

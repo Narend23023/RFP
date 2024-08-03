@@ -1,0 +1,155 @@
+Rule name
+
+Two Copies Two Sites
+
+Reference time Ingest time
+
+Placements
+
+On Day 0 to forever, keep one replicated copy at Site 1 and one replicated copy at Site 2.
+
+The Rule analysis section of the Retention diagram states:
+
+StorageGRID site-loss protection will apply for the duration of this rule.
+
+Objects processed by this rule will not be deleted by ILM.
+
+695
+
+ILM rule 2 for example 1: Erasure-coding profile with bucket matching
+
+This example ILM rule uses an erasure-coding profile and an S3 bucket to determine where and how long the object is stored. Rule definition
+
+Example value
+
+Storage pool with multiple sites
+
+One storage pool across three sites (Sites 1, 2, 3)
+
+Use 6+3 erasure-coding scheme
+
+Rule name
+
+S3 Bucket finance-records
+
+Reference time
+
+Ingest time
+
+Placements
+
+For objects in the S3 bucket named finance-records, create one erasure-coded copy in the pool specified by the erasure-coding profile. Keep this copy forever. ILM policy for example 1
+
+In practice, most ILM policies are simple, even though the StorageGRID system allows you to design sophisticated and complex ILM policies.
+
+A typical ILM policy for a multi-site grid might include ILM rules such as the following:
+
+At ingest, store all objects belonging to the S3 bucket named finance-records in a storage pool that contains three sites. Use 6+3 erasure coding.
+
+If an object does not match the first ILM rule, use the policy’s default ILM rule, Two Copies Two Data Centers, to store one copy of that object in Site 1, and one copy in Site 2.
+
+696
+
+Related information
+
+ILM policies: Overview
+
+Create ILM policies
+
+Example 2: ILM rules and policy for EC object size filtering Example value
+
+Storage pool with multiple sites
+
+One storage pool across three sites (Sites 1, 2, 3)
+
+Use 6+3 erasure-coding scheme
+
+Rule name
+
+S3 Bucket finance-records
+
+Reference time
+
+Ingest time
+
+Placements
+
+For objects in the S3 bucket named finance-records, create one erasure-coded copy in the pool specified by the erasure-coding profile. Keep this copy forever. ILM policy for example 1
+
+In practice, most ILM policies are simple, even though the StorageGRID system allows you to design sophisticated and complex ILM policies.
+
+A typical ILM policy for a multi-site grid might include ILM rules such as the following:
+
+At ingest, store all objects belonging to the S3 bucket named finance-records in a storage pool that contains three sites. Use 6+3 erasure coding.
+
+If an object does not match the first ILM rule, use the policy’s default ILM rule, Two Copies Two Data Centers, to store one copy of that object in Site 1, and one copy in Site 2.
+
+696
+
+Related information
+
+ILM policies: Overview
+
+Create ILM policies
+
+Example 2: ILM rules and policy for EC object size filtering
+
+You can use the following example rules and policy as starting points to define an ILM policy that filters by object size to meet recommended EC requirements. The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+ILM rule 1 for example 2: Use EC for objects greater than 1 MB
+
+This example ILM rule erasure codes objects that are greater than 1 MB.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments. Rule definition
+
+Example value
+
+Rule name
+
+EC Only Objects > 1 MB
+
+Reference time
+
+Ingest time
+
+Advanced filter for Object size
+
+Object size greater than 1 MB
+
+Placements
+
+Create a 2+1 erasure-coded copy using three sites
+
+697
+
+ILM rule 2 for example 2: Two replicated copies
+
+This example ILM rule creates two replicated copies and does not filter by object size. This rule is the default rule for the policy. Because the first rule filters out all objects greater than 1 MB, this rule only applies to objects that are 1 MB or smaller. Rule definition
+
+Example value
+
+Rule name
+
+Two Replicated Copies
+
+Reference time
+
+Ingest time
+
+Advanced filter for Object size
+
+None
+
+Placements
+
+On Day 0 to forever, keep one replicated copy at Site 1 and one replicated copy at Site 2.
+
+ILM policy for example 2: Use EC for objects greater than 1 MB
+
+This example ILM policy includes two ILM rules:
+
+The first rule erasure codes all objects that are greater than 1 MB.
+
+The second (default) ILM rule creates two replicated copies. Because objects greater than 1 MB have been filtered out by rule 1, rule 2 only applies to objects that are 1 MB or smaller. Example 3: ILM rules and policy for better protection for image files
+
+You can use the following example rules and policy to ensure that images greater than 1 MB are erasure-coded and that two copies are made of smaller images.

@@ -1,0 +1,147 @@
+3. Complete the following steps on the new Admin Node: a. Log in to the new Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the new Admin Node:
+
+/usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+1428
+
+f. When prompted, press Enter to confirm that you want to destroy the new Prometheus database on the new Admin Node.
+
+The original Prometheus database and its historical data are copied to the new Admin Node. When the copy operation is done, the script starts the new Admin Node. The following status appears:
+
+Database cloned, starting services
+
+g. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter:
+
+ssh-add -D
+
+4. Restart the Prometheus service on the source Admin Node.
+
+service prometheus start
+
+Copy audit logs
+
+When you add a new Admin Node through an expansion procedure, its AMS service only logs events and actions that occur after it joins the system. As required, you can copy audit logs from a previously installed Admin Node to the new expansion Admin Node so that it is in sync with the rest of the StorageGRID system.
+
+Before you begin
+
+You have completed the required expansion steps to add an Admin Node.
+
+You have the Passwords.txt file. About this task
+
+To make historical audit messages available on a new Admin Node, you must copy the audit log files manually from an existing Admin Node to the expansion Admin Node.
+
+By default, audit information is sent to the audit log on Admin Nodes. You can skip these steps if either of the following applies:
+
+You configured an external syslog server and audit logs are now being sent to the syslog server instead of to Admin Nodes.
+
+You explicitly specified that audit messages should be saved only on the local nodes that generated them.
+
+See Configure audit messages and log destinations for details. Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@_primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+1429
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new file: service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+4. Rename the source audit.log file to ensure that it does not overwrite the file on the expansion Admin Node you are copying it to:
+
+ls -l mv audit.log _new_name_.txt
+
+5. Copy all audit log files to the destination location on the expansion Admin Node:
+
+scp -p * IP_address:/var/local/log
+
+6. If prompted for the passphrase for /root/.ssh/id_rsa, enter the SSH Access Password for the Primary Admin Node listed in the Passwords.txt file.
+
+7. Restore the original audit.log file: mv new_name.txt audit.log
+
+8. Start the AMS service:
+
+service ams start
+
+9. Log out from the server:
+
+exit
+
+10. Log in to the expansion Admin Node: b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+1429
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new file: service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+4. Rename the source audit.log file to ensure that it does not overwrite the file on the expansion Admin Node you are copying it to:
+
+ls -l mv audit.log _new_name_.txt
+
+5. Copy all audit log files to the destination location on the expansion Admin Node:
+
+scp -p * IP_address:/var/local/log
+
+6. If prompted for the passphrase for /root/.ssh/id_rsa, enter the SSH Access Password for the Primary Admin Node listed in the Passwords.txt file.
+
+7. Restore the original audit.log file: mv new_name.txt audit.log
+
+8. Start the AMS service:
+
+service ams start
+
+9. Log out from the server:
+
+exit
+
+10. Log in to the expansion Admin Node:
+
+a. Enter the following command: ssh admin@expansion_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+11. Update the user and group settings for the audit log files: cd /var/local/log chown ams-user:bycast *
+
+12. Log out from the server:
+
+exit
+
+1430
+
+Rebalance erasure-coded data after adding Storage Nodes

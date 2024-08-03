@@ -1,0 +1,39 @@
+When using StorageGRID load balancer endpoints, use Gateway Nodes instead of Admin Nodes for untrusted client traffic. If you have untrusted tenants, don’t allow them to have direct access to the Tenant Manager or the Tenant Management API. Instead, have any untrusted tenants use a tenant portal or an external tenant management system, which interacts with the Tenant Management API.
+
+Optionally, use an admin proxy for more control over AutoSupport communication from Admin Nodes to NetApp Support. See the steps for creating an admin proxy.
+
+Optionally, use the restricted 8443 and 9443 ports to separate Grid Manager and Tenant Manager communications. Block the shared port 443 and limit tenant requests to port 9443 for additional protection.
+
+Optionally, use separate Admin Nodes for grid administrators and tenant users.
+
+For more information, see the instructions for administering StorageGRID. Guidelines for Storage Nodes
+
+Storage Nodes manage and store object data and metadata. Follow these guidelines to secure the Storage Nodes in your StorageGRID system.
+
+Don’t allow untrusted clients to connect directly to Storage Nodes. Use a load balancer endpoint served by a Gateway Node or a third party load balancer.
+
+Don’t enable outbound services for untrusted tenants. For example, when creating the account for an untrusted tenant, don’t allow the tenant to use its own identity source and don’t allow the use of platform services. See the steps for creating a tenant account.
+
+Use a third-party load balancer for untrusted client traffic. Third-party load balancing offers more control and additional layers of protection against attack.
+
+Optionally, use a storage proxy for more control over Cloud Storage Pools and platform services communication from Storage Nodes to external services. See the steps for creating a storage proxy. Optionally, connect to external services using the Client Network. Then, select CONFIGURATION > Security > Firewall control > Untrusted Client Networks and indicate that the Client Network on the Storage Node is untrusted. The Storage Node no longer accepts any incoming traffic on the Client Network, but it continues to allow outbound requests for Platform Services. Guidelines for Gateway Nodes
+
+Gateway Nodes provide an optional load-balancing interface that client applications can use to connect to StorageGRID. Follow these guidelines to secure any Gateway Nodes in your StorageGRID system:
+
+Configure and use load balancer endpoints. See Considerations for load balancing. Don’t enable outbound services for untrusted tenants. For example, when creating the account for an untrusted tenant, don’t allow the tenant to use its own identity source and don’t allow the use of platform services. See the steps for creating a tenant account.
+
+Use a third-party load balancer for untrusted client traffic. Third-party load balancing offers more control and additional layers of protection against attack.
+
+Optionally, use a storage proxy for more control over Cloud Storage Pools and platform services communication from Storage Nodes to external services. See the steps for creating a storage proxy. Optionally, connect to external services using the Client Network. Then, select CONFIGURATION > Security > Firewall control > Untrusted Client Networks and indicate that the Client Network on the Storage Node is untrusted. The Storage Node no longer accepts any incoming traffic on the Client Network, but it continues to allow outbound requests for Platform Services. Guidelines for Gateway Nodes
+
+Gateway Nodes provide an optional load-balancing interface that client applications can use to connect to StorageGRID. Follow these guidelines to secure any Gateway Nodes in your StorageGRID system:
+
+Configure and use load balancer endpoints. See Considerations for load balancing.
+
+Use a third-party load balancer between the client and the Gateway Node or Storage Nodes for untrusted client traffic. Third-party load balancing offers more control and additional layers of protection against attack. If you do use a third-party load balancer, network traffic can still optionally be configured to go through an internal load balancer endpoint or be sent directly to Storage Nodes.
+
+If you are using load balancer endpoints, optionally have clients connect over the Client Network. Then,
+
+718 select CONFIGURATION > Security > Firewall control > Untrusted Client Networks and indicate that the Client Network on the Gateway Node is untrusted. The Gateway Node only accepts inbound traffic on the ports explicitly configured as load balancer endpoints. Guidelines for hardware appliance nodes
+
+StorageGRID hardware appliances are specially designed for use in a StorageGRID system. Some appliances can be used as Storage Nodes. Other appliances can be used as Admin Nodes or Gateway Nodes. You can combine appliance nodes with software-based nodes or deploy fully engineered, all-appliance grids.

@@ -1,0 +1,107 @@
+You belong to a user group that has the Manage endpoints or Root access permission. Steps
+
+1. Select STORAGE (S3) > Platform services endpoints.
+
+The Platform services endpoints page appears and shows the list of platform services endpoints that have already been configured.
+
+844
+
+2. Select the endpoint you want to edit.
+
+The endpoint details page appears.
+
+3. Select Configuration.
+
+4. As needed, change the configuration of the endpoint.
+
+You can’t change an endpoint’s URN after the endpoint has been created.
+
+a. To change the display name for the endpoint, select the edit icon
+
+.
+
+b. As needed, change the URI.
+
+c. As needed, change the authentication type.
+
+▪ For Access Key authentication, change the key as necessary by selecting Edit S3 key and pasting a new access key ID and secret access key. If you need to cancel your changes, select Revert S3 key edit.
+
+▪ For CAP (C2S Access Portal) authentication, change the temporary credentials URL or optional
+
+client private key passphrase and upload new certificate and key files as needed. The Client private key must be in OpenSSL encrypted format or unencrypted private key format.
+
+d. As needed, change the method for verifying the server.
+
+5. Select Test and save changes.
+
+A success message appears if the endpoint can be reached using the specified credentials. The connection to the endpoint is verified from one node at each site.
+
+845
+
+◦ An error message appears if endpoint validation fails. Modify the endpoint to correct the error, and then
+
+select Test and save changes. Delete platform services endpoint
+
+You can delete an endpoint if you no longer want to use the associated platform service.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Manage endpoints or Root access permission. Steps
+
+1. Select STORAGE (S3) > Platform services endpoints.
+
+The Platform services endpoints page appears and shows the list of platform services endpoints that have already been configured.
+
+2. Select the checkbox for each endpoint you want to delete.
+
+If you delete a platform services endpoint that is in use, the associated platform service will be disabled for any buckets that use the endpoint. Any requests that have not yet been completed will be dropped. Any new requests will continue to be generated until you change your bucket configuration to no longer reference the deleted URN. StorageGRID will report these requests as unrecoverable errors.
+
+3. Select Actions > Delete endpoint.
+
+A confirmation message appears.
+
+846
+
+4. Select Delete endpoint. Troubleshoot platform services endpoint errors
+
+If an error occurs when StorageGRID attempts to communicate with a platform services endpoint, a message is displayed on the dashboard. On the Platform services endpoints page, the Last error column indicates how long ago the error occurred. No error is displayed if the permissions associated with an endpoint’s credentials are incorrect.
+
+Determine if error has occurred
+
+If any platform services endpoint errors have occurred within the past 7 days, the Tenant Manager dashboard displays an alert message. You can go the Platform services endpoints page to see more details about the error.
+
+The same error that appears on the dashboard also appears at the top of the Platform services endpoints page. To view a more detailed error message: Steps
+
+1. From the list of endpoints, select the endpoint that has the error.
+
+2. On the endpoint details page, select Connection. This tab displays only the most recent error for an
+
+endpoint and indicates how long ago the error occurred. Errors that include the red X icon within the past 7 days.
+
+occurred
+
+847
+
+Check if error is still current
+
+Some errors might continue to be shown in the Last error column even after they are resolved. To see if an error is current or to force the removal of a resolved error from the table: Steps
+
+1. Select the endpoint.
+
+The endpoint details page appears.
+
+2. Select Connection > Test connection.
+
+Selecting Test connection causes StorageGRID to validate that the platform services endpoint exists and that it can be reached with the current credentials. The connection to the endpoint is validated from one node at each site. Resolve endpoint errors Determine if error has occurred
+
+If any platform services endpoint errors have occurred within the past 7 days, the Tenant Manager dashboard displays an alert message. You can go the Platform services endpoints page to see more details about the error.
+
+The same error that appears on the dashboard also appears at the top of the Platform services endpoints page. To view a more detailed error message: Steps
+
+1. From the list of endpoints, select the endpoint that has the error.
+
+2. On the endpoint details page, select Connection. This tab displays only the most recent error for an
+
+endpoint and indicates how long ago the error occurred. Errors that include the red X icon within the past 7 days.

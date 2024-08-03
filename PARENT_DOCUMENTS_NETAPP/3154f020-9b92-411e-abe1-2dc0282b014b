@@ -1,0 +1,65 @@
+6. After the sn-recovery-postinstall.sh script has started services on the node, you can restore object data to any storage volumes that were formatted by the script.
+
+The script asks if you want to use the Grid Manager volume restoration process.
+
+In most cases, you should restore object data using Grid Manager. Answer y to use the Grid Manager. ◦ In rare cases, such as when instructed by technical support, or when you know that the replacement node has fewer volumes available for object storage than the original node, you must restore object data manually using the repair-data script. If one of these cases applies, answer n.
+
+1570
+
+If you answer n to using the Grid Manager volume restoration process (restore object data manually): ▪ You aren’t able to restore object data using Grid Manager. ▪ You can monitor the progress of manual restoration jobs using Grid Manager.
+
+After making your selection, the script completes and the next steps to recover object data are shown. After reviewing these steps, press any key to return to the command line.
+
+Restore object data to storage volume for appliance
+
+After recovering storage volumes for the appliance Storage Node, you can restore the replicated or erasure-coded object data that was lost when the Storage Node failed.
+
+Which procedure should I use?
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager.
+
+If the volumes are listed at MAINTENANCE > Volume restoration > Nodes to restore, restore object data using the Volume restoration page in the Grid Manager. The script asks if you want to use the Grid Manager volume restoration process.
+
+In most cases, you should restore object data using Grid Manager. Answer y to use the Grid Manager. ◦ In rare cases, such as when instructed by technical support, or when you know that the replacement node has fewer volumes available for object storage than the original node, you must restore object data manually using the repair-data script. If one of these cases applies, answer n.
+
+1570
+
+If you answer n to using the Grid Manager volume restoration process (restore object data manually): ▪ You aren’t able to restore object data using Grid Manager. ▪ You can monitor the progress of manual restoration jobs using Grid Manager.
+
+After making your selection, the script completes and the next steps to recover object data are shown. After reviewing these steps, press any key to return to the command line.
+
+Restore object data to storage volume for appliance
+
+After recovering storage volumes for the appliance Storage Node, you can restore the replicated or erasure-coded object data that was lost when the Storage Node failed.
+
+Which procedure should I use?
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager.
+
+If the volumes are listed at MAINTENANCE > Volume restoration > Nodes to restore, restore object data using the Volume restoration page in the Grid Manager.
+
+If the volumes aren’t listed at MAINTENANCE > Volume restoration > Nodes to restore, follow the steps below for using the repair-data script to restore object data. If the recovered Storage Node contains fewer volumes than the node it is replacing, you must use the repair-data script.
+
+The repair-data script is deprecated and will be removed in a future release. When possible, use the Volume restoration procedure in the Grid Manager.
+
+Use the repair-data script to restore object data
+
+Before you begin
+
+You have confirmed that the recovered Storage Node has a Connection State of Connected NODES > Overview tab in the Grid Manager. About this task
+
+Object data can be restored from other Storage Nodes, an Archive Node, or a Cloud Storage Pool, assuming that the grid’s ILM rules were configured such that object copies are available.
+
+Note the following:
+
+If an ILM rule was configured to store only one replicated copy and that copy existed on a storage volume that failed, you will not be able to recover the object.
+
+If the only remaining copy of an object is in a Cloud Storage Pool, StorageGRID must issue multiple requests to the Cloud Storage Pool endpoint to restore object data. Before performing this procedure, contact technical support for help in estimating the recovery time frame and the associated costs. If the only remaining copy of an object is on an Archive Node, object data is retrieved from the Archive Node. Restoring object data to a Storage Node from an Archive Node takes longer than restoring copies from other Storage Nodes because of the latency associated with retrievals from external archival storage on the
+
+1571
+
+systems.
+
+About the repair-data script
+
+To restore object data, you run the repair-data script. This script begins the process of restoring object data and works with ILM scanning to ensure that ILM rules are met.

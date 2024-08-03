@@ -1,0 +1,85 @@
+Each site in your StorageGRID system must have at least three Storage Nodes. Types of Storage Nodes
+
+All Storage Nodes that were installed before StorageGRID 11.8 store both objects and the metadata for those objects. Starting in StorageGRID 11.8, you can choose the Storage Node type for new software-based storage nodes:
+
+Object and metadata Storage Nodes
+
+By default, all new Storage Nodes installed in StorageGRID 11.8 will store both objects and metadata. Metadata-only Storage Nodes (software-based nodes only)
+
+You can specify that a new software-based Storage Node be used to store only metadata. You can also add a metadata-only software-based Storage Node to your StorageGRID system during StorageGRID system expansion.
+
+16 Processes requests from the Grid Management API and the Tenant Management API.
+
+Network Management System
+
+Provides functionality for the Grid Manager.
+
+(NMS)
+
+Prometheus
+
+Collects and stores time-series metrics from the services on all nodes.
+
+Server Status Monitor (SSM) Monitors the operating system and underlying hardware.
+
+What is a Storage Node?
+
+Storage Nodes manage and store object data and metadata. Storage Nodes include the services and processes required to store, move, verify, and retrieve object data and metadata on disk.
+
+Each site in your StorageGRID system must have at least three Storage Nodes. Types of Storage Nodes
+
+All Storage Nodes that were installed before StorageGRID 11.8 store both objects and the metadata for those objects. Starting in StorageGRID 11.8, you can choose the Storage Node type for new software-based storage nodes:
+
+Object and metadata Storage Nodes
+
+By default, all new Storage Nodes installed in StorageGRID 11.8 will store both objects and metadata. Metadata-only Storage Nodes (software-based nodes only)
+
+You can specify that a new software-based Storage Node be used to store only metadata. You can also add a metadata-only software-based Storage Node to your StorageGRID system during StorageGRID system expansion.
+
+16
+
+You can only select the Storage Node type when initially installing the software-based node or when you install the software-based node during StorageGRID system expansion. You can’t change the type after the node installation is complete.
+
+Installing a metadata-only node is typically not required. However, using a Storage Node exclusively for metadata can make sense if your grid stores a very large number of small objects. Installing dedicated metadata capacity provides a better balance between the space needed for a very large number of small objects and the space needed for the metadata for all those objects. When installing a grid with software-based metadata-only nodes, the grid must also contain a minimum number of nodes for object storage:
+
+For a single-site grid, at least two Storage Nodes are configured for objects and metadata.
+
+For a multi-site grid, at least one Storage Node per site are configured for objects and metadata.
+
+Software-based Storage Nodes display a metadata-only indication for each metadata-only node on all pages that list the Storage Node type. Primary services for Storage Nodes
+
+The following table shows the primary services for Storage Nodes; however, this table does not list all node services.
+
+Some services, such as the ADC service and the RSM service, typically exist only on three Storage Nodes at each site.
+
+Service
+
+Key function
+
+Account (acct) Manages tenant accounts.
+
+17
+
+Service
+
+Administrative Domain Controller (ADC)
+
+Cassandra
+
+Cassandra Reaper
+
+Chunk
+
+Data Mover (dmv)
+
+18
+
+Key function
+
+Maintains topology and grid-wide configuration. Details
+
+The Administrative Domain Controller (ADC) service authenticates grid nodes and their connections with each other. The ADC service is hosted on a minimum of three Storage Nodes at a site.
+
+The ADC service maintains topology information including the location and availability of services. When a grid node requires information from another grid node or an action to be performed by another grid node, it contacts an ADC service to find the best grid node to process its request. In addition, the ADC service retains a copy of the StorageGRID deployment’s configuration bundles, allowing any grid node to retrieve current configuration information.
+
+To facilitate distributed and islanded operations, each ADC service synchronizes certificates, configuration bundles, and information about services and topology with the other ADC services in the StorageGRID system. In general, all grid nodes maintain a connection to at least one ADC service. This ensures that grid nodes are always accessing the latest information. When grid nodes connect, they cache other grid nodes' certificates, enabling systems to continue functioning with known grid nodes even when an ADC service is unavailable. New grid nodes can only establish connections by using an ADC service.

@@ -1,0 +1,93 @@
+2. Select Enable S3 Object Lock.
+
+3. Select Apply.
+
+A confirmation dialog box appears and reminds you that you can’t disable S3 Object Lock after it is enabled.
+
+4. If you are sure you want to permanently enable S3 Object Lock for your entire system, select OK.
+
+693
+
+When you select OK:
+
+If the default rule in the active ILM policy is compliant, S3 Object Lock is now enabled for the entire grid and can’t be disabled.
+
+If the default rule is not compliant, an error appears. You must create and activate a new ILM policy that includes a compliant rule as its default rule. Select OK. Then, create a new policy, simulate it, and activate it. See Create ILM policy for instructions.
+
+Resolve consistency errors when updating the S3 Object Lock or legacy Compliance configuration If a data center site or multiple Storage Nodes at a site become unavailable, you might need to help S3 tenant users apply changes to the S3 Object Lock or legacy Compliance configuration.
+
+Tenant users who have buckets with S3 Object Lock (or legacy Compliance) enabled can change certain settings. For example, a tenant user using S3 Object Lock might need to put an object version under legal hold.
+
+When a tenant user updates the settings for an S3 bucket or an object version, StorageGRID attempts to immediately update the bucket or object metadata across the grid. If the system is unable to update the metadata because a data center site or multiple Storage Nodes are unavailable, it returns an error:
+
+503: Service Unavailable Unable to update compliance settings because the settings can't be consistently applied on enough storage services. Contact your grid administrator for assistance.
+
+To resolve this error, follow these steps: 1. Attempt to make all Storage Nodes or sites available again as soon as possible. If the default rule is not compliant, an error appears. You must create and activate a new ILM policy that includes a compliant rule as its default rule. Select OK. Then, create a new policy, simulate it, and activate it. See Create ILM policy for instructions.
+
+Resolve consistency errors when updating the S3 Object Lock or legacy Compliance configuration If a data center site or multiple Storage Nodes at a site become unavailable, you might need to help S3 tenant users apply changes to the S3 Object Lock or legacy Compliance configuration.
+
+Tenant users who have buckets with S3 Object Lock (or legacy Compliance) enabled can change certain settings. For example, a tenant user using S3 Object Lock might need to put an object version under legal hold.
+
+When a tenant user updates the settings for an S3 bucket or an object version, StorageGRID attempts to immediately update the bucket or object metadata across the grid. If the system is unable to update the metadata because a data center site or multiple Storage Nodes are unavailable, it returns an error:
+
+503: Service Unavailable Unable to update compliance settings because the settings can't be consistently applied on enough storage services. Contact your grid administrator for assistance.
+
+To resolve this error, follow these steps: 1. Attempt to make all Storage Nodes or sites available again as soon as possible.
+
+2. If you are unable to make enough of the Storage Nodes at each site available, contact technical support, who can help you recover nodes and ensure that changes are consistently applied across the grid.
+
+3. Once the underlying issue has been resolved, remind the tenant user to retry their configuration changes.
+
+Related information
+
+Use a tenant account
+
+Use S3 REST API
+
+Recover and maintain Example ILM rules and policies
+
+Example 1: ILM rules and policy for object storage
+
+You can use the following example rules and policy as a starting point when defining an ILM policy to meet your object protection and retention requirements.
+
+694
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss. ILM rule 1 for example 1: Copy object data to two sites
+
+This example ILM rule copies object data to storage pools in two sites.
+
+Rule definition
+
+Example value
+
+One-site storage pools
+
+Two storage pools, each containing different sites, named Site 1 and Site 2.
+
+Rule name
+
+Two Copies Two Sites
+
+Reference time Ingest time
+
+Placements
+
+On Day 0 to forever, keep one replicated copy at Site 1 and one replicated copy at Site 2.
+
+The Rule analysis section of the Retention diagram states:
+
+StorageGRID site-loss protection will apply for the duration of this rule.
+
+Objects processed by this rule will not be deleted by ILM.
+
+695
+
+ILM rule 2 for example 1: Erasure-coding profile with bucket matching
+
+This example ILM rule uses an erasure-coding profile and an S3 bucket to determine where and how long the object is stored. Rule definition
+
+Example value
+
+Storage pool with multiple sites
+
+One storage pool across three sites (Sites 1, 2, 3)

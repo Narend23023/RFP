@@ -1,0 +1,51 @@
+To understand what happens when an S3 client deletes objects from a bucket that has cross-grid replication enabled, review how S3 clients delete objects from buckets that have versioning enabled, as follows:
+
+361
+
+• If an S3 client issues a delete request that includes a version ID, that version of the object is permanently
+
+removed. No delete marker is added to the bucket. What happens when objects are deleted?
+
+As described in Delete data flow, StorageGRID can delete an object for any of these reasons:
+
+The S3 client issues a delete request.
+
+A Tenant Manager user selects the Delete objects in bucket option to remove all objects from a bucket.
+
+The bucket has a lifecycle configuration, which expires.
+
+The last time period in the ILM rule for the object ends, and there are no further placements specified. When StorageGRID deletes an object because of a Delete objects in bucket operation, bucket lifecycle expiration, or ILM placement expiration, the replicated object is never deleted from the other grid in a grid federation connection. However, delete markers added to the source bucket by S3 client deletes can optionally be replicated to the destination bucket.
+
+To understand what happens when an S3 client deletes objects from a bucket that has cross-grid replication enabled, review how S3 clients delete objects from buckets that have versioning enabled, as follows:
+
+361
+
+• If an S3 client issues a delete request that includes a version ID, that version of the object is permanently
+
+removed. No delete marker is added to the bucket.
+
+If an S3 client issues a delete request that does not include a version ID, StorageGRID does not delete any object versions. Instead, it adds a delete marker to the bucket. The delete marker causes StorageGRID to act as if the object was deleted: A GetObject request without a version ID will fail with 404 No Object Found ◦ A GetObject request with a valid version ID will succeed and return the requested object version.
+
+When an S3 client deletes an object from a bucket that has cross-grid replication enabled, StorageGRID determines whether to replicate the delete request to the destination, as follows:
+
+If the delete request includes a version ID, that object version is permanently removed from the source grid. However, StorageGRID does not replicate delete requests that include a version ID, so the same object version is not deleted from the destination.
+
+If the delete request does not include a version ID, StorageGRID can optionally replicate the delete marker, based on how cross-grid replication is configured for the bucket:
+
+If you choose to replicate delete markers (default), a delete marker is added to the source bucket and replicated to the destination bucket. In effect, the object appears to be deleted on both grids. If you choose not to replicate delete markers, a delete marker is added to the source bucket but is not replicated to the destination bucket. In effect, objects that are deleted on the source grid aren’t deleted on the destination grid.
+
+In the figure, Replicate delete markers was set to Yes when cross-grid replication was enabled. Delete requests for the source bucket that include a version ID will not delete objects from the destination bucket. Delete requests for the source bucket that don’t include a version ID will appear to delete objects in the destination bucket.
+
+If you want to keep object deletions synchronized between grids, create corresponding S3 lifecycle configurations for the buckets on both grids.
+
+How encrypted objects are replicated
+
+When you use cross-grid replication to replicate objects between grids, you can encrypt individual objects, use default bucket encryption, or configure grid-wide encryption. You can add, modify, or remove default bucket or 362
+
+grid-wide encryption settings before or after you enable cross-grid replication for a bucket.
+
+To encrypt individual objects, you can use SSE (server-side encryption with StorageGRID-managed keys) when adding the objects to the source bucket. Use the x-amz-server-side-encryption request header and specify AES256. See Use server-side encryption.
+
+Using SSE-C (server-side encryption with customer-provided keys) is not supported for cross- grid replication. The ingest operation will fail.
+
+To use default encryption for a bucket, use a PutBucketEncryption request and set the SSEAlgorithm parameter to AES256. Bucket-level encryption applies to any objects ingested without the x-amz-server- side-encryption request header. See Operations on buckets. To use grid-level encryption, set the Stored object encryption option to AES-256. Grid-level encryption applies to any objects that aren’t encrypted at the bucket level or that are ingested without the x-amz- server-side-encryption request header. See Configure network and object options. How encrypted objects are replicated

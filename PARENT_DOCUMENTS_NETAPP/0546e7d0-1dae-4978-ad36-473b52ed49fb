@@ -1,0 +1,59 @@
+How trusted the tenant accounts are. If you are a service provider with untrusted tenant accounts, you will have different security concerns than if you only use trusted, in-house tenants.
+
+Which security requirements and conventions are followed by your organization. You might need to comply with specific regulatory or corporate requirements.
+
+714
+
+Hardening guidelines for software upgrades You must keep your StorageGRID system and related services up to date to defend against attacks. Upgrades to StorageGRID software
+
+Whenever possible, you should upgrade StorageGRID software to the most recent major release or to the previous major release. Keeping StorageGRID up to date helps reduce the amount of time that known vulnerabilities are active and reduces the overall attack surface area. In addition, the most recent releases of StorageGRID often contain security hardening features that aren’t included in earlier releases.
+
+Consult the NetApp Interoperability Matrix Tool (IMT) to determine which version of StorageGRID software you should be using. When a hotfix is required, NetApp prioritizes creating updates for the most recent releases. Some patches might not be compatible with earlier releases.
+
+To download the most recent StorageGRID releases and hotfixes, go to NetApp Downloads: StorageGRID. How trusted the tenant accounts are. If you are a service provider with untrusted tenant accounts, you will have different security concerns than if you only use trusted, in-house tenants.
+
+Which security requirements and conventions are followed by your organization. You might need to comply with specific regulatory or corporate requirements.
+
+714
+
+Hardening guidelines for software upgrades You must keep your StorageGRID system and related services up to date to defend against attacks. Upgrades to StorageGRID software
+
+Whenever possible, you should upgrade StorageGRID software to the most recent major release or to the previous major release. Keeping StorageGRID up to date helps reduce the amount of time that known vulnerabilities are active and reduces the overall attack surface area. In addition, the most recent releases of StorageGRID often contain security hardening features that aren’t included in earlier releases.
+
+Consult the NetApp Interoperability Matrix Tool (IMT) to determine which version of StorageGRID software you should be using. When a hotfix is required, NetApp prioritizes creating updates for the most recent releases. Some patches might not be compatible with earlier releases.
+
+To download the most recent StorageGRID releases and hotfixes, go to NetApp Downloads: StorageGRID.
+
+To upgrade StorageGRID software, see the upgrade instructions.
+
+To apply a hotfix, see the StorageGRID hotfix procedure.
+
+Upgrades to external services External services can have vulnerabilities that affect StorageGRID indirectly. You should ensure that the services that StorageGRID depends on are kept up to date. These services include LDAP, KMS (or KMIP server), DNS, and NTP.
+
+For a list of supported versions, see the NetApp Interoperability Matrix Tool. Upgrades to hypervisors
+
+If your StorageGRID nodes are running on VMware or another hypervisor, you must ensure that the hypervisor software and firmware are up to date.
+
+For a list of supported versions, see the NetApp Interoperability Matrix Tool. Upgrades to Linux nodes
+
+If your StorageGRID nodes are using Linux host platforms, you must ensure that security updates and kernel updates are applied to the host OS. Additionally, you must apply firmware updates to vulnerable hardware when these updates become available.
+
+For a list of supported versions, see the NetApp Interoperability Matrix Tool.
+
+Hardening guidelines for StorageGRID networks
+
+The StorageGRID system supports up to three network interfaces per grid node, allowing you to configure the networking for each individual grid node to match your security and access requirements.
+
+For detailed information about StorageGRID networks, see the StorageGRID network types.
+
+715
+
+Guidelines for Grid Network
+
+You must configure a Grid Network for all internal StorageGRID traffic. All grid nodes are on the Grid Network, and they must be able to talk to all other nodes.
+
+When configuring the Grid Network, follow these guidelines: Ensure that the network is secured from untrusted clients, such as those on the open internet.
+
+When possible, use the Grid Network exclusively for internal traffic. Both the Admin Network and the Client Network have additional firewall restrictions that block external traffic to internal services. Using the Grid Network for external client traffic is supported, but this use offers fewer layers of protection.
+
+If the StorageGRID deployment spans multiple data centers, use a virtual private network (VPN) or equivalent on the Grid Network to provide additional protection for internal traffic.

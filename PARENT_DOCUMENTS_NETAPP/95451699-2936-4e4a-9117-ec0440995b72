@@ -1,0 +1,169 @@
+1500
+
+8192
+
+GRID_NETWORK_TARGET
+
+Value
+
+176
+
+Designation
+
+Required when GRID_NETWORK_IP is specified and GRID_NETWORK_CONFIG = STATIC.
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+Name of the host device that you will use for Grid Network access by the StorageGRID node. Only network interface names are supported. Typically, you use a different interface name than what was specified for ADMIN_NETWORK_TARGET or CLIENT_NETWORK_TARGET.
+
+Note: Don’t use bond or bridge devices as the network target. Either configure a VLAN (or other virtual interface) on top of the bond device, or use a bridge and virtual Ethernet (veth) pair. Examples:
+
+bond0.1001
+
+ens192
+
+GRID_NETWORK_TARGET_TYPE
+
+Value
+
+Interface (This is the only supported value.)
+
+GRID_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+Value
+
+True or False
+
+Set the value of the key to "true" to cause the StorageGRID container to use the MAC address of the host target interface on the Grid Network.
+
+Best practice: In networks where promiscuous mode would be required, use the GRID_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC key instead. For more details on MAC cloning:
+
+Considerations and recommendations for MAC address cloning (Red Hat Enterprise Linux)
+
+Considerations and recommendations for MAC address cloning (Ubuntu or Debian)
+
+Interfaces key
+
+INTERFACE_TARGET_nnnn
+
+Value
+
+Required
+
+Designation
+
+Optional
+
+Designation
+
+Best practice Designation
+
+177
+
+Name and optional description for an extra interface you want to add to this node. You can add multiple extra interfaces to each node.
+
+For nnnn, specify a unique number for each INTERFACE_TARGET entry you are adding.
+
+For the value, specify the name of the physical interface on the bare- metal host. Then, optionally, add a comma and provide a description of the interface, which is displayed on the VLAN interfaces page and the HA groups page. Example: INTERFACE_TARGET_0001=ens256, Trunk
+
+If you add a trunk interface, you must configure a VLAN interface in StorageGRID. If you add an access interface, you can add the interface directly to an HA group; you don’t need to configure a VLAN interface.
+
+Maximum RAM key
+
+MAXIMUM_RAM
+
+Value
+
+The maximum amount of RAM that this node is allowed to consume. If this key is omitted, the node has no memory restrictions. When setting this field for a production-level node, specify a value that is at least 24 GB and 16 to 32 GB less than the total system RAM.
+
+Note: The RAM value affects a node’s actual metadata reserved space. See the description of what Metadata Reserved Space is.
+
+The format for this field is numberunit, where unit can be b, k, m, or g. Examples:
+
+24g
+
+38654705664b
+
+Note: If you want to use this option, you must enable kernel support for memory cgroups.
+
+Node type key
+
+NODE_TYPE
+
+Value
+
+178
+
+Optional
+
+Designation
+
+Optional
+
+Designation
+
+Type of node: If you add a trunk interface, you must configure a VLAN interface in StorageGRID. If you add an access interface, you can add the interface directly to an HA group; you don’t need to configure a VLAN interface.
+
+Maximum RAM key
+
+MAXIMUM_RAM
+
+Value
+
+The maximum amount of RAM that this node is allowed to consume. If this key is omitted, the node has no memory restrictions. When setting this field for a production-level node, specify a value that is at least 24 GB and 16 to 32 GB less than the total system RAM.
+
+Note: The RAM value affects a node’s actual metadata reserved space. See the description of what Metadata Reserved Space is.
+
+The format for this field is numberunit, where unit can be b, k, m, or g. Examples:
+
+24g
+
+38654705664b
+
+Note: If you want to use this option, you must enable kernel support for memory cgroups.
+
+Node type key
+
+NODE_TYPE
+
+Value
+
+178
+
+Optional
+
+Designation
+
+Optional
+
+Designation
+
+Type of node:
+
+VM_Admin_Node VM_Storage_Node VM_Archive_Node VM_API_Gateway
+
+Port remap keys
+
+PORT_REMAP Value
+
+Remaps any port used by a node for internal grid node communications or external communications. Remapping ports is necessary if enterprise networking policies restrict one or more ports used by StorageGRID, as described in Internal grid node communications or External communications.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+Note: If only PORT_REMAP is set, the mapping that you specify is used for both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications.
+
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP = client/tcp/18082/443
+
+PORT_REMAP_INBOUND
+
+Value
+
+Remaps inbound communications to the specified port. If you specify PORT_REMAP_INBOUND but don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.

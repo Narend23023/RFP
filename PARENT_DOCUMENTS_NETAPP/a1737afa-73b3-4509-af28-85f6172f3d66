@@ -1,0 +1,47 @@
+The Client Network gateway becomes the default route for the grid node when grid configuration is complete. Optional VLAN networks
+
+As required, you can optionally use virtual LAN (VLAN) networks for client traffic and for some types of admin traffic. Grid traffic, however, can’t use a VLAN interface. The internal StorageGRID traffic between nodes must always use the Grid Network on eth0.
+
+To support the use VLANs, you must configure one or more interfaces on a node as trunk interfaces at the switch. You can configure the Grid Network interface (eth0) or the Client Network interface (eth2) to be a trunk, or you can add trunk interfaces to the node.
+
+If eth0 is configured as a trunk, Grid Network traffic flows over the trunk native interface, as configured on the switch. Similarly, if eth2 is configured as a trunk, and the Client Network is also configured on the same node, the Client Network uses the trunk port’s native VLAN as configured on the switch. Only inbound admin traffic, such as used for SSH, Grid Manager, or Tenant Manager traffic, is supported over VLAN networks. Outbound traffic, such as used for NTP, DNS, LDAP, KMS, and Cloud Storage Pools, is not supported over VLAN networks.
+
+VLAN interfaces can be added to Admin Nodes and Gateway Nodes only. You can’t use a VLAN interface for client or admin access to Storage Nodes or Archive Nodes.
+
+See Configure VLAN interfaces for instructions and guidelines.
+
+VLAN interfaces are only used in HA groups and are assigned VIP addresses on the active node. See Manage high availability groups for instructions and guidelines. Network topology examples
+
+Grid Network topology
+
+The simplest network topology is created by configuring the Grid Network only.
+
+When you configure the Grid Network, you establish the host IP address, subnet mask, and Gateway IP address for the eth0 interface for each grid node.
+
+During configuration, you must add all Grid Network subnets to the Grid Network Subnet List (GNSL). This list includes all subnets for all sites, and might also include external subnets that provide access to critical services such as NTP, DNS, or LDAP.
+
+At installation, the Grid Network interface applies static routes for all subnets in the GNSL and sets the node’s default route to the Grid Network gateway if one is configured. The GNSL is not required if there is no Client Network and the Grid Network gateway is the node’s default route. Host routes to all other nodes in the grid are
+
+47
+
+also generated. In this example, all traffic shares the same network, including traffic related to S3 and Swift client requests and administrative and maintenance functions.
+
+This topology is appropriate for single-site deployments that aren’t externally available, proof-of- concept or test deployments, or when a third-party load balancer acts as the client access boundary. When possible, the Grid Network should be used exclusively for internal traffic. Both the Admin Network and the Client Network have additional firewall restrictions that block external traffic to internal services. Using the Grid Network for external client traffic is supported, but this use offers fewer layers of protection.
+
+48
+
+Admin Network topology
+
+Having an Admin Network is optional. One way that you can use an Admin Network and a Grid Network is to configure a routable Grid Network and a bounded Admin Network for each node. When you configure the Admin Network, you establish the host IP address, subnet mask, and Gateway IP address for the eth1 interface for each grid node.
+
+The Admin Network can be unique to each node and can consist of multiple subnets. Each node can be configured with an Admin External Subnet List (AESL). The AESL lists the subnets reachable over the Admin Network for each node. The AESL must also include the subnets of any services the grid will access over the Admin Network, such as NTP, DNS, KMS, and LDAP. Static routes are applied for each subnet in the AESL.
+
+In this example, the Grid Network is used for traffic related to S3 and Swift client requests and object management. while the Admin Network is used for administrative functions.
+
+49 Client Network topology
+
+Having a Client Network is optional. Using a Client Network allows client network traffic (for example, S3 and Swift) to be separated from grid internal traffic, which allows grid networking to be more secure. Administrative traffic can be handled by either the Client or Grid Network when the Admin Network is not configured. 48
+
+Admin Network topology
+
+Having an Admin Network is optional. One way that you can use an Admin Network and a Grid Network is to configure a routable Grid Network and a bounded Admin Network for each node. When you configure the Admin Network, you establish the host IP address, subnet mask, and Gateway IP address for the eth1 interface for each grid node.

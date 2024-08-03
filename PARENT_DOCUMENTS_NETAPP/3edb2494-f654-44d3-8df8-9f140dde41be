@@ -1,0 +1,75 @@
+a. Expand the accordion.
+
+b. Select the checkbox to return a stack trace in Grid Manager and Tenant Manager API error responses.
+
+Leave stack trace disabled in production environments to avoid revealing internal software details when API errors occur. c. Select Save.
+
+Configure key management servers
+
+Configure key management servers: Overview
+
+You can configure one or more external key management servers (KMS) to protect the data on specially configured appliance nodes.
+
+StorageGRID supports only certain key management servers. For a list of supported products and versions, use the NetApp Interoperability Matrix Tool (IMT).
+
+What is a key management server (KMS)?
+
+A key management server (KMS) is an external, third-party system that provides encryption keys to StorageGRID appliance nodes at the associated StorageGRID site using the Key Management Interoperability Protocol (KMIP). You can use one or more key management servers to manage the node encryption keys for any StorageGRID appliance nodes that have the Node Encryption setting enabled during installation. Using key management servers with these appliance nodes lets you protect your data even if an appliance is removed from the data center. After the appliance volumes are encrypted, you can’t access any data on the appliance unless the node can communicate with the KMS.
+
+StorageGRID does not create or manage the external keys used to encrypt and decrypt appliance nodes. If you plan to use an external key management server to protect StorageGRID data, you must understand how to set up that server, and you must understand how to manage the encryption keys. Performing key management tasks is beyond the scope of these instructions. If you need help, see the documentation for your key management server or contact technical support. Overview of KMS and appliance configuration
+
+Before you can use a key management server (KMS) to secure StorageGRID data on appliance nodes, you must complete two configuration tasks: setting up one or more KMS servers and enabling node encryption for the appliance nodes. When these two configuration tasks are complete, the key management process occurs automatically.
+
+The flowchart shows the high-level steps for using a KMS to secure StorageGRID data on appliance nodes.
+
+427
+
+The flowchart shows KMS setup and appliance setup occurring in parallel; however, you can set up the key
+
+428
+
+management servers before or after you enable node encryption for new appliance nodes, based on your requirements. Set up the key management server (KMS)
+
+Setting up a key management server includes the following high-level steps.
+
+Step
+
+Refer to
+
+Access the KMS software and add a client for StorageGRID to each KMS or KMS cluster.
+
+Configure StorageGRID as a client in the KMS
+
+Obtain the required information for the StorageGRID client on the KMS. Configure StorageGRID as a client in the KMS
+
+Add the KMS to the Grid Manager, assign it to a single site or to a default group of sites, upload the required certificates, and save the KMS configuration.
+
+Add a key management server (KMS) Set up the appliance
+
+Setting up an appliance node for KMS use includes the following high-level steps.
+
+1. During the hardware configuration stage of appliance installation, use the StorageGRID Appliance Installer to enable the Node Encryption setting for the appliance.
+
+You can’t enable the Node Encryption setting after an appliance is added to the grid, and you can’t use external key management for appliances that don’t have node encryption enabled.
+
+2. Run the StorageGRID Appliance Installer. During installation, a random data encryption key (DEK) is assigned to each appliance volume, as follows:
+
+The DEKs are used to encrypt the data on each volume. These keys are generated using Linux Unified Key Setup (LUKS) disk encryption in the appliance OS and can’t be changed. Refer to
+
+Access the KMS software and add a client for StorageGRID to each KMS or KMS cluster.
+
+Configure StorageGRID as a client in the KMS
+
+Obtain the required information for the StorageGRID client on the KMS. Configure StorageGRID as a client in the KMS
+
+Add the KMS to the Grid Manager, assign it to a single site or to a default group of sites, upload the required certificates, and save the KMS configuration.
+
+Add a key management server (KMS) Set up the appliance
+
+Setting up an appliance node for KMS use includes the following high-level steps.
+
+1. During the hardware configuration stage of appliance installation, use the StorageGRID Appliance Installer to enable the Node Encryption setting for the appliance.
+
+You can’t enable the Node Encryption setting after an appliance is added to the grid, and you can’t use external key management for appliances that don’t have node encryption enabled.
+
+2. Run the StorageGRID Appliance Installer. During installation, a random data encryption key (DEK) is assigned to each appliance volume, as follows:

@@ -1,0 +1,81 @@
+1535
+
+Configure NTP servers
+
+Follow these steps to add, update, or remove NTP servers. Steps
+
+1. Select MAINTENANCE > Network > NTP servers.
+
+2. In the Servers section, add, update, or remove NTP server entries, as necessary.
+
+You should include at least four NTP servers, and you can specify up to six servers.
+
+3. Enter the provisioning passphrase for your StorageGRID system, then select Save.
+
+The page is disabled until the configuration updates are complete.
+
+If all of your NTP servers fail the connection test after you save the new NTP servers, don’t proceed. Contact technical support. Resolve NTP server issues
+
+If you encounter problems with the stability or availability of the NTP servers originally specified during installation, you can update the list of external NTP sources that the StorageGRID system uses by adding additional servers, or updating or removing existing servers. Restore network connectivity for isolated nodes
+
+Under certain circumstances, such as site- or grid-wide IP address changes, one or more groups of nodes might not be able to contact the rest of the grid. About this task
+
+In the Grid Manager (SUPPORT > Tools > Grid topology), if a node is gray, or if a node is blue with many of its services showing a status other than Running, you should check for node isolation. Configure NTP servers
+
+Follow these steps to add, update, or remove NTP servers. Steps
+
+1. Select MAINTENANCE > Network > NTP servers.
+
+2. In the Servers section, add, update, or remove NTP server entries, as necessary.
+
+You should include at least four NTP servers, and you can specify up to six servers.
+
+3. Enter the provisioning passphrase for your StorageGRID system, then select Save.
+
+The page is disabled until the configuration updates are complete.
+
+If all of your NTP servers fail the connection test after you save the new NTP servers, don’t proceed. Contact technical support. Resolve NTP server issues
+
+If you encounter problems with the stability or availability of the NTP servers originally specified during installation, you can update the list of external NTP sources that the StorageGRID system uses by adding additional servers, or updating or removing existing servers. Restore network connectivity for isolated nodes
+
+Under certain circumstances, such as site- or grid-wide IP address changes, one or more groups of nodes might not be able to contact the rest of the grid. About this task
+
+In the Grid Manager (SUPPORT > Tools > Grid topology), if a node is gray, or if a node is blue with many of its services showing a status other than Running, you should check for node isolation.
+
+1536
+
+Some of the consequences of having isolated nodes include the following:
+
+If multiple nodes are isolated, you might not be able to sign in to or access the Grid Manager.
+
+If multiple nodes are isolated, the storage usage and quota values shown on the dashboard for the Tenant Manager might be out of date. The totals will be updated when network connectivity is restored.
+
+To resolve the isolation issue, you run a command line utility on each isolated node or on one node in a group (all nodes in a subnet that does not contain the primary Admin Node) that is isolated from the grid. The utility provides the nodes with the IP address of a non-isolated node in the grid, which allows the isolated node or group of nodes to contact the entire grid again. If the multicast domain name system (mDNS) is disabled in the networks, the command line utility might have to be run on each isolated node.
+
+Steps
+
+1. Access the node and check /var/local/log/dynip.log for isolation messages. For example:
+
+[2018-01-09T19:11:00.545] UpdateQueue - WARNING -- Possible isolation, no contact with other nodes. If this warning persists, manual action might be required.
+
+If you are using the VMware console, it will contain a message that the node might be isolated.
+
+On Linux deployments, isolation messages would appear in /var/log/storagegrid/node/<nodename>.log files.
+
+2. If the isolation messages are recurring and persistent, run the following command:
+
+1537
+
+add_node_ip.py <address>
+
+where <address> is the IP address of a remote node that is connected to the grid.
+
+# /usr/sbin/add_node_ip.py 10.224.4.210
+
+Retrieving local host information Validating remote node at address 10.224.4.210 Sending node IP hint for 10.224.4.210 to local node Local node found on remote node. Update complete.
+
+3. Verify the following for each node that was previously isolated: The node’s services have started. ◦ The status of the Dynamic IP service is "Running" after you run the storagegrid-status command. ◦ In the Grid Topology tree, the node no longer appears disconnected from the rest of the grid.
+
+If running the add_node_ip.py command does not solve the problem, there could be other networking issues that need to be resolved. Host and middleware procedures
+
+Linux: Migrate grid node to new host

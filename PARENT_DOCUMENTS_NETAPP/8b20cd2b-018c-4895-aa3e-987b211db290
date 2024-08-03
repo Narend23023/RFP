@@ -1,0 +1,259 @@
+PutObjectLockConfiguration PutBucketPolicy
+
+DeleteBucketTagging†
+
+PutBucketTagging
+
+PutBucketVersioning
+
+DeleteBucketLifecycle†
+
+PutBucketLifecycleConfiguration
+
+PutBucketReplication
+
+S3 REST API operations
+
+AbortMultipartUpload
+
+RestoreObject
+
+DeleteObject
+
+DeleteObjects
+
+PutObjectRetention
+
+DeleteObject
+
+DeleteObjects
+
+RestoreObject
+
+Custom for StorageGRID Yes
+
+Yes, separate permissions for PUT and DELETE
+
+Custom for StorageGRID
+
+975
+
+Permissions
+
+s3:DeleteObjectTagging
+
+s3:DeleteObjectVersionTagging
+
+s3:DeleteObjectVersion
+
+s3:GetObject
+
+s3:GetObjectAcl
+
+s3:GetObjectLegalHold
+
+s3:GetObjectRetention
+
+s3:GetObjectTagging
+
+s3:GetObjectVersionTagging
+
+s3:GetObjectVersion s3:ListMultipartUploadParts
+
+s3:PutObject
+
+s3:PutObjectLegalHold
+
+s3:PutObjectRetention
+
+s3:PutObjectTagging
+
+976
+
+S3 REST API operations
+
+DeleteObjectTagging
+
+DeleteObjectTagging (a specific version of the object)
+
+DeleteObject (a specific version of the object)
+
+GetObject
+
+HeadObject
+
+RestoreObject
+
+SelectObjectContent GetObjectAcl
+
+GetObjectLegalHold
+
+GetObjectRetention
+
+GetObjectTagging
+
+GetObjectTagging (a specific version of the object)
+
+GetObject (a specific version of the object)
+
+ListParts, RestoreObject
+
+PutObject
+
+CopyObject
+
+RestoreObject
+
+CreateMultipartUpload
+
+CompleteMultipartUpload
+
+UploadPart
+
+UploadPartCopy PutObjectLegalHold
+
+PutObjectRetention
+
+PutObjectTagging
+
+Custom for StorageGRID
+
+Permissions
+
+S3 REST API operations
+
+Custom for StorageGRID
+
+s3:PutObjectVersionTagging
+
+PutObjectTagging (a specific version of the object)
+
+s3:PutOverwriteObject
+
+PutObject
+
+Yes
+
+CopyObject
+
+PutObjectTagging
+
+DeleteObjectTagging
+
+CompleteMultipartUpload s3:RestoreObject
+
+RestoreObject
+
+Use PutOverwriteObject permission
+
+The s3:PutOverwriteObject permission is a custom StorageGRID permission that applies to operations that create or update objects. The setting of this permission determines whether the client can overwrite an object’s data, user-defined metadata, or S3 object tagging. Possible settings for this permission include: GetObject
+
+HeadObject
+
+RestoreObject
+
+SelectObjectContent GetObjectAcl
+
+GetObjectLegalHold
+
+GetObjectRetention
+
+GetObjectTagging
+
+GetObjectTagging (a specific version of the object)
+
+GetObject (a specific version of the object)
+
+ListParts, RestoreObject
+
+PutObject
+
+CopyObject
+
+RestoreObject
+
+CreateMultipartUpload
+
+CompleteMultipartUpload
+
+UploadPart
+
+UploadPartCopy PutObjectLegalHold
+
+PutObjectRetention
+
+PutObjectTagging
+
+Custom for StorageGRID
+
+Permissions
+
+S3 REST API operations
+
+Custom for StorageGRID
+
+s3:PutObjectVersionTagging
+
+PutObjectTagging (a specific version of the object)
+
+s3:PutOverwriteObject
+
+PutObject
+
+Yes
+
+CopyObject
+
+PutObjectTagging
+
+DeleteObjectTagging
+
+CompleteMultipartUpload s3:RestoreObject
+
+RestoreObject
+
+Use PutOverwriteObject permission
+
+The s3:PutOverwriteObject permission is a custom StorageGRID permission that applies to operations that create or update objects. The setting of this permission determines whether the client can overwrite an object’s data, user-defined metadata, or S3 object tagging. Possible settings for this permission include:
+
+Allow: The client can overwrite an object. This is the default setting.
+
+Deny: The client can’t overwrite an object. When set to Deny, the PutOverwriteObject permission works as follows:
+
+If an existing object is found at the same path:
+
+▪ The object’s data, user-defined metadata, or S3 object tagging can’t be overwritten. ▪ Any ingest operations in progress are cancelled, and an error is returned. ▪ If S3 versioning is enabled, the Deny setting prevents PutObjectTagging or DeleteObjectTagging
+
+operations from modifying the TagSet for an object and its noncurrent versions.
+
+If an existing object is not found, this permission has no effect.
+
+When this permission is not present, the effect is the same as if Allow were set. If the current S3 policy allows overwrite, and the PutOverwriteObject permission is set to Deny, the client can’t overwrite an object’s data, user-defined metadata, or object tagging. In addition, if the Prevent client modification checkbox is selected (CONFIGURATION > Security settings > Network and objects), that setting overrides the setting of the PutOverwriteObject permission. Specify conditions in a policy
+
+Conditions define when a policy will be in effect. Conditions consist of operators and key-value pairs.
+
+Conditions use key-value pairs for evaluation. A Condition element can contain multiple conditions, and each condition can contain multiple key-value pairs. The condition block uses the following format:
+
+977 Condition: { condition_type: { condition_key: condition_values
+
+In the following example, the IpAddress condition uses the SourceIp condition key.
+
+"Condition": { "IpAddress": { "aws:SourceIp": "54.240.143.0/24" ... }, ...
+
+Supported condition operators
+
+Condition operators are categorized as follows:
+
+String
+
+Numeric
+
+Boolean
+
+IP address
+
+Null check Condition operators
+
+Description
+
+StringEquals

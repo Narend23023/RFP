@@ -1,0 +1,91 @@
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have confirmed that a grid upgrade is not in progress.
+
+Don’t make any changes to the domain name configuration when a grid upgrade is in progress. About this task
+
+To enable clients to use S3 endpoint domain names, you must do all of the following:
+
+Use the Grid Manager to add the S3 endpoint domain names to the StorageGRID system.
+
+Ensure that the certificate the client uses for HTTPS connections to StorageGRID is signed for all domain names that the client requires.
+
+For example, if the endpoint is s3.company.com, you must ensure that the certificate used for HTTPS connections includes the s3.company.com endpoint and the endpoint’s wildcard Subject Alternative Name (SAN): *.s3.company.com.
+
+Configure the DNS server used by the client. Include DNS records for the IP addresses that clients use to make connections, and ensure that the records reference all required S3 endpoint domain names, including any wildcard names.
+
+509 Clients can connect to StorageGRID using the IP address of a Gateway Node, an Admin Node, or a Storage Node, or by connecting to the virtual IP address of a high availability group. You should understand how client applications connect to the grid so you include the correct IP addresses in the DNS records.
+
+Clients that use HTTPS connections (recommended) to the grid can use either of these certificates:
+
+Clients that connect to a load balancer endpoint can use a custom certificate for that endpoint. Each load balancer endpoint can be configured to recognize different S3 endpoint domain names.
+
+Clients that connect to a load balancer endpoint or directly to a Storage Node can customize the global S3 and Swift API certificate to include all required S3 endpoint domain names. Ensure that the certificate the client uses for HTTPS connections to StorageGRID is signed for all domain names that the client requires.
+
+For example, if the endpoint is s3.company.com, you must ensure that the certificate used for HTTPS connections includes the s3.company.com endpoint and the endpoint’s wildcard Subject Alternative Name (SAN): *.s3.company.com.
+
+Configure the DNS server used by the client. Include DNS records for the IP addresses that clients use to make connections, and ensure that the records reference all required S3 endpoint domain names, including any wildcard names.
+
+509 Clients can connect to StorageGRID using the IP address of a Gateway Node, an Admin Node, or a Storage Node, or by connecting to the virtual IP address of a high availability group. You should understand how client applications connect to the grid so you include the correct IP addresses in the DNS records.
+
+Clients that use HTTPS connections (recommended) to the grid can use either of these certificates:
+
+Clients that connect to a load balancer endpoint can use a custom certificate for that endpoint. Each load balancer endpoint can be configured to recognize different S3 endpoint domain names.
+
+Clients that connect to a load balancer endpoint or directly to a Storage Node can customize the global S3 and Swift API certificate to include all required S3 endpoint domain names.
+
+If you don’t add S3 endpoint domain names and the list is empty, support for S3 virtual-hosted- style requests is disabled. Add an S3 endpoint domain name
+
+Steps
+
+1. Select CONFIGURATION > Network > S3 endpoint domain names.
+
+2. Enter the domain name in the Domain name 1 field. Select Add another domain name to add more domain names.
+
+3. Select Save.
+
+4. Ensure that the server certificates that clients use match the required S3 endpoint domain names. ◦ If clients connect to a load balancer endpoint that uses its own certificate, update the certificate associated with the endpoint.
+
+If clients connect to a load balancer endpoint that uses the global S3 and Swift API certificate or directly to Storage Nodes, update the global S3 and Swift API certificate.
+
+5. Add the DNS records required to ensure that endpoint domain name requests can be resolved. Result
+
+Now, when clients use the endpoint bucket.s3.company.com, the DNS server resolves to the correct endpoint and the certificate authenticates the endpoint as expected.
+
+Rename an S3 endpoint domain name
+
+If you change a name used by S3 applications, virtual-hosted-style requests will fail.
+
+Steps
+
+1. Select CONFIGURATION > Network > S3 endpoint domain names.
+
+2. Select the domain name field you want to edit and make the necessary changes.
+
+3. Select Save.
+
+4. Select Yes to confirm your change. Delete an S3 endpoint domain name
+
+If you remove a name used by S3 applications, virtual-hosted-style requests will fail.
+
+Steps
+
+510
+
+1. Select CONFIGURATION > Network > S3 endpoint domain names.
+
+2. Select the delete icon
+
+next to the domain name.
+
+3. Select Yes to confirm the deletion.
+
+Related information
+
+Use S3 REST API
+
+View IP addresses

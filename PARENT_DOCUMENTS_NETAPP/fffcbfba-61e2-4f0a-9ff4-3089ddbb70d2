@@ -1,0 +1,131 @@
+Response
+
+In the response XML, <Consistency> will return one of the following values:
+
+Consistency
+
+Description
+
+all
+
+All nodes receive the data immediately, or the request will fail. strong-global
+
+Guarantees read-after-write consistency for all client requests across all sites.
+
+strong-site
+
+Guarantees read-after-write consistency for all client requests within a site.
+
+read-after-new-write
+
+(Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+948
+
+Consistency
+
+Description available
+
+Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets.
+
+Response example
+
+HTTP/1.1 200 OK Date: Fri, 18 Sep 2020 01:02:18 GMT Connection: CLOSE Server: StorageGRID/11.5.0 x-amz-request-id: 12345 Content-Length: 127 Content-Type: application/xml <?xml version="1.0" encoding="UTF-8"?> <Consistency xmlns="http://s3.storagegrid.com/doc/2015-02-01/">read-after- new-write</Consistency>
+
+Related information
+
+Consistency values
+
+PUT Bucket consistency
+
+The PUT Bucket consistency request allows you to specify the consistency to apply to operations performed on a bucket.
+
+The default consistency is set to guarantee read-after-write for newly created objects.
+
+Before you begin
+
+You must have the s3:PutBucketConsistency permission, or be account root, to complete this operation. Request
+
+The x-ntap-sg-consistency parameter must contain one of the following values:
+
+Consistency
+
+Description
+
+all
+
+All nodes receive the data immediately, or the request will fail.
+
+strong-global
+
+Guarantees read-after-write consistency for all client requests across all sites.
+
+strong-site
+
+Guarantees read-after-write consistency for all client requests within a site.
+
+949
+
+Consistency
+
+Description read-after-new-write
+
+(Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+available
+
+Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets.
+
+Note: In general, you should use the "Read-after-new-write" consistency. If requests aren’t working correctly, change the application client behavior if possible. Or, configure the client to specify the consistency for each API request. Set the consistency at the bucket level only as a last resort. Request example
+
+PUT /bucket?x-ntap-sg-consistency=strong-global HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Related information
+
+Consistency values all
+
+All nodes receive the data immediately, or the request will fail.
+
+strong-global
+
+Guarantees read-after-write consistency for all client requests across all sites.
+
+strong-site
+
+Guarantees read-after-write consistency for all client requests within a site.
+
+949
+
+Consistency
+
+Description read-after-new-write
+
+(Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+available
+
+Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets.
+
+Note: In general, you should use the "Read-after-new-write" consistency. If requests aren’t working correctly, change the application client behavior if possible. Or, configure the client to specify the consistency for each API request. Set the consistency at the bucket level only as a last resort. Request example
+
+PUT /bucket?x-ntap-sg-consistency=strong-global HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Related information
+
+Consistency values
+
+GET Bucket last access time
+
+The GET Bucket last access time request allows you to determine if last access time updates are enabled or disabled for individual buckets.
+
+You must have the s3:GetBucketLastAccessTime permission, or be account root, to complete this operation. Request example
+
+GET /bucket?x-ntap-sg-lastaccesstime HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response example
+
+This example shows that last access time updates are enabled for the bucket.
+
+950
+
+HTTP/1.1 200 OK Date: Sat, 29 Nov 2015 01:02:18 GMT Connection: CLOSE Server: StorageGRID/10.3.0 x-amz-request-id: 12345 Content-Length: 127 Content-Type: application/xml

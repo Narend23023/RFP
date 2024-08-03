@@ -1,0 +1,207 @@
+CMN (Configuration Management Node)
+
+Manages system-wide configurations and grid tasks. Each grid has one CMN service.
+
+Primary Admin Node DDS (Distributed Data Store)
+
+Interfaces with the Cassandra database to manage object metadata.
+
+Storage Nodes
+
+12
+
+Service
+
+DMV (Data Mover)
+
+Dynamic IP (dynip)
+
+Grafana
+
+High Availability
+
+Identity (idnt)
+
+Lambda Arbitrator
+
+Load Balancer (nginx-gw)
+
+LDR (Local Distribution Router)
+
+MISCd Information Service Control Daemon nginx
+
+nginx-gw
+
+NMS (Network Management System)
+
+Description
+
+Moves data to cloud endpoints.
+
+Monitors the grid for dynamic IP changes and updates local configurations.
+
+Used for metrics visualization in the Grid Manager.
+
+Manages high availability virtual IPs on nodes configured on the High Availability Groups page. This service is also known as the keepalived service. Federates user identities from LDAP and Active Directory.
+
+Manages S3 Select SelectObjectContent requests.
+
+Provides load balancing of S3 and Swift traffic from clients to Storage Nodes. The Load Balancer service can be configured through the Load Balancer Endpoints configuration page. This service is also known as the nginx- gw service.
+
+Manages the storage and transfer of content within the grid.
+
+Provides an interface for querying and managing services on other nodes and for managing environmental configurations on the node such as querying the state of services running on other nodes. Storage Nodes
+
+12
+
+Service
+
+DMV (Data Mover)
+
+Dynamic IP (dynip)
+
+Grafana
+
+High Availability
+
+Identity (idnt)
+
+Lambda Arbitrator
+
+Load Balancer (nginx-gw)
+
+LDR (Local Distribution Router)
+
+MISCd Information Service Control Daemon nginx
+
+nginx-gw
+
+NMS (Network Management System)
+
+Description
+
+Moves data to cloud endpoints.
+
+Monitors the grid for dynamic IP changes and updates local configurations.
+
+Used for metrics visualization in the Grid Manager.
+
+Manages high availability virtual IPs on nodes configured on the High Availability Groups page. This service is also known as the keepalived service. Federates user identities from LDAP and Active Directory.
+
+Manages S3 Select SelectObjectContent requests.
+
+Provides load balancing of S3 and Swift traffic from clients to Storage Nodes. The Load Balancer service can be configured through the Load Balancer Endpoints configuration page. This service is also known as the nginx- gw service.
+
+Manages the storage and transfer of content within the grid.
+
+Provides an interface for querying and managing services on other nodes and for managing environmental configurations on the node such as querying the state of services running on other nodes.
+
+Acts as an authentication and secure communication mechanism for various grid services (such as Prometheus and Dynamic IP) to be able to talk to services on other nodes over HTTPS APIs. Powers the Load Balancer service.
+
+Powers the monitoring, reporting, and configuration options that are displayed through the Grid Manager.
+
+Location
+
+Storage Nodes
+
+All nodes
+
+Admin Nodes
+
+Admin and Gateway Nodes
+
+Storage Nodes that use the ADC service
+
+All nodes
+
+Admin and Gateway Nodes
+
+Storage Nodes All nodes
+
+All nodes
+
+Admin and Gateway Nodes
+
+Admin Nodes
+
+13
+
+Service
+
+Description
+
+Location
+
+Persistence
+
+Manages files on the root disk that need to persist across a reboot.
+
+All nodes
+
+Prometheus
+
+Collects time series metrics from services on all nodes.
+
+Admin Nodes
+
+RSM (Replicated State Machine)
+
+Ensures platform service requests are sent to their respective endpoints.
+
+Storage Nodes that use the ADC service SSM (Server Status Monitor) Monitors hardware conditions and reports to
+
+the NMS service.
+
+An instance is present on every grid node
+
+Trace collector
+
+Performs trace collection to gather information for use by technical support. The trace collector service uses open source Jaeger software.
+
+Admin Nodes What is an Admin Node?
+
+Admin Nodes provide management services such as system configuration, monitoring, and logging. Admin Nodes can also be used to load balance S3 and Swift client traffic. Each grid must have one primary Admin Node and might have any number of non- primary Admin Nodes for redundancy. Differences between primary and non-primary Admin Nodes
+
+When you sign in to the Grid Manager or the Tenant Manager, you are connecting to an Admin Node. You can connect to any Admin Node, and each Admin Node displays a similar view of the StorageGRID system. However, the primary Admin Node provides more functionality than non-primary Admin Nodes. For example, most maintenance procedures must be performed from the primary Admin Nodes.
+
+The table summarizes the capabilities of primary and non-primary Admin Nodes. Capabilities
+
+Primary Admin Node
+
+Non-primary Admin Node
+
+Includes the AMS service
+
+Yes
+
+Yes
+
+Includes the CMN service
+
+Yes
+
+No
+
+Includes the NMS service
+
+Yes
+
+Yes
+
+Includes the Prometheus service
+
+Yes
+
+Yes
+
+Includes the SSM service
+
+Yes
+
+Yes
+
+14
+
+Capabilities
+
+Primary Admin Node

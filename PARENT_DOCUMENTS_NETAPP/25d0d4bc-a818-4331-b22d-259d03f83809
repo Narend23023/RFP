@@ -1,0 +1,67 @@
+grep SGET audit.log | audit-sum -gt 1H
+
+1319
+
+1320
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ 2019-09-05T00 7591 0.010 1481.867 1.254 2019-09-05T01 4173 0.011 1740.290 1.115 2019-09-05T02 20142 0.011 1274.961 1.562 2019-09-05T03 57591 0.010 1383.867 1.254 2019-09-05T04 124171 0.013 1740.290 1.405 2019-09-05T05 420182 0.021 1274.511 1.562 2019-09-05T06 1220371 0.015 6274.961 5.562 2019-09-05T07 527142 0.011 1974.228 2.002 2019-09-05T08 384173 0.012 1740.290 1.105 2019-09-05T09 27591 0.010 1481.867 1.354
+
+These results show that S3 GET traffic spiked between 06:00 and 07:00. The max and average times are both considerably higher at these times as well, and they did not ramp up gradually as the count increased. This suggests that capacity was exceeded somewhere, perhaps in the network or in the grid’s ability to process requests. b. To determine what size objects were being retrieved each hour yesterday, add the size option (-s) to
+
+the command:
+
+grep SGET audit.log | audit-sum -gt 1H -s
+
+message group count min(B) max(B) average(B) ============= ===== ======== ======== ============ 2019-09-05T00 7591 0.040 1481.867 1.976 2019-09-05T01 4173 0.043 1740.290 2.062 2019-09-05T02 20142 0.083 1274.961 2.303 2019-09-05T03 57591 0.912 1383.867 1.182 2019-09-05T04 124171 0.730 1740.290 1.528 2019-09-05T05 420182 0.875 4274.511 2.398 2019-09-05T06 1220371 0.691 5663711385.961 51.328 2019-09-05T07 527142 0.130 1974.228 2.147 2019-09-05T08 384173 0.625 1740.290 1.878 2019-09-05T09 27591 0.689 1481.867 1.354
+
+These results indicate that some very large retrievals occurred when the overall retrieval traffic was at its maximum.
+
+c. To see more detail, use the audit-explain tool to review all the SGET operations during that hour: grep 2019-09-05T06 audit.log | grep SGET | audit-explain | less
+
+If the output of the grep command is expected to be many lines, add the less command to show the contents of the audit log file one page (one screen) at a time.
+
+5. If you want to determine if SPUT operations on buckets are slower than SPUT operations for objects: These results indicate that some very large retrievals occurred when the overall retrieval traffic was at its maximum.
+
+c. To see more detail, use the audit-explain tool to review all the SGET operations during that hour: grep 2019-09-05T06 audit.log | grep SGET | audit-explain | less
+
+If the output of the grep command is expected to be many lines, add the less command to show the contents of the audit log file one page (one screen) at a time.
+
+5. If you want to determine if SPUT operations on buckets are slower than SPUT operations for objects:
+
+a. Start by using the -go option, which groups messages for object and bucket operations separately:
+
+grep SPUT sample.log | audit-sum -go
+
+1321
+
+1322
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ SPUT.bucket 1 0.125 0.125 0.125 SPUT.object 12 0.025 1.019 0.236
+
+The results show that SPUT operations for buckets have different performance characteristics than SPUT operations for objects.
+
+b. To determine which buckets have the slowest SPUT operations, use the -gb option, which groups messages by bucket:
+
+grep SPUT audit.log | audit-sum -gb
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ SPUT.cho-non-versioning 71943 0.046 1770.563 1.571 SPUT.cho-versioning 54277 0.047 1736.633 1.415 SPUT.cho-west-region 80615 0.040 55.557 1.329 SPUT.ldt002 1564563 0.011 51.569 0.361
+
+c. To determine which buckets have the largest SPUT object size, use both the -gb and the -s options:
+
+grep SPUT audit.log | audit-sum -gb -s
+
+message group count min(B) max(B) average(B) ============= ===== ======== ======== ============ SPUT.cho-non-versioning 71943 2.097 5000.000 21.672 SPUT.cho-versioning 54277 2.097 5000.000 21.120 SPUT.cho-west-region 80615 2.097 800.000 14.433 SPUT.ldt002 1564563 0.000 999.972 0.352 Audit message format Audit message format: Overview
+
+Audit messages exchanged within the StorageGRID system include standard information common to all messages and specific content describing the event or activity being reported.
+
+If the summary information provided by the audit-explain and audit-sum tools is insufficient, refer to this section to understand the general format of all audit messages.
+
+The following is an example audit message as it might appear in the audit log file:
+
+2014-07-17T03:50:47.484627 [AUDT:[RSLT(FC32):VRGN][AVER(UI32):10][ATIM(UI64):1405569047484627][ATYP(F C32):SYSU][ANID(UI32):11627225][AMID(FC32):ARNI][ATID(UI64):94457363265006 03516]]
+
+Each audit message contains a string of attribute elements. The entire string is enclosed in brackets ([ ]), and each attribute element in the string has the following characteristics:
+
+Enclosed in brackets [ ]
+
+Introduced by the string AUDT, which indicates an audit message

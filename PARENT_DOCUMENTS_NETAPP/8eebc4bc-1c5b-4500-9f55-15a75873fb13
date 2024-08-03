@@ -1,0 +1,145 @@
+On Day 0 to forever, keep one replicated copy at Site 1 and one replicated copy at Site 2.
+
+ILM policy for example 2: Use EC for objects greater than 1 MB
+
+This example ILM policy includes two ILM rules:
+
+The first rule erasure codes all objects that are greater than 1 MB.
+
+The second (default) ILM rule creates two replicated copies. Because objects greater than 1 MB have been filtered out by rule 1, rule 2 only applies to objects that are 1 MB or smaller. Example 3: ILM rules and policy for better protection for image files
+
+You can use the following example rules and policy to ensure that images greater than 1 MB are erasure-coded and that two copies are made of smaller images.
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+ILM rule 1 for example 3: Use EC for image files greater than 1 MB
+
+This example ILM rule uses advanced filtering to erasure code all image files greater than 1 MB.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments. Rule definition
+
+Example value
+
+Rule name
+
+EC Image Files > 1 MB
+
+698
+
+Rule definition
+
+Example value
+
+Reference time
+
+Ingest time
+
+Advanced filter for Object size
+
+Object size greater than 1 MB
+
+Advanced filters for Key
+
+Ends with .jpg
+
+Ends with .png
+
+Placements
+
+Create a 2+1 erasure-coded copy using three sites You can use the following example rules and policy to ensure that images greater than 1 MB are erasure-coded and that two copies are made of smaller images.
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+ILM rule 1 for example 3: Use EC for image files greater than 1 MB
+
+This example ILM rule uses advanced filtering to erasure code all image files greater than 1 MB.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments. Rule definition
+
+Example value
+
+Rule name
+
+EC Image Files > 1 MB
+
+698
+
+Rule definition
+
+Example value
+
+Reference time
+
+Ingest time
+
+Advanced filter for Object size
+
+Object size greater than 1 MB
+
+Advanced filters for Key
+
+Ends with .jpg
+
+Ends with .png
+
+Placements
+
+Create a 2+1 erasure-coded copy using three sites
+
+Because this rule is configured as the first rule in the policy, the erasure-coding placement instruction only applies to .jpg and .png files that are greater than 1 MB.
+
+ILM rule 2 for example 3: Create 2 replicated copies for all remaining image files
+
+This example ILM rule uses advanced filtering to specify that smaller image files be replicated. Because the first rule in the policy has already matched image files greater than 1 MB, this rule applies to image files that are 1 MB or smaller. Rule definition
+
+Example value
+
+Rule name
+
+2 Copies for Image Files
+
+Reference time
+
+Ingest time
+
+Advanced filters for Key
+
+Ends with .jpg
+
+Ends with .png
+
+Placements
+
+Create 2 replicated copies in two storage pools ILM policy for example 3: Better protection for image files
+
+This example ILM policy includes three rules:
+
+699
+
+• The first rule erasure codes all image files greater than 1 MB.
+
+The second rule creates two copies of any remaining image files (that is, images that are 1 MB or smaller).
+
+The default rule applies to all remaining objects (that is, any non-image files).
+
+Example 4: ILM rules and policy for S3 versioned objects
+
+If you have an S3 bucket with versioning enabled, you can manage the noncurrent object versions by including rules in your ILM policy that use "Noncurrent time" as the reference time.
+
+If you specify a limited retention time for objects, those objects will be deleted permanently after the time period is reached. Make sure you understand how long the objects will be retained.
+
+As this example shows, you can control the amount of storage used by versioned objects by using different placement instructions for noncurrent object versions. The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+To perform ILM policy simulation on a noncurrent version of an object, you must know the object version’s UUID or CBID. To find the UUID and CBID, use object metadata lookup while the object is still current.
+
+Related information
+
+How objects are deleted ILM rule 1 for example 4: Save three copies for 10 years
+
+This example ILM rule stores a copy of each object at three sites for 10 years.
+
+This rule applies to all objects, whether or not they are versioned.
+
+700
+
+Rule definition

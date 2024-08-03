@@ -1,0 +1,65 @@
+If the only copies of the object are on tape, the "bulk retrieval" request is canceled with a message, "1 requests canceled". If copies of the object exist elsewhere in the system, the object retrieval is processed by a different module so the response to the message is "0 requests canceled".
+
+d. Issue a command to notify the StorageGRID system that an object copy has been lost and that an
+
+additional copy must be made: /proc/CMSI/Object_Lost CBID node_ID
+
+1544
+
+where CBID is the identifier of the object that can’t be retrieved from the TSM server, and node_ID is the node ID of the Archive Node where the retrieval failed.
+
+You must enter a separate command for each lost object copy: entering a range of CBIDs is not supported. In most cases, the StorageGRID system immediately begins to make additional copies of object data to ensure that the system’s ILM policy is followed.
+
+However, if the ILM rule for the object specified that only one copy be made and that copy has now been lost, the object can’t be recovered. In this case running the Object_Lost command purges the lost object’s metadata from the StorageGRID system.
+
+When the Object_Lost command completes successfully, the following message is returned:
+
+CLOC_LOST_ANS returned result ‘SUCS’
+
+The /proc/CMSI/Object_Lost command is only valid for lost objects that are stored on Archive Nodes. e. Exit the ADE Console: exit
+
+f. Log out of the Archive Node: exit
+
+5. Reset the value of Request Failures in the StorageGRID system:
+
+a. Go to Archive Node > ARC > Retrieve > Configuration, and select Reset Request Failure Count.
+
+b. Click Apply Changes.
+
+Related information
+
+Administer StorageGRID Review audit logs
+
+VMware: Configure virtual machine for automatic restart
+
+If the virtual machine does not restart after VMware vSphere Hypervisor is restarted, you might need to configure the virtual machine for automatic restart.
+
+You should perform this procedure if you notice that a virtual machine does not restart while you are recovering a grid node or performing another maintenance procedure. Steps
+
+1. In the VMware vSphere Client tree, select the virtual machine that is not started.
+
+2. Right-click the virtual machine, and select Power on.
+
+3. Configure VMware vSphere Hypervisor to restart the virtual machine automatically in future.
+
+1545
+
+Recover or replace nodes Grid node recovery procedures: Overview
+
+If a grid node fails, you can recover it by replacing the failed physical or virtual server, reinstalling StorageGRID software, and restoring recoverable data.
+
+Grid nodes can fail if a hardware, virtualization, operating system, or software fault renders the node inoperable or unreliable. There are many kinds of failure that can trigger the need to recover a grid node.
+
+The steps to recover a grid node vary, depending on the platform where the grid node is hosted and on the type of grid node. Each type of grid node has a specific recovery procedure, which you must follow exactly.
+
+Generally, you try to preserve data from the failed grid node where possible, repair or replace the failed node, use the Grid Manager to configure the replacement node, and restore the node’s data. If an entire StorageGRID site has failed, contact technical support. Technical support will work with you to develop and execute a site recovery plan that maximizes the amount of data that is recovered, and meets your business objectives. See How technical support recovers a site. Warnings and considerations for grid node recovery
+
+If a grid node fails, you must recover it as soon as possible. You must review all warnings and considerations for node recovery before you begin.
+
+StorageGRID is a distributed system composed of multiple nodes working with each other. Don’t use disk snapshots to restore grid nodes. Instead, refer to the recovery and maintenance procedures for each type of node.
+
+Some of the reasons for recovering a failed grid node as soon as possible include the following: Grid nodes can fail if a hardware, virtualization, operating system, or software fault renders the node inoperable or unreliable. There are many kinds of failure that can trigger the need to recover a grid node.
+
+The steps to recover a grid node vary, depending on the platform where the grid node is hosted and on the type of grid node. Each type of grid node has a specific recovery procedure, which you must follow exactly.
+
+Generally, you try to preserve data from the failed grid node where possible, repair or replace the failed node, use the Grid Manager to configure the replacement node, and restore the node’s data. If an entire StorageGRID site has failed, contact technical support. Technical support will work with you to develop and execute a site recovery plan that maximizes the amount of data that is recovered, and meets your business objectives. See How technical support recovers a site. Warnings and considerations for grid node recovery

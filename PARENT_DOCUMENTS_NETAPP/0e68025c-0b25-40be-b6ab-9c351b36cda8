@@ -1,0 +1,137 @@
+b. Turn off the power to the appliance, and wait for the blue power LED to turn off.
+
+SG5800
+
+a. Wait for the green Cache Active LED on the back of the storage controller to turn off.
+
+This LED is on when cached data needs to be written to the drives. You must wait for this LED to turn off before you turn off power.
+
+b. From the home page of SANtricity System Manager, select View Operations in Progress.
+
+c. Confirm that all operations have completed before continuing with the next step.
+
+d. Turn off both power switches on the controller shelf, and wait for all LEDs on the controller shelf to
+
+turn off.
+
+SG5700
+
+a. Wait for the green Cache Active LED on the back of the storage controller to turn off. This LED is on when cached data needs to be written to the drives. You must wait for this LED to turn off before you turn off power.
+
+b. Turn off the power to the appliance, and wait for all LED and seven-segment display activity to
+
+stop.
+
+9. If required, log out of the command shell: exit
+
+The StorageGRID grid has now been shut down.
+
+1507
+
+Start up grid nodes
+
+If the entire grid has been shut down for more than 15 days, you must contact technical support before starting up any grid nodes. Don’t attempt the recovery procedures that rebuild Cassandra data. Doing so might result in data loss. If possible, power on the grid nodes in this order:
+
+Apply power to Admin Nodes first.
+
+Apply power to Gateway Nodes last.
+
+If a host includes multiple grid nodes, the nodes will come back online automatically when you power on the host.
+
+Steps
+
+1. Power on the hosts for the primary Admin Node and any non-primary Admin Nodes.
+
+You will not be able to log in to the Admin Nodes until the Storage Nodes have been restarted.
+
+2. Power on the hosts for all Archive Nodes and Storage Nodes. You can power on these nodes in any order.
+
+3. Power on the hosts for all Gateway Nodes.
+
+4. Sign in to the Grid Manager.
+
+5. Select NODES and monitor the status of the grid nodes. Verify that there are no alert icons next to the node names.
+
+Related information
+
+SGF6112 and SG6160 storage appliances
+
+SG110 and SG1100 services appliances
+
+SG100 and SG1000 services appliances
+
+SG6000 storage appliances
+
+SG5800 storage appliances
+
+SG5700 storage appliances Port remap procedures
+
+Remove port remaps Apply power to Admin Nodes first.
+
+Apply power to Gateway Nodes last.
+
+If a host includes multiple grid nodes, the nodes will come back online automatically when you power on the host.
+
+Steps
+
+1. Power on the hosts for the primary Admin Node and any non-primary Admin Nodes.
+
+You will not be able to log in to the Admin Nodes until the Storage Nodes have been restarted.
+
+2. Power on the hosts for all Archive Nodes and Storage Nodes. You can power on these nodes in any order.
+
+3. Power on the hosts for all Gateway Nodes.
+
+4. Sign in to the Grid Manager.
+
+5. Select NODES and monitor the status of the grid nodes. Verify that there are no alert icons next to the node names.
+
+Related information
+
+SGF6112 and SG6160 storage appliances
+
+SG110 and SG1100 services appliances
+
+SG100 and SG1000 services appliances
+
+SG6000 storage appliances
+
+SG5800 storage appliances
+
+SG5700 storage appliances Port remap procedures
+
+Remove port remaps
+
+If you want to configure an endpoint for the Load Balancer service, and you want to use a port that has already been configured as the Mapped-To Port of a port remap, you must first remove the existing port remap, or the endpoint will not be effective. You must run a script on each Admin Node and Gateway Node that has conflicting remapped ports to remove all of the node’s port remaps. About this task
+
+1508
+
+This procedure removes all port remaps. If you need to keep some of the remaps, contact technical support.
+
+For information about configuring load balancer endpoints, see Configuring load balancer endpoints.
+
+If the port remap provides client access, reconfigure the client to use a different port as an load balancer endpoint to avoid loss of service. Otherwise, removing the port mapping will result in loss of client access and should be scheduled appropriately.
+
+This procedure does not work for a StorageGRID system deployed as a container on bare metal hosts. See the instructions for removing port remaps on bare metal hosts. Steps
+
+1. Log in to the node.
+
+a. Enter the following command: ssh -p 8022 admin@node_IP
+
+Port 8022 is the SSH port of the base OS, while port 22 is the SSH port of the container engine running StorageGRID.
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following script: remove-port-remap.sh
+
+3. Reboot the node: reboot
+
+4. Log out of the command shell: exit
+
+5. Repeat these steps on each Admin Node and Gateway Node that has conflicting remapped ports. Remove port remaps on bare metal hosts

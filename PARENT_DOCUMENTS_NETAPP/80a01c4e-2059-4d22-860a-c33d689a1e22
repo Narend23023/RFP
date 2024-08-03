@@ -1,0 +1,107 @@
+message appears if multiple placements that use a Cloud Storage Pool have overlapping dates or if multiple lines in the same placement use a Cloud Storage Pool.
+
+661
+
+▪ You can store an object in a Cloud Storage Pool at the same time that object is being stored as replicated or erasure-coded copies in StorageGRID. However, you must include more than one line in the placement instruction for the time period, so you can specify the number and types of copies for each location.
+
+7. In the Retention diagram, confirm your placement instructions.
+
+In this example, the ILM rule stores one replicated copy in Site 1 and one replicated copy in Site 2 for the first year. After one year and for an additional 10 years, a 6+3 erasure-coded copy will be saved at three sites. After 11 years total, the objects will be deleted from StorageGRID. The Rule analysis section of the Retention diagram states:
+
+StorageGRID site-loss protection will apply for the duration of this rule. ◦ Objects processed by this rule will be deleted after Day 4015.
+
+See Enable site-loss protection.
+
+8. Select Continue. Step 3 (Select ingest behavior) of the Create an ILM rule wizard appears. Use Last access time in ILM rules
+
+You can use Last access time as the reference time in an ILM rule. For example, you might want to leave objects that have been viewed in the last three months on local Storage Nodes, while moving objects that have not been viewed as recently to an off-site location. You can also use Last access time as an advanced filter if you want an ILM rule to apply only to objects that were last accessed on a specific date. About this task
+
+Before using Last access time in an ILM rule, review the following considerations:
+
+When using Last access time as a reference time, be aware that changing the Last access time for an object does not trigger an immediate ILM evaluation. Instead, the object’s placements are assessed and the object is moved as required when background ILM evaluates the object. This could take two weeks or more after the object is accessed.
+
+Take this latency into account when creating ILM rules based on Last access time and avoid placements that use short time periods (less than one month).
+
+When using Last access time as an advanced filter or as a reference time, you must enable last access time updates for S3 buckets. You can use the Tenant Manager or the Tenant Management API.
+
+662
+
+Last access time updates are always enabled for Swift containers, but are disabled by default for S3 buckets. Be aware that enabling last access time updates can reduce performance, especially in systems with small objects. The performance impact occurs because StorageGRID must update the objects with new timestamps every time the objects are retrieved.
+
+The following table summarizes whether the Last access time is updated for all objects in the bucket for different types of requests. Type of request
+
+Whether Last access time is updated when last access time updates are disabled
+
+Whether Last access time is updated when last access time updates are enabled
+
+Request to retrieve an object, its access control list, or its metadata
+
+No
+
+Yes
+
+Request to update an object’s metadata
+
+Yes Yes
+
+Request to copy an object from one bucket to another
+
+No, for the source copy
+
+Yes, for the destination copy
+
+Yes, for the source copy
+
+Yes, for the destination copy
+
+Request to complete a multipart upload
+
+Yes, for the assembled object
+
+Yes, for the assembled object
+
+Step 3 of 3: Select ingest behavior
+
+The Select ingest behavior step of the Create ILM Rule wizard allows you to choose how the objects filtered by this rule are protected as they are ingested. About this task
+
+StorageGRID can make interim copies and queue the objects for ILM evaluation later, or it can make copies to meet the rule’s placement instructions immediately. Steps
+
+1. Select the ingest behavior to use.
+
+For more information, see Advantages, disadvantages, and limitations of the ingest options.
+
+You can’t use the Balanced or Strict option if the rule uses one of these placements:
+
+A Cloud Storage Pool at day 0 ◦ An Archive Node at day 0 ◦ A Cloud Storage Pool or an Archive Node when the rule uses a User defined creation time as a Reference time
+
+See Example 5: ILM rules and policy for Strict ingest behavior.
+
+663
+
+2. Select Create. No
+
+Yes
+
+Request to update an object’s metadata
+
+Yes Yes
+
+Request to copy an object from one bucket to another
+
+No, for the source copy
+
+Yes, for the destination copy
+
+Yes, for the source copy
+
+Yes, for the destination copy
+
+Request to complete a multipart upload
+
+Yes, for the assembled object
+
+Yes, for the assembled object
+
+Step 3 of 3: Select ingest behavior
+
+The Select ingest behavior step of the Create ILM Rule wizard allows you to choose how the objects filtered by this rule are protected as they are ingested. About this task

@@ -1,0 +1,155 @@
+PEM-encoded private key for the client certificate. ◦ Passphrase for decrypting the private key for the client certificate, if it is encrypted. If the client certificate will be encrypted, use the traditional format for the encryption. PKCS #8 encrypted format is not supported.
+
+Azure Blob storage
+
+For the external container
+
+Uniform Resource Identifier (URI) used to access the Blob Storage container. ◦ Name of the storage account and the account key. You can use the Azure portal to find these values. Steps
+
+1. Select ILM > Storage pools > Cloud Storage Pools.
+
+2. Select Create, then enter the following information:
+
+Field
+
+Description
+
+Cloud Storage Pool name
+
+A name that briefly describes the Cloud Storage Pool and its purpose. Use a name that will be easy to identify when you configure ILM rules.
+
+638
+
+Field
+
+Description Provider type
+
+Which cloud provider you will use for this Cloud Storage Pool:
+
+Amazon S3/GCP: Select this option for an Amazon S3, Commercial Cloud Services (C2S) S3, Google Cloud Platform (GCP), or other S3-compatible provider.
+
+Azure Blob Storage
+
+Bucket or container
+
+The name of the external S3 bucket or Azure container. You can’t change this value after the Cloud Storage Pool is saved.
+
+3. Based on your Provider type selection, enter the Service endpoint information.
+
+639
+
+Amazon S3/GCP
+
+a. For the protocol, select either HTTPS or HTTP. Don’t use HTTP connections for sensitive data.
+
+b. Enter the hostname. Example:
+
+s3-aws-region.amazonaws.com
+
+c. Select the URL style:
+
+Option
+
+Description 1. Select ILM > Storage pools > Cloud Storage Pools.
+
+2. Select Create, then enter the following information:
+
+Field
+
+Description
+
+Cloud Storage Pool name
+
+A name that briefly describes the Cloud Storage Pool and its purpose. Use a name that will be easy to identify when you configure ILM rules.
+
+638
+
+Field
+
+Description Provider type
+
+Which cloud provider you will use for this Cloud Storage Pool:
+
+Amazon S3/GCP: Select this option for an Amazon S3, Commercial Cloud Services (C2S) S3, Google Cloud Platform (GCP), or other S3-compatible provider.
+
+Azure Blob Storage
+
+Bucket or container
+
+The name of the external S3 bucket or Azure container. You can’t change this value after the Cloud Storage Pool is saved.
+
+3. Based on your Provider type selection, enter the Service endpoint information.
+
+639
+
+Amazon S3/GCP
+
+a. For the protocol, select either HTTPS or HTTP. Don’t use HTTP connections for sensitive data.
+
+b. Enter the hostname. Example:
+
+s3-aws-region.amazonaws.com
+
+c. Select the URL style:
+
+Option
+
+Description
+
+Auto-detect
+
+Attempt to automatically detect which URL style to use, based on the information provided. For example, if you specify an IP address, StorageGRID will use a path-style URL. Select this option only if you don’t know which specific style to use. Virtual-hosted-style
+
+Use a virtual-hosted-style URL to access the bucket. Virtual-hosted- style URLs include the bucket name as part of the domain name. Example: https://bucket-name.s3.company.com/key-name
+
+Path-style
+
+Use a path-style URL to access the bucket. Path-style URLs include the bucket name at the end. Example: https://s3.company.com/bucket-name/key-name
+
+Note: The path-style URL option is not recommended and will be deprecated in a future release of StorageGRID.
+
+d. Optionally, enter the port number, or use the default port: 443 for HTTPS or 80 for HTTP. Azure Blob Storage
+
+a. Using one of the following formats, enter the URI for the service endpoint.
+
+▪ https://host:port ▪ http://host:port
+
+Example: https://myaccount.blob.core.windows.net:443
+
+If you don’t specify a port, by default port 443 is used for HTTPS and port 80 is used for HTTP.
+
+4. Select Continue. Then select the authentication type and enter the required information for the Cloud Storage Pool endpoint:
+
+640
+
+Access key For Amazon S3/GCP provider type only
+
+a. For Access key ID, enter the access key ID for the account that owns the external bucket.
+
+b. For Secret access key, enter the secret access key.
+
+CAP (C2S access portal)
+
+For Commercial Cloud Services (C2S) S3 service
+
+a. For Temporary credentials URL, enter the complete URL that StorageGRID will use to obtain
+
+temporary credentials from the CAP server, including all the required and optional API parameters assigned to your C2S account.
+
+b. For Server CA certificate, select Browse, and upload the PEM-encoded CA certificate that
+
+StorageGRID will use to verify the CAP server.
+
+c. For Client certificate, select Browse, and upload the PEM-encoded certificate that StorageGRID
+
+will use to identify itself to the CAP server.
+
+d. For Client private key, select Browse, and upload the PEM-encoded private key for the client certificate.
+
+e. If the client private key is encrypted, enter the passphrase for decrypting the client private key.
+
+Otherwise, leave the Client private key passphrase field blank.
+
+Azure Blob Storage
+
+a. For Account name, enter the name of the Blob storage account that owns the external service

@@ -1,0 +1,137 @@
+Steps
+
+1. Run the following commands on each host:
+
+sudo systemctl enable storagegrid sudo systemctl start storagegrid
+
+2. Run the following command to ensure the deployment is proceeding: sudo storagegrid node status node-name
+
+3. If any node returns a status of "Not Running" or "Stopped," run the following command:
+
+sudo storagegrid node start node-name
+
+4. If you have previously enabled and started the StorageGRID host service (or if you are unsure if the service has been enabled and started), also run the following command: sudo systemctl reload-or-restart storagegrid
+
+Recover nodes that fail to start normally
+
+If a StorageGRID node doesn’t rejoin the grid normally and doesn’t show up as recoverable, it might be corrupted. You can force the node into recovery mode.
+
+Steps
+
+1. Confirm that the node’s network configuration is correct.
+
+The node might have failed to rejoin the grid because of incorrect network interface mappings or an incorrect Grid Network IP address or gateway.
+
+2. If the network configuration is correct, issue the force-recovery command: sudo storagegrid node force-recovery node-name
+
+1644
+
+3. Perform the additional recovery steps for the node. See What’s next: Perform additional recovery steps, if
+
+required.
+
+What’s next: Perform additional recovery steps, if required
+
+Depending on the specific actions you took to get the StorageGRID nodes running on the replacement host, you might need to perform additional recovery steps for each node.
+
+Node recovery is complete if you did not need to take any corrective actions while you replaced the Linux host or restored the failed grid node to the new host. Corrective actions and next steps
+
+During node replacement, you might have needed to take one of these corrective actions:
+
+You had to use the --force flag to import the node.
+
+For any <PURPOSE>, the value of the BLOCK_DEVICE_<PURPOSE> configuration file variable refers to a block device that does not contain the same data it did before the host failure.
+
+You issued storagegrid node force-recovery node-name for the node.
+
+You added a new block device.
+
+If you took any of these corrective actions, you must perform additional recovery steps. Type of recovery
+
+Next step
+
+Primary Admin Node
+
+Configure replacement primary Admin Node
+
+Non-primary Admin Node
+
+Select Start Recovery to configure non-primary Admin Node
+
+Gateway Node
+
+Select Start Recovery to configure Gateway Node
+
+Archive Node
+
+Select Start Recovery to configure Archive Node
+
+Storage Node (software-based): Select Start Recovery to configure Storage Node required.
+
+What’s next: Perform additional recovery steps, if required
+
+Depending on the specific actions you took to get the StorageGRID nodes running on the replacement host, you might need to perform additional recovery steps for each node.
+
+Node recovery is complete if you did not need to take any corrective actions while you replaced the Linux host or restored the failed grid node to the new host. Corrective actions and next steps
+
+During node replacement, you might have needed to take one of these corrective actions:
+
+You had to use the --force flag to import the node.
+
+For any <PURPOSE>, the value of the BLOCK_DEVICE_<PURPOSE> configuration file variable refers to a block device that does not contain the same data it did before the host failure.
+
+You issued storagegrid node force-recovery node-name for the node.
+
+You added a new block device.
+
+If you took any of these corrective actions, you must perform additional recovery steps. Type of recovery
+
+Next step
+
+Primary Admin Node
+
+Configure replacement primary Admin Node
+
+Non-primary Admin Node
+
+Select Start Recovery to configure non-primary Admin Node
+
+Gateway Node
+
+Select Start Recovery to configure Gateway Node
+
+Archive Node
+
+Select Start Recovery to configure Archive Node
+
+Storage Node (software-based): Select Start Recovery to configure Storage Node
+
+If you had to use the --force flag to import the node, or you issued storagegrid node force-recovery node-name
+
+If you had to do a full node reinstall, or you needed to restore /var/local
+
+1645
+
+Type of recovery
+
+Next step
+
+Storage Node (software-based):
+
+Recover from storage volume failure where system drive is intact
+
+If you added a new block device.
+
+If, for any <PURPOSE>, the value of the
+
+BLOCK_DEVICE_<PURPOSE> configuration file variable refers to a block device that does not contain the same data it did before the host failure. Replace VMware node
+
+When you recover a failed StorageGRID node that was hosted on VMware, you remove the failed node and deploy a recovery node.
+
+Before you begin
+
+You have determined that the virtual machine can’t be restored and must be replaced.
+
+About this task
+
+You use the VMware vSphere Web Client to first remove the virtual machine associated with the failed grid node. Then, you can deploy a new virtual machine.

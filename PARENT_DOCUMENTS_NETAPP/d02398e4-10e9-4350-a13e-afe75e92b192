@@ -1,0 +1,75 @@
+To ensure even space usage for replicated copies, object data for a given object is stored to one object store based on available storage space. When an object store fills to capacity, the remaining object stores continue to store objects until there is no more room on the Storage Node. Metadata protection
+
+StorageGRID stores object metadata in a Cassandra database, which interfaces with the LDR service.
+
+To ensure redundancy and thus protection against loss, three copies of object metadata are maintained at each site. This replication is non- configurable and performed automatically. For details, see Manage object metadata storage.
+
+Service
+
+Key function Replicated State Machine (RSM)
+
+Ensures that S3 platform services requests are sent to their respective endpoints.
+
+Server Status Monitor (SSM)
+
+Monitors the operating system and underlying hardware.
+
+What is a Gateway Node?
+
+Gateway Nodes provide a dedicated load-balancing interface that S3 and Swift client applications can use to connect to StorageGRID. Load balancing maximizes speed and connection capacity by distributing the workload across multiple Storage Nodes. Gateway Nodes are optional. To ensure even space usage for replicated copies, object data for a given object is stored to one object store based on available storage space. When an object store fills to capacity, the remaining object stores continue to store objects until there is no more room on the Storage Node. Metadata protection
+
+StorageGRID stores object metadata in a Cassandra database, which interfaces with the LDR service.
+
+To ensure redundancy and thus protection against loss, three copies of object metadata are maintained at each site. This replication is non- configurable and performed automatically. For details, see Manage object metadata storage.
+
+Service
+
+Key function Replicated State Machine (RSM)
+
+Ensures that S3 platform services requests are sent to their respective endpoints.
+
+Server Status Monitor (SSM)
+
+Monitors the operating system and underlying hardware.
+
+What is a Gateway Node?
+
+Gateway Nodes provide a dedicated load-balancing interface that S3 and Swift client applications can use to connect to StorageGRID. Load balancing maximizes speed and connection capacity by distributing the workload across multiple Storage Nodes. Gateway Nodes are optional.
+
+The StorageGRID Load Balancer service is provided on all Admin Nodes and all Gateway Nodes. It performs Transport Layer Security (TLS) termination of client requests, inspects the requests, and establishes new secure connections to the Storage Nodes. The Load Balancer service seamlessly directs clients to an optimal Storage Node, so that the failure of nodes or even an entire site is transparent. You configure one or more load balancer endpoints to define the port and network protocol (HTTPS or HTTP) that incoming and outgoing client requests wil use to access the Load Balancer services on Gateway and Admin Nodes. The load balancer endpoint also defines the client type (S3 or Swift), the binding mode, and optionally a list of allowed or blocked tenants. See Considerations for load balancing.
+
+As required, you can group the network interfaces of multiple Gateway Nodes and Admin Nodes into a high availability (HA) group. If the active interface in the HA group fails, a backup interface can manage the client application workload. See Manage high availability (HA) groups. Primary services for Gateway Nodes
+
+The following table shows the primary services for Gateway Nodes; however, this table does not list all node services.
+
+Service
+
+Key function
+
+High Availability
+
+Manages high availability virtual IP addresses for groups of Admin Nodes and Gateway Nodes.
+
+Note: This service is also found on Admin Nodes. Load Balancer
+
+Provides Layer 7 load balancing of S3 and Swift traffic from clients to Storage Nodes. This is the recommended load balancing mechanism.
+
+Note: This service is also found on Admin Nodes.
+
+Server Status Monitor (SSM) Monitors the operating system and underlying hardware.
+
+21
+
+What is an Archive Node?
+
+Support for Archive Nodes is deprecated and will be removed in a future release.
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+The Cloud Tiering - Simple Storage Service (S3) option is also deprecated. If you are currently using an Archive Node with this option, migrate your objects to a Cloud Storage Pool instead.
+
+Additionally, you should remove Archive Nodes from the active ILM policies in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies. Primary services for Archive Nodes
+
+The following table shows the primary services for Archive Nodes; however, this table does not list all node services.
+
+Service

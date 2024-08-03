@@ -1,0 +1,141 @@
+For example:
+
+service ldr restart
+
+Using the restart command is the same as using the stop command followed by the start command. You can issue restart even if the service is currently stopped.
+
+3. Log out of the command shell: exit
+
+Use a DoNotStart file
+
+If you are performing various maintenance or configuration procedures under the direction of technical support, you might be asked to use a DoNotStart file to prevent services from starting when Server Manager is started or restarted.
+
+1493 Before you begin
+
+You have the Passwords.txt file. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Decide which command to issue, based on whether the service is currently running or stopped.
+
+If the service is currently stopped, use the start command to start the service manually: service servicename start For example:
+
+service ldr start
+
+If the service is currently running, use the restart command to stop the service and then restart it: service servicename restart
+
+For example:
+
+service ldr restart
+
+Using the restart command is the same as using the stop command followed by the start command. You can issue restart even if the service is currently stopped.
+
+3. Log out of the command shell: exit
+
+Use a DoNotStart file
+
+If you are performing various maintenance or configuration procedures under the direction of technical support, you might be asked to use a DoNotStart file to prevent services from starting when Server Manager is started or restarted.
+
+1493
+
+You should add or remove a DoNotStart file only if technical support has directed you to do so. To prevent a service from starting, place a DoNotStart file in the directory of the service you want to prevent from starting. At start-up, Server Manager looks for the DoNotStart file. If the file is present, the service (and any services dependent on it) is prevented from starting. When the DoNotStart file is removed, the previously stopped service will start on the next start or restart of Server Manager. Services aren’t automatically started when the DoNotStart file is removed.
+
+The most efficient way to prevent all services from restarting is to prevent the NTP service from starting. All services are dependent on the NTP service and can’t run if the NTP service is not running. Add DoNotStart file for service
+
+You can prevent an individual service from starting by adding a DoNotStart file to that service’s directory on a grid node.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Add a DoNotStart file: touch /etc/sv/service/DoNotStart
+
+where service is the name of the service to be prevented from starting. For example, touch /etc/sv/ldr/DoNotStart
+
+A DoNotStart file is created. No file content is needed.
+
+When Server Manager or the grid node is restarted, Server Manager restarts, but the service does not.
+
+3. Log out of the command shell: exit
+
+Remove DoNotStart file for service
+
+When you remove a DoNotStart file that is preventing a service from starting, you must start that service.
+
+Before you begin
+
+You have the Passwords.txt file. Steps
+
+1494
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Remove the DoNotStart file from the service directory: rm /etc/sv/service/DoNotStart
+
+where service is the name of the service. For example,
+
+rm /etc/sv/ldr/DoNotStart
+
+3. Start the service: service servicename start
+
+4. Log out of the command shell: exit Troubleshoot Server Manager
+
+If a problem arises when using Server Manager, check its log file. A DoNotStart file is created. No file content is needed.
+
+When Server Manager or the grid node is restarted, Server Manager restarts, but the service does not.
+
+3. Log out of the command shell: exit
+
+Remove DoNotStart file for service
+
+When you remove a DoNotStart file that is preventing a service from starting, you must start that service.
+
+Before you begin
+
+You have the Passwords.txt file. Steps
+
+1494
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.

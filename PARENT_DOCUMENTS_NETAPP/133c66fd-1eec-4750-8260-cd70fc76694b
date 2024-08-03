@@ -1,0 +1,75 @@
+saved at only one site. For this reason, don’t specify the All Storage Nodes storage pool (StorageGRID 11.6 and earlier) and another storage pool.
+
+4. If you want to create an erasure-coded copy: a. From the Store objects by drop-down list, select erasure coding.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure- coded fragments. 660
+
+The ILM placement unachievable alert is triggered to indicate that the ILM rule could not be completely applied.
+
+If you specify more than one storage pool, keep these rules in mind:
+
+▪ The number of copies can’t be greater than the number of storage pools. ▪ If the number of copies equals the number of storage pools, one copy of the object is stored in each storage pool.
+
+▪ If the number of copies is less than the number of storage pools, one copy is stored at the ingest site, and then the system distributes the remaining copies to keep disk usage among the pools balanced, while ensuring that no site gets more than one copy of an object.
+
+▪ If the storage pools overlap (contain the same Storage Nodes), all copies of the object might be
+
+saved at only one site. For this reason, don’t specify the All Storage Nodes storage pool (StorageGRID 11.6 and earlier) and another storage pool.
+
+4. If you want to create an erasure-coded copy: a. From the Store objects by drop-down list, select erasure coding.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure- coded fragments.
+
+b. If you didn’t add an Object size filter for a value greater than 200 KB, select Previous to return to Step 1. Then, select Add an advanced filter and set an Object size filter to any value greater than 200 KB.
+
+c. Select the storage pool you want to add and the erasure-coding scheme you want to use.
+
+The storage location for an erasure-coded copy includes the name of the erasure-coding scheme, followed by the name of the storage pool.
+
+5. Optionally:
+
+a. Select Add other type or location to create additional copies at different locations.
+
+b. Select Add another time period to add different time periods.
+
+Objects are automatically deleted at the end of the final time period unless another time period ends with forever. 6. If you want to store objects in a Cloud Storage Pool:
+
+a. In the Store objects by drop-down list, select replicating.
+
+b. Select the copies at field, then select a Cloud Storage Pool.
+
+When using Cloud Storage Pools, keep these rules in mind:
+
+▪ You can’t select more than one Cloud Storage Pool in a single placement instruction. Similarly, you
+
+can’t select a Cloud Storage Pool and a storage pool in the same placement instruction.
+
+▪ You can store only one copy of an object in any given Cloud Storage Pool. An error message
+
+appears if you set Copies to 2 or more.
+
+▪ You can’t store more than one object copy in any Cloud Storage Pool at the same time. An error
+
+message appears if multiple placements that use a Cloud Storage Pool have overlapping dates or if multiple lines in the same placement use a Cloud Storage Pool.
+
+661
+
+▪ You can store an object in a Cloud Storage Pool at the same time that object is being stored as replicated or erasure-coded copies in StorageGRID. However, you must include more than one line in the placement instruction for the time period, so you can specify the number and types of copies for each location.
+
+7. In the Retention diagram, confirm your placement instructions.
+
+In this example, the ILM rule stores one replicated copy in Site 1 and one replicated copy in Site 2 for the first year. After one year and for an additional 10 years, a 6+3 erasure-coded copy will be saved at three sites. After 11 years total, the objects will be deleted from StorageGRID. The Rule analysis section of the Retention diagram states:
+
+StorageGRID site-loss protection will apply for the duration of this rule. ◦ Objects processed by this rule will be deleted after Day 4015.
+
+See Enable site-loss protection.
+
+8. Select Continue. Step 3 (Select ingest behavior) of the Create an ILM rule wizard appears. Use Last access time in ILM rules ▪ You can’t store more than one object copy in any Cloud Storage Pool at the same time. An error
+
+message appears if multiple placements that use a Cloud Storage Pool have overlapping dates or if multiple lines in the same placement use a Cloud Storage Pool.
+
+661
+
+▪ You can store an object in a Cloud Storage Pool at the same time that object is being stored as replicated or erasure-coded copies in StorageGRID. However, you must include more than one line in the placement instruction for the time period, so you can specify the number and types of copies for each location.
+
+7. In the Retention diagram, confirm your placement instructions.

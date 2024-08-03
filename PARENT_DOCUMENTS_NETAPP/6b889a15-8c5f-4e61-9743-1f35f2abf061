@@ -1,0 +1,223 @@
+Note: Don’t use bond or bridge devices as the network target. Either configure a VLAN (or other virtual interface) on top of the bond device, or use a bridge and virtual Ethernet (veth) pair.
+
+Best practice:Specify a value even if this node will not initially have an Admin Network IP address. Then you can add an Admin Network IP address later, without having to reconfigure the node on the host. Examples:
+
+bond0.1002
+
+ens256
+
+ADMIN_NETWORK_TARGET_TYPE
+
+Value
+
+Interface (This is the only supported value.)
+
+ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+Value
+
+True or False
+
+Set the key to "true" to cause the StorageGRID container use the MAC address of the host host target interface on the Admin Network.
+
+Best practice: In networks where promiscuous mode would be required, use the ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC key instead. For more details on MAC cloning:
+
+Considerations and recommendations for MAC address cloning (Red Hat Enterprise Linux)
+
+Considerations and recommendations for MAC address cloning (Ubuntu or Debian)
+
+ADMIN_ROLE
+
+168
+
+Best practice
+
+Designation
+
+Optional
+
+Designation
+
+Best practice
+
+Value
+
+Primary or non-primary
+
+This key is only required when NODE_TYPE = VM_Admin_Node; don’t specify it for other node types. Block device keys
+
+BLOCK_DEVICE_AUDIT_LOGS
+
+Value
+
+Path and name of the block device special file this node will use for persistent storage of audit logs.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-adm1-audit-logs BLOCK_DEVICE_RANGEDB_nnn
+
+Value
+
+Designation
+
+Required when NODE_TYPE = VM_Admin_Node
+
+Optional otherwise.
+
+Designation
+
+Required for nodes with NODE_TYPE = VM_Admin_Node. Don’t specify it for other node types.
+
+Designation
+
+169
+
+Path and name of the block device special file this node will use for persistent object storage. This key is only required for nodes with NODE_TYPE = VM_Storage_Node; don’t specify it for other node types.
+
+Only BLOCK_DEVICE_RANGEDB_000 is required; the rest are optional. The block device specified for BLOCK_DEVICE_RANGEDB_000 must be at least 4 TB; the others can be smaller.
+
+Don’t leave gaps. If you specify BLOCK_DEVICE_RANGEDB_005, you must also specify BLOCK_DEVICE_RANGEDB_004.
+
+Note: For compatibility with existing deployments, two-digit keys are supported for upgraded nodes. Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-sn1-rangedb-000
+
+BLOCK_DEVICE_TABLES
+
+Value
+
+170
+
+Required:
+
+BLOCK_DEVICE_RANGEDB_000
+
+Optional:
+
+BLOCK_DEVICE_RANGEDB_001
+
+BLOCK_DEVICE_RANGEDB_002
+
+BLOCK_DEVICE_RANGEDB_003 BLOCK_DEVICE_RANGEDB_004 Only BLOCK_DEVICE_RANGEDB_000 is required; the rest are optional. The block device specified for BLOCK_DEVICE_RANGEDB_000 must be at least 4 TB; the others can be smaller.
+
+Don’t leave gaps. If you specify BLOCK_DEVICE_RANGEDB_005, you must also specify BLOCK_DEVICE_RANGEDB_004.
+
+Note: For compatibility with existing deployments, two-digit keys are supported for upgraded nodes. Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-sn1-rangedb-000
+
+BLOCK_DEVICE_TABLES
+
+Value
+
+170
+
+Required:
+
+BLOCK_DEVICE_RANGEDB_000
+
+Optional:
+
+BLOCK_DEVICE_RANGEDB_001
+
+BLOCK_DEVICE_RANGEDB_002
+
+BLOCK_DEVICE_RANGEDB_003 BLOCK_DEVICE_RANGEDB_004
+
+BLOCK_DEVICE_RANGEDB_005
+
+BLOCK_DEVICE_RANGEDB_006
+
+BLOCK_DEVICE_RANGEDB_007
+
+BLOCK_DEVICE_RANGEDB_008
+
+BLOCK_DEVICE_RANGEDB_009
+
+BLOCK_DEVICE_RANGEDB_010
+
+BLOCK_DEVICE_RANGEDB_011
+
+BLOCK_DEVICE_RANGEDB_012
+
+BLOCK_DEVICE_RANGEDB_013
+
+BLOCK_DEVICE_RANGEDB_014
+
+BLOCK_DEVICE_RANGEDB_015 Designation
+
+Path and name of the block device special file this node will use for persistent storage of database tables. This key is only required for nodes with NODE_TYPE = VM_Admin_Node; don’t specify it for other node types.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd /dev/mapper/sgws-adm1-tables
+
+BLOCK_DEVICE_VAR_LOCAL
+
+Value
+
+Path and name of the block device special file this node will use for its /var/local persistent storage.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-sn1-var-local Client Network keys
+
+CLIENT_NETWORK_CONFIG
+
+Value
+
+DHCP, STATIC, or DISABLED
+
+CLIENT_NETWORK_GATEWAY
+
+Value
+
+Required
+
+Designation
+
+Required
+
+Designation
+
+Optional
+
+Designation
+
+171
+
+IPv4 address of the local Client Network gateway for this node, which must be on the subnet defined by CLIENT_NETWORK_IP and CLIENT_NETWORK_MASK. This value is ignored for DHCP-configured networks. Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+CLIENT_NETWORK_IP
+
+Value
+
+IPv4 address of this node on the Client Network.
+
+This key is only required when CLIENT_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+1.1.1.1

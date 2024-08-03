@@ -1,0 +1,109 @@
+This rule applies to objects that belong to any tenant and any region. Rule definition
+
+Example value
+
+Tenant account
+
+Ignore
+
+Advanced filter
+
+Not specified
+
+Storage pools
+
+Site 1 (Paris) and Site 2 (US)
+
+Rule name
+
+2 Copies 2 Data Centers
+
+Reference time
+
+Ingest time
+
+Placements
+
+On Day 0, keep two replicated copies forever at two data centers
+
+704
+
+Rule definition
+
+Example value Ingest behavior
+
+Balanced. Objects that match this rule are placed according to the rule’s placement instructions if possible. Otherwise, interim copies are made at any available location.
+
+ILM policy for example 5: Combining ingest behaviors
+
+The example ILM policy includes two rules that have different ingest behaviors.
+
+An ILM policy that uses two different ingest behaviors might include ILM rules such as the following:
+
+Store objects that belong to the Paris tenant and that have the S3 bucket region set to eu-west-3 (Paris) only in the Paris data center. Fail ingest if the Paris data center is not available. This rule applies to objects that belong to any tenant and any region. Rule definition
+
+Example value
+
+Tenant account
+
+Ignore
+
+Advanced filter
+
+Not specified
+
+Storage pools
+
+Site 1 (Paris) and Site 2 (US)
+
+Rule name
+
+2 Copies 2 Data Centers
+
+Reference time
+
+Ingest time
+
+Placements
+
+On Day 0, keep two replicated copies forever at two data centers
+
+704
+
+Rule definition
+
+Example value Ingest behavior
+
+Balanced. Objects that match this rule are placed according to the rule’s placement instructions if possible. Otherwise, interim copies are made at any available location.
+
+ILM policy for example 5: Combining ingest behaviors
+
+The example ILM policy includes two rules that have different ingest behaviors.
+
+An ILM policy that uses two different ingest behaviors might include ILM rules such as the following:
+
+Store objects that belong to the Paris tenant and that have the S3 bucket region set to eu-west-3 (Paris) only in the Paris data center. Fail ingest if the Paris data center is not available.
+
+Store all other objects (including those that belong to the Paris tenant but that have a different bucket region) in both the US data center and the Paris data center. Make interim copies in any available location if the placement instruction can’t be satisfied.
+
+When you simulate the example policy, you expect test objects to be evaluated as follows: Any objects that belong to the Paris tenant and that have the S3 bucket region set to eu-west-3 are matched by the first rule and are stored at the Paris data center. Because the first rule uses Strict ingest, these objects are never stored at the US data center. If the Storage Nodes at the Paris data center aren’t available, ingest fails.
+
+All other objects are matched by the second rule, including objects that belong to the Paris tenant and that don’t have the S3 bucket region set to eu-west-3. One copy of each object is saved at each data center. However, because the second rule uses Balanced ingest, if one data center is unavailable, two interim copies are saved at any available location. Example 6: Change an ILM policy
+
+If your data protection needs to be changed or you add new sites, you can create and activate a new ILM policy.
+
+Before changing a policy, you must understand how changes in ILM placements can temporarily affect the overall performance of a StorageGRID system.
+
+In this example, a new StorageGRID site has been added in an expansion, and a new active ILM policy needs to be implemented to store data at the new site. To implement a new active policy, first create a policy. Afterward, you must simulate and then activate the new policy.
+
+The following ILM rules and policy are only examples. There are many ways to configure ILM rules. Before activating a new policy, simulate it to confirm it will work as intended to protect content from loss.
+
+How changing an ILM policy affects performance When you activate a new ILM policy, the performance of your StorageGRID system might be temporarily affected, especially if the placement instructions in the new policy require many existing objects to be moved to new locations.
+
+When you activate a new ILM policy, StorageGRID uses it to manage all objects, including existing objects and
+
+705
+
+newly ingested objects. Before activating a new ILM policy, review any changes to the placement of existing replicated and erasure-coded objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented.
+
+To ensure a new ILM policy does not affect the placement of existing replicated and erasure-coded objects, you can create an ILM rule with an ingest time filter. For example, Ingest time is on or after <date and time>, so that the new rule applies only to objects ingested on or after the date and time specified. The types of ILM policy changes that can temporarily affect StorageGRID performance include the following:

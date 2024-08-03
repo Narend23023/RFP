@@ -1,0 +1,109 @@
+This script finds any new storage volumes and prompts you to format them.
+
+c. Enter y to accept the formatting.
+
+d. If any of the volumes have previously been formatted, decide if you want to reformat them.
+
+▪ Enter y to reformat. ▪ Enter n to skip reformatting.
+
+The setup_rangedbs.sh script runs automatically.
+
+5. Check that the services start correctly:
+
+a. View a list of the status of all services on the server: sudo storagegrid-status
+
+The status is updated automatically.
+
+b. Wait until all services are Running or Verified.
+
+c. Exit the status screen:
+
+Ctrl+C
+
+6. Verify that the Storage Node is online:
+
+a. Sign in to the Grid Manager using a supported web browser.
+
+b. Select SUPPORT > Tools > Grid topology. c. Select site > Storage Node > LDR > Storage.
+
+d. Select the Configuration tab and then the Main tab.
+
+e. If the Storage State - Desired drop-down list is set to Read-only or Offline, select Online.
+
+f. Select Apply Changes.
+
+7. To see the new object stores:
+
+a. Select NODES > site > Storage Node > Storage.
+
+b. View the details in the Object Stores table. Result
+
+You can use the expanded capacity of the Storage Nodes to save object data.
+
+Linux: Add direct-attached or SAN volumes to Storage Node
+
+If a Storage Node includes fewer than 16 storage volumes, you can increase its capacity by adding new block storage devices, making them visible to the Linux hosts, and adding the new block device mappings to the StorageGRID configuration file used for the Storage Node.
+
+Before you begin
+
+1406
+
+• You have access to the instructions for installing StorageGRID for your Linux platform.
+
+Install StorageGRID on Red Hat Enterprise Linux ◦ Install StorageGRID on Ubuntu or Debian
+
+You have the Passwords.txt file.
+
+You have specific access permissions.
+
+Don’t attempt to add storage volumes to a Storage Node while a software upgrade, recovery procedure, or another expansion procedure is active. About this task
+
+The Storage Node is unavailable for a brief time when you add storage volumes. You should perform this procedure on one Storage Node at a time to avoid impacting client-facing grid services. Steps
+
+1. Install the new storage hardware.
+
+For more information, see the documentation provided by your hardware vendor.
+
+2. Create new block storage volumes of the desired sizes.
+
+Attach the new drives and update the RAID controller configuration as needed, or allocate the new SAN LUNs on the shared storage arrays and allow the Linux host to access them.
+
+Use the same persistent naming scheme you used for the storage volumes on the existing Storage Node.
+
+If you use the StorageGRID node migration feature, make the new volumes visible to other Linux hosts that are migration targets for this Storage Node. For more information, see the instructions for installing StorageGRID for your Linux platform.
+
+3. Log in to the Linux host supporting the Storage Node as root or with an account that has sudo permission.
+
+4. Confirm that the new storage volumes are visible on the Linux host.
+
+You might have to rescan for devices.
+
+5. Run the following command to temporarily disable the Storage Node: sudo storagegrid node stop <node-name>
+
+6. Using a text editor such as vim or pico, edit the node configuration file for the Storage Node, which can be found at /etc/storagegrid/nodes/<node-name>.conf.
+
+7. Locate the section of the node configuration file that contains the existing object storage block device mappings.
+
+In the example, BLOCK_DEVICE_RANGEDB_00 to BLOCK_DEVICE_RANGEDB_03 are the existing object storage block device mappings.
+
+1407 Attach the new drives and update the RAID controller configuration as needed, or allocate the new SAN LUNs on the shared storage arrays and allow the Linux host to access them.
+
+Use the same persistent naming scheme you used for the storage volumes on the existing Storage Node.
+
+If you use the StorageGRID node migration feature, make the new volumes visible to other Linux hosts that are migration targets for this Storage Node. For more information, see the instructions for installing StorageGRID for your Linux platform.
+
+3. Log in to the Linux host supporting the Storage Node as root or with an account that has sudo permission.
+
+4. Confirm that the new storage volumes are visible on the Linux host.
+
+You might have to rescan for devices.
+
+5. Run the following command to temporarily disable the Storage Node: sudo storagegrid node stop <node-name>
+
+6. Using a text editor such as vim or pico, edit the node configuration file for the Storage Node, which can be found at /etc/storagegrid/nodes/<node-name>.conf.
+
+7. Locate the section of the node configuration file that contains the existing object storage block device mappings.
+
+In the example, BLOCK_DEVICE_RANGEDB_00 to BLOCK_DEVICE_RANGEDB_03 are the existing object storage block device mappings.
+
+1407

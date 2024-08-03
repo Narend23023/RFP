@@ -1,0 +1,63 @@
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP = client/tcp/18082/443
+
+PORT_REMAP_INBOUND
+
+Value
+
+Remaps inbound communications to the specified port. If you specify PORT_REMAP_INBOUND but don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+IMPORTANT: Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+The format used is: network type/protocol/remapped port /default port used by grid node, where network type is grid, admin, or client, and protocol is tcp or udp. Example: PORT_REMAP_INBOUND = grid/tcp/3022/22
+
+Required
+
+Designation
+
+Optional
+
+Designation
+
+Optional
+
+179
+
+How grid nodes discover the primary Admin Node
+
+Grid nodes communicate with the primary Admin Node for configuration and management. Each grid node must know the IP address of the primary Admin Node on the Grid Network.
+
+To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually.
+
+You can omit the ADMIN_IP parameter to have the grid node discover the value automatically. Automatic discovery is especially useful when the Grid Network uses DHCP to assign the IP address to the primary Admin Node. Automatic discovery of the primary Admin Node is accomplished using a multicast domain name system (mDNS). When the primary Admin Node first starts up, it publishes its IP address using mDNS. Other nodes on the same subnet can then query for the IP address and acquire it automatically. However, because multicast IP traffic is not normally routable across subnets, nodes on other subnets can’t acquire the primary Admin Node’s IP address directly.
+
+If you use automatic discovery:
+
+You must include the ADMIN_IP setting for at least one grid node on any subnets that the primary Admin Node is not directly attached to. This grid node will then publish the primary Admin Node’s IP address for other nodes on the subnet to discover with mDNS.
+
+Ensure that your network infrastructure supports passing multi-cast IP traffic within a subnet. Example node configuration files To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually.
+
+You can omit the ADMIN_IP parameter to have the grid node discover the value automatically. Automatic discovery is especially useful when the Grid Network uses DHCP to assign the IP address to the primary Admin Node. Automatic discovery of the primary Admin Node is accomplished using a multicast domain name system (mDNS). When the primary Admin Node first starts up, it publishes its IP address using mDNS. Other nodes on the same subnet can then query for the IP address and acquire it automatically. However, because multicast IP traffic is not normally routable across subnets, nodes on other subnets can’t acquire the primary Admin Node’s IP address directly.
+
+If you use automatic discovery:
+
+You must include the ADMIN_IP setting for at least one grid node on any subnets that the primary Admin Node is not directly attached to. This grid node will then publish the primary Admin Node’s IP address for other nodes on the subnet to discover with mDNS.
+
+Ensure that your network infrastructure supports passing multi-cast IP traffic within a subnet. Example node configuration files
+
+You can use the example node configuration files to help set up the node configuration files for your StorageGRID system. The examples show node configuration files for all types of grid nodes.
+
+For most nodes, you can add Admin and Client Network addressing information (IP, mask, gateway, and so on) when you configure the grid using the Grid Manager or the Installation API. The exception is the primary Admin Node. If you want to browse to the Admin Network IP of the primary Admin Node to complete grid configuration (because the Grid Network is not routed, for example), you must configure the Admin Network connection for the primary Admin Node in its node configuration file. This is shown in the example.
+
+In the examples, the Client Network target has been configured as a best practice, even though the Client Network is disabled by default. Example for primary Admin Node
+
+Example file name: /etc/storagegrid/nodes/dc1-adm1.conf
+
+Example file contents:
+
+180
+
+NODE_TYPE = VM_Admin_Node ADMIN_ROLE = Primary BLOCK_DEVICE_VAR_LOCAL = /dev/mapper/dc1-adm1-var-local BLOCK_DEVICE_AUDIT_LOGS = /dev/mapper/dc1-adm1-audit-logs BLOCK_DEVICE_TABLES = /dev/mapper/dc1-adm1-tables GRID_NETWORK_TARGET = bond0.1001 ADMIN_NETWORK_TARGET = bond0.1002 CLIENT_NETWORK_TARGET = bond0.1003 GRID_NETWORK_IP = 10.1.0.2 GRID_NETWORK_MASK = 255.255.255.0 GRID_NETWORK_GATEWAY = 10.1.0.1

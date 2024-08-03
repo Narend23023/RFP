@@ -1,0 +1,161 @@
+If the site included one or more Admin Nodes and single sign-on (SSO) is enabled for your StorageGRID system, remove all relying party trusts for the site from Active Directory Federation Services (AD FS).
+
+After the nodes have been gracefully powered off automatically as part of the connected site decommission procedure, remove the associated virtual machines. Rename grid, site, or node
+
+Rename grid, sites, and nodes: Overview
+
+As required, you can change the display names that are shown throughout the Grid Manager for the entire grid, each site, and each node. You can update display names safely and whenever you need.
+
+What is the rename procedure?
+
+When you install StorageGRID initially, you specify a name for the grid, each site, and each node. These initial
+
+1477
+
+names are known as system names, and they are the names initially shown throughout StorageGRID.
+
+System names are required for internal StorageGRID operations and can’t be changed. However, you can use the rename procedure to define new display names for the grid, each site, and each node. These display names appear in various StorageGRID locations instead of (or in some cases, in addition to) the underlying system names. Use the rename procedure to correct typos, to implement a different naming convention, or to indicate that a site and all of its nodes have been relocated. Unlike system names, display names can be updated whenever required and without impacting StorageGRID operations.
+
+Where do system and display names appear?
+
+The following table summarizes where system names and display names are shown in the StorageGRID user interface and in StorageGRID files. Location
+
+System name
+
+Display name
+
+Grid Manager pages
+
+Shown unless the item is renamed
+
+If an item is renamed, shown instead of the system name in these locations:
+
+Dashboard
+
+Nodes page
+
+Configuration pages for high availability groups, load balancer endpoints, VLAN interfaces, key management servers, grid passwords, and firewall control
+
+Alerts
+
+Storage pool definitions
+
+Object metadata lookup page
+
+Pages related to maintenance
+
+procedures, including upgrade, hotfix, SANtricity OS upgrade, decommission, expansion, recovery, and object existence check
+
+Support pages (logs and diagnostics)
+
+Single sign-on page, next to the Admin Node hostname in the table for Admin Node details NODES > Overview tab for a node
+
+Always shown
+
+Shown only if the item is renamed
+
+Legacy pages in the Grid Manager (for example, SUPPORT > Grid Topology)
+
+Shown
+
+Not shown
+
+node-health API
+
+Always returned
+
+Returned only if the item is renamed
+
+1478
+
+Location
+
+System name
+
+Display name
+
+Prompt when using SSH to access a node
+
+Shown as the primary name unless the item has been renamed:
+
+Shown as the primary name when the item is renamed: admin@SYSTEM-NAME: ~ $
+
+admin@DISPLAY-NAME(SYSTEM-NAME):~ $
+
+Included in parentheses when the item is renamed:
+
+admin@DISPLAY- NAME(SYSTEM-NAME):~ $
+
+Passwords.txt file in the Recovery Package
+
+Shown as Server Name
+
+Shown as Display Name
+
+/etc/hosts file on all nodes
+
+Always shown in the second column
+
+When the item is renamed, shown in the fourth column For example:
+
+10.96.99.128 SYSTEM- NAME 28989c59-a2c3- 4d30-bb09-6879adf2437f DISPLAY-NAME localhost-grid # storagegrid-gen-host
+
+topology-display- names.json, included with AutoSupport data
+
+Not included
+
+Empty unless items have been renamed; otherwise, maps grid, site, and node IDs to their display names. Display name requirements
+
+Before using this procedure, review the requirements for display names.
+
+Display names for nodes
+
+Display names for nodes must follow these rules:
+
+Must be unique across your StorageGRID system. Display name
+
+Prompt when using SSH to access a node
+
+Shown as the primary name unless the item has been renamed:
+
+Shown as the primary name when the item is renamed: admin@SYSTEM-NAME: ~ $
+
+admin@DISPLAY-NAME(SYSTEM-NAME):~ $
+
+Included in parentheses when the item is renamed:
+
+admin@DISPLAY- NAME(SYSTEM-NAME):~ $
+
+Passwords.txt file in the Recovery Package
+
+Shown as Server Name
+
+Shown as Display Name
+
+/etc/hosts file on all nodes
+
+Always shown in the second column
+
+When the item is renamed, shown in the fourth column For example:
+
+10.96.99.128 SYSTEM- NAME 28989c59-a2c3- 4d30-bb09-6879adf2437f DISPLAY-NAME localhost-grid # storagegrid-gen-host
+
+topology-display- names.json, included with AutoSupport data
+
+Not included
+
+Empty unless items have been renamed; otherwise, maps grid, site, and node IDs to their display names. Display name requirements
+
+Before using this procedure, review the requirements for display names.
+
+Display names for nodes
+
+Display names for nodes must follow these rules:
+
+Must be unique across your StorageGRID system.
+
+Can’t be the same as the system name for any other item in your StorageGRID system.
+
+Must contain at least 1 and no more than 32 characters.
+
+Can contain numbers, hyphens (-), and uppercase and lowercase letters.

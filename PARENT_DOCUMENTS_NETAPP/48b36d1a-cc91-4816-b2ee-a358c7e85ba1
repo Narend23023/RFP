@@ -1,0 +1,105 @@
+To make use of the new Storage Nodes, you should run the EC rebalance procedure. When this procedure runs, StorageGRID redistributes existing erasure-coded data and parity fragments among all Storage Nodes at the site. In this example, when the EC rebalance procedure is complete, all five nodes are now only 60% full, and objects can continue to be ingested into the 2+1 erasure-coding scheme on all Storage Nodes.
+
+Recommendations for EC rebalancing
+
+NetApp requires EC rebalancing if all of the following statements are true:
+
+You use erasure coding for your object data.
+
+1391
+
+• The Low Object Storage alert has been triggered for one or more Storage Nodes at a site, indicating that
+
+the nodes are 80% or more full. You are unable to add enough new Storage Nodes for the erasure-coding scheme in use. See Add storage capacity for erasure-coded objects.
+
+Your S3 and Swift clients can tolerate lower performance for their write and read operations while the EC rebalance procedure is running.
+
+You can optionally run the EC rebalance procedure if you prefer Storage Nodes to be filled to similar levels and your S3 and Swift clients can tolerate lower performance for their write and read operations while the EC rebalance procedure is running. How EC rebalance procedure interacts with other maintenance tasks
+
+You can’t perform certain maintenance procedures at the same time you are running the EC rebalance procedure.
+
+Procedure
+
+Allowed during EC rebalance procedure?
+
+Additional EC rebalance procedures
+
+No.
+
+You can only run one EC rebalance procedure at a time. Decommission procedure
+
+No.
+
+EC data repair job
+
+You are prevented from starting a decommission procedure or an EC data repair while the EC rebalance procedure is running. NetApp requires EC rebalancing if all of the following statements are true:
+
+You use erasure coding for your object data.
+
+1391
+
+• The Low Object Storage alert has been triggered for one or more Storage Nodes at a site, indicating that
+
+the nodes are 80% or more full. You are unable to add enough new Storage Nodes for the erasure-coding scheme in use. See Add storage capacity for erasure-coded objects.
+
+Your S3 and Swift clients can tolerate lower performance for their write and read operations while the EC rebalance procedure is running.
+
+You can optionally run the EC rebalance procedure if you prefer Storage Nodes to be filled to similar levels and your S3 and Swift clients can tolerate lower performance for their write and read operations while the EC rebalance procedure is running. How EC rebalance procedure interacts with other maintenance tasks
+
+You can’t perform certain maintenance procedures at the same time you are running the EC rebalance procedure.
+
+Procedure
+
+Allowed during EC rebalance procedure?
+
+Additional EC rebalance procedures
+
+No.
+
+You can only run one EC rebalance procedure at a time. Decommission procedure
+
+No.
+
+EC data repair job
+
+You are prevented from starting a decommission procedure or an EC data repair while the EC rebalance procedure is running.
+
+You are prevented from starting the EC rebalance procedure while a Storage Node decommission procedure or an EC data repair is running. Expansion procedure
+
+No.
+
+If you need to add new Storage Nodes in an expansion, run the EC rebalance procedure after adding all new nodes.
+
+Upgrade procedure
+
+No.
+
+If you need to upgrade StorageGRID software, perform the upgrade procedure before or after running the EC rebalance procedure. As required, you can terminate the EC rebalance procedure to perform a software upgrade. Appliance node clone procedure
+
+No.
+
+If you need to clone an appliance Storage Node, run the EC rebalance procedure after adding the new node.
+
+Hotfix procedure
+
+Yes.
+
+You can apply a StorageGRID hotfix while the EC rebalance procedure is running.
+
+1392
+
+Procedure
+
+Allowed during EC rebalance procedure? Other maintenance procedures
+
+No.
+
+You must terminate the EC rebalance procedure before running other maintenance procedures.
+
+How EC rebalance procedure interacts with ILM
+
+While the EC rebalance procedure is running, avoid making ILM changes that might change the location of existing erasure-coded objects. For example, don’t start using an ILM rule that has a different erasure-coding profile. If you need to make such ILM changes, you should terminate the EC rebalance procedure. Add metadata capacity
+
+To ensure that adequate space is available for object metadata, you might need to perform an expansion procedure to add new Storage Nodes at each site.
+
+StorageGRID reserves space for object metadata on volume 0 of each Storage Node. Three copies of all object metadata are maintained at each site, evenly distributed across all Storage Nodes.

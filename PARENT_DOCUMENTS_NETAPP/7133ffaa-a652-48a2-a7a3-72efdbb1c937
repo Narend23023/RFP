@@ -1,0 +1,135 @@
+You have configured any VLAN interfaces you plan to use. See Configure VLAN interfaces.
+
+If you are creating an HTTPS endpoint (recommended), you have the information for the server certificate.
+
+Changes to an endpoint certificate can take up to 15 minutes to be applied to all nodes.
+
+To upload a certificate, you need the server certificate, the certificate private key, and optionally, a CA bundle.
+
+To generate a certificate, you need all of the domain names and IP addresses that S3 or Swift clients will use to access the endpoint. You must also know the subject (Distinguished Name). If you want to use the StorageGRID S3 and Swift API certificate (which can also be used for connections directly to Storage Nodes), you have already replaced the default certificate with a custom certificate signed by an external certificate authority. See Configure S3 and Swift API certificates.
+
+Create a load balancer endpoint
+
+Each S3 or Swift client load balancer endpoint specifies a port, a client type (S3 or Swift), and a network protocol (HTTP or HTTPS). Management interface load balancer endpoints specifies a port, interface type, and untrusted Client Network. Access the wizard
+
+Steps
+
+1. Select CONFIGURATION > Network > Load balancer endpoints.
+
+500
+
+2. To create an endpoint for an S3 or Swift client, select the S3 or Swift client tab.
+
+3. To create an endpoint for access to the Grid Manager, Tenant Manager, or both, select the Management interface tab.
+
+4. Select Create. Enter endpoint details
+
+Steps
+
+1. Select the appropriate instructions to enter details for the type of endpoint you want to create.
+
+501
+
+S3 or Swift client
+
+Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint, which will appear in the table on the Load balancer endpoints page.
+
+Port Create a load balancer endpoint
+
+Each S3 or Swift client load balancer endpoint specifies a port, a client type (S3 or Swift), and a network protocol (HTTP or HTTPS). Management interface load balancer endpoints specifies a port, interface type, and untrusted Client Network. Access the wizard
+
+Steps
+
+1. Select CONFIGURATION > Network > Load balancer endpoints.
+
+500
+
+2. To create an endpoint for an S3 or Swift client, select the S3 or Swift client tab.
+
+3. To create an endpoint for access to the Grid Manager, Tenant Manager, or both, select the Management interface tab.
+
+4. Select Create. Enter endpoint details
+
+Steps
+
+1. Select the appropriate instructions to enter details for the type of endpoint you want to create.
+
+501
+
+S3 or Swift client
+
+Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint, which will appear in the table on the Load balancer endpoints page.
+
+Port
+
+The StorageGRID port you want to use for load balancing. This field defaults to 10433 for the first endpoint you create, but you can enter any unused external port from 1 to 65535.
+
+If you enter 80 or 8443, the endpoint is configured only on Gateway Nodes, unless you have freed up port 8443. Then you can use port 8443 as an S3 endpoint, and the port will be configured on both Gateway and Admin Nodes. Client type
+
+The type of client application that will use this endpoint, either S3 or Swift.
+
+Network protocol
+
+The network protocol that clients will use when connecting to this endpoint.
+
+Select HTTPS for secure, TLS encrypted communication (recommended). You must attach a security certificate before you can save the endpoint.
+
+Select HTTP for less secure, unencrypted communication. Use HTTP only for a non-production grid. Management interface
+
+Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint, which will appear in the table on the Load balancer endpoints page.
+
+Port
+
+The StorageGRID port you want to use to access the Grid Manager, Tenant Manager, or both.
+
+Grid Manager: 8443
+
+Tenant Manager: 9443
+
+Both Grid Manager and Tenant Manager: 443
+
+Note: You can use these preset ports or other available ports. Interface type
+
+Select the radio button for the StorageGRID interface you will access using this endpoint.
+
+Untrusted Client Network Select Yes if this endpoint should be accessible to untrusted Client Networks.
+
+Otherwise, select No.
+
+When you select Yes, the port is open on all untrusted Client Networks.
+
+Note: You can only configure a port to be open or closed to untrusted Client Networks when you are creating the load balancer endpoint.
+
+502
+
+2. Select Continue.
+
+Select a binding mode Steps
+
+1. Select a binding mode for the endpoint to control how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces.
+
+Some binding modes are available for either client endpoints or management interface endpoints. All modes for both endpoint types are listed here. Mode
+
+Description
+
+Global (default for client endpoints)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.

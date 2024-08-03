@@ -1,0 +1,121 @@
+./vsphere/configure-storagegrid.py
+
+A Python script used to automate the configuration of a StorageGRID system.
+
+./vsphere/configure-sga.py
+
+A Python script used to automate the configuration of StorageGRID appliances. ./vsphere/storagegrid-ssoauth.py
+
+An example Python script that you can use to sign in to the Grid Management API when single sign-on (SSO) is enabled. You can also use this script for Ping Federate.
+
+1552
+
+Path and file name
+
+Description
+
+./vsphere/configure- storagegrid.sample.json
+
+An example configuration file for use with the configure-storagegrid.py script. ./vsphere/configure- storagegrid.blank.json
+
+A blank configuration file for use with the configure-storagegrid.py script.
+
+./vsphere/storagegrid-ssoauth-azure.py
+
+An example Python script that you can use to sign in to the Grid Management API when single sign-on (SSO) is enabled using Active Directory or Ping Federate. ./vsphere/storagegrid-ssoauth-azure.js
+
+A helper script called by the companion storagegrid-ssoauth-azure.py Python script to perform SSO interactions with Azure.
+
+./vsphere/extras/api-schemas
+
+API schemas for StorageGRID.
+
+Note: Before you perform an upgrade, you can use these schemas to confirm that any code you have written to use StorageGRID management APIs will be compatible with the new StorageGRID release if you don’t have a non-production StorageGRID environment for upgrade compatibility testing.
+
+12. If you are recovering a StorageGRID appliance-based system, select the appropriate files. Path and file name
+
+Description
+
+./debs/storagegrid-webscale-images- version-SHA.deb
+
+DEB package for installing the StorageGRID node images on your appliances.
+
+./debs/storagegrid-webscale-images- version-SHA.deb.md5
+
+MD5 checksum for the file /debs/storagegridwebscale- images-version-SHA.deb. ./vsphere/storagegrid-ssoauth-azure.py
+
+An example Python script that you can use to sign in to the Grid Management API when single sign-on (SSO) is enabled using Active Directory or Ping Federate. ./vsphere/storagegrid-ssoauth-azure.js
+
+A helper script called by the companion storagegrid-ssoauth-azure.py Python script to perform SSO interactions with Azure.
+
+./vsphere/extras/api-schemas
+
+API schemas for StorageGRID.
+
+Note: Before you perform an upgrade, you can use these schemas to confirm that any code you have written to use StorageGRID management APIs will be compatible with the new StorageGRID release if you don’t have a non-production StorageGRID environment for upgrade compatibility testing.
+
+12. If you are recovering a StorageGRID appliance-based system, select the appropriate files. Path and file name
+
+Description
+
+./debs/storagegrid-webscale-images- version-SHA.deb
+
+DEB package for installing the StorageGRID node images on your appliances.
+
+./debs/storagegrid-webscale-images- version-SHA.deb.md5
+
+MD5 checksum for the file /debs/storagegridwebscale- images-version-SHA.deb.
+
+For appliance installation, these files are only required if you need to avoid network traffic. The appliance can download the required files from the primary Admin Node. Select node recovery procedure
+
+You must select the correct recovery procedure for the type of node that has failed.
+
+1553
+
+Grid node
+
+Recovery procedure
+
+More than one Storage Node
+
+Contact technical support. If more than one Storage Node has failed, technical support must assist with recovery to prevent database inconsistencies that could lead to data loss. A site recovery procedure might be required. How technical support recovers a site
+
+A single Storage Node
+
+The Storage Node recovery procedure depends on the type and duration of the failure.
+
+Recover from Storage Node failures
+
+Admin Node
+
+The Admin Node procedure depends on whether you need to recover the primary Admin Node or a non-primary Admin Node. Recover from Admin Node failures
+
+Gateway Node
+
+Recover from Gateway Node failures.
+
+Archive Node
+
+Recover from Archive Node failures.
+
+If a server that is hosting more than one grid node fails, you can recover the nodes in any order. However, if the failed server is hosting the primary Admin Node, you must recover that node first. Recovering the primary Admin Node first prevents other node recoveries from halting as they wait to contact the primary Admin Node. Recover from Storage Node failures Recover from Storage Node failures: Overview
+
+The procedure for recovering a failed Storage Node depends on the type of failure and the type of Storage Node that has failed.
+
+Use this table to select the recovery procedure for a failed Storage Node.
+
+1554
+
+Issue
+
+Action
+
+Notes
+
+More than one Storage Node has failed.
+
+More than one Storage Node has failed.
+
+A second Storage Node has failed less than 15 days after a Storage Node failure or recovery.
+
+Recovering more than one Storage Node (or more than one Storage Node within 15 days) might affect the integrity of the Cassandra database, which can cause data loss.

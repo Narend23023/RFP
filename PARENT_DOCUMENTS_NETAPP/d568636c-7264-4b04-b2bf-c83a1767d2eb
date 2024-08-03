@@ -1,0 +1,87 @@
+You have deployed and configured the replacement node. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+1627
+
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node.
+
+Linux: Restart the node by running this command on the Linux host: storagegrid node force- recovery node-name Appliance: If you want to retry the recovery after resetting the procedure, you must restore the appliance node to a pre-installed state by running sgareinstall on the node. See Prepare appliance for reinstallation (platform replacement only).
+
+6. If single sign-on (SSO) is enabled for your StorageGRID system and the relying party trust for the Admin Node you recovered was configured to use the default management interface certificate, update (or delete and recreate) the node’s relying party trust in Active Directory Federation Services (AD FS). Use the new default server certificate that was generated during the Admin Node recovery process.
+
+To configure a relying party trust, see Configure single sign-on. To access the default server certificate, log in to the command shell of the Admin Node. Go to the /var/local/mgmt- api directory, and select the server.crt file. Restore audit log on recovered non-primary Admin Node
+
+If you were able to preserve the audit log from the failed non-primary Admin Node, so that historical audit log information is retained, you can copy it to the non-primary Admin Node you are recovering.
+
+Before you begin
+
+The recovered Admin Node is installed and running.
+
+You have copied the audit logs to another location after the original Admin Node failed. About this task
+
+If an Admin Node fails, audit logs saved to that Admin Node are potentially lost. It might be possible to preserve data from loss by copying audit logs from the failed Admin Node and then restoring these audit logs
+
+1628
+
+to the recovered Admin Node. Depending on the failure, it might not be possible to copy audit logs from the failed Admin Node. In that case, if the deployment has more than one Admin Node, you can recover audit logs from another Admin Node as audit logs are replicated to all Admin Nodes.
+
+If there is only one Admin Node and the audit log can’t be copied from the failed node, the recovered Admin Node starts recording events to the audit log as if the installation is new.
+
+You must recover an Admin Node as soon as possible to restore logging functionality.
+
+By default, audit information is sent to the audit log on Admin Nodes. You can skip these steps if either of the following applies: You configured an external syslog server and audit logs are now being sent to the syslog server instead of to Admin Nodes.
+
+You explicitly specified that audit messages should be saved only on the local nodes that generated them.
+
+See Configure audit messages and log destinations for details.
+
+Steps
+
+1. Log in to the recovered Admin Node: a. Enter the following command:
+
++ ssh admin@recovery_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+After you are logged in as root, the prompt changes from $ to #.
+
+2. Check which audit files have been preserved: cd /var/local/log
+
+3. Copy the preserved audit log files to the recovered Admin Node: If there is only one Admin Node and the audit log can’t be copied from the failed node, the recovered Admin Node starts recording events to the audit log as if the installation is new.
+
+You must recover an Admin Node as soon as possible to restore logging functionality.
+
+By default, audit information is sent to the audit log on Admin Nodes. You can skip these steps if either of the following applies: You configured an external syslog server and audit logs are now being sent to the syslog server instead of to Admin Nodes.
+
+You explicitly specified that audit messages should be saved only on the local nodes that generated them.
+
+See Configure audit messages and log destinations for details.
+
+Steps
+
+1. Log in to the recovered Admin Node: a. Enter the following command:
+
++ ssh admin@recovery_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -

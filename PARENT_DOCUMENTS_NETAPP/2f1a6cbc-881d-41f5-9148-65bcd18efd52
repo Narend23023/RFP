@@ -1,0 +1,85 @@
+There is no difference in priority between group and bucket policies. StorageGRID bucket and group policies follow a specific grammar defined by Amazon. Inside each policy is an array of policy statements, and each statement contains the following elements:
+
+Statement ID (Sid) (optional)
+
+Effect
+
+Principal/NotPrincipal
+
+Resource/NotResource
+
+Action/NotAction
+
+Condition (optional)
+
+Policy statements are built using this structure to specify permissions: Grant <Effect> to allow/deny <Principal> to perform <Action> on <Resource> when <Condition> applies.
+
+Each policy element is used for a specific function: Element
+
+Description
+
+Sid Bucket policies, which are managed using the GetBucketPolicy, PutBucketPolicy, and DeleteBucketPolicy S3 API operations. Bucket policies are attached to buckets, so they are configured to control access by users in the bucket owner account or other accounts to the bucket and the objects in it. A bucket policy applies to only one bucket and possibly multiple groups.
+
+Group policies, which are configured using the Tenant Manager or Tenant Management API. Group
+
+967
+
+policies are attached to a group in the account, so they are configured to allow that group to access specific resources owned by that account. A group policy applies to only one group and possibly multiple buckets.
+
+There is no difference in priority between group and bucket policies. StorageGRID bucket and group policies follow a specific grammar defined by Amazon. Inside each policy is an array of policy statements, and each statement contains the following elements:
+
+Statement ID (Sid) (optional)
+
+Effect
+
+Principal/NotPrincipal
+
+Resource/NotResource
+
+Action/NotAction
+
+Condition (optional)
+
+Policy statements are built using this structure to specify permissions: Grant <Effect> to allow/deny <Principal> to perform <Action> on <Resource> when <Condition> applies.
+
+Each policy element is used for a specific function: Element
+
+Description
+
+Sid
+
+The Sid element is optional. The Sid is only intended as a description for the user. It is stored but not interpreted by the StorageGRID system.
+
+Effect
+
+Use the Effect element to establish whether the specified operations are allowed or denied. You must identify operations you allow (or deny) on buckets or objects using the supported Action element keywords. Principal/NotPrincipal
+
+You can allow users, groups, and accounts to access specific resources and perform specific actions. If no S3 signature is included in the request, anonymous access is allowed by specifying the wildcard character (*) as the principal. By default, only the account root has access to resources owned by the account.
+
+You only need to specify the Principal element in a bucket policy. For group policies, the group to which the policy is attached is the implicit Principal element. Resource/NotResource
+
+The Resource element identifies buckets and objects. You can allow or deny permissions to buckets and objects using the Amazon Resource Name (ARN) to identify the resource.
+
+Action/NotAction
+
+The Action and Effect elements are the two components of permissions. When a group requests a resource, they are either granted or denied access to the resource. Access is denied unless you specifically assign permissions, but you can use explicit deny to override a permission granted by another policy.
+
+968
+
+Element
+
+Description Condition
+
+The Condition element is optional. Conditions allow you to build expressions to determine when a policy should be applied.
+
+In the Action element, you can use the wildcard character (*) to specify all operations, or a subset of operations. For example, this Action matches permissions such as s3:GetObject, s3:PutObject, and s3:DeleteObject. s3:*Object
+
+In the Resource element, you can use the wildcard characters (*) and (?). While the asterisk (*) matches 0 or more characters, the question mark (?) matches any single character.
+
+In the Principal element, wildcard characters aren’t supported except to set anonymous access, which grants permission to everyone. For example, you set the wildcard (*) as the Principal value. "Principal":"*"
+
+"Principal":{"AWS":"*"}
+
+In the following example, the statement is using the Effect, Principal, Action, and Resource elements. This example shows a complete bucket policy statement that uses the Effect "Allow" to give the Principals, the admin group federated-group/admin and the finance group federated-group/finance, permissions to perform the Action s3:ListBucket on the bucket named mybucket and the Action s3:GetObject on all objects inside that bucket.
+
+969

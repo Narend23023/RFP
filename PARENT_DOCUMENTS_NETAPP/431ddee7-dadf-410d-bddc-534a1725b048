@@ -1,0 +1,111 @@
+If your tenant account has the Use grid federation connection permission, you can view the allowed connections.
+
+Before you begin
+
+The tenant account has the Use grid federation connection permission.
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access permission. Steps
+
+1. Select STORAGE (S3) > Grid federation connections.
+
+The Grid federation connection page appears and includes a table that summarizes the following information:
+
+Column
+
+Description
+
+Connection name
+
+The grid federation connections this tenant has permission to use.
+
+Buckets with cross-grid replication For each grid federation connection, the tenant buckets that have
+
+cross-grid replication enabled. Objects added to these buckets will be replicated to the other grid in the connection. Last error
+
+For each grid federation connection, the most recent error to occur, if any, when data was being replicated to the other grid. See Clear the last error.
+
+2. Optionally, select a bucket name to view bucket details.
+
+Clear the last error
+
+An error might appear in the Last error column for one of these reasons:
+
+The source object version was not found.
+
+The source bucket was not found.
+
+The destination bucket was deleted.
+
+The destination bucket was re-created by a different account.
+
+The destination bucket has versioning suspended.
+
+The destination bucket was re-created by the same account but is now unversioned.
+
+781
+
+This column only shows the last cross-grid replication error to occur; previous errors that might have occurred will not be shown. Steps
+
+1. If a message appears in the Last error column, view the message text.
+
+For example, this error indicates that the destination bucket for cross-grid replication was in an invalid state, possibly because versioning was suspended or S3 Object Lock was enabled.
+
+2. Perform any recommended actions. For example, if versioning was suspended on the destination bucket for cross-grid replication, reenable versioning for that bucket.
+
+3. Select the connection from the table.
+
+4. Select Clear error.
+
+5. Select Yes to clear the message and update the system’s status.
+
+6. Wait 5-6 minutes and then ingest a new object into the bucket. Confirm that the error message does not reappear.
+
+To ensure the error message is cleared, wait at least 5 minutes after the timestamp in the message before ingesting a new object.
+
+7. To determine if any objects failed to be replicated because of the bucket error, see Identify and retry failed replication operations. Manage groups and users
+
+Use identity federation
+
+Using identity federation makes setting up tenant groups and users faster, and it allows tenant users to sign in to the tenant account using familiar credentials. Configure identity federation for Tenant Manager
+
+You can configure identity federation for the Tenant Manager if you want tenant groups and users to be managed in another system such as Active Directory, Azure Active Directory (Azure AD), OpenLDAP, or Oracle Directory Server.
+
+Before you begin
+
+782
+
+• You are signed in to the Tenant Manager using a supported web browser. 2. Perform any recommended actions. For example, if versioning was suspended on the destination bucket for cross-grid replication, reenable versioning for that bucket.
+
+3. Select the connection from the table.
+
+4. Select Clear error.
+
+5. Select Yes to clear the message and update the system’s status.
+
+6. Wait 5-6 minutes and then ingest a new object into the bucket. Confirm that the error message does not reappear.
+
+To ensure the error message is cleared, wait at least 5 minutes after the timestamp in the message before ingesting a new object.
+
+7. To determine if any objects failed to be replicated because of the bucket error, see Identify and retry failed replication operations. Manage groups and users
+
+Use identity federation
+
+Using identity federation makes setting up tenant groups and users faster, and it allows tenant users to sign in to the tenant account using familiar credentials. Configure identity federation for Tenant Manager
+
+You can configure identity federation for the Tenant Manager if you want tenant groups and users to be managed in another system such as Active Directory, Azure Active Directory (Azure AD), OpenLDAP, or Oracle Directory Server.
+
+Before you begin
+
+782
+
+• You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access permission.
+
+You are using Active Directory, Azure AD, OpenLDAP, or Oracle Directory Server as the identity provider.
+
+If you want to use an LDAP v3 service that is not listed, contact technical support.
+
+If you plan to use OpenLDAP, you must configure the OpenLDAP server. See Guidelines for configuring OpenLDAP server.

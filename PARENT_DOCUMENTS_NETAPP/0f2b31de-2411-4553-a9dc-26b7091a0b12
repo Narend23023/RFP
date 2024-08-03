@@ -1,0 +1,99 @@
+Create a high availability group When you create a high availability group, you select one or more interfaces and organize them in priority order. Then, you assign one or more VIP addresses to the group.
+
+An interface must be for a Gateway Node or an Admin Node to be included in an HA group. An HA group can only use one interface for any given node; however, other interfaces for the same node can be used in other HA groups. Access the wizard
+
+Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+2. Select Create.
+
+491
+
+Enter details for the HA group
+
+Steps
+
+1. Provide a unique name for the HA group.
+
+2. Optionally, enter a description for the HA group.
+
+3. Select Continue.
+
+Add interfaces to the HA group Steps
+
+1. Select one or more interfaces to add to this HA group.
+
+Use the column headers to sort the rows, or enter a search term to locate interfaces more quickly.
+
+After creating a VLAN interface, wait up to 5 minutes for the new interface to appear in the table.
+
+Guidelines for selecting interfaces Create a high availability group When you create a high availability group, you select one or more interfaces and organize them in priority order. Then, you assign one or more VIP addresses to the group.
+
+An interface must be for a Gateway Node or an Admin Node to be included in an HA group. An HA group can only use one interface for any given node; however, other interfaces for the same node can be used in other HA groups. Access the wizard
+
+Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+2. Select Create.
+
+491
+
+Enter details for the HA group
+
+Steps
+
+1. Provide a unique name for the HA group.
+
+2. Optionally, enter a description for the HA group.
+
+3. Select Continue.
+
+Add interfaces to the HA group Steps
+
+1. Select one or more interfaces to add to this HA group.
+
+Use the column headers to sort the rows, or enter a search term to locate interfaces more quickly.
+
+After creating a VLAN interface, wait up to 5 minutes for the new interface to appear in the table.
+
+Guidelines for selecting interfaces
+
+You must select at least one interface. ◦ You can select only one interface for a node. ◦ If the HA group is for HA protection of Admin Node services, which include the Grid Manager and the Tenant Manager, select interfaces on Admin Nodes only.
+
+If the HA group is for HA protection of S3 or Swift client traffic, select interfaces on Admin Nodes, Gateway Nodes, or both. If you select interfaces on different types of nodes, an informational note appears. You are reminded that if a failover occurs, services provided by the previously active node might not be available on the newly active node. For example, a backup Gateway Node can’t provide HA protection of Admin Node services. Similarly, a backup Admin Node can’t perform all of the maintenance procedures that the primary Admin Node can provide.
+
+492
+
+◦ If you can’t select an interface, its checkbox is disabled. The tool tip provides more information.
+
+You can’t select an interface if its subnet value or gateway conflicts with another selected interface. ◦ You can’t select a configured interface if it does not have a static IP address.
+
+2. Select Continue.
+
+Determine the priority order If the HA group includes more than one interface, you can determine which is the Primary interface and which are the Backup (failover) interfaces. If the Primary interface fails, the VIP addresses move to the highest priority interface that is available. If that interface fails, the VIP addresses move to the next highest priority interface that is available, and so on. Steps
+
+1. Drag rows in the Priority order column to determine the Primary interface and any Backup interfaces.
+
+The first interface in the list is the Primary interface. The Primary interface is the active interface unless a failure occurs.
+
+If the HA group provides access to the Grid Manager, you must select an interface on the primary Admin Node to be the Primary interface. Some maintenance procedures can only be performed from the primary Admin Node.
+
+2. Select Continue.
+
+493
+
+Enter IP addresses Steps
+
+1. In the Subnet CIDR field, specify the VIP subnet in CIDR notation—an IPv4 address followed by a slash and the subnet length (0-32).
+
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+If you use a 32-bit prefix, the VIP network address also serves as the gateway address and the VIP address.
+
+2. Optionally, if any S3, Swift, administrative or tenant clients will access these VIP addresses from a different subnet, enter the Gateway IP address. The gateway address must be within the VIP subnet.
+
+Client and admin users will use this gateway to access the virtual IP addresses.
+
+3. Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet and all will be active at the same time on the active interface.

@@ -1,0 +1,137 @@
+Stop services and shut down grid nodes
+
+Before you can power off a StorageGRID system, you must stop all services running on each grid node, and then shut down all VMware virtual machines, container engines, and StorageGRID appliances. About this task
+
+Stop services on Admin Nodes and Gateway Nodes first, and then stop services on Storage Nodes.
+
+This approach allows you to use the primary Admin Node to monitor the status of the other grid nodes for as long as possible.
+
+If a single host includes more than one grid node, don’t shut down the host until you have stopped all of the nodes on that host. If the host includes the primary Admin Node, shut down that host last.
+
+If required, you can migrate nodes from one Linux host to another to perform host maintenance without impacting the functionality or availability of your grid. Steps
+
+1. Stop all client applications from accessing the grid.
+
+2.
+
+Log in to each Gateway Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Stop all services running on the node: service servermanager stop
+
+Services can take up to 15 minutes to shut down, and you might want to log in to the system remotely to
+
+1505
+
+monitor the shutdown process.
+
+4. Repeat the previous two steps to stop the services on all Storage Nodes, Archive Nodes, and non-primary Admin Nodes.
+
+You can stop the services on these nodes in any order.
+
+If you issue the service servermanager stop command to stop the services on an appliance Storage Node, you must power cycle the appliance to restart the node.
+
+5. For the primary Admin Node, repeat the steps for logging into the node and stopping all services on the node. 6. For nodes that are running on Linux hosts:
+
+a. Log in to the host operating system.
+
+b. Stop the node: storagegrid node stop c. Shut down the host operating system.
+
+7. For nodes that are running on VMware virtual machines and for appliance Storage Nodes, issue the shutdown command: shutdown -h now
+
+Perform this step regardless of the outcome of the service servermanager stop command.
+
+For the appliance, this command shuts down the compute controller, but the appliance is still powered on. You must complete the next step.
+
+8. If you have appliance nodes, follow the steps for your appliance.
+
+1506
+
+SG110 or SG1100
+
+a. Turn off the power to the appliance.
+
+b. Wait for the blue power LED to turn off.
+
+SG100 or SG1000
+
+a. Turn off the power to the appliance.
+
+b. Wait for the blue power LED to turn off.
+
+SG6160
+
+a. Turn off the power to the SG6100-CN storage controller.
+
+b. Wait for the blue power LED on the SG6100-CN storage controller to turn off.
+
+SGF6112
+
+a. Turn off the power to the appliance. 5. For the primary Admin Node, repeat the steps for logging into the node and stopping all services on the node. 6. For nodes that are running on Linux hosts:
+
+a. Log in to the host operating system.
+
+b. Stop the node: storagegrid node stop c. Shut down the host operating system.
+
+7. For nodes that are running on VMware virtual machines and for appliance Storage Nodes, issue the shutdown command: shutdown -h now
+
+Perform this step regardless of the outcome of the service servermanager stop command.
+
+For the appliance, this command shuts down the compute controller, but the appliance is still powered on. You must complete the next step.
+
+8. If you have appliance nodes, follow the steps for your appliance.
+
+1506
+
+SG110 or SG1100
+
+a. Turn off the power to the appliance.
+
+b. Wait for the blue power LED to turn off.
+
+SG100 or SG1000
+
+a. Turn off the power to the appliance.
+
+b. Wait for the blue power LED to turn off.
+
+SG6160
+
+a. Turn off the power to the SG6100-CN storage controller.
+
+b. Wait for the blue power LED on the SG6100-CN storage controller to turn off.
+
+SGF6112
+
+a. Turn off the power to the appliance.
+
+b. Wait for the blue power LED to turn off.
+
+SG6000 a. Wait for the green Cache Active LED on the back of the storage controllers to turn off.
+
+This LED is on when cached data needs to be written to the drives. You must wait for this LED to turn off before you turn off power.
+
+b. Turn off the power to the appliance, and wait for the blue power LED to turn off.
+
+SG5800
+
+a. Wait for the green Cache Active LED on the back of the storage controller to turn off.
+
+This LED is on when cached data needs to be written to the drives. You must wait for this LED to turn off before you turn off power.
+
+b. From the home page of SANtricity System Manager, select View Operations in Progress.
+
+c. Confirm that all operations have completed before continuing with the next step.
+
+d. Turn off both power switches on the controller shelf, and wait for all LEDs on the controller shelf to
+
+turn off.
+
+SG5700

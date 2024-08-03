@@ -1,0 +1,99 @@
+2. Define root access for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both. Option
+
+Do this
+
+If identity federation is not enabled
+
+Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.
+
+3. For Bucket name, enter the name of the bucket FabricPool will use to store ONTAP data. For example, fabricpool-bucket.
+
+You can’t change the bucket name after creating the bucket.
+
+4. Select the Region for this bucket.
+
+Use the default region (us-east-1) unless you expect to use ILM in the future to filter objects based on the bucket’s region.
+
+5. Select Create and Continue to create the tenant and bucket and to go to the download data step Select tenant and bucket
+
+The existing tenant account must have at least one bucket that does not have versioning enabled. You can’t select an existing tenant account if no bucket exists for that tenant.
+
+1. Select the existing tenant from the Tenant name drop-down list.
+
+2. Select the existing bucket from the Bucket name drop-down list.
+
+FabricPool does not support object versioning, so buckets that have versioning enabled aren’t shown.
+
+Don’t select a bucket that has S3 Object Lock enabled for use with FabricPool.
+
+3. Select Continue to go to the download data step. Step 4 of 9: Download ONTAP settings
+
+During this step, you download a file that you can use to enter values into ONTAP System Manager.
+
+734
+
+Steps
+
+1. Optionally, select the copy icon ( clipboard.
+
+1. Optionally, select the copy icon ( clipboard.
+
+These values are included in the download file, but you might want to save them separately.
+
+2. Select Download ONTAP settings to download a text file that contains the values you’ve entered so far.
+
+The ONTAP_FabricPool_settings_bucketname.txt file includes the information you need to configure StorageGRID as the object storage system for a FabricPool cloud tier, including:
+
+Load balancer connection details, including the server name (FQDN), port, and certificate ◦ Bucket name ◦ Access key ID and secret access key for the root user of the tenant account
+
+3. Save the copied keys and downloaded file to a secure location. Don’t close this page until you have copied both access keys, downloaded the ONTAP settings, or both. The keys will not be available after you close this page. Make sure to save this information in a secure location because it can be used to obtain data from your StorageGRID system. 3. Select Continue to go to the download data step. Step 4 of 9: Download ONTAP settings
+
+During this step, you download a file that you can use to enter values into ONTAP System Manager.
+
+734
+
+Steps
+
+1. Optionally, select the copy icon ( clipboard.
+
+1. Optionally, select the copy icon ( clipboard.
+
+These values are included in the download file, but you might want to save them separately.
+
+2. Select Download ONTAP settings to download a text file that contains the values you’ve entered so far.
+
+The ONTAP_FabricPool_settings_bucketname.txt file includes the information you need to configure StorageGRID as the object storage system for a FabricPool cloud tier, including:
+
+Load balancer connection details, including the server name (FQDN), port, and certificate ◦ Bucket name ◦ Access key ID and secret access key for the root user of the tenant account
+
+3. Save the copied keys and downloaded file to a secure location. Don’t close this page until you have copied both access keys, downloaded the ONTAP settings, or both. The keys will not be available after you close this page. Make sure to save this information in a secure location because it can be used to obtain data from your StorageGRID system.
+
+4. Select the checkbox to confirm you have downloaded or copied the access key ID and secret access key.
+
+5. Select Continue to go to the ILM storage pool step.
+
+Step 5 of 9: Select a storage pool
+
+A storage pool is a group of Storage Nodes. When you select a storage pool, you determine which nodes StorageGRID will use to store the data tiered from ONTAP.
+
+For details about this step, see Create a storage pool. Steps
+
+1. From the Site drop-down list, select the StorageGRID site you want to use for the data tiered from ONTAP.
+
+2. From the Storage pool drop-down list, select the storage pool for that site.
+
+The storage pool for a site includes all Storage Nodes at that site.
+
+3. Select Continue to go to the ILM rule step. Step 6 of 9: Review ILM rule for FabricPool
+
+Information lifecycle management (ILM) rules control the placement, duration, and ingest behavior for all objects in your StorageGRID system.

@@ -1,0 +1,77 @@
+Note: An error message appears if you attempt to deactivate an erasure-coding profile and object data is still associated with the profile. You might need to wait several weeks before trying the deactivation process again.
+
+Learn about deactivating an erasure-coding profile. No, you can’t decommission an Archive Node unless the node is disconnected.
+
+If an Archive Node is still connected, you can’t remove it.
+
+Complete the steps in Considerations for Archive Node and then decommission the disconnected node.
+
+Decommission disconnected grid nodes For each affected erasure-coding profile, perform one of the following steps, based on how the profile is being used:
+
+For example, if an erasure-coding profile exists for 4+2 erasure coding, at least 6 Storage Nodes must remain.
+
+Used in active ILM policies: Perform an expansion. Add enough new Storage Nodes to allow erasure coding to continue. See the instructions for expanding your grid.
+
+Used in an ILM rule but not in active ILM policies: Edit or delete the rule and then deactivate the erasure-coding profile.
+
+Not used in any ILM rule: Deactivate the erasure-coding profile.
+
+Note: An error message appears if you attempt to deactivate an erasure-coding profile and object data is still associated with the profile. You might need to wait several weeks before trying the deactivation process again.
+
+Learn about deactivating an erasure-coding profile. No, you can’t decommission an Archive Node unless the node is disconnected.
+
+If an Archive Node is still connected, you can’t remove it.
+
+Complete the steps in Considerations for Archive Node and then decommission the disconnected node.
+
+Decommission disconnected grid nodes
+
+You might need to decommission a node that is not currently connected to the grid (one whose Health is Unknown or Administratively Down).
+
+Before you begin
+
+You understand the considerations for decommissioning Admin, Gateway, and Archive Nodes and the considerations for decommissioning Storage Nodes.
+
+You have obtained all prerequisite items.
+
+You have ensured that no data repair jobs are active. See Check data repair jobs.
+
+You have confirmed that Storage Node recovery is not in progress anywhere in the grid. If it is, you must wait until any Cassandra rebuild performed as part of the recovery is complete. You can then proceed with
+
+1447
+
+decommissioning. You have ensured that other maintenance procedures will not be run while the node decommission procedure is running, unless the node decommission procedure is paused.
+
+The Decommission Possible column for the disconnected node or nodes you want to decommission includes a green check mark.
+
+You have the provisioning passphrase. About this task
+
+You can identify disconnected nodes by looking for Unknown (blue) or Administratively Down (gray) icons in the Health column. In the example, the Archive Node named DC1-ARC1 is disconnected.
+
+Before decommissioning any disconnected node, note the following:
+
+This procedure is primarily intended for removing a single disconnected node. If your grid contains multiple disconnected nodes, the software requires you to decommission them all at the same time, which increases the potential for unexpected results.
+
+Data loss might occur if you decommission more than one disconnected Storage Node at a time. See Considerations for disconnected Storage Nodes.
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. If a disconnected node can’t be removed (for example, a Storage Node that is required for the ADC quorum), no other disconnected node can be removed. Steps
+
+1. Unless you are decommissioning an Archive Node (which must be disconnected), attempt to bring any disconnected grid nodes back online or recover them.
+
+See Grid node recovery procedures for instructions.
+
+2. If you are unable to recover a disconnected grid node and you want to decommission it while it is disconnected, select the checkbox for that node.
+
+If your grid contains multiple disconnected nodes, the software requires you to decommission them all at the same time, which increases the potential for unexpected results.
+
+1448
+
+Be careful when choosing to decommission more than one disconnected grid node at a time, especially if you are selecting multiple disconnected Storage Nodes. If you have more than one disconnected Storage Node that you can’t recover, contact technical support to determine the best course of action.
+
+3. Enter the provisioning passphrase.
+
+The Start Decommission button is enabled.
+
+4. Click Start Decommission. A warning appears, indicating that you have selected a disconnected node and that object data will be lost if the node has the only copy of an object.
+
+5. Review the list of nodes, and click OK.

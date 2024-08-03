@@ -1,0 +1,95 @@
+4. When you are ready to start the rolling reboot procedure for all selected nodes, select Reboot nodes.
+
+5. If you selected to reboot the primary Admin Node, read the information message, and select Yes.
+
+The primary Admin Node will be the last node to reboot. While this node is rebooting, your browser’s connection will be lost. When the primary Admin Node is available again, you must reload the Rolling reboot page. Monitor a rolling reboot
+
+While the rolling reboot procedure is running, you can monitor it from the primary Admin Node.
+
+Steps
+
+1. Review the overall progress of the operation, which includes the following information:
+
+Number of nodes rebooted ◦ Number of nodes in process of being rebooted ◦ Number of nodes that remain to be rebooted
+
+2. Review the table for each type of node.
+
+The tables provide a progress bar of the operation on each node and show the reboot stage for that node, which can be one of these:
+
+Waiting to Reboot ◦ Stopping services ◦ Rebooting system ◦ Starting services ◦ Reboot completed
+
+Stop the rolling reboot procedure
+
+You can stop the rolling reboot procedure from the primary Admin Node. When you stop the procedure, any nodes that have the status "Stopping services," "Rebooting system," or "Starting services" will complete the reboot operation. However, these nodes will no longer be tracked as part of the procedure. Steps
+
+1. Select MAINTENANCE > Tasks > Rolling reboot.
+
+2. From the Monitor reboot step, select Stop reboot. Reboot grid node from Tasks tab
+
+You can reboot an individual grid node from the Tasks tab on the Nodes page.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+1498
+
+• You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+If you are rebooting the primary Admin Node or any Storage Node, you have reviewed the following considerations:
+
+When you reboot the primary Admin Node, your browser temporarily loses access to the Grid Manager. ◦ If you reboot two or more Storage Nodes at a given site, you might not be able to access certain objects for the duration of the reboot. This issue can occur if any ILM rule uses the Dual commit ingest option (or a rule specifies Balanced and it is not possible to immediately create all required copies). In this case, StorageGRID will commit newly ingested objects to two Storage Nodes on the same site and evaluate ILM later. To ensure you can access all objects while a Storage Node is rebooting, stop ingesting objects at a site for approximately one hour before rebooting the node.
+
+About this task
+
+When StorageGRID reboots a grid node, it issues the reboot command on the node, which causes the node to shut down and restart. All services are restarted automatically.
+
+Rebooting a VMware node reboots the virtual machine.
+
+Rebooting a Linux node reboots the container.
+
+Rebooting a StorageGRID Appliance node reboots the compute controller.
+
+If you need to reboot more than one node, you can use the rolling reboot procedure. Steps
+
+1. Select NODES.
+
+2. Select the grid node you want to reboot.
+
+3. Select the Tasks tab.
+
+4. Select Reboot.
+
+A confirmation dialog box appears. If you are rebooting the primary Admin Node, the confirmation dialog box reminds you that your browser’s connection to the Grid Manager will be lost temporarily when services are stopped.
+
+5. Enter the provisioning passphrase, and select OK.
+
+6. Wait for the node to reboot.
+
+It might take some time for services to shut down.
+
+When the node is rebooting, the gray (Administratively Down) icon appears for the node on the Nodes page. When all services have started again and the node is successfully connected to the grid, the Nodes page should display normal status (no icons to the left of the node name), indicating that no alerts are active and the node is connected to the grid. Reboot grid node from command shell Rebooting a VMware node reboots the virtual machine.
+
+Rebooting a Linux node reboots the container.
+
+Rebooting a StorageGRID Appliance node reboots the compute controller.
+
+If you need to reboot more than one node, you can use the rolling reboot procedure. Steps
+
+1. Select NODES.
+
+2. Select the grid node you want to reboot.
+
+3. Select the Tasks tab.
+
+4. Select Reboot.
+
+A confirmation dialog box appears. If you are rebooting the primary Admin Node, the confirmation dialog box reminds you that your browser’s connection to the Grid Manager will be lost temporarily when services are stopped.
+
+5. Enter the provisioning passphrase, and select OK.
+
+6. Wait for the node to reboot.
+
+It might take some time for services to shut down.

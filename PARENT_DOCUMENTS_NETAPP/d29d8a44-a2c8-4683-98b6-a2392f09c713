@@ -1,0 +1,335 @@
+Use the details provided for Internal grid node communications and External communications to determine how to configure each required port. Internal grid node communications
+
+The StorageGRID internal firewall allows incoming connections to specific ports on the Grid Network. Connections are also accepted on ports defined by load balancer endpoints.
+
+NetApp recommends that you enable Internet Control Message Protocol (ICMP) traffic between grid nodes. Allowing ICMP traffic can improve failover performance when a grid node can’t be reached.
+
+In addition to ICMP and the ports listed in the table, StorageGRID uses the Virtual Router Redundancy Protocol (VRRP). VRRP is an internet protocol that uses IP protocol number 112. StorageGRID uses VRRP in unicast mode only. VRRP is required only if high availability groups are configured. Guidelines for Linux-based nodes
+
+If enterprise networking policies restrict access to any of these ports, you can remap ports at deployment time using a deployment configuration parameter. For more information about port remapping and deployment configuration parameters, see:
+
+Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian Guidelines for VMware-based nodes
+
+Configure the following ports only if you need to define firewall restrictions that are external to VMware networking.
+
+If enterprise networking policies restrict access to any of these ports, you can remap ports when you deploy nodes using the VMware vSphere Web Client, or by using a configuration file setting when automating grid node deployment. For more information about port remapping and deployment configuration parameters, see Install StorageGRID on VMware. Guidelines for appliance nodes
+
+If enterprise networking policies restrict access to any of these ports, you can remap ports using the StorageGRID Appliance Installer. See Optional: Remap network ports for appliance.
+
+61
+
+StorageGRID internal ports
+
+Port
+
+TCP or UDP
+
+22
+
+TCP
+
+80
+
+TCP
+
+123
+
+UDP
+
+443
+
+TCP
+
+1055 TCP
+
+1139
+
+TCP
+
+1501
+
+TCP
+
+1502
+
+TCP
+
+1504
+
+TCP
+
+1505
+
+TCP
+
+1506
+
+TCP
+
+1507
+
+TCP
+
+1508
+
+TCP
+
+62
+
+From
+
+To
+
+Primary Admin Node
+
+All nodes
+
+Appliances Primary
+
+Admin Node
+
+All nodes
+
+All nodes
+
+All nodes
+
+Primary Admin Node
+
+All nodes
+
+Primary Admin Node
+
+Storage Nodes
+
+Storage Nodes
+
+All nodes
+
+Storage Nodes with ADC All nodes
+
+Storage Nodes
+
+All nodes
+
+Admin Nodes
+
+All nodes
+
+Admin Nodes
+
+All nodes
+
+All nodes
+
+All nodes
+
+Gateway Nodes
+
+All nodes
+
+Primary Admin Node
+
+Details
+
+For maintenance procedures, the primary Admin Node must be able to communicate with all other nodes using SSH on port 22. Allowing SSH traffic from other nodes is optional.
+
+Used by StorageGRID appliances to communicate with the primary Admin Node to start the installation.
+
+Network time protocol service. Every node synchronizes its time with every other node using NTP.
+
+Used for communicating status to the primary Admin Node during installation and other maintenance procedures. Internal traffic for installation, expansion, recovery, and other maintenance procedures.
+
+Internal traffic between Storage Nodes.
+
+Reporting, auditing, and configuration internal traffic.
+
+S3- and Swift-related internal traffic. TCP
+
+1506
+
+TCP
+
+1507
+
+TCP
+
+1508
+
+TCP
+
+62
+
+From
+
+To
+
+Primary Admin Node
+
+All nodes
+
+Appliances Primary
+
+Admin Node
+
+All nodes
+
+All nodes
+
+All nodes
+
+Primary Admin Node
+
+All nodes
+
+Primary Admin Node
+
+Storage Nodes
+
+Storage Nodes
+
+All nodes
+
+Storage Nodes with ADC All nodes
+
+Storage Nodes
+
+All nodes
+
+Admin Nodes
+
+All nodes
+
+Admin Nodes
+
+All nodes
+
+All nodes
+
+All nodes
+
+Gateway Nodes
+
+All nodes
+
+Primary Admin Node
+
+Details
+
+For maintenance procedures, the primary Admin Node must be able to communicate with all other nodes using SSH on port 22. Allowing SSH traffic from other nodes is optional.
+
+Used by StorageGRID appliances to communicate with the primary Admin Node to start the installation.
+
+Network time protocol service. Every node synchronizes its time with every other node using NTP.
+
+Used for communicating status to the primary Admin Node during installation and other maintenance procedures. Internal traffic for installation, expansion, recovery, and other maintenance procedures.
+
+Internal traffic between Storage Nodes.
+
+Reporting, auditing, and configuration internal traffic.
+
+S3- and Swift-related internal traffic.
+
+NMS service reporting and configuration internal traffic.
+
+AMS service internal traffic. Server status internal traffic.
+
+Load balancer internal traffic.
+
+Configuration management internal traffic.
+
+Port
+
+1509
+
+1511
+
+7001
+
+7443
+
+8011
+
+8443
+
+9042
+
+9999
+
+10226
+
+10342
+
+11139
+
+18000
+
+18001
+
+18002
+
+TCP or UDP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+TCP
+
+From
+
+All nodes All nodes
+
+Storage Nodes
+
+All nodes
+
+All nodes
+
+Primary Admin Node
+
+Storage Nodes
+
+All nodes
+
+Storage Nodes
+
+All nodes
+
+Archive/Stor age Nodes
+
+Admin/Stora ge Nodes
+
+Admin/Stora ge Nodes
+
+Admin/Stora ge Nodes
+
+To
+
+Archive Nodes
+
+Storage Nodes

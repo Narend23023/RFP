@@ -1,0 +1,79 @@
+1. Create at least one compliant ILM rule and make that rule the default rule in an active ILM policy.
+
+2. Enable the global S3 Object Lock setting for the entire StorageGRID system. Tenant user tasks
+
+After the global S3 Object Lock setting has been enabled, tenants can perform these tasks:
+
+1. Create buckets that have S3 Object Lock enabled.
+
+2. Optionally, specify default retention settings for the bucket. Any default bucket settings are applied only to new objects that don’t have their own retention settings.
+
+3. Add objects to those buckets and optionally specify object-level retention periods and legal hold settings.
+
+4. As required, update default retention for the bucket or update the retention period or the legal hold setting for an individual object.
+
+690
+
+Requirements for S3 Object Lock
+
+You must review the requirements for enabling the global S3 Object Lock setting, the requirements for creating compliant ILM rules and ILM policies, and the restrictions StorageGRID places on buckets and objects that use S3 Object Lock. The workflow diagram shows the high-level steps for using S3 Object Lock. These steps are performed by the grid administrator and by tenant users.
+
+689 Grid administrator tasks
+
+As the workflow diagram shows, a grid administrator must perform two high-level tasks before S3 tenant users can use S3 Object Lock:
+
+1. Create at least one compliant ILM rule and make that rule the default rule in an active ILM policy.
+
+2. Enable the global S3 Object Lock setting for the entire StorageGRID system. Tenant user tasks
+
+After the global S3 Object Lock setting has been enabled, tenants can perform these tasks:
+
+1. Create buckets that have S3 Object Lock enabled.
+
+2. Optionally, specify default retention settings for the bucket. Any default bucket settings are applied only to new objects that don’t have their own retention settings.
+
+3. Add objects to those buckets and optionally specify object-level retention periods and legal hold settings.
+
+4. As required, update default retention for the bucket or update the retention period or the legal hold setting for an individual object.
+
+690
+
+Requirements for S3 Object Lock
+
+You must review the requirements for enabling the global S3 Object Lock setting, the requirements for creating compliant ILM rules and ILM policies, and the restrictions StorageGRID places on buckets and objects that use S3 Object Lock.
+
+Requirements for using the global S3 Object Lock setting You must enable the global S3 Object Lock setting using the Grid Manager or the Grid Management API before any S3 tenant can create a bucket with S3 Object Lock enabled.
+
+Enabling the global S3 Object Lock setting allows all S3 tenant accounts to create buckets with S3 Object Lock enabled.
+
+After you enable the global S3 Object Lock setting, you can’t disable the setting.
+
+You can’t enable the global S3 Object Lock unless the default rule in all active ILM policies is compliant (that is, the default rule must comply with the requirements of buckets with S3 Object Lock enabled).
+
+When the global S3 Object Lock setting is enabled, you can’t create a new ILM policy or activate an existing ILM policy unless the default rule in the policy is compliant. After the global S3 Object Lock setting has been enabled, the ILM rules and ILM policies pages indicate which ILM rules are compliant. Requirements for compliant ILM rules
+
+If you want to enable the global S3 Object Lock setting, you must ensure that the default rule in all active ILM policies is compliant. A compliant rule satisfies the requirements of both buckets with S3 Object Lock enabled and any existing buckets that have legacy Compliance enabled:
+
+It must create at least two replicated object copies or one erasure-coded copy.
+
+These copies must exist on Storage Nodes for the entire duration of each line in the placement instructions.
+
+Object copies can’t be saved in a Cloud Storage Pool.
+
+Object copies can’t be saved on Archive Nodes.
+
+At least one line of the placement instructions must start at day 0, using Ingest time as the reference time.
+
+At least one line of the placement instructions must be "forever." Requirements for ILM policies
+
+When the global S3 Object Lock setting is enabled, active and inactive ILM policies can include both compliant and non-compliant rules.
+
+The default rule in an active or inactive ILM policy must be compliant.
+
+Non-compliant rules only apply to objects in buckets that don’t have S3 Object Lock enabled or that don’t have the legacy Compliance feature enabled.
+
+Compliant rules can apply to objects in any bucket; S3 Object Lock or legacy Compliance does not need to be enabled for the bucket.
+
+A compliant ILM policy might include these three rules:
+
+1. A compliant rule that creates erasure-coded copies of the objects in a specific bucket with S3 Object Lock enabled. The EC copies are stored on Storage Nodes from day 0 to forever.

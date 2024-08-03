@@ -1,0 +1,103 @@
+If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Test Swift REST API configuration
+
+You can use the Swift CLI to test your connection to the StorageGRID system and to verify that you can read and write objects.
+
+Before you begin 995
+
+• If you do follow the former AWS recommendation to use random and unique characters in name prefixes,
+
+you should prefix the object names with a directory name. That is, use this format: mycontainer/mydir/f8e3-image3132.jpg
+
+Instead of this format:
+
+mycontainer/f8e3-image3132.jpg
+
+Recommendations for "range reads"
+
+If the global option to compress stored objects is enabled, Swift client applications should avoid performing GET object operations that specify a range of bytes be returned. These "range read" operations are inefficient because StorageGRID must effectively uncompress the objects to access the requested bytes. GET Object operations that request a small range of bytes from a very large object are especially inefficient; for example, it is very inefficient to read a 10 MB range from a 50 GB compressed object.
+
+If ranges are read from compressed objects, client requests can time out.
+
+If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Test Swift REST API configuration
+
+You can use the Swift CLI to test your connection to the StorageGRID system and to verify that you can read and write objects.
+
+Before you begin
+
+You have downloaded and installed the Swift command-line client: SwiftStack: python-swiftclient
+
+Optionally, you have created a load balancer endpoint. Otherwise, you know the IP address of the Storage Node you want to connect to and the port number to use. See IP addresses and ports for client connections.
+
+You have created a Swift tenant account.
+
+You have signed in to the tenant account and created at least one group and user. See Create groups for a Swift tenant.
+
+Swift tenant users must have the Administrator group permission to authenticate into the Swift REST API. About this task
+
+If you have not configured security, you must add the --insecure flag to each of these commands.
+
+Steps
+
+1. Query the info URL for your StorageGRID Swift deployment:
+
+996
+
+swift -U <Tenant_Account_ID:Account_User_Name> -K <User_Password> -A https://<FQDN | IP>:<Port>/info capabilities
+
+This is sufficient to test that your Swift deployment is functional. To further test account configuration by storing an object, continue with the additional steps.
+
+2. Put an object in the container:
+
+touch test_object swift -U <Tenant_Account_ID:Account_User_Name> -K <User_Password> -A https://<FQDN | IP>:<Port>/auth/v1.0 upload test_container test_object --object-name test_object
+
+3. Get the container to verify the object: swift -U <Tenant_Account_ID:Account_User_Name> -K <User_Password> -A https://<FQDN | IP>:<Port>/auth/v1.0 list test_container
+
+4. Delete the object:
+
+swift -U <Tenant_Account_ID:Account_User_Name> -K <User_Password> -A https://<FQDN | IP>:<Port>/auth/v1.0 delete test_container test_object
+
+5. Delete the container: swift -U `<_Tenant_Account_ID:Account_User_Name_>` -K `<_User_Password_>` -A `\https://<_FQDN_ | _IP_>:<_Port_>/auth/v1.0' delete test_container
+
+997
+
+Swift REST API supported operations
+
+The StorageGRID system supports most operations in the OpenStack Swift API. Before integrating Swift REST API clients with StorageGRID, review the implementation details for account, container, and object operations.
+
+Operations supported in StorageGRID
+
+The following Swift API operations are supported:
+
+Account operations
+
+Container operations
+
+Object operations Common response headers for all operations
+
+The StorageGRID system implements all common headers for supported operations as defined by the OpenStack Swift Object Storage API v1.
+
+Related information
+
+OpenStack: Object Storage API
+
+Supported Swift API endpoints
+
+StorageGRID supports the following Swift API endpoints: the info URL, the auth URL, and the storage URL. info URL
+
+You can determine the capabilities and limitations of the StorageGRID Swift implementation by issuing a GET request to the Swift base URL with the /info path. 5. Delete the container: swift -U `<_Tenant_Account_ID:Account_User_Name_>` -K `<_User_Password_>` -A `\https://<_FQDN_ | _IP_>:<_Port_>/auth/v1.0' delete test_container
+
+997
+
+Swift REST API supported operations
+
+The StorageGRID system supports most operations in the OpenStack Swift API. Before integrating Swift REST API clients with StorageGRID, review the implementation details for account, container, and object operations.
+
+Operations supported in StorageGRID
+
+The following Swift API operations are supported:
+
+Account operations
+
+Container operations
+
+Object operations Common response headers for all operations

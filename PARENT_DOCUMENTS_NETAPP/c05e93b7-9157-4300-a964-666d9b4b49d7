@@ -1,0 +1,249 @@
+Don’t leave gaps. If you specify BLOCK_DEVICE_RANGEDB_005, you must also specify BLOCK_DEVICE_RANGEDB_004.
+
+Note: For compatibility with existing deployments, two-digit keys are supported for upgraded nodes. Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-sn1-rangedb-000
+
+BLOCK_DEVICE_TABLES
+
+Value
+
+Required:
+
+BLOCK_DEVICE_RANGEDB_000
+
+Optional:
+
+BLOCK_DEVICE_RANGEDB_001
+
+BLOCK_DEVICE_RANGEDB_002
+
+BLOCK_DEVICE_RANGEDB_003 BLOCK_DEVICE_RANGEDB_004
+
+BLOCK_DEVICE_RANGEDB_005
+
+BLOCK_DEVICE_RANGEDB_006
+
+BLOCK_DEVICE_RANGEDB_007
+
+BLOCK_DEVICE_RANGEDB_008
+
+BLOCK_DEVICE_RANGEDB_009
+
+BLOCK_DEVICE_RANGEDB_010
+
+BLOCK_DEVICE_RANGEDB_011
+
+BLOCK_DEVICE_RANGEDB_012
+
+BLOCK_DEVICE_RANGEDB_013
+
+BLOCK_DEVICE_RANGEDB_014
+
+BLOCK_DEVICE_RANGEDB_015 Designation
+
+105
+
+Path and name of the block device special file this node will use for persistent storage of database tables. This key is only required for nodes with NODE_TYPE = VM_Admin_Node; don’t specify it for other node types.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0 BLOCK_DEVICE_RANGEDB_002
+
+BLOCK_DEVICE_RANGEDB_003 BLOCK_DEVICE_RANGEDB_004
+
+BLOCK_DEVICE_RANGEDB_005
+
+BLOCK_DEVICE_RANGEDB_006
+
+BLOCK_DEVICE_RANGEDB_007
+
+BLOCK_DEVICE_RANGEDB_008
+
+BLOCK_DEVICE_RANGEDB_009
+
+BLOCK_DEVICE_RANGEDB_010
+
+BLOCK_DEVICE_RANGEDB_011
+
+BLOCK_DEVICE_RANGEDB_012
+
+BLOCK_DEVICE_RANGEDB_013
+
+BLOCK_DEVICE_RANGEDB_014
+
+BLOCK_DEVICE_RANGEDB_015 Designation
+
+105
+
+Path and name of the block device special file this node will use for persistent storage of database tables. This key is only required for nodes with NODE_TYPE = VM_Admin_Node; don’t specify it for other node types.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd /dev/mapper/sgws-adm1-tables
+
+BLOCK_DEVICE_VAR_LOCAL
+
+Value
+
+Path and name of the block device special file this node will use for its /var/local persistent storage.
+
+Examples:
+
+/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0
+
+/dev/disk/by-id/wwn- 0x600a09800059d6df000060d757b475fd
+
+/dev/mapper/sgws-sn1-var-local Client Network keys
+
+CLIENT_NETWORK_CONFIG
+
+Value
+
+DHCP, STATIC, or DISABLED
+
+CLIENT_NETWORK_GATEWAY
+
+Value
+
+106
+
+Required
+
+Designation
+
+Required
+
+Designation
+
+Optional
+
+Designation
+
+IPv4 address of the local Client Network gateway for this node, which must be on the subnet defined by CLIENT_NETWORK_IP and CLIENT_NETWORK_MASK. This value is ignored for DHCP-configured networks. Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+CLIENT_NETWORK_IP
+
+Value
+
+IPv4 address of this node on the Client Network.
+
+This key is only required when CLIENT_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+CLIENT_NETWORK_MAC
+
+Value
+
+The MAC address for the Client Network interface in the container.
+
+This field is optional. If omitted, a MAC address will be generated automatically.
+
+Must be 6 pairs of hexadecimal digits separated by colons.
+
+Example: b2:9c:02:c2:27:20 CLIENT_NETWORK_MASK
+
+Value
+
+Optional
+
+Designation
+
+Required when CLIENT_NETWORK_CONFIG = STATIC
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+107
+
+IPv4 netmask for this node on the Client Network.
+
+Specify this key when CLIENT_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+255.255.255.0
+
+255.255.248.0 CLIENT_NETWORK_MTU
+
+Value
+
+The maximum transmission unit (MTU) for this node on the Client Network. Don’t specify if CLIENT_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1500 is used.
+
+If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value. CLIENT_NETWORK_MAC
+
+Value
+
+The MAC address for the Client Network interface in the container.
+
+This field is optional. If omitted, a MAC address will be generated automatically.
+
+Must be 6 pairs of hexadecimal digits separated by colons.
+
+Example: b2:9c:02:c2:27:20 CLIENT_NETWORK_MASK
+
+Value
+
+Optional
+
+Designation
+
+Required when CLIENT_NETWORK_CONFIG = STATIC
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+107
+
+IPv4 netmask for this node on the Client Network.
+
+Specify this key when CLIENT_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+255.255.255.0
+
+255.255.248.0 CLIENT_NETWORK_MTU
+
+Value
+
+The maximum transmission unit (MTU) for this node on the Client Network. Don’t specify if CLIENT_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1500 is used.
+
+If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value.
+
+IMPORTANT: The MTU value of the network must match the value configured on the switch port the node is connected to. Otherwise, network performance issues or packet loss might occur. Examples:
+
+1500
+
+8192
+
+CLIENT_NETWORK_TARGET
+
+Value
+
+108

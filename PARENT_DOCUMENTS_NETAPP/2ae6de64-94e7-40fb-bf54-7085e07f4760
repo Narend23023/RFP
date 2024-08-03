@@ -1,0 +1,117 @@
+Storage
+
+Admin Node
+
+100 GB LUN for OS
+
+200 GB LUN for Admin Node tables
+
+200 GB LUN for Admin Node audit log
+
+Storage Node
+
+100 GB LUN for OS
+
+3 LUNs for each Storage Node on this host
+
+Note: A Storage Node can have 1 to 16 storage LUNs; at least 3 storage LUNs are recommended.
+
+Minimum size per LUN: 4 TB Maximum tested LUN size: 39 TB.
+
+Storage Node (metadata-only)
+
+100 GB LUN for OS
+
+1 LUN
+
+Minimum size per LUN: 4 TB
+
+Note: There is no maximum size for the single LUN. Excess capacity is saved for future use.
+
+Note: Only one rangedb is required for metadata-only Storage Nodes.
+
+Gateway Node
+
+100 GB LUN for OS Archive Node
+
+100 GB LUN for OS
+
+Depending on the audit level configured, the size of user inputs such as S3 object key name, and how much audit log data you need to preserve, you might need to increase the size of the audit log LUN on each Admin Node.Generally, a grid generates approximately 1 KB of audit data per S3 operation, which would mean that a 200 GB LUN would support 70 million operations per day or 800 operations per second for two to three days. Storage requirements for Storage Nodes 100 GB LUN for OS
+
+200 GB LUN for Admin Node tables
+
+200 GB LUN for Admin Node audit log
+
+Storage Node
+
+100 GB LUN for OS
+
+3 LUNs for each Storage Node on this host
+
+Note: A Storage Node can have 1 to 16 storage LUNs; at least 3 storage LUNs are recommended.
+
+Minimum size per LUN: 4 TB Maximum tested LUN size: 39 TB.
+
+Storage Node (metadata-only)
+
+100 GB LUN for OS
+
+1 LUN
+
+Minimum size per LUN: 4 TB
+
+Note: There is no maximum size for the single LUN. Excess capacity is saved for future use.
+
+Note: Only one rangedb is required for metadata-only Storage Nodes.
+
+Gateway Node
+
+100 GB LUN for OS Archive Node
+
+100 GB LUN for OS
+
+Depending on the audit level configured, the size of user inputs such as S3 object key name, and how much audit log data you need to preserve, you might need to increase the size of the audit log LUN on each Admin Node.Generally, a grid generates approximately 1 KB of audit data per S3 operation, which would mean that a 200 GB LUN would support 70 million operations per day or 800 operations per second for two to three days. Storage requirements for Storage Nodes
+
+A software-based Storage Node can have 1 to 16 storage volumes—3 or more storage volumes are recommended. Each storage volume should be 4 TB or larger.
+
+209
+
+An appliance Storage Node can have up to 48 storage volumes.
+
+As shown in the figure, StorageGRID reserves space for object metadata on storage volume 0 of each Storage Node. Any remaining space on storage volume 0 and any other storage volumes in the Storage Node are used exclusively for object data.
+
+To provide redundancy and to protect object metadata from loss, StorageGRID stores three copies of the metadata for all objects in the system at each site. The three copies of object metadata are evenly distributed across all Storage Nodes at each site.
+
+When installing a grid with metadata-only Storage Nodes, the grid must also contain a minimum number of nodes for object storage. See Types of Storage Nodes for more information about metadata-only Storage Nodes. For a single-site grid, at least two Storage Nodes are configured for objects and metadata.
+
+For a multi-site grid, at least one Storage Node per site are configured for objects and metadata.
+
+When you assign space to volume 0 of a new Storage Node, you must ensure there is adequate space for that node’s portion of all object metadata.
+
+At a minimum, you must assign at least 4 TB to volume 0.
+
+If you use only one storage volume for a Storage Node and you assign 4 TB or less to the volume, the Storage Node might enter the Storage Read-Only state on startup and store object metadata only.
+
+If you assign less than 500 GB to volume 0 (non-production use only), 10% of the storage volume’s capacity is reserved for metadata.
+
+If you are installing a new system (StorageGRID 11.6 or higher) and each Storage Node has 128 GB or more of RAM, assign 8 TB or more to volume 0. Using a larger value for volume 0 can increase the space
+
+210
+
+allowed for metadata on each Storage Node. When configuring different Storage Nodes for a site, use the same setting for volume 0 if possible. If a site contains Storage Nodes of different sizes, the Storage Node with the smallest volume 0 will determine the metadata capacity of that site.
+
+For details, go to Manage object metadata storage.
+
+Automate the installation (VMware)
+
+You can use VMware vSphere to automate the deployment of grid nodes. You can also automate the configuration of StorageGRID. Automate grid node deployment
+
+Use VMware vSphere to automate the deployment of grid nodes.
+
+Before you begin
+
+You have access to a Linux/Unix system with Bash 3.2 or later.
+
+You have VMware OVF Tool 4.1 installed and correctly configured.
+
+You know the username and password required to access VMware vSphere using the OVF Tool.

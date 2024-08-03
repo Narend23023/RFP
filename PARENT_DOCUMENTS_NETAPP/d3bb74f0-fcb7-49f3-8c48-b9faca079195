@@ -1,0 +1,91 @@
+a. Select the radio button next to the first pending grid node you want to approve. b. Select Approve.
+
+The grid node configuration form appears.
+
+c. As required, modify the general settings:
+
+Field
+
+Description
+
+Site
+
+The name of the site the grid node will be associated with. If you are adding multiple nodes, be sure to select the correct site for each node. If you are adding a new site, all nodes are added to the new site. Name
+
+The system name for the node. System names are required for internal StorageGRID operations and can’t be changed.
+
+1420
+
+Field
+
+Description
+
+NTP Role
+
+The Network Time Protocol (NTP) role of the grid node:
+
+Select Automatic (default) to automatically assign the NTP role to the node. The Primary role will be assigned to Admin Nodes, Storage Nodes with ADC services, Gateway Nodes, and any grid nodes that have non-static IP addresses. The Client role will be assigned to all other grid nodes.
+
+Select Primary to manually assign the Primary NTP role to the node. At least two nodes at each site should have the Primary role to provide redundant system access to external timing sources.
+
+Select Client to manually assign the Client NTP role to the node. ADC Service (Storage Nodes only)
+
+Whether this Storage Node will run the Administrative Domain Controller (ADC) service. The ADC service keeps track of the location and availability of grid services. At least three Storage Nodes at each site must include the ADC service. You can’t add the ADC service to a node after it is deployed.
+
+Select Yes if the Storage Node you are replacing includes the ADC service. Because you can’t decommission a Storage Node if too few ADC services would remain, this ensures that a new ADC service is available before the old service is removed.
+
+Select Automatic to let the system determine whether this node requires the ADC service.
+
+Learn about the ADC quorum. Storage Grade (Storage Nodes only)
+
+Use the Default storage grade, or select the custom storage grade you want to assign to this new node.
+
+Storage grades are used by ILM storage pools, so your selection can affect which objects will be placed on the Storage Node.
+
+d. As required, modify the settings for the Grid Network, Admin Network, and Client Network.
+
+▪ IPv4 Address (CIDR): The CIDR network address for the network interface. For example:
+
+172.16.10.100/24
+
+If you discover that nodes have duplicate IP addresses on the Grid Network while you are approving nodes, you must cancel the expansion, redeploy the virtual machines or appliances with a non-duplicate IP, and restart the expansion.
+
+▪ Gateway: The default gateway of the grid node. For example: 172.16.10.1 ▪ Subnets (CIDR): One or more subnetworks for the Admin Network. e. Select Save.
+
+1421
+
+The approved grid node moves to the Approved Nodes list.
+
+▪ To modify the properties of an approved grid node, select its radio button, and select Edit. ▪ To move an approved grid node back to the Pending Nodes list, select its radio button, and select
+
+Reset.
+
+▪ To permanently remove an approved grid node, power the node off. Then, select its radio button, and select Remove.
+
+f. Repeat these steps for each pending grid node you want to approve.
+
+If possible, you should approve all pending grid notes and perform a single expansion. More time will be required if you perform multiple small expansions.
+
+7. When you have approved all grid nodes, enter the Provisioning Passphrase, and select Expand.
+
+After a few minutes, this page updates to display the status of the expansion procedure. When tasks that affect individual grid nodes are in progress, the Grid Node Status section lists the current status for each grid node. ▪ Gateway: The default gateway of the grid node. For example: 172.16.10.1 ▪ Subnets (CIDR): One or more subnetworks for the Admin Network. e. Select Save.
+
+1421
+
+The approved grid node moves to the Approved Nodes list.
+
+▪ To modify the properties of an approved grid node, select its radio button, and select Edit. ▪ To move an approved grid node back to the Pending Nodes list, select its radio button, and select
+
+Reset.
+
+▪ To permanently remove an approved grid node, power the node off. Then, select its radio button, and select Remove.
+
+f. Repeat these steps for each pending grid node you want to approve.
+
+If possible, you should approve all pending grid notes and perform a single expansion. More time will be required if you perform multiple small expansions.
+
+7. When you have approved all grid nodes, enter the Provisioning Passphrase, and select Expand.
+
+After a few minutes, this page updates to display the status of the expansion procedure. When tasks that affect individual grid nodes are in progress, the Grid Node Status section lists the current status for each grid node.
+
+During the "Installing grid nodes" step for a new appliance, the StorageGRID Appliance Installer shows installation moving from Stage 3 to Stage 4, Finalize Installation. When Stage 4 completes, the controller is rebooted.

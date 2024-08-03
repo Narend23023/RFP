@@ -1,0 +1,149 @@
+When you create the tenant, you will select this group to have the initial Root access permission for both the source and destination tenant accounts.
+
+If this admin group doesn’t exist on both grids before you create the tenant, the tenant isn’t replicated to the destination. Access the wizard
+
+Steps
+
+1. Select TENANTS.
+
+2. Select Create.
+
+455
+
+Enter details
+
+Steps
+
+1. Enter details for the tenant.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, 20-digit account ID.
+
+Description (optional)
+
+A description to help identify the tenant.
+
+If you are creating a tenant that will use a grid federation connection, optionally, use this field to help identify which is the source tenant and which is the destination tenant. For example, this description for a tenant created on Grid 1 will also appear for the tenant replicated to Grid 2: "This tenant was created on Grid 1." Client type
+
+The type of client protocol this tenant will use, either S3 or Swift.
+
+Note: Support for Swift client applications has been deprecated and will be removed in a future release.
+
+Storage quota (optional)
+
+If you want this tenant to have a storage quota, a numerical value for the quota and the units.
+
+2. Select Continue. Select permissions
+
+Steps
+
+1. Optionally, select any permissions you want this tenant to have.
+
+Some of these permissions have additional requirements. For details, select the help icon for each permission.
+
+Permission
+
+If selected…
+
+Allow platform services
+
+The tenant can use S3 platform services such as CloudMirror. See Manage platform services for S3 tenant accounts. Use own identity source
+
+The tenant can configure and manage its own identity source for federated groups and users. This option is disabled if you have configured SSO for your StorageGRID system.
+
+456
+
+Permission
+
+If selected…
+
+Allow S3 Select
+
+The tenant can issue S3 SelectObjectContent API requests to filter and retrieve object data. See Manage S3 Select for tenant accounts.
+
+Important: SelectObjectContent requests can decrease load-balancer performance for all S3 clients and all tenants. Enable this feature only when required and only for trusted tenants. Use grid federation connection
+
+The tenant can use a grid federation connection.
+
+Selecting this option:
+
+Causes this tenant and all tenant groups and users added to the account to be cloned from this grid (the source grid) to the other grid in the selected connection (the destination grid).
+
+Allows this tenant to configure cross-grid replication between corresponding buckets on each grid.
+
+See Manage the permitted tenants for grid federation.
+
+2. If you selected Use grid federation connection, select one of the available grid federation connections.
+
+3. Select Continue. Define root access and create tenant
+
+Steps
+
+1. Define root access for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both.
+
+Option
+
+Do this
+
+If identity federation is not enabled Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+457
+
+Option
+
+Do this
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.
+
+2. Select Create tenant.
+
+A success message appears, and the new tenant is listed on the Tenants page. To learn how to view tenant details and monitor tenant activity, see Monitor tenant activity.
+
+3. If you selected the Use grid federation connection permission for the tenant: Allows this tenant to configure cross-grid replication between corresponding buckets on each grid.
+
+See Manage the permitted tenants for grid federation.
+
+2. If you selected Use grid federation connection, select one of the available grid federation connections.
+
+3. Select Continue. Define root access and create tenant
+
+Steps
+
+1. Define root access for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both.
+
+Option
+
+Do this
+
+If identity federation is not enabled Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+457
+
+Option
+
+Do this
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.
+
+2. Select Create tenant.

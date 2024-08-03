@@ -1,0 +1,97 @@
+Don’t use Azure Blob storage lifecycle management for the container used with a Cloud Storage Pool. The lifecycle operations might interfere with Cloud Storage Pool operations.
+
+Related information
+
+Create a Cloud Storage Pool Compare Cloud Storage Pools and CloudMirror replication
+
+As you begin using Cloud Storage Pools, it might be helpful to understand the similarities and differences between Cloud Storage Pools and the StorageGRID CloudMirror replication service.
+
+635
+
+What is the primary purpose?
+
+How is it set up?
+
+Who is responsible for setting it up?
+
+What is the destination?
+
+What causes objects to be moved to the destination?
+
+How are objects retrieved?
+
+636
+
+Cloud Storage Pool
+
+Acts as an archive target. The object copy in the Cloud Storage Pool can be the only copy of the object, or it can be an additional copy. That is, instead of keeping two copies onsite, you can keep one copy within StorageGRID and send a copy to the Cloud Storage Pool. Defined in the same way as storage pools, using the Grid Manager or the Grid Management API. Can be selected as the placement location in an ILM rule. While a storage pool consists of a group of Storage Nodes, a Cloud Storage Pool is defined using a remote S3 or Azure endpoint (IP address, credentials, and so on). Typically, a grid administrator
+
+Any compatible S3 infrastructure
+
+(including Amazon S3)
+
+Azure Blob Archive tier
+
+Google Cloud Platform (GCP) Related information
+
+Create a Cloud Storage Pool Compare Cloud Storage Pools and CloudMirror replication
+
+As you begin using Cloud Storage Pools, it might be helpful to understand the similarities and differences between Cloud Storage Pools and the StorageGRID CloudMirror replication service.
+
+635
+
+What is the primary purpose?
+
+How is it set up?
+
+Who is responsible for setting it up?
+
+What is the destination?
+
+What causes objects to be moved to the destination?
+
+How are objects retrieved?
+
+636
+
+Cloud Storage Pool
+
+Acts as an archive target. The object copy in the Cloud Storage Pool can be the only copy of the object, or it can be an additional copy. That is, instead of keeping two copies onsite, you can keep one copy within StorageGRID and send a copy to the Cloud Storage Pool. Defined in the same way as storage pools, using the Grid Manager or the Grid Management API. Can be selected as the placement location in an ILM rule. While a storage pool consists of a group of Storage Nodes, a Cloud Storage Pool is defined using a remote S3 or Azure endpoint (IP address, credentials, and so on). Typically, a grid administrator
+
+Any compatible S3 infrastructure
+
+(including Amazon S3)
+
+Azure Blob Archive tier
+
+Google Cloud Platform (GCP)
+
+One or more ILM rules in the active ILM policies. The ILM rules define which objects StorageGRID moves to the Cloud Storage Pool and when the objects are moved.
+
+Applications must make requests to StorageGRID to retrieve objects that have been moved to a Cloud Storage Pool. If the only copy of an object has been transitioned to archival storage, StorageGRID manages the process of restoring the object so it can be retrieved.
+
+CloudMirror replication service
+
+Enables a tenant to automatically replicate objects from a bucket in StorageGRID (source) to an external S3 bucket (destination). Creates an independent copy of an object in an independent S3 infrastructure. A tenant user configures CloudMirror replication by defining a CloudMirror endpoint (IP address, credentials, and so on) using the Tenant Manager or the S3 API. After the CloudMirror endpoint is set up, any bucket owned by that tenant account can be configured to point to the CloudMirror endpoint. Typically, a tenant user
+
+Any compatible S3 infrastructure
+
+(including Amazon S3)
+
+Google Cloud Platform (GCP)
+
+The act of ingesting a new object into a source bucket that has been configured with a CloudMirror endpoint. Objects that existed in the source bucket before the bucket was configured with the CloudMirror endpoint aren’t replicated, unless they are modified.
+
+Because the mirrored copy in the destination bucket is an independent copy, applications can retrieve the object by making requests either to StorageGRID or to the S3 destination. For example, suppose you use CloudMirror replication to mirror objects to a partner organization. The partner can use its own applications to read or update objects directly from the S3 destination. Using StorageGRID is not required.
+
+Cloud Storage Pool
+
+CloudMirror replication service
+
+Can you read from the destination directly? No. Objects moved to a Cloud Storage Pool are managed by StorageGRID. Read requests must be directed to StorageGRID (and StorageGRID will be responsible for retrieval from Cloud Storage Pool).
+
+Yes, because the mirrored copy is an independent copy.
+
+What happens if an object is deleted from the source?
+
+The object is also deleted from the Cloud Storage Pool.

@@ -1,0 +1,101 @@
+A restricted port
+
+From the Grid Manager, select TENANTS, and select Restricted.
+
+Enter the tenant’s URL in a web browser: https://FQDN_or_Admin_Node_IP:port/?accountId=20-digit- account-id
+
+FQDN_or_Admin_Node_IP is a fully qualified domain name or the IP address of an Admin Node
+
+port is the tenant-only restricted port ◦ 20-digit-account-id is the tenant’s unique account ID Configure the tenant
+
+Follow the instructions in Use a tenant account to manage tenant groups and users, S3 access keys, buckets, platform services, and account clone and cross-grid replication.
+
+459
+
+Edit tenant account
+
+You can edit a tenant account to change the display name, storage quota, or tenant permissions.
+
+If a tenant has the Use grid federation connection permission, you can edit tenant details from either grid in the connection. However, any changes you make on one grid in the connection will not be copied to the other grid. If you want to keep the tenant details exactly in sync between grids, make the same edits on both grids. See Manage the permitted tenants for grid federation connection.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access or Tenant accounts permission. Steps
+
+1. Select TENANTS.
+
+2. Locate the tenant account you want to edit.
+
+Use the search box to search for a tenant by name or tenant ID.
+
+3. Select the tenant. You can do either of the following:
+
+Select the checkbox for the tenant, and select Actions > Edit. ◦ Select the tenant name to display the details page, and select Edit.
+
+4. Optionally, change the values for these fields:
+
+Name ◦ Description ◦ Storage quota
+
+460
+
+5. Select Continue.
+
+6. Select or clear the permissions for the tenant account.
+
+If you disable Platform services for a tenant who is already using them, the services that they have configured for their S3 buckets will stop working. No error message is sent to the tenant. For example, if the tenant has configured CloudMirror replication for an S3 bucket, they can still store objects in the bucket, but copies of those objects will no longer be made in the external S3 bucket that they have configured as an endpoint. See Manage platform services for S3 tenant accounts. Change the setting of Uses own identity source to determine whether the tenant account will use its own identity source or the identity source that was configured for the Grid Manager.
+
+If Uses own identity source is:
+
+▪ Disabled and selected, the tenant has already enabled its own identity source. A tenant must disable its identity source before it can use the identity source that was configured for the Grid Manager.
+
+▪ Disabled and not selected, SSO is enabled for the StorageGRID system. The tenant must use the
+
+identity source that was configured for the Grid Manager.
+
+Select or clear the Allow S3 Select permission as needed. See Manage S3 Select for tenant accounts. ◦ To remove the Use grid federation connection permission: a. Go to the tenant’s details page.
+
+b. Select the Grid federation tab. c. Select Remove permission.
+
+To add the Use grid federation connection permission:
+
+a. Select the Use grid federation connection checkbox.
+
+b. Optionally, select Clone existing local users and groups to clone them to the remote grid. If you If Uses own identity source is:
+
+▪ Disabled and selected, the tenant has already enabled its own identity source. A tenant must disable its identity source before it can use the identity source that was configured for the Grid Manager.
+
+▪ Disabled and not selected, SSO is enabled for the StorageGRID system. The tenant must use the
+
+identity source that was configured for the Grid Manager.
+
+Select or clear the Allow S3 Select permission as needed. See Manage S3 Select for tenant accounts. ◦ To remove the Use grid federation connection permission: a. Go to the tenant’s details page.
+
+b. Select the Grid federation tab. c. Select Remove permission.
+
+To add the Use grid federation connection permission:
+
+a. Select the Use grid federation connection checkbox.
+
+b. Optionally, select Clone existing local users and groups to clone them to the remote grid. If you
+
+want, you can stop the cloning in progress or retry cloning if some local users or groups failed to be cloned after the last clone operation was completed. Change password for tenant’s local root user
+
+You might need to change the password for a tenant’s local root user if the root user is locked out of the account.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+If single sign-on (SSO) is enabled for your StorageGRID system, the local root user can’t sign in to the tenant account. To perform root user tasks, users must belong to a federated group that has the Root access permission for the tenant. Steps
+
+1. Select TENANTS.
+
+461
+
+2. Select the tenant account. You can do either of the following:

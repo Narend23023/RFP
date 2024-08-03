@@ -1,0 +1,43 @@
+Even though the object has not been removed, StorageGRID behaves as though the current version of the object is no longer available. Requests to that object return 404 NotFound. However, because noncurrent object data has not been removed, requests that specify a noncurrent version of the object can succeed.
+
+615
+
+To free space when deleting versioned objects, or to remove delete markers, use one of the following: S3 client request: Specify the object version ID in the S3 DELETE Object request (DELETE /object?versionId=ID). Keep in mind that this request only removes object copies for the specified version (the other versions are still taking up space). How S3 versioned objects are deleted
+
+When versioning is enabled for an S3 bucket, StorageGRID follows Amazon S3 behavior when responding to delete requests, whether those requests come from an S3 client, the expiration of an S3 bucket lifecycle, or the requirements of the ILM policy. When objects are versioned, object delete requests don’t delete the current version of the object and don’t free space. Instead, an object delete request creates a zero-byte delete marker as the current version of the object, which makes the previous version of the object "noncurrent." An object delete marker becomes an expired object delete marker when it is the current version and there are no noncurrent versions.
+
+Even though the object has not been removed, StorageGRID behaves as though the current version of the object is no longer available. Requests to that object return 404 NotFound. However, because noncurrent object data has not been removed, requests that specify a noncurrent version of the object can succeed.
+
+615
+
+To free space when deleting versioned objects, or to remove delete markers, use one of the following: S3 client request: Specify the object version ID in the S3 DELETE Object request (DELETE /object?versionId=ID). Keep in mind that this request only removes object copies for the specified version (the other versions are still taking up space).
+
+Bucket lifecycle: Use the NoncurrentVersionExpiration action in the bucket lifecycle configuration. When the number of NoncurrentDays specified is met, StorageGRID permanently removes all copies of noncurrent object versions. These object versions can’t be recovered. The NewerNoncurrentVersions action in the bucket lifecycle configuration specifies the number of noncurrent versions retained in a versioned S3 bucket. If there are more noncurrent versions than NewerNoncurrentVersions specifies, StorageGRID removes the older versions when the NoncurrentDays value has elapsed. The NewerNoncurrentVersions threshold overrides lifecycle rules provided by ILM, meaning that a noncurrent object with a version within the NewerNoncurrentVersions threshold is retained if ILM requests its deletion.
+
+To remove expired object delete markers use the Expiration action with one of the following tags: ExpiredObjectDeleteMarker, Days, or Date.
+
+ILM: Clone an active policy and add two ILM rules to the new policy: First rule: Use "Noncurrent time" as the Reference time to match the noncurrent versions of the object. In Step 1 (Enter details) of the Create an ILM rule wizard, select Yes for the question, "Apply this rule to older object versions only (in S3 buckets with versioning enabled)?"
+
+Second rule: Use Ingest time to match the current version. The "Noncurrent time" rule must appear in the policy above the Ingest time rule.
+
+ILM cannot be used to remove current object delete markers. Use an S3 client request or S3 Bucket Lifecycle to remove current object delete markers.
+
+Delete objects in bucket: Use the tenant manager to delete all object versions, including delete markers, from a bucket.
+
+When a versioned object is deleted, StorageGRID creates a zero-byte delete marker as the current version of the object. All objects and delete markers must be removed before a versioned bucket can be deleted. Delete markers created in StorageGRID 11.7 or earlier can only be removed through S3 client requests, they are not removed by ILM, bucket lifecycle rules, or Delete objects in bucket operations. ◦ Delete markers from a bucket that was created in StorageGRID 11.8 or later can be removed by ILM, bucket lifecycle rules, Delete objects in bucket operations, or an explicit S3 client deletion. Expired delete markers in StorageGRID 11.8 or later must be removed by bucket lifecycle rules or by an explicit S3 client request with a version ID specified.
+
+Related information
+
+Use S3 REST API
+
+Example 4: ILM rules and policy for S3 versioned objects Create and assign storage grades
+
+Storage grades identify the type of storage used by a Storage Node. You can create storage grades if you want ILM rules to place certain objects on certain Storage Nodes.
+
+616
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task

@@ -1,0 +1,195 @@
+Erasure-coding schemes for storage pools containing three or more sites ◦ Erasure-coding schemes for one-site storage pools
+
+Don’t use a storage pool that includes the default site, All Sites.
+
+The storage pool should include at least k+m +1 Storage Nodes that can store object data.
+
+Storage Nodes can be configured during installation to contain only object metadata and not object data. For more information, see Types of Storage Nodes.
+
+The minimum number of Storage Nodes required is k+m. However, having at least one additional Storage Node can help prevent ingest failures or ILM backlogs if a required Storage Node is temporarily unavailable. The storage overhead of an erasure-coding scheme is calculated by dividing the number of parity fragments ( m) by the number of data fragments (k). You can use the storage overhead to calculate how much disk space each erasure-coded object requires: disk space = object size + (object size * storage overhead)
+
+For example, if you store a 10 MB object using the 4+2 scheme (which has 50% storage overhead), the object consumes 15 MB of grid storage. If you store the same 10 MB object using the 6+2 scheme (which has 33% storage overhead), the object consumes approximately 13.3 MB.
+
+Select the erasure-coding scheme with the lowest total value of k+m that meets your needs. Erasure-coding schemes with a lower number of fragments are overall more computationally efficient, as fewer fragments are created and distributed (or retrieved) per object, can show better performance due to the larger fragment size, and can require fewer nodes be added in an expansion when more storage is required. (For information about planning a storage expansion, see the instructions for expanding StorageGRID.)
+
+608
+
+Erasure-coding schemes for storage pools containing three or more sites The following table describes the erasure-coding schemes currently supported by StorageGRID for storage pools that include three or more sites. All of these schemes provide site-loss protection. One site can be lost, and the object will still be accessible.
+
+For erasure-coding schemes that provide site-loss protection, the recommended number of Storage Nodes in the storage pool exceeds k+m +1 because each site requires a minimum of three Storage Nodes. Erasure-coding scheme (k+m)
+
+Minimum number of deployed sites
+
+Recommended number of Storage Nodes at each site
+
+Total recommended number of Storage Nodes
+
+Site loss protection?
+
+Storage overhead
+
+4+2
+
+3
+
+3
+
+9
+
+Yes
+
+50%
+
+6+2
+
+4
+
+3
+
+12
+
+Yes
+
+33%
+
+8+2
+
+5
+
+3
+
+15
+
+Yes
+
+25%
+
+6+3
+
+3
+
+4
+
+12
+
+Yes
+
+50%
+
+9+3
+
+4
+
+4
+
+16 Yes
+
+33%
+
+2+1
+
+3
+
+3
+
+9
+
+Yes
+
+50%
+
+4+1
+
+5
+
+3
+
+15
+
+Yes
+
+25%
+
+6+1
+
+7
+
+3
+
+21
+
+Yes
+
+17%
+
+7+5
+
+3
+
+5
+
+15
+
+Yes
+
+71%
+
+StorageGRID requires a minimum of three Storage Nodes per site. To use the 7+5 scheme, each site requires a minimum of four Storage Nodes. Using five Storage Nodes per site is recommended.
+
+When selecting an erasure-coding scheme that provides site protection, balance the relative importance of the following factors:
+
+Number of fragments: Performance and expansion flexibility are generally better when the total number of fragments is lower.
+
+Fault tolerance: Fault tolerance is increased by having more parity segments (that is, when m has a higher value.)
+
+Network traffic: When recovering from failures, using a scheme with more fragments (that is, a higher total for k+m) creates more network traffic.
+
+Storage overhead: Schemes with higher overhead require more storage space per object. For example, when deciding between a 4+2 scheme and 6+3 scheme (which both have 50% storage overhead), select the 6+3 scheme if additional fault tolerance is required. Select the 4+2 scheme if network
+
+609
+
+resources are constrained. If all other factors are equal, select 4+2 because it has a lower total number of fragments. 3
+
+15
+
+Yes
+
+25%
+
+6+1
+
+7
+
+3
+
+21
+
+Yes
+
+17%
+
+7+5
+
+3
+
+5
+
+15
+
+Yes
+
+71%
+
+StorageGRID requires a minimum of three Storage Nodes per site. To use the 7+5 scheme, each site requires a minimum of four Storage Nodes. Using five Storage Nodes per site is recommended.
+
+When selecting an erasure-coding scheme that provides site protection, balance the relative importance of the following factors:
+
+Number of fragments: Performance and expansion flexibility are generally better when the total number of fragments is lower.
+
+Fault tolerance: Fault tolerance is increased by having more parity segments (that is, when m has a higher value.)
+
+Network traffic: When recovering from failures, using a scheme with more fragments (that is, a higher total for k+m) creates more network traffic.
+
+Storage overhead: Schemes with higher overhead require more storage space per object. For example, when deciding between a 4+2 scheme and 6+3 scheme (which both have 50% storage overhead), select the 6+3 scheme if additional fault tolerance is required. Select the 4+2 scheme if network
+
+609

@@ -1,0 +1,249 @@
+The S3 bucket name and S3 key name.
+
+SEGC
+
+Container UUID UUID of the container for the segmented object. This value is available
+
+only if the object is segmented. UUID
+
+Universally Unique Identifier
+
+The identifier of the object within the StorageGRID system.
+
+RSLT
+
+Result of the delete operation
+
+The result of event, process, or transaction. If is not relevant for a message, NONE is used rather than SUCS so that the message is not accidentally filtered.
+
+EBKR: Empty Bucket Request
+
+This message indicates a user sent a request to turn empty bucket on or off (that is, to delete bucket objects or to stop deleting objects). Code
+
+Field
+
+Description
+
+BUID
+
+Bucket UUID
+
+The bucket ID.
+
+EBJS
+
+Empty Bucket JSON Configuration
+
+Contains the JSON representing the current Empty Bucket configuration.
+
+S3AI
+
+S3 tenant account ID
+
+The tenant account ID of the user who sent the request. An empty value indicates anonymous access.
+
+S3BK S3 Bucket
+
+The S3 bucket name.
+
+1350
+
+ECMC: Missing Erasure-Coded Data Fragment
+
+This audit message indicates that the system has detected a missing erasure-coded data fragment.
+
+Code
+
+Field
+
+Description
+
+VCMC
+
+VCS ID
+
+The name of the VCS that contains the missing chunk.
+
+MCID
+
+Chunk ID
+
+The identifier of the missing erasure-coded fragment. RSLT
+
+Result
+
+This field has the value 'NONE'. RSLT is a mandatory message field, but is not relevant for this particular message. 'NONE' is used rather than 'SUCS' so that this message is not filtered.
+
+ECOC: Corrupt Erasure-Coded Data Fragment
+
+This audit message indicates that the system has detected a corrupt erasure-coded data fragment. Code
+
+Field
+
+Description
+
+VCCO
+
+VCS ID
+
+The name of the VCS that contains the corrupt chunk.
+
+VLID
+
+Volume ID
+
+The RangeDB Volume that contains the corrupt erasure-coded fragment.
+
+CCID
+
+Chunk ID
+
+The identifier of the corrupt erasure-coded fragment.
+
+RSLT
+
+Result
+
+This field has the value 'NONE'. RSLT is a mandatory message field, but is not relevant for this particular message. 'NONE' is used rather than 'SUCS' so that this message is not filtered. ETAF: Security Authentication Failed
+
+This message is generated when a connection attempt using Transport Layer Security (TLS) has failed.
+
+Code
+
+Field
+
+Description
+
+CNID
+
+Connection Identifier
+
+The unique system identifier for the TCP/IP connection over which the authentication failed.
+
+RUID
+
+User Identity
+
+A service dependent identifier representing the identity of the remote user.
+
+1351
+
+Code
+
+Field
+
+Description RSLT
+
+Reason Code
+
+The reason for the failure:
+
+SCNI: Secure connection establishment failed.
+
+CERM: Certificate was missing.
+
+CERT: Certificate was invalid.
+
+CERE: Certificate was expired.
+
+CERR: Certificate was revoked. Field
+
+Description
+
+VCCO
+
+VCS ID
+
+The name of the VCS that contains the corrupt chunk.
+
+VLID
+
+Volume ID
+
+The RangeDB Volume that contains the corrupt erasure-coded fragment.
+
+CCID
+
+Chunk ID
+
+The identifier of the corrupt erasure-coded fragment.
+
+RSLT
+
+Result
+
+This field has the value 'NONE'. RSLT is a mandatory message field, but is not relevant for this particular message. 'NONE' is used rather than 'SUCS' so that this message is not filtered. ETAF: Security Authentication Failed
+
+This message is generated when a connection attempt using Transport Layer Security (TLS) has failed.
+
+Code
+
+Field
+
+Description
+
+CNID
+
+Connection Identifier
+
+The unique system identifier for the TCP/IP connection over which the authentication failed.
+
+RUID
+
+User Identity
+
+A service dependent identifier representing the identity of the remote user.
+
+1351
+
+Code
+
+Field
+
+Description RSLT
+
+Reason Code
+
+The reason for the failure:
+
+SCNI: Secure connection establishment failed.
+
+CERM: Certificate was missing.
+
+CERT: Certificate was invalid.
+
+CERE: Certificate was expired.
+
+CERR: Certificate was revoked.
+
+CSGN: Certificate signature was invalid.
+
+CSGU: Certificate signer was unknown.
+
+UCRM: User credentials were missing.
+
+UCRI: User credentials were invalid.
+
+UCRU: User credentials were disallowed.
+
+TOUT: Authentication timed out.
+
+When a connection is established to a secure service that uses TLS, the credentials of the remote entity are verified using the TLS profile and additional logic built into the service. If this authentication fails due to invalid, unexpected, or disallowed certificates or credentials, an audit message is logged. This enables queries for unauthorized access attempts and other security-related connection problems. The message could result from a remote entity having an incorrect configuration, or from attempts to present invalid or disallowed credentials to the system. This audit message should be monitored to detect attempts to gain unauthorized access to the system.
+
+GNRG: GNDS Registration
+
+The CMN service generates this audit message when a service has updated or registered information about itself in the StorageGRID system. Code
+
+Field
+
+Description
+
+RSLT
+
+Result
+
+The result of the update request:
+
+SUCS: Successful
+
+SUNV: Service Unavailable

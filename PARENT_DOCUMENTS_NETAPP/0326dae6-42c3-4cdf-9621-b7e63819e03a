@@ -1,0 +1,83 @@
+The ETag in the response is not the MD5 of the object data. You must manage the mapping of encryption keys to objects. StorageGRID does not store encryption keys. You are responsible for tracking the encryption key you provide for each object.
+
+If your bucket is versioning-enabled, each object version should have its own encryption key. You are responsible for tracking the encryption key used for each object version.
+
+Because you manage encryption keys on the client side, you must also manage any additional safeguards, such as key rotation, on the client side.
+
+917
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object.
+
+If cross-grid replication or CloudMirror replication is configured for the bucket, you can’t ingest SSE-C objects. The ingest operation will fail.
+
+Related information Amazon S3 User Guide: Using server-side encryption with customer-provided keys (SSE-C)
+
+CopyObject
+
+You can use the S3 CopyObject request to create a copy of an object that is already stored in S3. A CopyObject operation is the same as performing GetObject followed by PutObject.
+
+Resolve conflicts
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation. Object size
+
+The maximum recommended size for a single PutObject operation is 5 GiB (5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use multipart upload instead.
+
+The maximum supported size for a single PutObject operation is 5 TiB (5,497,558,138,880 bytes).
+
+If you upgraded from StorageGRID 11.6 or earlier, the S3 PUT Object size too large alert will be triggered if you attempt to upload an object that exceeds 5 GiB. If you have a new installation of StorageGRID 11.7 or 11.8, the alert won’t be triggered in this case. However, to align with the AWS S3 standard, future releases of StorageGRID won’t support uploads of objects larger than 5 GiB. UTF-8 characters in user metadata
+
+If a request includes (unescaped) UTF-8 values in the key name or value of user-defined metadata, StorageGRID behavior is undefined.
+
+StorageGRID does not parse or interpret escaped UTF-8 characters included in the key name or value of user- defined metadata. Escaped UTF-8 characters are treated as ASCII characters:
+
+Requests succeed if user-defined metadata includes escaped UTF-8 characters.
+
+StorageGRID does not return the x-amz-missing-meta header if the interpreted value of the key name or value includes unprintable characters.
+
+Supported request headers
+
+The following request headers are supported:
+
+Content-Type The maximum supported size for a single PutObject operation is 5 TiB (5,497,558,138,880 bytes).
+
+If you upgraded from StorageGRID 11.6 or earlier, the S3 PUT Object size too large alert will be triggered if you attempt to upload an object that exceeds 5 GiB. If you have a new installation of StorageGRID 11.7 or 11.8, the alert won’t be triggered in this case. However, to align with the AWS S3 standard, future releases of StorageGRID won’t support uploads of objects larger than 5 GiB. UTF-8 characters in user metadata
+
+If a request includes (unescaped) UTF-8 values in the key name or value of user-defined metadata, StorageGRID behavior is undefined.
+
+StorageGRID does not parse or interpret escaped UTF-8 characters included in the key name or value of user- defined metadata. Escaped UTF-8 characters are treated as ASCII characters:
+
+Requests succeed if user-defined metadata includes escaped UTF-8 characters.
+
+StorageGRID does not return the x-amz-missing-meta header if the interpreted value of the key name or value includes unprintable characters.
+
+Supported request headers
+
+The following request headers are supported:
+
+Content-Type
+
+918
+
+• x-amz-copy-source
+
+x-amz-copy-source-if-match
+
+x-amz-copy-source-if-none-match
+
+x-amz-copy-source-if-unmodified-since
+
+x-amz-copy-source-if-modified-since
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata x-amz-metadata-directive: The default value is COPY, which enables you to copy the object and associated metadata.
+
+You can specify REPLACE to overwrite the existing metadata when copying the object, or to update the object metadata.
+
+x-amz-storage-class
+
+x-amz-tagging-directive: The default value is COPY, which enables you to copy the object and all tags.
+
+You can specify REPLACE to overwrite the existing tags when copying the object, or to update the tags.
+
+S3 Object Lock request headers: ◦ x-amz-object-lock-mode ◦ x-amz-object-lock-retain-until-date ◦ x-amz-object-lock-legal-hold
+
+If a request is made without these headers, the bucket default retention settings are used to calculate the object version mode and retain-until-date. See Use S3 REST API to configure S3 Object Lock.

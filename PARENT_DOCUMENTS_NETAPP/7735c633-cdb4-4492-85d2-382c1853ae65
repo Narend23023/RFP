@@ -1,0 +1,225 @@
+The table summarizes the capabilities of primary and non-primary Admin Nodes. Capabilities
+
+Primary Admin Node
+
+Non-primary Admin Node
+
+Includes the AMS service
+
+Yes
+
+Yes
+
+Includes the CMN service
+
+Yes
+
+No
+
+Includes the NMS service
+
+Yes
+
+Yes
+
+Includes the Prometheus service
+
+Yes
+
+Yes
+
+Includes the SSM service
+
+Yes
+
+Yes
+
+14
+
+Capabilities
+
+Primary Admin Node
+
+Non-primary Admin Node Includes the Load Balancer and High Availability services
+
+Yes
+
+Yes
+
+Supports the Management Application Program Interface (mgmt-api)
+
+Yes
+
+Yes
+
+Can be used for all network-related maintenance tasks, for example IP address change and updating NTP servers
+
+Yes
+
+No
+
+Can perform EC rebalance after Storage Node expansion Yes
+
+No
+
+Can be used for the volume restoration procedure
+
+Yes
+
+Yes
+
+Can collect log files and system data from one or more nodes
+
+Yes
+
+No
+
+Sends alert notifications, AutoSupport packages, and SNMP traps and informs The table summarizes the capabilities of primary and non-primary Admin Nodes. Capabilities
+
+Primary Admin Node
+
+Non-primary Admin Node
+
+Includes the AMS service
+
+Yes
+
+Yes
+
+Includes the CMN service
+
+Yes
+
+No
+
+Includes the NMS service
+
+Yes
+
+Yes
+
+Includes the Prometheus service
+
+Yes
+
+Yes
+
+Includes the SSM service
+
+Yes
+
+Yes
+
+14
+
+Capabilities
+
+Primary Admin Node
+
+Non-primary Admin Node Includes the Load Balancer and High Availability services
+
+Yes
+
+Yes
+
+Supports the Management Application Program Interface (mgmt-api)
+
+Yes
+
+Yes
+
+Can be used for all network-related maintenance tasks, for example IP address change and updating NTP servers
+
+Yes
+
+No
+
+Can perform EC rebalance after Storage Node expansion Yes
+
+No
+
+Can be used for the volume restoration procedure
+
+Yes
+
+Yes
+
+Can collect log files and system data from one or more nodes
+
+Yes
+
+No
+
+Sends alert notifications, AutoSupport packages, and SNMP traps and informs
+
+Yes. Acts as the preferred sender.
+
+Yes. Acts as a standby sender.
+
+Preferred sender Admin Node
+
+If your StorageGRID deployment includes multiple Admin Nodes, the primary Admin Node is the preferred sender for alert notifications, AutoSupport packages, SNMP traps and informs, and legacy alarm notifications.
+
+Under normal system operations, only the preferred sender sends notifications. However, all other Admin Nodes monitor the preferred sender. If a problem is detected, other Admin Nodes act as standby senders.
+
+Multiple notifications might sent in these cases:
+
+If Admin Nodes become "islanded" from each other, both the preferred sender and the standby senders will attempt to send notifications, and multiple copies of notifications might be received. If standby sender detects problems with the preferred sender and starts sending notifications, the preferred sender might regain its ability to send notifications. If this occurs, duplicate notifications might be sent. The standby sender will stop sending notifications when it no longer detects errors on the preferred sender.
+
+When you test AutoSupport packages, all Admin Nodes send the test. When you test alert notifications, you must sign in to every Admin Node to verify connectivity. Primary services for Admin Nodes
+
+The following table shows the primary services for Admin Nodes; however, this table does not list all node services.
+
+15
+
+Service
+
+Key function
+
+Audit Management System
+
+Tracks system activity and events.
+
+(AMS)
+
+Configuration Management Node
+
+Manages system-wide configuration.
+
+(CMN) High Availability
+
+Manages high availability virtual IP addresses for groups of Admin Nodes and Gateway Nodes.
+
+Note: This service is also found on Gateway Nodes.
+
+Load Balancer
+
+Provides load balancing of S3 and Swift traffic from clients to Storage Nodes.
+
+Note: This service is also found on Gateway Nodes. Management Application Program Interface (mgmt-api)
+
+Processes requests from the Grid Management API and the Tenant Management API.
+
+Network Management System
+
+Provides functionality for the Grid Manager.
+
+(NMS)
+
+Prometheus
+
+Collects and stores time-series metrics from the services on all nodes.
+
+Server Status Monitor (SSM) Monitors the operating system and underlying hardware.
+
+What is a Storage Node?
+
+Storage Nodes manage and store object data and metadata. Storage Nodes include the services and processes required to store, move, verify, and retrieve object data and metadata on disk.
+
+Each site in your StorageGRID system must have at least three Storage Nodes. Types of Storage Nodes
+
+All Storage Nodes that were installed before StorageGRID 11.8 store both objects and the metadata for those objects. Starting in StorageGRID 11.8, you can choose the Storage Node type for new software-based storage nodes:
+
+Object and metadata Storage Nodes
+
+By default, all new Storage Nodes installed in StorageGRID 11.8 will store both objects and metadata. Metadata-only Storage Nodes (software-based nodes only)

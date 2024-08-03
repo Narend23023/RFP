@@ -1,0 +1,197 @@
+The key and the value must be separated by an equal sign (=) and optional whitespace.
+
+99
+
+• The keys can contain no spaces.
+
+The values can contain embedded spaces.
+
+Any leading or trailing whitespace is ignored.
+
+The following table defines the values for all supported keys. Each key has one of the following designations: Can contain the characters A through Z and a through z
+
+Can contain the numbers 0 through 9
+
+Can contain one or more hyphens (-)
+
+Must be no more than 32 characters, not including the .conf extension
+
+Any files in /etc/storagegrid/nodes that don’t follow these naming conventions will not be parsed by the host service.
+
+If you have a multi-site topology planned for your grid, a typical node naming scheme might be: site-nodetype-nodenumber.conf
+
+For example, you might use dc1-adm1.conf for the first Admin Node in Data Center 1, and dc2-sn3.conf for the third Storage Node in Data Center 2. However, you can use any scheme you like, as long as all node names follow the naming rules.
+
+Contents of a node configuration file
+
+A configuration file contains key/value pairs, with one key and one value per line. For each key/value pair, follow these rules:
+
+The key and the value must be separated by an equal sign (=) and optional whitespace.
+
+99
+
+• The keys can contain no spaces.
+
+The values can contain embedded spaces.
+
+Any leading or trailing whitespace is ignored.
+
+The following table defines the values for all supported keys. Each key has one of the following designations:
+
+Required: Required for every node or for the specified node types
+
+Best practice: Optional, although recommended
+
+Optional: Optional for all nodes Admin Network keys
+
+ADMIN_IP
+
+Value
+
+Designation
+
+Grid Network IPv4 address of the primary Admin Node for the grid to which this node belongs. Use the same value you specified for GRID_NETWORK_IP for the grid node with NODE_TYPE = VM_Admin_Node and ADMIN_ROLE = Primary. If you omit this parameter, the node attempts to discover a primary Admin Node using mDNS. Best practice
+
+How grid nodes discover the primary Admin Node
+
+Note: This value is ignored, and might be prohibited, on the primary Admin Node.
+
+ADMIN_NETWORK_CONFIG
+
+Value
+
+Designation
+
+DHCP, STATIC, or DISABLED
+
+Optional
+
+ADMIN_NETWORK_ESL
+
+Value
+
+Designation
+
+Comma-separated list of subnets in CIDR notation to which this node should communicate using the Admin Network gateway. Optional
+
+Example: 172.16.0.0/21,172.17.0.0/21
+
+ADMIN_NETWORK_GATEWAY
+
+100
+
+Value
+
+IPv4 address of the local Admin Network gateway for this node. Must be on the subnet defined by ADMIN_NETWORK_IP and ADMIN_NETWORK_MASK. This value is ignored for DHCP-configured networks.
+
+Examples:
+
+1.1.1.1
+
+10.224.4.81 ADMIN_NETWORK_IP
+
+Value
+
+IPv4 address of this node on the Admin Network. This key is only required when ADMIN_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+ADMIN_NETWORK_MAC
+
+Value
+
+The MAC address for the Admin Network interface in the container.
+
+This field is optional. If omitted, a MAC address will be generated automatically.
+
+Must be 6 pairs of hexadecimal digits separated by colons.
+
+Example: b2:9c:02:c2:27:10 ADMIN_NETWORK_MASK
+
+Value
+
+Designation
+
+Required if ADMIN_NETWORK_ESL is specified. Optional otherwise.
+
+Designation
+
+Required when ADMIN_NETWORK_CONFIG = STATIC.
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+101
+
+IPv4 netmask for this node, on the Admin Network. Specify this key when ADMIN_NETWORK_CONFIG = STATIC; don’t specify it for other values. Examples:
+
+255.255.255.0
+
+255.255.248.0
+
+ADMIN_NETWORK_MTU
+
+Value Value
+
+IPv4 address of this node on the Admin Network. This key is only required when ADMIN_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+ADMIN_NETWORK_MAC
+
+Value
+
+The MAC address for the Admin Network interface in the container.
+
+This field is optional. If omitted, a MAC address will be generated automatically.
+
+Must be 6 pairs of hexadecimal digits separated by colons.
+
+Example: b2:9c:02:c2:27:10 ADMIN_NETWORK_MASK
+
+Value
+
+Designation
+
+Required if ADMIN_NETWORK_ESL is specified. Optional otherwise.
+
+Designation
+
+Required when ADMIN_NETWORK_CONFIG = STATIC.
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+101
+
+IPv4 netmask for this node, on the Admin Network. Specify this key when ADMIN_NETWORK_CONFIG = STATIC; don’t specify it for other values. Examples:
+
+255.255.255.0
+
+255.255.248.0
+
+ADMIN_NETWORK_MTU
+
+Value
+
+The maximum transmission unit (MTU) for this node on the Admin Network. Don’t specify if ADMIN_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1500 is used.
+
+If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value.

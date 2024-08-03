@@ -1,0 +1,81 @@
+In this example, the ILM policy includes three ILM rules, in the following order:
+
+1. A compliant rule that uses erasure coding to protect objects greater than 1 MB in a specific bucket with S3 Object Lock enabled. The objects are stored on Storage Nodes from day 0 to forever.
+
+2. A non-compliant rule that creates two replicated object copies on Storage Nodes for a year and then moves one object copy to a Cloud Storage Pool forever. This rule does not apply to buckets with S3 Object Lock enabled because it uses a Cloud Storage Pool.
+
+3. The default compliant rule that creates two replicated object copies on Storage Nodes from day 0 to forever.
+
+Simulate the policy After you have added rules to your policy, chosen a default compliant rule, and arranged the other rules, you should simulate the policy by testing objects from the bucket with S3 Object Lock enabled and from other buckets. For example, when you simulate the example policy, you would expect test objects to be evaluated as follows: To create an ILM policy that will effectively protect all objects in your system, including those in buckets with S3 Object Lock enabled, you must select ILM rules that satisfy the storage requirements for all objects. Then, you must simulate and activate the policy. Add rules to the policy
+
+In this example, the ILM policy includes three ILM rules, in the following order:
+
+1. A compliant rule that uses erasure coding to protect objects greater than 1 MB in a specific bucket with S3 Object Lock enabled. The objects are stored on Storage Nodes from day 0 to forever.
+
+2. A non-compliant rule that creates two replicated object copies on Storage Nodes for a year and then moves one object copy to a Cloud Storage Pool forever. This rule does not apply to buckets with S3 Object Lock enabled because it uses a Cloud Storage Pool.
+
+3. The default compliant rule that creates two replicated object copies on Storage Nodes from day 0 to forever.
+
+Simulate the policy After you have added rules to your policy, chosen a default compliant rule, and arranged the other rules, you should simulate the policy by testing objects from the bucket with S3 Object Lock enabled and from other buckets. For example, when you simulate the example policy, you would expect test objects to be evaluated as follows:
+
+The first rule will only match test objects that are greater than 1 MB in the bucket bank-records for the Bank of ABC tenant.
+
+The second rule will match all objects in all non-compliant buckets for all other tenant accounts.
+
+The default rule will match these objects:
+
+Objects 1 MB or smaller in the bucket bank-records for the Bank of ABC tenant. ◦ Objects in any other bucket that has S3 Object Lock enabled for all other tenant accounts.
+
+Activate the policy
+
+When you are completely satisfied that the new policy protects object data as expected, you can activate it.
+
+712
+
+Example 8: Priorities for S3 bucket lifecycle and ILM policy Depending on your lifecycle configuration, objects follow the retention settings of either the S3 bucket lifecycle or an ILM policy.
+
+Example of bucket lifecycle taking priority over ILM policy
+
+ILM policy
+
+Rule based on noncurrent-time reference: On Day 0, keep X copies for 20 days
+
+Rule based on ingest-time reference (default): On Day 0, keep X copies for 50 days Bucket Lifecycle
+
+Filter: {Prefix: "docs/"}, Expiration: Days: 100, NoncurrentVersionExpiration: Days: 5
+
+Result
+
+An object named "docs/text" is ingested. It matches the bucket lifecycle filter of "docs/" prefix.
+
+After 100 days a delete-marker is created and "docs/text" becomes noncurrent. ◦ After 5 days, a total of 105 days since ingest, "docs/text" is deleted.
+
+An object named "video/movie" is ingested. It does not match the filter and uses the ILM retention policy.
+
+After 50 days a delete-marker is created and "video/movie" becomes noncurrent. ◦ After 20 days, a total of 70 days since the ingest, "video/movie" is deleted.
+
+Example of bucket lifecycle implicitly keeping-forever ILM policy
+
+Rule based on noncurrent-time reference: On Day 0, keep X copies for 20 days
+
+Rule based on ingest-time reference (default): On Day 0, keep X copies for 50 days
+
+Bucket Lifecycle
+
+Filter: {Prefix: "docs/"}, Expiration: ExpiredObjectDeleteMarker: true Result
+
+An object named "docs/text" is ingested. It matches the bucket lifecycle filter of "docs/" prefix.
+
+The Expiration action applies only to expired delete markers, which implies keeping everything else forever (starting with "docs/").
+
+Delete markers that start with "docs/" are removed when they become expired.
+
+An object named "video/movie" is ingested. It does not match the filter and uses the ILM retention policy.
+
+After 50 days a delete-marker is created and "video/movie" becomes noncurrent. ◦ After 20 days, a total of 70 days since the ingest, "video/movie" is deleted.
+
+Example of using bucket lifecycle to duplicate ILM and clean up expired delete markers
+
+713
+
+ILM policy

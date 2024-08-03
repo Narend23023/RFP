@@ -1,0 +1,53 @@
+If you want to perform object operations at a different consistency, you can:
+
+Specify a consistency for each bucket.
+
+Specify a consistency for each API operation.
+
+Change the default grid-wide consistency by performing one of the following tasks: In the Grid Manager, go to CONFIGURATION > System > Storage settings > Default consistency. ◦ Use the grid-config endpoint of the Grid Management private API.
+
+A change to the grid-wide consistency applies only to buckets created after the setting was changed. To determine the details of a change, see the audit log located at /var/local/log (search for consistencyLevel). Consistency values
+
+The consistency affects how the metadata that StorageGRID uses to track objects is distributed between nodes, and therefore the availability of objects for client requests.
+
+You can set the consistency for a bucket or an API operation to one of the following values:
+
+All: All nodes receive the data immediately, or the request will fail.
+
+Strong-global: Guarantees read-after-write consistency for all client requests across all sites.
+
+Strong-site: Guarantees read-after-write consistency for all client requests within a site.
+
+Read-after-new-write: (Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases. Available: Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets. Use "Read-after-new-write" and "Available" consistency
+
+When a HEAD or GET operation uses the "Read-after-new-write" consistency, StorageGRID performs the lookup in multiple steps, as follows:
+
+It first looks up the object using a low consistency.
+
+If that lookup fails, it repeats the lookup at the next consistency value until it reaches a consistency equivalent to the behavior for strong-global.
+
+If a HEAD or GET operation uses the "Read-after-new-write" consistency but the object does not exist, the object lookup will always reach a consistency equivalent to the behavior for strong-global. Because this consistency requires multiple copies of the object metadata to be available at each site, you can receive a high number of 500 Internal Server errors if two or more Storage Nodes at the same site are unavailable. Unless you require consistency guarantees similar to Amazon S3, you can prevent these errors for HEAD and GET operations by setting the consistency to "Available." When a HEAD or GET operation uses the "Available"
+
+887
+
+consistency, StorageGRID provides eventual consistency only. It does not retry a failed operation at increasing consistency, so it does not require that multiple copies of the object metadata be available. Specify consistency for API operation When a HEAD or GET operation uses the "Read-after-new-write" consistency, StorageGRID performs the lookup in multiple steps, as follows:
+
+It first looks up the object using a low consistency.
+
+If that lookup fails, it repeats the lookup at the next consistency value until it reaches a consistency equivalent to the behavior for strong-global.
+
+If a HEAD or GET operation uses the "Read-after-new-write" consistency but the object does not exist, the object lookup will always reach a consistency equivalent to the behavior for strong-global. Because this consistency requires multiple copies of the object metadata to be available at each site, you can receive a high number of 500 Internal Server errors if two or more Storage Nodes at the same site are unavailable. Unless you require consistency guarantees similar to Amazon S3, you can prevent these errors for HEAD and GET operations by setting the consistency to "Available." When a HEAD or GET operation uses the "Available"
+
+887
+
+consistency, StorageGRID provides eventual consistency only. It does not retry a failed operation at increasing consistency, so it does not require that multiple copies of the object metadata be available. Specify consistency for API operation
+
+To set the consistency for an individual API operation,the consistency values must be supported for the operation, and you must specify the consistency in the request header. This example sets the consistency to "Strong-site" for a GetObject operation.
+
+GET /bucket/object HTTP/1.1 Date: date Authorization: authorization name Host: host Consistency-Control: strong-site
+
+You must use the same consistency for both the PutObject and GetObject operations. Specify consistency for bucket
+
+To set the consistency for bucket, you can use the StorageGRID PUT Bucket consistency request. Or you can change a bucket’s consistency from the Tenant Manager.
+
+When setting the consistency for a bucket, be aware of the following:

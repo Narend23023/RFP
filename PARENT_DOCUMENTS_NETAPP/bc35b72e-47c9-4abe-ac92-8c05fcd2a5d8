@@ -1,0 +1,111 @@
+1157
+
+Code
+
+RDTU
+
+RIRF
+
+1158
+
+Name
+
+Tivoli Storage Manager Status
+
+Inbound Replications — F ailed
+
+Service BARC
+
+BLDR, BARC
+
+Recommended action
+
+Only available for Archive Nodes with a Target Type of Tivoli Storage Manager (TSM).
+
+If the value of Tivoli Storage Manager Status is Configuration Error and the Archive Node has just been added to the StorageGRID system, ensure that the TSM middleware server is correctly configured.
+
+If the value of Tivoli Storage Manager Status is Connection Failure, or Connection Failure, Retrying, check the network configuration on the TSM middleware server, and the network connection between the TSM middleware server and the StorageGRID system.
+
+If the value of Tivoli Storage Manager Status is Authentication Failure, or Authentication Failure, Reconnecting, the StorageGRID system can connect to the TSM middleware server, but can’t authenticate the connection. Check that the TSM middleware server is configured with the correct user, password, and permissions, and restart the service. If the value of Tivoli Storage Manager Status is Session Failure, an established session has been lost unexpectedly. Check the network connection between the TSM middleware server and the StorageGRID system. Check the middleware server for errors. Code
+
+RDTU
+
+RIRF
+
+1158
+
+Name
+
+Tivoli Storage Manager Status
+
+Inbound Replications — F ailed
+
+Service BARC
+
+BLDR, BARC
+
+Recommended action
+
+Only available for Archive Nodes with a Target Type of Tivoli Storage Manager (TSM).
+
+If the value of Tivoli Storage Manager Status is Configuration Error and the Archive Node has just been added to the StorageGRID system, ensure that the TSM middleware server is correctly configured.
+
+If the value of Tivoli Storage Manager Status is Connection Failure, or Connection Failure, Retrying, check the network configuration on the TSM middleware server, and the network connection between the TSM middleware server and the StorageGRID system.
+
+If the value of Tivoli Storage Manager Status is Authentication Failure, or Authentication Failure, Reconnecting, the StorageGRID system can connect to the TSM middleware server, but can’t authenticate the connection. Check that the TSM middleware server is configured with the correct user, password, and permissions, and restart the service. If the value of Tivoli Storage Manager Status is Session Failure, an established session has been lost unexpectedly. Check the network connection between the TSM middleware server and the StorageGRID system. Check the middleware server for errors.
+
+If the value of Tivoli Storage Manager Status is Unknown Error, contact technical support.
+
+An Inbound Replications — Failed alarm can occur during periods of high load or temporary network disruptions. After system activity reduces, this alarm should clear. If the count of failed replications continues to increase, look for network problems and verify that the source and destination LDR and ARC services are online and available.
+
+To reset the count, select SUPPORT > Tools > Grid topology, then select site > grid node > LDR > Replication > Configuration > Main. Select Reset Inbound Replication Failure Count, and click Apply Changes.
+
+Code RIRQ
+
+RORQ
+
+SAVP
+
+SCAS
+
+SCEP
+
+Name
+
+Inbound Replications —  Queued
+
+Outbound Replications —  Queued
+
+Total Usable Space (Percent)
+
+Status
+
+Storage API Service Endpoints Certificate Expiry
+
+Service
+
+BLDR, BARC
+
+BLDR, BARC
+
+LDR
+
+CMN CMN
+
+Recommended action
+
+Alarms can occur during periods of high load or temporary network disruption. After system activity reduces, this alarm should clear. If the count for queued replications continues to increase, look for network problems and verify that the source and destination LDR and ARC services are online and available.
+
+The outbound replication queue contains object data being copied to satisfy ILM rules and objects requested by clients.
+
+An alarm can occur as a result of a system overload. Wait to see if the alarm clears when system activity declines. If the alarm recurs, add capacity by adding Storage Nodes.
+
+If usable space reaches a low threshold, options include expanding the StorageGRID system or move object data to archive through an Archive Node. If the value of Status for the active grid task is Error, look up the grid task message. Select SUPPORT > Tools > Grid topology. Then select site > grid node > CMN > Grid Tasks > Overview > Main. The grid task message displays information about the error (for example, "check failed on node 12130011").
+
+After you have investigated and corrected the problem, restart the grid task. Select SUPPORT > Tools > Grid topology. Then select site > grid node > CMN > Grid Tasks > Configuration > Main, and select Actions > Run.
+
+If the value of Status for a grid task being stopped is Error, retry ending the grid task.
+
+If the problem persists, contact technical support.
+
+Triggered when the certificate used for accessing storage API endpoints is about to expire.

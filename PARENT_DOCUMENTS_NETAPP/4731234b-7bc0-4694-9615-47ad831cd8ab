@@ -1,0 +1,147 @@
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint.
+
+Node type
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint.
+
+5. For the Tenant access step, select one of the following: Field
+
+Description
+
+Allow all tenants (default)
+
+All tenant accounts can use this endpoint to access their buckets.
+
+Allow all tenants is almost always the appropriate option for the load balancer endpoint used for FabricPool.
+
+You must select this option if you have not yet created any tenant accounts.
+
+Allow selected tenants
+
+Only the selected tenant accounts can use this endpoint to access their buckets.
+
+Block selected tenants
+
+The selected tenant accounts can’t use this endpoint to access their buckets. All other tenants can use this endpoint.
+
+6. For the Attach certificate step, select one of the following: Field
+
+Description
+
+Upload certificate (recommended) Use this option to upload a CA-signed server certificate, certificate
+
+private key, and optional CA bundle.
+
+Generate certificate
+
+Use this option to generate a self-signed certificate. See Configure load balancer endpoints for details of what to enter. Use StorageGRID S3 and Swift certificate
+
+This option is available only if you have already uploaded or generated a custom version of the StorageGRID global certificate. See Configure S3 and Swift API certificates for details.
+
+7. Select Create.
+
+741
+
+Changes to an endpoint certificate can take up to 15 minutes to be applied to all nodes.
+
+Create a tenant account for FabricPool
+
+You must create a tenant account in the Grid Manager for FabricPool use.
+
+Tenant accounts allow client applications to store and retrieve objects on StorageGRID. Each tenant account has its own account ID, authorized groups and users, buckets, and objects.
+
+For details about this task, see Create tenant account. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. Steps
+
+1. Select TENANTS.
+
+2. Select Create.
+
+3. For the Enter details steps, enter the following information.
+
+Field
+
+Description
+
+Name private key, and optional CA bundle.
+
+Generate certificate
+
+Use this option to generate a self-signed certificate. See Configure load balancer endpoints for details of what to enter. Use StorageGRID S3 and Swift certificate
+
+This option is available only if you have already uploaded or generated a custom version of the StorageGRID global certificate. See Configure S3 and Swift API certificates for details.
+
+7. Select Create.
+
+741
+
+Changes to an endpoint certificate can take up to 15 minutes to be applied to all nodes.
+
+Create a tenant account for FabricPool
+
+You must create a tenant account in the Grid Manager for FabricPool use.
+
+Tenant accounts allow client applications to store and retrieve objects on StorageGRID. Each tenant account has its own account ID, authorized groups and users, buckets, and objects.
+
+For details about this task, see Create tenant account. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. Steps
+
+1. Select TENANTS.
+
+2. Select Create.
+
+3. For the Enter details steps, enter the following information.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, numeric account ID.
+
+Description (optional)
+
+A description to help identify the tenant. Client type
+
+Must be S3 for FabricPool.
+
+Storage quota (optional)
+
+Leave this field blank for FabricPool.
+
+4. For the Select permissions step:
+
+a. Don’t select Allow platform services.
+
+FabricPool tenants don’t typically need to use platform services, such as CloudMirror replication.
+
+b. Optionally, select Use own identity source. c. Don’t select Allow S3 Select.
+
+FabricPool tenants don’t typically need to use S3 Select.
+
+d. Optionally, select Use grid federation connection to allow the tenant to use a grid federation
+
+connection for account clone and cross-grid replication. Then, select the grid federation connection to use.
+
+5. For the Define root access step, specify which user will have the initial Root access permission for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both.
+
+742
+
+Option
+
+Do this

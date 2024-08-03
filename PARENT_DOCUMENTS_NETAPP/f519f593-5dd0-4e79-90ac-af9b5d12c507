@@ -1,0 +1,137 @@
+If the Email notification failure alert is triggered or you are unable to receive the test alert email notification, follow these steps to resolve the issue.
+
+Before you begin
+
+1099
+
+• You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission. Steps
+
+1. Verify your settings. If there are multiple current alerts with the same name and one of those alerts is resolved, a new notification is not sent if the alert reoccurs on the node for which the alert was resolved.
+
+1. Alert A is triggered for node 1. A notification is sent.
+
+2. Alert A is triggered for node 2. A second notification is sent.
+
+3. Alert A is resolved for node 2, but it remains active for node 1.
+
+4. Alert A is triggered again for node 2. No new notification is sent because the alert is still active for node 1. StorageGRID continues to send email notifications once every 7 days until all instances of the alert are resolved or the alert rule is silenced.
+
+1. Alert A is triggered for node 1 on March 8. A notification is sent.
+
+2. Alert A is not resolved or silenced. Additional notifications are sent on March 15, March 22, March 29, and so on. Troubleshoot alert email notifications
+
+If the Email notification failure alert is triggered or you are unable to receive the test alert email notification, follow these steps to resolve the issue.
+
+Before you begin
+
+1099
+
+• You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission. Steps
+
+1. Verify your settings.
+
+a. Select ALERTS > Email setup.
+
+b. Verify that the Email (SMTP) Server settings are correct.
+
+c. Verify that you have specified valid email addresses for the recipients.
+
+2. Check your spam filter, and make sure that the email was not sent to a junk folder.
+
+3. Ask your email administrator to confirm that emails from the sender address aren’t being blocked.
+
+4. Collect a log file for the Admin Node, and then contact technical support.
+
+Technical support can use the information in the logs to help determine what went wrong. For example, the prometheus.log file might show an error when connecting to the server you specified.
+
+See Collect log files and system data. Silence alert notifications
+
+Optionally, you can configure silences to temporarily suppress alert notifications.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission.
+
+About this task
+
+You can silence alert rules on the entire grid, a single site, or a single node and for one or more severities. Each silence suppresses all notifications for a single alert rule or for all alert rules.
+
+If you have enabled the SNMP agent, silences also suppress SNMP traps and informs.
+
+Be careful when deciding to silence an alert rule. If you silence an alert, you might not detect an underlying problem until it prevents a critical operation from completing.
+
+Because alarms and alerts are independent systems, you can’t use this functionality to suppress alarm notifications. Steps
+
+1. Select ALERTS > Silences.
+
+The Silences page appears.
+
+1100
+
+2. Select Create.
+
+The Create Silence dialog box appears.
+
+3. Select or enter the following information:
+
+Field
+
+Description
+
+Alert Rule
+
+The name of the alert rule you want to silence. You can select any default or custom alert rule, even if the alert rule is disabled.
+
+Note: Select All rules if you want to silence all alert rules using the criteria specified in this dialog box. Description
+
+Optionally, a description of the silence. For example, describe the purpose of this silence.
+
+1101
+
+Field
+
+Description
+
+Duration
+
+How long you want this silence to remain in effect, in minutes, hours, or days. A silence can be in effect from 5 minutes to 1,825 days (5 years).
+
+Note: You should not silence an alert rule for an extended amount of time. If an alert rule is silenced, you might not detect an underlying problem until it prevents a critical operation from completing. However, you might need to use an extended silence if an alert is triggered by a specific, intentional configuration, such as might be the case for the Services appliance link down alerts and the Storage appliance link down alerts. Severity
+
+Which alert severity or severities should be silenced. If the alert is triggered at one of the selected severities, no notifications are sent.
+
+Nodes The Silences page appears.
+
+1100
+
+2. Select Create.
+
+The Create Silence dialog box appears.
+
+3. Select or enter the following information:
+
+Field
+
+Description
+
+Alert Rule
+
+The name of the alert rule you want to silence. You can select any default or custom alert rule, even if the alert rule is disabled.
+
+Note: Select All rules if you want to silence all alert rules using the criteria specified in this dialog box. Description
+
+Optionally, a description of the silence. For example, describe the purpose of this silence.
+
+1101
+
+Field
+
+Description
+
+Duration

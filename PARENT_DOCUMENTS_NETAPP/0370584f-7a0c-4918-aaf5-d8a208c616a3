@@ -1,0 +1,211 @@
+Certificate type
+
+Description
+
+Server and client
+
+Authenticates the connection between an SMTP email server and StorageGRID that is used for alert notifications.
+
+If communications with the SMTP server requires Transport Layer Security (TLS), you must specify the email server CA certificate.
+
+Specify a client
+
+certificate only if the SMTP email server requires client certificates for authentication. External syslog server certificate
+
+400
+
+Navigation location
+
+ILM > Storage pools
+
+Navigation location
+
+ALERTS > Email setup
+
+Details
+
+Create a Cloud Storage Pool
+
+Details
+
+Set up email notifications for alerts
+
+Certificate type
+
+Description
+
+Server
+
+Authenticates the TLS or RELP/TLS connection between an external syslog server that logs events in StorageGRID.
+
+Note: An external syslog server certificate is not required for TCP, RELP/TCP, and UDP connections to an external syslog server. Grid federation connection certificate
+
+Certificate type
+
+Description
+
+Server and client
+
+Authenticate and encrypt information sent between the current StorageGRID system and another grid in a grid federation connection.
+
+Identity federation certificate
+
+Certificate type
+
+Description
+
+Server
+
+Authenticates the connection between StorageGRID and an external identity provider, such as Active Directory, OpenLDAP, or Oracle Directory Server. Used for identity federation, which allows admin groups and users to be managed by an external system. Key management server (KMS) certificate
+
+Navigation location
+
+CONFIGURATION > Monitoring > Audit and syslog server
+
+Navigation location
+
+CONFIGURATION > System > Grid federation
+
+Navigation location
+
+CONFIGURATION > Access Control > Identity federation
+
+Details
+
+Use an external syslog server
+
+Details
+
+Create grid federation connections ILM > Storage pools
+
+Navigation location
+
+ALERTS > Email setup
+
+Details
+
+Create a Cloud Storage Pool
+
+Details
+
+Set up email notifications for alerts
+
+Certificate type
+
+Description
+
+Server
+
+Authenticates the TLS or RELP/TLS connection between an external syslog server that logs events in StorageGRID.
+
+Note: An external syslog server certificate is not required for TCP, RELP/TCP, and UDP connections to an external syslog server. Grid federation connection certificate
+
+Certificate type
+
+Description
+
+Server and client
+
+Authenticate and encrypt information sent between the current StorageGRID system and another grid in a grid federation connection.
+
+Identity federation certificate
+
+Certificate type
+
+Description
+
+Server
+
+Authenticates the connection between StorageGRID and an external identity provider, such as Active Directory, OpenLDAP, or Oracle Directory Server. Used for identity federation, which allows admin groups and users to be managed by an external system. Key management server (KMS) certificate
+
+Navigation location
+
+CONFIGURATION > Monitoring > Audit and syslog server
+
+Navigation location
+
+CONFIGURATION > System > Grid federation
+
+Navigation location
+
+CONFIGURATION > Access Control > Identity federation
+
+Details
+
+Use an external syslog server
+
+Details
+
+Create grid federation connections
+
+Rotate connection certificates Details
+
+Use identity federation
+
+401
+
+Certificate type
+
+Description
+
+Navigation location
+
+Details
+
+Server and client
+
+Authenticates the connection between StorageGRID and an external key management server (KMS), which provides encryption keys to StorageGRID appliance nodes.
+
+CONFIGURATION > Security > Key management server Add key management server (KMS)
+
+Platform services endpoint certificate
+
+Certificate type
+
+Description
+
+Navigation location
+
+Details
+
+Server
+
+Authenticates the connection from the StorageGRID platform service to an S3 storage resource.
+
+Tenant Manager > STORAGE (S3) > Platform services endpoints
+
+Create platform services endpoint Edit platform services endpoint
+
+Single sign-on (SSO) certificate
+
+Certificate type
+
+Description
+
+Navigation location
+
+Details
+
+Server
+
+Authenticates the connection between identity federation services, such as Active Directory Federation Services (AD FS), and StorageGRID that are used for single sign-on (SSO) requests. CONFIGURATION > Access control > Single sign-on
+
+Configure single sign-on
+
+Certificate examples
+
+Example 1: Load Balancer service
+
+In this example, StorageGRID acts as the server.
+
+1. You configure a load balancer endpoint and upload or generate a server certificate in StorageGRID.
+
+2. You configure an S3 or Swift client connection to the load balancer endpoint and upload the same certificate to the client.
+
+3. When the client wants to save or retrieve data, it connects to the load balancer endpoint using HTTPS.
+
+4. StorageGRID responds with the server certificate, which contains a public key, and with a signature based on the private key.
+
+5. The client verifies this certificate by comparing the server signature to the signature on its copy of the certificate. If the signatures match, the client starts a session using the same public key.
+
+402

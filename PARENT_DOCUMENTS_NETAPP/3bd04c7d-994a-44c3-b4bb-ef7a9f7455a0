@@ -1,0 +1,103 @@
+Description
+
+Compliance
+
+The object can’t be deleted until its retain-until-date is reached.
+
+The object’s retain-until-date can be increased, but it can’t be decreased.
+
+The object’s retain-until-date can’t be removed until that date is reached.
+
+Governance
+
+Users with the s3:BypassGovernanceRetention permission can use the x-amz-bypass-governance-retention: true request header to bypass retention settings.
+
+These users can delete an object version before its retain-until- date is reached.
+
+These users can increase, decrease, or remove an object’s retain-until-date.
+
+6. If Default retention is enabled, specify the Default retention period for the bucket.
+
+The Default retention period indicates how long new objects added to this bucket should be retained, starting from the time they are ingested. Specify a value between 1 and 36,500 days or between 1 and 100 years, inclusive.
+
+7. Select Save changes. Configure cross-origin resource sharing (CORS)
+
+You can configure cross-origin resource sharing (CORS) for an S3 bucket if you want that bucket and objects in that bucket to be accessible to web applications in other domains.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+819
+
+• You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies.
+
+About this task
+
+Cross-origin resource sharing (CORS) is a security mechanism that allows client web applications in one domain to access resources in a different domain. For example, suppose you use an S3 bucket named Images to store graphics. By configuring CORS for the Images bucket, you can allow the images in that bucket to be displayed on the website http://www.example.com. Enable CORS for a bucket
+
+Steps
+
+1. Use a text editor to create the required XML. 6. If Default retention is enabled, specify the Default retention period for the bucket.
+
+The Default retention period indicates how long new objects added to this bucket should be retained, starting from the time they are ingested. Specify a value between 1 and 36,500 days or between 1 and 100 years, inclusive.
+
+7. Select Save changes. Configure cross-origin resource sharing (CORS)
+
+You can configure cross-origin resource sharing (CORS) for an S3 bucket if you want that bucket and objects in that bucket to be accessible to web applications in other domains.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+819
+
+• You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies.
+
+About this task
+
+Cross-origin resource sharing (CORS) is a security mechanism that allows client web applications in one domain to access resources in a different domain. For example, suppose you use an S3 bucket named Images to store graphics. By configuring CORS for the Images bucket, you can allow the images in that bucket to be displayed on the website http://www.example.com. Enable CORS for a bucket
+
+Steps
+
+1. Use a text editor to create the required XML.
+
+This example shows the XML used to enable CORS for an S3 bucket. This XML allows any domain to send GET requests to the bucket, but it only allows the http://www.example.com domain to send POST and DELETE requests. All request headers are allowed.
+
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2020-10-22/"> <CORSRule> <AllowedOrigin>*</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedHeader>*</AllowedHeader> </CORSRule> <CORSRule> <AllowedOrigin>http://www.example.com</AllowedOrigin> <AllowedMethod>GET</AllowedMethod> <AllowedMethod>POST</AllowedMethod> <AllowedMethod>DELETE</AllowedMethod> <AllowedHeader>*</AllowedHeader> </CORSRule> </CORSConfiguration>
+
+For more information about the CORS configuration XML, see Amazon Web Services (AWS) Documentation: Amazon Simple Storage Service Developer Guide.
+
+2. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets. 3. Select the bucket name from the table.
+
+The bucket details page appears.
+
+4. From the Bucket access tab, select the Cross-Origin Resource Sharing (CORS) accordion.
+
+5. Select the Enable CORS checkbox.
+
+6. Paste the CORS configuration XML into the text box.
+
+7. Select Save changes.
+
+820
+
+Modify CORS setting Steps
+
+1. Update the CORS configuration XML in the text box, or select Clear to start over.
+
+2. Select Save changes.
+
+Disable CORS setting
+
+Steps
+
+1. Clear the Enable CORS checkbox.
+
+2. Select Save changes.
+
+Delete objects in bucket
+
+You can use the Tenant Manager to delete the objects in one or more buckets. Considerations and requirements
+
+Before performing these steps, note the following:

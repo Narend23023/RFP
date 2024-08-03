@@ -1,0 +1,113 @@
+Reingest each object into the source bucket.
+
+Use the Grid Management private API, as described. Steps
+
+1. From the top of the Grid Manager, select the help icon and select API documentation.
+
+2. Select Go to private API documentation.
+
+The StorageGRID API endpoints that are marked "Private" are subject to change without notice. StorageGRID private endpoints also ignore the API version of the request.
+
+3. In the cross-grid-replication-advanced section, select the following endpoint: POST /private/cross-grid-replication-retry-failed
+
+4. Select Try it out.
+
+5. In the body text box, replace the example entry for versionID with a version ID from the audit.log that corresponds to a failed cross-grid-replication request.
+
+Be sure to retain the double quotes around the string.
+
+6. Select Execute.
+
+7. Confirm that the server response code is 204, indicating that the object or delete marker has been marked as pending for cross-grid replication to the other grid.
+
+Pending means the cross-grid replication request has been added to the internal queue for processing. Monitor replication retries
+
+You should monitor the replication retry operations to make sure they complete.
+
+It might take several hours or longer for an object or delete marker to be replicated to the other grid.
+
+You can monitor retry operations in either of two ways:
+
+Use an S3 HeadObject or GetObject request. The response includes the StorageGRID-specific x-ntap- sg-cgr-replication-status response header, which will have one of the following values:
+
+387
+
+Grid
+
+Replication status Source
+
+SUCCESS: The replication was successful.
+
+PENDING: The object hasn’t been replicated yet.
+
+FAILURE: The replication failed with a permanent failure. A user must resolve the error.
+
+Destination
+
+REPLICA: The object was replicated from the source grid.
+
+Use the Grid Management private API, as described. Steps
+
+1. In the cross-grid-replication-advanced section of the private API documentation, select the following endpoint:
+
+GET /private/cross-grid-replication-object-status/{id}
+
+2. Select Try it out.
+
+3. In the Parameter section, enter the version ID you used in the cross-grid-replication-retry- failed request.
+
+4. Select Execute.
+
+5. Confirm that the server response code is 200.
+
+6. Review the replication status, which will be one of the following:
+
+PENDING: The object hasn’t been replicated yet. ◦ COMPLETED: The replication was successful. ◦ FAILED: The replication failed with a permanent failure. A user must resolve the error. Manage security
+
+Manage security: Overview
+
+You can configure various security settings from the Grid Manager to help secure your StorageGRID system.
+
+Manage encryption
+
+StorageGRID provides several options for encrypting data. You should review the available encryption methods to determine which ones meet your data-protection requirements. Manage certificates
+
+You can configure and manage the server certificates used for HTTP connections or the client certificates used to authenticate a client or user identity to the server.
+
+Configure key management servers
+
+Using a key management server lets you protect StorageGRID data even if an appliance is removed from the data center. After the appliance volumes are encrypted, you can’t access any data on the appliance unless the
+
+388
+
+node can communicate with the KMS. 2. Select Try it out.
+
+3. In the Parameter section, enter the version ID you used in the cross-grid-replication-retry- failed request.
+
+4. Select Execute.
+
+5. Confirm that the server response code is 200.
+
+6. Review the replication status, which will be one of the following:
+
+PENDING: The object hasn’t been replicated yet. ◦ COMPLETED: The replication was successful. ◦ FAILED: The replication failed with a permanent failure. A user must resolve the error. Manage security
+
+Manage security: Overview
+
+You can configure various security settings from the Grid Manager to help secure your StorageGRID system.
+
+Manage encryption
+
+StorageGRID provides several options for encrypting data. You should review the available encryption methods to determine which ones meet your data-protection requirements. Manage certificates
+
+You can configure and manage the server certificates used for HTTP connections or the client certificates used to authenticate a client or user identity to the server.
+
+Configure key management servers
+
+Using a key management server lets you protect StorageGRID data even if an appliance is removed from the data center. After the appliance volumes are encrypted, you can’t access any data on the appliance unless the
+
+388
+
+node can communicate with the KMS.
+
+To use encryption key management, you must enable the Node Encryption setting for each appliance during installation, before the appliance is added to the grid. Manage proxy settings

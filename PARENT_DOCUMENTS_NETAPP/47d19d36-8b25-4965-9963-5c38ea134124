@@ -1,0 +1,79 @@
+1448
+
+Be careful when choosing to decommission more than one disconnected grid node at a time, especially if you are selecting multiple disconnected Storage Nodes. If you have more than one disconnected Storage Node that you can’t recover, contact technical support to determine the best course of action.
+
+3. Enter the provisioning passphrase.
+
+The Start Decommission button is enabled.
+
+4. Click Start Decommission. A warning appears, indicating that you have selected a disconnected node and that object data will be lost if the node has the only copy of an object.
+
+5. Review the list of nodes, and click OK.
+
+The decommission procedure starts, and the progress is displayed for each node. During the procedure, a new Recovery Package is generated containing the grid configuration change. 1. Unless you are decommissioning an Archive Node (which must be disconnected), attempt to bring any disconnected grid nodes back online or recover them.
+
+See Grid node recovery procedures for instructions.
+
+2. If you are unable to recover a disconnected grid node and you want to decommission it while it is disconnected, select the checkbox for that node.
+
+If your grid contains multiple disconnected nodes, the software requires you to decommission them all at the same time, which increases the potential for unexpected results.
+
+1448
+
+Be careful when choosing to decommission more than one disconnected grid node at a time, especially if you are selecting multiple disconnected Storage Nodes. If you have more than one disconnected Storage Node that you can’t recover, contact technical support to determine the best course of action.
+
+3. Enter the provisioning passphrase.
+
+The Start Decommission button is enabled.
+
+4. Click Start Decommission. A warning appears, indicating that you have selected a disconnected node and that object data will be lost if the node has the only copy of an object.
+
+5. Review the list of nodes, and click OK.
+
+The decommission procedure starts, and the progress is displayed for each node. During the procedure, a new Recovery Package is generated containing the grid configuration change.
+
+6. As soon as the new Recovery Package is available, click the link or select MAINTENANCE > System > Recovery package to access the Recovery Package page. Then, download the .zip file.
+
+See the instructions for downloading the Recovery Package.
+
+Download the Recovery Package as soon as possible to ensure you can recover your grid if something goes wrong during the decommission procedure.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system. 7. Periodically monitor the Decommission page to ensure that all selected nodes are decommissioned successfully.
+
+Storage Nodes can take days or weeks to decommission. When all tasks are complete, the node selection list is redisplayed with a success message. If you decommissioned a disconnected Storage Node, an information message indicates that the repair jobs have been started.
+
+8. After the nodes have shut down automatically as part of the decommission procedure, remove any remaining virtual machines or other resources that are associated with the decommissioned node.
+
+Don’t perform this step until the nodes have shut down automatically.
+
+9. If you are decommissioning a Storage Node, monitor the status of the replicated data and erasure-coded (EC) data repair jobs that are automatically started during the decommissioning process.
+
+1449
+
+Replicated data To get an estimated percent completion for the replicated repair, add the show-replicated- repair-status option to the repair-data command.
+
+repair-data show-replicated-repair-status
+
+To determine if repairs are complete:
+
+1. Select NODES > Storage Node being repaired > ILM.
+
+2. Review the attributes in the Evaluation section. When repairs are complete, the Awaiting - All attribute indicates 0 objects.
+
+To monitor the repair in more detail:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select grid > Storage Node being repaired > LDR > Data Store.
+
+3. Use a combination of the following attributes to determine, as well as possible, if replicated repairs are complete.
+
+Cassandra inconsistencies might be present, and failed repairs aren’t tracked.
+
+▪ Repairs Attempted (XRPA): Use this attribute to track the progress of replicated repairs. This attribute increases each time a Storage Node tries to repair a high-risk object. When this attribute does not increase for a period longer than the current scan period (provided by the Scan Period — Estimated attribute), it means that ILM scanning found no high-risk objects that need to be repaired on any nodes.
+
+High-risk objects are objects that are at risk of being completely lost. This does not include objects that don’t satisfy their ILM configuration. repair-data show-replicated-repair-status
+
+To determine if repairs are complete:
+
+1. Select NODES > Storage Node being repaired > ILM.

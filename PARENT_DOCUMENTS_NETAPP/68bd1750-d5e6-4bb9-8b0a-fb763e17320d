@@ -1,0 +1,101 @@
+You have the Maintenance or Root access permission. About this task
+
+Use this procedure if you need to reboot multiple nodes at the same time. For example, you can use this procedure after changing the FIPS mode for the grid’s TLS and SSH security policy. When the FIPS mode changes, you must reboot all nodes to put the change into effect.
+
+If you only need to reboot one node, you can reboot the node from the Tasks tab.
+
+When StorageGRID reboots grid nodes, it issues the reboot command on each node, which causes the node to shut down and restart. All services are restarted automatically.
+
+Rebooting a VMware node reboots the virtual machine.
+
+1496
+
+• Rebooting a Linux node reboots the container.
+
+Rebooting a StorageGRID Appliance node reboots the compute controller.
+
+The rolling reboot procedure can reboot multiple nodes at the same time, with these exceptions:
+
+Two nodes of the same type will not be rebooted at the same time.
+
+Gateway Nodes and Admin Nodes will not be rebooted at the same time. Storage Nodes and Archive Nodes will not be rebooted at the same time.
+
+Instead, these nodes are rebooted sequentially to ensure that HA groups, object data, and critical node services always remain available.
+
+When you reboot the primary Admin Node, your browser temporarily loses access to the Grid Manager, so you can no longer monitor the procedure. For this reason, the primary Admin Node is rebooted last.
+
+Perform a rolling reboot
+
+You select the nodes you want to reboot, review your selections, start the reboot procedure, and monitor the progress. Select nodes
+
+As your first step, access the Rolling reboot page and select the nodes you want to reboot.
+
+Steps
+
+1. Select MAINTENANCE > Tasks > Rolling reboot.
+
+2. Review the connection state and alert icons in the Node name column.
+
+You can’t reboot a node if it is disconnected from the grid. The checkboxes are disabled for nodes with these icons:
+
+or
+
+.
+
+3. If any nodes have active alerts, review the list of alerts in the Alert summary column.
+
+To see all current alerts for a node, you can also select the Nodes > Overview tab.
+
+4. Optionally, perform the recommended actions to resolve any current alerts.
+
+5. Optionally, if all nodes are connected and you want to reboot all of them, select the checkbox in the table header and select Select all. Otherwise, select each node you want to reboot.
+
+You can use the table’s filter options to view subsets of nodes. For example, you can view and select only Storage Nodes or all nodes at a certain site.
+
+6. Select Review selection. Review selection
+
+In this step, you can determine how long the total reboot procedure might take and confirm that you selected the correct nodes.
+
+1. On the Review selection page, review the Summary, which indicates how many nodes will be rebooted and the estimated total time for all nodes to reboot.
+
+1497
+
+2. Optionally, to remove a specific node from the reboot list, select Remove.
+
+3. Optionally, to add more nodes, select Previous step, select the additional nodes, and select Review selection.
+
+4. When you are ready to start the rolling reboot procedure for all selected nodes, select Reboot nodes.
+
+5. If you selected to reboot the primary Admin Node, read the information message, and select Yes.
+
+The primary Admin Node will be the last node to reboot. While this node is rebooting, your browser’s connection will be lost. When the primary Admin Node is available again, you must reload the Rolling reboot page. Monitor a rolling reboot
+
+While the rolling reboot procedure is running, you can monitor it from the primary Admin Node.
+
+Steps
+
+1. Review the overall progress of the operation, which includes the following information:
+
+Number of nodes rebooted ◦ Number of nodes in process of being rebooted ◦ Number of nodes that remain to be rebooted
+
+2. Review the table for each type of node. In this step, you can determine how long the total reboot procedure might take and confirm that you selected the correct nodes.
+
+1. On the Review selection page, review the Summary, which indicates how many nodes will be rebooted and the estimated total time for all nodes to reboot.
+
+1497
+
+2. Optionally, to remove a specific node from the reboot list, select Remove.
+
+3. Optionally, to add more nodes, select Previous step, select the additional nodes, and select Review selection.
+
+4. When you are ready to start the rolling reboot procedure for all selected nodes, select Reboot nodes.
+
+5. If you selected to reboot the primary Admin Node, read the information message, and select Yes.
+
+The primary Admin Node will be the last node to reboot. While this node is rebooting, your browser’s connection will be lost. When the primary Admin Node is available again, you must reload the Rolling reboot page. Monitor a rolling reboot
+
+While the rolling reboot procedure is running, you can monitor it from the primary Admin Node.
+
+Steps
+
+1. Review the overall progress of the operation, which includes the following information:

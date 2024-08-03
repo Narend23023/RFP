@@ -1,0 +1,133 @@
+b. Select ACCESS MANAGEMENT > Identity federation.
+
+c. Confirm that the Enable identity federation checkbox is not selected.
+
+d. If it is, confirm that any federated groups that might be in use for this tenant account are no longer
+
+required, clear the checkbox, and select Save.
+
+2. Confirm that a federated user can access the Grid Manager: a. From Grid Manager, select CONFIGURATION > Access control > Admin groups.
+
+b. Ensure that at least one federated group has been imported from the Active Directory identity source
+
+and that it has been assigned the Root access permission.
+
+c. Sign out.
+
+d. Confirm you can sign back in to the Grid Manager as a user in the federated group.
+
+3. If there are existing tenant accounts, confirm that a federated user who has Root access permission can sign in: a. From the Grid Manager, select TENANTS.
+
+b. Select the tenant account, and select Actions > Edit.
+
+c. On the Enter details tab, select Continue.
+
+d. If the Use own identity source checkbox is selected, uncheck the box and select Save.
+
+330
+
+The Tenant page appears.
+
+e. Select the tenant account, select Sign in, and sign in to the tenant account as the local root user. f. From the Tenant Manager, select ACCESS MANAGEMENT > Groups.
+
+g. Ensure that at least one federated group from the Grid Manager has been assigned the Root access
+
+permission for this tenant.
+
+h. Sign out.
+
+i. Confirm you can sign back in to the tenant as a user in the federated group.
+
+Related information
+
+Requirements and considerations for single sign-on
+
+Manage admin groups
+
+Use a tenant account Use sandbox mode
+
+You can use sandbox mode to configure and test single sign-on (SSO) before enabling it for all StorageGRID users. After SSO has been enabled, you can return to sandbox mode whenever you need to change or retest the configuration.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission.
+
+You have configured identity federation for your StorageGRID system.
+
+331
+
+• For the identity federation LDAP service type, you selected either Active Directory or Azure, based on the
+
+SSO identity provider you plan to use. Configured LDAP service type
+
+Options for SSO identity provider
+
+Active Directory
+
+Active Directory
+
+Azure
+
+PingFederate
+
+Azure
+
+Azure About this task
+
+When SSO is enabled and a user attempts to sign in to an Admin Node, StorageGRID sends an authentication request to the SSO identity provider. In turn, the SSO identity provider sends an authentication response back to StorageGRID, indicating whether the authentication request was successful. For successful requests:
+
+The response from Active Directory or PingFederate includes a universally unique identifier (UUID) for the user.
+
+The response from Azure includes a User Principal Name (UPN). Manage admin groups
+
+Use a tenant account Use sandbox mode
+
+You can use sandbox mode to configure and test single sign-on (SSO) before enabling it for all StorageGRID users. After SSO has been enabled, you can return to sandbox mode whenever you need to change or retest the configuration.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission.
+
+You have configured identity federation for your StorageGRID system.
+
+331
+
+• For the identity federation LDAP service type, you selected either Active Directory or Azure, based on the
+
+SSO identity provider you plan to use. Configured LDAP service type
+
+Options for SSO identity provider
+
+Active Directory
+
+Active Directory
+
+Azure
+
+PingFederate
+
+Azure
+
+Azure About this task
+
+When SSO is enabled and a user attempts to sign in to an Admin Node, StorageGRID sends an authentication request to the SSO identity provider. In turn, the SSO identity provider sends an authentication response back to StorageGRID, indicating whether the authentication request was successful. For successful requests:
+
+The response from Active Directory or PingFederate includes a universally unique identifier (UUID) for the user.
+
+The response from Azure includes a User Principal Name (UPN).
+
+To allow StorageGRID (the service provider) and the SSO identity provider to communicate securely about user authentication requests, you must configure certain settings in StorageGRID. Next, you must use the SSO identity provider’s software to create a relying party trust (AD FS), Enterprise Application (Azure) or Service Provider (PingFederate) for each Admin Node. Finally, you must return to StorageGRID to enable SSO. Sandbox mode makes it easy to perform this back-and-forth configuration and to test all of your settings before you enable SSO. When you are using sandbox mode, users can’t sign in using SSO.
+
+Access sandbox mode
+
+Steps
+
+1. Select CONFIGURATION > Access control > Single sign-on.
+
+The Single Sign-on page appears, with the Disabled option selected.
+
+332

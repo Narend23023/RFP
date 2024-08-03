@@ -1,0 +1,65 @@
+If the StorageGRID node uses storage assigned from a NetApp ONTAP system, confirm that the volume does not have a FabricPool tiering policy enabled. Disabling FabricPool tiering for volumes used with StorageGRID nodes simplifies troubleshooting and storage operations.
+
+Never use FabricPool to tier any data related to StorageGRID back to StorageGRID itself. Tiering StorageGRID data back to StorageGRID increases troubleshooting and operational complexity. Restore grid nodes to the host
+
+To restore a failed grid node to a new Linux host, you perform these steps to restore the node configuration file.
+
+1. Restore and validate the node by restoring the node configuration file. For a new install, you create a node configuration file for each grid node to be installed on a host. When restoring a grid node to a replacement host, you restore or replace the node configuration file for any failed grid nodes.
+
+2. Start the StorageGRID host service.
+
+3. As needed, recover any nodes that fail to start.
+
+If any block storage volumes were preserved from the previous host, you might have to perform additional recovery procedures. The commands in this section help you determine which additional procedures are required.
+
+Restore and validate grid nodes
+
+You must restore the grid configuration files for any failed grid nodes, and then validate the grid configuration files and resolve any errors. About this task
+
+1640
+
+You can import any grid node that should be present on the host, as long as its /var/local volume was not lost as a result of the failure of the previous host. For example, the /var/local volume might still exist if you used shared storage for StorageGRID system data volumes, as described in the StorageGRID installation instructions for your Linux operating system. Importing the node restores its node configuration file to the host.
+
+If it is not possible to import missing nodes, you must re-create their grid configuration files.
+
+You must then validate the grid configuration file, and resolve any networking or storage issues that might occur before going on to restart StorageGRID. When you re-create the configuration file for a node, you must use the same name for the replacement node that was used for the node you are recovering.
+
+See the installation instructions for more information about the location of the /var/local volume for a node. Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian
+
+Steps
+
+1. At the command line of the recovered host, list all currently configured StorageGRID nodes:sudo storagegrid node list
+
+If no grid nodes are configured, there will be no output. If some grid nodes are configured, expect output in the following format: Name Metadata-Volume ================================================================ dc1-adm1 /dev/mapper/sgws-adm1-var-local dc1-gw1 /dev/mapper/sgws-gw1-var-local dc1-sn1 /dev/mapper/sgws-sn1-var-local dc1-arc1 /dev/mapper/sgws-arc1-var-local If it is not possible to import missing nodes, you must re-create their grid configuration files.
+
+You must then validate the grid configuration file, and resolve any networking or storage issues that might occur before going on to restart StorageGRID. When you re-create the configuration file for a node, you must use the same name for the replacement node that was used for the node you are recovering.
+
+See the installation instructions for more information about the location of the /var/local volume for a node. Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian
+
+Steps
+
+1. At the command line of the recovered host, list all currently configured StorageGRID nodes:sudo storagegrid node list
+
+If no grid nodes are configured, there will be no output. If some grid nodes are configured, expect output in the following format: Name Metadata-Volume ================================================================ dc1-adm1 /dev/mapper/sgws-adm1-var-local dc1-gw1 /dev/mapper/sgws-gw1-var-local dc1-sn1 /dev/mapper/sgws-sn1-var-local dc1-arc1 /dev/mapper/sgws-arc1-var-local
+
+If some or all of the grid nodes that should be configured on the host aren’t listed, you need to restore the missing grid nodes.
+
+2. To import grid nodes that have a /var/local volume:
+
+a. Run the following command for each node you want to import:sudo storagegrid node import node-var-local-volume-path
+
+The storagegrid node import command succeeds only if the target node was shut down cleanly on the host on which it last ran. If that is not the case, you will observe an error similar to the following:
+
+This node (node-name) appears to be owned by another host (UUID host-uuid).
+
+Use the --force flag if you are sure import is safe.
+
+b. If you see the error about the node being owned by another host, run the command again with the
+
+--force flag to complete the import:sudo storagegrid --force node import node-var- local-volume-path
+
+1641

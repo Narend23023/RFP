@@ -1,0 +1,92 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> Sometimes a policy can grant permissions that are dangerous for security or dangerous for continued
+operations, such as locking out the root user of the account. The StorageGRID S3 REST API implementation is
+less restrictive during policy validation than Amazon, but equally strict during policy evaluation.<br>
+                       <b>Bounding box:</b> x1=134, y1=298, x2=1566, y2=1881
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Policy description</td>
+      <td>Policy type</td>
+      <td>Amazon behavior</td>
+      <td>StorageGRID behavior</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Deny self any permissions to\nthe root account</td>
+      <td>Bucket</td>
+      <td>Valid and enforced, but root\nuser account retains\npermission for all S3 bucket\npolicy operations</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Deny self any permissions to\nuser/group</td>
+      <td>Group</td>
+      <td>Valid and enforced</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Allow a foreign account group\nany permission</td>
+      <td>Bucket</td>
+      <td>Invalid principal</td>
+      <td>Valid, but permissions for all\nS3 bucket policy operations\nreturn a 405 Method Not\nAllowed error when allowed\nby a policy</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Allow a foreign account root\nor user any permission</td>
+      <td>Bucket</td>
+      <td>Valid, but permissions for all\nS3 bucket policy operations\nreturn a 405 Method Not\nAllowed error when allowed\nby a policy</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Allow everyone permissions\nto all actions</td>
+      <td>Bucket</td>
+      <td>Valid, but permissions for all\nS3 bucket policy operations\nreturn a 405 Method Not\nAllowed error for the foreign\naccount root and users</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Deny everyone permissions to\nall actions</td>
+      <td>Bucket</td>
+      <td>Valid and enforced, but root\nuser account retains\npermission for all S3 bucket\npolicy operations</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Principal is a non-existent\nuser or group</td>
+      <td>Bucket</td>
+      <td>Invalid principal</td>
+      <td>Valid</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Resource is a non-existent S3\nbucket</td>
+      <td>Group</td>
+      <td>Valid</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Principal is a local group</td>
+      <td>Bucket</td>
+      <td>Invalid principal</td>
+      <td>Valid</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

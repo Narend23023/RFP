@@ -1,0 +1,55 @@
+If you need to recover any node after starting the site decommission procedure, you must contact support. You can’t decommission more than one site at a time.
+
+If the site includes one or more Admin Nodes and single sign-on (SSO) is enabled for your StorageGRID
+
+1456
+
+or
+
+)
+
+system, you must remove all relying party trusts for the site from Active Directory Federation Services (AD FS). Requirements for information lifecycle management (ILM)
+
+As part of removing a site, you must update your ILM configuration. The Decommission Site wizard guides you through a number of prerequisite steps to ensure the following:
+
+The site is not referred to by any ILM policy. If it is, you must edit the policies or create and activate policies with new ILM rules.
+
+No ILM rules refer to the site, even if those rules aren’t used in any policy. You must delete or edit all rules that refer to the site. If you need to recover any node after starting the site decommission procedure, you must contact support. You can’t decommission more than one site at a time.
+
+If the site includes one or more Admin Nodes and single sign-on (SSO) is enabled for your StorageGRID
+
+1456
+
+or
+
+)
+
+system, you must remove all relying party trusts for the site from Active Directory Federation Services (AD FS). Requirements for information lifecycle management (ILM)
+
+As part of removing a site, you must update your ILM configuration. The Decommission Site wizard guides you through a number of prerequisite steps to ensure the following:
+
+The site is not referred to by any ILM policy. If it is, you must edit the policies or create and activate policies with new ILM rules.
+
+No ILM rules refer to the site, even if those rules aren’t used in any policy. You must delete or edit all rules that refer to the site.
+
+When StorageGRID decommissions the site, it will automatically deactivate any unused erasure-coding profiles that refer to the site, and it will automatically delete any unused storage pools that refer to the site. If the All Storage Nodes storage pool exists (StorageGRID 11.6 and earlier), it is removed because it uses all sites. Before you can remove a site, you might be required to create new ILM rules and activate a new ILM policy. These instructions assume that you have a good understanding of how ILM works and that you are familiar with creating storage pools, erasure-coding profiles, ILM rules, and simulating and activating an ILM policy. See Manage objects with ILM. Considerations for the object data at a connected site
+
+If you are performing a connected site decommission, you must decide what to do with existing object data at the site when you create new ILM rules and a new ILM policy. You can do either or both of the following:
+
+Move object data from the selected site to one or more other sites in your grid.
+
+Example for moving data: Suppose you want to decommission a site in Raleigh because you added a new site in Sunnyvale. In this example, you want to move all object data from the old site to the new site. Before updating your ILM rules and ILM policies, you must review the capacity at both sites. You must ensure that the Sunnyvale site has enough capacity to accommodate the object data from the Raleigh site and that adequate capacity will remain in Sunnyvale for future growth. To ensure that adequate capacity is available, you might need to expand a grid by adding storage volumes or Storage Nodes to an existing site or adding a new site before you perform this procedure.
+
+Delete object copies from the selected site.
+
+Example for deleting data: Suppose you currently use a 3-copy ILM rule to replicate object data across three sites. Before decommissioning a site, you can create an equivalent 2-copy ILM rule to store data at only two sites. When you activate a new ILM policy that uses the 2-copy rule, StorageGRID deletes the copies from the third site because they no longer satisfy ILM requirements. However, the object data will still be protected and the capacity of the two remaining sites will stay the same. Never create a single-copy ILM rule to accommodate the removal of a site. An ILM rule that creates only one replicated copy for any time period puts data at risk of permanent loss. If only one replicated copy of an object exists, that object is lost if a Storage Node fails or has a significant error. You also temporarily lose access to the object during maintenance procedures such as upgrades.
+
+1457
+
+Additional requirements for a connected site decommission
+
+Before StorageGRID can remove a connected site, you must ensure the following:
+
+All nodes in your StorageGRID system must have a Connection State of Connected ( nodes can have active alerts. ); however, the
+
+You can complete Steps 1-4 of the Decommission Site wizard if one or more nodes are disconnected. However, you can’t complete Step 5 of the wizard, which starts the decommission process, unless all nodes are connected. 1457

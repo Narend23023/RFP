@@ -1,0 +1,59 @@
+1457
+
+Additional requirements for a connected site decommission
+
+Before StorageGRID can remove a connected site, you must ensure the following:
+
+All nodes in your StorageGRID system must have a Connection State of Connected ( nodes can have active alerts. ); however, the
+
+You can complete Steps 1-4 of the Decommission Site wizard if one or more nodes are disconnected. However, you can’t complete Step 5 of the wizard, which starts the decommission process, unless all nodes are connected. 1457
+
+Additional requirements for a connected site decommission
+
+Before StorageGRID can remove a connected site, you must ensure the following:
+
+All nodes in your StorageGRID system must have a Connection State of Connected ( nodes can have active alerts. ); however, the
+
+You can complete Steps 1-4 of the Decommission Site wizard if one or more nodes are disconnected. However, you can’t complete Step 5 of the wizard, which starts the decommission process, unless all nodes are connected.
+
+If the site you plan to remove contains a Gateway Node or an Admin Node that is used for load balancing, you might need to expand a grid to add an equivalent new node at another site. Be sure clients can connect to the replacement node before starting the site decommission procedure. If the site you plan to remove contains any Gateway Node or Admin Nodes that are in an high availability (HA) group, you can complete Steps 1-4 of the Decommission Site wizard. However, you can’t complete Step 5 of the wizard, which starts the decommission process, until you remove these nodes from all HA groups. If existing clients connect to an HA group that includes nodes from the site, you must ensure they can continue to connect to StorageGRID after the site is removed.
+
+If clients connect directly to Storage Nodes at the site you are planning to remove, you must ensure that they can connect to Storage Nodes at other sites before starting the site decommission procedure.
+
+You must provide sufficient space on the remaining sites to accommodate any object data that will be moved because of changes to any active ILM policy. In some cases, you might need to expand a grid by adding Storage Nodes, storage volumes, or new sites before you can complete a connected site decommission. You must allow adequate time for the decommission procedure to complete. StorageGRID ILM processes might take days, weeks, or even months to move or delete object data from the site before the site can be decommissioned.
+
+Moving or deleting object data from a site might take days, weeks, or even months, depending on the amount of data at the site, the load on your system, network latencies, and the nature of the required ILM changes.
+
+Whenever possible, you should complete Steps 1-4 of the Decommission Site wizard as early as you can. The decommission procedure will complete more quickly and with fewer disruptions and performance impacts if you allow data to be moved from the site before starting the actual decommission procedure (by selecting Start Decommission in Step 5 of the wizard). Additional requirements for a disconnected site decommission
+
+Before StorageGRID can remove a disconnected site, you must ensure the following:
+
+You have contacted your NetApp account representative. NetApp will review your requirements before enabling all steps in the Decommission Site wizard.
+
+You should not attempt a disconnected site decommission if you believe it might be possible to recover the site or to recover any object data from the site. See How technical support recovers a site.
+
+All nodes at the site must have a Connection State of one of the following:
+
+1458
+
+◦
+
+Unknown ( unexpectedly down. For example, a service on the node might be stopped, or the node might have lost its network connection because of a power failure or unexpected outage.
+
+): For an unknown reason, a node is disconnected or services on the node are
+
+Administratively Down ( example, the node or services on the node have been gracefully shut down. ): The node is not connected to the grid for an expected reason. For
+
+All nodes at all other sites must have a Connection State of Connected ( can have active alerts. ); however, these other nodes
+
+You must understand that you will no longer be able to use StorageGRID to view or retrieve any object data that was stored at the site. When StorageGRID performs this procedure, it makes no attempt to preserve any data from the disconnected site.
+
+If your ILM rules and policy were designed to protect against the loss of a single site, copies of your objects still exist on the remaining sites.
+
+You must understand that if the site contained the only copy of an object, the object is lost and can’t be retrieved.
+
+Considerations for consistency when you remove a site All nodes at the site must have a Connection State of one of the following:
+
+1458
+
+◦

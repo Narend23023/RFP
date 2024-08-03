@@ -1,0 +1,109 @@
+Client Network
+
+Optional. The Client Network is an open network typically used to provide access to S3 and Swift client applications, so the Grid Network can be isolated and secured. The Client Network can communicate with any subnet reachable through the local gateway.
+
+513
+
+Guidelines
+
+Each StorageGRID node requires a dedicated network interface, IP address, subnet mask, and gateway for each network it is assigned to.
+
+A grid node can’t have more than one interface on a network.
+
+A single gateway, per network, per grid node is supported, and it must be on the same subnet as the node. You can implement more complex routing in the gateway, if required.
+
+On each node, each network maps to a specific network interface. Network
+
+Interface name
+
+Grid
+
+eth0
+
+Admin (optional)
+
+eth1
+
+Client (optional)
+
+eth2
+
+If the node is connected to a StorageGRID appliance, specific ports are used for each network. For details, see the installation instructions for your appliance.
+
+The default route is generated automatically, per node. If eth2 is enabled, then 0.0.0.0/0 uses the Client Network on eth2. If eth2 is not enabled, then 0.0.0.0/0 uses the Grid Network on eth0.
+
+The Client Network does not become operational until the grid node has joined the grid
+
+The Admin Network can be configured during grid node deployment to allow access to the installation user interface before the grid is fully installed. Optional interfaces 513
+
+Guidelines
+
+Each StorageGRID node requires a dedicated network interface, IP address, subnet mask, and gateway for each network it is assigned to.
+
+A grid node can’t have more than one interface on a network.
+
+A single gateway, per network, per grid node is supported, and it must be on the same subnet as the node. You can implement more complex routing in the gateway, if required.
+
+On each node, each network maps to a specific network interface. Network
+
+Interface name
+
+Grid
+
+eth0
+
+Admin (optional)
+
+eth1
+
+Client (optional)
+
+eth2
+
+If the node is connected to a StorageGRID appliance, specific ports are used for each network. For details, see the installation instructions for your appliance.
+
+The default route is generated automatically, per node. If eth2 is enabled, then 0.0.0.0/0 uses the Client Network on eth2. If eth2 is not enabled, then 0.0.0.0/0 uses the Grid Network on eth0.
+
+The Client Network does not become operational until the grid node has joined the grid
+
+The Admin Network can be configured during grid node deployment to allow access to the installation user interface before the grid is fully installed. Optional interfaces
+
+Optionally, you can add extra interfaces to a node. For example, you might want to add a trunk interface to an Admin or Gateway Node, so you can use VLAN interfaces to segregate the traffic belonging to different applications or tenants. Or, you might want to add an access interface to use in a high availability (HA) group.
+
+To add trunk or access interfaces, see the following:
+
+VMware (after installing the node): VMware: Add trunk or access interfaces to a node
+
+Red Hat Enterprise Linux (before installing the node): Create node configuration files ◦ Ubuntu or Debian (before installing the node): Create node configuration files ◦ RHEL, Ubuntu, or Debian (after installing the node): Linux: Add trunk or access interfaces to a node View IP addresses
+
+You can view the IP address for each grid node in your StorageGRID system. You can then use this IP address to log in to the grid node at the command line and perform various maintenance procedures.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. About this task
+
+514
+
+For information about changing IP addresses, see Configure IP addresses.
+
+Steps
+
+1. Select NODES > grid node > Overview.
+
+2. Select Show more to the right of the IP Addresses title.
+
+The IP addresses for that grid node are listed in a table. Configure VLAN interfaces
+
+You can create virtual LAN (VLAN) interfaces on Admin Nodes and Gateway Nodes and use them in HA groups and load balancer endpoints to isolate and partition traffic for security, flexibility, and performance.
+
+515
+
+Considerations for VLAN interfaces
+
+You create a VLAN interface by entering a VLAN ID and choosing a parent interface on one or more nodes.
+
+A parent interface must be configured as a trunk interface at the switch.
+
+A parent interface can be the Grid Network (eth0), the Client Network (eth2), or an additional trunk interface for the VM or bare-metal host (for example, ens256).
+
+For each VLAN interface, you can select only one parent interface for a given node. For example, you can’t use both the Grid Network interface and the Client Network interface on the same Gateway Node as the parent interface for the same VLAN. If the VLAN interface is for Admin Node traffic, which includes traffic related to the Grid Manager and the Tenant Manager, select interfaces on Admin Nodes only.

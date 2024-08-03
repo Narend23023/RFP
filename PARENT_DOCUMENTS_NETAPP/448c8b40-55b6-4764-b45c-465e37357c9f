@@ -1,0 +1,77 @@
+c. Select Configure Networking > IP Configuration and configure the enabled networks.
+
+d. Return to the Home page and click Start Installation.
+
+e. In the Grid Manager: If the node is listed in the Approved Nodes table, remove the node.
+
+f. Remove the node from the Pending Nodes table.
+
+g. Wait for the node to reappear in the Pending Nodes list.
+
+h. Confirm that you can configure the appropriate networks. They should already be populated with the
+
+information you provided on the IP Configuration page of the Appliance Installer.
+
+For additional information, see the installation instructions for your appliance.
+
+8. Click Save. The grid node entry moves to the Approved Nodes list.
+
+126
+
+9. Repeat these steps for each pending grid node you want to approve.
+
+You must approve all nodes that you want in the grid. However, you can return to this page at any time before you click Install on the Summary page. You can modify the properties of an approved grid node by selecting its radio button and clicking Edit.
+
+10. When you are done approving grid nodes, click Next. Specify Network Time Protocol server information
+
+You must specify the Network Time Protocol (NTP) configuration information for the StorageGRID system, so that operations performed on separate servers can be kept synchronized. About this task
+
+You must specify IPv4 addresses for the NTP servers.
+
+127
+
+You must specify external NTP servers. The specified NTP servers must use the NTP protocol.
+
+You must specify four NTP server references of Stratum 3 or better to prevent issues with time drift.
+
+When specifying the external NTP source for a production-level StorageGRID installation, don’t use the Windows Time (W32Time) service on a version of Windows earlier than Windows Server 2016. The time service on earlier versions of Windows is not sufficiently accurate and is not supported by Microsoft for use in high-accuracy environments, such as StorageGRID.
+
+Support boundary to configure the Windows Time service for high-accuracy environments
+
+The external NTP servers are used by the nodes to which you previously assigned Primary NTP roles. Make sure that at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid. Steps
+
+1. Specify the IPv4 addresses for at least four NTP servers in the Server 1 to Server 4 text boxes.
+
+2. If necessary, select the plus sign next to the last entry to add additional server entries.
+
+3. Select Next.
+
+Specify DNS server information
+
+You must specify DNS information for your StorageGRID system, so that you can access external servers using hostnames instead of IP addresses. About this task
+
+Specifying DNS server information allows you to use Fully Qualified Domain Name (FQDN) hostnames rather than IP addresses for email notifications and AutoSupport.
+
+128 Support boundary to configure the Windows Time service for high-accuracy environments
+
+The external NTP servers are used by the nodes to which you previously assigned Primary NTP roles. Make sure that at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid. Steps
+
+1. Specify the IPv4 addresses for at least four NTP servers in the Server 1 to Server 4 text boxes.
+
+2. If necessary, select the plus sign next to the last entry to add additional server entries.
+
+3. Select Next.
+
+Specify DNS server information
+
+You must specify DNS information for your StorageGRID system, so that you can access external servers using hostnames instead of IP addresses. About this task
+
+Specifying DNS server information allows you to use Fully Qualified Domain Name (FQDN) hostnames rather than IP addresses for email notifications and AutoSupport.
+
+128
+
+To ensure proper operation, specify two or three DNS servers. If you specify more than three, it is possible that only three will be used because of known OS limitations on some platforms. If you have routing restrictions in your environment, you can customize the DNS server list for individual nodes (typically all nodes at a site) to use a different set of up to three DNS servers.
+
+If possible, use DNS servers that each site can access locally to ensure that an islanded site can resolve the FQDNs for external destinations.
+
+If the DNS server information is omitted or incorrectly configured, a DNST alarm is triggered on each grid node’s SSM service. The alarm clears when DNS is configured correctly and the new server information has reached all grid nodes. Steps

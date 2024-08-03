@@ -1,0 +1,99 @@
+The total amount of object storage space remaining. Calculated by adding together the amount of available space for all object stores on the Storage Node. storagegrid_swift_data_transfers_bytes_ingested
+
+The total amount of data ingested from Swift clients to this Storage Node since the attribute was last reset.
+
+storagegrid_swift_data_transfers_bytes_retrieved
+
+The total amount of data retrieved by Swift clients from this Storage Node since the attribute was last reset. storagegrid_swift_operations_failed An estimate of the total size of replicated and erasure-coded object data on the Storage Node. storagegrid_storage_utilization_metadata_allowed_bytes
+
+The total space on volume 0 of each Storage Node that is allowed for object metadata. This value is always less than the actual space reserved for metadata on a node, because a portion of the reserved space is required for essential database operations (such as compaction and repair) and future hardware and software upgrades.The allowed space for object metadata controls overall object capacity. storagegrid_storage_utilization_metadata_bytes
+
+The amount of object metadata on storage volume 0, in bytes.
+
+storagegrid_storage_utilization_total_space_bytes
+
+The total amount of storage space allocated to all object stores.
+
+storagegrid_storage_utilization_usable_space_bytes
+
+The total amount of object storage space remaining. Calculated by adding together the amount of available space for all object stores on the Storage Node. storagegrid_swift_data_transfers_bytes_ingested
+
+The total amount of data ingested from Swift clients to this Storage Node since the attribute was last reset.
+
+storagegrid_swift_data_transfers_bytes_retrieved
+
+The total amount of data retrieved by Swift clients from this Storage Node since the attribute was last reset. storagegrid_swift_operations_failed
+
+The total number of failed Swift operations (HTTP status codes 4xx and 5xx), excluding those caused by Swift authorization failure.
+
+storagegrid_swift_operations_successful
+
+The total number of successful Swift operations (HTTP status code 2xx).
+
+storagegrid_swift_operations_unauthorized
+
+The total number of failed Swift operations that are the result of an authorization failure (HTTP status codes 401, 403, 405). storagegrid_tenant_usage_data_bytes
+
+The logical size of all objects for the tenant.
+
+storagegrid_tenant_usage_object_count
+
+The number of objects for the tenant.
+
+storagegrid_tenant_usage_quota_bytes
+
+The maximum amount of logical space available for the tenant’s objects. If a quota metric is not provided, an unlimited amount of space is available.
+
+Get a list of all metrics
+
+To obtain the complete list of metrics, use the Grid Management API.
+
+1. From the top of the Grid Manager, select the help icon and select API documentation.
+
+2. Locate the metrics operations.
+
+1119
+
+3. Execute the GET /grid/metric-names operation.
+
+4. Download the results. Manage alarms (legacy system)
+
+Manage alarms (legacy system)
+
+The StorageGRID alarm system is the legacy system used to identify trouble spots that sometimes occur during normal operation.
+
+While the legacy alarm system continues to be supported, the alert system offers significant benefits and is easier to use. Alarm classes (legacy system)
+
+A legacy alarm can belong to one of two mutually exclusive alarm classes.
+
+Default alarms are provided with each StorageGRID system and can’t be modified. However, you can disable Default alarms or override them by defining Global Custom alarms.
+
+Global Custom alarms monitor the status of all services of a given type in the StorageGRID system. You can create a Global Custom alarm to override a Default alarm. You can also create a new Global Custom alarm. This can be useful for monitoring any customized conditions of your StorageGRID system.
+
+Alarm triggering logic (legacy system)
+
+A legacy alarm is triggered when a StorageGRID attribute reaches a threshold value that evaluates to true against a combination of alarm class (Default or Global Custom) and alarm severity level. Icon
+
+Color
+
+Alarm severity Meaning
+
+Yellow
+
+Notice
+
+The node is connected to the grid, but an unusual condition exists that does not affect normal operations.
+
+Light Orange
+
+Minor
+
+The node is connected to the grid, but an abnormal condition exists that could affect operation in the future. You should investigate to prevent escalation. Dark Orange
+
+Major
+
+The node is connected to the grid, but an abnormal condition exists that currently affects operation. This requires prompt attention to prevent escalation.
+
+Red Critical
+
+The node is connected to the grid, but an abnormal condition exists that has stopped normal operations. You should address the issue immediately.

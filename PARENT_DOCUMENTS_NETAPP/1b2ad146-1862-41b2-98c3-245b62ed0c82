@@ -1,0 +1,55 @@
+volume does not belong to this Storage Node.
+
+In the example, the output for /dev/sde includes the following error message:
+
+Error: This volume does not belong to this node. Fix the attached volume and re-run this script.
+
+If a storage volume is reported as belonging to another Storage Node, contact technical support. If you run the sn-recovery-postinstall.sh script, the storage volume will be reformatted, which might cause data loss.
+
+c. If any storage devices could not be mounted, make a note of the device name, and repair or replace the device.
+
+You must repair or replace any storage devices that could not be mounted.
+
+You will use the device name to look up the volume ID, which is required input when you run the repair-data script to restore object data to the volume (the next procedure).
+
+d. After repairing or replacing all unmountable devices, run the sn-remount-volumes script again to
+
+confirm that all storage volumes that can be remounted have been remounted.
+
+If a storage volume can’t be mounted or is improperly formatted, and you continue to the next step, the volume and any data on the volume will be deleted. If you had two copies of object data, you will have only a single copy until you complete the next procedure (restoring object data).
+
+1601 Don’t run the sn-recovery-postinstall.sh script if you believe that the data remaining on a failed storage volume can’t be rebuilt from elsewhere in the grid (for example, if your ILM policy uses a rule that makes only one copy or if volumes have failed on multiple nodes). Instead, contact technical support to determine how to recover your data.
+
+4. Run the sn-recovery-postinstall.sh script: sn-recovery-postinstall.sh
+
+This script reformats any storage volumes that could not be mounted or that were found to be improperly formatted; rebuilds the Cassandra database on the node, if needed; and starts the services on the Storage Node. Be aware of the following:
+
+The script might take hours to run. ◦ In general, you should leave the SSH session alone while the script is running. ◦ Don’t press Ctrl+C while the SSH session is active. ◦ The script will run in the background if a network disruption occurs and terminates the SSH session, but you can view the progress from the Recovery page.
+
+If the Storage Node uses the RSM service, the script might appear to stall for 5 minutes as node services are restarted. This 5-minute delay is expected whenever the RSM service boots for the first time.
+
+The RSM service is present on Storage Nodes that include the ADC service. 4. Run the sn-recovery-postinstall.sh script: sn-recovery-postinstall.sh
+
+This script reformats any storage volumes that could not be mounted or that were found to be improperly formatted; rebuilds the Cassandra database on the node, if needed; and starts the services on the Storage Node. Be aware of the following:
+
+The script might take hours to run. ◦ In general, you should leave the SSH session alone while the script is running. ◦ Don’t press Ctrl+C while the SSH session is active. ◦ The script will run in the background if a network disruption occurs and terminates the SSH session, but you can view the progress from the Recovery page.
+
+If the Storage Node uses the RSM service, the script might appear to stall for 5 minutes as node services are restarted. This 5-minute delay is expected whenever the RSM service boots for the first time.
+
+The RSM service is present on Storage Nodes that include the ADC service.
+
+Some StorageGRID recovery procedures use Reaper to handle Cassandra repairs. Repairs occur automatically as soon as the related or required services have started. You might notice script output that mentions "reaper" or "Cassandra repair." If you see an error message indicating the repair has failed, run the command indicated in the error message. 5. As the sn-recovery-postinstall.sh script runs, monitor the Recovery page in the Grid Manager.
+
+The Progress bar and the Stage column on the Recovery page provide a high-level status of the sn- recovery-postinstall.sh script.
+
+1602
+
+6. After the sn-recovery-postinstall.sh script has started services on the node, you can restore
+
+object data to any storage volumes that were formatted by the script.
+
+The script asks if you want to use the Grid Manager volume restoration process.
+
+In most cases, you should restore object data using Grid Manager. Answer y to use the Grid Manager. ◦ In rare cases, such as when instructed by technical support, or when you know that the replacement node has fewer volumes available for object storage than the original node, you must restore object data manually using the repair-data script. If one of these cases applies, answer n.
+
+If you answer n to using the Grid Manager volume restoration process (restore object data manually): ▪ You aren’t able to restore object data using Grid Manager. ▪ You can monitor the progress of manual restoration jobs using Grid Manager.

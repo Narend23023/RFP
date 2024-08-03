@@ -1,0 +1,87 @@
+In a deployment with a single site, the infrastructure and operations of the StorageGRID system are centralized.
+
+Multiple sites
+
+In a deployment with multiple sites, different types and numbers of StorageGRID resources can be installed at each site. For example, more storage might be required at one data center than at another.
+
+Different sites are often located in geographically different locations across different failure domains, such as an earthquake fault line or flood plain. Data sharing and disaster recovery are achieved by automated distribution of data to other sites.
+
+8
+
+Multiple logical sites can also exist within a single data center to allow the use of distributed replication and erasure coding for increase availability and resiliency. Grid node redundancy Related information
+
+What is Cloud Storage Pool?
+
+Manage platform services
+
+Configure StorageGRID for FabricPool StorageGRID architecture and network topology
+
+A StorageGRID system consists of multiple types of grid nodes at one or more data center sites.
+
+See the descriptions of grid node types.
+
+For additional information about StorageGRID network topology, requirements, and grid communications, see the Networking guidelines.
+
+7
+
+Deployment topologies
+
+The StorageGRID system can be deployed to a single data center site or to multiple data center sites. Single site
+
+In a deployment with a single site, the infrastructure and operations of the StorageGRID system are centralized.
+
+Multiple sites
+
+In a deployment with multiple sites, different types and numbers of StorageGRID resources can be installed at each site. For example, more storage might be required at one data center than at another.
+
+Different sites are often located in geographically different locations across different failure domains, such as an earthquake fault line or flood plain. Data sharing and disaster recovery are achieved by automated distribution of data to other sites.
+
+8
+
+Multiple logical sites can also exist within a single data center to allow the use of distributed replication and erasure coding for increase availability and resiliency. Grid node redundancy
+
+In a single-site or multi-site deployment, you can optionally include more than one Admin Node or Gateway Node for redundancy. For example, you can install more than one Admin Node at a single site or across several sites. However, each StorageGRID system can only have one primary Admin Node. System architecture
+
+This diagram shows how grid nodes are arranged within a StorageGRID system.
+
+9
+
+S3 and Swift clients store and retrieve objects in StorageGRID. Other clients are used to send email notifications, to access the StorageGRID management interface, and optionally to access the audit share.
+
+S3 and Swift clients can connect to a Gateway Node or an Admin Node to use the load-balancing interface to Storage Nodes. Alternatively, S3 and Swift clients can connect directly to Storage Nodes using HTTPS.
+
+Objects can be stored within StorageGRID on software or hardware-based Storage Nodes, or in Cloud Storage Pools, which consist of external S3 buckets or Azure Blob storage containers. Grid nodes and services
+
+10
+
+Grid nodes and services: Overview
+
+The basic building block of a StorageGRID system is the grid node. Nodes contain services, which are software modules that provide a set of capabilities to a grid node.
+
+Types of grid nodes
+
+The StorageGRID system uses four types of grid nodes: Admin Nodes
+
+Provide management services such as system configuration, monitoring, and logging. When you sign in to the Grid Manager, you are connecting to an Admin Node. Each grid must have one primary Admin Node and might have additional non-primary Admin Nodes for redundancy. You can connect to any Admin Node, and each Admin Node displays a similar view of the StorageGRID system. However, maintenance procedures must be performed using the primary Admin Node.
+
+Admin Nodes can also be used to load balance S3 and Swift client traffic. See What is an Admin Node?
+
+Storage Nodes
+
+Manage and store object data and metadata. Each site in your StorageGRID system must have at least three Storage Nodes.
+
+See What is a Storage Node?
+
+Gateway Nodes (optional)
+
+Provide a load-balancing interface that client applications can use to connect to StorageGRID. A load balancer seamlessly directs clients to an optimal Storage Node, so that the failure of nodes or even an entire site is transparent. See What is a Gateway Node?
+
+Archive Nodes (deprecated)
+
+Provide an optional interface through which object data can be archived to tape.
+
+See What is an Archive Node?
+
+Hardware and software nodes
+
+StorageGRID nodes can be deployed as StorageGRID appliance nodes or as software-based nodes. StorageGRID appliance nodes

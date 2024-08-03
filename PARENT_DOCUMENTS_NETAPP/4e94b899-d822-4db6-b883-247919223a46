@@ -1,0 +1,129 @@
+g. Select Continue to go to the load balancer step.
+
+Use existing HA group
+
+a. To use an existing HA group, select the HA group name from the Select an HA group drop-down list.
+
+b. Select Continue to go to the load balancer step.
+
+Step 2 of 9: Configure load balancer endpoint
+
+StorageGRID uses a load balancer to manage the workload from client applications, such as FabricPool. Load balancing maximizes speed and connection capacity across multiple Storage Nodes.
+
+You can use the StorageGRID Load Balancer service, which exists on all Gateway and Admin Nodes, or you can connect to an external (third-party) load balancer. Using the StorageGRID load balancer is recommended.
+
+For details about this task, see the general considerations for load balancing and the best practices for load balancing for FabricPool. Steps
+
+1. Select or create a StorageGRID load balancer endpoint or use an external load balancer.
+
+730
+
+Create endpoint
+
+a. Select Create endpoint.
+
+b. For the Enter endpoint details step, complete the following fields.
+
+Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint.
+
+Port
+
+The StorageGRID port you want to use for load balancing. This field defaults to 10433 for the first endpoint you create, but you can enter any unused external port. If you enter 80 or 443, the endpoint is configured only on Gateway Nodes, because these ports are reserved on Admin Nodes.
+
+Note: Ports used by other grid services aren’t permitted. See the Network port reference. Client type
+
+Must be S3.
+
+Network protocol
+
+Select HTTPS.
+
+Note: Communicating with StorageGRID without TLS encryption is supported but not recommended.
+
+c. For the Select binding mode step, specify the binding mode. The binding mode controls how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces. Mode
+
+Description
+
+Global (default)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting (default) unless you need to restrict the accessibility of this endpoint. Virtual IPs of HA groups
+
+Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint. Node type
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint.
+
+731
+
+732
+
+d. For the Tenant access step, select one of the following:
+
+Field
+
+Description Allow all tenants (default)
+
+All tenant accounts can use this endpoint to access their buckets.
+
+Allow all tenants is almost always the appropriate option for the load balancer endpoint used for FabricPool. Description
+
+Global (default)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting (default) unless you need to restrict the accessibility of this endpoint. Virtual IPs of HA groups
+
+Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint. Node type
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint.
+
+731
+
+732
+
+d. For the Tenant access step, select one of the following:
+
+Field
+
+Description Allow all tenants (default)
+
+All tenant accounts can use this endpoint to access their buckets.
+
+Allow all tenants is almost always the appropriate option for the load balancer endpoint used for FabricPool.
+
+You must select this option if you are using the FabricPool setup wizard for a new StorageGRID system and you have not yet created any tenant accounts.
+
+Allow selected tenants Only the selected tenant accounts can use this endpoint to access their buckets.
+
+Block selected tenants The selected tenant accounts can’t use this endpoint to access their
+
+buckets. All other tenants can use this endpoint.
+
+e. For the Attach certificate step, select one of the following:
+
+Field
+
+Description
+
+Upload certificate (recommended)
+
+Use this option to upload a CA-signed server certificate, certificate private key, and optional CA bundle. Generate certificate

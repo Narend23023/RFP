@@ -1,0 +1,99 @@
+You specify resources with an S3 resource ARN. For example: "Resource": "arn:aws:s3:::mybucket/*"
+
+You can also use policy variables inside the object key. For example:
+
+"Resource": "arn:aws:s3:::mybucket/home/${aws:username}/*"
+
+The resource value can specify a bucket that does not yet exist when a group policy is created.
+
+Specify principals in a policy You can use the asterisk (*) as a wildcard to match zero or more characters inside the object key.
+
+International characters, which can be specified in the object key, should be encoded using JSON UTF-8 or using JSON \u escape sequences. Percent-encoding is not supported.
+
+RFC 2141 URN Syntax
+
+The HTTP request body for the PutBucketPolicy operation must be encoded with charset=UTF-8. Specify resources in a policy
+
+In policy statements, you can use the Resource element to specify the bucket or object for which permissions are allowed or denied.
+
+Each policy statement requires a Resource element. In a policy, resources are denoted by the element Resource, or alternatively, NotResource for exclusion.
+
+You specify resources with an S3 resource ARN. For example: "Resource": "arn:aws:s3:::mybucket/*"
+
+You can also use policy variables inside the object key. For example:
+
+"Resource": "arn:aws:s3:::mybucket/home/${aws:username}/*"
+
+The resource value can specify a bucket that does not yet exist when a group policy is created.
+
+Specify principals in a policy
+
+Use the Principal element to identity the user, group, or tenant account that is allowed/denied access to the resource by the policy statement.
+
+Each policy statement in a bucket policy must include a Principal element. Policy statements in a group policy don’t need the Principal element because the group is understood to be the principal.
+
+971
+
+• In a policy, principals are denoted by the element "Principal," or alternatively "NotPrincipal" for exclusion.
+
+Account-based identities must be specified using an ID or an ARN: "Principal": { "AWS": "account_id"} "Principal": { "AWS": "identity_arn" }
+
+This example uses the tenant account ID 27233906934684427525, which includes the account root and all users in the account:
+
+"Principal": { "AWS": "27233906934684427525" }
+
+You can specify just the account root:
+
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:root" }
+
+You can specify a specific federated user ("Alex"): "Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated- user/Alex" }
+
+You can specify a specific federated group ("Managers"):
+
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated- group/Managers" }
+
+You can specify an anonymous principal: "Principal": "*"
+
+To avoid ambiguity, you can use the user UUID instead of the username:
+
+arn:aws:iam::27233906934684427525:user-uuid/de305d54-75b4-431b-adb2- eb6b9e546013
+
+For example, suppose Alex leaves the organization and the username Alex is deleted. If a new Alex joins the organization and is assigned the same Alex username, the new user might unintentionally inherit the permissions granted to the original user.
+
+The principal value can specify a group/user name that does not yet exist when a bucket policy is created.
+
+972
+
+Specify permissions in a policy
+
+In a policy, the Action element is used to allow/deny permissions to a resource. There are a set of permissions that you can specify in a policy, which are denoted by the element "Action," or alternatively, "NotAction" for exclusion. Each of these elements maps to specific S3 REST API operations.
+
+The tables lists the permissions that apply to buckets and the permissions that apply to objects. Amazon S3 now uses the s3:PutReplicationConfiguration permission for both the PutBucketReplication and DeleteBucketReplication actions. StorageGRID uses separate permissions for each action, which matches the original Amazon S3 specification.
+
+A delete is performed when a put is used to overwrite an existing value.
+
+Permissions that apply to buckets Permissions
+
+S3 REST API operations
+
+Custom for StorageGRID
+
+s3:CreateBucket
+
+CreateBucket
+
+Yes.
+
+Note: Use in group policy only.
+
+s3:DeleteBucket
+
+DeleteBucket For example, suppose Alex leaves the organization and the username Alex is deleted. If a new Alex joins the organization and is assigned the same Alex username, the new user might unintentionally inherit the permissions granted to the original user.
+
+The principal value can specify a group/user name that does not yet exist when a bucket policy is created.
+
+972
+
+Specify permissions in a policy
+
+In a policy, the Action element is used to allow/deny permissions to a resource. There are a set of permissions that you can specify in a policy, which are denoted by the element "Action," or alternatively, "NotAction" for exclusion. Each of these elements maps to specific S3 REST API operations.

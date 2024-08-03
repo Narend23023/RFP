@@ -1,0 +1,43 @@
+default is the default Management Class for the Archive Node. The values of retinit, retmin, and retver have been chosen to reflect the retention behavior currently used by the Archive Node
+
+592
+
+Don’t set retinit to retinit=create. Setting retinit=create blocks the Archive Node from deleting content, because retention events are used to remove content from the TSM server.
+
+4. Assign the management class to be the default. assign defmgmtclass tsm-domain standard default
+
+5. Set the new policy set as active.
+
+activate policyset tsm-domain standard
+
+Ignore the "no backup copy group" warning that appears when you enter the activate command.
+
+6. Register a node to use the new policy set on the TSM server. On the TSM server, enter (on one line): register node arc-user arc-password passexp=0 domain=tsm-domain MAXNUMMP=number-of-sessions
+
+arc-user and arc-password are same client node name and password as you define on the Archive Node, and the value of MAXNUMMP is set to the number of tape drives reserved for Archive Node store sessions.
+
+By default, registering a node creates an administrative user ID with client owner authority, with the password defined for the node. Migrate data into StorageGRID
+
+You can migrate large amounts of data to the StorageGRID system while simultaneously using the StorageGRID system for day-to-day operations.
+
+Use this guide as you plan a migration of large amounts of data into the StorageGRID system. It is not a general guide to data migration, and it does not include detailed steps for performing a migration. Follow the guidelines and instructions in this section to ensure that data is migrated efficiently into the StorageGRID system without interfering with day-to-day operations, and that the migrated data is handled appropriately by the StorageGRID system. Confirm capacity of the StorageGRID system
+
+Before migrating large amounts of data into the StorageGRID system, confirm that the StorageGRID system has the disk capacity to handle the anticipated volume.
+
+If the StorageGRID system includes an Archive Node and a copy of migrated objects has been saved to near- line storage (such as tape), ensure that the Archive Node’s storage has sufficient capacity for the anticipated volume of migrated data.
+
+As part of the capacity assessment, look at the data profile of the objects you plan to migrate and calculate the amount of disk capacity required. For details about monitoring the disk capacity of your StorageGRID system, see Manage Storage Nodes and the instructions for monitoring StorageGRID.
+
+593
+
+Determine the ILM policy for migrated data The StorageGRID system’s ILM policy determines how many copies are made, the locations to which copies are stored, and for how long these copies are retained. An ILM policy consists of a set of ILM rules that describe how to filter objects and manage object data over time.
+
+Depending on how migrated data is used and your requirements for migrated data, you might want to define unique ILM rules for migrated data that are different from the ILM rules used for day-to-day operations. For example, if there are different regulatory requirements for day-to-day data management than there are for the data that is included in the migration, you might want a different number of copies of the migrated data on a different grade of storage.
+
+You can configure rules that apply exclusively to migrated data if it is possible to uniquely distinguish between migrated data and object data saved from day-to-day operations. If you can reliably distinguish between the types of data using one of the metadata criteria, you can use this criteria to define an ILM rule that applies only to migrated data. As part of the capacity assessment, look at the data profile of the objects you plan to migrate and calculate the amount of disk capacity required. For details about monitoring the disk capacity of your StorageGRID system, see Manage Storage Nodes and the instructions for monitoring StorageGRID.
+
+593
+
+Determine the ILM policy for migrated data The StorageGRID system’s ILM policy determines how many copies are made, the locations to which copies are stored, and for how long these copies are retained. An ILM policy consists of a set of ILM rules that describe how to filter objects and manage object data over time.
+
+Depending on how migrated data is used and your requirements for migrated data, you might want to define unique ILM rules for migrated data that are different from the ILM rules used for day-to-day operations. For example, if there are different regulatory requirements for day-to-day data management than there are for the data that is included in the migration, you might want a different number of copies of the migrated data on a different grade of storage.

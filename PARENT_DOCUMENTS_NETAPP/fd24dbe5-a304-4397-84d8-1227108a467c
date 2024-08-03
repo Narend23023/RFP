@@ -1,0 +1,95 @@
+If you use the stage option, restart the node as soon as possible after staging to minimize disruptions.
+
+cancel: Don’t make any network changes at this time.
+
+If you were unaware that the proposed changes require nodes to be restarted, you can defer the changes to minimize user impact. Selecting cancel returns you to the main menu and preserves your changes so you can apply them later.
+
+After you apply or stage changes, a new Recovery Package is generated as a result of the grid configuration change.
+
+12. If configuration is stopped due to errors, the following options are available:
+
+To terminate the IP change procedure and return to the main menu, enter a.
+
+1524 ◦ To retry the operation that failed, enter r. ◦ To continue to the next operation, enter c.
+
+The failed operation can be retried later by selecting option 10 (Apply Changes) from the main menu. The IP change procedure will not be complete until all operations have completed successfully.
+
+If you had to manually intervene (to reboot a node, for example) and are confident that the action the tool thinks has failed was actually completed successfully, enter f to mark it as successful and move to the next operation.
+
+13. Download a new Recovery Package from the Grid Manager. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the provisioning passphrase.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system.
+
+Change IP addresses for all nodes in grid
+
+If you need to change the Grid Network IP address for all nodes in the grid, you must follow this special procedure. You can’t do a grid-wide Grid Network IP change using the procedure to change individual nodes.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+To ensure that the grid starts up successfully, you must make all the changes at the same time.
+
+This procedure applies to the Grid Network only. You can’t use this procedure to change IP addresses on the Admin or Client Networks.
+
+If you want to change the IP addresses and MTU for the nodes at one site only, follow the Change node network configuration instructions. Steps
+
+1. Plan ahead for changes that you need to make outside of the Change IP tool, such as changes to DNS or NTP, and changes to the single sign-on (SSO) configuration, if used.
+
+If the existing NTP servers will not be accessible to the grid on the new IP addresses, add the new NTP servers before you perform the change-ip procedure.
+
+If the existing DNS servers will not be accessible to the grid on the new IP addresses, add the new DNS servers before you perform the change-ip procedure.
+
+If SSO is enabled for your StorageGRID system and any relying party trusts were configured using Admin Node IP addresses (instead of fully qualified domain names, as recommended), be prepared to update or reconfigure these relying party trusts in Active Directory Federation Services (AD FS) immediately after you change IP addresses. See Configure single sign-on.
+
+1525
+
+If necessary, add the new subnet for the new IP addresses.
+
+2. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Start the Change IP tool by entering the following command: change-ip
+
+4. Enter the provisioning passphrase at the prompt.
+
+The main menu appears. By default, the Selected nodes field is set to all.
+
+5. On the main menu, select 2 to edit IP/subnet mask, gateway, and MTU information for all the nodes.
+
+a. Select 1 to make changes to the Grid Network.
+
+After you make your selection, the prompt shows the node names, Grid Network name, data type (IP/mask, Gateway, or MTU), and current values. 1525
+
+If necessary, add the new subnet for the new IP addresses.
+
+2. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Start the Change IP tool by entering the following command: change-ip
+
+4. Enter the provisioning passphrase at the prompt.
+
+The main menu appears. By default, the Selected nodes field is set to all.
+
+5. On the main menu, select 2 to edit IP/subnet mask, gateway, and MTU information for all the nodes.
+
+a. Select 1 to make changes to the Grid Network.
+
+After you make your selection, the prompt shows the node names, Grid Network name, data type (IP/mask, Gateway, or MTU), and current values.

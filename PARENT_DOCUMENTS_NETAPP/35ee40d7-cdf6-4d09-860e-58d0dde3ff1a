@@ -1,0 +1,225 @@
+CTME
+
+Compliance: Ingest time
+
+For objects in compliant S3 buckets only. The object’s ingest time. You can add the retention period in minutes to this value to determine when the object can be deleted from the bucket. DMRK
+
+Delete Marker Version ID
+
+The version ID of the delete marker created when deleting an object from a versioned bucket. Operations on buckets don’t include this field.
+
+CSIZ
+
+Content size
+
+The size of the object in bytes.
+
+LOCS
+
+Locations
+
+The storage location of object data within the StorageGRID system. The value for LOCS is "" if the object has no locations (for example, it has been deleted).
+
+CLEC: for erasure-coded objects, the erasure-coding profile ID and the erasure coding group ID that is applied to the object’s data.
+
+CLDI: for replicated objects, the LDR node ID and the volume ID of the object’s location.
+
+CLNL: ARC node ID of the object’s location if the object data is archived. PATH
+
+S3 Bucket/Key or Swift Container/Object ID
+
+The S3 bucket name and S3 key name, or the Swift container name and Swift object identifier.
+
+RSLT
+
+Result
+
+The result of the ILM operation.
+
+SUCS: The ILM operation was successful.
+
+1356
+
+Code
+
+Field
+
+Description
+
+RULE
+
+Rules Label Delete Marker Version ID
+
+The version ID of the delete marker created when deleting an object from a versioned bucket. Operations on buckets don’t include this field.
+
+CSIZ
+
+Content size
+
+The size of the object in bytes.
+
+LOCS
+
+Locations
+
+The storage location of object data within the StorageGRID system. The value for LOCS is "" if the object has no locations (for example, it has been deleted).
+
+CLEC: for erasure-coded objects, the erasure-coding profile ID and the erasure coding group ID that is applied to the object’s data.
+
+CLDI: for replicated objects, the LDR node ID and the volume ID of the object’s location.
+
+CLNL: ARC node ID of the object’s location if the object data is archived. PATH
+
+S3 Bucket/Key or Swift Container/Object ID
+
+The S3 bucket name and S3 key name, or the Swift container name and Swift object identifier.
+
+RSLT
+
+Result
+
+The result of the ILM operation.
+
+SUCS: The ILM operation was successful.
+
+1356
+
+Code
+
+Field
+
+Description
+
+RULE
+
+Rules Label
+
+If an object in a compliant S3 bucket is being deleted automatically because its retention period has expired, this field is blank.
+
+If the object is being deleted because there are no more placement instructions that currently apply to the object, this field shows the human-readable label of the last ILM rule that applied to the object. SGRP
+
+Site (Group)
+
+If present, the object was deleted at the site specified, which is not the site where the object was ingested.
+
+UUID
+
+Universally Unique Identifier
+
+The identifier of the object within the StorageGRID system.
+
+VSID
+
+Version ID
+
+The version ID of the specific version of an object that was deleted. Operations on buckets and objects in unversioned buckets don’t include this field. LKCU: Overwritten Object Cleanup
+
+This message is generated when StorageGRID removes an overwritten object that previously required cleanup to free up storage space. An object is overwritten when an S3 or Swift client writes an object to a path already containing a object. The removal process occurs automatically and in the background. Code
+
+Field
+
+Description
+
+CSIZ
+
+Content size
+
+The size of the object in bytes.
+
+LTYP
+
+Type of cleanup
+
+Internal use only.
+
+LUID
+
+Removed Object UUID
+
+The identifier of the object that was removed.
+
+PATH
+
+S3 Bucket/Key or Swift Container/Object ID
+
+The S3 bucket name and S3 key name, or the Swift container name and Swift object identifier. SEGC
+
+Container UUID UUID of the container for the segmented object. This value is available
+
+only if the object is segmented.
+
+UUID
+
+Universally Unique Identifier
+
+The identifier of the object that still exists. This value is available only if the object has not been deleted.
+
+LLST: Location Lost
+
+This message is generated whenever a location for an object copy (replicated or erasure-
+
+1357
+
+coded) can’t be found. Code
+
+Field
+
+Description
+
+CBIL
+
+CBID
+
+The affected CBID.
+
+ECPR
+
+Erasure-Coding Profile
+
+For erasure-coded object data. The ID of the erasure-coding profile used.
+
+LTYP
+
+Location Type
+
+CLDI (Online): For replicated object data
+
+CLEC (Online): For erasure-coded object data
+
+CLNL (Nearline): For archived replicated object data NOID
+
+Source Node ID The node ID on which the locations were lost.
+
+PCLD
+
+Path to replicated object
+
+The complete path to the disk location of the lost object data. Only returned when LTYP has a value of CLDI (that is, for replicated objects).
+
+Takes the form /var/local/rangedb/2/p/13/13/00oJs6X%{h{U)SeUFxE@ RSLT
+
+Result
+
+Always NONE. RSLT is a mandatory message field, but is not relevant for this message. NONE is used rather than SUCS so that this message is not filtered.
+
+TSRC
+
+Triggering Source
+
+USER: User triggered
+
+SYST: System triggered
+
+UUID 1357
+
+coded) can’t be found. Code
+
+Field
+
+Description
+
+CBIL
+
+CBID
+
+The affected CBID.

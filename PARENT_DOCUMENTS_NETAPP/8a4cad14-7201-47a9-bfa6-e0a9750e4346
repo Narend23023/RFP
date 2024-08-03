@@ -1,0 +1,75 @@
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+4. Use a text editor (vi or vim) to delete failed volumes from the /etc/fstab file and then save the file. You have checked that an expansion is not in progress. (In the Grid Manager, select MAINTENANCE > Tasks > Expansion.)
+
+You have reviewed the warnings about storage volume recovery. Steps
+
+1. As needed, replace failed physical or virtual storage associated with the failed storage volumes that you identified and unmounted earlier.
+
+Don’t remount the volumes in this step. The storage is remounted and added to /etc/fstab in a later step.
+
+2. In the Grid Manager, go to NODES > appliance Storage Node > Hardware. In the StorageGRID Appliance section of the page, verify that the Storage RAID mode is healthy.
+
+3. Log in to the failed Storage Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+4. Use a text editor (vi or vim) to delete failed volumes from the /etc/fstab file and then save the file.
+
+Commenting out a failed volume in the /etc/fstab file is insufficient. The volume must be deleted from fstab as the recovery process verifies that all lines in the fstab file match the mounted file systems.
+
+5. Reformat any failed storage volumes and rebuild the Cassandra database if it is necessary. Enter: reformat_storage_block_devices.rb
+
+When storage volume 0 is unmounted, prompts and messages will indicate that the Cassandra service is being stopped.
+
+You will be prompted to rebuild the Cassandra database if it is necessary.
+
+▪ Review the warnings. If none of them apply, rebuild the Cassandra database. Enter: y ▪ If more than one Storage Node is offline or if another Storage Node has been rebuilt in the last 15 days. Enter: n
+
+1583
+
+The script will exit without rebuilding Cassandra. Contact technical support.
+
+For each rangedb drive on the Storage Node, when you are asked: Reformat the rangedb drive <name> (device <major number>:<minor number>)? [y/n]?, enter one of the following responses: ▪ y to reformat a drive that had errors. This reformats the storage volume and adds the reformatted storage volume to the /etc/fstab file.
+
+▪ n if the drive contains no errors, and you don’t want to reformat it.
+
+Selecting n exits the script. Either mount the drive (if you think the data on the drive should be retained and the drive was unmounted in error) or remove the drive. Then, run the reformat_storage_block_devices.rb command again.
+
+Some StorageGRID recovery procedures use Reaper to handle Cassandra repairs. Repairs occur automatically as soon as the related or required services have started. You might notice script output that mentions "reaper" or "Cassandra repair." If you see an error message indicating the repair has failed, run the command indicated in the error message.
+
+In the following example output, the drive /dev/sdf must be reformatted, and Cassandra did not need to be rebuilt: root@DC1-S1:~ # reformat_storage_block_devices.rb Formatting devices that are not in use... Skipping in use device /dev/sdc Skipping in use device /dev/sdd Skipping in use device /dev/sde Reformat the rangedb drive /dev/sdf (device 8:64)? [Y/n]? y Successfully formatted /dev/sdf with UUID b951bfcb-4804-41ad-b490- 805dfd8df16c All devices processed Running: /usr/local/ldr/setup_rangedb.sh 12368435 Cassandra does not need rebuilding. Starting services. Informing storage services of new volume
+
+Reformatting done. Now do manual steps to restore copies of data.
+
+After the storage volumes are reformatted and remounted and necessary Cassandra operations are complete, you can restore object data using Grid Manager.
+
+Restore object data to storage volume where system drive is intact
+
+After recovering a storage volume on a Storage Node where the system drive is intact, you can restore the replicated or erasure-coded object data that was lost when the 1584
+
+storage volume failed.
+
+Which procedure should I use?
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager. Reformatting done. Now do manual steps to restore copies of data.
+
+After the storage volumes are reformatted and remounted and necessary Cassandra operations are complete, you can restore object data using Grid Manager.
+
+Restore object data to storage volume where system drive is intact
+
+After recovering a storage volume on a Storage Node where the system drive is intact, you can restore the replicated or erasure-coded object data that was lost when the 1584
+
+storage volume failed.
+
+Which procedure should I use?
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager.

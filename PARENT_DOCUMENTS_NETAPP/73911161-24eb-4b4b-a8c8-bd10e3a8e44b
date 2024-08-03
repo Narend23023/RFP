@@ -1,0 +1,77 @@
+1. Select ILM > Regions.
+
+The Regions page appears, with the currently defined regions listed. Region 1 shows the default region, us-east-1, which can’t be modified or removed.
+
+2. To add a region:
+
+a. Select Add another region.
+
+b. Enter the name of a region that you want to use when creating S3 buckets.
+
+You must use this exact region name as the LocationConstraint request element when you create the corresponding S3 bucket.
+
+3. To remove an unused region, select the delete icon .
+
+An error message appears if you attempt to remove a region that is currently used in any policy (active or inactive).
+
+4. When you are done making changes, select Save.
+
+You can now select these regions from the Advanced filters section in step 1 of the Create ILM rule wizard.
+
+650
+
+See Use advanced filters in ILM rules. Create ILM rule
+
+Create an ILM rule: Overview
+
+To manage objects, you create a set of information lifecycle management (ILM) rules and organize them into an ILM policy. If you delete a region after using it to create an S3 bucket, you will need to re-add the region if you ever want to use the Location Constraint advanced filter to find objects in that bucket. Steps
+
+1. Select ILM > Regions.
+
+The Regions page appears, with the currently defined regions listed. Region 1 shows the default region, us-east-1, which can’t be modified or removed.
+
+2. To add a region:
+
+a. Select Add another region.
+
+b. Enter the name of a region that you want to use when creating S3 buckets.
+
+You must use this exact region name as the LocationConstraint request element when you create the corresponding S3 bucket.
+
+3. To remove an unused region, select the delete icon .
+
+An error message appears if you attempt to remove a region that is currently used in any policy (active or inactive).
+
+4. When you are done making changes, select Save.
+
+You can now select these regions from the Advanced filters section in step 1 of the Create ILM rule wizard.
+
+650
+
+See Use advanced filters in ILM rules. Create ILM rule
+
+Create an ILM rule: Overview
+
+To manage objects, you create a set of information lifecycle management (ILM) rules and organize them into an ILM policy.
+
+Every object ingested into the system is evaluated against the active policy. When a rule in the policy matches an object’s metadata, the instructions in the rule determine what actions StorageGRID takes to copy and store that object.
+
+Object metadata is not managed by ILM rules. Instead, object metadata is stored in a Cassandra database in what is known as a metadata store. Three copies of object metadata are automatically maintained at each site to protect the data from loss. Elements of an ILM rule
+
+An ILM rule has three elements:
+
+Filtering criteria: A rule’s basic and advanced filters define which objects the rule applies to. If an object matches all filters, StorageGRID applies the rule and creates the object copies specified in the rule’s placement instructions.
+
+Placement instructions: A rule’s placement instructions define the number, type, and location of object copies. Each rule can include a sequence of placement instructions to change the number, type, and location of object copies over time. When the time period for one placement expires, the instructions in the next placement are automatically applied by the next ILM evaluation.
+
+Ingest behavior: A rule’s ingest behavior allows you to choose how the objects filtered by the rule are protected as they are ingested (when an S3 or Swift client saves an object to the grid).
+
+ILM rule filtering
+
+When you create an ILM rule, you specify filters to identify which objects the rule applies to. In the simplest case, a rule might not use any filters. Any rule that does not use filters applies to all objects, so it must be the last (default) rule in an ILM policy. The default rule provides storage instructions for objects that don’t match the filters in another rule.
+
+Basic filters allow you to apply different rules to large, distinct groups of objects. These filters allow you to apply a rule to specific tenant accounts, specific S3 buckets or Swift containers, or both. Basic filters give you a simple way to apply different rules to large numbers of objects. For example, your company’s financial records might need to be stored to meet regulatory requirements, while data from the marketing department might need to be stored to facilitate daily operations. After creating separate tenant accounts for each department or after segregating data from the different departments into separate S3 buckets, you can easily create one rule that applies to all financial records and a second rule that applies to all marketing data.
+
+Advanced filters give you granular control. You can create filters to select objects based on the following object properties: ◦ Ingest time
+
+651 ILM rule filtering

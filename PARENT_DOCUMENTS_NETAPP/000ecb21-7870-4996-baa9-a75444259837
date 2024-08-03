@@ -1,0 +1,111 @@
+Decommission connected grid nodes
+
+You can decommission and permanently remove nodes that are connected to the grid. Before you begin
+
+You understand the considerations for decommissioning Admin, Gateway, and Archive Nodes and the considerations for decommissioning Storage Nodes.
+
+You have gathered all required materials.
+
+You have ensured that no data repair jobs are active.
+
+You have confirmed that Storage Node recovery is not in progress anywhere in the grid. If it is, wait until any Cassandra rebuild performed as part of the recovery is complete. You can then proceed with decommissioning. After you finish
+
+As soon as the disconnected nodes have been decommissioned and all data repair jobs have been completed, you can decommission any connected grid nodes as required.
+
+Then, complete these steps after you complete the decommission procedure:
+
+Ensure that the drives of the decommissioned grid node are wiped clean. Use a commercially available data wiping tool or service to permanently and securely remove data from the drives.
+
+If you decommissioned an appliance node and the data on the appliance was protected using node encryption, use the StorageGRID Appliance Installer to clear the key management server configuration (Clear KMS). You must clear the KMS configuration if you want to add the appliance to another grid. For instructions, see Monitor node encryption in maintenance mode.
+
+Decommission connected grid nodes
+
+You can decommission and permanently remove nodes that are connected to the grid. Before you begin
+
+You understand the considerations for decommissioning Admin, Gateway, and Archive Nodes and the considerations for decommissioning Storage Nodes.
+
+You have gathered all required materials.
+
+You have ensured that no data repair jobs are active.
+
+You have confirmed that Storage Node recovery is not in progress anywhere in the grid. If it is, wait until any Cassandra rebuild performed as part of the recovery is complete. You can then proceed with decommissioning.
+
+You have ensured that other maintenance procedures will not be run while the node decommission procedure is running, unless the node decommission procedure is paused.
+
+You have the provisioning passphrase.
+
+Grid nodes are connected.
+
+The Decommission Possible column for the node or nodes you want to decommission includes a green check mark.
+
+The decommission will not start if one or more volumes are offline (unmounted) or if they are online (mounted) but in an error state. 1451
+
+If one or more volumes go offline while a decommission is in progress, the decommission process completes after these volumes have come back online.
+
+All grid nodes have Normal (green) health must try to resolve the issue:
+
+. If you see one of these icons in the Health column, you
+
+Icon
+
+Color Severity
+
+Yellow
+
+Notice
+
+Light orange
+
+Minor
+
+Dark orange
+
+Major
+
+Red
+
+Critical
+
+If you previously decommissioned a disconnected Storage Node, the data repair jobs have all completed successfully. See Check data repair jobs.
+
+Don’t remove a grid node’s virtual machine or other resources until instructed to do so in this procedure.
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. About this task
+
+When a node is decommissioned, its services are disabled and the node automatically shut down.
+
+Steps
+
+1. From the Decommission Nodes page, select the checkbox for each grid node you want to decommission.
+
+2. Enter the provisioning passphrase.
+
+The Start Decommission button is enabled.
+
+3. Select Start Decommission.
+
+4. Review the list of nodes in the confirmation dialog, and select OK.
+
+The node decommission procedure starts, and the progress is displayed for each node.
+
+Don’t take a Storage Node offline after the decommission procedure has started. Changing the state might result in some content not being copied to other locations.
+
+5. As soon as the new Recovery Package is available, select the Recovery Package link in the banner or select MAINTENANCE > System > Recovery package to access the Recovery Package page. Then,
+
+1452
+
+download the .zip file. See downloading the Recovery Package.
+
+Download the Recovery Package as soon as possible to ensure you can recover your grid if something goes wrong during the decommission procedure.
+
+6. Periodically monitor the Decommission Nodes page to ensure that all selected nodes are decommissioned successfully.
+
+Storage Nodes can take days or weeks to decommission.
+
+When all tasks are complete, the node selection list is redisplayed with a success message.
+
+After you finish
+
+Complete these steps after you complete the node decommission procedure:
+
+1. Follow the appropriate step for your platform. For example: 2. Enter the provisioning passphrase.

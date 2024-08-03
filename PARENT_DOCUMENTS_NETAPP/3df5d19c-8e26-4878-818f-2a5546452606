@@ -1,0 +1,57 @@
+Before beginning the expansion of your StorageGRID system, ensure the following:
+
+The hardware needed to support the new grid nodes or new site has been installed and configured.
+
+All new nodes have bidirectional communication paths to all existing and new nodes (a requirement for the Grid Network). In particular, confirm that the following TCP ports are open between the new nodes you are adding in the expansion and the primary Admin Node:
+
+1055 ◦ 7443 ◦ 8011 ◦ 10342 See Internal grid node communications.
+
+The primary Admin Node can communicate with all expansion servers that are intended to host the StorageGRID system.
+
+If any of the new nodes has a Grid Network IP address on a subnet not previously used, you have already added the new subnet to the Grid Network subnet list. Otherwise, you will have to cancel the expansion, add the new subnet, and start the procedure again.
+
+You aren’t using network address translation (NAT) on the Grid Network between grid nodes or between StorageGRID sites. When you use private IPv4 addresses for the Grid Network, those addresses must be directly routable from every grid node at every site. Using NAT to bridge the Grid Network across a public network segment is supported only if you use a tunneling application that is transparent to all nodes in the grid, meaning the grid nodes require no knowledge of public IP addresses. This NAT restriction is specific to grid nodes and the Grid Network. As required, you can use NAT between external clients and grid nodes, such as to provide a public IP address for a Gateway Node.
+
+Add storage volumes Add storage volumes to Storage Nodes
+
+You can expand the storage capacity of Storage Nodes that have 16 or fewer storage volumes by adding additional storage volumes. You might need to add storage volumes to more than one Storage Node to satisfy ILM requirements for replicated or erasure- coded copies.
+
+1402
+
+Before you begin
+
+Before adding storage volumes, review the guidelines for adding object capacity to ensure that you know where to add volumes to meet the requirements of your ILM policy.
+
+These instructions apply to software-based Storage Nodes only. See Add expansion shelf to deployed SG6060 or Add expansion shelf to deployed SG6160 to learn how to add storage volumes to the SG6060 or SG6160 by installing expansion shelves. Other appliance Storage Nodes can’t be expanded. About this task
+
+The underlying storage of a Storage Node is divided into storage volumes. Storage volumes are block-based storage devices that are formatted by the StorageGRID system and mounted to store objects. Each Storage Node can support up to 16 storage volumes, which are called object stores in the Grid Manager.
+
+Object metadata is always stored in object store 0.
+
+Each object store is mounted on a volume that corresponds to its ID. For example, the object store with an ID of 0000 corresponds to the /var/local/rangedb/0 mount point.
+
+Before adding new storage volumes, use the Grid Manager to view the current object stores for each Storage Node as well as the corresponding mount points. You can use this information when adding storage volumes. Steps
+
+1. Select NODES > site > Storage Node > Storage.
+
+2. Scroll down to view the amounts of available storage for each volume and object store.
+
+For appliance Storage Nodes, the Worldwide Name for each disk matches the volume world-wide identifier (WWID) that appears when you view standard volume properties in SANtricity OS (the management software connected to the appliance’s storage controller).
+
+To help you interpret disk read and write statistics related to volume mount points, the first portion of the name shown in the Name column of the Disk Devices table (that is, sdc, sdd, sde, and so on) matches the value shown in the Device column of the Volumes table.
+
+1403
+
+1404
+
+3. Follow the instructions for your platform to add new storage volumes to the Storage Node.
+
+VMware: Add storage volumes to Storage Node ◦ Linux: Add direct-attached or SAN volumes to Storage Node Each object store is mounted on a volume that corresponds to its ID. For example, the object store with an ID of 0000 corresponds to the /var/local/rangedb/0 mount point.
+
+Before adding new storage volumes, use the Grid Manager to view the current object stores for each Storage Node as well as the corresponding mount points. You can use this information when adding storage volumes. Steps
+
+1. Select NODES > site > Storage Node > Storage.
+
+2. Scroll down to view the amounts of available storage for each volume and object store.
+
+For appliance Storage Nodes, the Worldwide Name for each disk matches the volume world-wide identifier (WWID) that appears when you view standard volume properties in SANtricity OS (the management software connected to the appliance’s storage controller).

@@ -1,0 +1,67 @@
+DeviceClassName is the name of the device class ◦ lto is the type of drive connected to the server ◦ tapelibrary is the tape library name you defined ◦ tapetype is the tape type; for example, ultrium3
+
+6. Add tape volumes to the inventory for the library. checkin libvolume tapelibrary
+
+tapelibrary is the tape library name you defined.
+
+7. Create the primary tape storage pool. define stgpool SGWSTapePool DeviceClassName description=description collocate=filespace maxscratch=XX
+
+SGWSTapePool is the name of the Archive Node’s tape storage pool. You can select any name for the tape storage pool (as long as the name uses the syntax conventions expected by the TSM server).
+
+DeviceClassName is the name of the device class name for the tape library. ◦ description is a description of the storage pool that can be displayed on the TSM server using the query stgpool command. For example: "Tape storage pool for the Archive Node."
+
+collocate=filespace specifies that the TSM server should write objects from the same file space into a single tape.
+
+XX is one of the following:
+
+▪ The number of empty tapes in the tape library (in the case that the Archive Node is the only
+
+590
+
+application using the library).
+
+▪ The number of tapes allocated for use by the StorageGRID system (in instances where the tape
+
+library is shared). 8. On a TSM server, create a disk storage pool. At the TSM server’s administrative console, enter
+
+define stgpool SGWSDiskPool disk description=description maxsize=maximum_file_size nextstgpool=SGWSTapePool highmig=percent_high lowmig=percent_low
+
+SGWSDiskPool is the name of the Archive Node’s disk pool. You can select any name for the disk storage pool (as long as the name uses the syntax conventions expected by the TSM).
+
+description is a description of the storage pool that can be displayed on the TSM server using the query stgpool command. For example, "Disk storage pool for the Archive Node."
+
+maximum_file_size forces objects larger than this size to be written directly to tape, rather than being cached in the disk pool. It is recommended to set maximum_file_size to 10 GB.
+
+nextstgpool=SGWSTapePool refers the disk storage pool to the tape storage pool defined for the Archive Node. percent_high sets the value at which the disk pool begins to migrate its contents to the tape pool. It is recommended to set percent_high to 0 so that data migration begins immediately
+
+percent_low sets the value at which migration to the tape pool stops. It is recommended to set percent_low to 0 to clear out the disk pool.
+
+9. On a TSM server, create a disk volume (or volumes) and assign it to the disk pool. define volume SGWSDiskPool volume_name formatsize=size
+
+SGWSDiskPool is the disk pool name. ◦ volume_name is the full path to the location of the volume (for example,
+
+/var/local/arc/stage6.dsm) on the TSM server where it writes the contents of the disk pool in preparation for transfer to tape.
+
+size is the size, in MB, of the disk volume.
+
+For example, to create a single disk volume such that the contents of a disk pool fill a single tape, set the value of size to 200000 when the tape volume has a capacity of 200 GB.
+
+However, it might be desirable to create multiple disk volumes of a smaller size, as the TSM server can write to each volume in the disk pool. For example, if the tape size is 250 GB, create 25 disk volumes with a size of 10 GB (10000) each. percent_low sets the value at which migration to the tape pool stops. It is recommended to set percent_low to 0 to clear out the disk pool.
+
+9. On a TSM server, create a disk volume (or volumes) and assign it to the disk pool. define volume SGWSDiskPool volume_name formatsize=size
+
+SGWSDiskPool is the disk pool name. ◦ volume_name is the full path to the location of the volume (for example,
+
+/var/local/arc/stage6.dsm) on the TSM server where it writes the contents of the disk pool in preparation for transfer to tape.
+
+size is the size, in MB, of the disk volume.
+
+For example, to create a single disk volume such that the contents of a disk pool fill a single tape, set the value of size to 200000 when the tape volume has a capacity of 200 GB.
+
+However, it might be desirable to create multiple disk volumes of a smaller size, as the TSM server can write to each volume in the disk pool. For example, if the tape size is 250 GB, create 25 disk volumes with a size of 10 GB (10000) each.
+
+The TSM server preallocates space in the directory for the disk volume. This can take some time to complete (more than three hours for a 200 GB disk volume).
+
+Define a domain policy and register a node You need to define a domain policy that uses the TSM management class for the data saved from the Archive Node, and then register a node to use this domain policy.
+
+591

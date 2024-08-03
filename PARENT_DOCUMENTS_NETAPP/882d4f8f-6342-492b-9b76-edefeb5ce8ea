@@ -1,0 +1,111 @@
+If you added a new block device.
+
+If, for any <PURPOSE>, the value of the
+
+BLOCK_DEVICE_<PURPOSE> configuration file variable refers to a block device that does not contain the same data it did before the host failure. Replace VMware node
+
+When you recover a failed StorageGRID node that was hosted on VMware, you remove the failed node and deploy a recovery node.
+
+Before you begin
+
+You have determined that the virtual machine can’t be restored and must be replaced.
+
+About this task
+
+You use the VMware vSphere Web Client to first remove the virtual machine associated with the failed grid node. Then, you can deploy a new virtual machine.
+
+This procedure is only one step in the grid node recovery process. The node removal and deployment procedure is the same for all VMware nodes, including Admin Nodes, Storage Nodes, Gateway Nodes, and Archive Nodes. Steps
+
+1. Log in to VMware vSphere Web Client.
+
+2. Navigate to the failed grid node virtual machine.
+
+3. Make a note of all of the information required to deploy the recovery node.
+
+a. Right-click the virtual machine, select the Edit Settings tab, and note the settings in use.
+
+b. Select the vApp Options tab to view and record the grid node network settings.
+
+4. If the failed grid node is a Storage Node, determine if any of the virtual hard disks used for data storage are undamaged and preserve them for reattachment to the recovered grid node.
+
+5. Power off the virtual machine.
+
+6. Select Actions > All vCenter Actions > Delete from Disk to delete the virtual machine.
+
+7. Deploy a new virtual machine to be the replacement node, and connect it to one or more StorageGRID networks. For instructions see Deploying a StorageGRID node as a virtual machine.
+
+When you deploy the node, you can optionally remap node ports or increase CPU or memory settings. After deploying the new node, you can add new virtual disks according to your storage requirements, reattach any virtual hard disks preserved from the previously removed failed grid node, or both.
+
+8. Complete the node recovery procedure, based on the type of node you are recovering.
+
+1646
+
+Type of node
+
+Go to Primary Admin Node
+
+Configure replacement primary Admin Node
+
+Non-primary Admin Node
+
+Select Start Recovery to configure non-primary Admin Node
+
+Gateway Node
+
+Select Start Recovery to configure Gateway Node
+
+Storage Node
+
+Select Start Recovery to configure Storage Node
+
+Archive Node Select Start Recovery to configure Archive Node
+
+Replace failed node with services appliance
+
+Replace failed node with services appliance: Overview 4. If the failed grid node is a Storage Node, determine if any of the virtual hard disks used for data storage are undamaged and preserve them for reattachment to the recovered grid node.
+
+5. Power off the virtual machine.
+
+6. Select Actions > All vCenter Actions > Delete from Disk to delete the virtual machine.
+
+7. Deploy a new virtual machine to be the replacement node, and connect it to one or more StorageGRID networks. For instructions see Deploying a StorageGRID node as a virtual machine.
+
+When you deploy the node, you can optionally remap node ports or increase CPU or memory settings. After deploying the new node, you can add new virtual disks according to your storage requirements, reattach any virtual hard disks preserved from the previously removed failed grid node, or both.
+
+8. Complete the node recovery procedure, based on the type of node you are recovering.
+
+1646
+
+Type of node
+
+Go to Primary Admin Node
+
+Configure replacement primary Admin Node
+
+Non-primary Admin Node
+
+Select Start Recovery to configure non-primary Admin Node
+
+Gateway Node
+
+Select Start Recovery to configure Gateway Node
+
+Storage Node
+
+Select Start Recovery to configure Storage Node
+
+Archive Node Select Start Recovery to configure Archive Node
+
+Replace failed node with services appliance
+
+Replace failed node with services appliance: Overview
+
+You can use a services appliance to recover a failed Gateway Node, a failed non-primary Admin Node, or a failed primary Admin Node that was hosted on VMware, a Linux host, or a services appliance. This procedure is one step of the grid node recovery procedure.
+
+Before you begin
+
+You have determined that one of the following situations is true: ◦ The virtual machine hosting the node can’t be restored. ◦ The physical or virtual Linux host for the grid node has failed, and must be replaced. ◦ The services appliance hosting the grid node must be replaced.
+
+You have confirmed that the StorageGRID Appliance Installer version on the services appliance matches the software version of your StorageGRID system. See Verify and upgrade StorageGRID Appliance Installer version. Don’t deploy both an SG110 and an SG1100 services appliance or an SG100 and an SG1000 services appliance in the same site. Unpredictable performance might result. About this task
+
+You can use a services appliance to recover a failed grid node in the following cases:

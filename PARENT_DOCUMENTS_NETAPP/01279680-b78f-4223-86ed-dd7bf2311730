@@ -1,0 +1,77 @@
+Using Kafka endpoints
+
+832
+
+Details
+
+StorageGRID software might throttle incoming S3 requests for a bucket if the rate at which the requests are being sent exceeds the rate at which the destination endpoint can receive the requests. Throttling only occurs when there is a backlog of requests waiting to be sent to the destination endpoint.
+
+The only visible effect is that the incoming S3 requests will take longer to execute. If you start to detect significantly slower performance, you should reduce the ingest rate or use an endpoint with higher capacity. If the backlog of requests continues to grow, client S3 operations (such as PUT requests) will eventually fail.
+
+CloudMirror requests are more likely to be affected by the performance of the destination endpoint because these requests typically involve more data transfer than search integration or event notification requests. StorageGRID guarantees ordering of operations on an object within a site. As long as all operations against an object are within the same site, the final object state (for replication) will always equal the state in StorageGRID.
+
+StorageGRID makes a best effort attempt to order requests when operations are made across StorageGRID sites. For example, if you write an object initially to site A and then later overwrite the same object at site B, the final object replicated by CloudMirror to the destination bucket is not guaranteed to be the newer object.
+
+To match the deletion behavior of the AWS CRR and Amazon Simple Notification Service, CloudMirror and event notification requests aren’t sent when an object in the source bucket is deleted because of StorageGRID ILM rules. For example, no CloudMirror or event notifications requests are sent if an ILM rule deletes an object after 14 days.
+
+In contrast, search integration requests are sent when objects are deleted because of ILM. For Kafka endpoints, Mutual TLS is not supported. As a result, if you have ssl.client.auth set to required in your Kafka broker configuration, it might cause Kafka endpoint configuration issues.
+
+The authentication of Kafka endpoints uses the following authentication types. These types are different from those used for the authentication of other endpoints, such as Amazon SNS, and require username and password credentials.
+
+SASL/PLAIN
+
+SASL/SCRAM-SHA-256
+
+SASL/SCRAM-SHA-512
+
+Note: Configured storage proxy settings do not apply to Kafka platform services endpoints.
+
+Considerations for using CloudMirror replication service Consideration
+
+Details
+
+Replication status
+
+StorageGRID does not support the x-amz-replication-status header.
+
+Object size
+
+The maximum size for objects that can be replicated to a destination bucket by the CloudMirror replication service is 5 TiB, which is the same as the maximum supported object size.
+
+Note: The maximum recommended size for a single PutObject operation is 5 GiB (5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use multipart upload instead. Bucket versioning and version IDs
+
+If the source S3 bucket in StorageGRID has versioning enabled, you should also enable versioning for the destination bucket.
+
+When using versioning, note that the ordering of object versions in the destination bucket is best effort and not guaranteed by the CloudMirror service, due to limitations in the S3 protocol.
+
+Note: Version IDs for the source bucket in StorageGRID aren’t related to the version IDs for the destination bucket.
+
+Tagging for object versions SASL/PLAIN
+
+SASL/SCRAM-SHA-256
+
+SASL/SCRAM-SHA-512
+
+Note: Configured storage proxy settings do not apply to Kafka platform services endpoints.
+
+Considerations for using CloudMirror replication service Consideration
+
+Details
+
+Replication status
+
+StorageGRID does not support the x-amz-replication-status header.
+
+Object size
+
+The maximum size for objects that can be replicated to a destination bucket by the CloudMirror replication service is 5 TiB, which is the same as the maximum supported object size.
+
+Note: The maximum recommended size for a single PutObject operation is 5 GiB (5,368,709,120 bytes). If you have objects that are larger than 5 GiB, use multipart upload instead. Bucket versioning and version IDs
+
+If the source S3 bucket in StorageGRID has versioning enabled, you should also enable versioning for the destination bucket.
+
+When using versioning, note that the ordering of object versions in the destination bucket is best effort and not guaranteed by the CloudMirror service, due to limitations in the S3 protocol.
+
+Note: Version IDs for the source bucket in StorageGRID aren’t related to the version IDs for the destination bucket.
+
+Tagging for object versions

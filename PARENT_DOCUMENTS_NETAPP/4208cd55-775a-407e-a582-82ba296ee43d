@@ -1,0 +1,243 @@
+VSID
+
+Version ID
+
+The version ID of a new object created in a versioned bucket. Operations on buckets and objects in unversioned buckets don’t include this field.
+
+The ORLM audit message can be issued more than once for a single object. For instance, it is issued
+
+1361
+
+whenever one of the following events occur:
+
+ILM rules for the object are satisfied forever.
+
+ILM rules for the object are satisfied for this epoch.
+
+ILM rules have deleted the object.
+
+The background verification process detects that a copy of replicated object data is corrupt. The StorageGRID system performs an ILM evaluation to replace the corrupt object.
+
+Related information
+
+Object ingest transactions
+
+Object delete transactions OVWR: Object Overwrite
+
+This message is generated when an external (client-requested) operation causes one object to be overwritten by another object.
+
+Code
+
+Field
+
+Description
+
+CBID
+
+Content Block Identifier (new)
+
+The CBID for the new object.
+
+CSIZ
+
+Previous Object Size
+
+The size, in bytes, of the object being overwritten. OCBD
+
+Content Block Identifier (previous)
+
+The CBID for the previous object.
+
+UUID
+
+Universally Unique ID (new)
+
+The identifier of the new object within the StorageGRID system.
+
+OUID
+
+Universally Unique ID (previous)
+
+The identifier for the previous object within the StorageGRID system.
+
+PATH
+
+S3 or Swift Object Path
+
+The S3 or Swift object path used for both the previous and new object RSLT
+
+Result Code
+
+Result of the Object Overwrite transaction. Result is always:
+
+SUCS: Successful
+
+SGRP
+
+Site (Group)
+
+If present, the overwritten object was deleted at the site specified, which is not the site where the overwritten object was ingested.
+
+1362
+
+S3SL: S3 Select request
+
+This message logs a completion after an S3 Select request has been returned to the client. The S3SL message can include error message and error code details. The request might not have been successful. Code
+
+Field
+
+Description
+
+BYSC
+
+Bytes Scanned
+
+Number of bytes scanned (received) from Storage Nodes.
+
+BYSC and BYPR are likely to be different if the object is compressed. If the object is compressed BYSC would have the compressed byte count and BYPR would be the bytes after decompression.
+
+BYPR
+
+Bytes Processed Number of bytes processed. Indicates how many bytes of "Bytes
+
+Scanned" were actually processed or acted upon by an S3 Select job. BYRT
+
+Bytes Returned Number of bytes that an S3 Select job returned to the client.
+
+REPR
+
+Records Processed
+
+Number of records or rows that an S3 Select job received from Storage Nodes.
+
+RERT
+
+Records Returned
+
+Number of records or rows an S3 Select job returned to the client.
+
+JOFI
+
+Job Finished
+
+Indicates if the S3 Select job finished processing or not. If this is false, then the job failed to finish and the error fields will likely have data in them. The client might have received partial results, or no results at all. REID
+
+Request ID
+
+Identifier for the S3 Select request.
+
+EXTM
+
+Execution Time
+
+The time, in seconds, it took for the S3 Select Job to complete.
+
+ERMG
+
+Error Message
+
+Error message that the S3 Select job generated.
+
+ERTY
+
+Error Type BYSC and BYPR are likely to be different if the object is compressed. If the object is compressed BYSC would have the compressed byte count and BYPR would be the bytes after decompression.
+
+BYPR
+
+Bytes Processed Number of bytes processed. Indicates how many bytes of "Bytes
+
+Scanned" were actually processed or acted upon by an S3 Select job. BYRT
+
+Bytes Returned Number of bytes that an S3 Select job returned to the client.
+
+REPR
+
+Records Processed
+
+Number of records or rows that an S3 Select job received from Storage Nodes.
+
+RERT
+
+Records Returned
+
+Number of records or rows an S3 Select job returned to the client.
+
+JOFI
+
+Job Finished
+
+Indicates if the S3 Select job finished processing or not. If this is false, then the job failed to finish and the error fields will likely have data in them. The client might have received partial results, or no results at all. REID
+
+Request ID
+
+Identifier for the S3 Select request.
+
+EXTM
+
+Execution Time
+
+The time, in seconds, it took for the S3 Select Job to complete.
+
+ERMG
+
+Error Message
+
+Error message that the S3 Select job generated.
+
+ERTY
+
+Error Type
+
+Error type that the S3 Select job generated.
+
+ERST
+
+Error Stacktrace Error Stacktrace that the S3 Select job generated. S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+S3AK
+
+S3 Access Key ID (request sender)
+
+The S3 access key ID for the user that sent the request.
+
+S3AI
+
+S3 tenant account ID (request sender)
+
+The tenant account ID of the user who sent the request.
+
+1363
+
+Code
+
+Field
+
+Description
+
+S3KY
+
+S3 Key
+
+The S3 key name, not including the bucket name. SADD: Security Audit Disable
+
+This message indicates that the originating service (node ID) has turned off audit message logging; audit messages are no longer being collected or delivered.
+
+Code
+
+Field
+
+Description
+
+AETM
+
+Enable Method
+
+The method used to disable the audit.
+
+AEUN
+
+User Name

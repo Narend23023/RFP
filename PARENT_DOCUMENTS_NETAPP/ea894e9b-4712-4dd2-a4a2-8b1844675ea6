@@ -1,0 +1,95 @@
+The StorageGRID system runs on Red Hat Enterprise Linux as a collection of containers. If you have chosen to use the Docker container engine, follow these steps to install Docker. Otherwise, install Podman.
+
+Steps
+
+1. Install Docker by following the instructions for your Linux distribution.
+
+If Docker is not included with your Linux distribution, you can download it from the Docker website.
+
+94
+
+2. Ensure Docker has been enabled and started by running the following two commands: sudo systemctl enable docker
+
+sudo systemctl start docker
+
+3. Confirm you have installed the expected version of Docker by entering the following:
+
+sudo docker version
+
+The Client and Server versions must be 1.11.0 or later.
+
+Install Podman
+
+The StorageGRID system runs on Red Hat Enterprise Linux as a collection of containers. If you have chosen to use the Podman container engine, follow these steps to install Podman. Otherwise, install Docker. Podman is supported only on Red Hat Enterprise Linux (RHEL).
+
+Steps
+
+1. Install Podman and Podman-Docker by following the instructions for your Linux distribution.
+
+You must also install the Podman-Docker package when you install Podman.
+
+2. Confirm you have installed the expected version of Podman and Podman-Docker by entering the following: sudo docker version
+
+The Podman-Docker package allows you to use Docker commands.
+
+The Client and Server versions must be 3.2.3 or later.
+
+Version: 3.2.3 API Version: 3.2.3 Go Version: go1.15.7 Built: Tue Jul 27 03:29:39 2021 OS/Arch: linux/amd64
+
+Install StorageGRID host services
+
+You use the StorageGRID RPM package to install the StorageGRID host services.
+
+95
+
+About this task
+
+These instructions describe how to install the host services from the RPM packages. As an alternative, you can use the Yum repository metadata included in the installation archive to install the RPM packages remotely. See the Yum repository instructions for your Linux operating system. Steps
+
+1. Copy the StorageGRID RPM packages to each of your hosts, or make them available on shared storage.
+
+For example, place them in the /tmp directory, so you can use the example command in the next step.
+
+2. Log in to each host as root or using an account with sudo permission, and run the following commands in the order specified:
+
+sudo yum --nogpgcheck localinstall /tmp/StorageGRID-Webscale-Images- version-SHA.rpm
+
+sudo yum --nogpgcheck localinstall /tmp/StorageGRID-Webscale-Service- version-SHA.rpm
+
+You must install the Images package first, and the Service package second.
+
+If you placed the packages in a directory other than /tmp, modify the command to reflect the path you used. Automate StorageGRID installation on Red Hat Enterprise Linux
+
+You can automate the installation of the StorageGRID host service and the configuration of grid nodes.
+
+Automating the deployment might be useful in any of the following cases:
+
+You already use a standard orchestration framework, such as Ansible, Puppet, or Chef, to deploy and configure physical or virtual hosts.
+
+You intend to deploy multiple StorageGRID instances.
+
+You are deploying a large, complex StorageGRID instance.
+
+The StorageGRID host service is installed by a package and driven by configuration files. You can create the configuration files using one of these methods:
+
+Create the configuration files interactively during a manual installation.
+
+Prepare the configuration files ahead of time (or programmatically) to enable automated installation using standard orchestration frameworks, as describe in this article. StorageGRID provides optional Python scripts for automating the configuration of StorageGRID appliances and the entire StorageGRID system (the "grid"). You can use these scripts directly, or you can inspect them to learn how to use the StorageGRID installation REST API in grid deployment and configuration tools you develop yourself.
+
+96
+
+Automate the installation and configuration of the StorageGRID host service
+
+You can automate the installation of the StorageGRID host service using standard orchestration frameworks such as Ansible, Puppet, Chef, Fabric, or SaltStack. You can automate the installation of the StorageGRID host service and the configuration of grid nodes.
+
+Automating the deployment might be useful in any of the following cases:
+
+You already use a standard orchestration framework, such as Ansible, Puppet, or Chef, to deploy and configure physical or virtual hosts.
+
+You intend to deploy multiple StorageGRID instances.
+
+You are deploying a large, complex StorageGRID instance.
+
+The StorageGRID host service is installed by a package and driven by configuration files. You can create the configuration files using one of these methods:
+
+Create the configuration files interactively during a manual installation.

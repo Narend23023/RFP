@@ -1,0 +1,155 @@
+You can include the x-amz-bucket-object-lock-enabled request header to create a bucket with S3 Object Lock enabled. See Use S3 REST API to configure S3 Object Lock.
+
+You must enable S3 Object Lock when you create the bucket. You can’t add or disable S3 Object Lock after a bucket is created. S3 Object Lock requires bucket versioning, which is enabled automatically when you create the bucket. DeleteBucket
+
+Deletes the bucket.
+
+DeleteBucketCors
+
+Deletes the CORS configuration for the bucket.
+
+DeleteBucketEncryption
+
+Deletes the default encryption from the bucket. Existing encrypted objects remain encrypted, but any new objects added to the bucket aren’t encrypted.
+
+DeleteBucketLifecycle
+
+Deletes the lifecycle configuration from the bucket. See Create S3 lifecycle configuration. DeleteBucketPolicy
+
+Deletes the policy attached to the bucket.
+
+DeleteBucketReplication Deletes the replication configuration attached to the bucket.
+
+904
+
+Operation
+
+DeleteBucketTagging
+
+GetBucketAcl
+
+GetBucketCors
+
+GetBucketEncryption You can include the x-amz-bucket-object-lock-enabled request header to create a bucket with S3 Object Lock enabled. See Use S3 REST API to configure S3 Object Lock.
+
+You must enable S3 Object Lock when you create the bucket. You can’t add or disable S3 Object Lock after a bucket is created. S3 Object Lock requires bucket versioning, which is enabled automatically when you create the bucket. DeleteBucket
+
+Deletes the bucket.
+
+DeleteBucketCors
+
+Deletes the CORS configuration for the bucket.
+
+DeleteBucketEncryption
+
+Deletes the default encryption from the bucket. Existing encrypted objects remain encrypted, but any new objects added to the bucket aren’t encrypted.
+
+DeleteBucketLifecycle
+
+Deletes the lifecycle configuration from the bucket. See Create S3 lifecycle configuration. DeleteBucketPolicy
+
+Deletes the policy attached to the bucket.
+
+DeleteBucketReplication Deletes the replication configuration attached to the bucket.
+
+904
+
+Operation
+
+DeleteBucketTagging
+
+GetBucketAcl
+
+GetBucketCors
+
+GetBucketEncryption
+
+GetBucketLifecycleConfig uration
+
+(previously named GET Bucket lifecycle) GetBucketLocation
+
+GetBucketNotificationCon figuration
+
+(previously named GET Bucket notification)
+
+GetBucketPolicy GetBucketReplication
+
+GetBucketTagging
+
+Implementation
+
+Uses the tagging subresource to remove all tags from a bucket.
+
+Caution: If a non-default ILM policy tag is set for this bucket, there will be a NTAP-SG-ILM-BUCKET-TAG bucket tag with a value assigned to it. Do not issue a DeleteBucketTagging request if there is a NTAP-SG-ILM-BUCKET-TAG bucket tag. Instead, issue a PutBucketTagging request with only the NTAP-SG-ILM- BUCKET-TAG tag and its assigned value to remove all other tags from the bucket. Do not modify or remove the NTAP-SG-ILM-BUCKET-TAG bucket tag.
+
+Returns a positive response and the ID, DisplayName, and Permission of the bucket owner, indicating that the owner has full access to the bucket.
+
+Returns the cors configuration for the bucket.
+
+Returns the default encryption configuration for the bucket.
+
+Returns the lifecycle configuration for the bucket. See Create S3 lifecycle configuration. Returns the region that was set using the LocationConstraint element in the CreateBucket request. If the bucket’s region is us-east-1, an empty string is returned for the region.
+
+Returns the notification configuration attached to the bucket.
+
+Returns the policy attached to the bucket.
+
+Returns the replication configuration attached to the bucket.
+
+Uses the tagging subresource to return all tags for a bucket.
+
+Caution: If a non-default ILM policy tag is set for this bucket, there will be a NTAP-SG-ILM-BUCKET-TAG bucket tag with a value assigned to it. Do not modify or remove this tag.
+
+905
+
+Operation
+
+GetBucketVersioning GetObjectLockConfigurati on
+
+HeadBucket
+
+ListObjects and ListObjectsV2
+
+(previously named GET Bucket)
+
+ListObjectVersions
+
+(previously named GET Bucket Object versions)
+
+PutBucketCors
+
+906
+
+Implementation
+
+This implementation uses the versioning subresource to return the versioning state of a bucket.
+
+blank: Versioning has never been enabled (bucket is "Unversioned")
+
+Enabled: Versioning is enabled
+
+Suspended: Versioning was previously enabled and is suspended
+
+Returns the bucket default retention mode and default retention period, if configured. See Use S3 REST API to configure S3 Object Lock.
+
+Determines if a bucket exists and you have permission to access it.
+
+This operation returns:
+
+x-ntap-sg-bucket-id: The UUID of the bucket in UUID format.
+
+x-ntap-sg-trace-id: The unique trace ID of the associated request.
+
+Returns some or all (up to 1,000) of the objects in a bucket. The Storage Class for objects can have either of two values, even if the object was ingested with the REDUCED_REDUNDANCY storage class option: 905
+
+Operation
+
+GetBucketVersioning GetObjectLockConfigurati on
+
+HeadBucket
+
+ListObjects and ListObjectsV2
+
+(previously named GET Bucket)
+
+ListObjectVersions

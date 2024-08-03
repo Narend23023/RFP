@@ -1,0 +1,103 @@
+The last rule in every ILM policy is the default ILM rule, which can’t use any filters. If an object has not been matched by another rule, the default rule controls where that object is placed and for how long it is retained.
+
+Before activating a new policy, review any changes that the policy is making to the placement of existing objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented. Create ILM policies
+
+Create one or more ILM policies to meet your quality-of-service requirements.
+
+Having one active ILM policy allows you to apply the same ILM rules to all tenants and buckets.
+
+Having multiple active ILM policies allows you to apply the appropriate ILM rules to specific tenants and buckets to fulfill multiple quality-of-service requirements. Create an ILM policy
+
+About this task
+
+Before creating your own policy, verify that the default ILM policy does not meet your storage requirements.
+
+Only use the system-provided policies, 2 copies Policy (for one-site grids) or 1 Copy per Site (for multi-site grids), in test systems. For StorageGRID 11.6 and earlier, the default rule in this policy uses the All Storage Nodes storage pool, which contains all sites. If your StorageGRID system has more than one site, two copies of an object might be placed on the same site.
+
+If the global S3 Object Lock setting has been enabled, you must ensure that the ILM policy is compliant with the requirements of buckets that have S3 Object Lock enabled. In this section, follow the instructions that mention having S3 Object Lock enabled.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permissions.
+
+You have created ILM rules based on whether S3 Object Lock is enabled. 670
+
+S3 Object Lock not enabled
+
+You have created the ILM rules you want to add to the policy. As required, you can save a policy,
+
+create additional rules, and then edit the policy to add the new rules. ◦ You have created a default ILM rule that does not contain any filters.
+
+S3 Object Lock enabled
+
+The global S3 Object Lock setting is already enabled for the StorageGRID system. ◦ You have created the compliant and non-compliant ILM rules you want to add to the policy. As required, you can save a policy, create additional rules, and then edit the policy to add the new rules.
+
+You have created a default ILM rule for the policy that is compliant.
+
+Optionally, you have watched the video: Video: Information lifecycle management policies in StorageGRID 11.8 See also Create an ILM policy: Overview.
+
+Steps
+
+1. Select ILM > Policies.
+
+If the global S3 Object Lock setting is enabled, the ILM policies page indicates which ILM rules are compliant.
+
+2. Determine how you want to create the ILM policy.
+
+Create new policy
+
+a. Select Create policy.
+
+Clone existing policy
+
+a. Select the checkbox for the policy you want to start with, then select Clone.
+
+Edit existing policy
+
+a. If a policy is inactive, you can edit it. Select the checkbox for the inactive policy you want to start with, then select Edit.
+
+3. In the Policy name field, enter a unique name for the policy.
+
+671
+
+4. Optionally, in the Reason for change field, enter the reason you are creating a new policy.
+
+5. To add rules to the policy, select Select rules. Select a rule name to view the settings for that rule.
+
+If you are cloning a policy:
+
+The rules used by the policy you are cloning are selected. ◦ If the policy you are cloning used any rules with no filters that were not the default rule, you are prompted to remove all but one of those rules.
+
+If the default rule used a filter, you are prompted to select a new default rule. ◦ If the default rule was not the last rule, you can move the rule to the end of the new policy.
+
+S3 Object Lock not enabled 2. Determine how you want to create the ILM policy.
+
+Create new policy
+
+a. Select Create policy.
+
+Clone existing policy
+
+a. Select the checkbox for the policy you want to start with, then select Clone.
+
+Edit existing policy
+
+a. If a policy is inactive, you can edit it. Select the checkbox for the inactive policy you want to start with, then select Edit.
+
+3. In the Policy name field, enter a unique name for the policy.
+
+671
+
+4. Optionally, in the Reason for change field, enter the reason you are creating a new policy.
+
+5. To add rules to the policy, select Select rules. Select a rule name to view the settings for that rule.
+
+If you are cloning a policy:
+
+The rules used by the policy you are cloning are selected. ◦ If the policy you are cloning used any rules with no filters that were not the default rule, you are prompted to remove all but one of those rules.
+
+If the default rule used a filter, you are prompted to select a new default rule. ◦ If the default rule was not the last rule, you can move the rule to the end of the new policy.
+
+S3 Object Lock not enabled

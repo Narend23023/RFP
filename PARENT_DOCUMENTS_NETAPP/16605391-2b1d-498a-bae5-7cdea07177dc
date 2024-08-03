@@ -1,0 +1,119 @@
+9. When you are ready to complete, select Finish to start the upload of the virtual machine.
+
+10.
+
+If you deployed this node as part of recovery operation and this is not a full-node recovery, perform these
+
+steps after deployment is complete: a. Right-click the virtual machine, and select Edit Settings.
+
+b. Select each default virtual hard disk that has been designated for storage, and select Remove.
+
+230
+
+c. Depending on your data recovery circumstances, add new virtual disks according to your storage
+
+requirements, reattach any virtual hard disks preserved from the previously removed failed grid node, or both.
+
+Note the following important guidelines:
+
+▪ If you are adding new disks you should use the same type of storage device that was in use before node recovery.
+
+▪ The Storage Node .ovf file defines several VMDKs for storage. Unless these VMDKs meet your storage requirements, you should remove them and assign appropriate VMDKs or RDMs for storage before powering up the node. VMDKs are more commonly used in VMware environments and are easier to manage, while RDMs might provide better performance for workloads that use larger object sizes (for example, greater than 100 MB).
+
+11. If you need to remap the ports used by this node, follow these steps.
+
+You might need to remap a port if your enterprise networking policies restrict access to one or more ports that are used by StorageGRID. See the networking guidelines for the ports used by StorageGRID.
+
+Don’t remap the ports used in load balancer endpoints.
+
+a. Select the new VM.
+
+b. From the Configure tab, select Settings > vApp Options. The location of vApp Options depends on the version of vCenter.
+
+c. In the Properties table, locate PORT_REMAP_INBOUND and PORT_REMAP.
+
+d. To symmetrically map both inbound and outbound communications for a port, select PORT_REMAP.
+
+If only PORT_REMAP is set, the mapping that you specify applies to both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications. i. Scroll back to the top of the table, and select Edit.
+
+ii. On the Type tab, select User configurable, and select Save.
+
+iii. Select Set Value.
+
+iv. Enter the port mapping:
+
+<network type>/<protocol>/<default port used by grid node>/<new port>
+
+<network type> is grid, admin, or client, and <protocol> is tcp or udp.
+
+For example, to remap ssh traffic from port 22 to port 3022, enter: client/tcp/22/3022
+
+v. Select OK.
+
+e. To specify the port used for inbound communications to the node, select PORT_REMAP_INBOUND.
+
+If you specify PORT_REMAP_INBOUND and don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+231
+
+i. Scroll back to the top of the table, and select Edit.
+
+ii. On the Type tab, select User configurable, and select Save. iii. Select Set Value.
+
+iv. Enter the port mapping:
+
+<network type>/<protocol>/<remapped inbound port>/<default inbound port used by grid node>
+
+<network type> is grid, admin, or client, and <protocol> is tcp or udp.
+
+For example, to remap inbound SSH traffic that is sent to port 3022 so that it is received at port 22 by the grid node, enter the following: client/tcp/3022/22
+
+v. Select OK <network type> is grid, admin, or client, and <protocol> is tcp or udp.
+
+For example, to remap ssh traffic from port 22 to port 3022, enter: client/tcp/22/3022
+
+v. Select OK.
+
+e. To specify the port used for inbound communications to the node, select PORT_REMAP_INBOUND.
+
+If you specify PORT_REMAP_INBOUND and don’t specify a value for PORT_REMAP, outbound communications for the port are unchanged.
+
+231
+
+i. Scroll back to the top of the table, and select Edit.
+
+ii. On the Type tab, select User configurable, and select Save. iii. Select Set Value.
+
+iv. Enter the port mapping:
+
+<network type>/<protocol>/<remapped inbound port>/<default inbound port used by grid node>
+
+<network type> is grid, admin, or client, and <protocol> is tcp or udp.
+
+For example, to remap inbound SSH traffic that is sent to port 3022 so that it is received at port 22 by the grid node, enter the following: client/tcp/3022/22
+
+v. Select OK
+
+12. If you want to increase the CPU or memory for the node from the default settings:
+
+a. Right-click the virtual machine, and select Edit Settings.
+
+b. Change the number of CPUs or the amount of memory as required.
+
+Set the Memory Reservation to the same size as the Memory allocated to the virtual machine. c. Select OK.
+
+13. Power on the virtual machine.
+
+After you finish
+
+If you deployed this node as part of an expansion or recovery procedure, return to those instructions to complete the procedure.
+
+Configure the grid and complete installation (VMware)
+
+Navigate to the Grid Manager
+
+You use the Grid Manager to define all of the information required to configure your StorageGRID system.
+
+Before you begin
+
+The primary Admin Node must be deployed and have completed the initial startup sequence. Steps

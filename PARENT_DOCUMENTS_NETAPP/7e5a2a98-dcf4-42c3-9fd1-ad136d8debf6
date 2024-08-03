@@ -1,0 +1,67 @@
+1543
+
+might need to search the log for other TSM errors around the time of the request failure.
+
+c. If an entire tape is permanently unavailable, identify the CBIDs for all objects stored on that volume: query content TSM_Volume_Name
+
+where TSM_Volume_Name is the TSM name for the unavailable tape. The following is an example of the output for this command: b. Determine if the object is permanently unavailable.
+
+For example, you might search the TSM activity log for a data integrity error for that object. The following example shows a search of the activity log for the past day for an object with CBID 498D8A1F681F05B3.
+
+> query actlog begindate=-1 search=276C14E94082CC69 12/21/2008 05:39:15 ANR0548W Retrieve or restore failed for session 9139359 for node DEV-ARC-20 (Bycast ARC) processing file space /19130020 4 for file /20081002/ 498D8A1F681F05B3 stored as Archive - data integrity error detected. (SESSION: 9139359) > Depending on the nature of the error, the CBID might not be recorded in the TSM activity log. You
+
+1543
+
+might need to search the log for other TSM errors around the time of the request failure.
+
+c. If an entire tape is permanently unavailable, identify the CBIDs for all objects stored on that volume: query content TSM_Volume_Name
+
+where TSM_Volume_Name is the TSM name for the unavailable tape. The following is an example of the output for this command:
+
+> query content TSM-Volume-Name Node Name Type Filespace FSID Client's Name for File Name ------------- ---- ---------- ---- ---------------------------- DEV-ARC-20 Arch /19130020 216 /20081201/ C1D172940E6C7E12 DEV-ARC-20 Arch /19130020 216 /20081201/ F1D7FBC2B4B0779E
+
+The Client’s Name for File Name is the same as the Archive Node volume ID (or TSM "high level name") followed by the object’s CBID (or TSM "low level name"). That is, the Client’s Name for File Name takes the form /Archive Node volume ID /CBID. In the first line of the example output, the Client’s Name for File Name is /20081201/ C1D172940E6C7E12.
+
+Recall also that the Filespace is the node ID of the Archive Node.
+
+You will need the CBID of each object stored on the volume and the node ID of the Archive Node to cancel the retrieval request. 4. For each object that is permanently unavailable, cancel the retrieval request and issue a command to inform the StorageGRID system that the object copy was lost:
+
+Use the ADE Console with caution. If the console is used improperly, it is possible to interrupt system operations and corrupt data. Enter commands carefully, and only use the commands documented in this procedure.
+
+a. If you aren’t already logged in to the Archive Node, log in as follows: i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Access the ADE console of the ARC service: telnet localhost 1409 c. Cancel the request for the object: /proc/BRTR/cancel -c CBID
+
+where CBID is the identifier of the object that can’t be retrieved from the TSM.
+
+If the only copies of the object are on tape, the "bulk retrieval" request is canceled with a message, "1 requests canceled". If copies of the object exist elsewhere in the system, the object retrieval is processed by a different module so the response to the message is "0 requests canceled".
+
+d. Issue a command to notify the StorageGRID system that an object copy has been lost and that an
+
+additional copy must be made: /proc/CMSI/Object_Lost CBID node_ID
+
+1544
+
+where CBID is the identifier of the object that can’t be retrieved from the TSM server, and node_ID is the node ID of the Archive Node where the retrieval failed.
+
+You must enter a separate command for each lost object copy: entering a range of CBIDs is not supported. In most cases, the StorageGRID system immediately begins to make additional copies of object data to ensure that the system’s ILM policy is followed. iv. Enter the password listed in the Passwords.txt file.
+
+b. Access the ADE console of the ARC service: telnet localhost 1409 c. Cancel the request for the object: /proc/BRTR/cancel -c CBID
+
+where CBID is the identifier of the object that can’t be retrieved from the TSM.
+
+If the only copies of the object are on tape, the "bulk retrieval" request is canceled with a message, "1 requests canceled". If copies of the object exist elsewhere in the system, the object retrieval is processed by a different module so the response to the message is "0 requests canceled".
+
+d. Issue a command to notify the StorageGRID system that an object copy has been lost and that an
+
+additional copy must be made: /proc/CMSI/Object_Lost CBID node_ID
+
+1544
+
+where CBID is the identifier of the object that can’t be retrieved from the TSM server, and node_ID is the node ID of the Archive Node where the retrieval failed.

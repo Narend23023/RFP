@@ -1,0 +1,87 @@
+1. Create a Cloud Storage Pool.
+
+Use a new S3 bucket for the Cloud Storage Pool to ensure it contains only the data managed by the Cloud Storage Pool.
+
+2. Locate any ILM rules in the active ILM policies that cause objects to be stored in the Cloud Tiering bucket.
+
+3. Clone each of these rules.
+
+4. In the cloned rules, change the placement location to the new Cloud Storage Pool.
+
+5. Save the cloned rules.
+
+6. Create a new policy that uses the new rules.
+
+7. Simulate and activate the new policy.
+
+When the new policy is activated and ILM evaluation occurs, the objects are moved from the S3 bucket configured for Cloud Tiering to the S3 bucket configured for the Cloud Storage Pool. The usable space on
+
+578
+
+the grid is not affected. After the objects are moved to the Cloud Storage Pool, they are removed from the Cloud Tiering bucket.
+
+Related information Manage objects with ILM
+
+Archive to tape through TSM middleware
+
+You can configure an Archive Node to target a Tivoli Storage Manager (TSM) server that provides a logical interface for storing and retrieving object data to random or sequential access storage devices, including tape libraries.
+
+The Archive Node’s ARC service acts as a client to the TSM server, using Tivoli Storage Manager as middleware for communicating with the archival storage system.
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+The Cloud Tiering - Simple Storage Service (S3) option is also deprecated. If you are currently using an Archive Node with this option, migrate your objects to a Cloud Storage Pool instead. Additionally, you should remove Archive Nodes from the active ILM policy in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies.
+
+TSM management classes
+
+Management classes defined by the TSM middleware outline how the TSMʹs backup and archive operations function, and can be used to specify rules for content that are applied by the TSM server. Such rules operate independently of the StorageGRID system’s ILM policy, and must be consistent with the StorageGRID system’s requirement that objects are stored permanently and are always available for retrieval by the Archive Node. After object data is sent to a TSM server by the Archive Node, the TSM lifecycle and retention rules are applied while the object data is stored to tape managed by the TSM server. The TSM management class is used by the TSM server to apply rules for data location or retention after objects are sent to the TSM server by the Archive Node. For example, objects identified as database backups (temporary content that can be overwritten with newer data) could be treated differently than application data (fixed content that must be retained indefinitely). Configure connections to TSM middleware
+
+Before the Archive Node can communicate with Tivoli Storage Manager (TSM) middleware, you must configure several settings.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+Until these settings are configured, the ARC service remains in a Major alarm state as it is unable to communicate with the Tivoli Storage Manager.
+
+579
+
+Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target.
+
+3. Select Configuration > Main.
+
+4. From the Target Type drop-down list, select Tivoli Storage Manager (TSM). Before the Archive Node can communicate with Tivoli Storage Manager (TSM) middleware, you must configure several settings.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+Until these settings are configured, the ARC service remains in a Major alarm state as it is unable to communicate with the Tivoli Storage Manager.
+
+579
+
+Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target.
+
+3. Select Configuration > Main.
+
+4. From the Target Type drop-down list, select Tivoli Storage Manager (TSM).
+
+5. For the Tivoli Storage Manager State, select Offline to prevent retrievals from the TSM middleware server.
+
+By default, the Tivoli Storage Manager State is set to Online, which means that the Archive Node is able to retrieve object data from the TSM middleware server.
+
+6. Complete the following information:
+
+Server IP or Hostname: Specify the IP address or fully qualified domain name of the TSM middleware server used by the ARC service. The default IP address is 127.0.0.1.

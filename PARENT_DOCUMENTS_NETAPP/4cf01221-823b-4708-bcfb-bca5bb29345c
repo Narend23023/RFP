@@ -1,0 +1,57 @@
+If the Grid Network interface is configured as a trunk to support VLAN interfaces, the trunk native VLAN must be the VLAN used for Grid Network traffic. All grid nodes must be accessible over the trunk native VLAN. Admin Network
+
+The Admin Network is optional. If you plan to configure an Admin Network, follow these requirements and guidelines.
+
+Typical uses of the Admin Network include management connections, AutoSupport, KMS, and connections to critical servers such as NTP, DNS, and LDAP if these connections aren’t provided through the Grid Network or Client Network.
+
+The Admin Network and AESL can be unique to each node, as long as the desired network services and clients are reachable.
+
+You must define at least one subnet on the Admin Network to enable inbound connections from external subnets. Static routes are automatically generated on each node for each subnet in the AESL. Client Network
+
+The Client Network is optional. If you plan to configure a Client Network, note the following considerations.
+
+The Client Network is designed to support traffic from S3 and Swift clients. If configured, the Client Network gateway becomes the node’s default gateway.
+
+If you use a Client Network, you can help secure StorageGRID from hostile attacks by accepting inbound client traffic only on explicitly configured load balancer endpoints. See Configure load balancer endpoints.
+
+If the Client Network interface is configured as a trunk to support VLAN interfaces, consider whether configuring the Client Network interface (eth2) is necessary. If configured, Client Network traffic will flow over the trunk native VLAN, as configured in the switch. Deployment-specific networking considerations
+
+56
+
+Linux deployments
+
+For efficiency, reliability, and security, the StorageGRID system runs on Linux as a collection of container engines. Container engine-related network configuration is not required in a StorageGRID system.
+
+Use a non-bond device, such as a VLAN or virtual Ethernet (veth) pair, for the container network interface. Specify this device as the network interface in the node configuration file.
+
+Don’t use bond or bridge devices directly as the container network interface. Doing so could prevent node start-up because of a kernel issue with the use of macvlan with bond and bridge devices in the container namespace. The Client Network is optional. If you plan to configure a Client Network, note the following considerations.
+
+The Client Network is designed to support traffic from S3 and Swift clients. If configured, the Client Network gateway becomes the node’s default gateway.
+
+If you use a Client Network, you can help secure StorageGRID from hostile attacks by accepting inbound client traffic only on explicitly configured load balancer endpoints. See Configure load balancer endpoints.
+
+If the Client Network interface is configured as a trunk to support VLAN interfaces, consider whether configuring the Client Network interface (eth2) is necessary. If configured, Client Network traffic will flow over the trunk native VLAN, as configured in the switch. Deployment-specific networking considerations
+
+56
+
+Linux deployments
+
+For efficiency, reliability, and security, the StorageGRID system runs on Linux as a collection of container engines. Container engine-related network configuration is not required in a StorageGRID system.
+
+Use a non-bond device, such as a VLAN or virtual Ethernet (veth) pair, for the container network interface. Specify this device as the network interface in the node configuration file.
+
+Don’t use bond or bridge devices directly as the container network interface. Doing so could prevent node start-up because of a kernel issue with the use of macvlan with bond and bridge devices in the container namespace.
+
+See the installation instructions for Red Hat Enterprise Linux or Ubuntu or Debian deployments. Host network configuration for container engine deployments
+
+Before starting your StorageGRID deployment on a container engine platform, determine which networks (Grid, Admin, Client) each node will use. You must ensure that each node’s network interface is configured on the correct virtual or physical host interface, and that each network has sufficient bandwidth. Physical hosts
+
+If you are using physical hosts to support grid nodes:
+
+Make sure all hosts use the same host interface for each node interface. This strategy simplifies host configuration and enables future node migration.
+
+Obtain an IP address for the physical host itself.
+
+A physical interface on the host can be used by the host itself and one or more nodes running on the host. Any IP addresses assigned to the host or nodes using this interface must be unique. The host and the node can’t share IP addresses.
+
+Open the required ports to the host.

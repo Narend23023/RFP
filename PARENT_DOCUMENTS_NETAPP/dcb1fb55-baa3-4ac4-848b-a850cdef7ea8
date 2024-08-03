@@ -1,0 +1,81 @@
+157
+
+ls -l $ ls -l /dev/disk/by-path/ total 0 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:00:07.1-ata-2 -> ../../sr0 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0 -> ../../sda lrwxrwxrwx 1 root root 10 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0-part1 -> ../../sda1 lrwxrwxrwx 1 root root 10 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0-part2 -> ../../sda2 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:1:0 -> ../../sdb lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:2:0 -> ../../sdc lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:3:0 -> ../../sdd
+
+Results will differ for each installation.
+
+Assign friendly names to each of these block storage volumes to simplify the initial StorageGRID installation and future maintenance procedures. If you are using the device mapper multipath driver for redundant access to shared storage volumes, you can use the alias field in your /etc/multipath.conf file. For example:
+
+158 Results will differ for each installation.
+
+Assign friendly names to each of these block storage volumes to simplify the initial StorageGRID installation and future maintenance procedures. If you are using the device mapper multipath driver for redundant access to shared storage volumes, you can use the alias field in your /etc/multipath.conf file. For example:
+
+158
+
+multipaths { multipath { wwid 3600a09800059d6df00005df2573c2c30 alias docker-storage-volume-hostA } multipath { wwid 3600a09800059d6df00005df3573c2c30 alias sgws-adm1-var-local } multipath { wwid 3600a09800059d6df00005df4573c2c30 alias sgws-adm1-audit-logs } multipath { wwid 3600a09800059d6df00005df5573c2c30 alias sgws-adm1-tables } multipath { wwid 3600a09800059d6df00005df6573c2c30 alias sgws-gw1-var-local } multipath { wwid 3600a09800059d6df00005df7573c2c30 alias sgws-sn1-var-local } multipath { wwid 3600a09800059d6df00005df7573c2c30 alias sgws-sn1-rangedb-0 } …
+
+This will cause the aliases to appear as block devices in the /dev/mapper directory on the host, allowing you to specify a friendly, easily-validated name whenever a configuration or maintenance operation requires specifying a block storage volume. If you are setting up shared storage to support StorageGRID node migration and using Device Mapper Multipathing, you can create and install a common /etc/multipath.conf on all co- located hosts. Just make sure to use a different Docker storage volume on each host. Using aliases and including the target hostname in the alias for each Docker storage volume LUN will make this easy to remember and is recommended.
+
+Related information Storage and performance requirements
+
+Node container migration requirements
+
+159
+
+Configure the Docker storage volume
+
+Before installing Docker, you might need to format the Docker storage volume and mount it on /var/lib/docker.
+
+About this task
+
+You can skip these steps if you plan to use local storage for the Docker storage volume and have sufficient space available on the host partition containing /var/lib. Steps
+
+1. Create a file system on the Docker storage volume:
+
+sudo mkfs.ext4 docker-storage-volume-device
+
+2. Mount the Docker storage volume:
+
+sudo mkdir -p /var/lib/docker sudo mount docker-storage-volume-device /var/lib/docker
+
+3. Add an entry for docker-storage-volume-device to /etc/fstab.
+
+This step ensures that the storage volume will remount automatically after host reboots. Install Docker
+
+The StorageGRID system runs on Linux as a collection of Docker containers. Before you can install StorageGRID, you must install Docker.
+
+Steps
+
+1. Install Docker by following the instructions for your Linux distribution.
+
+If Docker is not included with your Linux distribution, you can download it from the Docker website.
+
+2. Ensure Docker has been enabled and started by running the following two commands: sudo systemctl enable docker
+
+sudo systemctl start docker
+
+3. Confirm you have installed the expected version of Docker by entering the following:
+
+sudo docker version
+
+160
+
+The Client and Server versions must be 1.11.0 or later.
+
+Related information
+
+Configure host storage
+
+Install StorageGRID host services
+
+You use the StorageGRID DEB package to install the StorageGRID host services. About this task
+
+These instructions describe how to install the host services from the DEB packages. As an alternative, you can use the APT repository metadata included in the installation archive to install the DEB packages remotely. See the APT repository instructions for your Linux operating system. Steps
+
+1. Copy the StorageGRID DEB packages to each of your hosts, or make them available on shared storage.
+
+For example, place them in the /tmp directory, so you can use the example command in the next step.
+
+2. Log in to each host as root or using an account with sudo permission, and run the following commands. Steps
+
+1. Install Docker by following the instructions for your Linux distribution.

@@ -1,0 +1,105 @@
+3. In the FabricPool section of the FabricPool and S3 setup wizard page, select Configure now.
+
+Step 1 of 9: Configure HA group appears. Step 1 of 9: Configure HA group
+
+A high availability (HA) group is a collection of nodes that each contain the StorageGRID Load Balancer service. An HA group can contain Gateway Nodes, Admin Nodes, or both.
+
+You can use an HA group to help keep FabricPool data connections available. An HA group uses virtual IP addresses (VIPs) to provide highly available access to the Load Balancer service. If the active interface in the
+
+727
+
+HA group fails, a backup interface can manage the workload with little impact to FabricPool operations
+
+For details about this task, see Manage high availability groups and Best practices for high availability groups. Steps
+
+1. If you plan to use an external load balancer, you don’t need to create an HA group. Select Skip this step and go to Step 2 of 9: Configure load balancer endpoint.
+
+2. To use the StorageGRID load balancer, create a new HA group or use an existing HA group.
+
+728
+
+Create HA group
+
+a. To create a new HA group, select Create HA group.
+
+b. For the Enter details step, complete the following fields. Field
+
+Description
+
+HA group name
+
+A unique display name for this HA group.
+
+Description (optional)
+
+The description of this HA group.
+
+c. For the Add interfaces step, select the node interfaces you want to use in this HA group.
+
+Use the column headers to sort the rows, or enter a search term to locate interfaces more quickly.
+
+You can select one or more nodes, but you can select only one interface for each node.
+
+d. For the Prioritize interfaces step, determine the Primary interface and any backup interfaces for this HA group.
+
+Drag rows to change the values in the Priority order column.
+
+The first interface in the list is the Primary interface. The Primary interface is the active interface unless a failure occurs.
+
+If the HA group includes more than one interface and the active interface fails, the virtual IP (VIP) addresses move to the first backup interface in the priority order. If that interface fails, the VIP addresses move to the next backup interface, and so on. When failures are resolved, the VIP addresses move back to highest priority interface available.
+
+e. For the Enter IP addresses step, complete the following fields. Field
+
+Description
+
+Subnet CIDR
+
+The address of the VIP subnet in CIDR notation—an IPv4 address followed by a slash and the subnet length (0-32).
+
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+Gateway IP address (optional)
+
+Optional. If the ONTAP IP addresses used to access StorageGRID aren’t on the same subnet as the StorageGRID VIP addresses, enter the StorageGRID VIP local gateway IP address. The local gateway IP address must be within the VIP subnet. Virtual IP address
+
+Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet and all will be active at the same time on the active interface.
+
+At least one address must be IPv4. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+729
+
+f. Select Create HA group and then select Finish to return to the FabricPool setup wizard. e. For the Enter IP addresses step, complete the following fields. Field
+
+Description
+
+Subnet CIDR
+
+The address of the VIP subnet in CIDR notation—an IPv4 address followed by a slash and the subnet length (0-32).
+
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+Gateway IP address (optional)
+
+Optional. If the ONTAP IP addresses used to access StorageGRID aren’t on the same subnet as the StorageGRID VIP addresses, enter the StorageGRID VIP local gateway IP address. The local gateway IP address must be within the VIP subnet. Virtual IP address
+
+Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet and all will be active at the same time on the active interface.
+
+At least one address must be IPv4. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+729
+
+f. Select Create HA group and then select Finish to return to the FabricPool setup wizard.
+
+g. Select Continue to go to the load balancer step.
+
+Use existing HA group
+
+a. To use an existing HA group, select the HA group name from the Select an HA group drop-down list.
+
+b. Select Continue to go to the load balancer step.
+
+Step 2 of 9: Configure load balancer endpoint
+
+StorageGRID uses a load balancer to manage the workload from client applications, such as FabricPool. Load balancing maximizes speed and connection capacity across multiple Storage Nodes.
+
+You can use the StorageGRID Load Balancer service, which exists on all Gateway and Admin Nodes, or you can connect to an external (third-party) load balancer. Using the StorageGRID load balancer is recommended.

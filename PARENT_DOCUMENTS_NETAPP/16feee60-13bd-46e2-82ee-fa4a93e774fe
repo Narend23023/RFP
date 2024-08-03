@@ -1,0 +1,93 @@
+328
+
+Configured LDAP service type
+
+Options for SSO identity provider Active Directory
+
+Active Directory
+
+Azure
+
+PingFederate
+
+Azure
+
+Azure
+
+AD FS requirements
+
+You can use any of the following versions of AD FS:
+
+Windows Server 2022 AD FS
+
+Windows Server 2019 AD FS
+
+Windows Server 2016 AD FS
+
+Windows Server 2016 should be using the KB3201845 update, or higher.
+
+Additional requirements
+
+Transport Layer Security (TLS) 1.2 or 1.3
+
+Microsoft .NET Framework, version 3.5.1 or higher Considerations for Azure
+
+If you use Azure as the SSO type and users have user principal names that don’t use the sAMAccountName as the prefix, login issues can occur if StorageGRID loses its connection with the LDAP server. To allow users to sign in, you must restore the connection to the LDAP server. Server certificate requirements
+
+By default, StorageGRID uses a management interface certificate on each Admin Node to secure access to the Grid Manager, the Tenant Manager, the Grid Management API, and the Tenant Management API. When you configure relying party trusts (AD FS), enterprise applications (Azure), or service provider connections (PingFederate) for StorageGRID, you use the server certificate as the signature certificate for StorageGRID requests.
+
+If you have not already configured a custom certificate for the management interface, you should do so now. When you install a custom server certificate, it is used for all Admin Nodes, and you can use it in all StorageGRID relying party trusts, enterprise applications, or SP connections. Using an Admin Node’s default server certificate in a relying party trust, enterprise application, or SP connection is not recommended. If the node fails and you recover it, a new default server certificate is generated. Before you can sign in to the recovered node, you must update the relying party trust, enterprise application, or SP connection with the new certificate.
+
+You can access an Admin Node’s server certificate by logging in to the command shell of the node and going to the /var/local/mgmt-api directory. A custom server certificate is named custom-server.crt. The node’s default server certificate is named server.crt.
+
+329
+
+Port requirements
+
+Single sign-on (SSO) is not available on the restricted Grid Manager or Tenant Manager ports. You must use the default HTTPS port (443) if you want users to authenticate with single sign-on. See Control access at external firewall.
+
+Confirm federated users can sign in Before you enable single sign-on (SSO), you must confirm that at least one federated user can sign in to the Grid Manager and in to the Tenant Manager for any existing tenant accounts.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have already configured identity federation. Steps
+
+1. If there are existing tenant accounts, confirm that none of the tenants is using its own identity source.
+
+When you enable SSO, an identity source configured in the Tenant Manager is overridden by the identity source configured in the Grid Manager. Users belonging to the tenant’s identity source will no longer be able to sign in unless they have an account with the Grid Manager identity source. a. Sign in to the Tenant Manager for each tenant account.
+
+b. Select ACCESS MANAGEMENT > Identity federation.
+
+c. Confirm that the Enable identity federation checkbox is not selected. 329
+
+Port requirements
+
+Single sign-on (SSO) is not available on the restricted Grid Manager or Tenant Manager ports. You must use the default HTTPS port (443) if you want users to authenticate with single sign-on. See Control access at external firewall.
+
+Confirm federated users can sign in Before you enable single sign-on (SSO), you must confirm that at least one federated user can sign in to the Grid Manager and in to the Tenant Manager for any existing tenant accounts.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have already configured identity federation. Steps
+
+1. If there are existing tenant accounts, confirm that none of the tenants is using its own identity source.
+
+When you enable SSO, an identity source configured in the Tenant Manager is overridden by the identity source configured in the Grid Manager. Users belonging to the tenant’s identity source will no longer be able to sign in unless they have an account with the Grid Manager identity source. a. Sign in to the Tenant Manager for each tenant account.
+
+b. Select ACCESS MANAGEMENT > Identity federation.
+
+c. Confirm that the Enable identity federation checkbox is not selected.
+
+d. If it is, confirm that any federated groups that might be in use for this tenant account are no longer
+
+required, clear the checkbox, and select Save.
+
+2. Confirm that a federated user can access the Grid Manager: a. From Grid Manager, select CONFIGURATION > Access control > Admin groups.

@@ -1,0 +1,117 @@
+1443
+
+Optionally, you can use the Grid Manager to monitor restoration processes in progress and display a restoration history. See Restore object data using Grid Manager.
+
+3. If the State for all repairs is Completed, you don’t need to restart any repair jobs.
+
+4. If the State for any repair is Stopped, you must restart that repair. a. Obtain the repair ID for the failed repair from the output.
+
+b. Run the repair-data start-ec-node-repair command.
+
+Use the --repair-id option to specify the Repair ID. For example, if you want to retry a repair with repair ID 949292, run this command: repair-data start-ec-node-repair --repair-id 949292
+
+c. Continue to track the status of EC data repairs until the State for all repairs is Completed.
+
+Gather required materials
+
+Before performing a grid node decommission, you must obtain the following information. Item
+
+Notes
+
+Recovery Package .zip file If you have never run a data repair job, the output is No job found. You don’t need to restart any repair jobs.
+
+If the data repair job was run previously or is running currently, the output lists information for the repair. Each repair has a unique repair ID.
+
+1443
+
+Optionally, you can use the Grid Manager to monitor restoration processes in progress and display a restoration history. See Restore object data using Grid Manager.
+
+3. If the State for all repairs is Completed, you don’t need to restart any repair jobs.
+
+4. If the State for any repair is Stopped, you must restart that repair. a. Obtain the repair ID for the failed repair from the output.
+
+b. Run the repair-data start-ec-node-repair command.
+
+Use the --repair-id option to specify the Repair ID. For example, if you want to retry a repair with repair ID 949292, run this command: repair-data start-ec-node-repair --repair-id 949292
+
+c. Continue to track the status of EC data repairs until the State for all repairs is Completed.
+
+Gather required materials
+
+Before performing a grid node decommission, you must obtain the following information. Item
+
+Notes
+
+Recovery Package .zip file
+
+You must download the most recent Recovery Package .zip file (sgws-recovery-package-id-revision.zip). You can use the Recovery Package file to restore the system if a failure occurs.
+
+Passwords.txt file
+
+This file contains the passwords required to access grid nodes on the command line and is included in the Recovery Package.
+
+Provisioning passphrase
+
+The passphrase is created and documented when the StorageGRID system is first installed. The provisioning passphrase is not in the Passwords.txt file.
+
+Description of StorageGRID system’s topology before decommissioning
+
+If available, obtain any documentation that describes the system’s current topology.
+
+Related information Web browser requirements
+
+Access Decommission Nodes page
+
+When you access the Decommission Nodes page in the Grid Manager, you can see at a glance which nodes can be decommissioned.
+
+1444
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. Steps
+
+1. Select MAINTENANCE > Tasks > Decommission.
+
+2. Select Decommission Nodes.
+
+The Decommission Nodes page appears. From this page, you can:
+
+Determine which grid nodes can be decommissioned currently. ◦ See the health of all grid nodes ◦ Sort the list in ascending or descending order by Name, Site, Type, or Has ADC. ◦ Enter search terms to quickly find particular nodes.
+
+In this example, the Decommission Possible column indicates that you can decommission the Gateway Node and one of the four Storage Nodes.
+
+3. Review the Decommission Possible column for each node you want to decommission.
+
+If a grid node can be decommissioned, this column includes a green check mark, and the left column includes a checkbox. If a node can’t be decommissioned, this column describes the issue. If there is more than one reason a node can’t be decommissioned, the most critical reason is shown. Decommission Possible reason Description
+
+Steps to resolve
+
+No, node type decommissioning is not supported.
+
+You can’t decommission the primary Admin Node.
+
+None.
+
+1445
+
+1446
+
+Decommission Possible reason Description
+
+No, at least one grid node is disconnected.
+
+You can’t decommission a connected grid node if any grid node is disconnected.
+
+Note: This message is shown for connected grid nodes only.
+
+The Health column includes one of these icons for grid nodes that are disconnected: (gray): Administratively
+
+Down
+
+(blue): Unknown
+
+No, one or more required nodes is currently disconnected and must be recovered.

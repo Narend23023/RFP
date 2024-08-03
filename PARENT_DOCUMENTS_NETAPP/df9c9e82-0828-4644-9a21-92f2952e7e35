@@ -1,0 +1,91 @@
+If any platform services endpoint errors have occurred within the past 7 days, the Tenant Manager dashboard displays an alert message. You can go the Platform services endpoints page to see more details about the error.
+
+The same error that appears on the dashboard also appears at the top of the Platform services endpoints page. To view a more detailed error message: Steps
+
+1. From the list of endpoints, select the endpoint that has the error.
+
+2. On the endpoint details page, select Connection. This tab displays only the most recent error for an
+
+endpoint and indicates how long ago the error occurred. Errors that include the red X icon within the past 7 days.
+
+occurred
+
+847
+
+Check if error is still current
+
+Some errors might continue to be shown in the Last error column even after they are resolved. To see if an error is current or to force the removal of a resolved error from the table: Steps
+
+1. Select the endpoint.
+
+The endpoint details page appears.
+
+2. Select Connection > Test connection.
+
+Selecting Test connection causes StorageGRID to validate that the platform services endpoint exists and that it can be reached with the current credentials. The connection to the endpoint is validated from one node at each site. Resolve endpoint errors
+
+You can use the Last error message on the endpoint details page to help determine what is causing the error. Some errors might require you to edit the endpoint to resolve the issue. For example, a CloudMirroring error
+
+848
+
+can occur if StorageGRID is unable to access the destination S3 bucket because it does not have the correct access permissions or the access key has expired. The message is "Either the endpoint credentials or the destination access needs to be updated," and the details are "AccessDenied" or "InvalidAccessKeyId."
+
+If you need to edit the endpoint to resolve an error, selecting Test and save changes causes StorageGRID to validate the updated endpoint and confirm that it can be reached with the current credentials. The connection to the endpoint is validated from one node at each site. Steps
+
+1. Select the endpoint.
+
+2. On the endpoint details page, select Configuration.
+
+3. Edit the endpoint configuration as needed.
+
+4. Select Connection > Test connection.
+
+Endpoint credentials with insufficient permissions
+
+When StorageGRID validates a platform services endpoint, it confirms that the endpoint’s credentials can be used to contact the destination resource and it does a basic permissions check. However, StorageGRID does not validate all of the permissions required for certain platform services operations. For this reason, if you receive an error when attempting to use a platform service (such as "403 Forbidden"), check the permissions associated with the endpoint’s credentials.
+
+Related information
+
+Administer StorageGRID > Troubleshoot platform services
+
+Create platform services endpoint
+
+Test connection for platform services endpoint
+
+Edit platform services endpoint Configure CloudMirror replication
+
+The CloudMirror replication service is one of the three StorageGRID platform services. You can use CloudMirror replication to automatically replicate objects to an external S3 bucket.
+
+Before you begin
+
+Platform services were enabled for your tenant account by a StorageGRID administrator.
+
+You have already created a bucket to act as the replication source.
+
+The endpoint that you intend to use as a destination for CloudMirror replication already exists, and you have its URN.
+
+You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permission settings in group or bucket policies when configuring the bucket using the Tenant Manager. About this task
+
+CloudMirror replication copies objects from a source bucket to a destination bucket that is specified in an endpoint.
+
+849
+
+CloudMirror replication has important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication.
+
+To enable CloudMirror replication for a bucket, you must create and apply a valid bucket replication configuration XML. The replication configuration XML must use the URN of an S3 bucket endpoint for each destination.
+
+Replication is not supported for source or destination buckets with S3 Object Lock enabled. Create platform services endpoint
+
+Test connection for platform services endpoint
+
+Edit platform services endpoint Configure CloudMirror replication
+
+The CloudMirror replication service is one of the three StorageGRID platform services. You can use CloudMirror replication to automatically replicate objects to an external S3 bucket.
+
+Before you begin
+
+Platform services were enabled for your tenant account by a StorageGRID administrator.
+
+You have already created a bucket to act as the replication source.
+
+The endpoint that you intend to use as a destination for CloudMirror replication already exists, and you have its URN.

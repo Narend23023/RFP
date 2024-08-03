@@ -1,0 +1,57 @@
+After you have replaced the drives and performed the manual steps to format the volumes, Grid Manager displays the volumes as candidates for restoration on the MAINTENANCE > Volume restoration > Nodes to restore tab.
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager. You can either enable automatic restore mode to automatically start volume restoration when the volumes are ready to be restored or manually perform volume restoration. Follow these guidelines:
+
+If the volumes are listed at MAINTENANCE > Volume restoration > Nodes to restore, restore object data as described in the steps below. The volumes will be listed if:
+
+Some, but not all, storage volumes in a node have failed ◦ All storage volumes in a node have failed and are being replaced with the same number of volumes or more volumes
+
+The Volume restoration page in the Grid Manager also allows you to monitor the volume restoration process and view restoration history. If the volumes aren’t listed in the Grid Manager as candidates for restoration, follow the appropriate steps for using the repair-data script to restore object data: After you have replaced the drives and performed the manual steps to format the volumes, Grid Manager displays the volumes as candidates for restoration on the MAINTENANCE > Volume restoration > Nodes to restore tab.
+
+Whenever possible, restore object data using the Volume restoration page in the Grid Manager. You can either enable automatic restore mode to automatically start volume restoration when the volumes are ready to be restored or manually perform volume restoration. Follow these guidelines:
+
+If the volumes are listed at MAINTENANCE > Volume restoration > Nodes to restore, restore object data as described in the steps below. The volumes will be listed if:
+
+Some, but not all, storage volumes in a node have failed ◦ All storage volumes in a node have failed and are being replaced with the same number of volumes or more volumes
+
+The Volume restoration page in the Grid Manager also allows you to monitor the volume restoration process and view restoration history. If the volumes aren’t listed in the Grid Manager as candidates for restoration, follow the appropriate steps for using the repair-data script to restore object data:
+
+Restoring object data to storage volume (system drive failure) ◦ Restore object data to storage volume where system drive is intact ◦ Restore object data to storage volume for appliance
+
+The repair-data script is deprecated and will be removed in a future release.
+
+If the recovered Storage Node contains fewer volumes than the node it is replacing, you must use the repair-data script.
+
+You can restore two types of object data:
+
+Replicated data objects are restored from other locations, assuming that the grid’s ILM rules were configured to make object copies available.
+
+If an ILM rule was configured to store only one replicated copy and that copy existed on a storage volume that failed, you will not be able to recover the object.
+
+1612 ◦ If the only remaining copy of an object is in a Cloud Storage Pool, StorageGRID must issue multiple
+
+requests to the Cloud Storage Pool endpoint to restore object data.
+
+If the only remaining copy of an object is on an Archive Node, object data is retrieved from the Archive Node. Restoring object data to a Storage Node from an Archive Node takes longer than restoring object copies from other Storage Nodes.
+
+Erasure-coded (EC) data objects are restored by reassembling the stored fragments. Corrupt or lost fragments are recreated by the erasure-coding algorithm from the remaining data and parity fragments.
+
+Repairs of erasure-coded data can begin while some Storage Nodes are offline. However, if all erasure- coded data cannot be accounted for, the repair can’t be completed. Repair will complete after all nodes are available. Volume restoration is dependent on the availability of resources where object copies are stored. Progress of volume restoration is nonlinear and might take days or weeks to complete.
+
+Enable automatic restore mode
+
+When you enable Automatic restore mode, volume restoration automatically starts when the volumes are ready to be restored. Steps
+
+1. In Grid Manager go to MAINTENANCE > Volume restoration.
+
+2. Select the Nodes to restore tab, then slide the toggle for Automatic restore mode to the enabled position.
+
+3. When the confirmation dialog box appears, review the details.
+
+You will not be able to start volume restoration jobs manually on any nodes. ◦ Volume restorations will begin automatically only when no other maintenance procedures are in progress.
+
+You can monitor the status of the job from the progress monitoring page. ◦ StorageGRID automatically retries volume restorations that fail to start.
+
+4. When you understand the results of enabling Automatic restore mode, select Yes in the confirmation dialog box.
+
+You can disable Automatic restore mode at any time.

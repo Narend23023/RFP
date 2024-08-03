@@ -1,0 +1,113 @@
+The Relying Party properties are saved and closed.
+
+10. Repeat these steps to configure a relying party trust for all of the Admin Nodes in your StorageGRID system.
+
+11. When you are done, return to StorageGRID and test all relying party trusts to confirm they are configured correctly. See Use sandbox mode for instructions. Create enterprise applications in Azure AD
+
+You use Azure AD to create an enterprise application for each Admin Node in your system.
+
+Before you begin
+
+You have started configuring single sign-on for StorageGRID and you selected Azure as the SSO type.
+
+Sandbox mode is selected on the Single sign-on page in Grid Manager. See Use sandbox mode. a. Add the custom certificate:
+
+▪ If you have the custom management certificate you uploaded to StorageGRID, select that
+
+certificate.
+
+▪ If you don’t have the custom certificate, log in to the Admin Node, go the /var/local/mgmt-api
+
+directory of the Admin Node, and add the custom-server.crt certificate file.
+
+Note: Using the Admin Node’s default certificate (server.crt) is not recommended. If the Admin Node fails, the default certificate will be regenerated when you recover the node, and you will need to update the relying party trust. b. Select Apply, and select OK.
+
+The Relying Party properties are saved and closed.
+
+10. Repeat these steps to configure a relying party trust for all of the Admin Nodes in your StorageGRID system.
+
+11. When you are done, return to StorageGRID and test all relying party trusts to confirm they are configured correctly. See Use sandbox mode for instructions. Create enterprise applications in Azure AD
+
+You use Azure AD to create an enterprise application for each Admin Node in your system.
+
+Before you begin
+
+You have started configuring single sign-on for StorageGRID and you selected Azure as the SSO type.
+
+Sandbox mode is selected on the Single sign-on page in Grid Manager. See Use sandbox mode.
+
+You have the Enterprise application name for each Admin Node in your system. You can copy these values from the Admin Node details table on the StorageGRID Single Sign-on page.
+
+You must create an enterprise application for each Admin Node in your StorageGRID system. Having an enterprise application for each Admin Node ensures that users can securely sign in to and out of any Admin Node.
+
+344
+
+• You have experience creating enterprise applications in Azure Active Directory.
+
+You have an Azure account with an active subscription. You have one of the following roles in the Azure account: Global Administrator, Cloud Application Administrator, Application Administrator, or owner of the service principal.
+
+Access Azure AD
+
+Steps
+
+1. Log in to the Azure Portal.
+
+2. Navigate to Azure Active Directory.
+
+3. Select Enterprise applications.
+
+Create enterprise applications and save StorageGRID SSO configuration
+
+To save the SSO configuration for Azure in StorageGRID, you must use Azure to create an enterprise application for each Admin Node. You will copy the federation metadata URLs from Azure and paste them into the corresponding Federation metadata URL fields on the StorageGRID Single Sign-on page. Steps
+
+1. Repeat the following steps for each Admin Node.
+
+a. In the Azure Enterprise applications pane, select New application.
+
+b. Select Create your own application.
+
+c. For the name, enter the Enterprise application name you copied from the Admin Node details table
+
+on the StorageGRID Single Sign-on page.
+
+d. Leave the Integrate any other application you don’t find in the gallery (Non-gallery) radio button
+
+selected. e. Select Create.
+
+f. Select the Get started link in the 2. Set up single sign on box, or select the Single sign-on link in the
+
+left margin.
+
+g. Select the SAML box.
+
+h. Copy the App Federation Metadata Url, which you can find under Step 3 SAML Signing Certificate.
+
+i. Go to the StorageGRID Single Sign-on page, and paste the URL in the Federation metadata URL
+
+field that corresponds to the Enterprise application name you used.
+
+2. After you have pasted a federation metadata URL for each Admin Node and made all other needed changes to the SSO configuration, select Save on the StorageGRID Single Sign-on page. Download SAML metadata for every Admin Node
+
+After the SSO configuration is saved, you can download a SAML metadata file for each Admin Node in your StorageGRID system.
+
+Steps
+
+1. Repeat these steps for each Admin Node.
+
+a. Sign in to StorageGRID from the Admin Node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+345
+
+c. Select the button to download the SAML metadata for that Admin Node.
+
+d. Save the file, which you will upload into Azure AD. Upload SAML metadata to each enterprise application
+
+After downloading a SAML metadata file for each StorageGRID Admin Node, perform the following steps in Azure AD:
+
+Steps
+
+1. Return to the Azure Portal.
+
+2. Repeat these steps for each enterprise application: g. Select the SAML box.

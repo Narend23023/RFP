@@ -1,0 +1,73 @@
+7. Optionally, use the Recovery package link to download an additional copy of the new recovery package. Use identity federation
+
+Using identity federation makes setting up groups and users faster, and it allows users to sign in to StorageGRID using familiar credentials.
+
+Configure identity federation for Grid Manager
+
+You can configure identity federation in the Grid Manager if you want admin groups and users to be managed in another system such as Active Directory, Azure Active Directory (Azure AD), OpenLDAP, or Oracle Directory Server.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You are using Active Directory, Azure AD, OpenLDAP, or Oracle Directory Server as the identity provider.
+
+If you want to use an LDAP v3 service that is not listed, contact technical support.
+
+If you plan to use OpenLDAP, you must configure the OpenLDAP server. See Guidelines for configuring an OpenLDAP server. a. Review the error messages listed in the table.
+
+b. Resolve the issues.
+
+c. Select Retry.
+
+Retrying only changes the node console passwords on the nodes that failed during previous password change attempts.
+
+6. After node console passwords have been changed for all nodes, delete the first recovery package you downloaded.
+
+7. Optionally, use the Recovery package link to download an additional copy of the new recovery package. Use identity federation
+
+Using identity federation makes setting up groups and users faster, and it allows users to sign in to StorageGRID using familiar credentials.
+
+Configure identity federation for Grid Manager
+
+You can configure identity federation in the Grid Manager if you want admin groups and users to be managed in another system such as Active Directory, Azure Active Directory (Azure AD), OpenLDAP, or Oracle Directory Server.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You are using Active Directory, Azure AD, OpenLDAP, or Oracle Directory Server as the identity provider.
+
+If you want to use an LDAP v3 service that is not listed, contact technical support.
+
+If you plan to use OpenLDAP, you must configure the OpenLDAP server. See Guidelines for configuring an OpenLDAP server.
+
+If you plan to enable single sign-on (SSO), you have reviewed the requirements and considerations for single sign-on. If you plan to use Transport Layer Security (TLS) for communications with the LDAP server, the identity provider is using TLS 1.2 or 1.3. See Supported ciphers for outgoing TLS connections.
+
+About this task
+
+You can configure an identity source for the Grid Manager if you want to import groups from another system such as Active Directory, Azure AD, OpenLDAP, or Oracle Directory Server. You can import the following types of groups:
+
+Admin groups. The users in admin groups can sign in to the Grid Manager and perform tasks, based on the management permissions assigned to the group.
+
+311
+
+Tenant user groups for tenants that don’t use their own identity source. Users in tenant groups can sign in to the Tenant Manager and perform tasks, based on the permissions assigned to the group in the Tenant Manager. See Create tenant account and Use a tenant account for details. Enter the configuration
+
+Steps
+
+1. Select CONFIGURATION > Access control > Identity federation.
+
+2. Select Enable identity federation.
+
+3. In the LDAP service type section, select the type of LDAP service you want to configure.
+
+Select Other to configure values for an LDAP server that uses Oracle Directory Server.
+
+4. If you selected Other, complete the fields in the LDAP Attributes section. Otherwise, go to the next step.
+
+User Unique Name: The name of the attribute that contains the unique identifier of an LDAP user. This attribute is equivalent to sAMAccountName for Active Directory and uid for OpenLDAP. If you are configuring Oracle Directory Server, enter uid. User UUID: The name of the attribute that contains the permanent unique identifier of an LDAP user. This attribute is equivalent to objectGUID for Active Directory and entryUUID for OpenLDAP. If you are configuring Oracle Directory Server, enter nsuniqueid. Each user’s value for the specified attribute must be a 32-digit hexadecimal number in either 16-byte or string format, where hyphens are ignored.

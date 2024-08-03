@@ -1,0 +1,121 @@
+Steps
+
+1. Repeat these steps for each Admin Node.
+
+a. Sign in to StorageGRID from the Admin Node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+345
+
+c. Select the button to download the SAML metadata for that Admin Node.
+
+d. Save the file, which you will upload into Azure AD. Upload SAML metadata to each enterprise application
+
+After downloading a SAML metadata file for each StorageGRID Admin Node, perform the following steps in Azure AD:
+
+Steps
+
+1. Return to the Azure Portal.
+
+2. Repeat these steps for each enterprise application: g. Select the SAML box.
+
+h. Copy the App Federation Metadata Url, which you can find under Step 3 SAML Signing Certificate.
+
+i. Go to the StorageGRID Single Sign-on page, and paste the URL in the Federation metadata URL
+
+field that corresponds to the Enterprise application name you used.
+
+2. After you have pasted a federation metadata URL for each Admin Node and made all other needed changes to the SSO configuration, select Save on the StorageGRID Single Sign-on page. Download SAML metadata for every Admin Node
+
+After the SSO configuration is saved, you can download a SAML metadata file for each Admin Node in your StorageGRID system.
+
+Steps
+
+1. Repeat these steps for each Admin Node.
+
+a. Sign in to StorageGRID from the Admin Node.
+
+b. Select CONFIGURATION > Access control > Single sign-on.
+
+345
+
+c. Select the button to download the SAML metadata for that Admin Node.
+
+d. Save the file, which you will upload into Azure AD. Upload SAML metadata to each enterprise application
+
+After downloading a SAML metadata file for each StorageGRID Admin Node, perform the following steps in Azure AD:
+
+Steps
+
+1. Return to the Azure Portal.
+
+2. Repeat these steps for each enterprise application:
+
+You might need to refresh the Enterprise applications page to see applications you previously added in the list.
+
+a. Go to the Properties page for the enterprise application.
+
+b. Set Assignment required to No (unless you want to separately configure assignments). c. Go to the Single sign-on page.
+
+d. Complete the SAML configuration.
+
+e. Select the Upload metadata file button and select the SAML metadata file you downloaded for the
+
+corresponding Admin Node.
+
+f. After the file loads, select Save and then select X to close the pane. You are returned to the Set up Single Sign-On with SAML page.
+
+3. Follow the steps in Use sandbox mode to test each application. Create service provider (SP) connections in PingFederate
+
+You use PingFederate to create a service provider (SP) connection for each Admin Node in your system. To speed up the process, you will import the SAML metadata from StorageGRID.
+
+Before you begin
+
+You have configured single sign-on for StorageGRID and you selected Ping Federate as the SSO type.
+
+Sandbox mode is selected on the Single sign-on page in Grid Manager. See Use sandbox mode.
+
+You have the SP connection ID for each Admin Node in your system. You can find these values in the Admin Nodes detail table on the StorageGRID Single Sign-on page.
+
+You have downloaded the SAML metadata for each Admin Node in your system.
+
+You have experience creating SP connections in PingFederate Server.
+
+You have the
+
+Administrator’s Reference Guide for PingFederate Server. The PingFederate documentation provides detailed step-by-step instructions and explanations.
+
+You have the Admin permission for PingFederate Server. About this task
+
+These instructions summarize how to configure PingFederate Server version 10.3 as an SSO provider for StorageGRID. If you are using another version of PingFederate, you might need to adapt these instructions.
+
+346
+
+Refer to the PingFederate Server documentation for detailed instructions for your release. Complete prerequisites in PingFederate
+
+Before you can create the SP connections you will use for StorageGRID, you must complete prerequisite tasks in PingFederate. You will use information from these prerequisites when you configure the SP connections.
+
+Create data store
+
+If you haven’t already, create a data store to connect PingFederate to the AD FS LDAP server. Use the values you used when configuring identity federation in StorageGRID.
+
+Type: Directory (LDAP)
+
+LDAP Type: Active Directory
+
+Binary Attribute Name: Enter objectGUID on the LDAP Binary Attributes tab exactly as shown. Create password credential validator
+
+If you haven’t already, create a password credential validator.
+
+Type: LDAP Username Password Credential Validator
+
+Data store: Select the data store you created.
+
+Search base: Enter information from LDAP (for example, DC=saml,DC=sgws).
+
+Search filter: sAMAccountName=${username}
+
+Scope: Subtree Create IdP adapter instance 346
+
+Refer to the PingFederate Server documentation for detailed instructions for your release. Complete prerequisites in PingFederate

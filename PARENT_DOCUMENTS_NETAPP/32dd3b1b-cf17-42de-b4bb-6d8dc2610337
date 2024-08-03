@@ -1,0 +1,73 @@
+2. Review the list of rules in the inactive policy.
+
+If your grid doesn’t have an inactive ILM policy, the wizard creates an inactive policy by cloning your active policy and adding the new rule to the top.
+
+736
+
+◦ If your grid already has an inactive ILM policy and that policy uses the same rules and same order as
+
+the active ILM policy, the wizard adds the new rule to the top of the inactive policy.
+
+If your inactive policy contains different rules or a different order than the active policy, the wizard creates a new inactive policy by cloning your active policy and adding the new rule to the top.
+
+3. Review the order of the rules in the new inactive policy. Because the FabricPool rule is the first rule, any objects in the FabricPool bucket are placed before the other rules in the policy are evaluated. Objects in any other buckets are placed by subsequent rules in the policy.
+
+4. Review the retention diagram to learn how different objects will be retained.
+
+a. Select Expand all to see a retention diagram for each rule in the inactive policy.
+
+b. Select Time period and Storage pool to review the retention diagram. Confirm that any rules that apply to the FabricPool bucket or tenant retain objects forever.
+
+5. When you have reviewed the inactive policy, select Activate and continue to activate the policy and go to the traffic classification step.
+
+Errors in an ILM policy can cause irreparable data loss. Review the policy carefully before activating. Step 8 of 9: Create traffic classification policy
+
+As an option, the FabricPool setup wizard can create a traffic classification policy that you can use to monitor the FabricPool workload. The system-created policy uses a matching rule to identify all network traffic related to the bucket you created. This policy monitors traffic only; it does not limit traffic for FabricPool or any other clients.
+
+For details about this step, see Create a traffic classification policy for FabricPool. Steps
+
+1. Review the policy.
+
+2. If you want to create this traffic classification policy, select Create and continue.
+
+As soon as FabricPool begins tiering data to StorageGRID, you can go to the Traffic Classification Policies page to view network traffic metrics for this policy. Later, you can also add rules to limit other workloads and ensure that the FabricPool workload has most of the bandwidth.
+
+3. Otherwise, select Skip this step. Step 9 of 9: Review summary b. Select Time period and Storage pool to review the retention diagram. Confirm that any rules that apply to the FabricPool bucket or tenant retain objects forever.
+
+5. When you have reviewed the inactive policy, select Activate and continue to activate the policy and go to the traffic classification step.
+
+Errors in an ILM policy can cause irreparable data loss. Review the policy carefully before activating. Step 8 of 9: Create traffic classification policy
+
+As an option, the FabricPool setup wizard can create a traffic classification policy that you can use to monitor the FabricPool workload. The system-created policy uses a matching rule to identify all network traffic related to the bucket you created. This policy monitors traffic only; it does not limit traffic for FabricPool or any other clients.
+
+For details about this step, see Create a traffic classification policy for FabricPool. Steps
+
+1. Review the policy.
+
+2. If you want to create this traffic classification policy, select Create and continue.
+
+As soon as FabricPool begins tiering data to StorageGRID, you can go to the Traffic Classification Policies page to view network traffic metrics for this policy. Later, you can also add rules to limit other workloads and ensure that the FabricPool workload has most of the bandwidth.
+
+3. Otherwise, select Skip this step. Step 9 of 9: Review summary
+
+The summary provides details about the items you configured, including the name of the load balancer, tenant, and bucket, the traffic classification policy, and the active ILM policy,
+
+Steps
+
+1. Review the summary.
+
+2. Select Finish.
+
+737
+
+Next steps
+
+After completing the FabricPool wizard, perform these additional steps. Steps
+
+1. Go to Configure ONTAP System Manager to enter the saved values and to complete the ONTAP side of the connection. You must add StorageGRID as a cloud tier, attach the cloud tier to a local tier to create a FabricPool, and set volume tiering policies.
+
+2. Go to Configure the DNS server and ensure that the DNS includes a record to associate the StorageGRID server name (fully qualified domain name) to each StorageGRID IP address you will use.
+
+3. Go to Other best practices for StorageGRID and FabricPool to learn the best practices for StorageGRID audit logs and other global configuration options. Configure StorageGRID manually
+
+Create a high availability (HA) group for FabricPool

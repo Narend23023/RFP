@@ -1,0 +1,41 @@
+Access to audit logs on Admin Nodes.
+
+Secure Shell Protocol (SSH) access for maintenance and support. The Admin Network is never used for internal grid traffic. An Admin Network gateway is provided and allows the Admin Network to communicate with multiple external subnets. However, the Admin Network gateway is never used as the node default gateway.
+
+Note the following requirements and details for the Admin Network gateway:
+
+The Admin Network gateway is required if connections will be made from outside of the Admin Network subnet or if multiple Admin Network subnets are configured.
+
+Static routes are created for each subnet configured in the node’s Admin Network Subnet List. Client Network
+
+The Client Network is optional. When configured, it is used to provide access to grid services for client applications such as S3 and Swift. If you plan to make StorageGRID data accessible to an external resource (for example, a Cloud Storage Pool or the StorageGRID CloudMirror replication service), the external resource can also use the Client Network. Grid nodes can communicate with any subnet reachable through the Client Network gateway.
+
+You can choose which grid nodes should have the Client Network enabled on them. All nodes don’t have to be on the same Client Network, and nodes will never communicate with each other over the Client Network. The Client Network does not become operational until grid installation is complete. For added security, you can specify that a node’s Client Network interface be untrusted so that the Client Network will be more restrictive of which connections are allowed. If a node’s Client Network interface is untrusted, the interface accepts outbound connections such as those used by CloudMirror replication, but only accepts inbound connections on ports that have been explicitly configured as load balancer endpoints. See Manage firewall controls and Configure load balancer endpoints.
+
+When you use a Client Network, client traffic does not need to travel across the Grid Network. Grid Network traffic can be separated onto a secure, non-routable network. The following node types are often configured with a Client Network:
+
+Gateway Nodes, because these nodes provide access to the StorageGRID Load Balancer service and S3 and Swift client access to the grid.
+
+46
+
+• Storage Nodes, because these nodes provide access to the S3 and Swift protocols and to Cloud Storage Pools and the CloudMirror replication service.
+
+Admin Nodes, to ensure that tenant users can connect to theTenant Manager without needing to use the Admin Network.
+
+Note the following for the Client Network gateway:
+
+The Client Network gateway is required if the Client Network is configured.
+
+The Client Network gateway becomes the default route for the grid node when grid configuration is complete. Optional VLAN networks
+
+As required, you can optionally use virtual LAN (VLAN) networks for client traffic and for some types of admin traffic. Grid traffic, however, can’t use a VLAN interface. The internal StorageGRID traffic between nodes must always use the Grid Network on eth0.
+
+To support the use VLANs, you must configure one or more interfaces on a node as trunk interfaces at the switch. You can configure the Grid Network interface (eth0) or the Client Network interface (eth2) to be a trunk, or you can add trunk interfaces to the node.
+
+If eth0 is configured as a trunk, Grid Network traffic flows over the trunk native interface, as configured on the switch. Similarly, if eth2 is configured as a trunk, and the Client Network is also configured on the same node, the Client Network uses the trunk port’s native VLAN as configured on the switch. Only inbound admin traffic, such as used for SSH, Grid Manager, or Tenant Manager traffic, is supported over VLAN networks. Outbound traffic, such as used for NTP, DNS, LDAP, KMS, and Cloud Storage Pools, is not supported over VLAN networks. The Client Network gateway is required if the Client Network is configured.
+
+The Client Network gateway becomes the default route for the grid node when grid configuration is complete. Optional VLAN networks
+
+As required, you can optionally use virtual LAN (VLAN) networks for client traffic and for some types of admin traffic. Grid traffic, however, can’t use a VLAN interface. The internal StorageGRID traffic between nodes must always use the Grid Network on eth0.
+
+To support the use VLANs, you must configure one or more interfaces on a node as trunk interfaces at the switch. You can configure the Grid Network interface (eth0) or the Client Network interface (eth2) to be a trunk, or you can add trunk interfaces to the node.

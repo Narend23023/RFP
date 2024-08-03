@@ -1,0 +1,101 @@
+Manage S3 Select for tenant accounts
+
+You can allow certain S3 tenants to use S3 Select to issue SelectObjectContent requests on individual objects.
+
+S3 Select provides an efficient way to search through large amounts of data without having to deploy a database and associated resources to enable searches. It also reduces the cost and latency of retrieving data. What is S3 Select?
+
+S3 Select allows S3 clients to use SelectObjectContent requests to filter and retrieve only the data needed from an object. The StorageGRID implementation of S3 Select includes a subset of S3 Select commands and features.
+
+Considerations and requirements for using S3 Select
+
+Grid administration requirements
+
+The grid administrator must grant tenants S3 Select ability. Select Allow S3 Select when creating a tenant or editing a tenant. Object format requirements
+
+The object you want to query must be in one of the following formats:
+
+CSV. Can be used as is or compressed into GZIP or BZIP2 archives.
+
+Parquet. Additional requirements for Parquet objects:
+
+S3 Select supports only columnar compression using GZIP or Snappy. S3 Select doesn’t support whole-object compression for Parquet objects.
+
+S3 Select doesn’t support Parquet output. You must specify the output format as CSV or JSON. ◦ The maximum uncompressed row group size is 512 MB. ◦ You must use the data types specified in the object’s schema. ◦ You can’t use INTERVAL, JSON, LIST, TIME, or UUID logical types. Endpoint requirements
+
+The SelectObjectContent request must be sent to a StorageGRID load balancer endpoint. S3 Select allows S3 clients to use SelectObjectContent requests to filter and retrieve only the data needed from an object. The StorageGRID implementation of S3 Select includes a subset of S3 Select commands and features.
+
+Considerations and requirements for using S3 Select
+
+Grid administration requirements
+
+The grid administrator must grant tenants S3 Select ability. Select Allow S3 Select when creating a tenant or editing a tenant. Object format requirements
+
+The object you want to query must be in one of the following formats:
+
+CSV. Can be used as is or compressed into GZIP or BZIP2 archives.
+
+Parquet. Additional requirements for Parquet objects:
+
+S3 Select supports only columnar compression using GZIP or Snappy. S3 Select doesn’t support whole-object compression for Parquet objects.
+
+S3 Select doesn’t support Parquet output. You must specify the output format as CSV or JSON. ◦ The maximum uncompressed row group size is 512 MB. ◦ You must use the data types specified in the object’s schema. ◦ You can’t use INTERVAL, JSON, LIST, TIME, or UUID logical types. Endpoint requirements
+
+The SelectObjectContent request must be sent to a StorageGRID load balancer endpoint.
+
+The Admin and Gateway Nodes used by the endpoint must be one of the following:
+
+471
+
+• A services appliance node
+
+A VMware-based software node
+
+A bare metal node running a kernel with cgroup v2 enabled General considerations
+
+Queries can’t be sent directly to Storage Nodes.
+
+SelectObjectContent requests can decrease load-balancer performance for all S3 clients and all tenants. Enable this feature only when required and only for trusted tenants.
+
+See the instructions for using S3 Select.
+
+To view Grafana charts for S3 Select operations over time, select SUPPORT > Tools > Metrics in the Grid Manager. Configure client connections
+
+Configure S3 and Swift client connections: Overview
+
+As a grid administrator, you manage the configuration options that control how S3 and Swift client applications connect to your StorageGRID system to store and retrieve data.
+
+Support for Swift client applications has been deprecated and will be removed in a future release. Configuration workflow
+
+As shown in the workflow diagram, there are four primary steps for connecting StorageGRID to any S3 or Swift application:
+
+1. Perform prerequisite tasks in StorageGRID, based on how the client application will connect to StorageGRID.
+
+2. Use StorageGRID to obtain the values the application needs to connect to the grid. You can either use the S3 setup wizard or configure each StorageGRID entity manually.
+
+3. Use the S3 or Swift application to complete the connection to StorageGRID. Create DNS entries to associate IP addresses to any domain names you plan to use.
+
+4. Perform ongoing tasks in the application and in StorageGRID to manage and monitor object storage over time.
+
+472
+
+Information needed to attach StorageGRID to a client application
+
+Before you can attach StorageGRID to an S3 or Swift client application, you must perform configuration steps in StorageGRID and obtain certain value.
+
+What values do I need? The following table shows the values you must configure in StorageGRID and where those values are used by the S3 or Swift application and the DNS server.
+
+473
+
+Value
+
+Where value is configured
+
+Where value is used
+
+Virtual IP (VIP) addresses
+
+StorageGRID > HA group
+
+DNS entry
+
+Port

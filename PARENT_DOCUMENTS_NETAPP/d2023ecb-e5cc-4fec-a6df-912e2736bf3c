@@ -1,0 +1,139 @@
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments.
+
+657
+
+Metadata type
+
+Supported operators
+
+Metadata value
+
+User metadata
+
+contains
+
+ends with
+
+Key-value pair, where User metadata name is the key and Metadata value is the value.
+
+equals
+
+exists
+
+starts with
+
+For example, to filter on objects that have user metadata of color=blue, specify color for User metadata name, equals for the operator, and blue for Metadata value.
+
+does not contain
+
+does not end with Time and date the object was last retrieved (read or viewed).
+
+Note: If you plan to use last access time as an advanced filter, Last access time updates must be enabled for the S3 bucket or Swift container.
+
+The region where an S3 bucket was created. Use ILM > Regions to define the regions that are shown.
+
+Note: A value of us-east-1 will match objects in buckets created in the us-east-1 region as well as objects in buckets that have no region specified. See Configure regions (optional and S3 only). The object’s size.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments.
+
+657
+
+Metadata type
+
+Supported operators
+
+Metadata value
+
+User metadata
+
+contains
+
+ends with
+
+Key-value pair, where User metadata name is the key and Metadata value is the value.
+
+equals
+
+exists
+
+starts with
+
+For example, to filter on objects that have user metadata of color=blue, specify color for User metadata name, equals for the operator, and blue for Metadata value.
+
+does not contain
+
+does not end with
+
+Note: User-metadata names aren’t case sensitive; user-metadata values are case sensitive.
+
+does not equal
+
+does not exist
+
+does not start with Object tag (S3 only)
+
+contains
+
+ends with
+
+Key-value pair, where Object tag name is the key and Object tag value is the value.
+
+equals
+
+exists
+
+starts with
+
+For example, to filter on objects that have an object tag of Image=True, specify Image for Object tag name, equals for the operator, and True for Object tag value.
+
+does not contain
+
+does not end with
+
+does not equal
+
+Note: Object tag names and object tag values are case sensitive. You must enter these items exactly as they were defined for the object.
+
+does not exist
+
+does not start with Specify multiple metadata types and values
+
+When you define advanced filtering, you can specify multiple types of metadata and multiple metadata values. For example, if you want a rule to match objects between 10 MB and 100 MB in size, you would select the Object size metadata type and specify two metadata values.
+
+The first metadata value specifies objects greater than or equal to 10 MB.
+
+The second metadata value specifies objects less than or equal to 100 MB.
+
+Using multiple entries allows you to have precise control over which objects are matched. In the following example, the rule applies to objects that have Brand A or Brand B as the value of the camera_type user metadata. However, the rule only applies to those Brand B objects that are smaller than 10 MB.
+
+658 Step 2 of 3: Define placements
+
+The Define placements step of the Create ILM Rule wizard allows you to define the placement instructions that determine how long objects are stored, the type of copies (replicated or erasure-coded), the storage location, and the number of copies. About this task
+
+An ILM rule can include one or more placement instructions. Each placement instruction applies to a single period of time. When you use more than one instruction, the time periods must be contiguous, and at least one instruction must start on day 0. The instructions can continue either forever, or until you no longer require any object copies.
+
+Each placement instruction can have multiple lines if you want to create different types of copies or use different locations during that time period.
+
+In this example, the ILM rule stores one replicated copy in Site 1 and one replicated copy in Site 2 for the first year. After one year, a 2+1 erasure-coded copy is made and saved at only one site.
+
+Steps
+
+659
+
+1. For Reference time, select the type of time to use when calculating the start time for a placement instruction.
+
+Option
+
+Description
+
+Ingest time
+
+The time when the object was ingested.
+
+Last access time
+
+The time when the object was last retrieved (read or viewed).
+
+Note: To use this option, updates to Last access time must be enabled for the S3 bucket or Swift container. See Use Last access time in ILM rules.
+
+User defined creation time

@@ -1,0 +1,99 @@
+c. Specify any parameters you want to use when looking up users.
+
+d. Select Execute.
+
+e. Find the user whose keys you want to clone, and copy the number in the id field.
+
+4. In the s3 section, select the following endpoint: POST /org/users/{userId}/replicate-s3-access-key
+
+5. Select Try it out.
+
+6. In the userId text box, paste the user ID you copied.
+
+7. In the body text box, replace the example entries for example access key and secret access key with the values from the .csv file for that user.
+
+Be sure to retain the double quotes around the string.
+
+8. If the key will expire, replace the example entry for expires with the expiration date and time as a string in
+
+775
+
+ISO 8601 data-time format (for example, 2023-02-28T22:46:33-08:00). If the key will not expire, enter null as the value for the expires entry (or remove the Expires line and the preceding comma).
+
+9. Select Execute.
+
+10. Confirm that the server response code is 204, indicating that the key was successfully cloned to the destination grid. Manage cross-grid replication
+
+If your tenant account was assigned the Use grid federation connection permission when it was created, you can use cross-grid replication to automatically replicate objects between buckets on the tenant’s source grid and buckets on the tenant’s destination grid. Cross-grid replication can occur in one or both directions. Workflow for cross-grid replication
+
+The workflow diagram summarize the steps you will perform to configure cross-grid replication between buckets on two grids. These steps are described in more detail below.
+
+776 Configure cross-grid replication
+
+Before you can use cross-grid replication, you must sign in to the corresponding tenant accounts on each grid and create identical buckets. Then, you can enable cross-grid replication on either or both buckets.
+
+Before you begin
+
+You have reviewed the requirements for cross-grid replication. See What is cross-grid replication.
+
+You are using a supported web browser.
+
+The tenant account has the Use grid federation connection permission, and identical tenant accounts exist on both grids. See Manage the permitted tenants for grid federation connection.
+
+The tenant user you will be signing in as already exists on both grids and belongs to a user group that has the Root access permission.
+
+If you will be signing in to the tenant’s destination grid as a local user, the root user for the tenant account has set a password for your user account on that grid.
+
+777
+
+Create two identical buckets As a first step, sign in to the corresponding tenant accounts on each grid and create identical buckets.
+
+Steps
+
+1. Starting from either grid in the grid federation connection, create a new bucket: The workflow diagram summarize the steps you will perform to configure cross-grid replication between buckets on two grids. These steps are described in more detail below.
+
+776 Configure cross-grid replication
+
+Before you can use cross-grid replication, you must sign in to the corresponding tenant accounts on each grid and create identical buckets. Then, you can enable cross-grid replication on either or both buckets.
+
+Before you begin
+
+You have reviewed the requirements for cross-grid replication. See What is cross-grid replication.
+
+You are using a supported web browser.
+
+The tenant account has the Use grid federation connection permission, and identical tenant accounts exist on both grids. See Manage the permitted tenants for grid federation connection.
+
+The tenant user you will be signing in as already exists on both grids and belongs to a user group that has the Root access permission.
+
+If you will be signing in to the tenant’s destination grid as a local user, the root user for the tenant account has set a password for your user account on that grid.
+
+777
+
+Create two identical buckets As a first step, sign in to the corresponding tenant accounts on each grid and create identical buckets.
+
+Steps
+
+1. Starting from either grid in the grid federation connection, create a new bucket:
+
+a. Sign in to the tenant account using the credentials of a tenant user who exists on both grids.
+
+If you are unable to sign in to the tenant’s destination grid as a local user, confirm that the root user for the tenant account has set a password for your user account.
+
+b. Follow the instructions to create an S3 bucket.
+
+c. On the Manage object settings tab, select Enable object versioning.
+
+d. If S3 Object Lock is enabled for your StorageGRID system, don’t enable S3 Object Lock for the bucket. e. Select Create bucket.
+
+f. Select Finish.
+
+2. Repeat these steps to create an identical bucket for the same tenant account on the other grid in the grid federation connection.
+
+As required, each bucket can use a different region.
+
+Enable cross-grid replication
+
+You must perform these steps before adding any objects to either bucket. Steps
+
+1. Starting from a grid whose objects you want to replicate, enable cross-grid replication in one direction:

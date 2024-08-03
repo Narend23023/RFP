@@ -1,0 +1,137 @@
+The Grid Network MTU mismatch alert is triggered when the maximum transmission unit (MTU) setting for the Grid Network interface (eth0) differs significantly across nodes in the grid.
+
+About this task
+
+The differences in MTU settings could indicate that some, but not all, eth0 networks are configured for jumbo frames. An MTU size mismatch of greater than 1000 might cause network performance problems. Steps
+
+1. List the MTU settings for eth0 on all nodes.
+
+Use the query provided in the Grid Manager. ◦ Navigate to primary Admin Node IP address/metrics/graph and enter the following query: node_network_mtu_bytes{device="eth0"}
+
+2. Modify the MTU settings as necessary to ensure they are the same for the Grid Network interface (eth0) on all nodes.
+
+For Linux- and VMware-based nodes, use the following command: /usr/sbin/change-ip.py [- h] [-n node] mtu network [network...] Example: change-ip.py -n node 1500 grid admin
+
+Note: On Linux-based nodes, if the desired MTU value for the network in the container exceeds the value already configured on the host interface, you must first configure the host interface to have the desired MTU value, and then use the change-ip.py script to change the MTU value of the network in the container.
+
+Use the following arguments for modifying the MTU on Linux- or VMware-based nodes.
+
+1297
+
+Positional arguments
+
+Description mtu
+
+The MTU to set. Must be in the range 1280 to 9216.
+
+network
+
+The networks to apply the MTU to. Include one or more of the following network types:
+
+grid
+
+admin
+
+client
+
+Optional arguments
+
+Description
+
+h, – help
+
+Show the help message and exit.
+
+n node, --node node
+
+The node. The default is the local node. Network Receive Error (NRER) alarm
+
+Network Receive Error (NRER) alarms can be caused by connectivity issues between StorageGRID and your network hardware. In some cases, NRER errors can clear without manual intervention. If the errors don’t clear, take the recommended actions.
+
+About this task
+
+NRER alarms can be caused by the following issues with networking hardware that connects to StorageGRID:
+
+Forward error correction (FEC) is required and not in use
+
+Switch port and NIC MTU mismatch
+
+High link error rates
+
+NIC ring buffer overrun Steps
+
+1. Follow the troubleshooting steps for all potential causes of the NRER alarm given your network configuration.
+
+2. Perform the following steps depending on the cause of the error:
+
+1298
+
+FEC mismatch
+
+These steps are applicable only for NRER errors caused by FEC mismatch on StorageGRID appliances. Positional arguments
+
+Description mtu
+
+The MTU to set. Must be in the range 1280 to 9216.
+
+network
+
+The networks to apply the MTU to. Include one or more of the following network types:
+
+grid
+
+admin
+
+client
+
+Optional arguments
+
+Description
+
+h, – help
+
+Show the help message and exit.
+
+n node, --node node
+
+The node. The default is the local node. Network Receive Error (NRER) alarm
+
+Network Receive Error (NRER) alarms can be caused by connectivity issues between StorageGRID and your network hardware. In some cases, NRER errors can clear without manual intervention. If the errors don’t clear, take the recommended actions.
+
+About this task
+
+NRER alarms can be caused by the following issues with networking hardware that connects to StorageGRID:
+
+Forward error correction (FEC) is required and not in use
+
+Switch port and NIC MTU mismatch
+
+High link error rates
+
+NIC ring buffer overrun Steps
+
+1. Follow the troubleshooting steps for all potential causes of the NRER alarm given your network configuration.
+
+2. Perform the following steps depending on the cause of the error:
+
+1298
+
+FEC mismatch
+
+These steps are applicable only for NRER errors caused by FEC mismatch on StorageGRID appliances.
+
+a. Check the FEC status of the port in the switch attached to your StorageGRID appliance.
+
+b. Check the physical integrity of the cables from the appliance to the switch.
+
+c. If you want to change FEC settings to try to resolve the NRER alarm, first ensure that the
+
+appliance is configured for Auto mode on the Link Configuration page of the StorageGRID Appliance Installer (see the instructions for your appliance:
+
+▪ SG6160 ▪ SGF6112 ▪ SG6000 ▪ SG5800 ▪ SG5700 ▪ SG110 and SG1100 ▪ SG100 and SG1000
+
+d. Change the FEC settings on the switch ports. The StorageGRID appliance ports will adjust their
+
+FEC settings to match, if possible. You can’t configure FEC settings on StorageGRID appliances. Instead, the appliances attempt to discover and mirror the FEC settings on the switch ports they are connected to. If the links are forced to 25-GbE or 100-GbE network speeds, the switch and NIC might fail to negotiate a common FEC setting. Without a common FEC setting, the network will fall back to "no-FEC" mode. When FEC is not enabled, the connections are more susceptible to errors caused by electrical noise.
+
+StorageGRID appliances support Firecode (FC) and Reed Solomon (RS) FEC, as well as no FEC. Switch port and NIC MTU mismatch

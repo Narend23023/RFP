@@ -1,0 +1,81 @@
+s3:AbortMultipartUpload
+
+s3:DeleteObject
+
+s3:GetObject
+
+s3:ListBucket
+
+s3:ListBucketMultipartUploads
+
+s3:ListMultipartUploadParts
+
+s3:PutObject
+
+s3:RestoreObject S3: Considerations for the external bucket’s lifecycle
+
+The movement of objects between StorageGRID and the external S3 bucket specified in the Cloud Storage Pool is controlled by ILM rules and the active ILM policies in StorageGRID. In contrast, the transition of objects from the external S3 bucket specified in the Cloud Storage Pool to Amazon S3 Glacier or S3 Glacier Deep Archive (or to a storage solution that implements the Glacier storage class) is controlled by that bucket’s lifecycle configuration.
+
+If you want to transition objects from the Cloud Storage Pool, you must create the appropriate lifecycle configuration on the external S3 bucket, and you must use a storage solution that implements the Glacier storage class and supports the S3 RestoreObject API.
+
+For example, suppose you want all objects that are moved from StorageGRID to the Cloud Storage Pool to be transitioned to Amazon S3 Glacier storage immediately. You would create a lifecycle configuration on the 634
+
+external S3 bucket that specifies a single action (Transition) as follows: s3:AbortMultipartUpload
+
+s3:DeleteObject
+
+s3:GetObject
+
+s3:ListBucket
+
+s3:ListBucketMultipartUploads
+
+s3:ListMultipartUploadParts
+
+s3:PutObject
+
+s3:RestoreObject S3: Considerations for the external bucket’s lifecycle
+
+The movement of objects between StorageGRID and the external S3 bucket specified in the Cloud Storage Pool is controlled by ILM rules and the active ILM policies in StorageGRID. In contrast, the transition of objects from the external S3 bucket specified in the Cloud Storage Pool to Amazon S3 Glacier or S3 Glacier Deep Archive (or to a storage solution that implements the Glacier storage class) is controlled by that bucket’s lifecycle configuration.
+
+If you want to transition objects from the Cloud Storage Pool, you must create the appropriate lifecycle configuration on the external S3 bucket, and you must use a storage solution that implements the Glacier storage class and supports the S3 RestoreObject API.
+
+For example, suppose you want all objects that are moved from StorageGRID to the Cloud Storage Pool to be transitioned to Amazon S3 Glacier storage immediately. You would create a lifecycle configuration on the 634
+
+external S3 bucket that specifies a single action (Transition) as follows:
+
+<LifecycleConfiguration> <Rule> <ID>Transition Rule</ID> <Filter> <Prefix></Prefix> </Filter> <Status>Enabled</Status> <Transition> <Days>0</Days> <StorageClass>GLACIER</StorageClass> </Transition> </Rule> </LifecycleConfiguration>
+
+This rule would transition all bucket objects to Amazon S3 Glacier on the day they were created (that is, on the day they were moved from StorageGRID to the Cloud Storage Pool).
+
+When configuring the external bucket’s lifecycle, never use Expiration actions to define when objects expire. Expiration actions cause the external storage system to delete expired objects. If you later attempt to access an expired object from StorageGRID, the deleted object will not be found. If you want to transition objects in the Cloud Storage Pool to S3 Glacier Deep Archive (instead of to Amazon S3 Glacier), specify <StorageClass>DEEP_ARCHIVE</StorageClass> in the bucket lifecycle. However, be aware that you can’t use the Expedited tier to restore objects from S3 Glacier Deep Archive. Azure: Considerations for Access tier
+
+When you configure an Azure storage account, you can set the default Access tier to Hot or Cool. When creating a storage account for use with a Cloud Storage Pool, you should use the Hot tier as the default tier. Even though StorageGRID immediately sets the tier to Archive when it moves objects to the Cloud Storage Pool, using a default setting of Hot ensures that you will not be charged an early deletion fee for objects removed from the Cool tier before the 30-day minimum.
+
+Azure: Lifecycle management not supported
+
+Don’t use Azure Blob storage lifecycle management for the container used with a Cloud Storage Pool. The lifecycle operations might interfere with Cloud Storage Pool operations.
+
+Related information
+
+Create a Cloud Storage Pool Compare Cloud Storage Pools and CloudMirror replication
+
+As you begin using Cloud Storage Pools, it might be helpful to understand the similarities and differences between Cloud Storage Pools and the StorageGRID CloudMirror replication service.
+
+635
+
+What is the primary purpose?
+
+How is it set up?
+
+Who is responsible for setting it up?
+
+What is the destination?
+
+What causes objects to be moved to the destination?
+
+How are objects retrieved?
+
+636
+
+Cloud Storage Pool

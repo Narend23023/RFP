@@ -1,0 +1,97 @@
+Example file contents:
+
+116 Example file contents:
+
+NODE_TYPE = VM_Storage_Node ADMIN_IP = 10.1.0.2 BLOCK_DEVICE_VAR_LOCAL = /dev/mapper/dc1-sn1-var-local BLOCK_DEVICE_RANGEDB_00 = /dev/mapper/dc1-sn1-rangedb-0 BLOCK_DEVICE_RANGEDB_01 = /dev/mapper/dc1-sn1-rangedb-1 BLOCK_DEVICE_RANGEDB_02 = /dev/mapper/dc1-sn1-rangedb-2 BLOCK_DEVICE_RANGEDB_03 = /dev/mapper/dc1-sn1-rangedb-3 GRID_NETWORK_TARGET = bond0.1001 ADMIN_NETWORK_TARGET = bond0.1002 CLIENT_NETWORK_TARGET = bond0.1003 GRID_NETWORK_IP = 10.1.0.3 GRID_NETWORK_MASK = 255.255.255.0 GRID_NETWORK_GATEWAY = 10.1.0.1
+
+Example for Archive Node
+
+Example file name: /etc/storagegrid/nodes/dc1-arc1.conf
+
+Example file contents:
+
+116
+
+NODE_TYPE = VM_Archive_Node ADMIN_IP = 10.1.0.2 BLOCK_DEVICE_VAR_LOCAL = /dev/mapper/dc1-arc1-var-local GRID_NETWORK_TARGET = bond0.1001 ADMIN_NETWORK_TARGET = bond0.1002 CLIENT_NETWORK_TARGET = bond0.1003 GRID_NETWORK_IP = 10.1.0.4 GRID_NETWORK_MASK = 255.255.255.0 GRID_NETWORK_GATEWAY = 10.1.0.1
+
+Example for Gateway Node
+
+Example file name: /etc/storagegrid/nodes/dc1-gw1.conf
+
+Example file contents:
+
+NODE_TYPE = VM_API_Gateway ADMIN_IP = 10.1.0.2 BLOCK_DEVICE_VAR_LOCAL = /dev/mapper/dc1-gw1-var-local GRID_NETWORK_TARGET = bond0.1001 ADMIN_NETWORK_TARGET = bond0.1002 CLIENT_NETWORK_TARGET = bond0.1003 GRID_NETWORK_IP = 10.1.0.5 GRID_NETWORK_MASK = 255.255.255.0 GRID_NETWORK_GATEWAY = 10.1.0.1 Example for a non-primary Admin Node
+
+Example file name: /etc/storagegrid/nodes/dc1-adm2.conf
+
+Example file contents:
+
+117
+
+NODE_TYPE = VM_Admin_Node ADMIN_ROLE = Non-Primary ADMIN_IP = 10.1.0.2 BLOCK_DEVICE_VAR_LOCAL = /dev/mapper/dc1-adm2-var-local BLOCK_DEVICE_AUDIT_LOGS = /dev/mapper/dc1-adm2-audit-logs BLOCK_DEVICE_TABLES = /dev/mapper/dc1-adm2-tables GRID_NETWORK_TARGET = bond0.1001 ADMIN_NETWORK_TARGET = bond0.1002 CLIENT_NETWORK_TARGET = bond0.1003 GRID_NETWORK_IP = 10.1.0.6 GRID_NETWORK_MASK = 255.255.255.0 GRID_NETWORK_GATEWAY = 10.1.0.1
+
+Validate the StorageGRID configuration
+
+After creating configuration files in /etc/storagegrid/nodes for each of your StorageGRID nodes, you must validate the contents of those files.
+
+To validate the contents of the configuration files, run the following command on each host: sudo storagegrid node validate all
+
+If the files are correct, the output shows PASSED for each configuration file, as shown in the example.
+
+When using only one LUN on metadata-only nodes, you might receive a warning message that can be ignored. Validate the StorageGRID configuration
+
+After creating configuration files in /etc/storagegrid/nodes for each of your StorageGRID nodes, you must validate the contents of those files.
+
+To validate the contents of the configuration files, run the following command on each host: sudo storagegrid node validate all
+
+If the files are correct, the output shows PASSED for each configuration file, as shown in the example.
+
+When using only one LUN on metadata-only nodes, you might receive a warning message that can be ignored.
+
+For an automated installation, you can suppress this output by using the -q or --quiet options in the storagegrid command (for example, storagegrid --quiet…). If you suppress the output, the command will have a non-zero exit value if any configuration warnings or errors were detected.
+
+If the configuration files are incorrect, the issues are shown as WARNING and ERROR, as shown in the example. If any configuration errors are found, you must correct them before you continue with the installation.
+
+118
+
+Start the StorageGRID host service
+
+To start your StorageGRID nodes, and ensure they restart after a host reboot, you must enable and start the StorageGRID host service. Steps
+
+1. Run the following commands on each host:
+
+sudo systemctl enable storagegrid sudo systemctl start storagegrid
+
+119
+
+2. Run the following command to ensure the deployment is proceeding:
+
+sudo storagegrid node status node-name
+
+3. If any node returns a status of "Not Running" or "Stopped," run the following command: sudo storagegrid node start node-name
+
+4. If you have previously enabled and started the StorageGRID host service (or if you are unsure if the service has been enabled and started), also run the following command:
+
+sudo systemctl reload-or-restart storagegrid
+
+Configure the grid and complete installation (Red Hat) Navigate to the Grid Manager
+
+You use the Grid Manager to define all of the information required to configure your StorageGRID system.
+
+Before you begin
+
+The primary Admin Node must be deployed and have completed the initial startup sequence.
+
+Steps
+
+1. Open your web browser and navigate to one of the following addresses: https://primary_admin_node_ip
+
+client_network_ip
+
+Alternatively, you can access the Grid Manager on port 8443:
+
+https://primary_admin_node_ip:8443
+
+You can use the IP address for the primary Admin Node IP on the Grid Network or on the Admin Network, as appropriate for your network configuration.
+
+2. Select Install a StorageGRID system.

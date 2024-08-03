@@ -1,0 +1,207 @@
+MIB file contents
+
+All objects are under the StorageGRID OID.
+
+Object name
+
+Object ID (OID)
+
+Description
+
+.iso.org.dod.intern et. private.enterprises . netapp.storagegrid
+
+.1.3.6.1.4.1.789.28 669 The MIB module for NetApp StorageGRID entities.
+
+MIB objects
+
+Object name
+
+Object ID (OID)
+
+Description
+
+activeAlertCount 3. To extract the StorageGRID OIDs from the MIB file:
+
+a. Get the OID of the root of the StorageGRID MIB:
+
+root@user-adm1:~ # snmptranslate -On -IR storagegrid
+
+Result: .1.3.6.1.4.1.789.28669 (28669 is always the OID for StorageGRID)
+
+b. Grep for the StorageGRID OID in the entire tree (using paste to join lines):
+
+root@user-adm1:~ # snmptranslate -Tso | paste -d " " - - | grep 28669 The snmptranslate command has many options that are useful for exploring the MIB. This command is available on any StorageGRID node.
+
+MIB file contents
+
+All objects are under the StorageGRID OID.
+
+Object name
+
+Object ID (OID)
+
+Description
+
+.iso.org.dod.intern et. private.enterprises . netapp.storagegrid
+
+.1.3.6.1.4.1.789.28 669 The MIB module for NetApp StorageGRID entities.
+
+MIB objects
+
+Object name
+
+Object ID (OID)
+
+Description
+
+activeAlertCount
+
+.1.3.6.1.4.1. 789.28669.1.3
+
+The number of active alerts in the activeAlertTable.
+
+activeAlertTable
+
+.1.3.6.1.4.1. 789.28669.1.4
+
+A table of active alerts in StorageGRID.
+
+1206
+
+Object name
+
+Object ID (OID)
+
+Description activeAlertId
+
+.1.3.6.1.4.1. 789.28669.1.4.1.1
+
+The ID of the alert. Only unique in the current set of active alerts.
+
+activeAlertName
+
+.1.3.6.1.4.1. 789.28669.1.4.1.2
+
+The name of the alert.
+
+activeAlertInstance .1.3.6.1.4.1.
+
+789.28669.1.4.1.3
+
+The name of the entity that generated the alert, typically the node name. activeAlertSeverity .1.3.6.1.4.1.
+
+The severity of the alert.
+
+789.28669.1.4.1.4
+
+activeAlertStartTim e
+
+.1.3.6.1.4.1. 789.28669.1.4.1.5
+
+The date and time the alert was triggered.
+
+Notification types (Traps)
+
+All notifications include the following variables as varbinds:
+
+activeAlertId
+
+activeAlertName
+
+activeAlertInstance
+
+activeAlertSeverity
+
+activeAlertStartTime Notification type
+
+Object ID (OID)
+
+Description
+
+activeMinorAlert
+
+.1.3.6.1.4.1. 789.28669.0.6
+
+An alert with minor severity
+
+activeMajorAlert
+
+.1.3.6.1.4.1. 789.28669.0.7
+
+An alert with major severity
+
+activeCriticalAlert .1.3.6.1.4.1. 789.28669.0.8
+
+An alert with critical severity
+
+Collect additional StorageGRID data Use charts and graphs
+
+You can use charts and reports to monitor the state of the StorageGRID system and troubleshoot problems.
+
+The Grid Manager is updated with each release and might not match the example screenshots on this page. Types of charts
+
+Charts and graphs summarize the values of specific StorageGRID metrics and attributes.
+
+1207
+
+The Grid Manager dashboard includes cards that summarize available storage for the grid and each site.
+
+The Storage usage panel on the Tenant Manager dashboard displays the following:
+
+A list of the largest buckets (S3) or containers (Swift) for the tenant
+
+A bar chart that represents the relative sizes of the largest buckets or containers
+
+The total amount of space used and, if a quota is set, the amount and percentage of space remaining
+
+1208 Object ID (OID)
+
+Description
+
+activeMinorAlert
+
+.1.3.6.1.4.1. 789.28669.0.6
+
+An alert with minor severity
+
+activeMajorAlert
+
+.1.3.6.1.4.1. 789.28669.0.7
+
+An alert with major severity
+
+activeCriticalAlert .1.3.6.1.4.1. 789.28669.0.8
+
+An alert with critical severity
+
+Collect additional StorageGRID data Use charts and graphs
+
+You can use charts and reports to monitor the state of the StorageGRID system and troubleshoot problems.
+
+The Grid Manager is updated with each release and might not match the example screenshots on this page. Types of charts
+
+Charts and graphs summarize the values of specific StorageGRID metrics and attributes.
+
+1207
+
+The Grid Manager dashboard includes cards that summarize available storage for the grid and each site.
+
+The Storage usage panel on the Tenant Manager dashboard displays the following:
+
+A list of the largest buckets (S3) or containers (Swift) for the tenant
+
+A bar chart that represents the relative sizes of the largest buckets or containers
+
+The total amount of space used and, if a quota is set, the amount and percentage of space remaining
+
+1208
+
+In addition, graphs that show how StorageGRID metrics and attributes change over time are available from the Nodes page and from the SUPPORT > Tools > Grid topology page.
+
+There are four types of graphs:
+
+Grafana charts: Shown on the Nodes page, Grafana charts are used to plot the values of Prometheus metrics over time. For example, the NODES > Network tab for a Storage Node includes a Grafana chart for network traffic. 1209
+
+Grafana charts are also included on the pre-constructed dashboards available from the SUPPORT > Tools > Metrics page.
+
+Line graphs: Available from the Nodes page and from the SUPPORT > Tools > Grid topology page after a data value), line graphs are used to plot the values of StorageGRID

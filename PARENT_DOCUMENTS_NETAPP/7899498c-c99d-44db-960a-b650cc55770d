@@ -1,0 +1,75 @@
+SG110 and SG1100 services appliances
+
+SG100 and SG1000 services appliances Network information for each node
+
+You must configure the following for each network you enable on a node:
+
+IP address
+
+Subnet mask
+
+Gateway IP address
+
+You can only configure one IP address/mask/gateway combination for each of the three networks on each grid node. If you don’t want to configure a gateway for a network, you should use the IP address as the gateway address. High availability groups
+
+High availability (HA) groups provide the ability to add virtual IP (VIP) addresses to the Grid or Client Network interface. For more information, see Manage high availability groups. Grid Network
+
+The Grid Network is required. It is used for all internal StorageGRID traffic. The Grid Network provides connectivity among all nodes in the grid, across all sites and subnets. All nodes on the Grid Network must be able to communicate with all other nodes. The Grid Network can consist of multiple subnets. Networks containing critical grid services, such as NTP, can also be added as grid subnets.
+
+StorageGRID does not support network address translation (NAT) between nodes.
+
+The Grid Network can be used for all admin traffic and all client traffic, even if the Admin Network and Client Network are configured. The Grid Network gateway is the node default gateway unless the node has the Client Network configured.
+
+When configuring the Grid Network, you must ensure that the network is secured from untrusted clients, such as those on the open internet.
+
+Note the following requirements and details for the Grid Network gateway: The Grid Network gateway must be configured if there are multiple grid subnets.
+
+The Grid Network gateway is the node default gateway until grid configuration is complete.
+
+Static routes are generated automatically for all nodes to all subnets configured in the global Grid Network Subnet List.
+
+45
+
+• If a Client Network is added, the default gateway switches from the Grid Network gateway to the Client
+
+Network gateway when grid configuration is complete. Admin Network
+
+The Admin Network is optional. When configured, it can be used for system administration and maintenance traffic. The Admin Network is typically a private network and does not need to be routable between nodes.
+
+You can choose which grid nodes should have the Admin Network enabled on them.
+
+When you use the Admin Network, administrative and maintenance traffic does not need to travel across the Grid Network. Typical uses of the Admin Network include the following:
+
+Access to the Grid Manager and Tenant Manager user interfaces.
+
+Access to critical services such as NTP servers, DNS servers, external key management servers (KMS), and Lightweight Directory Access Protocol (LDAP) servers.
+
+Access to audit logs on Admin Nodes.
+
+Secure Shell Protocol (SSH) access for maintenance and support. The Admin Network is never used for internal grid traffic. An Admin Network gateway is provided and allows the Admin Network to communicate with multiple external subnets. However, the Admin Network gateway is never used as the node default gateway.
+
+Note the following requirements and details for the Admin Network gateway:
+
+The Admin Network gateway is required if connections will be made from outside of the Admin Network subnet or if multiple Admin Network subnets are configured.
+
+Static routes are created for each subnet configured in the node’s Admin Network Subnet List. Client Network Network gateway when grid configuration is complete. Admin Network
+
+The Admin Network is optional. When configured, it can be used for system administration and maintenance traffic. The Admin Network is typically a private network and does not need to be routable between nodes.
+
+You can choose which grid nodes should have the Admin Network enabled on them.
+
+When you use the Admin Network, administrative and maintenance traffic does not need to travel across the Grid Network. Typical uses of the Admin Network include the following:
+
+Access to the Grid Manager and Tenant Manager user interfaces.
+
+Access to critical services such as NTP servers, DNS servers, external key management servers (KMS), and Lightweight Directory Access Protocol (LDAP) servers.
+
+Access to audit logs on Admin Nodes.
+
+Secure Shell Protocol (SSH) access for maintenance and support. The Admin Network is never used for internal grid traffic. An Admin Network gateway is provided and allows the Admin Network to communicate with multiple external subnets. However, the Admin Network gateway is never used as the node default gateway.
+
+Note the following requirements and details for the Admin Network gateway:
+
+The Admin Network gateway is required if connections will be made from outside of the Admin Network subnet or if multiple Admin Network subnets are configured.
+
+Static routes are created for each subnet configured in the node’s Admin Network Subnet List. Client Network

@@ -1,0 +1,67 @@
+Issue a GetObjectLockConfiguration request. GetObjectLockConfiguration
+
+The GetObjectLockConfiguration request allows you to determine if S3 Object Lock is enabled for a bucket and, if it is enabled, see if there is a default retention mode and retention period configured for the bucket.
+
+When new object versions are ingested to the bucket, the default retention mode is applied if x-amz-object- lock-mode is not specified. The default retention period is used to calculate the retain-until-date if x-amz- object-lock-retain-until-date is not specified.
+
+You must have the s3:GetBucketObjectLockConfiguration permission, or be account root, to complete this operation. Request example
+
+892
+
+GET /bucket?object-lock HTTP/1.1 Host: host Accept-Encoding: identity User-Agent: aws-cli/1.18.106 Python/3.8.2 Linux/4.4.0-18362-Microsoft botocore/1.17.29 x-amz-date: date x-amz-content-sha256: authorization-string Authorization: authorization-string Response example
+
+HTTP/1.1 200 OK x-amz-id-2: iVmcB7OXXJRkRH1FiVq1151/T24gRfpwpuZrEG11Bb9ImOMAAe98oxSpXlknabA0LTvBYJpSIX k= x-amz-request-id: B34E94CACB2CEF6D Date: Fri, 04 Sep 2020 22:47:09 GMT Transfer-Encoding: chunked Server: AmazonS3
+
+<?xml version="1.0" encoding="UTF-8"?> <ObjectLockConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <ObjectLockEnabled>Enabled</ObjectLockEnabled> <Rule> <DefaultRetention> <Mode>COMPLIANCE</Mode> <Years>6</Years> </DefaultRetention> </Rule> </ObjectLockConfiguration>
+
+How to specify retention settings for an object
+
+A bucket with S3 Object Lock enabled can contain a combination of objects with and without S3 Object Lock retention settings.
+
+Object-level retention settings are specified using the S3 REST API. The retention settings for an object override any default retention settings for the bucket.
+
+You can specify the following settings for each object:
+
+Retention mode: Either COMPLIANCE or GOVERNANCE. Retain-until-date: A date specifying how long the object version must be retained by StorageGRID.
+
+In COMPLIANCE mode, if the retain-until-date is in the future, the object can be retrieved, but it can’t be modified or deleted. The retain-until-date can be increased, but this date can’t be decreased or removed.
+
+893
+
+◦ In GOVERNANCE mode, users with special permission can bypass the retain-until-date setting. They <?xml version="1.0" encoding="UTF-8"?> <ObjectLockConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> <ObjectLockEnabled>Enabled</ObjectLockEnabled> <Rule> <DefaultRetention> <Mode>COMPLIANCE</Mode> <Years>6</Years> </DefaultRetention> </Rule> </ObjectLockConfiguration>
+
+How to specify retention settings for an object
+
+A bucket with S3 Object Lock enabled can contain a combination of objects with and without S3 Object Lock retention settings.
+
+Object-level retention settings are specified using the S3 REST API. The retention settings for an object override any default retention settings for the bucket.
+
+You can specify the following settings for each object:
+
+Retention mode: Either COMPLIANCE or GOVERNANCE. Retain-until-date: A date specifying how long the object version must be retained by StorageGRID.
+
+In COMPLIANCE mode, if the retain-until-date is in the future, the object can be retrieved, but it can’t be modified or deleted. The retain-until-date can be increased, but this date can’t be decreased or removed.
+
+893
+
+◦ In GOVERNANCE mode, users with special permission can bypass the retain-until-date setting. They
+
+can delete an object version before its retention period has elapsed. They can also increase, decrease, or even remove the retain-until-date.
+
+Legal hold: Applying a legal hold to an object version immediately locks that object. For example, you might need to put a legal hold on an object that is related to an investigation or legal dispute. A legal hold has no expiration date, but remains in place until it is explicitly removed. The legal hold setting for an object is independent of the retention mode and the retain-until-date. If an object version is under a legal hold, no one can delete that version.
+
+To specify S3 Object Lock settings when adding an object version to a bucket, issue a PutObject, CopyObject, or CreateMultipartUpload request.
+
+You can use the following:
+
+x-amz-object-lock-mode, which can be COMPLIANCE or GOVERNANCE (case sensitive).
+
+If you specify x-amz-object-lock-mode, you must also specify x-amz-object-lock- retain-until-date.
+
+x-amz-object-lock-retain-until-date
+
+The retain-until-date value must be in the format 2020-08-10T21:46:00Z. Fractional seconds are allowed, but only 3 decimal digits are preserved (milliseconds precision). Other ISO 8601 formats aren’t allowed.
+
+The retain-until-date must be in the future.
+
+x-amz-object-lock-legal-hold If legal hold is ON (case-sensitive), the object is placed under a legal hold. If legal hold is OFF, no legal hold is placed. Any other value results in a 400 Bad Request (InvalidArgument) error.

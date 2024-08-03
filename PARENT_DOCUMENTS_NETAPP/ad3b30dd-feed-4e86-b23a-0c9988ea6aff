@@ -1,0 +1,73 @@
+You can enable event notification for an S3 bucket if you want StorageGRID to send notifications about specified events to a destination Kafka cluster or Amazon Simple Notification Service.
+
+You can configure event notifications by associating notification configuration XML with a source bucket. The notification configuration XML follows S3 conventions for configuring bucket notifications, with the destination Kafka or Amazon SNS topic specified as the URN of an endpoint.
+
+Event notifications are created at the source bucket as specified in the notification configuration and are delivered to the destination. If an event associated with an object succeeds, a notification about that event is created and queued for delivery. The uniqueness and ordering of notifications aren’t guaranteed. More than one notification of an event might be delivered to the destination as a result of operations taken to guarantee delivery success. And because delivery is asynchronous, the time ordering of notifications at the destination is not guaranteed to match the ordering of events on the source bucket, particularly for operations that originate from different StorageGRID sites. You can use the sequencer key in the event message to determine the order of events for a particular object, as described in Amazon S3 documentation.
+
+Supported notifications and messages
+
+StorageGRID event notifications follow the Amazon S3 API with some limitations:
+
+829
+
+• The following event types are supported: s3:ObjectCreated:* ◦ s3:ObjectCreated:Put ◦ s3:ObjectCreated:Post ◦ s3:ObjectCreated:Copy ◦ s3:ObjectCreated:CompleteMultipartUpload ◦ s3:ObjectRemoved:* ◦ s3:ObjectRemoved:Delete ◦ s3:ObjectRemoved:DeleteMarkerCreated ◦ s3:ObjectRestore:Post
+
+Event notifications sent from StorageGRID use the standard JSON format but don’t include some keys and use specific values for others, as shown in the table: Key name
+
+StorageGRID value
+
+eventSource
+
+sgws:s3
+
+awsRegion
+
+not included
+
+x-amz-id-2
+
+not included
+
+arn
+
+urn:sgws:s3:::bucket_name
+
+Understand search integration service
+
+You can enable search integration for an S3 bucket if you want to use an external search and data analysis service for your object metadata.
+
+The search integration service is a custom StorageGRID service that automatically and asynchronously sends S3 object metadata to a destination endpoint whenever an object or its metadata is updated. You can then use sophisticated search, data analysis, visualization, or machine learning tools provided by the destination service to search, analyze, and gain insights from your object data.
+
+You can enable the search integration service for any versioned or unversioned bucket. Search integration is configured by associating metadata notification configuration XML with the bucket that specifies which objects to act on and the destination for the object metadata. Notifications are generated in the form of a JSON document named with the bucket name, object name, and version ID, if any. Each metadata notification contains a standard set of system metadata for the object in addition to all of the object’s tags and user metadata. StorageGRID value
+
+eventSource
+
+sgws:s3
+
+awsRegion
+
+not included
+
+x-amz-id-2
+
+not included
+
+arn
+
+urn:sgws:s3:::bucket_name
+
+Understand search integration service
+
+You can enable search integration for an S3 bucket if you want to use an external search and data analysis service for your object metadata.
+
+The search integration service is a custom StorageGRID service that automatically and asynchronously sends S3 object metadata to a destination endpoint whenever an object or its metadata is updated. You can then use sophisticated search, data analysis, visualization, or machine learning tools provided by the destination service to search, analyze, and gain insights from your object data.
+
+You can enable the search integration service for any versioned or unversioned bucket. Search integration is configured by associating metadata notification configuration XML with the bucket that specifies which objects to act on and the destination for the object metadata. Notifications are generated in the form of a JSON document named with the bucket name, object name, and version ID, if any. Each metadata notification contains a standard set of system metadata for the object in addition to all of the object’s tags and user metadata.
+
+For tags and user metadata, StorageGRID passes dates and numbers to Elasticsearch as strings or as S3 event notifications. To configure Elasticsearch to interpret these strings as dates or numbers, follow the Elasticsearch instructions for dynamic field mapping and for mapping date formats. You must enable the dynamic field mappings on the index before you configure the search integration service. After a document is indexed, you can’t edit the document’s field types in the index.
+
+830
+
+Notifications are generated and queued for delivery whenever:
+
+An object is created.

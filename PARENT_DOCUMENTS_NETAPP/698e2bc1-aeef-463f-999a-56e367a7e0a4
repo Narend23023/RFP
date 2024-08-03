@@ -1,0 +1,63 @@
+segment container + segment 1 + segment 2 = three stored objects
+
+What are storage volume watermarks? Monitoring and managing the space used for object metadata
+
+Configuring global settings for stored objects
+
+Applying Storage Node configuration settings
+
+Managing full Storage Nodes Use Storage options
+
+What is object segmentation?
+
+Object segmentation is the process of splitting up an object into a collection of smaller fixed-size objects to optimize storage and resources usage for large objects. S3 multi-part upload also creates segmented objects, with an object representing each part.
+
+When an object is ingested into the StorageGRID system, the LDR service splits the object into segments, and creates a segment container that lists the header information of all segments as content.
+
+546
+
+On retrieval of a segment container, the LDR service assembles the original object from its segments and returns the object to the client.
+
+The container and segments aren’t necessarily stored on the same Storage Node. Container and segments can be stored on any Storage Node within the storage pool specified in the ILM rule. Each segment is treated by the StorageGRID system independently and contributes to the count of attributes such as Managed Objects and Stored Objects. For example, if an object stored to the StorageGRID system is split into two segments, the value of Managed Objects increases by three after the ingest is complete, as follows:
+
+segment container + segment 1 + segment 2 = three stored objects
+
+What are storage volume watermarks?
+
+StorageGRID uses three storage volume watermarks to ensure that Storage Nodes are safely transitioned to a read-only state before they run critically low on space and to allow Storage Nodes that have been transitioned to a read-only state to become read-write again.
+
+547
+
+Storage volume watermarks only apply to the space used for replicated and erasure-coded object data. To learn about the space reserved for object metadata on volume 0, go to Manage object metadata storage. What is the Soft Read-Only Watermark?
+
+The Storage Volume Soft Read-Only Watermark is the first watermark to indicate that a Storage Node’s usable space for object data is becoming full.
+
+If each volume in a Storage Node has less free space than that volume’s Soft Read-Only Watermark, the Storage Node transitions into read-only mode. Read-only mode means that the Storage Node advertises read- only services to the rest of the StorageGRID system, but fulfills all pending write requests.
+
+For example, suppose each volume in a Storage Node has a Soft Read-Only Watermark of 10 GB. As soon as each volume has less than 10 GB of free space, the Storage Node transitions to soft read-only mode. What is the Hard Read-Only Watermark?
+
+The Storage Volume Hard Read-Only Watermark is the next watermark to indicate that a node’s usable space for object data is becoming full.
+
+If the free space on a volume is less than that volume’s Hard Read-Only Watermark, writes to the volume will fail. Writes to other volumes can continue, however, until the free space on those volumes is less than their Hard Read-Only Watermarks.
+
+For example, suppose each volume in a Storage Node has a Hard Read-Only Watermark of 5 GB. As soon as each volume has less than 5 GB of free space, the Storage Node no longer accepts any write requests.
+
+548
+
+The Hard Read-Only Watermark is always less than the Soft Read-Only Watermark.
+
+What is the Read-Write Watermark? The Storage Volume Read-Write Watermark only applies to Storage Nodes that have transitioned to read- only mode. It determines when the node can become read-write again. When the free space on any one storage volume in a Storage Node is greater than that volume’s Read-Write Watermark, the node automatically transitions back to the read-write state.
+
+For example, suppose the Storage Node has transitioned to read-only mode. Also suppose that each volume has a Read-Write Watermark of 30 GB. As soon as the free space for any volume increases to 30 GB, the node becomes read-write again.
+
+The Read-Write Watermark is always larger than both the Soft Read-Only Watermark and the Hard Read-Only Watermark. View storage volume watermarks
+
+You can view the current watermark settings and the system-optimized values. If optimized watermarks aren’t being used, you can determine if you can or should adjust the settings.
+
+Before you begin
+
+You have completed the upgrade to StorageGRID 11.6 or higher.
+
+You are signed in to the Grid Manager using a supported web browser. 548
+
+The Hard Read-Only Watermark is always less than the Soft Read-Only Watermark.

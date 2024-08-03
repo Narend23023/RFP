@@ -1,0 +1,129 @@
+a. On the Trust Model tab, select Unanchored.
+
+b. On the Signature Verification Certificate tab, review the signing certificate information, which was
+
+imported from the StorageGRID SAML metadata.
+
+5. Review the summary screens and select Save to save the SP connection. Create additional SP connections
+
+You can copy the first SP connection to create the SP connections you need for each Admin Node in your grid. You upload new metadata for each copy.
+
+The SP connections for different Admin Nodes use identical settings, with the exception of the Partner’s Entity ID, Base URL, Connection ID, Connection Name, Signature Verification, and SLO Response URL. Steps
+
+1. Select Action > Copy to create a copy of the initial SP connection for each additional Admin Node.
+
+2. Enter the Connection ID and Connection Name for the copy, and select Save.
+
+3. Choose the metadata file corresponding to the Admin Node:
+
+a. Select Action > Update with Metadata.
+
+b. Select Choose File and upload the metadata. c. Select Next.
+
+d. Select Save.
+
+4. Resolve the error due to the unused attribute:
+
+a. Select the new connection.
+
+b. Select Configure Browser SSO > Configure Assertion Creation > Attribute Contract.
+
+c. Delete the entry for urn:oid.
+
+d. Select Save.
+
+Disable single sign-on
+
+You can disable single sign-on (SSO) if you no longer want to use this functionality. You must disable single sign-on before you can disable identity federation.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. Steps
+
+1. Select CONFIGURATION > Access control > Single sign-on.
+
+The Single Sign-on page appears.
+
+350
+
+2. Select the Disabled option.
+
+3. Select Save.
+
+A warning message appears indicating that local users will now be able to sign in.
+
+4. Select OK.
+
+The next time you sign in to StorageGRID, the StorageGRID Sign in page appears and you must enter the username and password for a local or federated StorageGRID user. Temporarily disable and reenable single sign-on for one Admin Node
+
+You might not be able to sign in to the Grid Manager if the single sign-on (SSO) system goes down. In this case, you can temporarily disable and reenable SSO for one Admin Node. To disable and then reenable SSO, you must access the node’s command shell.
+
+Before you begin
+
+You have specific access permissions.
+
+You have the Passwords.txt file.
+
+You know the password for the local root user. About this task
+
+After you disable SSO for one Admin Node, you can sign in to the Grid Manager as the local root user. To secure your StorageGRID system, you must use the node’s command shell to reenable SSO on the Admin Node as soon as you sign out.
+
+Disabling SSO for one Admin Node does not affect the SSO settings for any other Admin Nodes in the grid. The Enable SSO checkbox on the Single Sign-on page in the Grid Manager remains selected, and all existing SSO settings are maintained unless you update them. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following command:disable-saml
+
+A message indicates that the command applies to this Admin Node only.
+
+3. Confirm that you want to disable SSO. Before you begin
+
+You have specific access permissions.
+
+You have the Passwords.txt file.
+
+You know the password for the local root user. About this task
+
+After you disable SSO for one Admin Node, you can sign in to the Grid Manager as the local root user. To secure your StorageGRID system, you must use the node’s command shell to reenable SSO on the Admin Node as soon as you sign out.
+
+Disabling SSO for one Admin Node does not affect the SSO settings for any other Admin Nodes in the grid. The Enable SSO checkbox on the Single Sign-on page in the Grid Manager remains selected, and all existing SSO settings are maintained unless you update them. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Run the following command:disable-saml
+
+A message indicates that the command applies to this Admin Node only.
+
+3. Confirm that you want to disable SSO.
+
+A message indicates that single sign-on is disabled on the node.
+
+4. From a web browser, access the Grid Manager on the same Admin Node.
+
+351
+
+The Grid Manager sign-in page is now displayed because SSO has been disabled.
+
+5. Sign in with the username root and the local root user’s password.

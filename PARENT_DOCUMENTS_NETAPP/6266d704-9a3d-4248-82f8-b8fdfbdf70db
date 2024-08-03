@@ -1,0 +1,43 @@
+986 { "Statement": [ { "Sid": "AllowEveryoneReadWriteAccessIfInSourceIpRange", "Effect": "Allow", "Principal": "*", "Action": [ "s3:*Object", "s3:ListBucket" ], "Resource": ["arn:aws:s3:::examplebucket","arn:aws:s3:::examplebucket/*"], "Condition": { "IpAddress": {"aws:SourceIp": "54.240.143.0/24"}, "NotIpAddress": {"aws:SourceIp": "54.240.143.188"} } } ] }
+
+Example: Allow full access to a bucket exclusively by a specified federated user
+
+In this example, the federated user Alex is allowed full access to the examplebucket bucket and its objects. All other users, including ‘root’, are explicitly denied all operations. Note however that ‘root’ is never denied permissions to Put/Get/DeleteBucketPolicy.
+
+987 { "Statement": [ { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::95390887230002558202:federated-user/Alex" }, "Action": [ "s3:*" ], "Resource": [ "arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*" ] }, { "Effect": "Deny", "NotPrincipal": { "AWS": "arn:aws:iam::95390887230002558202:federated-user/Alex" }, "Action": [ "s3:*" ], "Resource": [ "arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*" ] } ] } Example: PutOverwriteObject permission
+
+In this example, the Deny Effect for PutOverwriteObject and DeleteObject ensures that no one can overwrite or delete the object’s data, user-defined metadata, and S3 object tagging. In this example, the federated user Alex is allowed full access to the examplebucket bucket and its objects. All other users, including ‘root’, are explicitly denied all operations. Note however that ‘root’ is never denied permissions to Put/Get/DeleteBucketPolicy.
+
+987 { "Statement": [ { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::95390887230002558202:federated-user/Alex" }, "Action": [ "s3:*" ], "Resource": [ "arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*" ] }, { "Effect": "Deny", "NotPrincipal": { "AWS": "arn:aws:iam::95390887230002558202:federated-user/Alex" }, "Action": [ "s3:*" ], "Resource": [ "arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*" ] } ] } Example: PutOverwriteObject permission
+
+In this example, the Deny Effect for PutOverwriteObject and DeleteObject ensures that no one can overwrite or delete the object’s data, user-defined metadata, and S3 object tagging.
+
+988
+
+{ "Statement": [ { "Effect": "Deny", "Principal": "*", "Action": [ "s3:PutOverwriteObject", "s3:DeleteObject", "s3:DeleteObjectVersion" ], "Resource": "arn:aws:s3:::wormbucket/*" }, { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::95390887230002558202:federated- group/SomeGroup"
+
+}, "Action": "s3:ListBucket", "Resource": "arn:aws:s3:::wormbucket" }, { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::95390887230002558202:federated- group/SomeGroup" }, "Action": "s3:*", "Resource": "arn:aws:s3:::wormbucket/*" } ] }
+
+Example group policies
+
+Use the examples in this section to build StorageGRID access policies for groups.
+
+Group policies specify the access permissions for the group that the policy is attached to. There is no Principal element in the policy because it is implicit. Group policies are configured using the Tenant Manager or the API. Example: Set group policy using Tenant Manager
+
+When you add or edit a group in the Tenant Manager, you can select a group policy to determine which S3 access permissions the members of this group will have. See Create groups for an S3 tenant.
+
+989
+
+• No S3 Access: Default option. Users in this group don’t have access to S3 resources, unless access is
+
+granted with a bucket policy. If you select this option, only the root user will have access to S3 resources by default.
+
+Read Only Access: Users in this group have read-only access to S3 resources. For example, users in this group can list objects and read object data, metadata, and tags. When you select this option, the JSON string for a read-only group policy appears in the text box. You can’t edit this string.
+
+Full Access: Users in this group have full access to S3 resources, including buckets. When you select this option, the JSON string for a full-access group policy appears in the text box. You can’t edit this string. Ransomware Mitigation: This sample policy applies to all buckets for this tenant. Users in this group can perform common actions, but can’t permanently delete objects from buckets that have object versioning enabled.
+
+Tenant Manager users who have the Manage all buckets permission can override this group policy. Limit the Manage all buckets permission to trusted users, and use Multi-Factor Authentication (MFA) where available.
+
+Custom: Users in the group are granted the permissions you specify in the text box. Example: Allow group full access to all buckets
+
+In this example, all members of the group are permitted full access to all buckets owned by the tenant account unless explicitly denied by bucket policy. granted with a bucket policy. If you select this option, only the root user will have access to S3 resources by default.

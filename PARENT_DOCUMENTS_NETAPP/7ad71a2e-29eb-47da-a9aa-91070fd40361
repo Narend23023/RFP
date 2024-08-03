@@ -1,0 +1,28 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> The following table describes how StorageGRID implements S3 REST API object operations.<br>
+                       <b>Bounding box:</b> x1=134, y1=609, x2=1566, y2=1957
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Operation</td>
+      <td>Implementation</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>DeleteObject</td>
+      <td>Multi-Factor Authentication (MFA) and the response header x-amz-mfa\naren’t supported.\nWhen processing a DeleteObject request, StorageGRID attempts to\nimmediately remove all copies of the object from all stored locations. If\nsuccessful, StorageGRID returns a response to the client immediately. If\nall copies can’t be removed within 30 seconds (for example, because a\nlocation is temporarily unavailable), StorageGRID queues the copies for\nremoval and then indicates success to the client.\nVersioning\nTo remove a specific version, the requestor must be the bucket\nowner and use the subresource. Using this subresource versionId\npermanently deletes the version. If the corresponds to a versionId\ndelete marker, the response header is x-amz-delete-marker\nreturned set to true.\n• subresource on a If an object is deleted without the versionId\nversion enabled bucket, it results in the generation of a delete\nmarker. The for the delete marker is returned using versionId\nthe response header, and the x-amz-version-id x-amz-\nresponse header is returned set to delete-marker true.\n• If an object is deleted without the subresource on a versionId\nversion suspended bucket, it results in a permanent deletion of\nan already existing 'null' version or a 'null' delete marker, and the\ngeneration of a new 'null' delete marker. The x-amz-delete-\nresponse header is returned set to marker true.\nNote: In certain cases, multiple delete markers might exist for an\nobject.\nSee Use S3 REST API to configure S3 Object Lock to learn how to\ndelete object versions in GOVERNANCE mode.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

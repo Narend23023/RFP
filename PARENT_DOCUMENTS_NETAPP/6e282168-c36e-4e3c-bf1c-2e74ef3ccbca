@@ -1,0 +1,63 @@
+966
+
+Storage Nodes at each site available, technical support might direct you to retry the failed request by forcing the Strong-site consistency. Never force the Strong-site consistency for PUT bucket compliance unless you have been directed to do so by technical support and unless you understand the potential consequences of using this level. True: The objects in this bucket will be deleted automatically when their retention period expires, unless the bucket is under a legal hold.
+
+False: The objects in this bucket will not be deleted automatically when the retention period expires. You must delete these objects manually if you need to delete them. Consistency for compliance settings
+
+When you update the compliance settings for an S3 bucket with a PUT Bucket compliance request, StorageGRID attempts to update the bucket’s metadata across the grid. By default, StorageGRID uses the Strong-global consistency to guarantee that all data center sites and all Storage Nodes that contain bucket metadata have read-after-write consistency for the changed compliance settings.
+
+If StorageGRID can’t achieve the Strong-global consistency because a data center site or multiple Storage Nodes at a site are unavailable, the HTTP status code for the response is 503 Service Unavailable.
+
+If you receive this response, you must contact the grid administrator to ensure that the required storage services are made available as soon as possible. If the grid administrator is unable to make enough of the
+
+966
+
+Storage Nodes at each site available, technical support might direct you to retry the failed request by forcing the Strong-site consistency. Never force the Strong-site consistency for PUT bucket compliance unless you have been directed to do so by technical support and unless you understand the potential consequences of using this level.
+
+When the consistency is reduced to Strong-site, StorageGRID guarantees that updated compliance settings will have read-after-write consistency only for client requests within a site. This means that the StorageGRID system might temporarily have multiple, inconsistent settings for this bucket until all sites and Storage Nodes are available. The inconsistent settings can result in unexpected and undesired behavior. For example, if you are placing a bucket under a legal hold and you force a lower consistency, the bucket’s previous compliance settings (that is, legal hold off) might continue to be in effect at some data center sites. As a result, objects that you think are on legal hold might be deleted when their retention period expires, either by the user or by AutoDelete, if enabled. To force the use of the Strong-site consistency, reissue the PUT Bucket compliance request and include the Consistency-Control HTTP request header, as follows:
+
+PUT /mybucket/?x-ntap-sg-compliance HTTP/1.1 Consistency-Control: strong-site
+
+Error responses
+
+If the bucket was not created to be compliant, the HTTP status code for the response is 404 Not Found.
+
+If RetentionPeriodMinutes in the request is less than the bucket’s current retention period, the HTTP status code is 400 Bad Request.
+
+Related information
+
+Deprecated: PUT Bucket request modifications for compliance Bucket and group access policies
+
+Use bucket and group access policies
+
+StorageGRID uses the Amazon Web Services (AWS) policy language to allow S3 tenants to control access to buckets and objects within those buckets. The StorageGRID system implements a subset of the S3 REST API policy language. Access policies for the S3 API are written in JSON. Access policy overview
+
+There are two kinds of access policies supported by StorageGRID.
+
+Bucket policies, which are managed using the GetBucketPolicy, PutBucketPolicy, and DeleteBucketPolicy S3 API operations. Bucket policies are attached to buckets, so they are configured to control access by users in the bucket owner account or other accounts to the bucket and the objects in it. A bucket policy applies to only one bucket and possibly multiple groups.
+
+Group policies, which are configured using the Tenant Manager or Tenant Management API. Group
+
+967
+
+policies are attached to a group in the account, so they are configured to allow that group to access specific resources owned by that account. A group policy applies to only one group and possibly multiple buckets.
+
+There is no difference in priority between group and bucket policies. StorageGRID bucket and group policies follow a specific grammar defined by Amazon. Inside each policy is an array of policy statements, and each statement contains the following elements:
+
+Statement ID (Sid) (optional)
+
+Effect
+
+Principal/NotPrincipal
+
+Resource/NotResource
+
+Action/NotAction
+
+Condition (optional)
+
+Policy statements are built using this structure to specify permissions: Grant <Effect> to allow/deny <Principal> to perform <Action> on <Resource> when <Condition> applies.
+
+Each policy element is used for a specific function: Element
+
+Description

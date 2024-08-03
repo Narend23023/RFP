@@ -1,0 +1,55 @@
+To learn more about high availability groups, see Manage high availability (HA) groups. Using HA groups
+
+The best practices for creating a StorageGRID HA group for FabricPool depend on the workload.
+
+If you plan to use FabricPool with primary workload data, you must create an HA group that includes at least two load-balancing nodes to prevent data retrieval interruption.
+
+If you plan to use the FabricPool snapshot-only volume tiering policy or non-primary local performance tiers (for example, disaster recovery locations or NetApp SnapMirror® destinations), you can configure an HA group with only one node.
+
+These instructions describe setting up an HA group for Active-Backup HA (one node is active and one node is backup). However, you might prefer to use DNS Round Robin or Active-Active HA. To learn the benefits of these other HA configurations, see Configuration options for HA groups. Best practices for load balancing for FabricPool
+
+Before attaching StorageGRID as a FabricPool cloud tier, review the best practices for using load balancers with FabricPool.
+
+To learn general information about the StorageGRID load balancer and the load balancer certificate, see Considerations for load balancing.
+
+Best practices for tenant access to the load balancer endpoint used for FabricPool
+
+You can control which tenants can use a specific load balancer endpoint to access their buckets. You can allow all tenants, allow some tenants, or block some tenants. When creating a load balance endpoint for FabricPool use, select Allow all tenants. ONTAP encrypts the data that is placed in StorageGRID buckets, so little additional security would be provided by this extra security layer. Best practices for the security certificate
+
+When you create a StorageGRID load balancer endpoint for FabricPool use, you provide the security certificate that will allow ONTAP to authenticate with StorageGRID.
+
+750
+
+In most cases, the connection between ONTAP and StorageGRID should use Transport Layer Security (TLS) encryption. Using FabricPool without TLS encryption is supported but not recommended. When you select the network protocol for the StorageGRID load balancer endpoint, select HTTPS. Then provide the security certificate that will allow ONTAP to authenticate with StorageGRID. Before attaching StorageGRID as a FabricPool cloud tier, review the best practices for using load balancers with FabricPool.
+
+To learn general information about the StorageGRID load balancer and the load balancer certificate, see Considerations for load balancing.
+
+Best practices for tenant access to the load balancer endpoint used for FabricPool
+
+You can control which tenants can use a specific load balancer endpoint to access their buckets. You can allow all tenants, allow some tenants, or block some tenants. When creating a load balance endpoint for FabricPool use, select Allow all tenants. ONTAP encrypts the data that is placed in StorageGRID buckets, so little additional security would be provided by this extra security layer. Best practices for the security certificate
+
+When you create a StorageGRID load balancer endpoint for FabricPool use, you provide the security certificate that will allow ONTAP to authenticate with StorageGRID.
+
+750
+
+In most cases, the connection between ONTAP and StorageGRID should use Transport Layer Security (TLS) encryption. Using FabricPool without TLS encryption is supported but not recommended. When you select the network protocol for the StorageGRID load balancer endpoint, select HTTPS. Then provide the security certificate that will allow ONTAP to authenticate with StorageGRID.
+
+To learn more about the server certificate for a load balancing endpoint:
+
+Manage security certificates
+
+Considerations for load balancing
+
+Hardening guidelines for server certificates
+
+Add certificate to ONTAP
+
+When you add StorageGRID as a FabricPool cloud tier, you must install the same certificate on the ONTAP cluster, including the root and any subordinate certificate authority (CA) certificates. Manage certificate expiration
+
+If the certificate used to secure the connection between ONTAP and StorageGRID expires, FabricPool will temporarily stop working and ONTAP will temporarily lose access to data tiered to StorageGRID.
+
+To avoid certificate expiration issues, follow these best practices:
+
+Carefully monitor any alerts that warn of approaching certificate expiration dates, such as the Expiration of load balancer endpoint certificate and Expiration of global server certificate for S3 and Swift API alerts.
+
+Always keep the StorageGRID and ONTAP versions of the certificate in sync. If you replace or renew the certificate used for a load balancer endpoint, you must replace or renew the equivalent certificate used by ONTAP for the cloud tier.

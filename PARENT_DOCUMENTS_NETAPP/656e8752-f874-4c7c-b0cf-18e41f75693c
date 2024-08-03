@@ -1,0 +1,127 @@
+rebalance-data terminate --job-id job-id
+
+When you terminate an EC rebalance procedure, any data fragments that have already been moved remain in their new locations. Data is not moved back to the original location.
+
+9. If you are using erasure coding at more than one site, run this procedure for all other affected sites. Troubleshoot expansion
+
+If you encounter errors during the grid expansion process that you are unable to resolve, or if a grid task fails, collect the log files and contact technical support.
+
+Before you contact technical support, collect the required log files to assist in troubleshooting.
+
+Steps
+
+1. Connect to the expansion node that has experienced failures: a. Enter the following command:ssh -p 8022 admin@grid_node_IP
+
+Port 8022 is the SSH port of the base OS, while port 22 is the SSH port of the container engine running StorageGRID.
+
+b. Enter the password listed in the Passwords.txt file.
+
+1433
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+After you log in as root, the prompt changes from $ to #.
+
+2. Depending on the stage the installation reached, retrieve any of the following logs that are available on the grid node: Platform
+
+Logs
+
+VMware
+
+/var/log/daemon.log
+
+/var/log/storagegrid/daemon.log
+
+/var/log/storagegrid/nodes/<node-name>.log Linux
+
+/var/log/storagegrid/daemon.log
+
+/etc/storagegrid/nodes/<node-name>.conf (for each failed node)
+
+/var/log/storagegrid/nodes/<node-name>.log (for each failed node; might not exist)
+
+1434
+
+Maintain a StorageGRID system
+
+Maintain your grid: Overview
+
+Grid maintenance tasks include decommissioning a node or site, renaming a grid, node or site, and maintaining networks. You can also perform host and middleware procedures and grid node procedures.
+
+In these instructions, "Linux" refers to a Red Hat® Enterprise Linux®, Ubuntu®, or Debian® deployment. For a list of supported versions, see the NetApp Interoperability Matrix Tool.
+
+Before you begin
+
+You have a broad understanding of the StorageGRID system.
+
+You have reviewed your StorageGRID system’s topology and you understand the grid configuration.
+
+You understand that you must follow all instructions exactly and heed all warnings. You understand that maintenance procedures not described aren’t supported or require a services engagement.
+
+Maintenance procedures for appliances
+
+For hardware procedures, see the maintenance instructions for your StorageGRID appliance.
+
+Download Recovery Package /var/log/storagegrid/nodes/<node-name>.log Linux
+
+/var/log/storagegrid/daemon.log
+
+/etc/storagegrid/nodes/<node-name>.conf (for each failed node)
+
+/var/log/storagegrid/nodes/<node-name>.log (for each failed node; might not exist)
+
+1434
+
+Maintain a StorageGRID system
+
+Maintain your grid: Overview
+
+Grid maintenance tasks include decommissioning a node or site, renaming a grid, node or site, and maintaining networks. You can also perform host and middleware procedures and grid node procedures.
+
+In these instructions, "Linux" refers to a Red Hat® Enterprise Linux®, Ubuntu®, or Debian® deployment. For a list of supported versions, see the NetApp Interoperability Matrix Tool.
+
+Before you begin
+
+You have a broad understanding of the StorageGRID system.
+
+You have reviewed your StorageGRID system’s topology and you understand the grid configuration.
+
+You understand that you must follow all instructions exactly and heed all warnings. You understand that maintenance procedures not described aren’t supported or require a services engagement.
+
+Maintenance procedures for appliances
+
+For hardware procedures, see the maintenance instructions for your StorageGRID appliance.
+
+Download Recovery Package
+
+The Recovery Package file allows you to restore the StorageGRID system if a failure occurs.
+
+Before you begin
+
+From the primary Admin Node, you are signed in to the Grid Manager using a supported web browser.
+
+You have the provisioning passphrase.
+
+You have specific access permissions.
+
+Download the current Recovery Package file before making grid topology changes to the StorageGRID system or before upgrading software. Then, download a new copy of the Recovery Package after making grid topology changes or after upgrading software. Steps
+
+1. Select MAINTENANCE > System > Recovery package.
+
+2. Enter the provisioning passphrase, and select Start download.
+
+The download starts immediately.
+
+3. When the download completes, open the .zip file and confirm that you can access the contents, including the Passwords.txt file.
+
+4. Copy the downloaded Recovery Package file (.zip) to two safe, secure, and separate locations.
+
+1435
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system. Decommission nodes or site
+
+Decommission procedure: Overview
+
+You can perform a decommission procedure to permanently remove grid nodes or an entire site from the StorageGRID system.

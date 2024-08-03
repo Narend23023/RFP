@@ -1,0 +1,73 @@
+Content-Language
+
+Content-Length
+
+Content-MD5
+
+Content-Type
+
+Expires
+
+Transfer-Encoding
+
+Chunked transfer encoding is supported if aws-chunked payload signing is also used.
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata.
+
+When specifying the name-value pair for user-defined metadata, use this general format: x-amz-meta-name: value
+
+If you want to use the User defined creation time option as the Reference time for an ILM rule, you must use creation-time as the name of the metadata that records when the object was created. For example: x-amz-meta-creation-time: 1443399726
+
+The value for creation-time is evaluated as seconds since January 1, 1970.
+
+An ILM rule can’t use both a User defined creation time for the Reference time and the Balanced or Strict ingest option. An error is returned when the ILM rule is created.
+
+x-amz-tagging
+
+S3 Object Lock request headers ◦ x-amz-object-lock-mode ◦ x-amz-object-lock-retain-until-date ◦ x-amz-object-lock-legal-hold
+
+If a request is made without these headers, the bucket default retention settings are used to calculate the object version mode and retain-until-date. See Use S3 REST API to configure S3 Object Lock.
+
+SSE request headers:
+
+x-amz-server-side-encryption
+
+928
+
+x-amz-server-side-encryption-customer-key-MD5 ◦ x-amz-server-side-encryption-customer-key ◦ x-amz-server-side-encryption-customer-algorithm See Request headers for server-side encryption
+
+Unsupported request headers
+
+The following request headers aren’t supported:
+
+The x-amz-acl request header is not supported. The x-amz-website-redirect-location request header is not supported and returns XNotImplemented. Storage class options
+
+The x-amz-storage-class request header is supported. The value submitted for x-amz-storage-class affects how StorageGRID protects object data during ingest and not how many persistent copies of the object are stored in the StorageGRID system (which is determined by ILM).
+
+If the ILM rule matching an ingested object uses the Strict ingest option, the x-amz-storage-class header has no effect.
+
+The following values can be used for x-amz-storage-class:
+
+STANDARD (Default)
+
+Dual commit: If the ILM rule specifies the Dual commit option for Ingest Behavior, as soon as an object is ingested a second copy of that object is created and distributed to a different Storage Node (dual commit). When the ILM is evaluated, StorageGRID determines if these initial interim copies satisfy the placement instructions in the rule. If they don’t, new object copies might need to be made in different locations and the initial interim copies might need to be deleted. Balanced: If the ILM rule specifies the Balanced option and StorageGRID can’t immediately make all copies specified in the rule, StorageGRID makes two interim copies on different Storage Nodes.
+
+If StorageGRID can immediately create all object copies specified in the ILM rule (synchronous placement), the x-amz-storage-class header has no effect.
+
+REDUCED_REDUNDANCY If the ILM rule matching an ingested object uses the Strict ingest option, the x-amz-storage-class header has no effect.
+
+The following values can be used for x-amz-storage-class:
+
+STANDARD (Default)
+
+Dual commit: If the ILM rule specifies the Dual commit option for Ingest Behavior, as soon as an object is ingested a second copy of that object is created and distributed to a different Storage Node (dual commit). When the ILM is evaluated, StorageGRID determines if these initial interim copies satisfy the placement instructions in the rule. If they don’t, new object copies might need to be made in different locations and the initial interim copies might need to be deleted. Balanced: If the ILM rule specifies the Balanced option and StorageGRID can’t immediately make all copies specified in the rule, StorageGRID makes two interim copies on different Storage Nodes.
+
+If StorageGRID can immediately create all object copies specified in the ILM rule (synchronous placement), the x-amz-storage-class header has no effect.
+
+REDUCED_REDUNDANCY
+
+Dual commit: If the ILM rule specifies the Dual commit option for Ingest Behavior, StorageGRID creates a single interim copy as the object is ingested (single commit). Balanced: If the ILM rule specifies the Balanced option, StorageGRID makes a single interim copy only if the system can’t immediately make all copies specified in the rule. If StorageGRID can perform synchronous placement, this header has no effect. The REDUCED_REDUNDANCY option is best used when the ILM rule that matches the object creates a single replicated copy. In this case using REDUCED_REDUNDANCY eliminates the unnecessary creation and deletion of an extra object copy for every ingest operation.
+
+Using the REDUCED_REDUNDANCY option is not recommended in other circumstances. REDUCED_REDUNDANCY increases the risk of object data loss during ingest. For example, you might lose
+
+929

@@ -1,0 +1,163 @@
+Special character. Uses the character as a literal * character.
+
+${?}
+
+Special character. Uses the character as a literal ? character.
+
+${$}
+
+Special character. Uses the character as a literal $ character.
+
+981
+
+Create policies requiring special handling
+
+Sometimes a policy can grant permissions that are dangerous for security or dangerous for continued operations, such as locking out the root user of the account. The StorageGRID S3 REST API implementation is less restrictive during policy validation than Amazon, but equally strict during policy evaluation. Policy description
+
+Policy type
+
+Amazon behavior
+
+StorageGRID behavior
+
+Deny self any permissions to the root account
+
+Bucket
+
+Valid and enforced, but root user account retains permission for all S3 bucket policy operations
+
+Same
+
+Deny self any permissions to user/group
+
+Group
+
+Valid and enforced
+
+Same
+
+Allow a foreign account group any permission Bucket
+
+Invalid principal
+
+Valid, but permissions for all S3 bucket policy operations return a 405 Method Not Allowed error when allowed by a policy
+
+Allow a foreign account root or user any permission
+
+Bucket
+
+Valid, but permissions for all S3 bucket policy operations return a 405 Method Not Allowed error when allowed by a policy Same
+
+Allow everyone permissions to all actions
+
+Bucket
+
+Valid, but permissions for all S3 bucket policy operations return a 405 Method Not Allowed error for the foreign account root and users
+
+Same
+
+Deny everyone permissions to all actions
+
+Bucket
+
+Valid and enforced, but root user account retains permission for all S3 bucket policy operations Same
+
+Principal is a non-existent user or group
+
+Bucket
+
+Invalid principal
+
+Valid
+
+Resource is a non-existent S3 bucket
+
+Group
+
+Valid
+
+Same
+
+Principal is a local group
+
+Bucket
+
+Invalid principal
+
+Valid
+
+982
+
+Policy description
+
+Policy type
+
+Amazon behavior
+
+StorageGRID behavior
+
+Policy grants a non-owner account (including anonymous accounts) permissions to put objects. Bucket
+
+Valid. Objects are owned by the creator account, and the bucket policy does not apply. The creator account must grant access permissions for the object using object ACLs.
+
+Valid. Objects are owned by the bucket owner account. Bucket policy applies. Write-once-read-many (WORM) protection
+
+You can create write-once-read-many (WORM) buckets to protect data, user-defined object metadata, and S3 object tagging. You configure the WORM buckets to allow the creation of new objects and to prevent overwrites or deletion of existing content. Use one of the approaches described here.
+
+To ensure that overwrites are always denied, you can:
+
+From the Grid Manager, go to CONFIGURATION > Security > Security settings > Network and objects, and select the Prevent client modification checkbox.
+
+Apply the following rules and S3 policies:
+
+Add a PutOverwriteObject DENY operation to the S3 policy. ◦ Add a DeleteObject DENY operation to the S3 policy. ◦ Add a PutObject ALLOW operation to the S3 policy.
+
+Setting DeleteObject to DENY in an S3 policy does not prevent ILM from deleting objects when a rule such as "zero copies after 30 days" exists. Even when all of these rules and policies are applied, they don’t guard against concurrent writes (see Situation A). They do guard against sequential completed overwrites (see Situation B).
+
+Situation A: Concurrent writes (not guarded against)
+
+/mybucket/important.doc PUT#1 ---> OK PUT#2 -------> OK
+
+Situation B: Sequential completed overwrites (guarded against) /mybucket/important.doc PUT#1 -------> PUT#2 ---X (denied)
+
+Related information
+
+How StorageGRID ILM rules manage objects
+
+Example bucket policies
+
+Example group policies
+
+983
+
+• Manage objects with ILM
+
+Use a tenant account Example bucket policies
+
+Use the examples in this section to build StorageGRID access policies for buckets.
+
+Bucket policies specify the access permissions for the bucket that the policy is attached to. Bucket policies are configured using the S3 PutBucketPolicy API. See Operations on buckets.
+
+A bucket policy can be configured using the AWS CLI as per the following command:
+
+> aws s3api put-bucket-policy --bucket examplebucket --policy file://policy.json Setting DeleteObject to DENY in an S3 policy does not prevent ILM from deleting objects when a rule such as "zero copies after 30 days" exists. Even when all of these rules and policies are applied, they don’t guard against concurrent writes (see Situation A). They do guard against sequential completed overwrites (see Situation B).
+
+Situation A: Concurrent writes (not guarded against)
+
+/mybucket/important.doc PUT#1 ---> OK PUT#2 -------> OK
+
+Situation B: Sequential completed overwrites (guarded against) /mybucket/important.doc PUT#1 -------> PUT#2 ---X (denied)
+
+Related information
+
+How StorageGRID ILM rules manage objects
+
+Example bucket policies
+
+Example group policies
+
+983
+
+• Manage objects with ILM
+
+Use a tenant account Example bucket policies

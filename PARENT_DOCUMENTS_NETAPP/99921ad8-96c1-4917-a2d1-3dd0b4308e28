@@ -1,0 +1,95 @@
+502
+
+2. Select Continue.
+
+Select a binding mode Steps
+
+1. Select a binding mode for the endpoint to control how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces.
+
+Some binding modes are available for either client endpoints or management interface endpoints. All modes for both endpoint types are listed here. Mode
+
+Description
+
+Global (default for client endpoints)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting unless you need to restrict the accessibility of this endpoint.
+
+Virtual IPs of HA groups Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint.
+
+Node type (client endpoints only)
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint. All Admin Nodes (default for management interface endpoints)
+
+Clients must use the IP address (or corresponding FQDN) of any Admin Node to access this endpoint.
+
+If more than one endpoint uses the same port, StorageGRID uses this priority order to decide which endpoint to use: Virtual IPs of HA groups > Node interfaces > Node type > Global. Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting unless you need to restrict the accessibility of this endpoint.
+
+Virtual IPs of HA groups Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint.
+
+Node type (client endpoints only)
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint. All Admin Nodes (default for management interface endpoints)
+
+Clients must use the IP address (or corresponding FQDN) of any Admin Node to access this endpoint.
+
+If more than one endpoint uses the same port, StorageGRID uses this priority order to decide which endpoint to use: Virtual IPs of HA groups > Node interfaces > Node type > Global.
+
+If you are creating management interface endpoints, only Admin Nodes are allowed.
+
+2. If you selected Virtual IPs of HA groups, select one or more HA groups.
+
+If you are creating management interface endpoints, select VIPs associated only with Admin Nodes.
+
+3. If you selected Node interfaces, select one or more node interfaces for each Admin Node or Gateway Node that you want to associate with this endpoint.
+
+4. If you selected Node type, select either Admin Nodes, which includes both the primary Admin Node and any non-primary Admin Nodes, or Gateway Nodes.
+
+503
+
+Control tenant access A management interface endpoint can control tenant access only when the endpoint has the interface type of Tenant Manager.
+
+Steps
+
+1. For the Tenant access step, select one of the following:
+
+Field
+
+Description
+
+Allow all tenants (default)
+
+All tenant accounts can use this endpoint to access their buckets.
+
+You must select this option if you have not yet created any tenant accounts. After you add tenant accounts, you can edit the load balancer endpoint to allow or block specific accounts.
+
+Allow selected tenants
+
+Only the selected tenant accounts can use this endpoint to access their buckets.
+
+Block selected tenants
+
+The selected tenant accounts can’t use this endpoint to access their buckets. All other tenants can use this endpoint.
+
+2. If you are creating an HTTP endpoint, you don’t need to attach a certificate. Select Create to add the new load balancer endpoint. Then, go to After you finish. Otherwise, select Continue to attach the certificate. Attach certificate
+
+Steps
+
+1. If you are creating an HTTPS endpoint, select the type of security certificate you want to attach to the endpoint.
+
+The certificate secures the connections between S3 and Swift clients and the Load Balancer service on Admin Node or Gateway Nodes.

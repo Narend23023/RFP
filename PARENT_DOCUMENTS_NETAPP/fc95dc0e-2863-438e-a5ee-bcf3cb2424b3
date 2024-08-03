@@ -1,0 +1,87 @@
+b. Select grid > Storage.
+
+c. Position your cursor over the Storage used - object data and the Storage used - object metadata
+
+charts to see how much object storage and object metadata storage is available for the entire grid, and how much has been used over time.
+
+The total values for a site or the grid don’t include nodes that have not reported metrics for at least five minutes, such as offline nodes.
+
+3. Plan to perform an expansion to add Storage Nodes or storage volumes before the grid’s usable storage capacity is consumed.
+
+When planning the timing of an expansion, consider how long it will take to procure and install additional storage.
+
+1057
+
+If your ILM policy uses erasure coding, you might prefer to expand when existing Storage Nodes are approximately 70% full to reduce the number of nodes that must be added.
+
+For more information about planning a storage expansion, see the instructions for expanding StorageGRID. Monitor storage capacity for each Storage Node
+
+Monitor the total usable space for each Storage Node to ensure that the node has enough space for new object data.
+
+About this task
+
+Usable space is the amount of storage space available to store objects. The total usable space for a Storage Node is calculated by adding together the available space on all object stores within the node. Steps
+
+1. Select NODES > Storage Node > Storage.
+
+The graphs and tables for the node appear.
+
+2. Position your cursor over the Storage used - object data graph.
+
+The following values are shown:
+
+Used (%): The percentage of the Total usable space that has been used for object data. ◦ Used: The amount of the Total usable space that has been used for object data. ◦ Replicated data: An estimate of the amount of replicated object data on this node, site, or grid. ◦ Erasure-coded data: An estimate of the amount of erasure-coded object data on this node, site, or grid.
+
+Total: The total amount of usable space on this node, site, or grid.
+
+1058
+
+The Used value is the storagegrid_storage_utilization_data_bytes metric.
+
+3. Review the Available values in the Volumes and Object stores tables, below the graphs.
+
+To view graphs of these values, click the chart icons in the Available columns.
+
+1059
+
+4. Monitor the values over time to estimate the rate at which usable storage space is being consumed.
+
+5. To maintain normal system operations, add Storage Nodes, add storage volumes, or archive object data before usable space is consumed. 1. Select NODES > Storage Node > Storage.
+
+The graphs and tables for the node appear.
+
+2. Position your cursor over the Storage used - object data graph.
+
+The following values are shown:
+
+Used (%): The percentage of the Total usable space that has been used for object data. ◦ Used: The amount of the Total usable space that has been used for object data. ◦ Replicated data: An estimate of the amount of replicated object data on this node, site, or grid. ◦ Erasure-coded data: An estimate of the amount of erasure-coded object data on this node, site, or grid.
+
+Total: The total amount of usable space on this node, site, or grid.
+
+1058
+
+The Used value is the storagegrid_storage_utilization_data_bytes metric.
+
+3. Review the Available values in the Volumes and Object stores tables, below the graphs.
+
+To view graphs of these values, click the chart icons in the Available columns.
+
+1059
+
+4. Monitor the values over time to estimate the rate at which usable storage space is being consumed.
+
+5. To maintain normal system operations, add Storage Nodes, add storage volumes, or archive object data before usable space is consumed.
+
+When planning the timing of an expansion, consider how long it will take to procure and install additional storage.
+
+If your ILM policy uses erasure coding, you might prefer to expand when existing Storage Nodes are approximately 70% full to reduce the number of nodes that must be added.
+
+For more information about planning a storage expansion, see the instructions for expanding StorageGRID.
+
+1060
+
+The Low object data storage alert is triggered when insufficient space remains for storing object data on a Storage Node.
+
+Monitor object metadata capacity for each Storage Node Monitor the metadata usage for each Storage Node to ensure that adequate space remains available for essential database operations. You must add new Storage Nodes at each site before object metadata exceeds 100% of the allowed metadata space. About this task
+
+StorageGRID maintains three copies of object metadata at each site to provide redundancy and to protect object metadata from loss. The three copies are evenly distributed across all Storage Nodes at each site using the space reserved for metadata on storage volume 0 of each Storage Node.

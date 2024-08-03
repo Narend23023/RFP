@@ -1,0 +1,121 @@
+After you configure an audit share and add an NFS audit client, you can mount the audit client share and verify that the files are available from the audit share.
+
+Support for NFS has been deprecated and will be removed in a future release.
+
+Steps
+
+1. Verify connectivity (or variant for the client system) using the client-side IP address of the Admin Node hosting the AMS service. Enter: ping IP_address
+
+Verify that the server responds, indicating connectivity.
+
+570
+
+2. Mount the audit read-only share using a command appropriate to the client operating system. An example
+
+Linux command is (enter on one line): mount -t nfs -o hard,intr Admin_Node_IP_address:/var/local/log myAudit
+
+Use the IP address of the Admin Node hosting the AMS service and the predefined share name for the audit system. The mount point can be any name selected by the client (for example, myAudit in the previous command).
+
+3. Verify that the files are available from the audit share. Enter: ls myAudit /*
+
+where myAudit is the mount point of the audit share. There should be at least one log file listed.
+
+Remove an NFS audit client from the audit share
+
+NFS audit clients are granted access to an audit share based on their IP address. You can remove an existing audit client by removing its IP address.
+
+Before you begin
+
+You have the Passwords.txt file with the root/admin account password.
+
+You have the Configuration.txt file (available in the Recovery Package). About this task
+
+You can’t remove the last IP address permitted to access the audit share.
+
+Steps
+
+1. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Start the NFS configuration utility: config_nfs.rb
+
+----------------------------------------------------------------- | Shares | Clients | Config | ----------------------------------------------------------------- | add-audit-share | add-ip-to-share | validate-config | | enable-disable-share | remove-ip-from-share | refresh-config | | | | help | | | | exit | -----------------------------------------------------------------
+
+3. Remove the IP address from the audit share: remove-ip-from-share
+
+571
+
+A numbered list of audit shares configured on the server is displayed. The audit share is listed as: /var/local/log
+
+4. Enter the number corresponding to the audit share: audit_share_number A numbered list of IP addresses permitted to access the audit share is displayed.
+
+5. Enter the number corresponding to the IP address you want to remove.
+
+The audit share is updated, and access is no longer permitted from any audit client with this IP address.
+
+6. When prompted, press Enter.
+
+The NFS configuration utility is displayed.
+
+7. Close the NFS configuration utility: exit
+
+8. If your StorageGRID deployment is a multiple data center site deployment with additional Admin Nodes at the other sites, disable these audit shares as required: a. Remotely log in to each site’s Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Repeat these steps to configure the audit shares for each additional Admin Node.
+
+c. Close the remote secure shell login to the remote Admin Node: exit
+
+9. Log out of the command shell: exit
+
+Change the IP address of an NFS audit client 4. Enter the number corresponding to the audit share: audit_share_number A numbered list of IP addresses permitted to access the audit share is displayed.
+
+5. Enter the number corresponding to the IP address you want to remove.
+
+The audit share is updated, and access is no longer permitted from any audit client with this IP address.
+
+6. When prompted, press Enter.
+
+The NFS configuration utility is displayed.
+
+7. Close the NFS configuration utility: exit
+
+8. If your StorageGRID deployment is a multiple data center site deployment with additional Admin Nodes at the other sites, disable these audit shares as required: a. Remotely log in to each site’s Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Repeat these steps to configure the audit shares for each additional Admin Node.
+
+c. Close the remote secure shell login to the remote Admin Node: exit
+
+9. Log out of the command shell: exit
+
+Change the IP address of an NFS audit client
+
+Complete these steps if you need to change the IP address of an NFS audit client. Steps
+
+1. Add a new IP address to an existing NFS audit share.
+
+2. Remove the original IP address.
+
+Related information

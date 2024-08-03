@@ -1,0 +1,49 @@
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Replication.
+
+3. Select Configuration > Main.
+
+585
+
+4. Modify the following settings, as necessary:
+
+Reset Inbound Replication Failure Count: Select to reset the counter for inbound replication failures. This can be used to clear the RIRF (Inbound Replications — Failed) alarm.
+
+Reset Outbound Replication Failure Count: Select to reset the counter for outbound replication failures. This can be used to clear the RORF (Outbound Replications — Failed) alarm.
+
+Disable Inbound Replication: Select to disable inbound replication as part of a maintenance or testing procedure. Leave cleared during normal operation.
+
+When inbound replication is disabled, object data can be retrieved from the ARC service for replication to other locations in the StorageGRID system, but objects can’t be replicated to this ARC service from other system locations. The ARC service is read‐only. Disable Outbound Replication: Select the checkbox to disable outbound replication (including content requests for HTTP retrievals) as part of a maintenance or testing procedure. Leave unchecked during normal operation.
+
+When outbound replication is disabled, object data can be copied to this ARC service to satisfy ILM rules, but object data can’t be retrieved from the ARC service to be copied to other locations in the StorageGRID system. The ARC service is write‐only.
+
+5. Select Apply Changes. Set Custom alarms for the Archive Node
+
+You should establish Custom alarms for the ARQL and ARRL attributes that are used to monitor the speed and efficiency of object data retrieval from the archival storage system by the Archive Node.
+
+ARQL: Average Queue Length. The average time, in microseconds, that object data is queued for retrieval from the archival storage system.
+
+ARRL: Average Request Latency. The average time, in microseconds, needed by the Archive Node to retrieve object data from the archival storage system.
+
+586
+
+The acceptable values for these attributes depend on how the archival storage system is configured and used. (Go to ARC > Retrieve > Overview > Main.) The values set for request timeouts and the number of sessions made available for retrieve requests are particularly influential. After integration is complete, monitor the Archive Node’s object data retrievals to establish values for normal retrieval times and queue lengths. Then, create Custom alarms for ARQL and ARRL that will trigger if an abnormal operating condition arises. See the instructions for managing alarms (legacy system). Integrate Tivoli Storage Manager
+
+Archive Node configuration and operation
+
+Your StorageGRID system manages the Archive Node as a location where objects are stored indefinitely and are always accessible. 5. Select Apply Changes. Set Custom alarms for the Archive Node
+
+You should establish Custom alarms for the ARQL and ARRL attributes that are used to monitor the speed and efficiency of object data retrieval from the archival storage system by the Archive Node.
+
+ARQL: Average Queue Length. The average time, in microseconds, that object data is queued for retrieval from the archival storage system.
+
+ARRL: Average Request Latency. The average time, in microseconds, needed by the Archive Node to retrieve object data from the archival storage system.
+
+586
+
+The acceptable values for these attributes depend on how the archival storage system is configured and used. (Go to ARC > Retrieve > Overview > Main.) The values set for request timeouts and the number of sessions made available for retrieve requests are particularly influential. After integration is complete, monitor the Archive Node’s object data retrievals to establish values for normal retrieval times and queue lengths. Then, create Custom alarms for ARQL and ARRL that will trigger if an abnormal operating condition arises. See the instructions for managing alarms (legacy system). Integrate Tivoli Storage Manager
+
+Archive Node configuration and operation
+
+Your StorageGRID system manages the Archive Node as a location where objects are stored indefinitely and are always accessible.

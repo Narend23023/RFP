@@ -1,0 +1,41 @@
+939
+
+CreateMultipartUpload
+
+The CreateMultipartUpload (previously named Initiate Multipart Upload) operation initiates a multipart upload for an object, and returns an upload ID. The x-amz-storage-class request header is supported. The value submitted for x-amz-storage-class affects how StorageGRID protects object data during ingest and not how many persistent copies of the object are stored in the StorageGRID system (which is determined by ILM). If the bucket where the multipart upload occurs is configured for a platform service, multipart upload succeeds even if the associated replication or notification action fails.
+
+If this occurs, an alarm is raised in the Grid Manager on Total Events (SMTT). The Last Event message displays "Failed to publish notifications for bucket-nameobject key" for the last object whose notification failed. (To see this message, select NODES > Storage Node > Events. View Last Event at the top of the table.) Event messages are also listed in /var/local/log/bycast-err.log.
+
+A tenant can trigger the failed replication or notification by updating the object’s metadata or tags. A tenant can resubmit the existing values to avoid making unwanted changes.
+
+939
+
+CreateMultipartUpload
+
+The CreateMultipartUpload (previously named Initiate Multipart Upload) operation initiates a multipart upload for an object, and returns an upload ID. The x-amz-storage-class request header is supported. The value submitted for x-amz-storage-class affects how StorageGRID protects object data during ingest and not how many persistent copies of the object are stored in the StorageGRID system (which is determined by ILM).
+
+If the ILM rule matching an ingested object uses the Strict ingest option, the x-amz-storage-class header has no effect.
+
+The following values can be used for x-amz-storage-class:
+
+STANDARD (Default)
+
+Dual commit: If the ILM rule specifies the Dual commit ingest option, as soon as an object is ingested a second copy of that object is created and distributed to a different Storage Node (dual commit). When the ILM is evaluated, StorageGRID determines if these initial interim copies satisfy the placement instructions in the rule. If they don’t, new object copies might need to be made in different locations and the initial interim copies might need to be deleted. Balanced: If the ILM rule specifies the Balanced option and StorageGRID can’t immediately make all copies specified in the rule, StorageGRID makes two interim copies on different Storage Nodes.
+
+If StorageGRID can immediately create all object copies specified in the ILM rule (synchronous placement), the x-amz-storage-class header has no effect.
+
+REDUCED_REDUNDANCY
+
+Dual commit: If the ILM rule specifies the Dual commit option, StorageGRID creates a single interim copy as the object is ingested (single commit). Balanced: If the ILM rule specifies the Balanced option, StorageGRID makes a single interim copy only if the system can’t immediately make all copies specified in the rule. If StorageGRID can perform synchronous placement, this header has no effect. The REDUCED_REDUNDANCY option is best used when the ILM rule that matches the object creates a single replicated copy. In this case using REDUCED_REDUNDANCY eliminates the unnecessary creation and deletion of an extra object copy for every ingest operation.
+
+Using the REDUCED_REDUNDANCY option is not recommended in other circumstances. REDUCED_REDUNDANCY increases the risk of object data loss during ingest. For example, you might lose data if the single copy is initially stored on a Storage Node that fails before ILM evaluation can occur. Having only one replicated copy for any time period puts data at risk of permanent loss. If only one replicated copy of an object exists, that object is lost if a Storage Node fails or has a significant error. You also temporarily lose access to the object during maintenance procedures such as upgrades.
+
+Specifying REDUCED_REDUNDANCY only affects how many copies are created when an object is first ingested. It does not affect how many copies of the object are made when the object is evaluated by the active ILM policies, and does not result in data being stored at lower levels of redundancy in the StorageGRID system.
+
+940
+
+If you are ingesting an object into a bucket with S3 Object Lock enabled, the REDUCED_REDUNDANCY option is ignored. If you are ingesting an object into a legacy Compliant bucket, the REDUCED_REDUNDANCY option returns an error. StorageGRID will always perform a dual-commit ingest to ensure that compliance requirements are satisfied. The following request headers are supported:
+
+Content-Type
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata

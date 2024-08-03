@@ -1,0 +1,105 @@
+Details about each active instance of the alert, including the node and site affected, the alert severity, the UTC time when the alert rule was triggered, and the name of the affected job and service.
+
+5
+
+The hostname of the Admin Node that sent the notification.
+
+How alerts are grouped c. Sign in to any other Admin Nodes and send a test email to verify connectivity from all sites.
+
+When you test alert notifications, you must sign in to every Admin Node to verify connectivity. This is in contrast to testing AutoSupport packages and legacy alarm notifications, where all Admin Nodes send the test email.
+
+8. Select Save.
+
+Sending a test email does not save your settings. You must select Save.
+
+The email settings are saved.
+
+Information included in alert email notifications After you configure the SMTP email server, email notifications are sent to the designated recipients when an alert is triggered, unless the alert rule is suppressed by a silence. See Silence alert notifications.
+
+Email notifications include the following information:
+
+1097
+
+Callout
+
+Description
+
+1
+
+The name of the alert, followed by the number of active instances of this alert.
+
+2 The description of the alert.
+
+3
+
+Any recommended actions for the alert.
+
+4
+
+Details about each active instance of the alert, including the node and site affected, the alert severity, the UTC time when the alert rule was triggered, and the name of the affected job and service.
+
+5
+
+The hostname of the Admin Node that sent the notification.
+
+How alerts are grouped
+
+To prevent an excessive number of email notifications from being sent when alerts are triggered, StorageGRID attempts to group multiple alerts in the same notification.
+
+Refer to the following table for examples of how StorageGRID groups multiple alerts in email notifications.
+
+1098
+
+Behavior
+
+Example
+
+Each alert notification applies only to alerts that have the same name. If two alerts with different names are triggered at the same time, two email notifications are sent.
+
+Alert A is triggered on two nodes at the same time. Only one notification is sent. Alert A is triggered on node 1, and Alert B is triggered on node 2 at the same time. Two notifications are sent—one for each alert.
+
+For a specific alert on a specific node, if the thresholds are reached for more than one severity, a notification is sent only for the most severe alert.
+
+Alert A is triggered and the minor, major, and critical alert thresholds are reached. One notification is sent for the critical alert.
+
+The first time an alert is triggered, StorageGRID waits 2 minutes before sending a notification. If other alerts with the same name are triggered during that time, StorageGRID groups all of the alerts in the initial notification.
+
+1. Alert A is triggered on node 1 at 08:00. No notification is sent.
+
+2. Alert A is triggered on node 2 at 08:01. No notification is sent.
+
+3. At 08:02, a notification is sent to report both instances of the alert. If an another alert with the same name is triggered, StorageGRID waits 10 minutes before sending a new notification. The new notification reports all active alerts (current alerts that have not been silenced), even if they were reported previously.
+
+1. Alert A is triggered on node 1 at 08:00. A notification is sent at 08:02.
+
+2. Alert A is triggered on node 2 at 08:05. A second notification is sent at 08:15 (10 minutes later). Both nodes are reported.
+
+If there are multiple current alerts with the same name and one of those alerts is resolved, a new notification is not sent if the alert reoccurs on the node for which the alert was resolved.
+
+1. Alert A is triggered for node 1. A notification is sent.
+
+2. Alert A is triggered for node 2. A second notification is sent.
+
+3. Alert A is resolved for node 2, but it remains active for node 1.
+
+4. Alert A is triggered again for node 2. No new notification is sent because the alert is still active for node 1. StorageGRID continues to send email notifications once every 7 days until all instances of the alert are resolved or the alert rule is silenced.
+
+1. Alert A is triggered for node 1 on March 8. A notification is sent.
+
+2. Alert A is not resolved or silenced. Additional notifications are sent on March 15, March 22, March 29, and so on. Troubleshoot alert email notifications
+
+If the Email notification failure alert is triggered or you are unable to receive the test alert email notification, follow these steps to resolve the issue.
+
+Before you begin
+
+1099
+
+• You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission. Steps
+
+1. Verify your settings. If there are multiple current alerts with the same name and one of those alerts is resolved, a new notification is not sent if the alert reoccurs on the node for which the alert was resolved.
+
+1. Alert A is triggered for node 1. A notification is sent.
+
+2. Alert A is triggered for node 2. A second notification is sent.

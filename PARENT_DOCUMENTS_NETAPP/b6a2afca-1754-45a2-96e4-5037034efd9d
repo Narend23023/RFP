@@ -1,0 +1,71 @@
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target > Configuration > Main.
+
+3. Change the value of Tivoli Storage Manager State to Offline, and click Apply Changes.
+
+4. After maintenance is complete, change the value of Tivoli Storage Manager State to Online, and click Apply Changes. Tivoli Storage Manager administrative tools
+
+The dsmadmc tool is the administrative console for the TSM middleware server that is installed on the Archive Node. You can access the tool by typing dsmadmc at the command line of the server. Log in to the administrative console using the same administrative user name and password that is configured for the ARC service.
+
+The tsmquery.rb script was created to generate status information from dsmadmc in a more readable form. You can run this script by entering the following command at the command line of the Archive Node: /usr/local/arc/tsmquery.rb status
+
+For more information about the TSM administrative console dsmadmc, see the Tivoli Storage Manager for Linux: Administratorʹs Reference.
+
+1541 Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target > Configuration > Main.
+
+3. Change the value of Tivoli Storage Manager State to Offline, and click Apply Changes.
+
+4. After maintenance is complete, change the value of Tivoli Storage Manager State to Online, and click Apply Changes. Tivoli Storage Manager administrative tools
+
+The dsmadmc tool is the administrative console for the TSM middleware server that is installed on the Archive Node. You can access the tool by typing dsmadmc at the command line of the server. Log in to the administrative console using the same administrative user name and password that is configured for the ARC service.
+
+The tsmquery.rb script was created to generate status information from dsmadmc in a more readable form. You can run this script by entering the following command at the command line of the Archive Node: /usr/local/arc/tsmquery.rb status
+
+For more information about the TSM administrative console dsmadmc, see the Tivoli Storage Manager for Linux: Administratorʹs Reference.
+
+1541
+
+Object permanently unavailable When the Archive Node requests an object from the Tivoli Storage Manager (TSM) server and the retrieval fails, the Archive Node retries the request after an interval of 10 seconds. If the object is permanently unavailable (for example, because the object is corrupted on tape), the TSM API has no way to indicate this to the Archive Node, so the Archive Node continues to retry the request.
+
+When this situation occurs, an alarm is triggered, and the value continues to increase. To see the alarm, select SUPPORT > Tools > Grid topology. Then, select Archive Node > ARC > Retrieve > Request Failures.
+
+If the object is permanently unavailable, you must identify the object and then manually cancel the Archive Node’s request as described in the procedure, Determining if objects are permanently unavailable.
+
+A retrieval can also fail if the object is temporarily unavailable. In this case, subsequent retrieval requests should eventually succeed. If the StorageGRID system is configured to use an ILM rule that creates a single object copy and that copy can’t be retrieved, the object is lost and can’t be recovered. However, you must still follow the procedure to determine if the object is permanently unavailable to "clean up" the StorageGRID system, to cancel the Archive Node’s request, and to purge metadata for the lost object.
+
+Determining if objects are permanently unavailable
+
+You can determine if objects are permanently unavailable by making a request using the TSM administrative console.
+
+Before you begin
+
+You have specific access permissions.
+
+You have the Passwords.txt file.
+
+You have the IP address of an Admin Node. About this task
+
+This example is provided for your information. This procedure can’t help you identify all failure conditions that might result in unavailable objects or tape volumes. For information about TSM administration, see TSM Server documentation.
+
+Steps
+
+1. Log in to an Admin Node: a. Enter the following command: ssh admin@Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+2. Identify the object or objects that could not be retrieved by the Archive Node:
+
+a. Go to the directory containing the audit log files: cd /var/local/log
+
+The active audit log file is named audit.log. Once a day, the active audit.log file is saved, and a new audit.log file is started. The name of the saved file indicates when it was saved, in the format yyyy- mm-dd.txt. After a day, the saved file is compressed and renamed, in the format yyyy-mm- dd.txt.gz, which preserves the original date.
+
+b. Search the relevant audit log file for messages indicating that an archived object could not be retrieved. For example, enter: grep ARCE audit.log | less -n
+
+1542

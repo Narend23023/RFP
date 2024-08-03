@@ -1,0 +1,119 @@
+You can disable a legacy Global Custom alarm for the entire system.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+Disabling an alarm for an attribute that currently has an alarm triggered does not clear the current alarm. The alarm will be disabled the next time the attribute crosses the alarm threshold, or you can clear the triggered alarm. Steps
+
+1. Select SUPPORT > Alarms (legacy) > Global alarms.
+
+2. In the Global Custom Alarms table, click Edit
+
+next to the alarm you want to disable.
+
+3. Clear the Enabled checkbox.
+
+1131
+
+4. Click Apply Changes.
+
+The Global Custom alarm is disabled.
+
+Clear triggered alarms (legacy system)
+
+If a legacy alarm is triggered, you can clear it instead of acknowledging it.
+
+Before you begin
+
+You must have the Passwords.txt file.
+
+Disabling an alarm for an attribute that currently has an alarm triggered against it does not clear the alarm. The alarm will be disabled the next time the attribute changes. You can acknowledge the alarm or, if you want to immediately clear the alarm rather than wait for the attribute value to change (resulting in a change to the alarm state), you can clear the triggered alarm. You might find this helpful if you want to clear an alarm immediately against an attribute whose value does not change often (for example, state attributes). 1. Disable the alarm.
+
+2. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Restart the NMS service: service nms restart
+
+4. Log out of the Admin Node: exit
+
+The alarm is cleared.
+
+1132
+
+Configure notifications for alarms (legacy system)
+
+StorageGRID system can automatically send email and SNMP notifications when an alarm is triggered or a service state changes.
+
+By default, alarm email notifications aren’t sent. For email notifications, you must configure the email server and specify the email recipients. For SNMP notifications, you must configure the SNMP agent. Types of alarm notifications (legacy system)
+
+When a legacy alarm is triggered, the StorageGRID system sends out two types of alarm notifications: severity level and service state.
+
+Severity level notifications
+
+An alarm email notification is sent when a legacy alarm is triggered at a selected severity level:
+
+Notice
+
+Minor
+
+Major
+
+Critical
+
+A mailing list receives all notifications related to the alarm for the selected severity. A notification is also sent when the alarm leaves the alarm level — either by being resolved or by entering a different alarm severity level. Service state notifications
+
+A service state notification is sent when a service (for example, the LDR service or NMS service) enters the selected service state and when it leaves the selected service state. Service state notifications are send when a service enters or leaves ones of the following service states:
+
+Unknown
+
+Administratively Down
+
+A mailing list receives all notifications related to changes in the selected state. Configure email server settings for alarms (legacy system)
+
+If you want StorageGRID to send email notifications when a legacy alarm is triggered, you must specify the SMTP mail server settings. The StorageGRID system only sends email; it can’t receive email.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+Use these settings to define the SMTP server used for legacy alarm email notifications and AutoSupport email messages. These settings aren’t used for alert notifications. Severity level notifications
+
+An alarm email notification is sent when a legacy alarm is triggered at a selected severity level:
+
+Notice
+
+Minor
+
+Major
+
+Critical
+
+A mailing list receives all notifications related to the alarm for the selected severity. A notification is also sent when the alarm leaves the alarm level — either by being resolved or by entering a different alarm severity level. Service state notifications
+
+A service state notification is sent when a service (for example, the LDR service or NMS service) enters the selected service state and when it leaves the selected service state. Service state notifications are send when a service enters or leaves ones of the following service states:
+
+Unknown
+
+Administratively Down
+
+A mailing list receives all notifications related to changes in the selected state. Configure email server settings for alarms (legacy system)
+
+If you want StorageGRID to send email notifications when a legacy alarm is triggered, you must specify the SMTP mail server settings. The StorageGRID system only sends email; it can’t receive email.
+
+Before you begin

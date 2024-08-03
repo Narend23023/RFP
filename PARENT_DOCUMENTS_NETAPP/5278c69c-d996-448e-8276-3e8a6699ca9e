@@ -1,0 +1,109 @@
+For a policy containing multiple matchers where at least one is an inverse matcher, be careful not to create a policy that matches all requests.
+
+5. Optionally, select Add a limit and select the following details to add one or more limits to control the network traffic matched by a rule.
+
+StorageGRID collects metrics even if you don’t add any limits, so you can understand traffic trends. Field
+
+Description
+
+Type
+
+The type of limit you want to apply to the network traffic matched by the rule. For example, you can limit bandwidth or request rate.
+
+Note: You can create policies to limit aggregate bandwidth or to limit per- request bandwidth. However, StorageGRID can’t limit both types of bandwidth at the same time. When aggregate bandwidth is in use, per-request bandwidth is unavailable. Conversely, when per-request bandwidth is in use, aggregate bandwidth is unavailable. Aggregate bandwidth limits might impose an additional minor performance impact on non-limited traffic.
+
+For bandwidth limits, StorageGRID applies the policy that best matches the type of limit set. For example, if you have a policy that limits traffic in only one direction, then traffic in the opposite direction will be unlimited, even if there is traffic that matches additional policies that have bandwidth limits. StorageGRID implements "best" matches for bandwidth limits in the following order: Exact IP address (/32 mask)
+
+Exact bucket name
+
+Bucket regex
+
+Tenant
+
+Endpoint
+
+Non-exact CIDR matches (not /32)
+
+Inverse matches
+
+Applies to
+
+Whether this limit applies to client read requests (GET or HEAD) or write requests (PUT, POST, or DELETE). Description
+
+Type
+
+The type of limit you want to apply to the network traffic matched by the rule. For example, you can limit bandwidth or request rate.
+
+Note: You can create policies to limit aggregate bandwidth or to limit per- request bandwidth. However, StorageGRID can’t limit both types of bandwidth at the same time. When aggregate bandwidth is in use, per-request bandwidth is unavailable. Conversely, when per-request bandwidth is in use, aggregate bandwidth is unavailable. Aggregate bandwidth limits might impose an additional minor performance impact on non-limited traffic.
+
+For bandwidth limits, StorageGRID applies the policy that best matches the type of limit set. For example, if you have a policy that limits traffic in only one direction, then traffic in the opposite direction will be unlimited, even if there is traffic that matches additional policies that have bandwidth limits. StorageGRID implements "best" matches for bandwidth limits in the following order: Exact IP address (/32 mask)
+
+Exact bucket name
+
+Bucket regex
+
+Tenant
+
+Endpoint
+
+Non-exact CIDR matches (not /32)
+
+Inverse matches
+
+Applies to
+
+Whether this limit applies to client read requests (GET or HEAD) or write requests (PUT, POST, or DELETE).
+
+522
+
+Field
+
+Description
+
+Value
+
+The value that network traffic will be limited to, based on the Unit you select. For example, enter 10 and select MiB/s to prevent the network traffic matched by this rule from exceeding 10 MiB/s.
+
+Note: Depending on the units setting, the available units will be either binary (for example, GiB) or decimal (for example, GB). To change the units setting, select the user drop-down in the upper right of the Grid Manager, then select User Preferences. Unit
+
+The unit that describes the value you entered.
+
+For example, if you want to create a 40 GB/s bandwidth limit for an SLA tier, create two Aggregate bandwidth limits: GET/HEAD at 40 GB/s and PUT/POST/DELETE at 40 GB/s.
+
+6. Select Continue.
+
+7. Read and review the Traffic classification policy. Use the Previous button to go back and make changes as required. When you are satisfied with the policy, select Save and continue.
+
+S3 and Swift client traffic is now handled according to the traffic classification policy.
+
+After you finish
+
+View network traffic metrics to verify that the polices are enforcing the traffic limits you expect. Edit traffic classification policy
+
+You can edit a traffic classification policy to change its name or description, or to create, edit, or delete any rules or limits for the policy.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission. Steps
+
+1. Select CONFIGURATION > Network > Traffic classification.
+
+The Traffic classification policies page appears and the existing policies are listed in a table.
+
+2. Edit the policy using the Actions menu or the details page. See create traffic classification policies for what to enter.
+
+523
+
+Actions menu
+
+a. Select the checkbox for the policy. b. Select Actions > Edit.
+
+Details page
+
+a. Select the policy name.
+
+b. Select the Edit button beside the policy name.
+
+3. For the Enter policy name step, optionally edit the policy name or description, and select Continue.

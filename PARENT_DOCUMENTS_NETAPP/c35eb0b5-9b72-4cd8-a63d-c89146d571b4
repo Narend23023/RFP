@@ -1,0 +1,53 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> No title detected<br>
+                       <b>Bounding box:</b> x1=134, y1=100, x2=1566, y2=1774
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Behavior</td>
+      <td>Example</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Each alert notification applies only to alerts that have\nthe same name. If two alerts with different names are\ntriggered at the same time, two email notifications are\nsent.</td>
+      <td>• Alert A is triggered on two nodes at the same\ntime. Only one notification is sent.\n• Alert A is triggered on node 1, and Alert B is\ntriggered on node 2 at the same time. Two\nnotifications are sent—one for each alert.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>For a specific alert on a specific node, if the\nthresholds are reached for more than one severity, a\nnotification is sent only for the most severe alert.</td>
+      <td>• Alert A is triggered and the minor, major, and\ncritical alert thresholds are reached. One\nnotification is sent for the critical alert.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>The first time an alert is triggered, StorageGRID waits\n2 minutes before sending a notification. If other alerts\nwith the same name are triggered during that time,\nStorageGRID groups all of the alerts in the initial\nnotification.</td>
+      <td>1. Alert A is triggered on node 1 at 08:00. No\nnotification is sent.\n2. Alert A is triggered on node 2 at 08:01. No\nnotification is sent.\n3. At 08:02, a notification is sent to report both\ninstances of the alert.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>If an another alert with the same name is triggered,\nStorageGRID waits 10 minutes before sending a new\nnotification. The new notification reports all active\nalerts (current alerts that have not been silenced),\neven if they were reported previously.</td>
+      <td>1. Alert A is triggered on node 1 at 08:00. A\nnotification is sent at 08:02.\n2. Alert A is triggered on node 2 at 08:05. A second\nnotification is sent at 08:15 (10 minutes later).\nBoth nodes are reported.</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>If there are multiple current alerts with the same name\nand one of those alerts is resolved, a new notification\nis not sent if the alert reoccurs on the node for which\nthe alert was resolved.</td>
+      <td>1. Alert A is triggered for node 1. A notification is\nsent.\n2. Alert A is triggered for node 2. A second\nnotification is sent.\n3. Alert A is resolved for node 2, but it remains\nactive for node 1.\n4. Alert A is triggered again for node 2. No new\nnotification is sent because the alert is still active\nfor node 1.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>StorageGRID continues to send email notifications\nonce every 7 days until all instances of the alert are\nresolved or the alert rule is silenced.</td>
+      <td>1. Alert A is triggered for node 1 on March 8. A\nnotification is sent.\n2. Alert A is not resolved or silenced. Additional\nnotifications are sent on March 15, March 22,\nMarch 29, and so on.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

@@ -1,0 +1,121 @@
+StorageGRID systems often support multiple client applications. You should keep this in mind when you determine the maximum number of concurrent connections used by a client application. If the client application consists of multiple software entities that each establish connections to the StorageGRID system, you should add up all the connections across the entities. You might have to adjust the maximum number of concurrent connections in the following situations:
+
+The StorageGRID system’s topology affects the maximum number of concurrent transactions and connections that the system can support. Client applications that interact with the StorageGRID system over a network with limited bandwidth might have to reduce the degree of concurrency to ensure that individual transactions are completed in a reasonable time.
+
+When many client applications share the StorageGRID system, you might have to reduce the degree of concurrency to avoid exceeding the limits of the system.
+
+Separation of HTTP connection pools for read and write operations
+
+You can use separate pools of HTTP connections for read and write operations and control how much of a pool to use for each. Separate pools of HTTP connections enable you to better control transactions and balance loads.
+
+Client applications can create loads that are retrieve-dominant (read) or store-dominant (write). With separate pools of HTTP connections for read and write transactions, you can adjust how much of each pool to dedicate for read or write transactions. Manage link costs
+
+Link costs let you prioritize which data center site provides a requested service when two or more data center sites exist. You can adjust link costs to reflect latency between sites.
+
+528
+
+What are link costs?
+
+Link costs are used to prioritize which object copy is used to fulfill object retrievals.
+
+Link costs are used by the Grid Management API and the Tenant Management API to determine which internal StorageGRID services to use.
+
+Link costs are used by the Load Balancer service on Admin Nodes and Gateway Nodes to direct client connections. See Considerations for load balancing.
+
+The diagram shows a three site grid that has link costs configured between sites:
+
+The Load Balancer service on Admin Nodes and Gateway Nodes equally distributes client connections to all Storage Nodes at the same data center site and to any data center sites with a link cost of 0. In the example, a Gateway Node at data center site 1 (DC1) equally distributes client connections to Storage Nodes at DC1 and to Storage Nodes at DC2. A Gateway Node at DC3 sends client connections only to Storage Nodes at DC3.
+
+When retrieving an object that exists as multiple replicated copies, StorageGRID retrieves the copy at the data center that has the lowest link cost.
+
+In the example, if a client application at DC2 retrieves an object that is stored both at DC1 and DC3, the object is retrieved from DC1, because the link cost from DC1 to DC2 is 0, which is lower than the link cost from DC3 to DC2 (25).
+
+Link costs are arbitrary relative numbers with no specific unit of measure. For example, a link cost of 50 is used less preferentially than a link cost of 25. The table shows commonly used link costs. Link
+
+Link cost
+
+Notes
+
+Between physical data center sites
+
+25 (default)
+
+Data centers connected by a WAN link.
+
+529
+
+Link
+
+Link cost
+
+Notes
+
+Between logical data center sites at the same physical location
+
+0
+
+Logical data centers in the same physical building or campus connected by a LAN.
+
+Update link costs
+
+You can update the link costs between data center sites to reflect latency between sites.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Grid topology page configuration permission. Steps
+
+1. Select SUPPORT > Other > Link cost.
+
+2. Select a site under Link Source and enter a cost value between 0 and 100 under Link Destination.
+
+You can’t change the link cost if the source is the same as the destination.
+
+To cancel changes, select
+
+Revert.
+
+3. Select Apply Changes.
+
+Use AutoSupport
+
+530 Link costs are arbitrary relative numbers with no specific unit of measure. For example, a link cost of 50 is used less preferentially than a link cost of 25. The table shows commonly used link costs. Link
+
+Link cost
+
+Notes
+
+Between physical data center sites
+
+25 (default)
+
+Data centers connected by a WAN link.
+
+529
+
+Link
+
+Link cost
+
+Notes
+
+Between logical data center sites at the same physical location
+
+0
+
+Logical data centers in the same physical building or campus connected by a LAN.
+
+Update link costs
+
+You can update the link costs between data center sites to reflect latency between sites.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Grid topology page configuration permission. Steps
+
+1. Select SUPPORT > Other > Link cost.
+
+2. Select a site under Link Source and enter a cost value between 0 and 100 under Link Destination.

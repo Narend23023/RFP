@@ -1,0 +1,109 @@
+The memberof and refint overlays should be enabled. For more information, see the instructions for reverse group membership maintenance in the OpenLDAP documentation: Version 2.4 Administrator’s Guide.
+
+Indexing
+
+You must configure the following OpenLDAP attributes with the specified index keywords:
+
+olcDbIndex: objectClass eq
+
+olcDbIndex: uid eq,pres,sub
+
+olcDbIndex: cn eq,pres,sub
+
+olcDbIndex: entryUUID eq
+
+In addition, ensure the fields mentioned in the help for Username are indexed for optimal performance.
+
+See the information about reverse group membership maintenance in the OpenLDAP documentation: Version 2.4 Administrator’s Guide. Manage tenant groups
+
+Create groups for an S3 tenant
+
+You can manage permissions for S3 user groups by importing federated groups or creating local groups.
+
+Before you begin
+
+787
+
+• You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access permission.
+
+If you plan to import a federated group, you have configured identity federation, and the federated group already exists in the configured identity source.
+
+If your tenant account has the Use grid federation connection permission, you have reviewed the workflow and considerations for cloning tenant groups and users, and you are signed in to the tenant’s source grid. Access the Create group wizard
+
+As your first step, access the Create group wizard.
+
+Steps
+
+1. Select ACCESS MANAGEMENT > Groups.
+
+2. If your tenant account has the Use grid federation connection permission, confirm that a blue banner appears, indicating that new groups created on this grid will be cloned to the same tenant on the other grid in the connection. If this banner does not appear, you might be signed in to the tenant’s destination grid.
+
+3. Select Create group.
+
+Choose a group type
+
+You can create a local group or import a federated group. Steps
+
+1. Select the Local group tab to create a local group, or select the Federated group tab to import a group from the previously configured identity source.
+
+If single sign-on (SSO) is enabled for your StorageGRID system, users belonging to local groups will not be able to sign in to the Tenant Manager, although they can use client applications to manage the tenant’s resources, based on group permissions.
+
+2. Enter the group’s name.
+
+Local group: Enter both a display name and a unique name. You can edit the display name later.
+
+788
+
+If your tenant account has the Use grid federation connection permission, a cloning error will occur if the same Unique name already exists for the tenant on the destination grid.
+
+Federated group: Enter the unique name. For Active Directory, the unique name is the name associated with the sAMAccountName attribute. For OpenLDAP, the unique name is the name associated with the uid attribute.
+
+3. Select Continue. Manage group permissions
+
+Group permissions control which tasks users can perform in the Tenant Manager and Tenant Management API.
+
+Steps
+
+1. For Access mode, select one of the following: 3. Select Create group.
+
+Choose a group type
+
+You can create a local group or import a federated group. Steps
+
+1. Select the Local group tab to create a local group, or select the Federated group tab to import a group from the previously configured identity source.
+
+If single sign-on (SSO) is enabled for your StorageGRID system, users belonging to local groups will not be able to sign in to the Tenant Manager, although they can use client applications to manage the tenant’s resources, based on group permissions.
+
+2. Enter the group’s name.
+
+Local group: Enter both a display name and a unique name. You can edit the display name later.
+
+788
+
+If your tenant account has the Use grid federation connection permission, a cloning error will occur if the same Unique name already exists for the tenant on the destination grid.
+
+Federated group: Enter the unique name. For Active Directory, the unique name is the name associated with the sAMAccountName attribute. For OpenLDAP, the unique name is the name associated with the uid attribute.
+
+3. Select Continue. Manage group permissions
+
+Group permissions control which tasks users can perform in the Tenant Manager and Tenant Management API.
+
+Steps
+
+1. For Access mode, select one of the following:
+
+Read-write (default): Users can sign in to Tenant Manager and manage the tenant configuration. ◦ Read-only: Users can only view settings and features. They can’t make any changes or perform any operations in the Tenant Manager or Tenant Management API. Local read-only users can change their own passwords.
+
+If a user belongs to multiple groups and any group is set to Read-only, the user will have read-only access to all selected settings and features.
+
+2. Select one or more permissions for this group.
+
+See Tenant management permissions.
+
+3. Select Continue. Set S3 group policy
+
+The group policy determines which S3 access permissions users will have.
+
+Steps

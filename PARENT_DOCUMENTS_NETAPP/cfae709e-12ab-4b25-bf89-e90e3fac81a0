@@ -1,0 +1,107 @@
+You must select this option if you are using the FabricPool setup wizard for a new StorageGRID system and you have not yet created any tenant accounts.
+
+Allow selected tenants Only the selected tenant accounts can use this endpoint to access their buckets.
+
+Block selected tenants The selected tenant accounts can’t use this endpoint to access their
+
+buckets. All other tenants can use this endpoint.
+
+e. For the Attach certificate step, select one of the following:
+
+Field
+
+Description
+
+Upload certificate (recommended)
+
+Use this option to upload a CA-signed server certificate, certificate private key, and optional CA bundle. Generate certificate
+
+Use this option to generate a self-signed certificate. See Configure load balancer endpoints for details of what to enter.
+
+Use StorageGRID S3 and Swift certificate
+
+This option is available only if you have already uploaded or generated a custom version of the StorageGRID global certificate. See Configure S3 and Swift API certificates for details.
+
+f. Select Finish to return to the FabricPool setup wizard.
+
+g. Select Continue to go to the tenant and bucket step.
+
+Changes to an endpoint certificate can take up to 15 minutes to be applied to all nodes.
+
+Use existing load balancer endpoint
+
+a. Select the name of an existing endpoint from the Select a load balancer endpoint drop-down list.
+
+b. Select Continue to go to the tenant and bucket step.
+
+Use external load balancer
+
+a. Complete the following fields for the external load balancer.
+
+Field
+
+Description
+
+FQDN
+
+The fully qualified domain name (FQDN) of the external load balancer.
+
+Port
+
+The port number that FabricPool will use to connect to the external load balancer. Certificate
+
+Copy the server certificate for the external load balancer and paste it into this field.
+
+b. Select Continue to go to the tenant and bucket step. Step 3 of 9: Tenant and bucket
+
+A tenant is an entity that can use S3 applications to store and retrieve objects in StorageGRID. Each tenant has its own users, access keys, buckets, objects, and a specific set of capabilities. You must create a StorageGRID tenant before you can create the bucket that FabricPool will use.
+
+A bucket is a container used to store a tenant’s objects and object metadata. Although some tenants might have many buckets, the wizard lets you create or select only one tenant and one bucket at a time. You can use the Tenant Manager later to add any additional buckets you need.
+
+You can create a new tenant and bucket for FabricPool use, or you can select an existing tenant and bucket. If you create a new tenant, the system automatically creates the access key ID and secret access key for the tenant’s root user.
+
+For details about this task, see Create a tenant account for FabricPool and Create an S3 bucket and obtain an access key. Steps
+
+Create a new tenant and bucket or select an existing tenant.
+
+733
+
+New tenant and bucket
+
+1. To create a new tenant and bucket, enter a Tenant name. For example, FabricPool tenant. Copy the server certificate for the external load balancer and paste it into this field.
+
+b. Select Continue to go to the tenant and bucket step. Step 3 of 9: Tenant and bucket
+
+A tenant is an entity that can use S3 applications to store and retrieve objects in StorageGRID. Each tenant has its own users, access keys, buckets, objects, and a specific set of capabilities. You must create a StorageGRID tenant before you can create the bucket that FabricPool will use.
+
+A bucket is a container used to store a tenant’s objects and object metadata. Although some tenants might have many buckets, the wizard lets you create or select only one tenant and one bucket at a time. You can use the Tenant Manager later to add any additional buckets you need.
+
+You can create a new tenant and bucket for FabricPool use, or you can select an existing tenant and bucket. If you create a new tenant, the system automatically creates the access key ID and secret access key for the tenant’s root user.
+
+For details about this task, see Create a tenant account for FabricPool and Create an S3 bucket and obtain an access key. Steps
+
+Create a new tenant and bucket or select an existing tenant.
+
+733
+
+New tenant and bucket
+
+1. To create a new tenant and bucket, enter a Tenant name. For example, FabricPool tenant.
+
+2. Define root access for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both. Option
+
+Do this
+
+If identity federation is not enabled
+
+Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.

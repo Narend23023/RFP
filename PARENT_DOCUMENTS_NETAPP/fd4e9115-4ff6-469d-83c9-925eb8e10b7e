@@ -1,0 +1,99 @@
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+If you use a 32-bit prefix, the VIP network address also serves as the gateway address and the VIP address.
+
+2. Optionally, if any S3, Swift, administrative or tenant clients will access these VIP addresses from a different subnet, enter the Gateway IP address. The gateway address must be within the VIP subnet.
+
+Client and admin users will use this gateway to access the virtual IP addresses.
+
+3. Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet and all will be active at the same time on the active interface.
+
+You must provide at least one IPv4 address. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+4. Select Create HA group and select Finish. The HA Group is created, and you can now use the configured virtual IP addresses.
+
+Next steps
+
+If you will use this HA group for load balancing, create a load balancer endpoint to determine the port and network protocol and to attach any required certificates. See Configure load balancer endpoints.
+
+494 The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+If you use a 32-bit prefix, the VIP network address also serves as the gateway address and the VIP address.
+
+2. Optionally, if any S3, Swift, administrative or tenant clients will access these VIP addresses from a different subnet, enter the Gateway IP address. The gateway address must be within the VIP subnet.
+
+Client and admin users will use this gateway to access the virtual IP addresses.
+
+3. Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet and all will be active at the same time on the active interface.
+
+You must provide at least one IPv4 address. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+4. Select Create HA group and select Finish. The HA Group is created, and you can now use the configured virtual IP addresses.
+
+Next steps
+
+If you will use this HA group for load balancing, create a load balancer endpoint to determine the port and network protocol and to attach any required certificates. See Configure load balancer endpoints.
+
+494
+
+Edit a high availability group
+
+You can edit a high availability (HA) group to change its name and description, add or remove interfaces, change the priority order, or add or update virtual IP addresses.
+
+For example, you might need to edit an HA group if you want to remove the node associated with a selected interface in a site or node decommission procedure. Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+The High availability groups page shows all existing HA groups.
+
+2. Select the checkbox for the HA group you want to edit.
+
+3. Do one of the following, based on what you want to update:
+
+Select Actions > Edit virtual IP address to add or remove VIP addresses. ◦ Select Actions > Edit HA group to update the group’s name or description, add or remove interfaces, change the priority order, or add or remove VIP addresses.
+
+4. If you selected Edit virtual IP address: a. Update the virtual IP addresses for the HA group.
+
+b. Select Save.
+
+c. Select Finish.
+
+5. If you selected Edit HA group:
+
+a. Optionally, update the group’s name or description.
+
+b. Optionally, select or clear the checkboxes to add or remove interfaces.
+
+If the HA group provides access to the Grid Manager, you must select an interface on the primary Admin Node to be the Primary interface. Some maintenance procedures can only be performed from the primary Admin Node
+
+c. Optionally, drag rows to change the priority order of the Primary interface and any Backup interfaces for this HA group.
+
+d. Optionally, update the virtual IP addresses.
+
+e. Select Save and then select Finish.
+
+Remove a high availability group
+
+You can remove one or more high availability (HA) groups at a time.
+
+You can’t remove an HA group if it is bound to a load balancer endpoint. To delete an HA group, you must remove it from any load balancer endpoints that use it.
+
+To prevent client disruptions, update any affected S3 or Swift client applications before you remove an HA group. Update each client to connect using another IP address, for example, the virtual IP address of a different HA group or the IP address that was configured for an interface during installation. Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+495
+
+2. Review the Load balancer endpoints column for each HA group you want to remove. If any load balancer
+
+endpoints are listed:
+
+a. Go to CONFIGURATION > Network > Load balancer endpoints.
+
+b. Select the checkbox for the endpoint.
+
+c. Select Actions > Edit endpoint binding mode.
+
+d. Update the binding mode to remove the HA group. e. Select Save changes.
+
+3. If no load balancer endpoints are listed, select the checkbox for each HA group you want to remove.

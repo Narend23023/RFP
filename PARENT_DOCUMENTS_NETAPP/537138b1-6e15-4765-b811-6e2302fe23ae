@@ -1,0 +1,59 @@
+d. If any ILM rules are listed, look at the Used in active policy column to determine if the Archive Node
+
+storage pool is being used in an active policy.
+
+e. If the storage pool is being used, create a new ILM policy that no longer uses the Archive Node.
+
+f. Activate the new policy.
+
+g. Wait for all objects to be moved from the Archive Node storage pool. This might take several days or weeks.
+
+3. After you are certain all objects have been moved from the Archive Node, power down the node.
+
+4. Perform the decommission procedure for disconnected nodes.
+
+Considerations for Storage Nodes Considerations for decommissioning Storage Nodes
+
+Before decommissioning a Storage Node, consider whether you can clone the node instead. Then, if you do decide to decommission the node, review how StorageGRID manages objects and metadata during the decommission procedure.
+
+When to clone a node instead of decommissioning it
+
+If you want to replace an older appliance Storage Node with a newer or larger appliance, consider cloning the appliance node instead of adding a new appliance in an expansion and then decommissioning the old appliance.
+
+1438
+
+Appliance node cloning lets you easily replace an existing appliance node with a compatible appliance at the same StorageGRID site. The cloning process transfers all data to the new appliance, places the new appliance in service, and leaves the old appliance in a pre-install state.
+
+You can clone an appliance node if you need to:
+
+Replace an appliance that is reaching end-of-life. Upgrade an existing node to take advantage of improved appliance technology.
+
+Increase grid storage capacity without changing the number of Storage Nodes in your StorageGRID system.
+
+Improve storage efficiency, such as by changing the RAID mode.
+
+See Appliance node cloning: Overview for details. Considerations for connected Storage Nodes
+
+Review the considerations for decommissioning a connected Storage Node.
+
+You should not decommission more than 10 Storage Nodes in a single Decommission Node procedure.
+
+The system must, at all times, include enough Storage Nodes to satisfy operational requirements, including the ADC quorum and the active ILM policy. To satisfy this restriction, you might need to add a new Storage Node in an expansion operation before you can decommission an existing Storage Node.
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. When you remove a Storage Node, large volumes of object data are transferred over the network. Although these transfers should not affect normal system operations, they can affect the total amount of network bandwidth consumed by the StorageGRID system. You can clone an appliance node if you need to:
+
+Replace an appliance that is reaching end-of-life. Upgrade an existing node to take advantage of improved appliance technology.
+
+Increase grid storage capacity without changing the number of Storage Nodes in your StorageGRID system.
+
+Improve storage efficiency, such as by changing the RAID mode.
+
+See Appliance node cloning: Overview for details. Considerations for connected Storage Nodes
+
+Review the considerations for decommissioning a connected Storage Node.
+
+You should not decommission more than 10 Storage Nodes in a single Decommission Node procedure.
+
+The system must, at all times, include enough Storage Nodes to satisfy operational requirements, including the ADC quorum and the active ILM policy. To satisfy this restriction, you might need to add a new Storage Node in an expansion operation before you can decommission an existing Storage Node.
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. When you remove a Storage Node, large volumes of object data are transferred over the network. Although these transfers should not affect normal system operations, they can affect the total amount of network bandwidth consumed by the StorageGRID system.

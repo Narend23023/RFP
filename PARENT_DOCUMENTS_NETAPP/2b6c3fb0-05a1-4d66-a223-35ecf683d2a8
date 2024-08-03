@@ -1,0 +1,51 @@
+If you plan to use S3 virtual hosted-style requests, the certificate must also include an Alternative Name entry for each S3 endpoint domain name you have configured, including any wildcard names. For example: Alternative Name: DNS:*.s3.storagegrid.example.com
+
+If you use wildcards for domain names, review the Hardening guidelines for server certificates.
+
+You must also define a DNS entry for each name in the security certificate.
+
+How do I manage expiring certificates?
+
+If the certificate used to secure the connection between the S3 application and StorageGRID expires, the application might temporarily lose access to StorageGRID.
+
+To avoid certificate expiration issues, follow these best practices:
+
+Carefully monitor any alerts that warn of approaching certificate expiration dates, such as the Expiration of load balancer endpoint certificate and Expiration of global server certificate for S3 and Swift API alerts.
+
+Always keep the StorageGRID and S3 application’s versions of the certificate in sync. If you replace or renew the certificate used for a load balancer endpoint, you must replace or renew the equivalent certificate used by the S3 application. Use a publicly signed CA certificate. If you use a certificate signed by a CA, you can replace soon-to-expire certificates nondisruptively.
+
+If you have generated a self-signed StorageGRID certificate and that certificate is about to expire, you must manually replace the certificate in both StorageGRID and in the S3 application before the existing certificate expires. Considerations for the binding mode If you use wildcards for domain names, review the Hardening guidelines for server certificates.
+
+You must also define a DNS entry for each name in the security certificate.
+
+How do I manage expiring certificates?
+
+If the certificate used to secure the connection between the S3 application and StorageGRID expires, the application might temporarily lose access to StorageGRID.
+
+To avoid certificate expiration issues, follow these best practices:
+
+Carefully monitor any alerts that warn of approaching certificate expiration dates, such as the Expiration of load balancer endpoint certificate and Expiration of global server certificate for S3 and Swift API alerts.
+
+Always keep the StorageGRID and S3 application’s versions of the certificate in sync. If you replace or renew the certificate used for a load balancer endpoint, you must replace or renew the equivalent certificate used by the S3 application. Use a publicly signed CA certificate. If you use a certificate signed by a CA, you can replace soon-to-expire certificates nondisruptively.
+
+If you have generated a self-signed StorageGRID certificate and that certificate is about to expire, you must manually replace the certificate in both StorageGRID and in the S3 application before the existing certificate expires. Considerations for the binding mode
+
+The binding mode lets you control which IP addresses can be used to access a load balancer endpoint. If an endpoint uses a binding mode, client applications can only access the endpoint if they use an allowed IP address or its corresponding fully qualified domain name (FQDN). Client applications using any other IP address or FQDN can’t access the endpoint.
+
+498
+
+You can specify any of the following binding modes:
+
+Global (default): Client applications can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN. Use this setting unless you need to restrict the accessibility of an endpoint.
+
+Virtual IPs of HA groups. Client applications must use a virtual IP address (or corresponding FQDN) of an HA group.
+
+Node interfaces. Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces. Node type. Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node. Considerations for tenant access
+
+Tenant access is an optional security feature that lets you control which StorageGRID tenant accounts can use a load balancer endpoint to access their buckets. You can allow all tenants to access an endpoint (default), or you can specify a list of the allowed or blocked tenants for each endpoint.
+
+You can use this feature to provide better security isolation between tenants and their endpoints. For example, you might use this feature to ensure that the top-secret or highly classified materials owned by one tenant remain completely inaccessible to other tenants.
+
+For the purpose of access control, the tenant is determined from the access keys used in the client request, if no access keys are provided as part of the request (such as with anonymous access) the bucket owner is used to determine the tenant. Tenant access example
+
+To understand how this security feature works, consider the following example:

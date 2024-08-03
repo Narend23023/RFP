@@ -1,0 +1,71 @@
+Actual minimum WAN bandwidth requirements depend on client activity and the ILM protection scheme. For
+
+54
+
+assistance estimating the minimum WAN bandwidth requirements, contact your NetApp Professional Services consultant. Connections for Admin Nodes and Gateway Nodes
+
+Admin Nodes must always be secured from untrusted clients, such as those on the open internet. You must ensure that no untrusted client can access any Admin Node on the Grid Network, the Admin Network, or the Client Network.
+
+Admin Nodes and Gateway Nodes that you plan to add to high availability groups must be configured with a static IP address. For more information, see Manage high availability groups.
+
+Using network address translation (NAT) Don’t use network address translation (NAT) on the Grid Network between grid nodes or between StorageGRID sites. When you use private IPv4 addresses for the Grid Network, those addresses must be directly routable from every grid node at every site. As required, however, you can use NAT between external clients and grid nodes, such as to provide a public IP address for a Gateway Node. Using NAT to bridge a public network segment is supported only when you employ a tunneling application that is transparent to all nodes in the grid, meaning the grid nodes require no knowledge of public IP addresses. Network-specific requirements
+
+Follow the requirements for each StorageGRID network type.
+
+Network gateways and routers
+
+If set, the gateway for a given network must be within the specific network’s subnet.
+
+If you configure an interface using static addressing, you must specify a gateway address other than 0.0.0.0.
+
+If you don’t have a gateway, the best practice is to set the gateway address to be the IP address of the network interface. Subnets
+
+Each network must be connected to its own subnet that does not overlap with any other network on the node.
+
+The following restrictions are enforced by the Grid Manager during deployment. They are provided here to assist in pre-deployment network planning.
+
+The subnet mask for any network IP address can’t be 255.255.255.254 or 255.255.255.255 (/31 or /32 in CIDR notation). Follow the requirements for each StorageGRID network type.
+
+Network gateways and routers
+
+If set, the gateway for a given network must be within the specific network’s subnet.
+
+If you configure an interface using static addressing, you must specify a gateway address other than 0.0.0.0.
+
+If you don’t have a gateway, the best practice is to set the gateway address to be the IP address of the network interface. Subnets
+
+Each network must be connected to its own subnet that does not overlap with any other network on the node.
+
+The following restrictions are enforced by the Grid Manager during deployment. They are provided here to assist in pre-deployment network planning.
+
+The subnet mask for any network IP address can’t be 255.255.255.254 or 255.255.255.255 (/31 or /32 in CIDR notation).
+
+The subnet defined by a network interface IP address and subnet mask (CIDR) can’t overlap the subnet of any other interface configured on the same node.
+
+The Grid Network subnet for each node must be included in the GNSL.
+
+The Admin Network subnet can’t overlap the Grid Network subnet, the Client Network subnet, or any subnet in the GNSL.
+
+The subnets in the AESL can’t overlap with any subnets in the GNSL.
+
+The Client Network subnet can’t overlap the Grid Network subnet, the Admin Network subnet, any subnet
+
+55
+
+in the GNSL, or any subnet in the AESL. Grid Network
+
+At deployment time, each grid node must be attached to the Grid Network and must be able to communicate with the primary Admin Node using the networking configuration you specify when deploying the node.
+
+During normal grid operations, each grid node must be able to communicate with all other grid nodes over the Grid Network.
+
+The Grid Network must be directly routable between each node. Network address translation (NAT) between nodes is not supported.
+
+If the Grid Network consists of multiple subnets, add them to the Grid Network Subnet List (GNSL). Static routes are created on all nodes for each subnet in the GNSL.
+
+If the Grid Network interface is configured as a trunk to support VLAN interfaces, the trunk native VLAN must be the VLAN used for Grid Network traffic. All grid nodes must be accessible over the trunk native VLAN. Admin Network
+
+The Admin Network is optional. If you plan to configure an Admin Network, follow these requirements and guidelines.
+
+Typical uses of the Admin Network include management connections, AutoSupport, KMS, and connections to critical servers such as NTP, DNS, and LDAP if these connections aren’t provided through the Grid Network or Client Network.
+
+The Admin Network and AESL can be unique to each node, as long as the desired network services and clients are reachable.

@@ -1,0 +1,95 @@
+You have confirmed that the StorageGRID Appliance Installer version on the services appliance matches the software version of your StorageGRID system. See Verify and upgrade StorageGRID Appliance Installer version. Don’t deploy both an SG110 and an SG1100 services appliance or an SG100 and an SG1000 services appliance in the same site. Unpredictable performance might result. About this task
+
+You can use a services appliance to recover a failed grid node in the following cases:
+
+The failed node was hosted on VMware or Linux (platform change)
+
+The failed node was hosted on a services appliance (platform replacement)
+
+Install services appliance (platform change only)
+
+When you are recovering a failed grid node that was hosted on VMware or a Linux host and you are using a services appliance for the replacement node, you must first install the new appliance hardware using the same node name (system name) as the failed node.
+
+1647
+
+Before you begin
+
+You have the following information about the failed node:
+
+Node name: You must install the services appliance using the same node name as the failed node. The node name is the hostname (system name).
+
+IP addresses: You can assign the services appliance the same IP addresses as the failed node, which is the preferred option, or you can select a new unused IP address on each network. About this task
+
+Perform this procedure only if you are recovering a failed node that was hosted on VMware or Linux and are replacing it with a node hosted on a services appliance.
+
+Steps
+
+1. Follow the instructions for installing a new services appliance. See Quick start for hardware installation.
+
+2. When prompted for a node name, use the node name of the failed node.
+
+Prepare appliance for reinstallation (platform replacement only)
+
+When recovering a grid node that was hosted on a services appliance, you must first prepare the appliance for reinstallation of StorageGRID software.
+
+Perform this procedure only if you are replacing a failed node that was hosted on a services appliance. Don’t follow these steps if the failed node was originally hosted on VMware or a Linux host. Steps
+
+1. Log in to the failed grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Prepare the appliance for the installation of StorageGRID software. Enter: sgareinstall Perform this procedure only if you are recovering a failed node that was hosted on VMware or Linux and are replacing it with a node hosted on a services appliance.
+
+Steps
+
+1. Follow the instructions for installing a new services appliance. See Quick start for hardware installation.
+
+2. When prompted for a node name, use the node name of the failed node.
+
+Prepare appliance for reinstallation (platform replacement only)
+
+When recovering a grid node that was hosted on a services appliance, you must first prepare the appliance for reinstallation of StorageGRID software.
+
+Perform this procedure only if you are replacing a failed node that was hosted on a services appliance. Don’t follow these steps if the failed node was originally hosted on VMware or a Linux host. Steps
+
+1. Log in to the failed grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Prepare the appliance for the installation of StorageGRID software. Enter: sgareinstall
+
+3. When prompted to continue, enter: y
+
+The appliance reboots, and your SSH session ends. It usually takes about 5 minutes for the StorageGRID Appliance Installer to become available, although in some cases you might need to wait up to 30 minutes.
+
+The services appliance is reset, and data on the grid node is no longer accessible. IP addresses configured during the original installation process should remain intact; however, it is recommended that you confirm this when the procedure completes. After executing the sgareinstall command, all StorageGRID-provisioned accounts, passwords, and SSH keys are removed, and new host keys are generated.
+
+1648
+
+Start software installation on services appliance
+
+To install a Gateway Node or Admin Node on a services appliance, you use the StorageGRID Appliance Installer, which is included on the appliance.
+
+Before you begin
+
+The appliance is installed in a rack, connected to your networks, and powered on.
+
+Network links and IP addresses are configured for the appliance using the StorageGRID Appliance Installer.
+
+If you are installing a Gateway Node or non-primary Admin Node, you know the IP address of the primary Admin Node for the StorageGRID grid.

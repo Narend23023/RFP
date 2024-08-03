@@ -1,0 +1,69 @@
+▪ Repairs Attempted (XRPA): Use this attribute to track the progress of replicated repairs. This attribute increases each time a Storage Node tries to repair a high-risk object. When this attribute does not increase for a period longer than the current scan period (provided by the Scan Period — Estimated attribute), it means that ILM scanning found no high-risk objects that need to be repaired on any nodes.
+
+High-risk objects are objects that are at risk of being completely lost. This does not include objects that don’t satisfy their ILM configuration. repair-data show-replicated-repair-status
+
+To determine if repairs are complete:
+
+1. Select NODES > Storage Node being repaired > ILM.
+
+2. Review the attributes in the Evaluation section. When repairs are complete, the Awaiting - All attribute indicates 0 objects.
+
+To monitor the repair in more detail:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select grid > Storage Node being repaired > LDR > Data Store.
+
+3. Use a combination of the following attributes to determine, as well as possible, if replicated repairs are complete.
+
+Cassandra inconsistencies might be present, and failed repairs aren’t tracked.
+
+▪ Repairs Attempted (XRPA): Use this attribute to track the progress of replicated repairs. This attribute increases each time a Storage Node tries to repair a high-risk object. When this attribute does not increase for a period longer than the current scan period (provided by the Scan Period — Estimated attribute), it means that ILM scanning found no high-risk objects that need to be repaired on any nodes.
+
+High-risk objects are objects that are at risk of being completely lost. This does not include objects that don’t satisfy their ILM configuration.
+
+▪ Scan Period — Estimated (XSCM): Use this attribute to estimate when a policy change will be applied to previously ingested objects. If the Repairs Attempted attribute does not increase for a period longer than the current scan period, it is probable that replicated repairs are done. Note that the scan period can change. The Scan Period — Estimated (XSCM) attribute applies to the entire grid and is the maximum of all node scan periods. You can query the Scan Period — Estimated attribute history for the grid to determine an appropriate time frame. Erasure-coded (EC) data
+
+To monitor the repair of erasure-coded data and retry any requests that might have failed:
+
+1. Determine the status of erasure-coded data repairs:
+
+Select SUPPORT > Tools > Metrics to view the estimated time to completion and the completion percentage for the current job. Then, select EC Overview in the Grafana section. Look at the Grid EC Job Estimated Time to Completion and Grid EC Job Percentage Completed dashboards.
+
+Use this command to see the status of a specific repair-data operation: repair-data show-ec-repair-status --repair-id repair ID
+
+Use this command to list all repairs:
+
+1450
+
+repair-data show-ec-repair-status
+
+The output lists information, including repair ID, for all previously and currently running repairs.
+
+2. If the output shows that the repair operation failed, use the --repair-id option to retry the repair.
+
+This command retries a failed node repair, using the repair ID 6949309319275667690: repair-data start-ec-node-repair --repair-id 6949309319275667690
+
+This command retries a failed volume repair, using the repair ID 6949309319275667690: repair-data start-ec-volume-repair --repair-id 6949309319275667690
+
+After you finish
+
+As soon as the disconnected nodes have been decommissioned and all data repair jobs have been completed, you can decommission any connected grid nodes as required.
+
+Then, complete these steps after you complete the decommission procedure:
+
+Ensure that the drives of the decommissioned grid node are wiped clean. Use a commercially available data wiping tool or service to permanently and securely remove data from the drives.
+
+If you decommissioned an appliance node and the data on the appliance was protected using node encryption, use the StorageGRID Appliance Installer to clear the key management server configuration (Clear KMS). You must clear the KMS configuration if you want to add the appliance to another grid. For instructions, see Monitor node encryption in maintenance mode.
+
+Decommission connected grid nodes
+
+You can decommission and permanently remove nodes that are connected to the grid. Before you begin
+
+You understand the considerations for decommissioning Admin, Gateway, and Archive Nodes and the considerations for decommissioning Storage Nodes.
+
+You have gathered all required materials.
+
+You have ensured that no data repair jobs are active.
+
+You have confirmed that Storage Node recovery is not in progress anywhere in the grid. If it is, wait until any Cassandra rebuild performed as part of the recovery is complete. You can then proceed with decommissioning. After you finish

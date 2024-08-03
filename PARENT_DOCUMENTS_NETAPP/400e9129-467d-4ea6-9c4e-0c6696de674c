@@ -1,0 +1,61 @@
+1. Access the Swagger documentation for the Grid Management API. See Use the Grid Management API.
+
+2. Locate the Deactivate Features endpoint.
+
+306
+
+3. To deactivate a feature, such as Change tenant root password, send a body to the API like this: { "grid": {"changeTenantRootPassword": true} }
+
+When the request is complete, the Change tenant root password feature is disabled. The Change tenant root password management permission no longer appears in the user interface, and any API request that attempts to change the root password for a tenant will fail with "403 Forbidden."
+
+Reactivate deactivated features
+
+By default, you can use the Grid Management API to reactivate a feature that has been deactivated. However, if you want to prevent deactivated features from ever being reactivated, you can deactivate the activateFeatures feature itself. 1. Access the Swagger documentation for the Grid Management API. See Use the Grid Management API.
+
+2. Locate the Deactivate Features endpoint.
+
+306
+
+3. To deactivate a feature, such as Change tenant root password, send a body to the API like this: { "grid": {"changeTenantRootPassword": true} }
+
+When the request is complete, the Change tenant root password feature is disabled. The Change tenant root password management permission no longer appears in the user interface, and any API request that attempts to change the root password for a tenant will fail with "403 Forbidden."
+
+Reactivate deactivated features
+
+By default, you can use the Grid Management API to reactivate a feature that has been deactivated. However, if you want to prevent deactivated features from ever being reactivated, you can deactivate the activateFeatures feature itself.
+
+The activateFeatures feature can’t be reactivated. If you decide to deactivate this feature, be aware that you will permanently lose the ability to reactivate any other deactivated features. You must contact technical support to restore any lost functionality. Steps
+
+1. Access the Swagger documentation for the Grid Management API.
+
+2. Locate the Deactivate Features endpoint.
+
+3. To reactivate all features, send a body to the API like this:
+
+{ "grid": null }
+
+When this request is complete, all features, including the Change tenant root password feature, are reactivated. The Change tenant root password management permission now appears in the user interface, and any API request that attempts to change the root password for a tenant will succeed, assuming the user has the Root access or Change tenant root password management permission.
+
+The previous example causes all deactivated features to be reactivated. If other features have been deactivated that should remain deactivated, you must explicitly specify them in the PUT request. For example, to reactivate the Change tenant root password feature and continue to deactivate the Alarm acknowledgment feature, send this PUT request: { "grid": { "alarmAcknowledgment": true } }
+
+Control access to StorageGRID
+
+Control StorageGRID access: Overview
+
+You control who can access StorageGRID and which tasks users can perform by creating or importing groups and users and assigning permissions to each group. Optionally, you can enable single sign-on (SSO), create client certificates, and change grid passwords. Control access to the Grid Manager
+
+You determine who can access the Grid Manager and the Grid Management API by importing groups and users from an identity federation service or by setting up local groups and local users.
+
+307
+
+Using identity federation makes setting up groups and users faster, and it allows users to sign in to StorageGRID using familiar credentials. You can configure identity federation if you use Active Directory, OpenLDAP, or Oracle Directory Server.
+
+Contact technical support if you want to use another LDAP v3 service.
+
+You determine which tasks each user can perform by assigning different permissions to each group. For example, you might want users in one group to be able to manage ILM rules and users in another group to perform maintenance tasks. A user must belong to at least one group to access the system. Optionally, you can configure a group to be read-only. Users in a read-only group can only view settings and features. They can’t make any changes or perform any operations in the Grid Manager or Grid Management API.
+
+Enable single sign-on
+
+The StorageGRID system supports single sign-on (SSO) using the Security Assertion Markup Language 2.0 (SAML 2.0) standard. After you configure and enable SSO, all users must be authenticated by an external identity provider before they can access the Grid Manager, the Tenant Manager, the Grid Management API, or the Tenant Management API. Local users can’t sign in to StorageGRID.
+
+Change provisioning passphrase

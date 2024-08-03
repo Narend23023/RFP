@@ -1,0 +1,95 @@
+b. Follow the instructions to create an S3 bucket.
+
+c. On the Manage object settings tab, select Enable object versioning.
+
+d. If S3 Object Lock is enabled for your StorageGRID system, don’t enable S3 Object Lock for the bucket. e. Select Create bucket.
+
+f. Select Finish.
+
+2. Repeat these steps to create an identical bucket for the same tenant account on the other grid in the grid federation connection.
+
+As required, each bucket can use a different region.
+
+Enable cross-grid replication
+
+You must perform these steps before adding any objects to either bucket. Steps
+
+1. Starting from a grid whose objects you want to replicate, enable cross-grid replication in one direction:
+
+a. Sign in to the tenant account for the bucket.
+
+b. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+c. Select the bucket name from the table to access the bucket details page. d. Select the Cross-grid replication tab.
+
+e. Select Enable, and review the list of requirements.
+
+f. If all requirements have been met, select the grid federation connection you want to use.
+
+g. Optionally, change the setting of Replicate delete markers to determine what happens on the
+
+destination grid if an S3 client issues a delete request to the source grid that doesn’t include a version ID:
+
+▪ Yes (default): A delete marker is added to the source bucket and replicated to the destination bucket.
+
+▪ No: A delete marker is added to the source bucket but is not replicated to the destination bucket.
+
+778
+
+If the delete request includes a version ID, that object version is permanently removed from the source bucket. StorageGRID does not replicate delete requests that include a version ID, so the same object version is not deleted from the destination.
+
+See What is cross-grid replication for details.
+
+h. Optionally, change the setting of the Cross-grid replication audit category to manage the volume of audit messages:
+
+▪ Error (default): Only failed cross-grid replication requests are included in the audit output. ▪ Normal: All cross-grid replication requests are included, which significantly increases the volume of
+
+the audit output.
+
+i. Review your selections. You aren’t able to change these settings unless both buckets are empty. j. Select Enable and test.
+
+After a few moments, a success message appears. Objects added to this bucket will now be automatically replicated to the other grid. Cross-grid replication is shown as an enabled feature on the bucket details page.
+
+2. Optionally, go to the corresponding bucket on the other grid and enable cross-grid replication in both directions. Test replication between grids
+
+If cross-grid replication is enabled for a bucket, you might need to verify that the connection and cross-grid replication are working correctly and that the source and destination buckets still meet all requirements (for example, versioning is still enabled).
+
+Before you begin 778
+
+If the delete request includes a version ID, that object version is permanently removed from the source bucket. StorageGRID does not replicate delete requests that include a version ID, so the same object version is not deleted from the destination.
+
+See What is cross-grid replication for details.
+
+h. Optionally, change the setting of the Cross-grid replication audit category to manage the volume of audit messages:
+
+▪ Error (default): Only failed cross-grid replication requests are included in the audit output. ▪ Normal: All cross-grid replication requests are included, which significantly increases the volume of
+
+the audit output.
+
+i. Review your selections. You aren’t able to change these settings unless both buckets are empty. j. Select Enable and test.
+
+After a few moments, a success message appears. Objects added to this bucket will now be automatically replicated to the other grid. Cross-grid replication is shown as an enabled feature on the bucket details page.
+
+2. Optionally, go to the corresponding bucket on the other grid and enable cross-grid replication in both directions. Test replication between grids
+
+If cross-grid replication is enabled for a bucket, you might need to verify that the connection and cross-grid replication are working correctly and that the source and destination buckets still meet all requirements (for example, versioning is still enabled).
+
+Before you begin
+
+You are using a supported web browser.
+
+You belong to a user group that has the Root access permission. Steps
+
+1. Sign in to the tenant account for the bucket.
+
+779
+
+2. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+3. Select the bucket name from the table to access the bucket details page.
+
+4. Select the Cross-grid replication tab.
+
+5. Select Test connection.
+
+If the connection is healthy, a success banner appears. Otherwise, an error message appears, which you and the grid admin can use to resolve the issue. For details, see Troubleshoot grid federation errors.

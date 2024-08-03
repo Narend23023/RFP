@@ -1,0 +1,81 @@
+An object named "docs/text" is ingested. It matches the bucket lifecycle filter of "docs/" prefix.
+
+The Expiration action applies only to expired delete markers, which implies keeping everything else forever (starting with "docs/").
+
+Delete markers that start with "docs/" are removed when they become expired.
+
+An object named "video/movie" is ingested. It does not match the filter and uses the ILM retention policy.
+
+After 50 days a delete-marker is created and "video/movie" becomes noncurrent. ◦ After 20 days, a total of 70 days since the ingest, "video/movie" is deleted.
+
+Example of using bucket lifecycle to duplicate ILM and clean up expired delete markers
+
+713
+
+ILM policy
+
+Rule based on noncurrent-time reference: On Day 0, keep X copies for 20 days
+
+Rule based on ingest-time reference (default): On Day 0, keep X copies for 50 days Bucket Lifecycle Rule based on noncurrent-time reference: On Day 0, keep X copies for 20 days
+
+Rule based on ingest-time reference (default): On Day 0, keep X copies for 50 days
+
+Bucket Lifecycle
+
+Filter: {Prefix: "docs/"}, Expiration: ExpiredObjectDeleteMarker: true Result
+
+An object named "docs/text" is ingested. It matches the bucket lifecycle filter of "docs/" prefix.
+
+The Expiration action applies only to expired delete markers, which implies keeping everything else forever (starting with "docs/").
+
+Delete markers that start with "docs/" are removed when they become expired.
+
+An object named "video/movie" is ingested. It does not match the filter and uses the ILM retention policy.
+
+After 50 days a delete-marker is created and "video/movie" becomes noncurrent. ◦ After 20 days, a total of 70 days since the ingest, "video/movie" is deleted.
+
+Example of using bucket lifecycle to duplicate ILM and clean up expired delete markers
+
+713
+
+ILM policy
+
+Rule based on noncurrent-time reference: On Day 0, keep X copies for 20 days
+
+Rule based on ingest-time reference (default): On Day 0, keep X copies for 50 days Bucket Lifecycle
+
+Filter: {}, Expiration: Days: 50, NoncurrentVersionExpiration: Days: 20
+
+Result
+
+The ILM policy is duplicated in the bucket lifecycle.
+
+An object is ingested. No filter means that the bucket lifecycle applies to all objects and overrides the ILM retention settings.
+
+After 50 days a delete-marker is created and the object becomes noncurrent. ◦ After 20 days, a total of 70 days since the ingest, the noncurrent object is deleted and the delete- marker becomes expired.
+
+After 30 days, a total of 100 days since the ingest, the expired delete-marker is deleted.
+
+System hardening System hardening: Overview
+
+System hardening is the process of eliminating as many security risks as possible from a StorageGRID system.
+
+This document provides an overview of the hardening guidelines that are specific to StorageGRID. These guidelines are a supplement to industry-standard best practices for system hardening. For example, these guidelines assume that you use strong passwords for StorageGRID, use HTTPS instead of HTTP, and enable certificate-based authentication where available.
+
+As you install and configure StorageGRID, you can use these guidelines to help you meet any prescribed security objectives for information system confidentiality, integrity, and availability.
+
+StorageGRID follows the NetApp Vulnerability Handling Policy. Reported vulnerabilities are verified and addressed according to the product security incident response process.
+
+General considerations for hardening StorageGRID systems
+
+When hardening a StorageGRID system, you must consider the following: Which of the three StorageGRID networks you have implemented. All StorageGRID systems must use the Grid Network, but you might also be using the Admin Network, the Client Network, or both. Each network has different security considerations.
+
+The type of platforms you use for the individual nodes in your StorageGRID system. StorageGRID nodes can be deployed on VMware virtual machines, within a container engine on Linux hosts, or as dedicated hardware appliances. Each type of platform has its own set of hardening best practices.
+
+How trusted the tenant accounts are. If you are a service provider with untrusted tenant accounts, you will have different security concerns than if you only use trusted, in-house tenants.
+
+Which security requirements and conventions are followed by your organization. You might need to comply with specific regulatory or corporate requirements.
+
+714
+
+Hardening guidelines for software upgrades You must keep your StorageGRID system and related services up to date to defend against attacks. Upgrades to StorageGRID software

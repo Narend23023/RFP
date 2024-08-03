@@ -1,0 +1,189 @@
+Description
+
+Refer to
+
+ARCT
+
+Archive Retrieve from Cloud-Tier
+
+ARCT: Archive Retrieve from Cloud-Tier
+
+ASCT
+
+Archive Store Cloud-Tier
+
+ASCT: Archive Store Cloud-Tier
+
+IDEL
+
+ILM Initiated Delete: Logs when ILM starts the process of deleting an object.
+
+IDEL: ILM Initiated Delete
+
+SDEL
+
+S3 DELETE: Logs a successful transaction to delete an object or bucket. SDEL: S3 DELETE
+
+SGET
+
+S3 GET: Logs a successful transaction to retrieve an object or list the objects in a bucket.
+
+SGET: S3 GET
+
+SHEA
+
+S3 HEAD: Logs a successful transaction to check for the existence of an object or bucket.
+
+SHEA: S3 HEAD
+
+SPUT
+
+S3 PUT: Logs a successful transaction to create a new object or bucket. SPUT: S3 PUT
+
+1315
+
+Code
+
+Description
+
+Refer to
+
+WDEL
+
+Swift DELETE: Logs a successful transaction to delete an object or container.
+
+WDEL: Swift DELETE
+
+WGET
+
+Swift GET: Logs a successful transaction to retrieve an object or list the objects in a container.
+
+WGET: Swift GET
+
+WHEA
+
+Swift HEAD: Logs a successful transaction to check for the existence of an object or container. WHEA: Swift HEAD
+
+WPUT
+
+Swift PUT: Logs a successful transaction to create a new object or container.
+
+WPUT: Swift PUT
+
+The audit-sum tool can do the following:
+
+Process plain or compressed audit logs. For example:
+
+audit-sum audit.log
+
+audit-sum 2019-08-12.txt.gz SGET
+
+S3 GET: Logs a successful transaction to retrieve an object or list the objects in a bucket.
+
+SGET: S3 GET
+
+SHEA
+
+S3 HEAD: Logs a successful transaction to check for the existence of an object or bucket.
+
+SHEA: S3 HEAD
+
+SPUT
+
+S3 PUT: Logs a successful transaction to create a new object or bucket. SPUT: S3 PUT
+
+1315
+
+Code
+
+Description
+
+Refer to
+
+WDEL
+
+Swift DELETE: Logs a successful transaction to delete an object or container.
+
+WDEL: Swift DELETE
+
+WGET
+
+Swift GET: Logs a successful transaction to retrieve an object or list the objects in a container.
+
+WGET: Swift GET
+
+WHEA
+
+Swift HEAD: Logs a successful transaction to check for the existence of an object or container. WHEA: Swift HEAD
+
+WPUT
+
+Swift PUT: Logs a successful transaction to create a new object or container.
+
+WPUT: Swift PUT
+
+The audit-sum tool can do the following:
+
+Process plain or compressed audit logs. For example:
+
+audit-sum audit.log
+
+audit-sum 2019-08-12.txt.gz
+
+Process multiple files simultaneously. For example: audit-sum audit.log 2019-08-12.txt.gz 2019-08-13.txt.gz
+
+audit-sum /var/local/log/*
+
+Accept input from a pipe, which allows you to filter and preprocess the input using the grep command or other means. For example:
+
+grep WGET audit.log | audit-sum
+
+grep bucket1 audit.log | audit-sum
+
+grep SPUT audit.log | grep bucket1 | audit-sum
+
+This tool does not accept compressed files as piped input. To process compressed files, provide their file names as command-line arguments, or use the zcat tool to decompress the files first. For example: audit-sum audit.log.gz
+
+zcat audit.log.gz | audit-sum
+
+You can use command-line options to summarize operations on buckets separately from operations on objects or to group message summaries by bucket name, by time period, or by target type. By default, the summaries show the minimum, maximum, and average operation time, but you can use the size (-s) option to look at
+
+1316
+
+object size instead.
+
+Use the help (-h) option to see the available options. For example: $ audit-sum -h
+
+Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. If you want to analyze all messages related to write, read, head, and delete operations, follow these steps:
+
+a. Enter the following command, where /var/local/log/audit.log represents the name and the
+
+location of the file or files you want to analyze: $ audit-sum /var/local/log/audit.log
+
+This example shows typical output from the audit-sum tool. This example shows how long protocol operations took.
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ IDEL 274 SDEL 213371 0.004 20.934 0.352 SGET 201906 0.010 1740.290 1.132 SHEA 22716 0.005 2.349 0.272 SPUT 1771398 0.011 1770.563 0.487
+
+In this example, SGET (S3 GET) operations are the slowest on average at 1.13 seconds, but SGET and SPUT (S3 PUT) operations both show long worst-case times of about 1,770 seconds.
+
+b. To show the slowest 10 retrieval operations, use the grep command to select only SGET messages
+
+and add the long output option (-l) to include object paths:
+
+grep SGET audit.log | audit-sum -l 2. If you want to analyze all messages related to write, read, head, and delete operations, follow these steps:
+
+a. Enter the following command, where /var/local/log/audit.log represents the name and the

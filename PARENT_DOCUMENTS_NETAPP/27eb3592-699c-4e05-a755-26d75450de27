@@ -1,0 +1,57 @@
+To use default encryption for a bucket, use a PutBucketEncryption request and set the SSEAlgorithm parameter to AES256. Bucket-level encryption applies to any objects ingested without the x-amz-server- side-encryption request header. See Operations on buckets. To use grid-level encryption, set the Stored object encryption option to AES-256. Grid-level encryption applies to any objects that aren’t encrypted at the bucket level or that are ingested without the x-amz- server-side-encryption request header. See Configure network and object options. How encrypted objects are replicated
+
+When you use cross-grid replication to replicate objects between grids, you can encrypt individual objects, use default bucket encryption, or configure grid-wide encryption. You can add, modify, or remove default bucket or 362
+
+grid-wide encryption settings before or after you enable cross-grid replication for a bucket.
+
+To encrypt individual objects, you can use SSE (server-side encryption with StorageGRID-managed keys) when adding the objects to the source bucket. Use the x-amz-server-side-encryption request header and specify AES256. See Use server-side encryption.
+
+Using SSE-C (server-side encryption with customer-provided keys) is not supported for cross- grid replication. The ingest operation will fail.
+
+To use default encryption for a bucket, use a PutBucketEncryption request and set the SSEAlgorithm parameter to AES256. Bucket-level encryption applies to any objects ingested without the x-amz-server- side-encryption request header. See Operations on buckets. To use grid-level encryption, set the Stored object encryption option to AES-256. Grid-level encryption applies to any objects that aren’t encrypted at the bucket level or that are ingested without the x-amz- server-side-encryption request header. See Configure network and object options.
+
+SSE does not support AES-128. If the Stored object encryption option is enabled for the source grid using the AES-128 option, the use of the AES-128 algorithm will not be propagated to the replicated object. Instead, the replicated object will use the destination’s default bucket or grid-level encryption setting, if available.
+
+When determining how to encrypt source objects, StorageGRID applies these rules:
+
+1. Use the x-amz-server-side-encryption ingest header, if present.
+
+2. If an ingest header is not present, use the bucket default encryption setting, if configured.
+
+3. If a bucket setting is not configured, use the grid-wide encryption setting, if configured. 4. If a grid-wide setting is not present, don’t encrypt the source object.
+
+When determining how to encrypt replicated objects, StorageGRID applies these rules in this order:
+
+1. Use the same encryption as the source object, unless that object uses AES-128 encryption.
+
+2. If the source object is not encrypted or it uses AES-128, use the destination bucket’s default encryption setting, if configured.
+
+3. If the destination bucket does not have an encryption setting, use the destination’s grid-wide encryption setting, if configured.
+
+4. If a grid-wide setting is not present, don’t encrypt the destination object.
+
+PutObjectTagging and DeleteObjectTagging aren’t supported
+
+PutObjectTagging and DeleteObjectTagging requests aren’t supported for objects in buckets that have cross- grid replication enabled. If an S3 client issues a PutObjectTagging or DeleteObjectTagging request, 501 Not Implemented is returned. The message is Put(Delete) ObjectTagging is not available for buckets that have cross-grid replication configured.
+
+How segmented objects are replicated
+
+The source grid’s maximum segment size applies to objects replicated to the destination grid. When objects
+
+363
+
+are replicated to another grid, the Maximum Segment Size setting (CONFIGURATION > System > Storage options) of the source grid will be used on both grids. For example, suppose the maximum segment size for the source grid is 1 GB, while the maximum segment size of the destination grid is 50 MB. If you ingest a 2-GB object on the source grid, that object is saved as two 1-GB segments. It will also be replicated to the destination grid as two 1-GB segments, even though that grid’s maximum segment size is 50 MB. Compare cross-grid replication and CloudMirror replication
+
+As you begin using grid federation, review the similarities and differences between cross- grid replication and the StorageGRID CloudMirror replication service.
+
+Cross-grid replication CloudMirror replication service
+
+What is the primary purpose?
+
+One StorageGRID system acts as a disaster recovery system. Objects in a bucket can be replicated between the grids in one or both directions.
+
+Enables a tenant to automatically replicate objects from a bucket in StorageGRID (source) to an external S3 bucket (destination). How segmented objects are replicated
+
+The source grid’s maximum segment size applies to objects replicated to the destination grid. When objects
+
+363

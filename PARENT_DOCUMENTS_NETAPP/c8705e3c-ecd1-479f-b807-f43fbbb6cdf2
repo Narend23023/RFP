@@ -1,0 +1,71 @@
+Access the S3 Console to manage the objects in the bucket ◦ Delete all objects in a bucket ◦ Delete a bucket that is already empty Apply an ILM policy tag to a bucket
+
+Choose an ILM policy tag to apply to a bucket based on your object storage requirements.
+
+The ILM policy controls where the object data is stored and whether it is deleted after a certain time period. Your grid administrator creates ILM policies and assigns them to ILM policy tags when using multiple active policies.
+
+Avoid frequently reassigning a bucket’s policy tag. Otherwise, performance issues might occur.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access, Manage all buckets, or View all buckets permission. These permissions override the permission settings in group or bucket policies. Steps
+
+809
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+The Buckets page appears. As required, you can sort the information by any column, or you can page forward and back through the list.
+
+2. Select the name of the bucket you want to assign an ILM policy tag to.
+
+You can also change the ILM policy tag assignment for a bucket that already has a tag assigned.
+
+The Object Count and Space Used values displayed are estimates. These estimates are affected by the timing of ingests, network connectivity, and node status. If buckets have versioning enabled, deleted object versions are included in the object count.
+
+3. In the Bucket options tab, expand the ILM policy tag accordion. This accordion only appears if your grid administrator has enabled the use of custom policy tags. Avoid frequently reassigning a bucket’s policy tag. Otherwise, performance issues might occur.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Root access, Manage all buckets, or View all buckets permission. These permissions override the permission settings in group or bucket policies. Steps
+
+809
+
+1. Select View buckets from the dashboard, or select STORAGE (S3) > Buckets.
+
+The Buckets page appears. As required, you can sort the information by any column, or you can page forward and back through the list.
+
+2. Select the name of the bucket you want to assign an ILM policy tag to.
+
+You can also change the ILM policy tag assignment for a bucket that already has a tag assigned.
+
+The Object Count and Space Used values displayed are estimates. These estimates are affected by the timing of ingests, network connectivity, and node status. If buckets have versioning enabled, deleted object versions are included in the object count.
+
+3. In the Bucket options tab, expand the ILM policy tag accordion. This accordion only appears if your grid administrator has enabled the use of custom policy tags.
+
+4. Read the description of each policy tag to determine which tag should be applied to the bucket. Changing the ILM policy tag for a bucket will trigger ILM reevaluation of all objects in the bucket. If the new policy retains objects for a limited time, older objects will be deleted.
+
+5. Select the radio button for the tag you want to assign to the bucket.
+
+6. Select Save changes. A new S3 bucket tag will be set on the bucket with the key NTAP-SG-ILM- BUCKET-TAG and the value of the ILM policy tag name.
+
+Ensure that your S3 applications do not accidentally override or delete the new bucket tag. If this tag is omitted when applying a new TagSet to the bucket, objects in the bucket will revert to being evaluated against the default ILM policy.
+
+Set and modify ILM policy tags using only the Tenant Manager or Tenant Manager API where the ILM policy tag is validated. Do not modify the NTAP-SG-ILM-BUCKET-TAG ILM policy tag using the S3 PutBucketTagging API or the S3 DeleteBucketTagging API. Changing the policy tag assigned to a bucket has a temporary performance impact while objects are being reevaluated using the new ILM policy. Manage bucket consistency
+
+Consistency values can be used to specify the availability of bucket setting changes as well as to provide a balance between the availability of the objects within a bucket and the consistency of those objects across different Storage Nodes and sites. You can change the consistency values to be different from the default values so that client applications can meet their operational needs.
+
+Before you begin
+
+You are signed in to the Tenant Manager using a supported web browser.
+
+You belong to a user group that has the Manage all buckets or Root access permission. These permissions override the permissions settings in group or bucket policies.
+
+810
+
+Bucket consistency guidelines
+
+The bucket consistency is used to determine the consistency for client applications affecting objects within that S3 bucket. In general, you should use the Read-after-new-write consistency for your buckets. Change bucket consistency

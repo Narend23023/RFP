@@ -1,0 +1,91 @@
+3. Check the Store State and Store Status attributes to confirm that the Store component is Online with No Errors. 1. From the Grid Manager, select SUPPORT > Tools > Metrics.
+
+The tools available on the Metrics page are intended for use by technical support. Some features and menu items within these tools are intentionally non-functional and are subject to change. See the list of commonly used Prometheus metrics.
+
+2. In the Grafana section of the page, select Cross Grid Replication.
+
+For detailed instructions, see Review support metrics.
+
+1078
+
+3. To retry replication of objects that failed to replicate, see Identify and retry failed replication operations. Monitor archival capacity
+
+You can’t directly monitor an external archival storage system’s capacity through the StorageGRID system. However, you can monitor whether the Archive Node can still send object data to the archival destination, which might indicate that an expansion of archival media is required. About this task
+
+You can monitor the Store component to check if the Archive Node can still send object data to the targeted archival storage system. The Store Failures (ARVF) alarm might also indicate that the targeted archival storage system has reached capacity and can no longer accept object data. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC> Overview> Main.
+
+3. Check the Store State and Store Status attributes to confirm that the Store component is Online with No Errors.
+
+An offline Store component or one with errors might indicate that targeted archival storage system can no longer accept object data because it has reached capacity. Alerts and alarms
+
+Manage alerts and alarms: Overview
+
+The StorageGRID alert system is designed to inform you about operational issues that require your attention. The legacy alarm system is deprecated.
+
+1079
+
+Alert system
+
+The alert system is designed to be your primary tool for monitoring any issues that might occur in your StorageGRID system. The alert system provides an easy-to-use interface for detecting, evaluating, and resolving issues.
+
+Alerts are triggered at specific severity levels when alert rule conditions evaluate as true. When an alert is triggered, the following actions occur:
+
+An alert severity icon is shown on the dashboard in the Grid Manager, and the count of Current Alerts is incremented.
+
+The alert is shown on the NODES summary page and on the NODES > node > Overview tab.
+
+An email notification is sent, assuming you have configured an SMTP server and provided email addresses for the recipients. An Simple Network Management Protocol (SNMP) notification is sent, assuming you have configured the StorageGRID SNMP agent. Legacy alarm system
+
+Like alerts, alarms are triggered at specific severity levels when attributes reach defined threshold values. However, unlike alerts, many alarms are triggered for events that you can safely ignore, which might result in an excessive number of email or SNMP notifications.
+
+The alarm system is deprecated and will be removed in a future release. If you are still using legacy alarms, you should fully transition to the alert system as soon as possible.
+
+When an alarm is triggered, the following actions occur:
+
+The alarm appears on the SUPPORT > Alarms (legacy) > Current alarms page.
+
+An email notification is sent, assuming you have configured an SMTP server and configured one or more mailing lists.
+
+An SNMP notification might be sent, assuming you have configured the StorageGRID SNMP agent. (SNMP notifications aren’t sent for all alarms or alarm severities.) Compare alerts and alarms
+
+There are several similarities between the alert system and the legacy alarm system, but the alert system offers significant benefits and is easier to use.
+
+Refer to the following table to learn how to perform similar operations.
+
+Alerts
+
+Alarms (legacy system)
+
+How do I see which alerts or alarms are active?
+
+Select the Current alerts link on the dashboard. Select SUPPORT > Alarms (legacy) > Current alarms.
+
+Select the alert on the NODES > Overview page.
+
+Manage alarms (legacy system)
+
+Select ALERTS > Current.
+
+View current alerts
+
+1080
+
+What causes an alert or an alarm to be triggered?
+
+If an alert or alarm is triggered, how do I resolve the underlying problem?
+
+Where can I see a list of alerts or alarms that have been resolved?
+
+Where do I manage the settings?
+
+What user group permissions do I need?
+
+Alerts
+
+Alerts are triggered when a Prometheus expression in an alert rule evaluates as true for the specific trigger condition and duration. View alert rules An SNMP notification might be sent, assuming you have configured the StorageGRID SNMP agent. (SNMP notifications aren’t sent for all alarms or alarm severities.) Compare alerts and alarms
+
+There are several similarities between the alert system and the legacy alarm system, but the alert system offers significant benefits and is easier to use.

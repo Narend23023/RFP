@@ -1,0 +1,59 @@
+Rule 2: Erasure coding for objects greater than 1 MB
+
+Match all objects from other tenants, but only if they are greater than 1 MB. These larger objects are stored using 6+3 erasure coding at three sites.
+
+Does not match objects 1 MB or smaller, so these objects are evaluated against Rule 3.
+
+Rule 3: 2 copies 2 data centers (default)
+
+Is the last and default rule in the policy. Does not use filters.
+
+668
+
+◦ Make two replicated copies of all objects not matched by Rule 1 or Rule 2 (objects not belonging to
+
+Tenant A that are 1 MB or smaller).
+
+What are active and inactive policies? Every StorageGRID system must have at least one active ILM policy. If you want to have more than one active ILM policy, you create ILM policy tags and assign a policy to each tag. Tenants then apply tags to S3 buckets. The default policy is applied to all objects in buckets that do not have a policy tag assigned.
+
+When you first create an ILM policy, you select one or more ILM rules and arrange them in a specific order. After you have simulated the policy to confirm its behavior, you activate it.
+
+When you activate one ILM policy, StorageGRID uses that policy to manage all objects, including existing objects and newly ingested objects. Existing objects might be moved to new locations when the ILM rules in the new policy are implemented.
+
+If you activate more than one ILM policy at a time, and tenants apply policy tags to S3 buckets, the objects in each bucket are managed according to the policy assigned to the tag. A StorageGRID system tracks the history of policies that have been activated or deactivated.
+
+Considerations for creating an ILM policy
+
+Only use the system-provided policy, Baseline 2 copies policy, in test systems. For StorageGRID 11.6 and earlier, the Make 2 Copies rule in this policy uses the All Storage Nodes storage pool, which contains all sites. If your StorageGRID system has more than one site, two copies of an object might be placed on the same site.
+
+The All Storage Nodes storage pool is automatically created during the installation of StorageGRID 11.6 and earlier. If you upgrade to a later version of StorageGRID, the All Storage Nodes pool will still exist. If you install StorageGRID 11.7 or later as a new installation, the All Storage Nodes pool is not created.
+
+669
+
+• When designing a new policy, consider all of the different types of objects that might be ingested into your
+
+grid. Make sure the policy includes rules to match and place these objects as required. Keep the ILM policy as simple as possible. This avoids potentially dangerous situations where object data is not protected as intended when changes are made to the StorageGRID system over time.
+
+Make sure that the rules in the policy are in the correct order. When the policy is activated, new and existing objects are evaluated by the rules in the order listed, starting at the top. For example, if the first rule in a policy matches an object, that object will not be evaluated by any other rule.
+
+The last rule in every ILM policy is the default ILM rule, which can’t use any filters. If an object has not been matched by another rule, the default rule controls where that object is placed and for how long it is retained.
+
+Before activating a new policy, review any changes that the policy is making to the placement of existing objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented. Create ILM policies
+
+Create one or more ILM policies to meet your quality-of-service requirements.
+
+Having one active ILM policy allows you to apply the same ILM rules to all tenants and buckets.
+
+Having multiple active ILM policies allows you to apply the appropriate ILM rules to specific tenants and buckets to fulfill multiple quality-of-service requirements. Create an ILM policy
+
+About this task
+
+Before creating your own policy, verify that the default ILM policy does not meet your storage requirements. Make sure that the rules in the policy are in the correct order. When the policy is activated, new and existing objects are evaluated by the rules in the order listed, starting at the top. For example, if the first rule in a policy matches an object, that object will not be evaluated by any other rule.
+
+The last rule in every ILM policy is the default ILM rule, which can’t use any filters. If an object has not been matched by another rule, the default rule controls where that object is placed and for how long it is retained.
+
+Before activating a new policy, review any changes that the policy is making to the placement of existing objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented. Create ILM policies
+
+Create one or more ILM policies to meet your quality-of-service requirements.
+
+Having one active ILM policy allows you to apply the same ILM rules to all tenants and buckets.

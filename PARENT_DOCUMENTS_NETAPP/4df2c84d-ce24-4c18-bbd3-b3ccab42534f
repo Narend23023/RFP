@@ -1,0 +1,121 @@
+1. In the VMware vSphere Hypervisor client tree, select the virtual machine that is not started.
+
+2. Right‐click the virtual machine, and select Edit Settings.
+
+3. From the Virtual Machines Properties window, select the Resources tab.
+
+4. Adjust the resources allocated to the virtual machine:
+
+a. Select CPU, and then use the Reservation slider to adjust the MHz reserved for this virtual machine.
+
+b. Select Memory, and then use the Reservation slider to adjust the MB reserved for this virtual machine.
+
+5. Click OK.
+
+6. Repeat as required for other virtual machines hosted on the same VM host.
+
+Temporary installation password was disabled
+
+When you deploy a VMware node, you can optionally specify a temporary installation password. You must have this password to access the VM console or use SSH before the new node joins the grid.
+
+If you opted to disable the temporary installation password, you must perform additional steps to debug installation issues. You can do either of the following:
+
+Redeploy the VM but specify a temporary installation password so you can access the console or use SSH to debug installation issues.
+
+Use vCenter to set the password:
+
+1. Go to VM, select the Configure tab, and select vApp Options.
+
+2. Update CUSTOM_TEMPORARY_PASSWORD with the custom password value or update TEMPORARY_PASSWORD_TYPE with the Use node name value.
+
+3. Reboot the VM to apply the new password. Upgrade StorageGRID software
+
+Upgrade StorageGRID software: Overview
+
+Use these instructions to upgrade a StorageGRID system to a new release.
+
+247
+
+About these instructions
+
+These instructions describe what’s new in StorageGRID 11.8 and provide step-by-step instructions for upgrading all nodes in your StorageGRID system to the new release.
+
+Before you begin
+
+Review these topics to learn about the new features and enhancements in StorageGRID 11.8, determine whether any features have been deprecated or removed, and find out about changes to StorageGRID APIs.
+
+What’s new in StorageGRID 11.8
+
+Removed or deprecated features
+
+Changes to the Grid Management API
+
+Changes to the Tenant Management API
+
+What’s new in StorageGRID 11.8
+
+This release of StorageGRID introduces the following features and functional changes. Install, upgrade, hotfix
+
+Temporary installation passwords
+
+When you deploy a StorageGRID node as a virtual machine or use VMware vSphere to automate grid node deployment, you are now prompted to set a temporary installation password. This password is used only if you need to access the VM console or use SSH before the new node joins the grid. Appliances
+
+Documentation site for appliances
+
+The documentation for StorageGRID appliances was moved to a new appliances documentation site.
+
+FIPS support
+
+Support for FIPS 140-2 validated cryptography.
+
+SGF6112 improvements
+
+StorageGRID 11.8 and StorageGRID Appliance Installer firmware version 3.8.0 support:
+
+Significantly improved PUT performance for new SGF6112 installations.
+
+UEFI secure boot on both upgraded and new SGF6112 nodes.
+
+Local key manager for DAS NVMe SSD drive passwords. Configure and manage
+
+Consistency grid-wide default
+
+You can change the grid-wide default consistency using the Grid Manager or the grid-config endpoint of the Grid Management private API. The new default will be applied to buckets created after the change.
+
+ILM policy tags
+
+Allows per-bucket ILM policies controlled with bucket tags. Multiple active and inactive ILM policies can exist at the same time. See ILM policies:Overview.
+
+248
+
+Kafka endpoints Support for Kafka endpoints for bucket event notifications.
+
+Load balancer for management interface traffic
+
+Create load balancer endpoints to manage the management interface workload on Admin Nodes. See considerations for load balancing. As part of this change, you can now use Grid Manager and Tenant Manager ports 443, 8443, and 9443 when creating HTTPS load balancer endpoints for S3 or Swift client access.
+
+Manage drives tab
+
+Added Manage drives tab for the SGF6112 appliance. Metadata-only Storage Nodes SGF6112 improvements
+
+StorageGRID 11.8 and StorageGRID Appliance Installer firmware version 3.8.0 support:
+
+Significantly improved PUT performance for new SGF6112 installations.
+
+UEFI secure boot on both upgraded and new SGF6112 nodes.
+
+Local key manager for DAS NVMe SSD drive passwords. Configure and manage
+
+Consistency grid-wide default
+
+You can change the grid-wide default consistency using the Grid Manager or the grid-config endpoint of the Grid Management private API. The new default will be applied to buckets created after the change.
+
+ILM policy tags
+
+Allows per-bucket ILM policies controlled with bucket tags. Multiple active and inactive ILM policies can exist at the same time. See ILM policies:Overview.
+
+248
+
+Kafka endpoints Support for Kafka endpoints for bucket event notifications.
+
+Load balancer for management interface traffic

@@ -1,0 +1,55 @@
+What is erasure coding? Erasure coding is one of two methods StorageGRID uses to store object data. When objects match an ILM rule that uses erasure coding, those objects are sliced into data fragments, additional parity fragments are computed, and each fragment is stored on a different Storage Node.
+
+When an object is accessed, it is reassembled using the stored fragments. If a data or a parity fragment becomes corrupt or lost, the erasure-coding algorithm can recreate that fragment using a subset of the remaining data and parity fragments.
+
+As you create ILM rules, StorageGRID creates erasure-coding profiles that support those rules. You can view a list of erasure-coding profiles, rename an erasure-coding profile, or deactivate an erasure-coding profile if it is not currently used in any ILM rules. The following example illustrates the use of an erasure-coding algorithm on an object’s data. In this example, the ILM rule uses a 4+2 erasure-coding scheme. Each object is sliced into four equal data fragments, and two parity fragments are computed from the object data. Each of the six fragments is stored on a different node across three data center sites to provide data protection for node failures or site loss.
+
+The 4+2 erasure-coding scheme can be configured in various ways. For example, you can configure a single- site storage pool that contains six Storage Nodes. For site-loss protection, you can use a storage pool containing three sites with three Storage Nodes at each site. An object can be retrieved as long as any four of the six fragments (data or parity) remain available. Up to two fragments can be lost without loss of the object data. If an entire site is lost, the object can still be retrieved or repaired, as long as all of the other fragments remain accessible. 606
+
+If more than two Storage Nodes are lost, the object is not retrievable.
+
+Related information
+
+What is replication
+
+What is a storage pool
+
+What are erasure-coding schemes
+
+607
+
+• Rename an erasure-coding profile
+
+Deactivate an erasure-coding profile
+
+What are erasure-coding schemes?
+
+Erasure-coding schemes control how many data fragments and how many parity fragments are created for each object.
+
+When you configure the erasure-coding profile for an ILM rule, you select an available erasure-coding scheme based on how many Storage Nodes and sites make up the storage pool you plan to use.
+
+The StorageGRID system uses the Reed-Solomon erasure-coding algorithm. The algorithm slices an object into k data fragments and computes m parity fragments. The k + m = n fragments are spread across n Storage Nodes to provide data protection. An object can sustain up to m lost or corrupt fragments. To retrieve or repair an object, k fragments are needed. When selecting the storage pool to use for a rule that will create an erasure-coded copy, use the following guidelines for storage pools:
+
+The storage pool must include three or more sites, or exactly one site.
+
+You can’t use erasure coding if the storage pool includes two sites.
+
+Erasure-coding schemes for storage pools containing three or more sites ◦ Erasure-coding schemes for one-site storage pools
+
+Don’t use a storage pool that includes the default site, All Sites.
+
+The storage pool should include at least k+m +1 Storage Nodes that can store object data.
+
+Storage Nodes can be configured during installation to contain only object metadata and not object data. For more information, see Types of Storage Nodes.
+
+The minimum number of Storage Nodes required is k+m. However, having at least one additional Storage Node can help prevent ingest failures or ILM backlogs if a required Storage Node is temporarily unavailable. The storage overhead of an erasure-coding scheme is calculated by dividing the number of parity fragments ( m) by the number of data fragments (k). You can use the storage overhead to calculate how much disk space each erasure-coded object requires: disk space = object size + (object size * storage overhead)
+
+For example, if you store a 10 MB object using the 4+2 scheme (which has 50% storage overhead), the object consumes 15 MB of grid storage. If you store the same 10 MB object using the 6+2 scheme (which has 33% storage overhead), the object consumes approximately 13.3 MB. You can’t use erasure coding if the storage pool includes two sites.
+
+Erasure-coding schemes for storage pools containing three or more sites ◦ Erasure-coding schemes for one-site storage pools
+
+Don’t use a storage pool that includes the default site, All Sites.
+
+The storage pool should include at least k+m +1 Storage Nodes that can store object data.
+
+Storage Nodes can be configured during installation to contain only object metadata and not object data. For more information, see Types of Storage Nodes.

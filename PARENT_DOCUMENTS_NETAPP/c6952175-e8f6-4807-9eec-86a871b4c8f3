@@ -1,0 +1,89 @@
+Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+334
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+b. In the Enterprise Application section, specify the Enterprise application name for StorageGRID. This
+
+value controls the name you use for each enterprise application in Azure AD.
+
+For example, if your grid has only one Admin Node and you don’t anticipate adding more Admin Nodes in the future, enter SG or StorageGRID. If your grid includes more than one Admin Node, include the string [HOSTNAME] in the identifier. For example, SG-[HOSTNAME]. This generates a table that shows an enterprise application name for each Admin Node in your system, based on the node’s hostname.
+
+You must create an enterprise application for each Admin Node in your StorageGRID system. Having an enterprise application for each Admin Node ensures that users can securely sign in to and out of any Admin Node.
+
+c. Follow the steps in Create enterprise applications in Azure AD to create an enterprise application for
+
+each Admin Node listed in the table.
+
+d. From Azure AD, copy the federation metadata URL for each enterprise application. Then, paste this URL into the corresponding Federation metadata URL field in StorageGRID.
+
+e. After you have copied and pasted a federation metadata URL for all Admin Nodes, select Save.
+
+A green check mark appears on the Save button for a few seconds.
+
+PingFederate
+
+a. Specify which TLS certificate will be used to secure the connection when the identity provider sends SSO configuration information in response to StorageGRID requests.
+
+Use operating system CA certificate: Use the default CA certificate installed on the operating system to secure the connection.
+
+Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+b. In the Service Provider (SP) section, specify the SP connection ID for StorageGRID. This value
+
+controls the name you use for each SP connection in PingFederate.
+
+335
+
+◦ For example, if your grid has only one Admin Node and you don’t anticipate adding more Admin Nodes in the future, enter SG or StorageGRID. e. After you have copied and pasted a federation metadata URL for all Admin Nodes, select Save.
+
+A green check mark appears on the Save button for a few seconds.
+
+PingFederate
+
+a. Specify which TLS certificate will be used to secure the connection when the identity provider sends SSO configuration information in response to StorageGRID requests.
+
+Use operating system CA certificate: Use the default CA certificate installed on the operating system to secure the connection.
+
+Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+b. In the Service Provider (SP) section, specify the SP connection ID for StorageGRID. This value
+
+controls the name you use for each SP connection in PingFederate.
+
+335
+
+◦ For example, if your grid has only one Admin Node and you don’t anticipate adding more Admin Nodes in the future, enter SG or StorageGRID.
+
+If your grid includes more than one Admin Node, include the string [HOSTNAME] in the identifier. For example, SG-[HOSTNAME]. This generates a table that shows the SP connection ID for each Admin Node in your system, based on the node’s hostname.
+
+You must create an SP connection for each Admin Node in your StorageGRID system. Having an SP connection for each Admin Node ensures that users can securely sign in to and out of any Admin Node.
+
+c. Specify the federation metadata URL for each Admin Node in the Federation metadata URL field.
+
+Use the following format: https://<Federation Service Name>:<port>/pf/federation_metadata.ping?PartnerSpId=<SP Connection ID>
+
+d. Select Save.
+
+A green check mark appears on the Save button for a few seconds.
+
+Configure relying party trusts, enterprise applications, or SP connections
+
+When the configuration is saved, the Sandbox mode confirmation notice appears. This notice confirms that sandbox mode is now enabled and provides overview instructions.

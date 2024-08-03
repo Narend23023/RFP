@@ -1,0 +1,107 @@
+If the HA group includes more than one interface and the active interface fails, the virtual IP (VIP) addresses move to the first backup interface in the priority order. If that interface fails, the VIP addresses move to the next backup interface, and so on. When failures are resolved, the VIP addresses move back to the highest priority interface available.
+
+e. For the Enter IP addresses step, complete the following fields. Field
+
+Description
+
+Subnet CIDR
+
+The address of the VIP subnet in CIDR notation — an IPv4 address followed by a slash and the subnet length (0-32).
+
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+Gateway IP address (optional)
+
+If the S3 IP addresses used to access StorageGRID aren’t on the same subnet as the StorageGRID VIP addresses, enter the StorageGRID VIP local gateway IP address. The local gateway IP address must be within the VIP subnet. Virtual IP address
+
+Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet.
+
+At least one address must be IPv4. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+479
+
+f. Select Create HA group and then select Finish to return to the S3 setup wizard.
+
+g. Select Continue to go to the load balancer step.
+
+Use existing HA group
+
+a. To use an existing HA group, select the HA group name from the Select an HA group.
+
+b. Select Continue to go to the load balancer step. Step 2 of 6: Configure load balancer endpoint
+
+StorageGRID uses a load balancer to manage the workload from client applications. Load balancing maximizes speed and connection capacity across multiple Storage Nodes. The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+Gateway IP address (optional)
+
+If the S3 IP addresses used to access StorageGRID aren’t on the same subnet as the StorageGRID VIP addresses, enter the StorageGRID VIP local gateway IP address. The local gateway IP address must be within the VIP subnet. Virtual IP address
+
+Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet.
+
+At least one address must be IPv4. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+479
+
+f. Select Create HA group and then select Finish to return to the S3 setup wizard.
+
+g. Select Continue to go to the load balancer step.
+
+Use existing HA group
+
+a. To use an existing HA group, select the HA group name from the Select an HA group.
+
+b. Select Continue to go to the load balancer step. Step 2 of 6: Configure load balancer endpoint
+
+StorageGRID uses a load balancer to manage the workload from client applications. Load balancing maximizes speed and connection capacity across multiple Storage Nodes.
+
+You can use the StorageGRID Load Balancer service, which exists on all Gateway and Admin Nodes, or you can connect to an external (third-party) load balancer. Using the StorageGRID load balancer is recommended.
+
+For details about this task, see Considerations for load balancing.
+
+To use the StorageGRID Load Balancer service, select the StorageGRID load balancer tab and then create or select the load balancer endpoint you want to use. To use an external load balancer, select the External load balancer tab and provide details about the system you have already configured.
+
+480
+
+Create endpoint Steps
+
+1. To create a load balancer endpoint, select Create endpoint.
+
+2. For the Enter endpoint details step, complete the following fields.
+
+Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint.
+
+Port
+
+The StorageGRID port you want to use for load balancing. This field defaults to 10433 for the first endpoint you create, but you can enter any unused external port. If you enter 80 or 443, the endpoint is configured only on Gateway Nodes, because these ports are reserved on Admin Nodes.
+
+Note: Ports used by other grid services aren’t permitted. See the Network port reference. Client type
+
+Must be S3.
+
+Network protocol
+
+Select HTTPS.
+
+Note: Communicating with StorageGRID without TLS encryption is supported but not recommended.
+
+3. For the Select binding mode step, specify the binding mode. The binding mode controls how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces. Mode
+
+Description
+
+Global (default)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting (default) unless you need to restrict the accessibility of this endpoint.
+
+Virtual IPs of HA groups Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces

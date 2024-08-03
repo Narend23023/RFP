@@ -1,0 +1,93 @@
+940
+
+If you are ingesting an object into a bucket with S3 Object Lock enabled, the REDUCED_REDUNDANCY option is ignored. If you are ingesting an object into a legacy Compliant bucket, the REDUCED_REDUNDANCY option returns an error. StorageGRID will always perform a dual-commit ingest to ensure that compliance requirements are satisfied. The following request headers are supported:
+
+Content-Type
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata
+
+When specifying the name-value pair for user-defined metadata, use this general format: Specifying REDUCED_REDUNDANCY only affects how many copies are created when an object is first ingested. It does not affect how many copies of the object are made when the object is evaluated by the active ILM policies, and does not result in data being stored at lower levels of redundancy in the StorageGRID system.
+
+940
+
+If you are ingesting an object into a bucket with S3 Object Lock enabled, the REDUCED_REDUNDANCY option is ignored. If you are ingesting an object into a legacy Compliant bucket, the REDUCED_REDUNDANCY option returns an error. StorageGRID will always perform a dual-commit ingest to ensure that compliance requirements are satisfied. The following request headers are supported:
+
+Content-Type
+
+x-amz-meta-, followed by a name-value pair containing user-defined metadata
+
+When specifying the name-value pair for user-defined metadata, use this general format:
+
+x-amz-meta-_name_: `value`
+
+If you want to use the User defined creation time option as the Reference time for an ILM rule, you must use creation-time as the name of the metadata that records when the object was created. For example: x-amz-meta-creation-time: 1443399726
+
+The value for creation-time is evaluated as seconds since January 1, 1970.
+
+Adding creation-time as user-defined metadata is not allowed if you are adding an object to a bucket that has legacy Compliance enabled. An error will be returned.
+
+S3 Object Lock request headers: ◦ x-amz-object-lock-mode ◦ x-amz-object-lock-retain-until-date ◦ x-amz-object-lock-legal-hold
+
+If a request is made without these headers, the bucket default retention settings are used to calculate the object version retain-until-date. Use S3 REST API to configure S3 Object Lock
+
+SSE request headers:
+
+x-amz-server-side-encryption ◦ x-amz-server-side-encryption-customer-key-MD5 ◦ x-amz-server-side-encryption-customer-key ◦ x-amz-server-side-encryption-customer-algorithm Request headers for server-side encryption
+
+For information about how StorageGRID handles UTF-8 characters, see PutObject.
+
+941
+
+Request headers for server-side encryption
+
+You can use the following request headers to encrypt a multipart object with server-side encryption. The SSE and SSE-C options are mutually exclusive.
+
+SSE: Use the following header in the CreateMultipartUpload request if you want to encrypt the object with a unique key managed by StorageGRID. Don’t specify this header in any of the UploadPart requests.
+
+x-amz-server-side-encryption
+
+SSE-C: Use all three of these headers in the CreateMultipartUpload request (and in each subsequent UploadPart request) if you want to encrypt the object with a unique key that you provide and manage. x-amz-server-side-encryption-customer-algorithm: Specify AES256. ◦ x-amz-server-side-encryption-customer-key: Specify your encryption key for the new object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the new object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations for using server-side encryption.
+
+Unsupported request headers
+
+The following request header is not supported and returns XNotImplemented
+
+x-amz-website-redirect-location Versioning
+
+Multipart upload consists of separate operations for initiating the upload, listing uploads, uploading parts, assembling the uploaded parts, and completing the upload. Objects are created (and versioned if applicable) when the CompleteMultipartUpload operation is performed.
+
+ListMultipartUploads
+
+The ListMultipartUploads operation lists in-progress multipart uploads for a bucket.
+
+The following request parameters are supported:
+
+encoding-type
+
+key-marker
+
+max-uploads
+
+prefix
+
+upload-id-marker
+
+Host
+
+Date
+
+Authorization
+
+942 x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the new object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations for using server-side encryption.
+
+Unsupported request headers
+
+The following request header is not supported and returns XNotImplemented
+
+x-amz-website-redirect-location Versioning

@@ -1,0 +1,73 @@
+This recovery procedure applies to software-based Storage Nodes only. If storage volumes have failed on an appliance Storage Node, use the appliance procedure instead: Recover appliance Storage Node.
+
+This recovery procedure includes the following tasks:
+
+Review warnings for storage volume recovery
+
+Identify and unmount failed storage volumes
+
+Recover the volumes and rebuild the Cassandra database
+
+Restore object data The value of both attributes should be Online.
+
+3. If the Storage State — Desired is set to Read-only, complete the following steps:
+
+a. Click the Configuration tab. b. From the Storage State — Desired drop-down list, select Online.
+
+c. Click Apply Changes. d. Click the Overview tab and confirm that the values of Storage State — Desired and Storage
+
+State — Current are updated to Online.
+
+Recover from storage volume failure where system drive is intact
+
+Recover from storage volume failure where system drive is intact: Overview
+
+You must complete a series of tasks to recover a software-based Storage Node where one or more storage volumes on the Storage Node have failed, but the system drive is intact. If only storage volumes have failed, the Storage Node is still available to the StorageGRID system. 1578
+
+This recovery procedure applies to software-based Storage Nodes only. If storage volumes have failed on an appliance Storage Node, use the appliance procedure instead: Recover appliance Storage Node.
+
+This recovery procedure includes the following tasks:
+
+Review warnings for storage volume recovery
+
+Identify and unmount failed storage volumes
+
+Recover the volumes and rebuild the Cassandra database
+
+Restore object data
+
+Check the storage state Warnings for storage volume recovery
+
+Before recovering failed storage volumes for a Storage Node, review the following warnings.
+
+The storage volumes (or rangedbs) in a Storage Node are identified by a hexadecimal number, which is known as the volume ID. For example, 0000 is the first volume and 000F is the sixteenth volume. The first object store (volume 0) on each Storage Node uses up to 4 TB of space for object metadata and Cassandra database operations; any remaining space on that volume is used for object data. All other storage volumes are used exclusively for object data.
+
+If volume 0 fails and needs to be recovered, the Cassandra database might be rebuilt as part of the volume recovery procedure. Cassandra might also be rebuilt in the following circumstances:
+
+A Storage Node is brought back online after having been offline for more than 15 days.
+
+The system drive and one or more storage volumes fails and is recovered. When Cassandra is rebuilt, the system uses information from other Storage Nodes. If too many Storage Nodes are offline, some Cassandra data might not be available. If Cassandra has been rebuilt recently, Cassandra data might not yet be consistent across the grid. Data loss can occur if Cassandra is rebuilt when too many Storage Nodes are offline or if two or more Storage Nodes are rebuilt within 15 days of each other.
+
+If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Rebuilding Cassandra on two or more Storage Nodes within 15 days can result in data loss.
+
+If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site. If ILM rules are configured to store only one replicated copy and the copy exists on a storage volume that has failed, you will not be able to recover the object.
+
+1579
+
+If you encounter a Services: Status - Cassandra (SVST) alarm during recovery, see Recover failed storage volumes and rebuild Cassandra database. After Cassandra is rebuilt, alarms should clear. If alarms don’t clear, contact technical support.
+
+Related information Warnings and considerations for grid node recovery
+
+Identify and unmount failed storage volumes
+
+When recovering a Storage Node with failed storage volumes, you must identify and unmount the failed volumes. You must verify that only the failed storage volumes are reformatted as part of the recovery procedure.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. About this task
+
+You should recover failed storage volumes as soon as possible.
+
+The first step of the recovery process is to detect volumes that have become detached, need to be unmounted, or have I/O errors. If failed volumes are still attached but have a randomly corrupted file system, the system might not detect any corruption in unused or unallocated parts of the disk.

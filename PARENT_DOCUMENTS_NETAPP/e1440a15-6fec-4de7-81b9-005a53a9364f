@@ -1,0 +1,127 @@
+3. From the source Admin Node, stop the MI service: service mi stop
+
+4. From the source Admin Node, stop the Management Application Program Interface (mgmt-api) service: service mgmt-api stop
+
+5. Complete the following steps on the recovered Admin Node:
+
+a. Log in to the recovered Admin Node:
+
+i. Enter the following command: ssh admin@grid_node_IP
+
+1630
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the MI service: service mi stop c. Stop the mgmt-api service: service mgmt-api stop
+
+d. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+e. Enter the SSH Access Password listed in the Passwords.txt file.
+
+f. Copy the database from the source Admin Node to the recovered Admin Node:
+
+/usr/local/mi/bin/mi-clone-db.sh Source_Admin_Node_IP
+
+g. When prompted, confirm that you want to overwrite the MI database on the recovered Admin Node.
+
+The database and its historical data are copied to the recovered Admin Node. When the copy operation is done, the script starts the recovered Admin Node.
+
+h. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter:ssh-add -D
+
+6. Restart the services on the source Admin Node: service servermanager start
+
+Restore Prometheus metrics when recovering non-primary Admin Node
+
+Optionally, you can retain the historical metrics maintained by Prometheus on a non- primary Admin Node that has failed.
+
+Before you begin
+
+The recovered Admin Node is installed and running.
+
+The StorageGRID system includes at least two Admin Nodes.
+
+You have the Passwords.txt file.
+
+You have the provisioning passphrase. About this task
+
+If an Admin Node fails, the metrics maintained in the Prometheus database on the Admin Node are lost. When you recover the Admin Node, the software installation process creates a new Prometheus database. After the recovered Admin Node is started, it records metrics as if you had performed a new installation of the StorageGRID system.
+
+If you restored a non-primary Admin Node, you can restore the historical metrics by copying the Prometheus database from the primary Admin Node (the source Admin Node) to the recovered Admin Node.
+
+Copying the Prometheus database might take an hour or more. Some Grid Manager features will be unavailable while services are stopped on the source Admin Node. Steps
+
+1. Log in to the source Admin Node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+1631
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+2. From the source Admin Node, stop the Prometheus service: service prometheus stop
+
+3. Complete the following steps on the recovered Admin Node:
+
+a. Log in to the recovered Admin Node: i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop
+
+c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the recovered Admin Node: /usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+f. When prompted, press Enter to confirm that you want to destroy the new Prometheus database on the
+
+recovered Admin Node. a. Enter the following command: ssh admin@grid_node_IP
+
+1631
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+2. From the source Admin Node, stop the Prometheus service: service prometheus stop
+
+3. Complete the following steps on the recovered Admin Node:
+
+a. Log in to the recovered Admin Node: i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop
+
+c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the recovered Admin Node: /usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+f. When prompted, press Enter to confirm that you want to destroy the new Prometheus database on the
+
+recovered Admin Node.
+
+The original Prometheus database and its historical data are copied to the recovered Admin Node. When the copy operation is done, the script starts the recovered Admin Node. The following status appears:
+
+Database cloned, starting services

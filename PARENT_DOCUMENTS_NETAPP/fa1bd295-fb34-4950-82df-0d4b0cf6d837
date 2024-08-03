@@ -1,0 +1,97 @@
+For more information, see Configure replacement primary Admin Node.
+
+How your system is affected when you apply a hotfix
+
+You must understand how your StorageGRID system will be affected when you apply a hotfix.
+
+269
+
+StorageGRID hotfixes are non-disruptive
+
+The StorageGRID system can ingest and retrieve data from client applications throughout the hotfix process. If you approve all nodes of the same type to hotfix (for example, Storage Nodes), the nodes are brought down one at a time, so there is no time when all grid nodes or all grid nodes of a certain type are unavailable.
+
+To allow for continued availability, ensure that your ILM policy contains rules that specify storing multiple copies of each object. You must also ensure that all external S3 or Swift clients are configured to send requests to one of the following:
+
+A high availability (HA) group virtual IP address
+
+A high availability third-party load balancer Multiple Gateway Nodes for each client
+
+Multiple Storage Nodes for each client
+
+Client applications might experience short-term disruptions
+
+The StorageGRID system can ingest and retrieve data from client applications throughout the hotfix process; however, client connections to individual Gateway Nodes or Storage Nodes might be disrupted temporarily if the hotfix needs to restart services on those nodes. Connectivity will be restored after the hotfix process completes and services resume on the individual nodes.
+
+You might need to schedule downtime to apply a hotfix if loss of connectivity for a short period is not acceptable. You can use selective approval to schedule when certain nodes are updated.
+
+You can use multiple gateways and high availability (HA) groups to provide automatic failover during the hotfix process. See the instructions for configuring high availability groups.
+
+Alerts and SNMP notifications might be triggered Alerts and SNMP notifications might be triggered when services are restarted and when the StorageGRID system is operating as a mixed-version environment (some grid nodes running an earlier version, while others have been upgraded to a later version). In general, these alerts and notifications will clear when the hotfix completes.
+
+Configuration changes are restricted
+
+When applying a hotfix to StorageGRID:
+
+Don’t make any grid configuration changes (for example, specifying Grid Network subnets or approving pending grid nodes) until the hotfix has been applied to all nodes.
+
+Don’t update the ILM configuration until the hotfix has been applied to all nodes. Obtain required materials for hotfix
+
+Before applying a hotfix, you must obtain all required materials.
+
+Item
+
+Notes
+
+StorageGRID hotfix file
+
+You must download the StorageGRID hotfix file.
+
+270
+
+Item
+
+Notes
+
+Network port
+
+Supported web browser
+
+SSH client (for example, PuTTY)
+
+Recovery Package (.zip) file
+
+Before applying a hotfix, download the most recent Recovery Package file in case any problems occur during the hotfix. Then, after the hotfix has been applied, download a new copy of the Recovery Package file and save it in a safe location. The updated Recovery Package file allows you to restore the system if a failure occurs. Passwords.txt file
+
+Optional and used only if you are applying a hotfix manually using the SSH client. The Passwords.txt file is part of the Recovery Package .zip file.
+
+Provisioning passphrase
+
+The passphrase is created and documented when the StorageGRID system is first installed. The provisioning passphrase is not listed in the Passwords.txt file. Related documentation
+
+readme.txt file for the hotfix. This file is included on the hotfix download page. Be sure to review the readme file carefully before applying the hotfix.
+
+Download hotfix file
+
+You must download the hotfix file before you can apply the hotfix.
+
+Steps
+
+1. Go to NetApp Downloads: StorageGRID.
+
+2. Select the down arrow under Available Software to see a list of hotfixes that are available to download.
+
+Hotfix file versions have the form: 11.4.x.y.
+
+3. Review the changes that are included in the update. Recovery Package (.zip) file
+
+Before applying a hotfix, download the most recent Recovery Package file in case any problems occur during the hotfix. Then, after the hotfix has been applied, download a new copy of the Recovery Package file and save it in a safe location. The updated Recovery Package file allows you to restore the system if a failure occurs. Passwords.txt file
+
+Optional and used only if you are applying a hotfix manually using the SSH client. The Passwords.txt file is part of the Recovery Package .zip file.
+
+Provisioning passphrase
+
+The passphrase is created and documented when the StorageGRID system is first installed. The provisioning passphrase is not listed in the Passwords.txt file. Related documentation
+
+readme.txt file for the hotfix. This file is included on the hotfix download page. Be sure to review the readme file carefully before applying the hotfix.
+
+Download hotfix file

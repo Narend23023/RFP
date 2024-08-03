@@ -1,0 +1,89 @@
+3. If you receive any errors, correct them and select Send test messages again.
+
+See Troubleshoot an external syslog server to help you resolve any errors.
+
+4. Wait until you see a green banner indicating all nodes have passed testing.
+
+5. Check your syslog server to determine if test messages are being received and processed as expected. If you are using UDP, check your entire log collection infrastructure. The UDP protocol does not allow for as rigorous error detection as the other protocols.
+
+6. Select Stop and finish.
+
+You are returned to the Audit and syslog server page. A green banner indicates that the syslog server configuration has been saved.
+
+StorageGRID audit information is not sent to the external syslog server until you select a destination that includes the external syslog server. Select audit information destinations
+
+You can specify where audit logs, security event logs, and StorageGRID software logs are sent.
+
+Some destination are available only if you have configured an external syslog server.
+
+Steps
+
+1. On the Audit and syslog server page, select the destination for audit information.
+
+Local nodes only and External syslog server typically provide better performance. Option
+
+Description
+
+Local nodes only
+
+Audit messages, security event logs, and application logs are not sent to Admin Nodes. Instead, they are saved only on the nodes that generated them ("the local node"). The audit information generated on every local node is stored in /var/local/log/localaudit.log
+
+Note: StorageGRID periodically removes local logs in a rotation to free up space. When the log file for a node reaches 1 GB, the existing file is saved, and a new log file is started. The rotation limit for the log is 21 files. When the 22nd version of the log file is created, the oldest log file is deleted. On average about 20 GB of log data is stored on each node.
+
+1194
+
+Option
+
+Description Admin Nodes/local nodes StorageGRID audit information is not sent to the external syslog server until you select a destination that includes the external syslog server. Select audit information destinations
+
+You can specify where audit logs, security event logs, and StorageGRID software logs are sent.
+
+Some destination are available only if you have configured an external syslog server.
+
+Steps
+
+1. On the Audit and syslog server page, select the destination for audit information.
+
+Local nodes only and External syslog server typically provide better performance. Option
+
+Description
+
+Local nodes only
+
+Audit messages, security event logs, and application logs are not sent to Admin Nodes. Instead, they are saved only on the nodes that generated them ("the local node"). The audit information generated on every local node is stored in /var/local/log/localaudit.log
+
+Note: StorageGRID periodically removes local logs in a rotation to free up space. When the log file for a node reaches 1 GB, the existing file is saved, and a new log file is started. The rotation limit for the log is 21 files. When the 22nd version of the log file is created, the oldest log file is deleted. On average about 20 GB of log data is stored on each node.
+
+1194
+
+Option
+
+Description Admin Nodes/local nodes
+
+Audit messages are sent to the audit log (/var/local/log/audit.log) on Admin Nodes, and security event logs and application logs are stored on the nodes that generated them.
+
+External syslog server
+
+Audit information is sent to an external syslog server and saved on the local nodes. The type of information sent depends upon how you configured the external syslog server. This option is enabled only after you have configured an external syslog server. Admin Node and external syslog server
+
+Audit messages are sent to the audit log (/var/local/log/audit.log) on Admin Nodes, and audit information is sent to the external syslog server and saved on the local node. The type of information sent depends upon how you configured the external syslog server. This option is enabled only after you have configured an external syslog server.
+
+2. Select Save.
+
+A warning message appears.
+
+3. Select OK to confirm that you want to change the destination for audit information.
+
+A green banner indicates that the audit configuration has been saved.
+
+New logs are sent to the destinations you selected. Existing logs remain in their current location. Use SNMP monitoring
+
+Use SNMP monitoring: Overview
+
+If you want to monitor StorageGRID using the Simple Network Management Protocol (SNMP), you must configure the SNMP agent that is included with StorageGRID.
+
+Configure the SNMP agent
+
+Update the SNMP agent Capabilities
+
+Each StorageGRID node runs an SNMP agent, or daemon, that provides a MIB. The StorageGRID MIB contains table and notification definitions for alerts and alarms. The MIB also contains system description information such as platform and model number for each node. Each StorageGRID node also supports a subset of MIB-II objects.

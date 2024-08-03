@@ -1,0 +1,115 @@
+For details, go to Manage object metadata storage.
+
+Automate the installation (VMware)
+
+You can use VMware vSphere to automate the deployment of grid nodes. You can also automate the configuration of StorageGRID. Automate grid node deployment
+
+Use VMware vSphere to automate the deployment of grid nodes.
+
+Before you begin
+
+You have access to a Linux/Unix system with Bash 3.2 or later.
+
+You have VMware OVF Tool 4.1 installed and correctly configured.
+
+You know the username and password required to access VMware vSphere using the OVF Tool.
+
+You know the virtual infrastructure (VI) URL for the location in vSphere where you want to deploy the StorageGRID virtual machines. This URL will typically be a vApp, or Resource Pool. For example: vi://vcenter.example.com/vi/sgws
+
+You can use the VMware ovftool utility to determine this value (see the ovftool documentation for details). 210
+
+allowed for metadata on each Storage Node. When configuring different Storage Nodes for a site, use the same setting for volume 0 if possible. If a site contains Storage Nodes of different sizes, the Storage Node with the smallest volume 0 will determine the metadata capacity of that site.
+
+For details, go to Manage object metadata storage.
+
+Automate the installation (VMware)
+
+You can use VMware vSphere to automate the deployment of grid nodes. You can also automate the configuration of StorageGRID. Automate grid node deployment
+
+Use VMware vSphere to automate the deployment of grid nodes.
+
+Before you begin
+
+You have access to a Linux/Unix system with Bash 3.2 or later.
+
+You have VMware OVF Tool 4.1 installed and correctly configured.
+
+You know the username and password required to access VMware vSphere using the OVF Tool.
+
+You know the virtual infrastructure (VI) URL for the location in vSphere where you want to deploy the StorageGRID virtual machines. This URL will typically be a vApp, or Resource Pool. For example: vi://vcenter.example.com/vi/sgws
+
+You can use the VMware ovftool utility to determine this value (see the ovftool documentation for details).
+
+If you are deploying to a vApp, the virtual machines will not start automatically the first time, and you must power them on manually.
+
+You have collected all the required information for the configuration file. See Collect information about your deployment environment for information. You have access to the following files from the VMware installation archive for StorageGRID:
+
+Filename
+
+Description
+
+NetApp-SG-version-SHA.vmdk
+
+The virtual machine disk file that is used as a template for creating grid node virtual machines.
+
+Note: This file must be in the same folder as the .ovf and .mf files. vsphere-primary-admin.ovf
+
+vsphere-primary-admin.mf
+
+The Open Virtualization Format template file (.ovf) and manifest file (.mf) for deploying the primary Admin Node.
+
+vsphere-non-primary-admin.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying non-primary Admin Nodes.
+
+vsphere-non-primary-admin.mf
+
+211
+
+Filename
+
+Description vsphere-archive.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying Archive Nodes.
+
+vsphere-archive.mf
+
+vsphere-gateway.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying Gateway Nodes.
+
+vsphere-gateway.mf
+
+vsphere-storage.ovf
+
+The template file (.ovf) and manifest file (.mf) for deploying virtual machine-based Storage Nodes. vsphere-storage.mf
+
+deploy-vsphere-ovftool.sh
+
+The Bash shell script used to automate the deployment of virtual grid nodes.
+
+deploy-vsphere-ovftool-sample.ini
+
+The example configuration file for use with the deploy-vsphere-ovftool.sh script.
+
+Define the configuration file for your deployment
+
+You specify the information needed to deploy virtual grid nodes for StorageGRID in a configuration file, which is used by the deploy-vsphere-ovftool.sh Bash script. You can modify an example configuration file, so that you don’t have to create the file from scratch. Steps
+
+1. Make a copy of the example configuration file (deploy-vsphere-ovftool.sample.ini). Save the new file as deploy-vsphere-ovftool.ini in the same directory as deploy-vsphere-ovftool.sh.
+
+2. Open deploy-vsphere-ovftool.ini.
+
+3. Enter all of the information required to deploy VMware virtual grid nodes.
+
+See Configuration file settings for information.
+
+4. When you have entered and verified all of the necessary information, save and close the file. Configuration file settings
+
+The deploy-vsphere-ovftool.ini configuration file contains the settings that are required to deploy virtual grid nodes.
+
+The configuration file first lists global parameters, and then lists node-specific parameters in sections defined by node name. When the file is used:
+
+Global parameters are applied to all grid nodes. The example configuration file for use with the deploy-vsphere-ovftool.sh script.
+
+Define the configuration file for your deployment

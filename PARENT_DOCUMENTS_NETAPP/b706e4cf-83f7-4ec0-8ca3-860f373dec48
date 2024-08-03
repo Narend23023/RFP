@@ -1,0 +1,101 @@
+Pending edit
+
+You have edited the connection on this grid, but the connection is still using the existing configuration. To complete the edit, upload the new verification file to the other grid.
+
+Waiting to connect
+
+You have configured the connection on this grid, but the connection hasn’t been completed on the other grid. Download the verification file from this grid and upload it to the other grid. Unknown
+
+The connection is in an unknown state, possibly because of a networking issue or an offline node.
+
+5. If the Connection status is Error, resolve any issues. Then, select Test connection again to confirm the issue has been fixed.
+
+371
+
+Rotate connection certificates
+
+Each grid federation connection uses four automatically-generated SSL certificates to secure the connection. When the two certificates for each grid near their expiration date, the Expiration of grid federation certificate alert reminds you to rotate the certificates.
+
+If the certificates on either end of the connection expire, the connection will stop working and replications will be pending until the certificates are updated. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node on either grid.
+
+2. Select CONFIGURATION > System > Grid federation. Connected
+
+Both grids are connected and communicating normally.
+
+Error
+
+The connection is in an error state. For example, a certificate has expired or a configuration value is no longer valid.
+
+Pending edit
+
+You have edited the connection on this grid, but the connection is still using the existing configuration. To complete the edit, upload the new verification file to the other grid.
+
+Waiting to connect
+
+You have configured the connection on this grid, but the connection hasn’t been completed on the other grid. Download the verification file from this grid and upload it to the other grid. Unknown
+
+The connection is in an unknown state, possibly because of a networking issue or an offline node.
+
+5. If the Connection status is Error, resolve any issues. Then, select Test connection again to confirm the issue has been fixed.
+
+371
+
+Rotate connection certificates
+
+Each grid federation connection uses four automatically-generated SSL certificates to secure the connection. When the two certificates for each grid near their expiration date, the Expiration of grid federation certificate alert reminds you to rotate the certificates.
+
+If the certificates on either end of the connection expire, the connection will stop working and replications will be pending until the certificates are updated. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node on either grid.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. From either tab on the Grid federation page, select the connection name to display its details.
+
+4. Select the Certificates tab.
+
+5. Select Rotate certificates.
+
+6. Specify how many days the new certificates should be valid.
+
+7. Enter the provisioning passphrase for the grid you are signed in to.
+
+8. Select Rotate certificates.
+
+9. As required, repeat these steps on the other grid in the connection.
+
+In general, use the same number of days for the certificates on both sides of the connection.
+
+Remove a grid federation connection
+
+You can remove a grid federation connection from either grid in the connection. As shown in the figure, you must perform prerequisite steps on both grids to confirm that the connection is not being used by any tenant on either grid.
+
+Before removing a connection, note the following: Removing a connection does not delete any items that have already been copied between grids. For example, tenant users, groups, and objects that exist on both grids aren’t deleted from either grid when the tenant’s permission is removed. If you want to delete these items, you must manually delete them from both grids.
+
+When you remove a connection, any objects that are pending replication (ingested but not yet replicated to the other grid) will have their replication permanently failed. Disable replication for all tenant buckets
+
+Steps
+
+1. Starting from either grid, sign in to the Grid Manager from the primary Admin Node.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select the connection name to display its details.
+
+372
+
+4. On the Permitted tenants tab, determine if the connection is being used by any tenants.
+
+5. If any tenants are listed, instruct all tenants to disable cross-grid replication for all of their buckets on both grids in the connection.
+
+You can’t remove the Use grid federation connection permission if any tenant buckets have cross-grid replication enabled. Each tenant account must disable cross-grid replication for their buckets on both grids. Remove permission for each tenant
+
+After cross-grid replication has been disabled for all tenant buckets, remove the Use grid federation permission from all tenants on both grids.
+
+Steps
+
+1. Select CONFIGURATION > System > Grid federation.
+
+2. Select the connection name to display its details.

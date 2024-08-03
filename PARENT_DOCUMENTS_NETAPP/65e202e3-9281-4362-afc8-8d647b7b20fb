@@ -1,0 +1,327 @@
+If you specified SSE-C encryption for the CreateMultipartUpload request, you must also include the following request headers in each UploadPartCopy request:
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-server-side-encryption-customer-key: Specify the same encryption key that you provided in the CreateMultipartUpload request.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the same MD5 digest that you provided in the CreateMultipartUpload request.
+
+If the source object is encrypted using a customer-provided key (SSE-C), you must include the following three headers in the UploadPartCopy request, so the object can be decrypted and then copied:
+
+x-amz-copy-source-server-side-encryption-customer-algorithm: Specify AES256.
+
+x-amz-copy-source-server-side-encryption-customer-key: Specify the encryption key you provided when you created the source object. x-amz-copy-source-server-side-encryption-customer-key-MD5: Specify the MD5 digest you provided when you created the source object.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations in Use server-side encryption. Versioning
+
+Multipart upload consists of separate operations for initiating the upload, listing uploads, uploading parts, assembling the uploaded parts, and completing the upload. Objects are created (and versioned if applicable) when the CompleteMultipartUpload operation is performed.
+
+Error responses
+
+The StorageGRID system supports all standard S3 REST API error responses that apply. In addition, the StorageGRID implementation adds several custom responses.
+
+Supported S3 API error codes Name
+
+HTTP status
+
+AccessDenied
+
+403 Forbidden
+
+BadDigest
+
+400 Bad Request
+
+BucketAlreadyExists
+
+409 Conflict
+
+944
+
+Name
+
+BucketNotEmpty
+
+IncompleteBody
+
+InternalError
+
+InvalidAccessKeyId
+
+InvalidArgument
+
+InvalidBucketName
+
+InvalidBucketState
+
+InvalidDigest
+
+InvalidEncryptionAlgorithmError
+
+InvalidPart InvalidPartOrder
+
+InvalidRange
+
+InvalidRequest
+
+InvalidStorageClass
+
+InvalidTag
+
+InvalidURI
+
+KeyTooLong
+
+MalformedXML
+
+MetadataTooLarge
+
+MethodNotAllowed
+
+MissingContentLength
+
+MissingRequestBodyError
+
+HTTP status
+
+409 Conflict
+
+400 Bad Request
+
+500 Internal Server Error
+
+403 Forbidden
+
+400 Bad Request 400 Bad Request
+
+409 Conflict
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+416 Requested Range Not Satisfiable
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+405 Method Not Allowed
+
+411 Length Required
+
+400 Bad Request
+
+945
+
+Name MissingSecurityHeader
+
+NoSuchBucket
+
+NoSuchKey
+
+NoSuchUpload
+
+NotImplemented
+
+NoSuchBucketPolicy
+
+ObjectLockConfigurationNotFoundError
+
+PreconditionFailed
+
+RequestTimeTooSkewed
+
+ServiceUnavailable
+
+SignatureDoesNotMatch
+
+TooManyBuckets
+
+UserKeyMustBeSpecified
+
+StorageGRID custom error codes
+
+Name
+
+XBucketLifecycleNotAllowed XBucketPolicyParseException
+
+XComplianceConflict
+
+XComplianceReducedRedundancyForbidd en
+
+XMaxBucketPolicyLengthExceeded
+
+946
+
+HTTP status
+
+400 Bad Request
+
+404 Not Found
+
+404 Not Found
+
+404 Not Found
+
+501 Not Implemented
+
+404 Not Found
+
+404 Not Found
+
+412 Precondition Failed
+
+403 Forbidden
+
+503 Service Unavailable 403 Forbidden 409 Conflict
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+416 Requested Range Not Satisfiable
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+400 Bad Request
+
+405 Method Not Allowed
+
+411 Length Required
+
+400 Bad Request
+
+945
+
+Name MissingSecurityHeader
+
+NoSuchBucket
+
+NoSuchKey
+
+NoSuchUpload
+
+NotImplemented
+
+NoSuchBucketPolicy
+
+ObjectLockConfigurationNotFoundError
+
+PreconditionFailed
+
+RequestTimeTooSkewed
+
+ServiceUnavailable
+
+SignatureDoesNotMatch
+
+TooManyBuckets
+
+UserKeyMustBeSpecified
+
+StorageGRID custom error codes
+
+Name
+
+XBucketLifecycleNotAllowed XBucketPolicyParseException
+
+XComplianceConflict
+
+XComplianceReducedRedundancyForbidd en
+
+XMaxBucketPolicyLengthExceeded
+
+946
+
+HTTP status
+
+400 Bad Request
+
+404 Not Found
+
+404 Not Found
+
+404 Not Found
+
+501 Not Implemented
+
+404 Not Found
+
+404 Not Found
+
+412 Precondition Failed
+
+403 Forbidden
+
+503 Service Unavailable 403 Forbidden
+
+400 Bad Request
+
+400 Bad Request
+
+Description
+
+Bucket lifecycle configuration is not allowed in a legacy Compliant bucket
+
+Failed to parse received bucket policy JSON.
+
+Operation denied because of legacy Compliance settings.
+
+Reduced redundancy is not allowed in legacy Compliant bucket
+
+Your policy exceeds the maximum allowed bucket policy length. HTTP status
+
+400 Bad Request
+
+400 Bad Request
+
+403 Forbidden
+
+400 Bad Request
+
+400 Bad Request
+
+Name
+
+Description
+
+HTTP status
+
+XMissingInternalRequestHeader
+
+Missing a header of an internal request.
+
+400 Bad Request
+
+XNoSuchBucketCompliance
+
+The specified bucket does not have legacy Compliance enabled. 404 Not Found

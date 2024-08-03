@@ -1,0 +1,123 @@
+c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the recovered Admin Node: /usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+f. When prompted, press Enter to confirm that you want to destroy the new Prometheus database on the
+
+recovered Admin Node.
+
+The original Prometheus database and its historical data are copied to the recovered Admin Node. When the copy operation is done, the script starts the recovered Admin Node. The following status appears:
+
+Database cloned, starting services
+
+g. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter:ssh-add -D
+
+4. Restart the Prometheus service on the source Admin Node.service prometheus start
+
+Recover from Gateway Node failures
+
+Recover from Gateway Node failures: Workflow
+
+You must complete a sequence of tasks in exact order to recover from a Gateway Node failure.
+
+1632
+
+Replace Gateway Node
+
+You can replace a failed Gateway Node with a Gateway Node running on the same physical or virtual hardware, or you can replace a Gateway Node running on VMware or a Linux host with a Gateway Node hosted on a services appliance.
+
+The node replacement procedure you must follow depends on which platform will be used by the replacement node. After you complete the node replacement procedure (which is suitable for all node types), that procedure will direct you to the next step for Gateway Node recovery. Replacement platform
+
+Procedure
+
+VMware
+
+Replace a VMware node
+
+Linux
+
+Replace a Linux node
+
+Services appliances
+
+Replace a services appliance
+
+1633
+
+Replacement platform
+
+Procedure
+
+OpenStack
+
+NetApp-provided virtual machine disk files and scripts for OpenStack are no longer supported for recovery operations. If you need to recover a node running in an OpenStack deployment, download the files for your Linux operating system. Then, follow the procedure for replacing a Linux node. Select Start Recovery to configure Gateway Node
+
+After replacing a Gateway Node, you must select Start Recovery in the Grid Manager to configure the new node as a replacement for the failed node.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+You have deployed and configured the replacement node. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+1634
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node. Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+You have deployed and configured the replacement node. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+1634
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node.
+
+Linux: Restart the node by running this command on the Linux host: storagegrid node force- recovery node-name Appliance: If you want to retry the recovery after resetting the procedure, you must restore the appliance node to a pre-installed state by running sgareinstall on the node. See Prepare appliance for reinstallation (platform replacement only).
+
+Recover from Archive Node failures Recover from Archive Node failures: Workflow
+
+You must complete a sequence of tasks in exact order to recover from an Archive Node failure.
+
+1635

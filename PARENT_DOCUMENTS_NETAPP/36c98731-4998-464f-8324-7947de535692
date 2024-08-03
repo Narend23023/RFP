@@ -1,0 +1,75 @@
+7. Instruct the tenant to re-trigger the failed replication or notification by updating the object’s metadata or tags.
+
+The tenant can resubmit the existing values to avoid making unwanted changes.
+
+468
+
+Platform services messages can’t be delivered
+
+If the destination encounters an issue that prevents it from accepting platform services messages, the client operation on the bucket succeeds, but the platform services message is not delivered. For example, this error might happen if credentials are updated on the destination such that StorageGRID can no longer authenticate to the destination service.
+
+If platform services messages can’t be delivered because of an unrecoverable error, the Total Events (SMTT) legacy alarm is triggered in the Grid Manager. Slower performance for platform service requests
+
+StorageGRID software might throttle incoming S3 requests for a bucket if the rate at which the requests are being sent exceeds the rate at which the destination endpoint can receive the requests. Throttling only occurs when there is a backlog of requests waiting to be sent to the destination endpoint. Event messages are also listed in /var/local/log/bycast-err.log. 4. Follow the guidance provided in the SMTT alarm contents to correct the issue.
+
+5. Select the Configuration tab to reset event counts.
+
+6. Notify the tenant of the objects whose platform services messages have not been delivered.
+
+7. Instruct the tenant to re-trigger the failed replication or notification by updating the object’s metadata or tags.
+
+The tenant can resubmit the existing values to avoid making unwanted changes.
+
+468
+
+Platform services messages can’t be delivered
+
+If the destination encounters an issue that prevents it from accepting platform services messages, the client operation on the bucket succeeds, but the platform services message is not delivered. For example, this error might happen if credentials are updated on the destination such that StorageGRID can no longer authenticate to the destination service.
+
+If platform services messages can’t be delivered because of an unrecoverable error, the Total Events (SMTT) legacy alarm is triggered in the Grid Manager. Slower performance for platform service requests
+
+StorageGRID software might throttle incoming S3 requests for a bucket if the rate at which the requests are being sent exceeds the rate at which the destination endpoint can receive the requests. Throttling only occurs when there is a backlog of requests waiting to be sent to the destination endpoint.
+
+The only visible effect is that the incoming S3 requests will take longer to execute. If you start to detect significantly slower performance, you should reduce the ingest rate or use an endpoint with higher capacity. If the backlog of requests continues to grow, client S3 operations (such as PUT requests) will eventually fail.
+
+CloudMirror requests are more likely to be affected by the performance of the destination endpoint because these requests typically involve more data transfer than search integration or event notification requests.
+
+Platform service requests fail
+
+To view the request failure rate for platform services: 1. Select NODES.
+
+2. Select site > Platform Services.
+
+3. View the Request error rate chart.
+
+469
+
+Platform services unavailable alert
+
+The Platform services unavailable alert indicates that no platform service operations can be performed at a site because too few Storage Nodes with the RSM service are running or available.
+
+The RSM service ensures platform service requests are sent to their respective endpoints.
+
+To resolve this alert, determine which Storage Nodes at the site include the RSM service. (The RSM service is present on Storage Nodes that also include the ADC service.) Then, ensure that a simple majority of those Storage Nodes are running and available.
+
+470
+
+If more than one Storage Node that contains the RSM service fails at a site, you lose any pending platform service requests for that site. Additional troubleshooting guidance for platform services endpoints
+
+For additional information see Use a tenant account > Troubleshoot platform services endpoints.
+
+Related information
+
+Troubleshoot StorageGRID system
+
+Manage S3 Select for tenant accounts
+
+You can allow certain S3 tenants to use S3 Select to issue SelectObjectContent requests on individual objects.
+
+S3 Select provides an efficient way to search through large amounts of data without having to deploy a database and associated resources to enable searches. It also reduces the cost and latency of retrieving data. What is S3 Select?
+
+S3 Select allows S3 clients to use SelectObjectContent requests to filter and retrieve only the data needed from an object. The StorageGRID implementation of S3 Select includes a subset of S3 Select commands and features.
+
+Considerations and requirements for using S3 Select
+
+Grid administration requirements

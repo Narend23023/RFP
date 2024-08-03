@@ -1,0 +1,131 @@
+SPUT S3 PUT bucket bucket1 account:92484777680322627870 usec:124673 SPUT S3 PUT object bucket1/part1.txt tenant:92484777680322627870 cbid:9DCB157394F99FE5 usec:101485 SPUT S3 PUT object bucket1/part2.txt tenant:92484777680322627870 cbid:3CFBB07AB3D32CA9 usec:102804 SPUT S3 PUT object bucket1/part3.txt tenant:92484777680322627870 cbid:5373D73831ECC743 usec:93874 The audit-explain tool can do the following:
+
+Process plain or compressed audit logs. For example:
+
+audit-explain audit.log
+
+audit-explain 2019-08-12.txt.gz
+
+Process multiple files simultaneously. For example:
+
+audit-explain audit.log 2019-08-12.txt.gz 2019-08-13.txt.gz
+
+audit-explain /var/local/log/*
+
+Accept input from a pipe, which allows you to filter and preprocess the input using the grep command or other means. For example:
+
+grep SPUT audit.log | audit-explain grep bucket-name audit.log | audit-explain
+
+Because audit logs can be very large and slow to parse, you can save time by filtering parts that you want to look at and running audit-explain on the parts, instead of the entire file.
+
+1313
+
+The audit-explain tool does not accept compressed files as piped input. To process compressed files, provide their file names as command-line arguments, or use the zcat tool to decompress the files first. For example: zcat audit.log.gz | audit-explain
+
+Use the help (-h) option to see the available options. For example:
+
+$ audit-explain -h
+
+Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Enter the following command, where /var/local/log/audit.log represents the name and the location of the file or files you want to analyze: $ audit-explain /var/local/log/audit.log
+
+The audit-explain tool prints human-readable interpretations of all messages in the specified file or files.
+
+To reduce line lengths and to aid readability, timestamps aren’t shown by default. If you want to see the timestamps, use the timestamp (-t) option. Use audit-sum tool Use the help (-h) option to see the available options. For example:
+
+$ audit-explain -h
+
+Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Enter the following command, where /var/local/log/audit.log represents the name and the location of the file or files you want to analyze: $ audit-explain /var/local/log/audit.log
+
+The audit-explain tool prints human-readable interpretations of all messages in the specified file or files.
+
+To reduce line lengths and to aid readability, timestamps aren’t shown by default. If you want to see the timestamps, use the timestamp (-t) option. Use audit-sum tool
+
+You can use the audit-sum tool to count the write, read, head, and delete audit messages and to see the minimum, maximum, and average time (or size) for each operation type.
+
+Before you begin
+
+You have specific access permissions.
+
+You must have the Passwords.txt file.
+
+You must know the IP address of the primary Admin Node. About this task
+
+The audit-sum tool, available on the primary Admin Node, summarizes how many write, read, and delete operations were logged and how long these operations took.
+
+1314
+
+The audit-sum tool is primarily intended for use by technical support during troubleshooting operations. Processing audit-sum queries can consume a large amount of CPU power, which might impact StorageGRID operations.
+
+This example shows typical output from the audit-sum tool. This example shows how long protocol operations took.
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ IDEL 274 SDEL 213371 0.004 20.934 0.352 SGET 201906 0.010 1740.290 1.132 SHEA 22716 0.005 2.349 0.272 SPUT 1771398 0.011 1770.563 0.487
+
+The audit-sum tool provides counts and times for the following S3, Swift, and ILM audit messages in an audit log: Code
+
+Description
+
+Refer to
+
+ARCT
+
+Archive Retrieve from Cloud-Tier
+
+ARCT: Archive Retrieve from Cloud-Tier
+
+ASCT
+
+Archive Store Cloud-Tier
+
+ASCT: Archive Store Cloud-Tier
+
+IDEL
+
+ILM Initiated Delete: Logs when ILM starts the process of deleting an object.
+
+IDEL: ILM Initiated Delete
+
+SDEL
+
+S3 DELETE: Logs a successful transaction to delete an object or bucket. SDEL: S3 DELETE
+
+SGET
+
+S3 GET: Logs a successful transaction to retrieve an object or list the objects in a bucket.
+
+SGET: S3 GET
+
+SHEA
+
+S3 HEAD: Logs a successful transaction to check for the existence of an object or bucket.
+
+SHEA: S3 HEAD
+
+SPUT

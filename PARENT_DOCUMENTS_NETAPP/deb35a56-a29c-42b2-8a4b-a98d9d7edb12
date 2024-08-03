@@ -1,0 +1,71 @@
+The Read-Write Watermark is always larger than both the Soft Read-Only Watermark and the Hard Read-Only Watermark. View storage volume watermarks
+
+You can view the current watermark settings and the system-optimized values. If optimized watermarks aren’t being used, you can determine if you can or should adjust the settings.
+
+Before you begin
+
+You have completed the upgrade to StorageGRID 11.6 or higher.
+
+You are signed in to the Grid Manager using a supported web browser. 548
+
+The Hard Read-Only Watermark is always less than the Soft Read-Only Watermark.
+
+What is the Read-Write Watermark? The Storage Volume Read-Write Watermark only applies to Storage Nodes that have transitioned to read- only mode. It determines when the node can become read-write again. When the free space on any one storage volume in a Storage Node is greater than that volume’s Read-Write Watermark, the node automatically transitions back to the read-write state.
+
+For example, suppose the Storage Node has transitioned to read-only mode. Also suppose that each volume has a Read-Write Watermark of 30 GB. As soon as the free space for any volume increases to 30 GB, the node becomes read-write again.
+
+The Read-Write Watermark is always larger than both the Soft Read-Only Watermark and the Hard Read-Only Watermark. View storage volume watermarks
+
+You can view the current watermark settings and the system-optimized values. If optimized watermarks aren’t being used, you can determine if you can or should adjust the settings.
+
+Before you begin
+
+You have completed the upgrade to StorageGRID 11.6 or higher.
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission. View current watermark settings
+
+You can view the current storage watermark settings in the Grid Manager.
+
+Steps
+
+1. Select SUPPORT > Other > Storage watermarks.
+
+2. On the Storage Watermarks page, look at the Use optimized values checkbox.
+
+If the checkbox is selected, all three watermarks are optimized for every storage volume on every Storage Node, based on the size of the Storage Node and the relative capacity of the volume.
+
+This is the default and recommended setting. Do not update these values. Optionally, you can View optimized storage watermarks.
+
+If the Use optimized values checkbox is unselected, custom (non-optimized) watermarks are being used. Using custom watermark settings is not recommended. Use the instructions for troubleshooting Low read-only watermark override alerts to determine if you can or should adjust the settings.
+
+When you specify custom watermark settings, you must enter values greater than 0.
+
+View optimized storage watermarks StorageGRID uses two Prometheus metrics to show the optimized values it has calculated for the Storage Volume Soft Read-Only Watermark. You can view the minimum and maximum optimized values for each Storage Node in your grid.
+
+1. Select SUPPORT > Tools > Metrics.
+
+549
+
+2. In the Prometheus section, select the link to access the Prometheus user interface.
+
+3. To see the recommended minimum soft read-only watermark, enter the following Prometheus metric, and select Execute: storagegrid_storage_volume_minimum_optimized_soft_readonly_watermark
+
+The last column shows the minimum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node. If this value is greater than the custom setting for the Storage Volume Soft Read-Only Watermark, the Low read-only watermark override alert is triggered for the Storage Node.
+
+4. To see the recommended maximum soft read-only watermark, enter the following Prometheus metric, and select Execute: storagegrid_storage_volume_maximum_optimized_soft_readonly_watermark
+
+The last column shows the maximum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node. Manage object metadata storage
+
+The object metadata capacity of a StorageGRID system controls the maximum number of objects that can be stored on that system. To ensure that your StorageGRID system has adequate space to store new objects, you must understand where and how StorageGRID stores object metadata.
+
+What is object metadata?
+
+Object metadata is any information that describes an object. StorageGRID uses object metadata to track the locations of all objects across the grid and to manage each object’s lifecycle over time.
+
+For an object in StorageGRID, object metadata includes the following types of information:
+
+System metadata, including a unique ID for each object (UUID), the object name, the name of the S3 bucket or Swift container, the tenant account name or ID, the logical size of the object, the date and time the object was first created, and the date and time the object was last modified.
+
+Any custom user metadata key-value pairs associated with the object. For S3 objects, any object tag key-value pairs associated with the object.

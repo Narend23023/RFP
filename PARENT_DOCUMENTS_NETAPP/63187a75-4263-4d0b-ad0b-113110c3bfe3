@@ -1,0 +1,61 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> No title detected<br>
+                       <b>Bounding box:</b> x1=134, y1=100, x2=1566, y2=1853
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>Cloud Storage Pool</td>
+      <td>CloudMirror replication service</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>What is the\nprimary\npurpose?</td>
+      <td>Acts as an archive target. The object copy in\nthe Cloud Storage Pool can be the only copy\nof the object, or it can be an additional copy.\nThat is, instead of keeping two copies onsite,\nyou can keep one copy within StorageGRID\nand send a copy to the Cloud Storage Pool.</td>
+      <td>Enables a tenant to automatically replicate\nobjects from a bucket in StorageGRID\n(source) to an external S3 bucket\n(destination). Creates an independent copy of\nan object in an independent S3 infrastructure.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>How is it set\nup?</td>
+      <td>Defined in the same way as storage pools,\nusing the Grid Manager or the Grid\nManagement API. Can be selected as the\nplacement location in an ILM rule. While a\nstorage pool consists of a group of Storage\nNodes, a Cloud Storage Pool is defined using\na remote S3 or Azure endpoint (IP address,\ncredentials, and so on).</td>
+      <td>A tenant user configures CloudMirror\nby defining a CloudMirror endpoint replication\n(IP address, credentials, and so on) using the\nTenant Manager or the S3 API. After the\nCloudMirror endpoint is set up, any bucket\nowned by that tenant account can be\nconfigured to point to the CloudMirror\nendpoint.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Who is\nresponsible\nfor setting it\nup?</td>
+      <td>Typically, a grid administrator</td>
+      <td>Typically, a tenant user</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>What is the\ndestination?</td>
+      <td>• Any compatible S3 infrastructure\n(including Amazon S3)\n• Azure Blob Archive tier\n• Google Cloud Platform (GCP)</td>
+      <td>• Any compatible S3 infrastructure\n(including Amazon S3)\n• Google Cloud Platform (GCP)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>What causes\nobjects to be\nmoved to the\ndestination?</td>
+      <td>One or more ILM rules in the active ILM\npolicies. The ILM rules define which objects\nStorageGRID moves to the Cloud Storage\nPool and when the objects are moved.</td>
+      <td>The act of ingesting a new object into a\nsource bucket that has been configured with a\nCloudMirror endpoint. Objects that existed in\nthe source bucket before the bucket was\nconfigured with the CloudMirror endpoint\naren’t replicated, unless they are modified.</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>How are\nobjects\nretrieved?</td>
+      <td>Applications must make requests to\nStorageGRID to retrieve objects that have\nbeen moved to a Cloud Storage Pool. If the\nonly copy of an object has been transitioned\nto archival storage, StorageGRID manages\nthe process of restoring the object so it can be\nretrieved.</td>
+      <td>Because the mirrored copy in the destination\nbucket is an independent copy, applications\ncan retrieve the object by making requests\neither to StorageGRID or to the S3\ndestination. For example, suppose you use\nCloudMirror replication to mirror objects to a\npartner organization. The partner can use its\nown applications to read or update objects\ndirectly from the S3 destination. Using\nStorageGRID is not required.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

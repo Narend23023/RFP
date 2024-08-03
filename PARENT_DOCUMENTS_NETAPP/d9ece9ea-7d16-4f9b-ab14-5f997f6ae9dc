@@ -1,0 +1,75 @@
+To ensure that platform services messages can be delivered, you must configure the network or networks containing the ADC Storage Nodes. You must ensure that the following ports can be used to send platform services messages to the destination endpoints.
+
+By default, platform services messages are sent on the following ports: Related information
+
+Manage platform services
+
+Configure Storage proxy settings
+
+Monitor StorageGRID Network and ports for platform services
+
+If you allow an S3 tenant to use platform services, you must configure networking for the grid to ensure that platform services messages can be delivered to their destinations.
+
+You can enable platform services for an S3 tenant account when you create or update the tenant account. If platform services are enabled, the tenant can create endpoints that serve as a destination for CloudMirror replication, event notifications, or search integration messages from its S3 buckets. These platform services messages are sent from Storage Nodes that run the ADC service to the destination endpoints.
+
+For example, tenants might configure the following types of destination endpoints:
+
+A locally-hosted Elasticsearch cluster
+
+A local application that supports receiving Amazon Simple Notification Service messages
+
+A locally-hosted Kafka cluster
+
+A locally-hosted S3 bucket on the same or another instance of StorageGRID An external endpoint, such as an endpoint on Amazon Web Services.
+
+To ensure that platform services messages can be delivered, you must configure the network or networks containing the ADC Storage Nodes. You must ensure that the following ports can be used to send platform services messages to the destination endpoints.
+
+By default, platform services messages are sent on the following ports:
+
+80: For endpoint URIs that begin with http (most endpoints)
+
+443: For endpoint URIs that begin with https (most endpoints)
+
+9092: For endpoint URIs that begin with http or https (Kafka endpoints only)
+
+464
+
+Tenants can specify a different port when they create or edit an endpoint.
+
+If a StorageGRID deployment is used as the destination for CloudMirror replication, replication messages might be received on a port other than 80 or 443. Ensure that the port being used for S3 by the destination StorageGRID deployment is specified in the endpoint. If you use a non-transparent proxy server, you must also configure storage proxy settings to allow messages to be sent to external endpoints, such as an endpoint on the internet.
+
+Related information
+
+Use a tenant account
+
+Per-site delivery of platform services messages
+
+All platform services operations are performed on a per-site basis.
+
+That is, if a tenant uses a client to perform an S3 API Create operation on an object by connecting to a Gateway Node at Data Center Site 1, the notification about that action is triggered and sent from Data Center Site 1.
+
+If the client subsequently performs an S3 API Delete operation on that same object from Data Center Site 2,
+
+465
+
+the notification about the delete action is triggered and sent from Data Center Site 2.
+
+Make sure that the networking at each site is configured such that platform services messages can be delivered to their destinations. Troubleshoot platform services
+
+The endpoints used in platform services are created and maintained by tenant users in the Tenant Manager; however, if a tenant has issues configuring or using platform services, you might be able to use the Grid Manager to help resolve the issue. Issues with new endpoints
+
+Before a tenant can use platform services, they must create one or more endpoints using the Tenant Manager. Each endpoint represents an external destination for one platform service, such as a StorageGRID S3 bucket, an Amazon Web Services bucket, an Amazon Simple Notification Service topic, a Kafka topic, or an Elasticsearch cluster hosted locally or on AWS. Each endpoint includes both the location of the external resource and the credentials needed to access that resource.
+
+When a tenant creates an endpoint, the StorageGRID system validates that the endpoint exists and that it can be reached using the credentials that were specified. The connection to the endpoint is validated from one
+
+466
+
+node at each site.
+
+If endpoint validation fails, an error message explains why endpoint validation failed. The tenant user should resolve the issue, then try creating the endpoint again. Endpoint creation will fail if platform services aren’t enabled for the tenant account.
+
+Issues with existing endpoints
+
+If an error occurs when StorageGRID tries to reach an existing endpoint, a message is displayed on the dashboard in the Tenant Manager.
+
+Tenant users can go to the Endpoints page to review the most recent error message for each endpoint and to determine how long ago the error occurred. The Last error column displays the most recent error message for

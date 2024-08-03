@@ -1,0 +1,131 @@
+Code ALUR
+
+AMQS
+
+AOTE
+
+Name
+
+Unreachable Attribute Repositories
+
+Audit Messages Queued
+
+Store State
+
+Service
+
+ADC
+
+BADC, BAMS, BARC, BCLB, BCMN, BLDR, BNMS, BDDS BARC
+
+Recommended action
+
+Check network connectivity with the NMS service to ensure that the service can contact the attribute repository.
+
+If this alarm is triggered and network connectivity is good, contact technical support.
+
+If audit messages can’t be immediately forwarded to an audit relay or repository, the messages are stored in a disk queue. If the disk queue becomes full, outages can occur.
+
+To allow you to respond in time to prevent an outage, AMQS alarms are triggered when the number of messages in the disk queue reaches the following thresholds:
+
+Notice: More than 100,000 messages
+
+Minor: At least 500,000 messages
+
+Major: At least 2,000,000 messages
+
+Critical: At least 5,000,000 messages
+
+If an AMQS alarm is triggered, check the load on the system—if there have been a significant number of transactions, the alarm should resolve itself over time. In this case, you can ignore the alarm. If the alarm persists and increases in severity, view a chart of the queue size. If the number is steadily increasing over hours or days, the audit load has likely exceeded the audit capacity of the system. Reduce the client operation rate or decrease the number of audit messages logged by changing the audit level to Error or Off. See Configure audit messages and log destinations.
+
+Only available for Archive Node’s with a Target Type of Tivoli Storage Manager (TSM).
+
+If the value of Store State is Waiting for Target, check the external archival storage system and ensure that it is operating correctly. If the Archive Node has just been added to the StorageGRID system, ensure that the Archive Node’s connection to the targeted external archival storage system is configured correctly.
+
+If the value of Store State is Offline, check the value of Store Status. Correct any problems before moving the Store State back to Online.
+
+1143
+
+Code AOTU
+
+APMS
+
+ARCE
+
+AROQ
+
+1144
+
+Name
+
+Service
+
+Store Status
+
+BARC
+
+Storage Multipath Connectivity
+
+SSM
+
+ARC State
+
+ARC Objects Queued ARC
+
+Recommended action
+
+If the value of Store Status is Session Lost check that the external archival storage system is connected and online.
+
+If the value of Target Error, check the external archival storage system for errors.
+
+If the value of Store Status is Unknown Error, contact technical support.
+
+If the multipath state alarm appears as "Degraded" (select SUPPORT > Tools > Grid topology, then select site > grid node > SSM > Events), do the following:
+
+1. Plug in or replace the cable that does not display any indicator lights.
+
+2. Wait one to five minutes.
+
+Don’t unplug the other cable until at least five minutes after you plug in the first one. Unplugging too early can cause the root volume to become read-only, which requires that the hardware be restarted.
+
+3. Return to the SSM > Resources page, and verify that the "Degraded" Multipath status has changed to "Nominal" in the Storage Hardware section. The ARC service has a state of Standby until all ARC components (Replication, Store, Retrieve, Target) have started. It then transitions to Online. 1144
+
+Name
+
+Service
+
+Store Status
+
+BARC
+
+Storage Multipath Connectivity
+
+SSM
+
+ARC State
+
+ARC Objects Queued ARC
+
+Recommended action
+
+If the value of Store Status is Session Lost check that the external archival storage system is connected and online.
+
+If the value of Target Error, check the external archival storage system for errors.
+
+If the value of Store Status is Unknown Error, contact technical support.
+
+If the multipath state alarm appears as "Degraded" (select SUPPORT > Tools > Grid topology, then select site > grid node > SSM > Events), do the following:
+
+1. Plug in or replace the cable that does not display any indicator lights.
+
+2. Wait one to five minutes.
+
+Don’t unplug the other cable until at least five minutes after you plug in the first one. Unplugging too early can cause the root volume to become read-only, which requires that the hardware be restarted.
+
+3. Return to the SSM > Resources page, and verify that the "Degraded" Multipath status has changed to "Nominal" in the Storage Hardware section. The ARC service has a state of Standby until all ARC components (Replication, Store, Retrieve, Target) have started. It then transitions to Online.
+
+If the value of ARC State does not transition from Standby to Online, check the status of the ARC components.
+
+If the value of ARC State is Offline, restart the service. If the problem persists, contact technical support.
+
+This alarm can be triggered if the removable storage device is running slowly due to problems with the targeted external archival storage system, or if it encounters multiple read errors. Check the external archival storage system for errors, and ensure that it is operating correctly.

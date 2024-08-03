@@ -1,0 +1,69 @@
+431
+
+What happens when a key is rotated?
+
+As a security best practice, you should periodically rotate the encryption key used by each configured KMS.
+
+When the new key version is available:
+
+It is automatically distributed to the encrypted appliance nodes at the site or sites associated with the KMS. The distribution should occur within an hour of when the key is rotated.
+
+If the encrypted appliance node is offline when the new key version is distributed, the node will receive the new key as soon as it reboots.
+
+If the new key version can’t be used to encrypt appliance volumes for any reason, the KMS encryption key rotation failed alert is triggered for the appliance node. You might need to contact technical support for help in resolving this alert.
+
+Can I reuse an appliance node after it has been encrypted? If you need to install an encrypted appliance into another StorageGRID system, you must first decommission the grid node to move object data to another node. Then, you can use the StorageGRID Appliance Installer to clear the KMS configuration. Clearing the KMS configuration disables the Node Encryption setting and removes the association between the appliance node and the KMS configuration for the StorageGRID site.
+
+432
+
+With no access to the KMS encryption key, any data that remains on the appliance can no longer be accessed and is permanently locked.
+
+Considerations for changing the KMS for a site
+
+Each key management server (KMS) or KMS cluster provides an encryption key to all appliance nodes at a single site or at a group of sites. If you need to change which KMS is used for a site, you might need to copy the encryption key from one KMS to another. If you change the KMS used for a site, you must ensure that the previously encrypted appliance nodes at that site can be decrypted using the key stored on the new KMS. In some cases, you might need to copy the current version of the encryption key from the original KMS to the new KMS. You must ensure that the KMS has the correct key to decrypt the encrypted appliance nodes at the site. For example:
+
+1. You initially configure a default KMS that applies to all sites that don’t have a dedicated KMS.
+
+2. When the KMS is saved, all appliance nodes that have the Node Encryption setting enabled connect to the KMS and request the encryption key. This key is used to encrypt the appliance nodes at all sites. This same key must also be used to decrypt those appliances.
+
+3. You decide to add a site-specific KMS for one site (Data Center 3 in the figure). However, because the appliance nodes are already encrypted, a validation error occurs when you attempt to save the configuration for the site-specific KMS. The error occurs because the site-specific KMS does not have the correct key to decrypt the nodes at that site.
+
+433 4. To address the issue, you copy the current version of the encryption key from the default KMS to the new KMS. (Technically, you copy the original key to a new key with the same alias. The original key becomes a prior version of the new key.) The site-specific KMS now has the correct key to decrypt the appliance nodes at Data Center 3, so it can be saved in StorageGRID.
+
+Use cases for changing which KMS is used for a site
+
+The table summarizes the required steps for the most common cases for changing the KMS for a site.
+
+Use case for changing a site’s KMS
+
+Required steps
+
+You have one or more site-specific KMS entries, and you want to use one of them as the default KMS.
+
+Edit the site-specific KMS. In the Manages keys for field, select Sites not managed by another KMS (default KMS). The site-specific KMS will now be used as the default KMS. It will apply to any sites that don’t have a dedicated KMS. Edit a key management server (KMS)
+
+434
+
+Use case for changing a site’s KMS
+
+Required steps 433 4. To address the issue, you copy the current version of the encryption key from the default KMS to the new KMS. (Technically, you copy the original key to a new key with the same alias. The original key becomes a prior version of the new key.) The site-specific KMS now has the correct key to decrypt the appliance nodes at Data Center 3, so it can be saved in StorageGRID.
+
+Use cases for changing which KMS is used for a site
+
+The table summarizes the required steps for the most common cases for changing the KMS for a site.
+
+Use case for changing a site’s KMS
+
+Required steps
+
+You have one or more site-specific KMS entries, and you want to use one of them as the default KMS.
+
+Edit the site-specific KMS. In the Manages keys for field, select Sites not managed by another KMS (default KMS). The site-specific KMS will now be used as the default KMS. It will apply to any sites that don’t have a dedicated KMS. Edit a key management server (KMS)
+
+434
+
+Use case for changing a site’s KMS
+
+Required steps
+
+You have a default KMS and you add a new site in an expansion. You don’t want to use the default KMS for the new site.

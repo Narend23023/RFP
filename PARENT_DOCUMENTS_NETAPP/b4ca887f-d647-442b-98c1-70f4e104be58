@@ -1,0 +1,135 @@
+If the value of AMS State is Offline, restart the service. If the problem persists, contact technical support.
+
+If an alarm is triggered, correct the underlying problem, and then restart the AMS service.
+
+If the problem persists, contact technical support.
+
+This alarm is triggered when one or more drives in a StorageGRID appliance has failed or is not optimal. Replace the drives as required. When a StorageGRID system is provisioned, the CMN service is allocated a fixed number of object identifiers. This alarm is triggered when the StorageGRID system begins to exhaust its supply of object identifiers.
+
+To allocate more identifiers, contact technical support.
+
+Code
+
+BASS
+
+BRDT
+
+BTOF
+
+BTSE
+
+Name Identifier Block Allocation Status
+
+Compute Controller Chassis Temperature
+
+Offset
+
+Clock State
+
+Service
+
+CMN
+
+SSM
+
+BADC, BLDR, BNMS, BAMS, BCLB, BCMN, BARC BADC, BLDR, BNMS, BAMS, BCLB, BCMN, BARC
+
+Recommended action
+
+By default, an alarm is triggered when object identifiers can’t be allocated because ADC quorum can’t be reached.
+
+Identifier block allocation on the CMN service requires a quorum (50% + 1) of the ADC services to be online and connected. If quorum is unavailable, the CMN service is unable to allocate new identifier blocks until ADC quorum is reestablished. If ADC quorum is lost, there is generally no immediate impact on the StorageGRID system (clients can still ingest and retrieve content), as approximately one month’s supply of identifiers are cached elsewhere in the grid; however, if the condition continues, the StorageGRID system will lose the ability to ingest new content.
+
+If an alarm is triggered, investigate the reason for the loss of ADC quorum (for example, it can be a network or Storage Node failure) and take corrective action.
+
+If the problem persists, contact technical support. An alarm is triggered if the temperature of the compute controller in a StorageGRID appliance exceeds a nominal threshold.
+
+Check hardware components and environmental issues for overheated condition. If necessary, replace the component.
+
+An alarm is triggered if the service time (seconds) differs significantly from the operating system time. Under normal conditions, the service should resynchronize itself. If the service time drifts too far from the operating system time, system operations can be affected. Confirm that the StorageGRID system’s time source is correct.
+
+If the problem persists, contact technical support.
+
+An alarm is triggered if the service’s time is not synchronized with the time tracked by the operating system. Under normal conditions, the service should resynchronize itself. If the time drifts too far from operating system time, system operations can be affected. Confirm that the StorageGRID system’s time source is correct. If the problem persists, contact technical support.
+
+1147
+
+Code
+
+CAHP
+
+CASA
+
+CASE
+
+CCNA
+
+1148
+
+Name
+
+Service
+
+Java Heap Usage Percent
+
+DDS
+
+Data Store Status
+
+DDS
+
+Data Store State DDS If the problem persists, contact technical support. An alarm is triggered if the temperature of the compute controller in a StorageGRID appliance exceeds a nominal threshold.
+
+Check hardware components and environmental issues for overheated condition. If necessary, replace the component.
+
+An alarm is triggered if the service time (seconds) differs significantly from the operating system time. Under normal conditions, the service should resynchronize itself. If the service time drifts too far from the operating system time, system operations can be affected. Confirm that the StorageGRID system’s time source is correct.
+
+If the problem persists, contact technical support.
+
+An alarm is triggered if the service’s time is not synchronized with the time tracked by the operating system. Under normal conditions, the service should resynchronize itself. If the time drifts too far from operating system time, system operations can be affected. Confirm that the StorageGRID system’s time source is correct. If the problem persists, contact technical support.
+
+1147
+
+Code
+
+CAHP
+
+CASA
+
+CASE
+
+CCNA
+
+1148
+
+Name
+
+Service
+
+Java Heap Usage Percent
+
+DDS
+
+Data Store Status
+
+DDS
+
+Data Store State DDS
+
+Compute Hardware SSM
+
+Recommended action
+
+An alarm is triggered if Java is unable to perform garbage collection at a rate that allows enough heap space for the system to properly function. An alarm might indicate a user workload that exceeds the resources available across the system for the DDS metadata store. Check the ILM Activity in the dashboard, or select SUPPORT > Tools > Grid topology, then select site > grid node > DDS > Resources > Overview > Main.
+
+If the problem persists, contact technical support.
+
+An alarm is raised if the Cassandra metadata store becomes unavailable.
+
+Check the status of Cassandra:
+
+1. At the Storage Node, log in as admin and su to root using the password listed in the Passwords.txt file.
+
+2. Enter: service cassandra status
+
+3. If Cassandra is not running, restart it: service cassandra restart

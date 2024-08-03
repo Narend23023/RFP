@@ -1,0 +1,33 @@
+ADMIN_NETWORK_ESL: The external subnet list (routes) for the Admin Network, specified as a comma- separated list of CIDR route destinations. If all or most of the nodes use the same external subnet list, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example:
+
+ADMIN_NETWORK_ESL = 172.16.0.0/21,172.17.0.0/21
+
+ADMIN_NETWORK_MTU: Optional. The maximum transmission unit (MTU) on the Admin Network. Don’t specify if ADMIN_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1400 is used. If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value. If all or most of the nodes use the same MTU for the Admin Network, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: ADMIN_NETWORK_MTU = 8192
+
+CLIENT_NETWORK_CONFIG: The method used to acquire IP addresses, either DISABLED, STATIC, or DHCP. The default is DISABLED. If all or most of the nodes use the same method for acquiring IP addresses, you can specify that method here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_CONFIG = STATIC
+
+CLIENT_NETWORK_TARGET: The name of an existing VMware network to use for the Client Network. This setting is required unless the Client Network is disabled. If all or most of the nodes use the same network name, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_TARGET = SG-Client-Network
+
+CLIENT_NETWORK_MASK: The network mask for the Client Network. This setting is required if you are using static IP addressing. If all or most of the nodes use the same network mask, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_MASK = 255.255.255.0
+
+CLIENT_NETWORK_GATEWAY: The network gateway for the Client Network. This setting is required if
+
+215
+
+you are using static IP addressing. If all or most of the nodes use the same network gateway, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_GATEWAY = 10.4.0.1
+
+CLIENT_NETWORK_MTU: Optional. The maximum transmission unit (MTU) on the Client Network. Don’t specify if CLIENT_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1400 is used. If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value. If all or most of the nodes use the same MTU for the Client Network, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_MTU = 8192
+
+PORT_REMAP: Remaps any port used by a node for internal grid node communications or external communications. Remapping ports is necessary if enterprise networking policies restrict one or more ports used by StorageGRID. For the list of ports used by StorageGRID, see internal grid node communications and external communications in Networking guidelines.
+
+Don’t remap the ports you are planning to use to configure load balancer endpoints. CLIENT_NETWORK_MTU: Optional. The maximum transmission unit (MTU) on the Client Network. Don’t specify if CLIENT_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1400 is used. If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value. If all or most of the nodes use the same MTU for the Client Network, you can specify it here. You can then override the global setting by specifying different settings for one or more individual nodes. For example: CLIENT_NETWORK_MTU = 8192
+
+PORT_REMAP: Remaps any port used by a node for internal grid node communications or external communications. Remapping ports is necessary if enterprise networking policies restrict one or more ports used by StorageGRID. For the list of ports used by StorageGRID, see internal grid node communications and external communications in Networking guidelines.
+
+Don’t remap the ports you are planning to use to configure load balancer endpoints.
+
+If only PORT_REMAP is set, the mapping that you specify is used for both inbound and outbound communications. If PORT_REMAP_INBOUND is also specified, PORT_REMAP applies only to outbound communications.
+
+The format used is: network type/protocol/default port used by grid node/new port, where network type is grid, admin, or client, and protocol is tcp or udp. For example:
+
+PORT_REMAP = client/tcp/18082/443

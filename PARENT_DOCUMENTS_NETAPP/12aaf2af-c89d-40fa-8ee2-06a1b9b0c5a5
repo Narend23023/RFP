@@ -1,0 +1,45 @@
+Distribute Storage Nodes across sites as evenly as possible. For example, to support a 6+3 erasure-coding scheme, configure a storage pool that includes at least three Storage Nodes at three sites.
+
+620 • If you have high throughput requirements, using a storage pool that includes multiple sites is not
+
+recommended if the network latency between sites is greater than 100 ms. As latency increases, the rate at which StorageGRID can create, place, and retrieve object fragments decreases sharply due to the decrease in TCP network throughput.
+
+The decrease in throughput affects the maximum achievable rates of object ingest and retrieval (when Balanced or Strict are selected as the ingest behavior) or could lead to ILM queue backlogs (when Dual commit is selected as the ingest behavior). See ILM rule ingest behavior. The number of Storage Nodes and sites contained in the storage pool determine which erasure-coding schemes are available.
+
+If possible, a storage pool should include more than the minimum number of Storage Nodes required for the erasure-coding scheme you select. For example, if you use a 6+3 erasure-coding scheme, you must have at least nine Storage Nodes. However, having at least one additional Storage Node per site is recommended.
+
+Distribute Storage Nodes across sites as evenly as possible. For example, to support a 6+3 erasure-coding scheme, configure a storage pool that includes at least three Storage Nodes at three sites.
+
+620 • If you have high throughput requirements, using a storage pool that includes multiple sites is not
+
+recommended if the network latency between sites is greater than 100 ms. As latency increases, the rate at which StorageGRID can create, place, and retrieve object fragments decreases sharply due to the decrease in TCP network throughput.
+
+The decrease in throughput affects the maximum achievable rates of object ingest and retrieval (when Balanced or Strict are selected as the ingest behavior) or could lead to ILM queue backlogs (when Dual commit is selected as the ingest behavior). See ILM rule ingest behavior.
+
+If your grid includes only one site, you are prevented from using the All Storage Nodes storage pool (StorageGRID 11.6 and earlier) or the All Sites default site in an erasure-coding profile. This behavior prevents the profile from becoming invalid if a second site is added.
+
+You can’t use Archive Nodes for erasure-coded data. Guidelines for storage pools used for archived copies
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+The Cloud Tiering - Simple Storage Service (S3) option is also deprecated. If you are currently using an Archive Node with this option, migrate your objects to a Cloud Storage Pool instead.
+
+Additionally, you should remove Archive Nodes from the active ILM policy in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies.
+
+You can’t create a storage pool that includes both Storage Nodes and Archive Nodes. Archived copies require a storage pool that only includes Archive Nodes. When using a storage pool that includes Archive Nodes, you should also maintain at least one replicated or erasure-coded copy on a storage pool that includes Storage Nodes.
+
+If the global S3 Object Lock setting is enabled and you are creating a compliant ILM rule, you can’t use a storage pool that includes Archive Nodes. See the instructions for managing objects with S3 Object Lock.
+
+If an Archive Node’s Target Type is Cloud Tiering - Simple Storage Service (S3), the Archive Node must be in its own storage pool. Enable site-loss protection
+
+If your StorageGRID deployment includes more than one site, you can use replication and erasure coding with appropriately configured storage pools to enable site-loss protection.
+
+Replication and erasure coding require different storage pool configurations:
+
+To use replication for site-loss protection, use the site-specific storage pools that are automatically created during StorageGRID installation. Then create ILM rules with placement instructions that specify multiple storage pools so that one copy of each object will be placed at each site.
+
+To use erasure coding for site-loss protection, create storage pools that consist of multiple sites. Then create ILM rules that use one storage pool consisting of multiple sites and any available erasure-coding schema.
+
+621
+
+When configuring your StorageGRID deployment for site-loss protection, you must also take into account the effects of ingest options and consistency. Replication example

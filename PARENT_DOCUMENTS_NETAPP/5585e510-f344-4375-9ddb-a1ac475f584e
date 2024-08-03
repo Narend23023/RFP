@@ -1,0 +1,309 @@
+Use S3 REST API to configure S3 Object Lock
+
+Use S3 REST API to configure S3 Object Lock
+
+Uses the tagging subresource to return all tags for an object. Versioning
+
+If the versionId query parameter is not specified in the request, the operation returns all tags from the most recent version of the object in a versioned bucket. If the current version of the object is a delete marker, a "MethodNotAllowed" status is returned with the x-amz- delete-marker response header set to true. HeadObject
+
+RestoreObject
+
+PutObject
+
+Operation
+
+CopyObject
+
+(previously named PUT Object - Copy)
+
+PutObjectLegalHold
+
+PutObjectRetention
+
+PutObjectTagging
+
+SelectObjectContent
+
+Implementation
+
+CopyObject
+
+Use S3 REST API to configure S3 Object Lock
+
+Use S3 REST API to configure S3 Object Lock
+
+Uses the tagging subresource to add a set of tags to an existing object. Object tag limits
+
+You can add tags to new objects when you upload them, or you can add them to existing objects. Both StorageGRID and Amazon S3 support up to 10 tags for each object. Tags associated with an object must have unique tag keys. A tag key can be up to 128 Unicode characters in length and tag values can be up to 256 Unicode characters in length. Key and values are case sensitive. Tag updates and ingest behavior
+
+When you use PutObjectTagging to update an object’s tags, StorageGRID does not re-ingest the object. This means that the option for Ingest Behavior specified in the matching ILM rule is not used. Any changes to object placement that are triggered by the update are made when ILM is re-evaluated by normal background ILM processes.
+
+This means that if the ILM rule uses the Strict option for ingest behavior, no action is taken if the required object placements can’t be made (for example, because a newly required location is unavailable). The updated object retains its current placement until the required placement is possible.
+
+Resolving conflicts
+
+Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest-wins" basis. The timing for the "latest- wins" evaluation is based on when the StorageGRID system completes a given request, and not on when S3 clients begin an operation. Versioning
+
+If the versionId query parameter is not specified in the request, the operation add tags to the most recent version of the object in a versioned bucket. If the current version of the object is a delete marker, a "MethodNotAllowed" status is returned with the x-amz- delete-marker response header set to true. SelectObjectContent
+
+913
+
+Use S3 Select
+
+StorageGRID supports the following Amazon S3 Select clauses, data types, and operators for the SelectObjectContent command.
+
+Any items not listed aren’t supported.
+
+For syntax, see SelectObjectContent. For more information about S3 Select, see the AWS documentation for S3 Select.
+
+Only tenant accounts that have S3 Select enabled can issue SelectObjectContent queries. See the considerations and requirements for using S3 Select. Clauses
+
+SELECT list
+
+FROM clause
+
+WHERE clause
+
+LIMIT clause
+
+Data types
+
+bool
+
+integer
+
+string
+
+float
+
+decimal, numeric
+
+timestamp
+
+Operators
+
+Logical operators
+
+AND
+
+NOT
+
+OR
+
+Comparison operators
+
+<
+
+>
+
+<=
+
+>=
+
+=
+
+=
+
+<>
+
+914
+
+• !=
+
+BETWEEN
+
+IN
+
+Pattern matching operators
+
+LIKE
+
+_
+
+%
+
+Unitary operators
+
+IS NULL
+
+IS NOT NULL Math operators
+
++
+
+-
+
+*
+
+/
+
+%
+
+StorageGRID follows the Amazon S3 Select operator precedence.
+
+Aggregate functions
+
+AVG()
+
+COUNT(*)
+
+MAX()
+
+MIN()
+
+SUM()
+
+Conditional functions
+
+CASE
+
+COALESCE
+
+NULLIF
+
+Conversion functions
+
+CAST (for supported datatype)
+
+Date functions
+
+DATE_ADD
+
+DATE_DIFF Only tenant accounts that have S3 Select enabled can issue SelectObjectContent queries. See the considerations and requirements for using S3 Select. Clauses
+
+SELECT list
+
+FROM clause
+
+WHERE clause
+
+LIMIT clause
+
+Data types
+
+bool
+
+integer
+
+string
+
+float
+
+decimal, numeric
+
+timestamp
+
+Operators
+
+Logical operators
+
+AND
+
+NOT
+
+OR
+
+Comparison operators
+
+<
+
+>
+
+<=
+
+>=
+
+=
+
+=
+
+<>
+
+914
+
+• !=
+
+BETWEEN
+
+IN
+
+Pattern matching operators
+
+LIKE
+
+_
+
+%
+
+Unitary operators
+
+IS NULL
+
+IS NOT NULL Math operators
+
++
+
+-
+
+*
+
+/
+
+%
+
+StorageGRID follows the Amazon S3 Select operator precedence.
+
+Aggregate functions
+
+AVG()
+
+COUNT(*)
+
+MAX()
+
+MIN()
+
+SUM()
+
+Conditional functions
+
+CASE
+
+COALESCE
+
+NULLIF
+
+Conversion functions
+
+CAST (for supported datatype)
+
+Date functions
+
+DATE_ADD
+
+DATE_DIFF
+
+915
+
+• EXTRACT
+
+TO_STRING
+
+TO_TIMESTAMP
+
+UTCNOW
+
+String functions
+
+CHAR_LENGTH, CHARACTER_LENGTH
+
+LOWER
+
+SUBSTRING
+
+TRIM
+
+UPPER Use server-side encryption
+
+Server-side encryption allows you to protect your object data at rest. StorageGRID encrypts the data as it writes the object and decrypts the data when you access the object.
+
+If you want to use server-side encryption, you can choose either of two mutually exclusive options, based on how the encryption keys are managed:

@@ -1,0 +1,75 @@
+If your grid contains more than one site, the default rule replicates one copy of each object at each site.
+
+If the default policy does not meet your storage requirements, you can create your own rules and policy. See Create an ILM rule and Create an ILM policy. One or many active ILM policies?
+
+You can have one or more active ILM policies at a time.
+
+One policy
+
+If your grid will use a simple data protection scheme with few tenant-specific and bucket-specific rules, use a single active ILM policy. The ILM rules can contain filters to manage different buckets or tenants.
+
+666
+
+When you have only one policy and a tenant’s requirements change, you must create a new ILM policy or clone the existing policy to apply changes, simulate, and then activate the new ILM policy. Changes to the ILM policy could result in object moves that could take many days and cause system latency. Multiple policies
+
+To provide different quality-of-service options to tenants, you can have more than one active policy at a time. Each policy can manage specific tenants, S3 buckets, and objects. When you apply or change one policy for a specific set of tenants or objects, the policies applied to other tenants and objects are not affected. ILM policy tags
+
+If you want to allow tenants to easily switch between multiple data protection policies on a per-bucket basis, use multiple ILM policies with ILM policy tags. You assign each ILM policy to a tag, then tenants tag a bucket to apply the policy to that bucket. You can set ILM policy tags on S3 buckets only.
+
+For example, you might have three tags named Gold, Silver, and Bronze. You can assign an ILM policy to each tag, based on how long and where that policy stores objects. Tenants can choose which policy to use by tagging their buckets. A bucket tagged Gold is managed by the Gold policy and receives the Gold level of data protection and performance. Default ILM policy tag
+
+A default ILM policy tag is automatically created when you install StorageGRID. Every grid must have one active policy that is assigned to the Default tag. The default policy applies to all objects in Swift containers, and any untagged S3 buckets.
+
+667
+
+How does an ILM policy evaluate objects?
+
+An active ILM policy controls the placement, duration, and data protection of objects.
+
+When clients save objects to StorageGRID, the objects are evaluated against the ordered set of ILM rules in the policy, as follows:
+
+1. If the filters for the first rule in the policy match an object, the object is ingested according to that rule’s ingest behavior and stored according to that rule’s placement instructions.
+
+2. If the filters for the first rule don’t match the object, the object is evaluated against each subsequent rule in the policy until a match is made. 3. If no rules match an object, the ingest behavior and placement instructions for the default rule in the policy are applied. The default rule is the last rule in a policy. The default rule must apply to all tenants, all S3 buckets or Swift containers, and all object versions and can’t use any advanced filters. Example ILM policy
+
+As an example, an ILM policy could contain three ILM rules that specify the following:
+
+Rule 1: Replicated copies for Tenant A
+
+Match all objects belonging to Tenant A. ◦ Store these objects as three replicated copies at three sites. ◦ Objects belonging to other tenants aren’t matched by Rule 1, so they are evaluated against Rule 2.
+
+Rule 2: Erasure coding for objects greater than 1 MB
+
+Match all objects from other tenants, but only if they are greater than 1 MB. These larger objects are stored using 6+3 erasure coding at three sites.
+
+Does not match objects 1 MB or smaller, so these objects are evaluated against Rule 3.
+
+Rule 3: 2 copies 2 data centers (default)
+
+Is the last and default rule in the policy. Does not use filters.
+
+668
+
+◦ Make two replicated copies of all objects not matched by Rule 1 or Rule 2 (objects not belonging to
+
+Tenant A that are 1 MB or smaller). As an example, an ILM policy could contain three ILM rules that specify the following:
+
+Rule 1: Replicated copies for Tenant A
+
+Match all objects belonging to Tenant A. ◦ Store these objects as three replicated copies at three sites. ◦ Objects belonging to other tenants aren’t matched by Rule 1, so they are evaluated against Rule 2.
+
+Rule 2: Erasure coding for objects greater than 1 MB
+
+Match all objects from other tenants, but only if they are greater than 1 MB. These larger objects are stored using 6+3 erasure coding at three sites.
+
+Does not match objects 1 MB or smaller, so these objects are evaluated against Rule 3.
+
+Rule 3: 2 copies 2 data centers (default)
+
+Is the last and default rule in the policy. Does not use filters.
+
+668
+
+◦ Make two replicated copies of all objects not matched by Rule 1 or Rule 2 (objects not belonging to
+
+Tenant A that are 1 MB or smaller).

@@ -1,0 +1,85 @@
+Use this command to see the status of a specific repair-data operation: repair-data show-ec-repair-status --repair-id repair ID
+
+Use this command to list all repairs:
+
+1616
+
+repair-data show-ec-repair-status
+
+The output lists information, including repair ID, for all previously and currently running repairs.
+
+2. If the output shows that the repair operation failed, use the --repair-id option to retry the repair.
+
+This command retries a failed node repair, using the repair ID 6949309319275667690: repair-data start-ec-node-repair --repair-id 6949309319275667690
+
+This command retries a failed volume repair, using the repair ID 6949309319275667690:
+
+repair-data start-ec-volume-repair --repair-id 6949309319275667690
+
+Recover from Admin Node failures
+
+Recover from Admin Node failures: Workflow
+
+The recovery process for an Admin Node depends on whether it is the primary Admin Node or a non-primary Admin Node.
+
+The high-level steps for recovering a primary or non-primary Admin Node are the same, although the details of the steps differ.
+
+Always follow the correct recovery procedure for the Admin Node you are recovering. The procedures look the same at a high level, but differ in the details. Choices
+
+Recover from primary Admin Node failures
+
+Recover from non-primary Admin Node failures
+
+Recover from primary Admin Node failures 1616
+
+repair-data show-ec-repair-status
+
+The output lists information, including repair ID, for all previously and currently running repairs.
+
+2. If the output shows that the repair operation failed, use the --repair-id option to retry the repair.
+
+This command retries a failed node repair, using the repair ID 6949309319275667690: repair-data start-ec-node-repair --repair-id 6949309319275667690
+
+This command retries a failed volume repair, using the repair ID 6949309319275667690:
+
+repair-data start-ec-volume-repair --repair-id 6949309319275667690
+
+Recover from Admin Node failures
+
+Recover from Admin Node failures: Workflow
+
+The recovery process for an Admin Node depends on whether it is the primary Admin Node or a non-primary Admin Node.
+
+The high-level steps for recovering a primary or non-primary Admin Node are the same, although the details of the steps differ.
+
+Always follow the correct recovery procedure for the Admin Node you are recovering. The procedures look the same at a high level, but differ in the details. Choices
+
+Recover from primary Admin Node failures
+
+Recover from non-primary Admin Node failures
+
+Recover from primary Admin Node failures
+
+Recover from primary Admin Node failures: Overview
+
+You must complete a specific set of tasks to recover from a primary Admin Node failure. The primary Admin Node hosts the Configuration Management Node (CMN) service for the grid.
+
+A failed primary Admin Node should be replaced promptly. The Configuration Management Node (CMN) service on the primary Admin Node is responsible for issuing blocks of object identifiers for the grid. These identifiers are assigned to objects as they are ingested. New objects can’t be ingested unless there are identifiers available. Object ingest can continue while the CMN is unavailable because approximately one month’s supply of identifiers is cached in the grid. However, after cached identifiers are exhausted, no new objects can be added.
+
+1617 You must repair or replace a failed primary Admin Node within approximately a month or the grid might lose its ability to ingest new objects. The exact time period depends on your rate of object ingest: if you need a more accurate assessment of the time frame for your grid, contact technical support.
+
+Copy audit logs from failed primary Admin Node
+
+If you are able to copy audit logs from the failed primary Admin Node, you should preserve them to maintain the grid’s record of system activity and usage. You can restore the preserved audit logs to the recovered primary Admin Node after it is up and running. About this task
+
+This procedure copies the audit log files from the failed Admin Node to a temporary location on a separate grid node. These preserved audit logs can then be copied to the replacement Admin Node. Audit logs aren’t automatically copied to the new Admin Node.
+
+Depending on the type of failure, you might not be able to copy audit logs from a failed Admin Node. If the deployment has only one Admin Node, the recovered Admin Node starts recording events to the audit log in a new empty file and previously recorded data is lost. If the deployment includes more than one Admin Node, you can recover the audit logs from another Admin Node.
+
+If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery. Steps
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available.
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.

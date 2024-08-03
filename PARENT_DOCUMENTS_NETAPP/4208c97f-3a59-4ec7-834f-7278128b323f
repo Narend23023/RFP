@@ -1,0 +1,89 @@
+Where are Prometheus metrics used?
+
+The metrics collected by Prometheus are used in several places in the Grid Manager: Nodes page: The graphs and charts on the tabs available from the Nodes page use the Grafana visualization tool to display the time-series metrics collected by Prometheus. Grafana displays time-series data in graph and chart formats, while Prometheus serves as the backend data source.
+
+1114
+
+Alerts: Alerts are triggered at specific severity levels when alert rule conditions that use Prometheus metrics evaluate as true. Alert name
+
+Description Tenant quota usage high
+
+A high percentage of quota space is being used. This rule is disabled by default because it might cause too many notifications.
+
+Commonly used Prometheus metrics
+
+Refer to this list of commonly used Prometheus metrics to better understand conditions in the default alert rules or to construct the conditions for custom alert rules.
+
+You can also obtain a complete list of all metrics.
+
+For details on the syntax of Prometheus queries, see Querying Prometheus.
+
+What are Prometheus metrics?
+
+Prometheus metrics are time series measurements. The Prometheus service on Admin Nodes collects these metrics from the services on all nodes. Metrics are stored on each Admin Node until the space reserved for Prometheus data is full. When the /var/local/mysql_ibdata/ volume reaches capacity, the oldest metrics are deleted first.
+
+Where are Prometheus metrics used?
+
+The metrics collected by Prometheus are used in several places in the Grid Manager: Nodes page: The graphs and charts on the tabs available from the Nodes page use the Grafana visualization tool to display the time-series metrics collected by Prometheus. Grafana displays time-series data in graph and chart formats, while Prometheus serves as the backend data source.
+
+1114
+
+Alerts: Alerts are triggered at specific severity levels when alert rule conditions that use Prometheus metrics evaluate as true.
+
+Grid Management API: You can use Prometheus metrics in custom alert rules or with external automation tools to monitor your StorageGRID system. A complete list of Prometheus metrics is available from the Grid Management API. (From the top of the Grid Manager, select the help icon and select API documentation > metrics.) While more than a thousand metrics are available, only a relatively small number are required to monitor the most critical StorageGRID operations. Metrics that include private in their names are intended for internal use only and are subject to change between StorageGRID releases without notice.
+
+The SUPPORT > Tools > Diagnostics page and the SUPPORT > Tools > Metrics page: These pages, which are primarily intended for use by technical support, provide several tools and charts that use the values of Prometheus metrics.
+
+Some features and menu items within the Metrics page are intentionally non-functional and are subject to change. List of most common metrics
+
+The following list contains the most commonly used Prometheus metrics.
+
+Metrics that include private in their names are for internal use only and are subject to change without notice between StorageGRID releases.
+
+alertmanager_notifications_failed_total
+
+The total number of failed alert notifications. node_filesystem_avail_bytes
+
+The amount of file system space available to non-root users in bytes.
+
+node_memory_MemAvailable_bytes
+
+Memory information field MemAvailable_bytes.
+
+node_network_carrier
+
+Carrier value of /sys/class/net/iface.
+
+1115
+
+node_network_receive_errs_total
+
+Network device statistic receive_errs. node_network_transmit_errs_total
+
+Network device statistic transmit_errs.
+
+storagegrid_administratively_down
+
+The node is not connected to the grid for an expected reason. For example, the node, or services on the node, has been gracefully shut down, the node is rebooting, or the software is being upgraded. storagegrid_appliance_compute_controller_hardware_status
+
+The status of the compute controller hardware in an appliance.
+
+storagegrid_appliance_failed_disks
+
+For the storage controller in an appliance, the number of drives that aren’t optimal.
+
+storagegrid_appliance_storage_controller_hardware_status The overall status of the storage controller hardware in an appliance.
+
+storagegrid_content_buckets_and_containers
+
+The total number of S3 buckets and Swift containers known by this Storage Node.
+
+storagegrid_content_objects
+
+The total number of S3 and Swift data objects known by this Storage Node. Count is valid only for data objects created by client applications that interface with the system through S3 or Swift. storagegrid_content_objects_lost
+
+The total number of objects this service detects as missing from the StorageGRID system. Action should be taken to determine the cause of the loss and if recovery is possible.
+
+Troubleshoot lost and missing object data
+
+storagegrid_http_sessions_incoming_attempted

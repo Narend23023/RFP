@@ -1,0 +1,53 @@
+You must complete the configuration tasks listed below for the grid nodes or sites you are adding in your expansion. Some tasks might be optional, depending on the options selected when installing and administering your system, and how you want to configure the nodes and sites added during the expansion.
+
+1424
+
+Steps
+
+1. If you added a site:
+
+Create a storage pool for the site and each storage grade you selected for the new Storage Nodes. ◦ Confirm that the ILM policy meets the new requirements. If rule changes are required, create new rules and update the ILM policy. If the rules are already correct, activate a new policy with no rule changes to ensure StorageGRID uses the new nodes.
+
+Confirm that Network Time Protocol (NTP) servers are accessible from that site. See Manage NTP servers. Make sure that at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid.
+
+2. If you added one or more Storage Nodes to an existing site:
+
+View storage pool details to confirm that each node you added is included in the expected storage pools and used in the expected ILM rules.
+
+Confirm that the ILM policy meets the new requirements. If rule changes are required, create new rules and update the ILM policy. If the rules are already correct, activate a new policy with no rule changes to ensure StorageGRID uses the new nodes. Verify that the Storage Node is active and able to ingest objects. ◦ If you were unable to add the recommended number of Storage Nodes, rebalance erasure-coded data. See Rebalance erasure-coded data after adding Storage Nodes.
+
+3. If you added a Gateway Node:
+
+If high availability (HA) groups are used for client connections, optionally add the Gateway Node to an HA group. Select CONFIGURATION > Network > High availability groups to review the list of existing HA groups and to add the new node. See Configure high availability groups.
+
+4. If you added an Admin Node:
+
+a. If single sign-on (SSO) is enabled for your StorageGRID system, create a relying party trust for the new
+
+Admin Node. You can’t sign in to the node until you create this relying party trust. See Configure single sign-on. b. If you plan to use the Load Balancer service on Admin Nodes, optionally add the new Admin Node to an HA group. Select CONFIGURATION > Network > High availability groups to review the list of existing HA groups and to add the new node. See Configure high availability groups.
+
+c. Optionally, copy the Admin Node database from the primary Admin Node to the expansion Admin Node if you want to keep the attribute and audit information consistent on each Admin Node. See Copy the Admin Node database.
+
+d. Optionally, copy the Prometheus database from the primary Admin Node to the expansion Admin Node
+
+if you want to keep the historical metrics consistent on each Admin Node. See Copy Prometheus metrics.
+
+e. Optionally, copy the existing audit logs from the primary Admin Node to the expansion Admin Node if you want to keep the historical log information consistent on each Admin Node. See Copy audit logs. 5. To check if expansion nodes were added with an untrusted Client Network or to change whether a node’s Client Network is untrusted or trusted, go to CONFIGURATION > Security > Firewall control.
+
+1425
+
+If the Client Network on the expansion node is untrusted, then connections to the node on the Client Network must be made using a load balancer endpoint. See Configure load balancer endpoints and Manage firewall controls.
+
+6. Configure the DNS. c. Optionally, copy the Admin Node database from the primary Admin Node to the expansion Admin Node if you want to keep the attribute and audit information consistent on each Admin Node. See Copy the Admin Node database.
+
+d. Optionally, copy the Prometheus database from the primary Admin Node to the expansion Admin Node
+
+if you want to keep the historical metrics consistent on each Admin Node. See Copy Prometheus metrics.
+
+e. Optionally, copy the existing audit logs from the primary Admin Node to the expansion Admin Node if you want to keep the historical log information consistent on each Admin Node. See Copy audit logs. 5. To check if expansion nodes were added with an untrusted Client Network or to change whether a node’s Client Network is untrusted or trusted, go to CONFIGURATION > Security > Firewall control.
+
+1425
+
+If the Client Network on the expansion node is untrusted, then connections to the node on the Client Network must be made using a load balancer endpoint. See Configure load balancer endpoints and Manage firewall controls.
+
+6. Configure the DNS.

@@ -1,0 +1,87 @@
+Object existence check does not provide useful information while these procedures are in progress. About this task
+
+An object existence check job can take days or weeks to complete, depending on the number of objects in the grid, the selected storage nodes and volumes, and the selected consistency. You can run only one job at a time, but you can select multiple Storage Nodes and volumes at the same time. Steps
+
+1. Select MAINTENANCE > Tasks > Object existence check.
+
+2. Select Create job. The Create an object existence check job wizard appears.
+
+3. Select the nodes containing the volumes you want to verify. To select all online nodes, select the Node name checkbox in the column header.
+
+You can search by node name or site.
+
+You can’t select nodes that aren’t connected to the grid.
+
+4. Select Continue.
+
+5. Select one or more volumes for each node in the list. You can search for volumes using the storage volume number or node name.
+
+To select all volumes for each node you selected, select the Storage volume checkbox in the column header.
+
+6. Select Continue.
+
+7. Select the consistency for the job.
+
+The consistency determines how many copies of object metadata are used for the object existence check. Object existence check does not provide useful information while these procedures are in progress. About this task
+
+An object existence check job can take days or weeks to complete, depending on the number of objects in the grid, the selected storage nodes and volumes, and the selected consistency. You can run only one job at a time, but you can select multiple Storage Nodes and volumes at the same time. Steps
+
+1. Select MAINTENANCE > Tasks > Object existence check.
+
+2. Select Create job. The Create an object existence check job wizard appears.
+
+3. Select the nodes containing the volumes you want to verify. To select all online nodes, select the Node name checkbox in the column header.
+
+You can search by node name or site.
+
+You can’t select nodes that aren’t connected to the grid.
+
+4. Select Continue.
+
+5. Select one or more volumes for each node in the list. You can search for volumes using the storage volume number or node name.
+
+To select all volumes for each node you selected, select the Storage volume checkbox in the column header.
+
+6. Select Continue.
+
+7. Select the consistency for the job.
+
+The consistency determines how many copies of object metadata are used for the object existence check.
+
+Strong-site: Two copies of metadata at a single site.
+
+1255
+
+◦ Strong-global: Two copies of metadata at each site. ◦ All (default): All three copies of metadata at each site. For more information about consistency, see the descriptions in the wizard.
+
+8. Select Continue.
+
+9. Review and verify your selections. You can select Previous to go to a previous step in the wizard to update your selections.
+
+An Object existence check job is generated and runs until one of the following occurs:
+
+The job completes. ◦ You pause or cancel the job. You can resume a job that you have paused, but you can’t resume a job that you have canceled.
+
+The job stalls. The Object existence check has stalled alert is triggered. Follow the corrective actions specified for the alert.
+
+The job fails. The Object existence check has failed alert is triggered. Follow the corrective actions specified for the alert.
+
+A "Service unavailable" or an "Internal server error" message appears. After one minute, refresh the page to continue monitoring the job.
+
+As needed, you can navigate away from the Object existence check page and return to continue monitoring the job. 10. As the job runs, view the Active job tab and note the value of Missing object copies detected.
+
+This value represents the total number of missing copies of replicated objects and erasure-coded objects with one or more missing fragments.
+
+If the number of Missing object copies detected is greater than 100, there might be an issue with the Storage Node’s storage.
+
+1256
+
+11. After the job has completed, take any additional required actions:
+
+If Missing object copies detected is zero, then no issues were found. No action is required. ◦ If Missing object copies detected is greater than zero and the Objects lost alert has not been triggered, then all missing copies were repaired by the system. Verify that any hardware issues have been corrected to prevent future damage to object copies.
+
+If Missing object copies detected is greater than zero and the Objects lost alert has been triggered, then data integrity could be affected. Contact technical support. You can investigate lost object copies by using grep to extract the LLST audit messages: grep LLST audit_file_name.
+
+This procedure is similar to the one for investigating lost objects, although for object copies you search for LLST instead of OLST.
+
+12. If you selected the strong-site or strong-global consistency for the job, wait approximately three weeks for metadata consistency and then rerun the job on the same volumes again.

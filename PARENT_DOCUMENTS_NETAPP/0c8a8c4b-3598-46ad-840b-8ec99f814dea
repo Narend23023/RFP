@@ -1,0 +1,59 @@
+In this example, SGET (S3 GET) operations are the slowest on average at 1.13 seconds, but SGET and SPUT (S3 PUT) operations both show long worst-case times of about 1,770 seconds.
+
+b. To show the slowest 10 retrieval operations, use the grep command to select only SGET messages
+
+and add the long output option (-l) to include object paths:
+
+grep SGET audit.log | audit-sum -l 2. If you want to analyze all messages related to write, read, head, and delete operations, follow these steps:
+
+a. Enter the following command, where /var/local/log/audit.log represents the name and the
+
+location of the file or files you want to analyze: $ audit-sum /var/local/log/audit.log
+
+This example shows typical output from the audit-sum tool. This example shows how long protocol operations took.
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ IDEL 274 SDEL 213371 0.004 20.934 0.352 SGET 201906 0.010 1740.290 1.132 SHEA 22716 0.005 2.349 0.272 SPUT 1771398 0.011 1770.563 0.487
+
+In this example, SGET (S3 GET) operations are the slowest on average at 1.13 seconds, but SGET and SPUT (S3 PUT) operations both show long worst-case times of about 1,770 seconds.
+
+b. To show the slowest 10 retrieval operations, use the grep command to select only SGET messages
+
+and add the long output option (-l) to include object paths:
+
+grep SGET audit.log | audit-sum -l
+
+The results include the type (object or bucket) and path, which allows you to grep the audit log for other
+
+1317
+
+messages relating to these particular objects. Total: 201906 operations Slowest: 1740.290 sec Average: 1.132 sec Fastest: 0.010 sec Slowest operations: time(usec) source ip type size(B) path ========== =============== ============ ============ ==== 1740289662 10.96.101.125 object 5663711385 backup/r9O1OaQ8JB-1566861764-4519.iso 1624414429 10.96.101.125 object 5375001556 backup/r9O1OaQ8JB-1566861764-6618.iso 1533143793 10.96.101.125 object 5183661466 backup/r9O1OaQ8JB-1566861764-4518.iso 70839 10.96.101.125 object 28338 bucket3/dat.1566861764-6619 68487 10.96.101.125 object 27890 bucket3/dat.1566861764-6615 67798 10.96.101.125 object 27671 bucket5/dat.1566861764-6617 67027 10.96.101.125 object 27230 bucket5/dat.1566861764-4517 60922 10.96.101.125 object 26118 bucket3/dat.1566861764-4520 35588 10.96.101.125 object 11311 bucket3/dat.1566861764-6616 23897 10.96.101.125 object 10692 bucket3/dat.1566861764-4516 From this example output, you can see that the three slowest S3 GET requests were for objects about 5 GB in size, which is much larger than the other objects. The large size accounts for the slow worst- case retrieval times.
+
+3. If you want to determine what sizes of objects are being ingested into and retrieved from your grid, use the size option (-s): audit-sum -s audit.log
+
+1318
+
+message group count min(MB) max(MB) average(MB) ============= ===== ======== ======== ============ IDEL 274 0.004 5000.000 1654.502 SDEL 213371 0.000 10.504 1.695 SGET 201906 0.000 5000.000 14.920 SHEA 22716 0.001 10.504 2.967 SPUT 1771398 0.000 5000.000 2.495
+
+In this example, the average object size for SPUT is under 2.5 MB, but the average size for SGET is much larger. The number of SPUT messages is much higher than the number of SGET messages, indicating that most objects are never retrieved.
+
+4. If you want to determine if retrievals were slow yesterday:
+
+a. Issue the command on the appropriate audit log and use the group-by-time option (-gt), followed by the time period (for example, 15M, 1H, 10S): 3. If you want to determine what sizes of objects are being ingested into and retrieved from your grid, use the size option (-s): audit-sum -s audit.log
+
+1318
+
+message group count min(MB) max(MB) average(MB) ============= ===== ======== ======== ============ IDEL 274 0.004 5000.000 1654.502 SDEL 213371 0.000 10.504 1.695 SGET 201906 0.000 5000.000 14.920 SHEA 22716 0.001 10.504 2.967 SPUT 1771398 0.000 5000.000 2.495
+
+In this example, the average object size for SPUT is under 2.5 MB, but the average size for SGET is much larger. The number of SPUT messages is much higher than the number of SGET messages, indicating that most objects are never retrieved.
+
+4. If you want to determine if retrievals were slow yesterday:
+
+a. Issue the command on the appropriate audit log and use the group-by-time option (-gt), followed by the time period (for example, 15M, 1H, 10S):
+
+grep SGET audit.log | audit-sum -gt 1H
+
+1319
+
+1320
+
+message group count min(sec) max(sec) average(sec) ============= ===== ======== ======== ============ 2019-09-05T00 7591 0.010 1481.867 1.254 2019-09-05T01 4173 0.011 1740.290 1.115 2019-09-05T02 20142 0.011 1274.961 1.562 2019-09-05T03 57591 0.010 1383.867 1.254 2019-09-05T04 124171 0.013 1740.290 1.405 2019-09-05T05 420182 0.021 1274.511 1.562 2019-09-05T06 1220371 0.015 6274.961 5.562 2019-09-05T07 527142 0.011 1974.228 2.002 2019-09-05T08 384173 0.012 1740.290 1.105 2019-09-05T09 27591 0.010 1481.867 1.354

@@ -1,0 +1,67 @@
+Using the REDUCED_REDUNDANCY option is not recommended in other circumstances. REDUCED_REDUNDANCY increases the risk of object data loss during ingest. For example, you might lose
+
+929
+
+data if the single copy is initially stored on a Storage Node that fails before ILM evaluation can occur. Having only one replicated copy for any time period puts data at risk of permanent loss. If only one replicated copy of an object exists, that object is lost if a Storage Node fails or has a significant error. You also temporarily lose access to the object during maintenance procedures such as upgrades.
+
+Specifying REDUCED_REDUNDANCY only affects how many copies are created when an object is first ingested. It does not affect how many copies of the object are made when the object is evaluated by the active ILM policies, and does not result in data being stored at lower levels of redundancy in the StorageGRID system.
+
+If you are ingesting an object into a bucket with S3 Object Lock enabled, the REDUCED_REDUNDANCY option is ignored. If you are ingesting an object into a legacy Compliant bucket, the REDUCED_REDUNDANCY option returns an error. StorageGRID will always perform a dual-commit ingest to ensure that compliance requirements are satisfied. Request headers for server-side encryption
+
+You can use the following request headers to encrypt an object with server-side encryption. The SSE and SSE- C options are mutually exclusive.
+
+SSE: Use the following header if you want to encrypt the object with a unique key managed by StorageGRID.
+
+x-amz-server-side-encryption
+
+SSE-C: Use all three of these headers if you want to encrypt the object with a unique key that you provide and manage.
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256. ◦ x-amz-server-side-encryption-customer-key: Specify your encryption key for the new object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the new object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations for using server-side encryption. If an object is encrypted with SSE or SSE-C, any bucket-level or grid-level encryption settings are ignored. Versioning You can use the following request headers to encrypt an object with server-side encryption. The SSE and SSE- C options are mutually exclusive.
+
+SSE: Use the following header if you want to encrypt the object with a unique key managed by StorageGRID.
+
+x-amz-server-side-encryption
+
+SSE-C: Use all three of these headers if you want to encrypt the object with a unique key that you provide and manage.
+
+x-amz-server-side-encryption-customer-algorithm: Specify AES256. ◦ x-amz-server-side-encryption-customer-key: Specify your encryption key for the new object.
+
+x-amz-server-side-encryption-customer-key-MD5: Specify the MD5 digest of the new object’s encryption key.
+
+The encryption keys you provide are never stored. If you lose an encryption key, you lose the corresponding object. Before using customer-provided keys to secure object data, review the considerations for using server-side encryption. If an object is encrypted with SSE or SSE-C, any bucket-level or grid-level encryption settings are ignored. Versioning
+
+If versioning is enabled for a bucket, a unique versionId is automatically generated for the version of the object being stored. This versionId is also returned in the response using the x-amz-version-id response header.
+
+If versioning is suspended, the object version is stored with a null versionId and if a null version already exists it will be overwritten.
+
+930
+
+Signature calculations for the Authorization header
+
+When using the Authorization header to authenticate requests, StorageGRID differs from AWS in the following ways:
+
+StorageGRID doesn’t require host headers to be included within CanonicalHeaders.
+
+StorageGRID doesn’t require Content-Type to be included within CanonicalHeaders.
+
+StorageGRID doesn’t require x-amz-* headers to be included within CanonicalHeaders.
+
+As a general best practice, always include these headers within CanonicalHeaders to ensure they are verified; however, if you exclude these headers, StorageGRID does not return an error. For details, refer to Signature Calculations for the Authorization Header: Transferring Payload in a Single Chunk (AWS Signature Version 4).
+
+Related information
+
+Manage objects with ILM
+
+RestoreObject
+
+You can use the S3 RestoreObject request to restore an object that is stored in a Cloud Storage Pool.
+
+Supported request type
+
+StorageGRID only supports RestoreObject requests to restore an object. It does not support the SELECT type of restoration. Select requests return XNotImplemented. Versioning
+
+Optionally, specify versionId to restore a specific version of an object in a versioned bucket. If you don’t specify versionId, the most recent version of the object is restored

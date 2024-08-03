@@ -1,0 +1,95 @@
+Configure the host network (Red Hat Enterprise Linux)
+
+Configure the host network (Ubuntu or Debian) Networking and ports for platform services and Cloud Storage Pools
+
+If you plan to use StorageGRID platform services or Cloud Storage Pools, you must configure grid networking and firewalls to ensure that the destination endpoints can be reached.
+
+Networking for platform services
+
+As described in Manage platform services for tenants and Manage platform services, platform services include
+
+58
+
+external services that provide search integration, event notification, and CloudMirror replication.
+
+Platform services require access from Storage Nodes that host the StorageGRID ADC service to the external service endpoints. Examples for providing access include:
+
+On the Storage Nodes with ADC services, configure unique Admin Networks with AESL entries that route to the target endpoints.
+
+Rely on the default route provided by a Client Network. If you use the default route, you can use the untrusted Client Network feature to restrict inbound connections. Networking for Cloud Storage Pools
+
+Cloud Storage Pools also require access from Storage Nodes to the endpoints provided by the external service used, such as Amazon S3 Glacier or Microsoft Azure Blob storage. For information, see What is a Cloud Storage Pool.
+
+Ports for platform services and Cloud Storage Pools
+
+By default, platform services and Cloud Storage Pool communications use the following ports:
+
+80: For endpoint URIs that begin with http
+
+443: For endpoint URIs that begin with https
+
+A different port can be specified when the endpoint is created or edited. See Network port reference.
+
+If you use a non-transparent proxy server, you must also configure storage proxy settings to allow messages to be sent to external endpoints, such as an endpoint on the internet.
+
+VLANs and platform services and Cloud Storage Pools
+
+You can’t use VLAN networks for platform services or Cloud Storage Pools. The destination endpoints must be reachable over the Grid, Admin, or Client Network. Appliance nodes
+
+You can configure the network ports on StorageGRID appliances to use the port bond modes that meet your requirements for throughput, redundancy, and failover.
+
+The 10/25-GbE ports on the StorageGRID appliances can be configured in Fixed or Aggregate bond mode for connections to the Grid Network and Client Network.
+
+The 1-GbE Admin Network ports can be configured in Independent or Active-Backup mode for connections to the Admin Network.
+
+See the information about port bond modes for your appliance:
+
+Port bond modes (SG6160)
+
+Port bond modes (SGF6112)
+
+Port bond modes (SG6000-CN controller) By default, platform services and Cloud Storage Pool communications use the following ports:
+
+80: For endpoint URIs that begin with http
+
+443: For endpoint URIs that begin with https
+
+A different port can be specified when the endpoint is created or edited. See Network port reference.
+
+If you use a non-transparent proxy server, you must also configure storage proxy settings to allow messages to be sent to external endpoints, such as an endpoint on the internet.
+
+VLANs and platform services and Cloud Storage Pools
+
+You can’t use VLAN networks for platform services or Cloud Storage Pools. The destination endpoints must be reachable over the Grid, Admin, or Client Network. Appliance nodes
+
+You can configure the network ports on StorageGRID appliances to use the port bond modes that meet your requirements for throughput, redundancy, and failover.
+
+The 10/25-GbE ports on the StorageGRID appliances can be configured in Fixed or Aggregate bond mode for connections to the Grid Network and Client Network.
+
+The 1-GbE Admin Network ports can be configured in Independent or Active-Backup mode for connections to the Admin Network.
+
+See the information about port bond modes for your appliance:
+
+Port bond modes (SG6160)
+
+Port bond modes (SGF6112)
+
+Port bond modes (SG6000-CN controller)
+
+Port bond modes (SG5800 controller)
+
+Port bond modes (E5700SG controller)
+
+59
+
+• Port bond modes (SG110 and SG1100)
+
+Port bond modes (SG100 and SG1000) Network installation and provisioning
+
+You must understand how the Grid Network and the optional Admin and Client Networks are used during node deployment and grid configuration.
+
+Initial deployment of a node
+
+When you first deploy a node, you must attach the node to the Grid Network and ensure it has access to the primary Admin Node. If the Grid Network is isolated, you can configure the Admin Network on the primary Admin Node for configuration and installation access from outside the Grid Network.
+
+A Grid Network with a gateway configured becomes the default gateway for a node during deployment. The default gateway allows grid nodes on separate subnets to communicate with the primary Admin Node before the grid has been configured.

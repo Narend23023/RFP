@@ -1,0 +1,269 @@
+storage URL
+
+A client application can issue Swift REST API calls to perform supported account, container, and object operations against a Gateway Node or Storage Node. Storage requests are addressed to the storage URL returned in the authentication response. The request must also include the X-Auth-Token header and value returned from the auth request. https://FQDN | IP:Swift_Port/v1/Tenant_Account_ID
+
+[/container][/object]
+
+X-Auth-Token: token
+
+999
+
+Some storage response headers that contain usage statistics might not reflect accurate numbers for recently modified objects. It might take a few minutes for accurate numbers to appear in these headers.
+
+The following response headers for account and container operations are examples of those that contain usage statistics:
+
+X-Account-Bytes-Used
+
+X-Account-Object-Count
+
+X-Container-Bytes-Used
+
+X-Container-Object-Count
+
+Related information Configure tenant accounts and connections
+
+Account operations
+
+Container operations
+
+Object operations
+
+Account operations
+
+The following Swift API operations are performed on accounts.
+
+GET account
+
+This operation retrieves the container list associated with the account and account usage statistics.
+
+The following request parameter is required:
+
+Account
+
+The following request header is required:
+
+X-Auth-Token
+
+The following supported request query parameters are optional:
+
+Delimiter
+
+End_marker
+
+Format
+
+Limit
+
+Marker
+
+Prefix
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response if the account is found and has no containers or the container list is empty; or an "HTTP/1.1 200 OK" response if the account is found and the container list is not empty:
+
+1000
+
+• Accept-Ranges
+
+Content-Length
+
+Content-Type
+
+Date
+
+X-Account-Bytes-Used
+
+X-Account-Container-Count
+
+X-Account-Object-Count
+
+X-Timestamp
+
+X-Trans-Id HEAD account
+
+This operation retrieves account information and statistics from a Swift account.
+
+The following request parameter is required:
+
+Account
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response:
+
+Accept-Ranges
+
+Content-Length
+
+Date
+
+X-Account-Bytes-Used
+
+X-Account-Container-Count
+
+X-Account-Object-Count
+
+X-Timestamp
+
+X-Trans-Id
+
+Related information
+
+Swift operations tracked in the audit logs Container operations
+
+StorageGRID supports a maximum of 1,000 containers per Swift account. The following Swift API operations are performed on containers.
+
+DELETE container
+
+This operation removes an empty container from a Swift account in a StorageGRID system.
+
+1001
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response:
+
+Content-Length
+
+Content-Type
+
+Date
+
+X-Trans-Id GET container
+
+This operation retrieves the object list associated with the container along with container statistics and metadata in a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+The following supported request query parameters are optional:
+
+Delimiter
+
+End_marker
+
+Format
+
+Limit
+
+Marker
+
+Path
+
+Prefix
+
+A successful execution returns the following headers with an "HTTP/1.1 200 Success" or a "HTTP/1.1 204 No Content" response:
+
+Accept-Ranges
+
+Content-Length
+
+Content-Type X-Trans-Id
+
+Related information
+
+Swift operations tracked in the audit logs Container operations
+
+StorageGRID supports a maximum of 1,000 containers per Swift account. The following Swift API operations are performed on containers.
+
+DELETE container
+
+This operation removes an empty container from a Swift account in a StorageGRID system.
+
+1001
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response:
+
+Content-Length
+
+Content-Type
+
+Date
+
+X-Trans-Id GET container
+
+This operation retrieves the object list associated with the container along with container statistics and metadata in a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+The following supported request query parameters are optional:
+
+Delimiter
+
+End_marker
+
+Format
+
+Limit
+
+Marker
+
+Path
+
+Prefix
+
+A successful execution returns the following headers with an "HTTP/1.1 200 Success" or a "HTTP/1.1 204 No Content" response:
+
+Accept-Ranges
+
+Content-Length
+
+Content-Type
+
+1002
+
+• Date
+
+X-Container-Bytes-Used
+
+X-Container-Object-Count
+
+X-Timestamp
+
+X-Trans-Id HEAD container
+
+This operation retrieves container statistics and metadata from a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token

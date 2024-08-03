@@ -1,0 +1,97 @@
+Use this procedure to rebuild Cassandra only if a single Storage Node is down. Contact technical support if additional Storage Nodes are offline or if Cassandra has been rebuilt on another Storage Node within the last 15 days; for example, Cassandra might have been rebuilt as part of the procedures to recover failed storage volumes or to recover a failed Storage Node.
+
+If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur. If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site. Steps
+
+1. If necessary, power on the Storage Node that needs to be recovered.
+
+2. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.+
+
+If you are unable to log in to the grid node, the system disk might not be intact. Go to the procedure for recovering from system drive failure.
+
+3. Perform the following checks on the Storage Node: a. Issue this command: nodetool status
+
+The output should be Connection refused b. In the Grid Manager, select SUPPORT > Tools > Grid topology.
+
+c. Select Site > Storage Node > SSM > Services. Verify that the Cassandra service displays Not
+
+1556
+
+Running.
+
+d. Select Storage Node > SSM > Resources. Verify that there is no error status in the Volumes section.
+
+e. Issue this command: grep -i Cassandra /var/local/log/servermanager.log
+
+You should see the following message in the output: 1. If necessary, power on the Storage Node that needs to be recovered.
+
+2. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.+
+
+If you are unable to log in to the grid node, the system disk might not be intact. Go to the procedure for recovering from system drive failure.
+
+3. Perform the following checks on the Storage Node: a. Issue this command: nodetool status
+
+The output should be Connection refused b. In the Grid Manager, select SUPPORT > Tools > Grid topology.
+
+c. Select Site > Storage Node > SSM > Services. Verify that the Cassandra service displays Not
+
+1556
+
+Running.
+
+d. Select Storage Node > SSM > Resources. Verify that there is no error status in the Volumes section.
+
+e. Issue this command: grep -i Cassandra /var/local/log/servermanager.log
+
+You should see the following message in the output:
+
+Cassandra not started because it has been offline for more than 15 day grace period - rebuild Cassandra
+
+4. Issue this command, and monitor the script output: check-cassandra-rebuild
+
+If the Cassandra service depending on volume 0 is running, you will be prompted to stop it. Enter: y
+
+If the Cassandra service is already stopped, you aren’t prompted. The Cassandra service is stopped only for volume 0.
+
+Review the warnings in the script. If none of them apply, confirm that you want to rebuild Cassandra. Enter: y Some StorageGRID recovery procedures use Reaper to handle Cassandra repairs. Repairs occur automatically as soon as the related or required services have started. You might notice script output that mentions "reaper" or "Cassandra repair." If you see an error message indicating the repair has failed, run the command indicated in the error message.
+
+5. After the rebuild completes, perform the following checks: a. In the Grid Manager, select SUPPORT > Tools > Grid topology.
+
+b. Select Site > recovered Storage Node > SSM > Services.
+
+c. Confirm that all services are running.
+
+d. Select DDS > Data Store.
+
+e. Confirm that the Data Store Status is "Up" and the Data Store State is "Normal." Recover appliance Storage Node
+
+Warnings for recovering appliance Storage Nodes
+
+The procedure for recovering a failed StorageGRID appliance Storage Node is the same whether you are recovering from the loss of the system drive or from the loss of storage volumes only.
+
+If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Rebuilding Cassandra on two or more Storage Nodes within 15 days can result in data loss.
+
+1557

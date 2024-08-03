@@ -1,0 +1,71 @@
+Error message
+
+Description and recommended actions
+
+Results query failed
+
+The Admin Node used for syslog server configuration and testing is unable to request test results from the nodes listed. One or more nodes might be down.
+
+1. Follow standard troubleshooting steps to ensure that the nodes are online and all expected services are running.
+
+2. Restart the miscd service on the nodes listed. Review audit logs
+
+Review audit logs: Overview
+
+These instructions contain information about the structure and content of StorageGRID audit messages and audit logs. You can use this information to read and analyze the audit trail of system activity.
+
+These instructions are for administrators responsible for producing reports of system activity and usage that require analysis of the StorageGRID system’s audit messages.
+
+To use the text log file, you must have access to the configured audit share on the Admin Node.
+
+For information about configuring audit message levels and using an external syslog server, see Configure audit messages and log destinations. Audit message flow and retention 4. Confirm that the CA certificate bundle and client certificate (if any) are compatible with the server certificate from the syslog server.
+
+5. Confirm that the identities in the server certificate from the syslog server include the expected IP or FQDN values.
+
+Error message
+
+Description and recommended actions
+
+Results query failed
+
+The Admin Node used for syslog server configuration and testing is unable to request test results from the nodes listed. One or more nodes might be down.
+
+1. Follow standard troubleshooting steps to ensure that the nodes are online and all expected services are running.
+
+2. Restart the miscd service on the nodes listed. Review audit logs
+
+Review audit logs: Overview
+
+These instructions contain information about the structure and content of StorageGRID audit messages and audit logs. You can use this information to read and analyze the audit trail of system activity.
+
+These instructions are for administrators responsible for producing reports of system activity and usage that require analysis of the StorageGRID system’s audit messages.
+
+To use the text log file, you must have access to the configured audit share on the Admin Node.
+
+For information about configuring audit message levels and using an external syslog server, see Configure audit messages and log destinations. Audit message flow and retention
+
+All StorageGRID services generate audit messages during normal system operation. You should understand how these audit messages move through the StorageGRID system to the audit.log file.
+
+Audit message flow
+
+Audit messages are processed by Admin Nodes and by those Storage Nodes that have an Administrative Domain Controller (ADC) service.
+
+As shown in the audit message flow diagram, each StorageGRID node sends its audit messages to one of the ADC services at the data center site. The ADC service is automatically enabled for the first three Storage Nodes installed at each site.
+
+In turn, each ADC service acts as a relay and sends its collection of audit messages to every Admin Node in the StorageGRID system, which gives each Admin Node a complete record of system activity.
+
+Each Admin Node stores audit messages in text log files; the active log file is named audit.log.
+
+1307 Audit message retention
+
+StorageGRID uses a copy-and-delete process to ensure that no audit messages are lost before they can be written to the audit log.
+
+When a node generates or relays an audit message, the message is stored in an audit message queue on the system disk of the grid node. A copy of the message is always held in an audit message queue until the message is written to the audit log file in the Admin Node’s /var/local/log directory. This helps prevent loss of an audit message during transport.
+
+1308
+
+The audit message queue can temporarily increase due to network connectivity issues or insufficient audit capacity. As the queues increase, they consume more of the available space in each node’s /var/local/ directory. If the issue persists and a node’s audit message directory becomes too full, the individual nodes will prioritize processing their backlog and become temporarily unavailable for new messages.
+
+Specifically, you might see the following behaviors: If the /var/local/log directory used by an Admin Node becomes full, the Admin Node will be flagged as unavailable to new audit messages until the directory is no longer full. S3 and Swift client requests aren’t affected. The XAMS (Unreachable Audit Repositories) alarm is triggered when an audit repository is unreachable.
+
+If the /var/local/ directory used by a Storage Node with the ADC service becomes 92% full, the node will be flagged as unavailable to audit messages until the directory is only 87% full. S3 and Swift client requests to other nodes aren’t affected. The NRLY (Available Audit Relays) alarm is triggered when audit relays are unreachable.

@@ -1,0 +1,115 @@
+Details
+
+When you edit a grid federation connection, StorageGRID attempts to save a "candidate configuration" file on all Admin Nodes on the first grid. A warning message appears if this file can’t be saved to all Admin Nodes, for example, because an Admin Node is offline.
+
+Recommended actions
+
+1. From the grid you are using to edit the connection, select NODES.
+
+2. Confirm that all Admin Nodes for that grid are online.
+
+3. If any nodes are offline, bring them back online and try editing the connection again. Account clone errors
+
+Can’t sign in to a cloned tenant account
+
+Issue
+
+You can’t sign in to a cloned tenant account. The error message on the Tenant Manager sign-in page is "Your credentials for this account were invalid. Please try again." Details
+
+For security reasons, when a tenant account is cloned from the tenant’s source grid to the tenant’s destination grid, the password you set for the tenant’s local root user is not cloned. Similarly, when a tenant creates local users on its source grid, the local user passwords aren’t cloned to the destination grid.
+
+Recommended actions
+
+Before the root user can sign in to the tenant’s destination grid, a grid administrator must first change the password for the local root user on the destination grid.
+
+Before a cloned local user can sign in to the tenant’s destination grid, the root user for the cloned tenant must add a password for the user on the destination grid. For instructions, see Manage local users in the instructions for using the Tenant Manager.
+
+Tenant created without a clone Issue
+
+You see the message "Tenant created without a clone" after creating a new tenant with the Use grid
+
+380
+
+federation connection permission.
+
+Details
+
+This issue can occur if updates to the Connection status are delayed, which might cause an unhealthy connection to be listed as Connected.
+
+Recommended actions
+
+1. Review the reason listed in the error message and resolve any networking or other issues that might be preventing the connection from working. See Grid federation connection alerts and errors.
+
+2. Follow the instructions to test a grid federation connection in Manage grid federation connections to confirm the issue has been fixed.
+
+3. From the tenant’s source grid, select TENANTS.
+
+4. Locate the tenant account that failed to be cloned.
+
+5. Select the tenant name to display the details page.
+
+6. Select Retry account clone.
+
+If the error has been resolved, the tenant account will now be cloned to the other grid. Cross-grid replication alerts and errors
+
+Last error shown for connection or tenant
+
+Issue
+
+When viewing a grid federation connection (or when managing the permitted tenants for a connection), you notice an error in the Last error column on the connection details page. For example:
+
+381 Details Tenant created without a clone Issue
+
+You see the message "Tenant created without a clone" after creating a new tenant with the Use grid
+
+380
+
+federation connection permission.
+
+Details
+
+This issue can occur if updates to the Connection status are delayed, which might cause an unhealthy connection to be listed as Connected.
+
+Recommended actions
+
+1. Review the reason listed in the error message and resolve any networking or other issues that might be preventing the connection from working. See Grid federation connection alerts and errors.
+
+2. Follow the instructions to test a grid federation connection in Manage grid federation connections to confirm the issue has been fixed.
+
+3. From the tenant’s source grid, select TENANTS.
+
+4. Locate the tenant account that failed to be cloned.
+
+5. Select the tenant name to display the details page.
+
+6. Select Retry account clone.
+
+If the error has been resolved, the tenant account will now be cloned to the other grid. Cross-grid replication alerts and errors
+
+Last error shown for connection or tenant
+
+Issue
+
+When viewing a grid federation connection (or when managing the permitted tenants for a connection), you notice an error in the Last error column on the connection details page. For example:
+
+381 Details
+
+For each grid federation connection, the Last error column shows the most recent error to occur, if any, when a tenant’s data was being replicated to the other grid. This column only shows the last cross-grid replication error to occur; previous errors that might have occurred will not be shown. An error in this column might occur for one of these reasons:
+
+The source object version was not found.
+
+The source bucket was not found.
+
+The destination bucket was deleted.
+
+The destination bucket was re-created by a different account.
+
+The destination bucket has versioning suspended.
+
+The destination bucket was re-created by the same account but is now unversioned.
+
+Recommended actions
+
+If an error message appears in the Last error column, follow these steps:
+
+1. Review the message text.

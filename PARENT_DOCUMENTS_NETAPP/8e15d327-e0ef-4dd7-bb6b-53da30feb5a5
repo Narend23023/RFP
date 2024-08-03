@@ -1,0 +1,87 @@
+466
+
+node at each site.
+
+If endpoint validation fails, an error message explains why endpoint validation failed. The tenant user should resolve the issue, then try creating the endpoint again. Endpoint creation will fail if platform services aren’t enabled for the tenant account.
+
+Issues with existing endpoints
+
+If an error occurs when StorageGRID tries to reach an existing endpoint, a message is displayed on the dashboard in the Tenant Manager.
+
+Tenant users can go to the Endpoints page to review the most recent error message for each endpoint and to determine how long ago the error occurred. The Last error column displays the most recent error message for
+
+each endpoint and indicates how long ago the error occurred. Errors that include the the past 7 days.
+
+icon occurred within When a tenant creates an endpoint, the StorageGRID system validates that the endpoint exists and that it can be reached using the credentials that were specified. The connection to the endpoint is validated from one
+
+466
+
+node at each site.
+
+If endpoint validation fails, an error message explains why endpoint validation failed. The tenant user should resolve the issue, then try creating the endpoint again. Endpoint creation will fail if platform services aren’t enabled for the tenant account.
+
+Issues with existing endpoints
+
+If an error occurs when StorageGRID tries to reach an existing endpoint, a message is displayed on the dashboard in the Tenant Manager.
+
+Tenant users can go to the Endpoints page to review the most recent error message for each endpoint and to determine how long ago the error occurred. The Last error column displays the most recent error message for
+
+each endpoint and indicates how long ago the error occurred. Errors that include the the past 7 days.
+
+icon occurred within
+
+Some error messages in the Last error column might include a logID in parentheses. A grid administrator or technical support can use this ID to locate more detailed information about the error in the bycast.log.
+
+467
+
+Issues related to proxy servers If you have configured a storage proxy between Storage Nodes and platform service endpoints, errors might occur if your proxy service does not allow messages from StorageGRID. To resolve these issues, check the settings of your proxy server to ensure that platform service-related messages aren’t blocked.
+
+Determine if an error has occurred
+
+If any endpoint errors have occurred within the past 7 days, the dashboard in the Tenant Manager displays an alert message. You can go the Endpoints page to see more details about the error.
+
+Client operations fail
+
+Some platform services issues might cause client operations on the S3 bucket to fail. For example, S3 client operations will fail if the internal Replicated State Machine (RSM) service stops, or if there are too many platform services messages queued for delivery.
+
+To check the status of services:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select site > Storage Node > SSM > Services. Recoverable and unrecoverable endpoint errors
+
+After endpoints have been created, platform service request errors can occur for various reasons. Some errors are recoverable with user intervention. For example, recoverable errors might occur for the following reasons:
+
+The user’s credentials have been deleted or have expired.
+
+The destination bucket does not exist.
+
+The notification can’t be delivered.
+
+If StorageGRID encounters a recoverable error, the platform service request will be retried until it succeeds.
+
+Other errors are unrecoverable. For example, an unrecoverable error occurs if the endpoint is deleted.
+
+If StorageGRID encounters an unrecoverable endpoint error, the Total Events (SMTT) legacy alarm is triggered in the Grid Manager. To view the Total Events legacy alarm:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select site > node > SSM > Events.
+
+3. View Last Event at the top of the table.
+
+Event messages are also listed in /var/local/log/bycast-err.log. 4. Follow the guidance provided in the SMTT alarm contents to correct the issue.
+
+5. Select the Configuration tab to reset event counts.
+
+6. Notify the tenant of the objects whose platform services messages have not been delivered.
+
+7. Instruct the tenant to re-trigger the failed replication or notification by updating the object’s metadata or tags.
+
+The tenant can resubmit the existing values to avoid making unwanted changes.
+
+468
+
+Platform services messages can’t be delivered
+
+If the destination encounters an issue that prevents it from accepting platform services messages, the client operation on the bucket succeeds, but the platform services message is not delivered. For example, this error might happen if credentials are updated on the destination such that StorageGRID can no longer authenticate to the destination service.

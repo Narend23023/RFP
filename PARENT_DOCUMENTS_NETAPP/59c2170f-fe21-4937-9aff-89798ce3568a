@@ -1,0 +1,61 @@
+You can add, delete, or change subnets to all nodes on the Admin Network Subnet List. Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Start the Change IP tool by entering the following command: change-ip
+
+3. Enter the provisioning passphrase at the prompt.
+
+The main menu appears.
+
+1518
+
+4. Optionally, limit the networks/nodes on which operations are performed. Choose one of the following:
+
+Select the nodes to edit by choosing 1, if you want to filter on specific nodes on which to perform the operation. Select one of the following options:
+
+▪ 1: Single node (select by name) ▪ 2: Single node (select by site, then by name) ▪ 3: Single node (select by current IP) ▪ 4: All nodes at a site ▪ 5: All nodes in the grid ▪ 0: Go back
+
+Allow "all" to remain selected. After the selection is made, the main menu screen appears. The Selected nodes field reflects your new selection, and now all operations selected will only be performed on this item.
+
+5. On the main menu, select the option to edit subnets for the Admin Network (option 3).
+
+6. Choose one of the following:
+
+Add a subnet by entering this command: add CIDR ◦ Delete a subnet by entering this command: del CIDR ◦ Set the list of subnets by entering this command: set CIDR
+
+For all commands, you can enter multiple addresses using this format: add CIDR, CIDR
+
+Example: add 172.14.0.0/16, 172.15.0.0/16, 172.16.0.0/16
+
+You can reduce the amount of typing required by using "up arrow" to recall previously typed values to the current input prompt, and then edit them if necessary.
+
+The example input below shows adding subnets to the Admin Network Subnet List:
+
+1519
+
+7. When ready, enter q to go back to the main menu screen. Your changes are held until cleared or applied. If you selected any of the "all" node selection modes in step 2, press Enter (without q) to get to the next node in the list.
+
+8. Choose one of the following:
+
+Select option 5 to show edits in output that is isolated to show only the changed item. Changes are highlighted in green (additions) or red (deletions), as shown in the example output below:
+
+Select option 6 to show edits in output that displays the full configuration. Changes are highlighted in green (additions) or red (deletions). Note: Certain terminal emulators might show additions and deletions using strikethrough formatting.
+
+When you attempt to change the subnet list, the following message is displayed:
+
+1520 CAUTION: The Admin Network subnet list on the node might contain /32 subnets derived from automatically applied routes that aren't persistent. Host routes (/32 subnets) are applied automatically if the IP addresses provided for external services such as NTP or DNS aren't reachable using default StorageGRID routing, but are reachable using a different interface and gateway. Making and applying changes to the subnet list will make all automatically applied subnets persistent. If you don't want that to happen, delete the unwanted subnets before applying changes. If you know that all /32 subnets in the list were added intentionally, you can ignore this caution. If you did not specifically assign the NTP and DNS server subnets to a network, StorageGRID creates a host route (/32) for the connection automatically. If, for example, you would rather have a /16 or /24 route for outbound connection to a DNS or NTP server, you should delete the automatically created /32 route and add the routes you want. If you don’t delete the automatically created host route, it will be persisted after you apply any changes to the subnet list.
+
+Although you can use these automatically discovered host routes, in general you should manually configure the DNS and NTP routes to ensure connectivity.
+
+9. Select option 7 to validate all staged changes. When you attempt to change the subnet list, the following message is displayed:

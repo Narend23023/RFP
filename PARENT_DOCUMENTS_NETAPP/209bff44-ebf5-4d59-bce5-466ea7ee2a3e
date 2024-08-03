@@ -1,0 +1,61 @@
+CloudMirror replication has some important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication.
+
+CloudMirror replication is not supported if the source bucket has S3 Object Lock enabled. Notifications
+
+Per-bucket event notifications are used to send notifications about specific actions performed on objects to a specified external Kafka cluster or Amazon Simple Notification Service.
+
+For example, you could configure alerts to be sent to administrators about each object added to a bucket, where the objects represent log files associated with a critical system event.
+
+Although event notification can be configured on a bucket with S3 Object Lock enabled, the S3 Object Lock metadata (including Retain Until Date and Legal Hold status) of the objects will not be included in the notification messages. Search integration service
+
+The search integration service is used to send S3 object metadata to a specified Elasticsearch index where the metadata can be searched or analyzed using the external service.
+
+For example, you could configure your buckets to send S3 object metadata to a remote Elasticsearch service. You could then use Elasticsearch to perform searches across buckets, and perform sophisticated analyses of patterns present in your object metadata.
+
+Although Elasticsearch integration can be configured on a bucket with S3 Object Lock enabled, the S3 Object Lock metadata (including Retain Until Date and Legal Hold status) of the objects will not be included in the notification messages.
+
+Platform services give tenants the ability to use external storage resources, notification services, and search or analysis services with their data. Because the target location for platform services is typically external to your
+
+463 StorageGRID deployment, you must decide if you want to permit tenants to use these services. If you do, you must enable the use of platform services when you create or edit tenant accounts. You must also configure your network such that the platform services messages that tenants generate can reach their destinations.
+
+Recommendations for using platform services
+
+Before using platform services, be aware of the following recommendations:
+
+If an S3 bucket in the StorageGRID system has both versioning and CloudMirror replication enabled, you should also enable S3 bucket versioning for the destination endpoint. This allows CloudMirror replication to generate similar object versions on the endpoint.
+
+You should not use more than 100 active tenants with S3 requests requiring CloudMirror replication, notifications, and search integration. Having more than 100 active tenants can result in slower S3 client performance. Requests to an endpoint that can’t be completed will be queued to a maximum of 500,000 requests. This limit is equally shared among active tenants. New tenants are allowed to temporarily exceed this 500,000 limit so that newly created tenants aren’t unfairly penalized.
+
+Related information
+
+Manage platform services
+
+Configure Storage proxy settings
+
+Monitor StorageGRID Network and ports for platform services
+
+If you allow an S3 tenant to use platform services, you must configure networking for the grid to ensure that platform services messages can be delivered to their destinations.
+
+You can enable platform services for an S3 tenant account when you create or update the tenant account. If platform services are enabled, the tenant can create endpoints that serve as a destination for CloudMirror replication, event notifications, or search integration messages from its S3 buckets. These platform services messages are sent from Storage Nodes that run the ADC service to the destination endpoints.
+
+For example, tenants might configure the following types of destination endpoints:
+
+A locally-hosted Elasticsearch cluster
+
+A local application that supports receiving Amazon Simple Notification Service messages
+
+A locally-hosted Kafka cluster
+
+A locally-hosted S3 bucket on the same or another instance of StorageGRID An external endpoint, such as an endpoint on Amazon Web Services.
+
+To ensure that platform services messages can be delivered, you must configure the network or networks containing the ADC Storage Nodes. You must ensure that the following ports can be used to send platform services messages to the destination endpoints.
+
+By default, platform services messages are sent on the following ports: Related information
+
+Manage platform services
+
+Configure Storage proxy settings
+
+Monitor StorageGRID Network and ports for platform services
+
+If you allow an S3 tenant to use platform services, you must configure networking for the grid to ensure that platform services messages can be delivered to their destinations.

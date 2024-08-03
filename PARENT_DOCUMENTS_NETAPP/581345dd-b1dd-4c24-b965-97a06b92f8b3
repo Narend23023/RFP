@@ -1,0 +1,223 @@
+s3:DeleteObjectVersionTa gging
+
+s3:GetObject
+
+s3:GetObjectAcl
+
+3:GetObjectTagging
+
+s3:GetObjectVersion
+
+s3:GetObjectVersionAcl
+
+s3:GetObjectVersionTagg ing s3:PutObjectAcl
+
+s3:PutObjectTagging
+
+s3:PutObjectVersionAcl
+
+s3:PutObjectVersionTaggi ng
+
+s3:ListBucket and
+
+s3:ListBucketVersions permissions
+
+s3:PutObject
+
+s3:PutObjectRetention
+
+s3:ListBucket and s3:ListBucketVersions permissions
+
+Description
+
+Will require that the existing object has the specific tag key and value.
+
+Will compare to the max-keys parameter specified in a ListObjects or ListObjectVersions request. s3:ListBucketVersions permissions
+
+979
+
+Condition keys s3:ExistingObjectTag/<tag -key>
+
+s3:max-keys
+
+s3:object-lock-remaining- retention-days
+
+s3:object-lock-remaining- retention-days
+
+s3:prefix
+
+980
+
+Actions
+
+s3:DeleteObjectTagging
+
+s3:DeleteObjectVersionTa gging
+
+s3:GetObject
+
+s3:GetObjectAcl
+
+3:GetObjectTagging
+
+s3:GetObjectVersion
+
+s3:GetObjectVersionAcl
+
+s3:GetObjectVersionTagg ing s3:PutObjectAcl
+
+s3:PutObjectTagging
+
+s3:PutObjectVersionAcl
+
+s3:PutObjectVersionTaggi ng
+
+s3:ListBucket and
+
+s3:ListBucketVersions permissions
+
+s3:PutObject
+
+s3:PutObjectRetention
+
+s3:ListBucket and s3:ListBucketVersions permissions
+
+Description
+
+Will require that the existing object has the specific tag key and value.
+
+Will compare to the max-keys parameter specified in a ListObjects or ListObjectVersions request.
+
+Compares to the retain-until-date specified in the x- amz-object-lock-retain-until-date request header or computed from the bucket default retention period to make sure that these values are within the allowable range for the following requests:
+
+PutObject
+
+CopyObject
+
+CreateMultipartUpload
+
+Compares to the retain-until-date specified in the PutObjectRetention request to ensure that it is within the allowable range.
+
+Will compare to the prefix parameter specified in a ListObjects or ListObjectVersions request.
+
+Condition keys
+
+Actions
+
+Description
+
+s3:RequestObjectTag/<ta g-key> s3:PutObject
+
+Will require a specific tag key and value when the object request includes tagging.
+
+s3:PutObjectTagging
+
+s3:PutObjectVersionTaggi ng
+
+Specify variables in a policy
+
+You can use variables in policies to populate policy information when it is available. You can use policy variables in the Resource element and in string comparisons in the Condition element.
+
+In this example, the variable ${aws:username} is part of the Resource element: "Resource": "arn:aws:s3:::bucket-name/home/${aws:username}/*"
+
+In this example, the variable ${aws:username} is part of the condition value in the condition block:
+
+"Condition": { "StringLike": { "s3:prefix": "${aws:username}/*" ... }, ...
+
+Variable
+
+Description
+
+${aws:SourceIp}
+
+Uses the SourceIp key as the provided variable. ${aws:username}
+
+Uses the username key as the provided variable.
+
+${s3:prefix}
+
+Uses the service-specific prefix key as the provided variable.
+
+${s3:max-keys}
+
+Uses the service-specific max-keys key as the provided variable.
+
+${*}
+
+Special character. Uses the character as a literal * character.
+
+${?}
+
+Special character. Uses the character as a literal ? character.
+
+${$}
+
+Special character. Uses the character as a literal $ character.
+
+981
+
+Create policies requiring special handling
+
+Sometimes a policy can grant permissions that are dangerous for security or dangerous for continued operations, such as locking out the root user of the account. The StorageGRID S3 REST API implementation is less restrictive during policy validation than Amazon, but equally strict during policy evaluation. Policy description
+
+Policy type
+
+Amazon behavior
+
+StorageGRID behavior
+
+Deny self any permissions to the root account
+
+Bucket
+
+Valid and enforced, but root user account retains permission for all S3 bucket policy operations
+
+Same
+
+Deny self any permissions to user/group
+
+Group
+
+Valid and enforced
+
+Same
+
+Allow a foreign account group any permission Bucket
+
+Invalid principal
+
+Valid, but permissions for all S3 bucket policy operations return a 405 Method Not Allowed error when allowed by a policy
+
+Allow a foreign account root or user any permission
+
+Bucket
+
+Valid, but permissions for all S3 bucket policy operations return a 405 Method Not Allowed error when allowed by a policy Same
+
+Allow everyone permissions to all actions ${*}
+
+Special character. Uses the character as a literal * character.
+
+${?}
+
+Special character. Uses the character as a literal ? character.
+
+${$}
+
+Special character. Uses the character as a literal $ character.
+
+981
+
+Create policies requiring special handling
+
+Sometimes a policy can grant permissions that are dangerous for security or dangerous for continued operations, such as locking out the root user of the account. The StorageGRID S3 REST API implementation is less restrictive during policy validation than Amazon, but equally strict during policy evaluation. Policy description
+
+Policy type
+
+Amazon behavior
+
+StorageGRID behavior
+
+Deny self any permissions to the root account
+
+Bucket

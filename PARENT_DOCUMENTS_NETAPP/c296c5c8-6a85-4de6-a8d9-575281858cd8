@@ -1,0 +1,103 @@
+Become familiar with StorageGRID system software, including the Grid Manager and the Tenant Manager.
+
+Review the FabricPool best practices for HA groups, load balancing, ILM, and more.
+
+Review these additional resources, which provide details about using and configuring ONTAP and FabricPool: TR-4598: FabricPool Best Practices in ONTAP
+
+ONTAP 9: FabricPool tier management overview with System Manager
+
+Perform prerequisite tasks
+
+Obtain the information needed to attach StorageGRID as a cloud tier, including:
+
+IP addresses
+
+Domain names
+
+SSL certificate
+
+Optionally, configure identity federation and single sign-on. Configure StorageGRID settings
+
+Use StorageGRID to obtain the values ONTAP needs to connect to the grid.
+
+Using the FabricPool setup wizard is the recommended and the fastest way to configure all items, but you can also configure each entity manually, if required.
+
+Configure ONTAP and DNS
+
+Use ONTAP to add a cloud tier that uses the StorageGRID values. Then, configure DNS entries to associate IP addresses to any domain names you plan to use. Monitor and manage
+
+When your system is up and running, perform ongoing tasks in ONTAP and StorageGRID to manage and monitor FabricPool data tiering over time.
+
+What is FabricPool?
+
+FabricPool is an ONTAP hybrid storage solution that uses a high-performance flash aggregate as the
+
+722
+
+performance tier and an object store as the cloud tier. Using FabricPool-enabled aggregates helps you reduce storage cost without compromising performance, efficiency, or protection.
+
+FabricPool associates a cloud tier (an external object store, such as StorageGRID) with a local tier (an ONTAP storage aggregate) to create a composite collection of discs. Volumes inside the FabricPool can then take advantage of the tiering by keeping active (hot) data on high-performance storage (the local tier) and tiering inactivate (cold) data to the external object store (the cloud tier). No architectural changes are required, and you can continue managing your data and application environment from the central ONTAP storage system.
+
+What is StorageGRID?
+
+NetApp StorageGRID is a storage architecture that manages data as objects, as opposed to other storage architectures such as file or block storage. Objects are kept inside a single container (such as a bucket) and aren’t nested as files inside a directory inside other directories. Although object storage generally provides lower performance than file or block storage, it is significantly more scalable. StorageGRID buckets can hold petabytes of data and billions of objects. Why use StorageGRID as a FabricPool cloud tier?
+
+FabricPool can tier ONTAP data to a number of object storage providers, including StorageGRID. Unlike public clouds that might set a maximum number of supported input/output operations per second (IOPS) at the bucket or container level, StorageGRID performance scales with the number of nodes in a system. Using StorageGRID as a FabricPool cloud tier allows you to keep your cold data in your own private cloud for highest performance and complete control over your data.
+
+In addition, a FabricPool license is not required when you use StorageGRID as the cloud tier.
+
+Information needed to attach StorageGRID as a cloud tier
+
+Before you can attach StorageGRID as a cloud tier for FabricPool, you must perform configuration steps in StorageGRID and obtain certain values for use in ONTAP.
+
+What values do I need?
+
+The following table shows the values you must configure in StorageGRID and how those values are used by ONTAP and the DNS server. Value
+
+Where value is configured
+
+Where value is used FabricPool can tier ONTAP data to a number of object storage providers, including StorageGRID. Unlike public clouds that might set a maximum number of supported input/output operations per second (IOPS) at the bucket or container level, StorageGRID performance scales with the number of nodes in a system. Using StorageGRID as a FabricPool cloud tier allows you to keep your cold data in your own private cloud for highest performance and complete control over your data.
+
+In addition, a FabricPool license is not required when you use StorageGRID as the cloud tier.
+
+Information needed to attach StorageGRID as a cloud tier
+
+Before you can attach StorageGRID as a cloud tier for FabricPool, you must perform configuration steps in StorageGRID and obtain certain values for use in ONTAP.
+
+What values do I need?
+
+The following table shows the values you must configure in StorageGRID and how those values are used by ONTAP and the DNS server. Value
+
+Where value is configured
+
+Where value is used
+
+Virtual IP (VIP) addresses
+
+StorageGRID > HA group
+
+DNS entry
+
+Port
+
+StorageGRID > Load balancer endpoint
+
+ONTAP System Manager > Add Cloud Tier
+
+SSL certificate
+
+StorageGRID > Load balancer endpoint
+
+ONTAP System Manager > Add Cloud Tier
+
+Server name (FQDN) StorageGRID > Load balancer endpoint
+
+DNS entry
+
+723
+
+Value
+
+Where value is configured
+
+Where value is used

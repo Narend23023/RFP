@@ -1,0 +1,73 @@
+If StorageGRID is able to deactivate the erasure-coding profile, its status is Deactivated. You can no longer select this profile for any ILM rule. You can’t reactivate a deactivated profile.
+
+If StorageGRID is not able to deactivate the profile, an error message appears. For example, an error message appears if object data is still associated with this profile. You might need to wait several weeks before trying the deactivation process again. Configure regions (optional and S3 only)
+
+ILM rules can filter objects based on the regions where S3 buckets are created, allowing you to store objects from different regions in different storage locations.
+
+If you want to use an S3 bucket region as a filter in a rule, you must first create the regions that can be used by the buckets in your system.
+
+You can’t change the region for a bucket after the bucket has been created.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task You can select multiple profiles to deactivate at the same time, as long as each profile is not used in any rule.
+
+5. If you are sure you want to deactivate the profile, select Deactivate. Results
+
+If StorageGRID is able to deactivate the erasure-coding profile, its status is Deactivated. You can no longer select this profile for any ILM rule. You can’t reactivate a deactivated profile.
+
+If StorageGRID is not able to deactivate the profile, an error message appears. For example, an error message appears if object data is still associated with this profile. You might need to wait several weeks before trying the deactivation process again. Configure regions (optional and S3 only)
+
+ILM rules can filter objects based on the regions where S3 buckets are created, allowing you to store objects from different regions in different storage locations.
+
+If you want to use an S3 bucket region as a filter in a rule, you must first create the regions that can be used by the buckets in your system.
+
+You can’t change the region for a bucket after the bucket has been created.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+When creating an S3 bucket, you can specify that the bucket be created in a specific region. Specifying a
+
+649
+
+region allows the bucket to be geographically close to its users, which can help optimize latency, minimize costs, and address regulatory requirements.
+
+When you create an ILM rule, you might want to use the region associated with an S3 bucket as an advanced filter. For example, you can design a rule that applies only to objects in S3 buckets created in the us-west-2 region. You can then specify that copies of those objects be placed on Storage Nodes at a data center site within that region to optimize latency.
+
+When configuring regions, follow these guidelines:
+
+By default, all buckets are considered to belong to the us-east-1 region. You must create the regions using the Grid Manager before you can specify a non-default region when creating buckets using the Tenant Manager or Tenant Management API or with the LocationConstraint request element for S3 PUT Bucket API requests. An error occurs if a PUT Bucket request uses a region that has not been defined in StorageGRID.
+
+You must use the exact region name when you create the S3 bucket. Region names are case sensitive. Valid characters are numbers, letters, and hyphens.
+
+EU is not considered to be an alias for eu-west-1. If you want to use the EU or eu-west-1 region, you must use the exact name.
+
+You can’t delete or modify a region if it’s used in a rule that is assigned to any policy (active or inactive).
+
+If you use an invalid region as the advanced filter in an ILM rule, you can’t add that rule to a policy. An invalid region can result if you use a region as an advanced filter in an ILM rule but you later delete that region, or if you use the Grid Management API to create a rule and specify a region that you have not defined.
+
+If you delete a region after using it to create an S3 bucket, you will need to re-add the region if you ever want to use the Location Constraint advanced filter to find objects in that bucket. Steps
+
+1. Select ILM > Regions.
+
+The Regions page appears, with the currently defined regions listed. Region 1 shows the default region, us-east-1, which can’t be modified or removed.
+
+2. To add a region:
+
+a. Select Add another region.
+
+b. Enter the name of a region that you want to use when creating S3 buckets.
+
+You must use this exact region name as the LocationConstraint request element when you create the corresponding S3 bucket.
+
+3. To remove an unused region, select the delete icon .
+
+An error message appears if you attempt to remove a region that is currently used in any policy (active or inactive).
+
+4. When you are done making changes, select Save.

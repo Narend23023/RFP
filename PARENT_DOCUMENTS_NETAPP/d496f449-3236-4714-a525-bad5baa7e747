@@ -1,0 +1,71 @@
+FEC settings to match, if possible. You can’t configure FEC settings on StorageGRID appliances. Instead, the appliances attempt to discover and mirror the FEC settings on the switch ports they are connected to. If the links are forced to 25-GbE or 100-GbE network speeds, the switch and NIC might fail to negotiate a common FEC setting. Without a common FEC setting, the network will fall back to "no-FEC" mode. When FEC is not enabled, the connections are more susceptible to errors caused by electrical noise.
+
+StorageGRID appliances support Firecode (FC) and Reed Solomon (RS) FEC, as well as no FEC. Switch port and NIC MTU mismatch
+
+If the error is caused by a switch port and NIC MTU mismatch, check that the MTU size configured on the node is the same as the MTU setting for the switch port.
+
+The MTU size configured on the node might be smaller than the setting on the switch port the node is connected to. If a StorageGRID node receives an Ethernet frame larger than its MTU, which is possible with this configuration, the NRER alarm might be reported. If you believe this is what is happening, either change the MTU of the switch port to match the StorageGRID network interface MTU, or change the MTU of the StorageGRID network interface to match the switch port, depending on your end-to-end MTU goals or requirements. For the best network performance, all nodes should be configured with similar MTU values on their Grid Network interfaces. The Grid Network MTU mismatch alert is triggered if there is a significant difference in MTU settings for the Grid Network on individual nodes. The MTU values don’t have to be the same for all network types. See Troubleshoot the Grid Network MTU mismatch alert for more information.
+
+1299
+
+Also see Change MTU setting. High link error rates
+
+a. Enable FEC, if not already enabled.
+
+b. Verify that your network cabling is of good quality and is not damaged or improperly connected.
+
+c. If the cables don’t appear to be the problem, contact technical support.
+
+You might notice high error rates in an environment with high electrical noise.
+
+NIC ring buffer overrun
+
+If the error is a NIC ring buffer overrun, contact technical support.
+
+The ring buffer can be overrun when the StorageGRID system is overloaded and unable to process network events in a timely manner. 1299
+
+Also see Change MTU setting. High link error rates
+
+a. Enable FEC, if not already enabled.
+
+b. Verify that your network cabling is of good quality and is not damaged or improperly connected.
+
+c. If the cables don’t appear to be the problem, contact technical support.
+
+You might notice high error rates in an environment with high electrical noise.
+
+NIC ring buffer overrun
+
+If the error is a NIC ring buffer overrun, contact technical support.
+
+The ring buffer can be overrun when the StorageGRID system is overloaded and unable to process network events in a timely manner.
+
+3. After you resolve the underlying problem, reset the error counter. a. Select SUPPORT > Tools > Grid topology.
+
+b. Select site > grid node > SSM > Resources > Configuration > Main.
+
+c. Select Reset Receive Error Count and click Apply Changes.
+
+Related information
+
+Alarms reference (legacy system)
+
+Time synchronization errors
+
+You might see issues with time synchronization in your grid.
+
+If you encounter time synchronization problems, verify that you have specified at least four external NTP sources, each providing a Stratum 3 or better reference, and that all external NTP sources are operating normally and are accessible by your StorageGRID nodes.
+
+When specifying the external NTP source for a production-level StorageGRID installation, don’t use the Windows Time (W32Time) service on a version of Windows earlier than Windows Server 2016. The time service on earlier versions of Windows is not sufficiently accurate and is not supported by Microsoft for use in high-accuracy environments, such as StorageGRID. Linux: Network connectivity issues
+
+You might see issues with network connectivity for StorageGRID nodes hosted on Linux hosts.
+
+MAC address cloning
+
+In some cases, network issues can be resolved by using MAC address cloning. If you are using virtual hosts, set the value of the MAC address cloning key for each of your networks to "true" in your node configuration file. This setting causes the MAC address of the StorageGRID container to use the MAC address of the host. To create node configuration files, see the instructions for Red Hat Enterprise Linux or Ubuntu or Debian.
+
+1300
+
+Create separate virtual network interfaces for use by the Linux host OS. Using the same network interfaces for the Linux host OS and the StorageGRID container might cause the host OS to become unreachable if promiscuous mode has not been enabled on the hypervisor.
+
+For more information about enabling MAC cloning, see the instructions for Red Hat Enterprise Linux or Ubuntu or Debian. Promiscuous mode

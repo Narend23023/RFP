@@ -1,0 +1,189 @@
+For erasure-coded objects, the LOCS field includes the erasure-coding profile ID and the erasure coding group ID 2019-02-23T01:52:54.647537 [AUDT:[CBID(UI64):0xFA8ABE5B5001F7E2][RULE(CSTR):"EC_2_plus_1"][STAT(FC32) :DONE][CSIZ(UI64):10000][UUID(CSTR):"E291E456-D11A-4701-8F51- D2F7CC9AFECA"][LOCS(CSTR):"CLEC 1 A471E45D-A400-47C7-86AC- 12E77F229831"][RSLT(FC32):SUCS][AVER(UI32):10][ATIM(UI64):1550929974537]\[ ATYP\(FC32\):ORLM\][ANID(UI32):12355278][AMID(FC32):ILMX][ATID(UI64):41685 59046473725560]]
+
+The PATH field includes S3 bucket and key information or Swift container and object information, depending on which API was used.
+
+2019-09-15.txt:2018-01-24T13:52:54.131559 [AUDT:[CBID(UI64):0x82704DFA4C9674F4][RULE(CSTR):"Make 2 Copies"][STAT(FC32):DONE][CSIZ(UI64):3145729][UUID(CSTR):"8C1C9CAC-22BB- 4880-9115- CE604F8CE687"][PATH(CSTR):"frisbee_Bucket1/GridDataTests151683676324774_1_ 1vf9d"][LOCS(CSTR):"CLDI 12525468, CLDI 12222978"][RSLT(FC32):SUCS][AVER(UI32):10][ATIM(UI64):1568555574559][ATYP( FC32):ORLM][ANID(UI32):12525468][AMID(FC32):OBDI][ATID(UI64):3448338865383 69336]] Object delete transactions
+
+You can identify object delete transactions in the audit log by locating API-specific (S3 and Swift) audit messages.
+
+Not all audit messages generated during a delete transaction are listed in the following tables. Only messages required to trace the delete transaction are included. S3 delete audit messages
+
+1330
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+SDEL
+
+S3 Delete
+
+Request made to delete the object from a bucket.
+
+CBID, S3KY
+
+SDEL: S3 DELETE
+
+Swift delete audit messages
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+WDEL
+
+Swift Delete
+
+Request made to delete the object from a container, or the container. CBID, WOBJ WDEL: Swift DELETE
+
+Example: S3 object deletion You can identify object delete transactions in the audit log by locating API-specific (S3 and Swift) audit messages.
+
+Not all audit messages generated during a delete transaction are listed in the following tables. Only messages required to trace the delete transaction are included. S3 delete audit messages
+
+1330
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+SDEL
+
+S3 Delete
+
+Request made to delete the object from a bucket.
+
+CBID, S3KY
+
+SDEL: S3 DELETE
+
+Swift delete audit messages
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+WDEL
+
+Swift Delete
+
+Request made to delete the object from a container, or the container. CBID, WOBJ WDEL: Swift DELETE
+
+Example: S3 object deletion
+
+When an S3 client deletes an object from a Storage Node (LDR service), an audit message is generated and saved to the audit log.
+
+Not all audit messages generated during a delete transaction are listed in the example below. Only those related to the S3 delete transaction (SDEL) are listed. SDEL: S3 Delete
+
+Object deletion begins when the client sends a DeleteObject request to an LDR service. The message contains the bucket from which to delete the object and the object’s S3 Key, which is used to identify the object.
+
+2017-07- 17T21:17:58.959669[AUDT:[RSLT(FC32):SUCS][TIME(UI64):14316][SAIP(IPAD):"10 .96.112.29"][S3AI(CSTR):"70899244468554783528"][SACC(CSTR):"test"][S3AK(CS TR):"SGKHyalRU_5cLflqajtaFmxJn946lAWRJfBF33gAOg=="][SUSR(CSTR):"urn:sgws:i dentity::70899244468554783528:root"][SBAI(CSTR):"70899244468554783528"][SB AC(CSTR):"test"]\[S3BK\(CSTR\):"example"\]\[S3KY\(CSTR\):"testobject-0- 7"\][CBID\(UI64\):0x339F21C5A6964D89][CSIZ(UI64):30720][AVER(UI32):10][ATI M(UI64):150032627859669][ATYP\(FC32\):SDEL][ANID(UI32):12086324][AMID(FC32 ):S3RQ][ATID(UI64):4727861330952970593]]
+
+Object retrieve transactions
+
+You can identify object retrieve transactions in the audit log by locating API-specific (S3 and Swift) audit messages. Not all audit messages generated during a retrieve transaction are listed in the following tables. Only messages required to trace the retrieve transaction are included.
+
+S3 retrieval audit messages
+
+1331
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+SGET
+
+S3 GET
+
+Request made to retrieve an object from a bucket. CBID, S3BK, S3KY
+
+SGET: S3 GET
+
+Swift retrieval audit messages
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+WGET
+
+Swift GET
+
+Request made to retrieve an object from a container.
+
+CBID, WCON, WOBJ
+
+WGET: Swift GET
+
+Example: S3 object retrieval
+
+When an S3 client retrieves an object from a Storage Node (LDR service), an audit message is generated and saved to the audit log.
+
+Note that not all audit messages generated during a transaction are listed in the example below. Only those related to the S3 retrieval transaction (SGET) are listed. SGET: S3 GET
+
+Object retrieval begins when the client sends a GetObject request to an LDR service. The message contains the bucket from which to retrieve the object and the object’s S3 Key, which is used to identify the object. S3 retrieval audit messages
+
+1331
+
+Code
+
+Name
+
+Description
+
+Trace
+
+See
+
+SGET
+
+S3 GET
+
+Request made to retrieve an object from a bucket. CBID, S3BK, S3KY
+
+SGET: S3 GET
+
+Swift retrieval audit messages
+
+Code
+
+Name
+
+Description
+
+Trace

@@ -1,0 +1,75 @@
+Warnings for recovering appliance Storage Nodes
+
+The procedure for recovering a failed StorageGRID appliance Storage Node is the same whether you are recovering from the loss of the system drive or from the loss of storage volumes only.
+
+If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Rebuilding Cassandra on two or more Storage Nodes within 15 days can result in data loss.
+
+1557
+
+If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site.
+
+If ILM rules are configured to store only one replicated copy and the copy exists on a storage volume that has failed, you will not be able to recover the object. If you encounter a Services: Status - Cassandra (SVST) alarm during recovery, see Recover failed storage volumes and rebuild Cassandra database. After Cassandra is rebuilt, alarms should clear. If alarms don’t clear, contact technical support.
+
+For hardware maintenance procedures, such as instructions for replacing a controller or reinstalling SANtricity OS, see the maintenance instructions for your storage appliance. Prepare appliance Storage Node for reinstallation
+
+When recovering an appliance Storage Node, you must first prepare the appliance for reinstallation of StorageGRID software.
+
+Steps
+
+1. Log in to the failed Storage Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Prepare the appliance Storage Node for the installation of StorageGRID software. sgareinstall If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site.
+
+If ILM rules are configured to store only one replicated copy and the copy exists on a storage volume that has failed, you will not be able to recover the object. If you encounter a Services: Status - Cassandra (SVST) alarm during recovery, see Recover failed storage volumes and rebuild Cassandra database. After Cassandra is rebuilt, alarms should clear. If alarms don’t clear, contact technical support.
+
+For hardware maintenance procedures, such as instructions for replacing a controller or reinstalling SANtricity OS, see the maintenance instructions for your storage appliance. Prepare appliance Storage Node for reinstallation
+
+When recovering an appliance Storage Node, you must first prepare the appliance for reinstallation of StorageGRID software.
+
+Steps
+
+1. Log in to the failed Storage Node: a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Prepare the appliance Storage Node for the installation of StorageGRID software. sgareinstall
+
+3. When prompted to continue, enter: y
+
+The appliance reboots, and your SSH session ends. It usually takes about 5 minutes for the StorageGRID Appliance Installer to become available, although in some cases you might need to wait up to 30 minutes.
+
+Don’t attempt to accelerate the reboot by cycling power or otherwise resetting the appliance. You might interrupt automatic BIOS, BMC, or other firmware upgrades. The StorageGRID appliance Storage Node is reset, and data on the Storage Node is no longer accessible. IP addresses configured during the original installation process should remain intact; however, it is recommended that you confirm this when the procedure completes.
+
+After executing the sgareinstall command, all StorageGRID-provisioned accounts, passwords, and SSH keys are removed, and new host keys are generated. Start StorageGRID appliance installation
+
+To install StorageGRID on an appliance Storage Node, you use the StorageGRID Appliance Installer, which is included on the appliance.
+
+1558
+
+Before you begin
+
+The appliance has been installed in a rack, connected to your networks, and powered on.
+
+Network links and IP addresses have been configured for the appliance using the StorageGRID Appliance Installer.
+
+You know the IP address of the primary Admin Node for the StorageGRID grid.
+
+All Grid Network subnets listed on the IP Configuration page of the StorageGRID Appliance Installer have been defined in the Grid Network Subnet List on the primary Admin Node.
+
+You have completed these prerequisite tasks by following the installation instructions for your storage appliance. See Quick start for hardware installation.

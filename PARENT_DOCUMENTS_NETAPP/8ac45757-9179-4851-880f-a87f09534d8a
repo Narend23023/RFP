@@ -1,0 +1,61 @@
+Storage efficiency: For similar levels of availability and reliability, objects protected through erasure coding consume less disk space than the same objects would if protected through replication. For example, a 10 MB object that is replicated to two sites consumes 20 MB of disk space (two copies), while an object that is erasure-coded across three sites with a 6+3 erasure-coding scheme only consumes 15 MB of disk space. Disk space for erasure-coded objects is calculated as the object size plus the storage overhead. The storage overhead percentage is the number of parity fragments divided by the number of data fragments.
+
+Disadvantages of erasure coding
+
+When compared to replication, erasure coding has the following disadvantages: An increased number of Storage Nodes and sites is recommended, depending on the erasure-coding scheme. In contrast, if you replicate object data, you need only one Storage Node for each copy. See Erasure-coding schemes for storage pools containing three or more sites and Erasure-coding schemes for one-site storage pools.
+
+Increased cost and complexity of storage expansions. To expand a deployment that uses replication, you add storage capacity in every location where object copies are made. To expand a deployment that uses erasure coding, you must consider both the erasure-coding scheme in use and how full existing Storage Nodes are. For example, if you wait until existing nodes are 100% full, you must add at least k+m Storage Nodes, but if you expand when existing nodes are 70% full, you can add two nodes per site and still maximize usable storage capacity. For more information, see Add storage capacity for erasure-coded objects. There are increased retrieval latencies when you use erasure coding across geographically distributed sites. The object fragments for an object that is erasure-coded and distributed across remote sites take longer to retrieve over WAN connections than an object that is replicated and available locally (the same site to which the client connects).
+
+When you use erasure coding across geographically distributed sites, there is higher WAN network traffic usage for retrievals and repairs, especially for frequently retrieved objects or for object repairs over WAN network connections.
+
+When you use erasure coding across sites, the maximum object throughput declines sharply as network latency between sites increases. This decrease is due to the corresponding decrease in TCP network throughput, which affects how quickly the StorageGRID system can store and retrieve object fragments.
+
+Higher usage of compute resources.
+
+When to use erasure coding Erasure coding is best suited for the following requirements:
+
+Objects greater than 1 MB in size.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments.
+
+611
+
+• Long-term or cold storage for infrequently retrieved content.
+
+High data availability and reliability.
+
+Protection against complete site and node failures.
+
+Storage efficiency.
+
+Single-site deployments that require efficient data protection with only a single erasure-coded copy rather than multiple replicated copies.
+
+Multiple-site deployments where the inter-site latency is less than 100 ms.
+
+How object retention is determined
+
+StorageGRID provides options for both grid administrators and individual tenant users to specify how long to store objects. In general, any retention instructions provided by a tenant user take precedence over the retention instructions provided by the grid administrator. How tenant users control object retention
+
+Tenant users have three primary ways to control how long their objects are stored in StorageGRID:
+
+If the global S3 Object Lock setting is enabled for the grid, S3 tenant users can create buckets with S3 Object Lock enabled and then use the S3 REST API to specify retain-until-date and legal hold settings for each object version added to that bucket. When to use erasure coding Erasure coding is best suited for the following requirements:
+
+Objects greater than 1 MB in size.
+
+Erasure coding is best suited for objects greater than 1 MB. Don’t use erasure coding for objects smaller than 200 KB to avoid the overhead of managing very small erasure-coded fragments.
+
+611
+
+• Long-term or cold storage for infrequently retrieved content.
+
+High data availability and reliability.
+
+Protection against complete site and node failures.
+
+Storage efficiency.
+
+Single-site deployments that require efficient data protection with only a single erasure-coded copy rather than multiple replicated copies.
+
+Multiple-site deployments where the inter-site latency is less than 100 ms.
+
+How object retention is determined

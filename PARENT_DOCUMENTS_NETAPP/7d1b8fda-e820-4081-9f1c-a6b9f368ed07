@@ -1,0 +1,55 @@
+2. Identify the object or objects that could not be retrieved by the Archive Node:
+
+a. Go to the directory containing the audit log files: cd /var/local/log
+
+The active audit log file is named audit.log. Once a day, the active audit.log file is saved, and a new audit.log file is started. The name of the saved file indicates when it was saved, in the format yyyy- mm-dd.txt. After a day, the saved file is compressed and renamed, in the format yyyy-mm- dd.txt.gz, which preserves the original date.
+
+b. Search the relevant audit log file for messages indicating that an archived object could not be retrieved. For example, enter: grep ARCE audit.log | less -n
+
+1542
+
+When an object can’t be retrieved from an Archive Node, the ARCE audit message (Archive Object Retrieve End) displays ARUN (archive middleware unavailable) or GERR (general error) in the result field. The following example line from the audit log shows that the ARCE message terminated with the result ARUN for CBID 498D8A1F681F05B3. b. Enter the password listed in the Passwords.txt file.
+
+2. Identify the object or objects that could not be retrieved by the Archive Node:
+
+a. Go to the directory containing the audit log files: cd /var/local/log
+
+The active audit log file is named audit.log. Once a day, the active audit.log file is saved, and a new audit.log file is started. The name of the saved file indicates when it was saved, in the format yyyy- mm-dd.txt. After a day, the saved file is compressed and renamed, in the format yyyy-mm- dd.txt.gz, which preserves the original date.
+
+b. Search the relevant audit log file for messages indicating that an archived object could not be retrieved. For example, enter: grep ARCE audit.log | less -n
+
+1542
+
+When an object can’t be retrieved from an Archive Node, the ARCE audit message (Archive Object Retrieve End) displays ARUN (archive middleware unavailable) or GERR (general error) in the result field. The following example line from the audit log shows that the ARCE message terminated with the result ARUN for CBID 498D8A1F681F05B3.
+
+[AUDT:[CBID(UI64):0x498D8A1F681F05B3][VLID(UI64):20091127][RSLT(FC32 ):ARUN][AVER(UI32):7] [ATIM(UI64):1350613602969243][ATYP(FC32):ARCE][ANID(UI32):13959984][A MID(FC32):ARCI] [ATID(UI64):4560349751312520631]]
+
+For more information see the instructions for understanding audit messages.
+
+c. Record the CBID of each object that had a request failure.
+
+You might also want to record the following additional information used by the TSM to identify objects saved by the Archive Node:
+
+▪ File Space Name: Equivalent to the Archive Node ID. To find the Archive Node ID, select SUPPORT > Tools > Grid topology. Then, select Archive Node > ARC > Target > Overview. ▪ High Level Name: Equivalent to the volume ID assigned to the object by the Archive Node. The volume ID takes the form of a date (for example, 20091127), and is recorded as the VLID of the object in archive audit messages.
+
+▪ Low Level Name: Equivalent to the CBID assigned to an object by the StorageGRID system. d. Log out of the command shell: exit
+
+3. Check the TSM server to see if the objects identified in step 2 are permanently unavailable: a. Log in to the administrative console of the TSM server: dsmadmc
+
+Use the administrative user name and password that are configured for the ARC service. Enter the user name and password in the Grid Manager. (To see the user name, select SUPPORT > Tools > Grid topology. Then, select Archive Node > ARC > Target > Configuration.)
+
+b. Determine if the object is permanently unavailable.
+
+For example, you might search the TSM activity log for a data integrity error for that object. The following example shows a search of the activity log for the past day for an object with CBID 498D8A1F681F05B3.
+
+> query actlog begindate=-1 search=276C14E94082CC69 12/21/2008 05:39:15 ANR0548W Retrieve or restore failed for session 9139359 for node DEV-ARC-20 (Bycast ARC) processing file space /19130020 4 for file /20081002/ 498D8A1F681F05B3 stored as Archive - data integrity error detected. (SESSION: 9139359) > Depending on the nature of the error, the CBID might not be recorded in the TSM activity log. You
+
+1543
+
+might need to search the log for other TSM errors around the time of the request failure.
+
+c. If an entire tape is permanently unavailable, identify the CBIDs for all objects stored on that volume: query content TSM_Volume_Name
+
+where TSM_Volume_Name is the TSM name for the unavailable tape. The following is an example of the output for this command: b. Determine if the object is permanently unavailable.
+
+For example, you might search the TSM activity log for a data integrity error for that object. The following example shows a search of the activity log for the past day for an object with CBID 498D8A1F681F05B3.

@@ -1,0 +1,97 @@
+1460
+
+3. View the values in the Used Storage Capacity column to determine how much storage is currently being used for object data at each site.
+
+The Used Storage Capacity is an estimate. If nodes are offline, the Used Storage Capacity is the last known value for the site.
+
+For a connected site decommission, this value represents how much object data will need to be moved to other sites or deleted by ILM before you can safely decommission this site.
+
+For a disconnected site decommission, this value represents how much of your system’s data storage will become inaccessible when you decommission this site.
+
+If your ILM policy was designed to protect against the loss of a single site, copies of your object data should still exist on the remaining sites. 4. Review the reasons in the Decommission Possible column to determine which sites can be decommissioned currently. You have reviewed the considerations for removing a site.
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission or the Maintenance and ILM permissions. Steps
+
+1. Select MAINTENANCE > Tasks > Decommission.
+
+2. Select Decommission Site.
+
+Step 1 (Select Site) of the Decommission Site wizard appears. This step includes an alphabetic list of the sites in your StorageGRID system.
+
+1460
+
+3. View the values in the Used Storage Capacity column to determine how much storage is currently being used for object data at each site.
+
+The Used Storage Capacity is an estimate. If nodes are offline, the Used Storage Capacity is the last known value for the site.
+
+For a connected site decommission, this value represents how much object data will need to be moved to other sites or deleted by ILM before you can safely decommission this site.
+
+For a disconnected site decommission, this value represents how much of your system’s data storage will become inaccessible when you decommission this site.
+
+If your ILM policy was designed to protect against the loss of a single site, copies of your object data should still exist on the remaining sites. 4. Review the reasons in the Decommission Possible column to determine which sites can be decommissioned currently.
+
+If there is more than one reason a site can’t be decommissioned, the most critical reason is shown.
+
+Decommission Possible reason Description
+
+Next step Green check mark (
+
+)
+
+You can decommission this site.
+
+Go to the next step.
+
+No. This site contains the primary Admin Node.
+
+You can’t decommission a site containing the primary Admin Node.
+
+None. You can’t perform this procedure.
+
+1461
+
+Decommission Possible reason Description
+
+Next step
+
+No. This site contains one or more Archive Nodes.
+
+You can’t decommission a site containing an Archive Node.
+
+None. You can’t perform this procedure.
+
+No. All nodes at this site are disconnected. Contact your NetApp account representative.
+
+You can’t perform a connected site decommission unless every node in the site is connected (
+
+).
+
+If you want to perform a disconnected site decommission, you must contact your NetApp account representative, who will review your requirements and enable the rest of the Decommission Site wizard.
+
+IMPORTANT: Never take online nodes offline so that you can remove a site. You will lose data. ) for the Raleigh The example shows a StorageGRID system with three sites. The green check mark ( and Sunnyvale sites indicates that you can decommission those sites. However, you can’t decommission the Vancouver site because it contains the primary Admin Node.
+
+5. If decommission is possible, select the radio button for the site.
+
+The Next button is enabled.
+
+6. Select Next. Step 2 (View Details) appears.
+
+Step 2: View Details
+
+From Step 2 (View Details) of the Decommission Site wizard, you can review which nodes are included at the site, see how much space has been used on each Storage Node, and assess how much free space is available at the other sites in your grid.
+
+Before you begin
+
+Before decommissioning a site, you must review how much object data exists at the site.
+
+If you are performing a connected site decommission, you must understand how much object data currently exists at the site before updating ILM. Based on site capacities and your data protection needs, you can create new ILM rules to move data to other sites or to delete object data from the site.
+
+Perform any required Storage Node expansions before starting the decommission procedure if possible.
+
+If you are performing a disconnected site decommission, you must understand how much object data will become permanently inaccessible when you remove the site. If you are performing a disconnected site decommission, ILM can’t move or delete object data. Any data that remains at the site will be lost. However, if your ILM policy was designed to protect against the loss of a single site, copies of your object data still exist on the remaining sites. See Enable site-loss protection.
+
+1462
+
+Steps

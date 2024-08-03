@@ -1,0 +1,115 @@
+Steps
+
+1. Select Finish to close the Simulate policy dialog. On the details page for the policy, select Retention diagram. Then select Expand all or View details for each rule as needed.
+
+2. Review the rule’s tenant account, reference time, and filtering criteria.
+
+As an example, suppose the metadata for the X-men rule was entered as "x-men01" instead of "x-men."
+
+3. To resolve the error, correct the rule as follows:
+
+If the rule is part of the policy, you can either clone the rule or remove the rule from the policy and then edit it.
+
+If the rule is part of the active policy, you must clone the rule. You can’t edit or remove a rule from the active policy.
+
+4. Perform the simulation again.
+
+In this example, the corrected X-men rule now matches the Beast.jpg object based on the series=x- men user metadata, as expected.
+
+678 Manage ILM policy tags
+
+You can view ILM policy tag details, edit a tag, or remove a tag.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permissions.
+
+View ILM policy tag details
+
+To view the details for a tag:
+
+1. Select ILM > Policy tags.
+
+2. Select the name of the policy from the table. The details page for the tag appears.
+
+3. On the details page, view the previous history of assigned policies.
+
+4. View a policy by selecting it. Edit ILM policy tag
+
+Tag names and descriptions are visible to tenants. Choose values that will help tenants make an informed decision when selecting policy tags to assign to their buckets. For example, if the assigned policy will delete objects after a period of time, you could communicate that in the description. Do not include sensitive information in these fields.
+
+To edit the description for an existing tag:
+
+1. Select ILM > Policy tags.
+
+2. Select the checkbox for the tag, then select Edit.
+
+Alternatively, select the name of the tag. The details page for the tag appears, and you can select Edit on that page.
+
+3. Change the tag description as needed
+
+4. Select Save. Remove ILM policy tag
+
+When you remove a policy tag, any buckets that are assigned that tag will have the Default policy applied.
+
+To remove a tag:
+
+679
+
+1. Select ILM > Policy tags.
+
+2. Select the checkbox for the tag, then select Remove. A confirmation dialog box appears.
+
+Alternatively, select the name of the tag. The details page for the tag appears, and you can select Remove on that page.
+
+3. Select Yes to delete the tag. 3. On the details page, view the previous history of assigned policies.
+
+4. View a policy by selecting it. Edit ILM policy tag
+
+Tag names and descriptions are visible to tenants. Choose values that will help tenants make an informed decision when selecting policy tags to assign to their buckets. For example, if the assigned policy will delete objects after a period of time, you could communicate that in the description. Do not include sensitive information in these fields.
+
+To edit the description for an existing tag:
+
+1. Select ILM > Policy tags.
+
+2. Select the checkbox for the tag, then select Edit.
+
+Alternatively, select the name of the tag. The details page for the tag appears, and you can select Edit on that page.
+
+3. Change the tag description as needed
+
+4. Select Save. Remove ILM policy tag
+
+When you remove a policy tag, any buckets that are assigned that tag will have the Default policy applied.
+
+To remove a tag:
+
+679
+
+1. Select ILM > Policy tags.
+
+2. Select the checkbox for the tag, then select Remove. A confirmation dialog box appears.
+
+Alternatively, select the name of the tag. The details page for the tag appears, and you can select Remove on that page.
+
+3. Select Yes to delete the tag.
+
+Verify an ILM policy with object metadata lookup
+
+After you have activated an ILM policy, you should ingest representative test objects into the StorageGRID system. You should then perform an object metadata lookup to confirm that copies are being made as intended and placed in the correct locations.
+
+Before you begin
+
+You have an object identifier, which can be one of: UUID: The object’s Universally Unique Identifier. Enter the UUID in all uppercase. ◦ CBID: The object’s unique identifier within StorageGRID. You can obtain an object’s CBID from the audit log. Enter the CBID in all uppercase.
+
+S3 bucket and object key: When an object is ingested through the S3 interface, the client application uses a bucket and object key combination to store and identify the object. If the S3 bucket is versioned and you want to look up a specific version of an S3 object using the bucket and object key, you have the version ID.
+
+Swift container and object name: When an object is ingested through the Swift interface, the client application uses a container and object name combination to store and identify the object. Steps
+
+1. Ingest the object.
+
+2. Select ILM > Object metadata lookup.
+
+3. Type the object’s identifier in the Identifier field. You can enter a UUID, CBID, S3 bucket/object-key, or Swift container/object-name.

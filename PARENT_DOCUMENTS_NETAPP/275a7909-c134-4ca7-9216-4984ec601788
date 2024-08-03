@@ -1,0 +1,97 @@
+1. Install the required dependencies, as follows:
+
+a. Install Node.js (see https://nodejs.org/en/download/).
+
+b. Install the required Node.js modules (puppeteer and jsdom): npm install -g <module>
+
+2. Pass the Python script to the Python interpreter to run the script.
+
+The Python script will then call the corresponding Node.js script to perform the Azure SSO interactions.
+
+3. When prompted, enter values for the following arguments (or pass them in using parameters):
+
+The SSO email address used to sign in to Azure ◦ The address for StorageGRID ◦ The tenant account ID, if you want to access the Tenant Management API
+
+4. When prompted, enter the password and be prepared to provide an MFA authorization to Azure if
+
+300
+
+requested.
+
+The script assumes MFA is done using Microsoft Authenticator. You might need to modify the script to support other forms of MFA (such as entering a code received in a text message). SSO operations can be executed using a series of API requests, but doing so is not straightforward. The Puppeteer Node.js module is used to scrape the Azure SSO interface.
+
+If you have a URL-encoding issue, you might see the error: Unsupported SAML version. Steps
+
+1. Install the required dependencies, as follows:
+
+a. Install Node.js (see https://nodejs.org/en/download/).
+
+b. Install the required Node.js modules (puppeteer and jsdom): npm install -g <module>
+
+2. Pass the Python script to the Python interpreter to run the script.
+
+The Python script will then call the corresponding Node.js script to perform the Azure SSO interactions.
+
+3. When prompted, enter values for the following arguments (or pass them in using parameters):
+
+The SSO email address used to sign in to Azure ◦ The address for StorageGRID ◦ The tenant account ID, if you want to access the Tenant Management API
+
+4. When prompted, enter the password and be prepared to provide an MFA authorization to Azure if
+
+300
+
+requested.
+
+The script assumes MFA is done using Microsoft Authenticator. You might need to modify the script to support other forms of MFA (such as entering a code received in a text message).
+
+The StorageGRID authorization token is provided in the output. You can now use the token for other requests, similar to how you would use the API if SSO was not being used.
+
+Use the API if single sign-on is enabled (PingFederate) If you have configured and enabled single sign-on (SSO) and you use PingFederate as the SSO provider, you must issue a series of API requests to obtain an authentication token that is valid for the Grid Management API or the Tenant Management API.
+
+Sign in to the API if single sign-on is enabled
+
+These instructions apply if you are using PingFederate as the SSO identity provider
+
+Before you begin
+
+You know the SSO username and password for a federated user who belongs to a StorageGRID user group.
+
+If you want to access the Tenant Management API, you know the tenant account ID. About this task
+
+To obtain an authentication token, you can use one of the following examples:
+
+The storagegrid-ssoauth.py Python script, which is located in the StorageGRID installation files directory (./rpms for Red Hat Enterprise Linux, ./debs for Ubuntu or Debian, and ./vsphere for VMware).
+
+An example workflow of curl requests.
+
+The curl workflow might time out if you perform it too slowly. You might see the error: A valid SubjectConfirmation was not found on this Response.
+
+The example curl workflow does not protect the password from being seen by other users.
+
+If you have a URL-encoding issue, you might see the error: Unsupported SAML version. Steps
+
+1. Select one of the following methods to obtain an authentication token: ◦ Use the storagegrid-ssoauth.py Python script. Go to step 2.
+
+301
+
+◦ Use curl requests. Go to step 3.
+
+2. If you want to use the storagegrid-ssoauth.py script, pass the script to the Python interpreter and run the script.
+
+When prompted, enter values for the following arguments:
+
+The SSO method. You can enter any variation of "pingfederate" (PINGFEDERATE, pingfederate, and so on).
+
+The SSO username ◦ The domain where StorageGRID is installed. This field is not used for PingFederate. You can leave it blank or enter any value.
+
+The address for StorageGRID ◦ The tenant account ID, if you want to access the Tenant Management API.
+
+The StorageGRID authorization token is provided in the output. You can now use the token for other requests, similar to how you would use the API if SSO was not being used.
+
+3. If you want to use curl requests, use the following procedure. a. Declare the variables needed to sign in.
+
+export SAMLUSER='my-sso-username' export SAMLPASSWORD='my-password' export TENANTACCOUNTID='12345' export STORAGEGRID_ADDRESS='storagegrid.example.com' To access the Grid Management API, use 0 as TENANTACCOUNTID. 301
+
+◦ Use curl requests. Go to step 3.
+
+2. If you want to use the storagegrid-ssoauth.py script, pass the script to the Python interpreter and run the script.

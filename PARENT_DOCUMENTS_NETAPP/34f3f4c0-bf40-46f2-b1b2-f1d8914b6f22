@@ -1,0 +1,69 @@
+x-amz-object-lock-mode, which can be COMPLIANCE or GOVERNANCE (case sensitive).
+
+If you specify x-amz-object-lock-mode, you must also specify x-amz-object-lock- retain-until-date.
+
+x-amz-object-lock-retain-until-date
+
+The retain-until-date value must be in the format 2020-08-10T21:46:00Z. Fractional seconds are allowed, but only 3 decimal digits are preserved (milliseconds precision). Other ISO 8601 formats aren’t allowed.
+
+The retain-until-date must be in the future.
+
+x-amz-object-lock-legal-hold If legal hold is ON (case-sensitive), the object is placed under a legal hold. If legal hold is OFF, no legal hold is placed. Any other value results in a 400 Bad Request (InvalidArgument) error.
+
+If you use any of these request headers, be aware of these restrictions:
+
+The Content-MD5 request header is required if any x-amz-object-lock-* request header is present in the PutObject request. Content-MD5 is not required for CopyObject or CreateMultipartUpload.
+
+If the bucket does not have S3 Object Lock enabled and a x-amz-object-lock-* request header is present, a 400 Bad Request (InvalidRequest) error is returned.
+
+The PutObject request supports the use of x-amz-storage-class: REDUCED_REDUNDANCY to match AWS behavior. However, when an object is ingested into a bucket with S3 Object Lock enabled, StorageGRID will always perform a dual-commit ingest. A subsequent GET or HeadObject version response will include the headers x-amz-object-lock- mode, x-amz-object-lock-retain-until-date, and x-amz-object-lock-legal-hold, if configured and if the request sender has the correct s3:Get* permissions.
+
+You can use the s3:object-lock-remaining-retention-days policy condition key to limit the minimum and maximum allowable retention periods for your objects.
+
+894
+
+How to update retention settings for an object If you use any of these request headers, be aware of these restrictions:
+
+The Content-MD5 request header is required if any x-amz-object-lock-* request header is present in the PutObject request. Content-MD5 is not required for CopyObject or CreateMultipartUpload.
+
+If the bucket does not have S3 Object Lock enabled and a x-amz-object-lock-* request header is present, a 400 Bad Request (InvalidRequest) error is returned.
+
+The PutObject request supports the use of x-amz-storage-class: REDUCED_REDUNDANCY to match AWS behavior. However, when an object is ingested into a bucket with S3 Object Lock enabled, StorageGRID will always perform a dual-commit ingest. A subsequent GET or HeadObject version response will include the headers x-amz-object-lock- mode, x-amz-object-lock-retain-until-date, and x-amz-object-lock-legal-hold, if configured and if the request sender has the correct s3:Get* permissions.
+
+You can use the s3:object-lock-remaining-retention-days policy condition key to limit the minimum and maximum allowable retention periods for your objects.
+
+894
+
+How to update retention settings for an object
+
+If you need to update the legal hold or retention settings for an existing object version, you can perform the following object subresource operations:
+
+PutObjectLegalHold
+
+If the new legal-hold value is ON, the object is placed under a legal hold. If the legal-hold value is OFF, the legal hold is lifted.
+
+PutObjectRetention The mode value can be COMPLIANCE or GOVERNANCE (case sensitive). ◦ The retain-until-date value must be in the format 2020-08-10T21:46:00Z. Fractional seconds are allowed, but only 3 decimal digits are preserved (milliseconds precision). Other ISO 8601 formats aren’t allowed.
+
+If an object version has an existing retain-until-date, you can only increase it. The new value must be in the future.
+
+How to use GOVERNANCE mode
+
+Users who have the s3:BypassGovernanceRetention permission can bypass the active retention settings of an object that uses GOVERNANCE mode. Any DELETE or PutObjectRetention operations must include the x-amz-bypass-governance-retention:true request header. These users can perform these additional operations:
+
+Perform DeleteObject or DeleteObjects operations to delete an object version before its retention period has elapsed.
+
+Objects that are under a legal hold can’t be deleted. Legal hold must be OFF. Perform PutObjectRetention operations that change an object version’s mode from GOVERNANCE to COMPLIANCE before the object’s retention period has elapsed.
+
+Changing the mode from COMPLIANCE to GOVERNANCE is never allowed.
+
+Perform PutObjectRetention operations to increase, decrease, or remove an object version’s retention period.
+
+Related information
+
+Manage objects with S3 Object Lock
+
+Use S3 Object Lock to retain objects
+
+Amazon Simple Storage Service User Guide: Using S3 Object Lock Create S3 lifecycle configuration
+
+You can create an S3 lifecycle configuration to control when specific objects are deleted from the StorageGRID system.

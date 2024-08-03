@@ -1,0 +1,83 @@
+Read-write (default): Users can sign in to Tenant Manager and manage the tenant configuration. ◦ Read-only: Users can only view settings and features. They can’t make any changes or perform any operations in the Tenant Manager or Tenant Management API. Local read-only users can change their own passwords.
+
+If a user belongs to multiple groups and any group is set to Read-only, the user will have read-only access to all selected settings and features.
+
+2. Select one or more permissions for this group.
+
+See Tenant management permissions.
+
+3. Select Continue. Set S3 group policy
+
+The group policy determines which S3 access permissions users will have.
+
+Steps
+
+1. Select the policy you want to use for this group.
+
+Group policy
+
+Description
+
+No S3 Access
+
+Default. Users in this group don’t have access to S3 resources, unless access is granted with a bucket policy. If you select this option, only the root user will have access to S3 resources by default. Read Only Access
+
+Users in this group have read-only access to S3 resources. For example, users in this group can list objects and read object data, metadata, and tags. When you select this option, the JSON string for a read-only group policy appears in the text box. You can’t edit this string.
+
+789
+
+Group policy
+
+Description Full Access
+
+Users in this group have full access to S3 resources, including buckets. When you select this option, the JSON string for a full- access group policy appears in the text box. You can’t edit this string.
+
+Ransomware Mitigation
+
+This example policy applies to all buckets for this tenant. Users in this group can perform common actions, but can’t permanently delete objects from buckets that have object versioning enabled.
+
+Tenant Manager users who have the Manage all buckets permission can override this group policy. Limit the Manage all buckets permission to trusted users, and use Multi-Factor Authentication (MFA) where available. Custom
+
+Users in the group are granted the permissions you specify in the text box.
+
+2. If you selected Custom, enter the group policy. Each group policy has a size limit of 5,120 bytes. You must enter a valid JSON formatted string.
+
+For detailed information about group policies, including language syntax and examples, see Example group policies.
+
+3. If you are creating a local group, select Continue. If you are creating a federated group, select Create group and Finish. Add users (local groups only)
+
+You can save the group without adding users, or you can optionally add any local users that already exist.
+
+If your tenant account has the Use grid federation connection permission, any users you select when you create a local group on the source grid aren’t included when the group is cloned to the destination grid. For this reason, don’t select users when you create the group. Instead, select the group when you create the users. Steps
+
+1. Optionally, select one or more local users for this group.
+
+2. Select Create group and Finish.
+
+The group you created appears in the list of groups. Tenant Manager users who have the Manage all buckets permission can override this group policy. Limit the Manage all buckets permission to trusted users, and use Multi-Factor Authentication (MFA) where available. Custom
+
+Users in the group are granted the permissions you specify in the text box.
+
+2. If you selected Custom, enter the group policy. Each group policy has a size limit of 5,120 bytes. You must enter a valid JSON formatted string.
+
+For detailed information about group policies, including language syntax and examples, see Example group policies.
+
+3. If you are creating a local group, select Continue. If you are creating a federated group, select Create group and Finish. Add users (local groups only)
+
+You can save the group without adding users, or you can optionally add any local users that already exist.
+
+If your tenant account has the Use grid federation connection permission, any users you select when you create a local group on the source grid aren’t included when the group is cloned to the destination grid. For this reason, don’t select users when you create the group. Instead, select the group when you create the users. Steps
+
+1. Optionally, select one or more local users for this group.
+
+2. Select Create group and Finish.
+
+The group you created appears in the list of groups.
+
+If your tenant account has the Use grid federation connection permission and you are on the tenant’s source grid, the new group is cloned to the tenant’s destination grid. Success appears as the Cloning status in the Overview section of the group’s detail page. Create groups for a Swift tenant
+
+You can manage access permissions for a Swift tenant account by importing federated groups or creating local groups. At least one group must have the Swift Administrator permission, which is required to manage the containers and objects for a Swift tenant
+
+790
+
+account.

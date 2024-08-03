@@ -1,0 +1,105 @@
+If the Start Installation button is not enabled, you might need to change the network configuration or port settings. For instructions, see the maintenance instructions for your appliance.
+
+6. From the StorageGRID Appliance Installer home page, click Start Installation.
+
+1560
+
+The Current state changes to "Installation is in progress," and the Monitor Installation page is displayed.
+
+If you need to access the Monitor Installation page manually, click Monitor Installation from the menu bar. See Monitor appliance installation. Monitor StorageGRID appliance installation
+
+The StorageGRID Appliance Installer provides status until installation is complete. When the software installation is complete, the appliance is rebooted. Steps
+
+1. To monitor the installation progress, click Monitor Installation from the menu bar.
+
+1561
+
+The Monitor Installation page shows the installation progress.
+
+The blue status bar indicates which task is currently in progress. Green status bars indicate tasks that have completed successfully.
+
+The installer ensures that tasks completed in a previous install aren’t re-run. If you are re- running an installation, any tasks that don’t need to be re-run are shown with a green status bar and a status of "Skipped."
+
+2. Review the progress of first two installation stages.
+
+1. Configure storage
+
+During this stage, the installer connects to the storage controller, clears any existing configuration, communicates with SANtricity OS to configure volumes, and configures host settings.
+
+2. Install OS
+
+During this stage, the installer copies the base operating system image for StorageGRID to the appliance. 3. Continue monitoring the installation progress until the Install StorageGRID stage pauses and a message appears on the embedded console prompting you to approve this node on the Admin Node using the Grid Manager.
+
+1562
+
+4. Go to Select Start Recovery to configure appliance Storage Node.
+
+Select Start Recovery to configure appliance Storage Node
+
+You must select Start Recovery in the Grid Manager to configure an appliance Storage Node as a replacement for the failed node.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+1563
+
+• You have deployed a recovery appliance Storage Node. The installer ensures that tasks completed in a previous install aren’t re-run. If you are re- running an installation, any tasks that don’t need to be re-run are shown with a green status bar and a status of "Skipped."
+
+2. Review the progress of first two installation stages.
+
+1. Configure storage
+
+During this stage, the installer connects to the storage controller, clears any existing configuration, communicates with SANtricity OS to configure volumes, and configures host settings.
+
+2. Install OS
+
+During this stage, the installer copies the base operating system image for StorageGRID to the appliance. 3. Continue monitoring the installation progress until the Install StorageGRID stage pauses and a message appears on the embedded console prompting you to approve this node on the Admin Node using the Grid Manager.
+
+1562
+
+4. Go to Select Start Recovery to configure appliance Storage Node.
+
+Select Start Recovery to configure appliance Storage Node
+
+You must select Start Recovery in the Grid Manager to configure an appliance Storage Node as a replacement for the failed node.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+1563
+
+• You have deployed a recovery appliance Storage Node.
+
+You have the start date of any repair jobs for erasure-coded data.
+
+You have verified that the Storage Node has not been rebuilt within the last 15 days. Steps
+
+1. From the Grid Manager, select MAINTENANCE > Tasks > Recovery.
+
+2. Select the grid node you want to recover in the Pending Nodes list.
+
+Nodes appear in the list after they fail, but you can’t select a node until it has been reinstalled and is ready for recovery.
+
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+When the grid node reaches the "Waiting for Manual Steps" stage, go to the next topic and perform the manual steps to remount and reformat appliance storage volumes.
+
+At any point during the recovery, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+1564
+
+If you want to retry the recovery after resetting the procedure, you must restore the appliance node to a pre-installed state by running sgareinstall on the node. Remount and reformat appliance storage volumes (manual steps)

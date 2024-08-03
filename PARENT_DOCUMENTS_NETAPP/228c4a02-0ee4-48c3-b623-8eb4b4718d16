@@ -1,0 +1,133 @@
+366
+
+Add connection
+
+Perform these steps on either of the two StorageGRID systems. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node on either grid.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select Add connection.
+
+4. Enter details for the connection.
+
+Field
+
+Description
+
+Connection name
+
+A unique name to help you recognize this connection, for example, "Grid 1-Grid 2." FQDN or IP for this grid
+
+One of the following:
+
+The FQDN of the grid you are currently signed into
+
+A VIP address of an HA group on this grid
+
+An IP address of an Admin Node or Gateway Node on this grid. The IP can be on any network that the destination grid can reach.
+
+Port
+
+The port you want to use for this connection. You can enter any unused port number from 23000 to 23999. You have reviewed the considerations and requirements for configuring grid federation connections.
+
+If you plan to use fully qualified domain names (FQDNs) for each grid instead of IP or VIP addresses, you know which names to use and you have confirmed that the DNS server for each grid has the appropriate entries.
+
+You are using a supported web browser.
+
+You have Root access permission and the provisioning passphrase for both grids.
+
+366
+
+Add connection
+
+Perform these steps on either of the two StorageGRID systems. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node on either grid.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select Add connection.
+
+4. Enter details for the connection.
+
+Field
+
+Description
+
+Connection name
+
+A unique name to help you recognize this connection, for example, "Grid 1-Grid 2." FQDN or IP for this grid
+
+One of the following:
+
+The FQDN of the grid you are currently signed into
+
+A VIP address of an HA group on this grid
+
+An IP address of an Admin Node or Gateway Node on this grid. The IP can be on any network that the destination grid can reach.
+
+Port
+
+The port you want to use for this connection. You can enter any unused port number from 23000 to 23999.
+
+Both grids in this connection will use the same port. You must ensure that no node in either grid uses this port for other connections. Certificate valid days for this grid
+
+The number of days you want the security certificates for this grid in the connection to be valid. The default value is 730 days (2 years), but you can enter any value from 1 to 762 days.
+
+StorageGRID automatically generates client and server certificates for each grid when you save the connection.
+
+Provisioning passphrase for this grid
+
+The provisioning passphrase for the grid you are signed in to. FQDN or IP for the other grid
+
+One of the following:
+
+The FQDN of the grid you want to connect to
+
+A VIP address of an HA group on the other grid
+
+An IP address of an Admin Node or Gateway Node on the other grid. The IP can be on any network that the source grid can reach.
+
+5. Select Save and continue.
+
+6. For the Download verification file step, select Download verification file.
+
+367
+
+After the connection is completed on the other grid, you can no longer download the verification file from either grid.
+
+7. Locate the downloaded file (connection-name.grid-federation), and save it to a safe location.
+
+This file contains secrets (masked as *) and other sensitive details and must be securely stored and transmitted.
+
+8. Select Close to return to the Grid federation page.
+
+9. Confirm that the new connection is shown and that its Connection status is Waiting to connect.
+
+10. Provide the connection-name.grid-federation file to the grid admin for the other grid. Complete connection
+
+Perform these steps on the StorageGRID system you are connecting to (the other grid). Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select Upload verification file to access the Upload page.
+
+4. Select Upload verification file. Then, browse to and select the file that was downloaded from the first grid (connection-name.grid-federation).
+
+The details for the connection are shown.
+
+5. Optionally, enter a different number of valid days for the security certificates for this grid. The Certificate valid days entry defaults to the value you entered on the first grid, but each grid can use different expiration dates.
+
+In general, use the same number of days for the certificates on both sides of the connection.
+
+If the certificates on either end of the connection expire, the connection will stop working and replications will be pending until the certificates are updated.
+
+6. Enter the provisioning passphrase for the grid you are currently signed in to.
+
+7. Select Save and test. The certificates are generated and the connection is tested. If the connection is valid, a success message appears and the new connection is listed on the Grid federation page. The Connection status will be Connected.
+
+If an error message appears, address any issues. See Troubleshoot grid federation errors.

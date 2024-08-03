@@ -1,0 +1,115 @@
+If Missing object copies detected is greater than zero and the Objects lost alert has been triggered, then data integrity could be affected. Contact technical support. You can investigate lost object copies by using grep to extract the LLST audit messages: grep LLST audit_file_name.
+
+This procedure is similar to the one for investigating lost objects, although for object copies you search for LLST instead of OLST.
+
+12. If you selected the strong-site or strong-global consistency for the job, wait approximately three weeks for metadata consistency and then rerun the job on the same volumes again.
+
+When StorageGRID has had time to achieve metadata consistency for the nodes and volumes included in the job, rerunning the job could clear erroneously reported missing object copies or cause additional object copies to be checked if they were missed. a. Select MAINTENANCE > Object existence check > Job history.
+
+b. Determine which jobs are ready to be rerun:
+
+i. Look at the End time column to determine which jobs were run more than three weeks ago.
+
+1257
+
+ii. For those jobs, scan the Consistency control column for strong-site or strong-global.
+
+c. Select the checkbox for each job you want to rerun, then select Rerun.
+
+d. In the Rerun jobs wizard, review the selected nodes and volumes and the consistency. If Missing object copies detected is greater than zero and the Objects lost alert has been triggered, then data integrity could be affected. Contact technical support. You can investigate lost object copies by using grep to extract the LLST audit messages: grep LLST audit_file_name.
+
+This procedure is similar to the one for investigating lost objects, although for object copies you search for LLST instead of OLST.
+
+12. If you selected the strong-site or strong-global consistency for the job, wait approximately three weeks for metadata consistency and then rerun the job on the same volumes again.
+
+When StorageGRID has had time to achieve metadata consistency for the nodes and volumes included in the job, rerunning the job could clear erroneously reported missing object copies or cause additional object copies to be checked if they were missed. a. Select MAINTENANCE > Object existence check > Job history.
+
+b. Determine which jobs are ready to be rerun:
+
+i. Look at the End time column to determine which jobs were run more than three weeks ago.
+
+1257
+
+ii. For those jobs, scan the Consistency control column for strong-site or strong-global.
+
+c. Select the checkbox for each job you want to rerun, then select Rerun.
+
+d. In the Rerun jobs wizard, review the selected nodes and volumes and the consistency.
+
+e. When you are ready to rerun the jobs, select Rerun.
+
+The Active job tab appears. All the jobs you selected are rerun as one job at a consistency of strong-site. A Related jobs field in the Details section lists the job IDs for the original jobs.
+
+After you finish If you still have concerns about data integrity, go to SUPPORT > Tools > Grid topology > site > Storage Node > LDR > Verification > Configuration > Main and increase the Background Verification Rate. Background verification checks the correctness of all stored object data and repairs any issues that it finds. Finding and repairing potential issues as quickly as possible reduces the risk of data loss. Troubleshoot S3 PUT Object size too large alert
+
+The S3 PUT Object size too large alert is triggered if a tenant attempts a non-multipart PutObject operation that exceeds the S3 size limit of 5 GiB.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+Determine which tenants use objects that are larger than 5 GiB, so you can notify them.
+
+1258
+
+Steps
+
+1. Go to CONFIGURATION > Monitoring > Audit and syslog server.
+
+2. If Client Writes are Normal, access the audit log:
+
+a. Enter ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #. e. Enter cd /var/local/log
+
+f. Identify which tenants are using objects larger than 5 GiB.
+
+i. Enter zgrep SPUT * | egrep "CSIZ\(UI64\):[0-9]*[5-9][0-9]{9}"
+
+ii. For each audit message in the results, look at S3AI field to determine the tenant account ID. Use the other fields in the message to determine which IP address was used by the client, the bucket, and the object: Code
+
+Description
+
+SAIP
+
+Source IP
+
+S3AI
+
+Tenant ID
+
+S3BK
+
+Bucket
+
+S3KY
+
+Object
+
+CSIZ
+
+Size (bytes)
+
+Example audit log results 1258
+
+Steps
+
+1. Go to CONFIGURATION > Monitoring > Audit and syslog server.
+
+2. If Client Writes are Normal, access the audit log:
+
+a. Enter ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.

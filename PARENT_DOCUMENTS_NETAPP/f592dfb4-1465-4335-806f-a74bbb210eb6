@@ -1,0 +1,99 @@
+a. Log in to the recovered Admin Node: i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop
+
+c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file. Copying the Prometheus database might take an hour or more. Some Grid Manager features will be unavailable while services are stopped on the source Admin Node. Steps
+
+1. Log in to the source Admin Node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+2. From the source Admin Node, stop the Prometheus service: service prometheus stop
+
+3. Complete the following steps on the recovered Admin Node:
+
+a. Log in to the recovered Admin Node: i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Stop the Prometheus service: service prometheus stop
+
+c. Add the SSH private key to the SSH agent. Enter:ssh-add
+
+d. Enter the SSH Access Password listed in the Passwords.txt file.
+
+e. Copy the Prometheus database from the source Admin Node to the recovered Admin Node: /usr/local/prometheus/bin/prometheus-clone-db.sh Source_Admin_Node_IP
+
+f. When prompted, press Enter to confirm that you want to destroy the new Prometheus database on the
+
+recovered Admin Node.
+
+The original Prometheus database and its historical data are copied to the recovered Admin Node. When the copy operation is done, the script starts the recovered Admin Node. The following status appears:
+
+1624
+
+Database cloned, starting services
+
+g. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter:ssh-add -D
+
+4. Restart the Prometheus service on the source Admin Node.service prometheus start
+
+Recover from non-primary Admin Node failures Recover from non-primary Admin Node failures: Overview
+
+You must complete the following tasks to recover from a non-primary Admin Node failure. One Admin Node hosts the Configuration Management Node (CMN) service and is known as the primary Admin Node. Although you can have multiple Admin Nodes, each StorageGRID system includes only one primary Admin Node. All other Admin Nodes are non-primary Admin Nodes.
+
+Copy audit logs from failed non-primary Admin Node
+
+If you are able to copy audit logs from the failed Admin Node, you should preserve them to maintain the grid’s record of system activity and usage. You can restore the preserved audit logs to the recovered non-primary Admin Node after it is up and running.
+
+This procedure copies the audit log files from the failed Admin Node to a temporary location on a separate grid node. These preserved audit logs can then be copied to the replacement Admin Node. Audit logs aren’t automatically copied to the new Admin Node. Depending on the type of failure, you might not be able to copy audit logs from a failed Admin Node. If the deployment has only one Admin Node, the recovered Admin Node starts recording events to the audit log in a new empty file and previously recorded data is lost. If the deployment includes more than one Admin Node, you can recover the audit logs from another Admin Node.
+
+If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery.
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available. a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Stop the AMS service to prevent it from creating a new log file:service ams stop
+
+3. Navigate to the audit export directory: cd /var/local/log
+
+1625
+
+4. Rename the source audit.log file to a unique numbered file name. For example, rename the audit.log file to
+
+2023-10-25.txt.1.
+
+ls -l mv audit.log 2023-10-25.txt.1
+
+5. Restart the AMS service: service ams start If the audit logs aren’t accessible on the failed Admin Node now, you might be able to access them later, for example, after host recovery.
+
+1. Log in to the failed Admin Node if possible. Otherwise, log in to the primary Admin Node or another Admin Node, if available. a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -

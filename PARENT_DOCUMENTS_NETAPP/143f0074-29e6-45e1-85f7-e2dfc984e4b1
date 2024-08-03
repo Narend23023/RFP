@@ -1,0 +1,81 @@
+You must confirm that the ILM rules are in the correct order. When the policy is activated, new and existing objects are evaluated by the rules in the order listed, starting at the top.
+
+9. As required, select Select rules to add or remove rules.
+
+10. When you are done, select Save.
+
+11. Repeat these steps to create additional ILM policies.
+
+12. Simulate an ILM policy. You should always simulate a policy before activating it to ensure it works as expected.
+
+Simulate a policy
+
+Simulate a policy on test objects before activating the policy and applying it to your production data.
+
+Before you begin
+
+You know the S3 bucket/object-key or the Swift container/object-name for each object you want to test. Steps
+
+1. Using an S3 or Swift client or the S3 Console, ingest the objects required to test each rule.
+
+2. On the ILM policies page, select the checkbox for the policy, then select Simulate.
+
+3. In the Object field, enter the S3 bucket/object-key or the Swift container/object-name for a test object. For example, bucket-01/filename.png.
+
+4. If S3 versioning is enabled, optionally enter a version ID for the object in the Version ID field.
+
+5. Select Simulate.
+
+6. In the Simulation results section, confirm that each object was matched by the correct rule.
+
+7. To determine which storage pool or erasure-coding profile is in effect, select the name of the matched rule to go to the rule details page.
+
+Review any changes to the placement of existing replicated and erasure-coded objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented. Results
+
+Any edits to the policy’s rules will be reflected in the Simulation results and show the new match and previous
+
+673
+
+match. The Simulate policy window retains the objects you tested until you select either Clear all or the remove icon
+
+for each object in the Simulation results list.
+
+Related information Example ILM policy simulations
+
+Activate a policy
+
+When you activate a single new ILM policy, existing objects and newly ingested objects are managed by that policy. When you activate multiple policies, ILM policy tags assigned to buckets determine the objects to be managed.
+
+Before you activate a new policy:
+
+1. Simulate the policy to confirm that it behaves as you expect.
+
+2. Review any changes to the placement of existing replicated and erasure-coded objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented.
+
+Errors in an ILM policy can cause unrecoverable data loss. About this task
+
+When you activate an ILM policy, the system distributes the new policy to all nodes. However, the new active policy might not actually take effect until all grid nodes are available to receive the new policy. In some cases, the system waits to implement a new active policy to ensure that grid objects aren’t accidentally removed. Specifically: Any edits to the policy’s rules will be reflected in the Simulation results and show the new match and previous
+
+673
+
+match. The Simulate policy window retains the objects you tested until you select either Clear all or the remove icon
+
+for each object in the Simulation results list.
+
+Related information Example ILM policy simulations
+
+Activate a policy
+
+When you activate a single new ILM policy, existing objects and newly ingested objects are managed by that policy. When you activate multiple policies, ILM policy tags assigned to buckets determine the objects to be managed.
+
+Before you activate a new policy:
+
+1. Simulate the policy to confirm that it behaves as you expect.
+
+2. Review any changes to the placement of existing replicated and erasure-coded objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented.
+
+Errors in an ILM policy can cause unrecoverable data loss. About this task
+
+When you activate an ILM policy, the system distributes the new policy to all nodes. However, the new active policy might not actually take effect until all grid nodes are available to receive the new policy. In some cases, the system waits to implement a new active policy to ensure that grid objects aren’t accidentally removed. Specifically:
+
+If you make policy changes that increase data redundancy or durability, those changes are implemented immediately. For example, if you activate a new policy that includes a three-copies rule instead of a two-copies rule, that policy will be implemented right away because it increases data redundancy. If you make policy changes that could decrease data redundancy or durability, those changes will not be implemented until all grid nodes are available. For example, if you activate a new policy that uses a two- copies rule instead of a three-copies rule, the new policy will appear in the Active policy tab but it will not take effect until all nodes are online and available. Steps

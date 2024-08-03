@@ -1,0 +1,121 @@
+Steps
+
+1. From the Browser SSO tab, select Configure Browser SSO.
+
+2. On the SAML profiles tab, select the SP-initiated SSO, SP-initial SLO, IdP-initiated SSO, and IdP- initiated SLO options.
+
+3. Select Next.
+
+4. On the Assertion Lifetime tab, make no changes.
+
+5. On the Assertion Creation tab, select Configure Assertion Creation. a. On the Identity Mapping tab, select Standard.
+
+b. On the Attribute Contract tab, use the SAML_SUBJECT as the Attribute Contract and the unspecified
+
+name format that was imported.
+
+6. For Extend the Contract, select Delete to remove the urn:oid, which is not used.
+
+348
+
+Map adapter instance Steps
+
+1. On the Authentication Source Mapping tab, select Map New Adapter Instance.
+
+2. On the Adapter instance tab, select the adapter instance you created.
+
+3. On the Mapping Method tab, select Retrieve Additional Attributes From a Data Store.
+
+4. On the Attribute Source & User Lookup tab, select Add Attribute Source.
+
+5. On the Data Store tab, provide a description and select the data store you added.
+
+6. On the LDAP Directory Search tab:
+
+Enter the Base DN, which should exactly match the value you entered in StorageGRID for the LDAP server.
+
+For the Search Scope, select Subtree. ◦ For the Root Object Class, search for and add either of these attributes: objectGUID or userPrincipalName.
+
+7. On the LDAP Binary Attribute Encoding Types tab, select Base64 for the objectGUID attribute.
+
+8. On the LDAP Filter tab, enter sAMAccountName=${username}. 9. On the Attribute Contract Fulfillment tab, select LDAP (attribute) from the Source drop-down and select either objectGUID or userPrincipalName from the Value drop-down.
+
+10. Review and then save the attribute source.
+
+11. On the Failsave Attribute Source tab, select Abort the SSO Transaction.
+
+12. Review the summary and select Done.
+
+13. Select Done. Configure protocol settings
+
+Steps
+
+1. On the SP Connection > Browser SSO > Protocol Settings tab, select Configure Protocol Settings.
+
+2. On the Assertion Consumer Service URL tab, accept the default values, which were imported from the StorageGRID SAML metadata (POST for Binding and /api/saml-response for Endpoint URL).
+
+3. On the SLO Service URLs tab, accept the default values, which were imported from the StorageGRID SAML metadata (REDIRECT for Binding and /api/saml-logout for Endpoint URL.
+
+4. On the Allowable SAML Bindings tab, clear ARTIFACT and SOAP. Only POST and REDIRECT are required.
+
+5. On the Signature Policy tab, leave the Require Authn Requests to be Signed and Always Sign Assertion checkboxes selected.
+
+6. On the Encryption Policy tab, select None.
+
+7. Review the summary and select Done to save the protocol settings.
+
+8. Review the summary and select Done to save the Browser SSO settings. Configure credentials
+
+Steps
+
+1. From the SP Connection tab, select Credentials.
+
+349
+
+2. From the Credentials tab, select Configure Credentials.
+
+3. Select the signing certificate you created or imported.
+
+4. Select Next to go to Manage Signature Verification Settings.
+
+a. On the Trust Model tab, select Unanchored.
+
+b. On the Signature Verification Certificate tab, review the signing certificate information, which was
+
+imported from the StorageGRID SAML metadata.
+
+5. Review the summary screens and select Save to save the SP connection. Create additional SP connections
+
+You can copy the first SP connection to create the SP connections you need for each Admin Node in your grid. You upload new metadata for each copy.
+
+The SP connections for different Admin Nodes use identical settings, with the exception of the Partner’s Entity ID, Base URL, Connection ID, Connection Name, Signature Verification, and SLO Response URL. Steps
+
+1. Select Action > Copy to create a copy of the initial SP connection for each additional Admin Node. 6. On the Encryption Policy tab, select None.
+
+7. Review the summary and select Done to save the protocol settings.
+
+8. Review the summary and select Done to save the Browser SSO settings. Configure credentials
+
+Steps
+
+1. From the SP Connection tab, select Credentials.
+
+349
+
+2. From the Credentials tab, select Configure Credentials.
+
+3. Select the signing certificate you created or imported.
+
+4. Select Next to go to Manage Signature Verification Settings.
+
+a. On the Trust Model tab, select Unanchored.
+
+b. On the Signature Verification Certificate tab, review the signing certificate information, which was
+
+imported from the StorageGRID SAML metadata.
+
+5. Review the summary screens and select Save to save the SP connection. Create additional SP connections
+
+You can copy the first SP connection to create the SP connections you need for each Admin Node in your grid. You upload new metadata for each copy.
+
+The SP connections for different Admin Nodes use identical settings, with the exception of the Partner’s Entity ID, Base URL, Connection ID, Connection Name, Signature Verification, and SLO Response URL. Steps

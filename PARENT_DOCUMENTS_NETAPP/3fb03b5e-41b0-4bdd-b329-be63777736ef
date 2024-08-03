@@ -1,0 +1,73 @@
+3. Enter the Provisioning Passphrase.
+
+4. Click Start Recovery.
+
+1595
+
+5. Monitor the progress of the recovery in the Recovering Grid Node table.
+
+While the recovery procedure is running, you can click Reset to start a new recovery. A dialog box appears, indicating that the node will be left in an indeterminate state if you reset the procedure.
+
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node.
+
+Linux: Restart the node by running this command on the Linux host: storagegrid node force- recovery node-name 6. When the Storage Node reaches the "Waiting for Manual Steps" stage, go to Remount and reformat storage volumes (manual steps).
+
+1596 Remount and reformat storage volumes (manual steps)
+
+You must manually run two scripts to remount preserved storage volumes and to reformat any failed storage volumes. The first script remounts volumes that are properly formatted as StorageGRID storage volumes. The second script reformats any unmounted volumes, rebuilds Cassandra, if needed, and starts services.
+
+Before you begin
+
+You have already replaced the hardware for any failed storage volumes that you know require replacement.
+
+Running the sn-remount-volumes script might help you identify additional failed storage volumes.
+
+You have checked that a Storage Node decommissioning is not in progress, or you have paused the node decommission procedure. (In the Grid Manager, select MAINTENANCE > Tasks > Decommission.)
+
+You have checked that an expansion is not in progress. (In the Grid Manager, select MAINTENANCE > Tasks > Expansion.)
+
+You have reviewed the warnings for Storage Node system drive recovery. Contact technical support if more than one Storage Node is offline or if a Storage Node in this grid has been rebuilt in the last 15 days. Don’t run the sn-recovery- postinstall.sh script. Rebuilding Cassandra on two or more Storage Nodes within 15 days of each other might result in data loss. About this task
+
+To complete this procedure, you perform these high-level tasks:
+
+Log in to the recovered Storage Node.
+
+Run the sn-remount-volumes script to remount properly formatted storage volumes. When this script runs, it does the following:
+
+Mounts and unmounts each storage volume to replay the XFS journal. ◦ Performs an XFS file consistency check. ◦ If the file system is consistent, determines if the storage volume is a properly formatted StorageGRID storage volume.
+
+If the storage volume is properly formatted, remounts the storage volume. Any existing data on the volume remains intact.
+
+Review the script output and resolve any issues.
+
+1597
+
+• Run the sn-recovery-postinstall.sh script. When this script runs, it does the following. Don’t reboot a Storage Node during recovery before running sn-recovery- postinstall.sh to reformat the failed storage volumes and restore object metadata. Rebooting the Storage Node before sn-recovery-postinstall.sh completes causes errors for services that attempt to start and causes StorageGRID appliance nodes to exit maintenance mode. See the step for post-install script. To complete this procedure, you perform these high-level tasks:
+
+Log in to the recovered Storage Node.
+
+Run the sn-remount-volumes script to remount properly formatted storage volumes. When this script runs, it does the following:
+
+Mounts and unmounts each storage volume to replay the XFS journal. ◦ Performs an XFS file consistency check. ◦ If the file system is consistent, determines if the storage volume is a properly formatted StorageGRID storage volume.
+
+If the storage volume is properly formatted, remounts the storage volume. Any existing data on the volume remains intact.
+
+Review the script output and resolve any issues.
+
+1597
+
+• Run the sn-recovery-postinstall.sh script. When this script runs, it does the following. Don’t reboot a Storage Node during recovery before running sn-recovery- postinstall.sh to reformat the failed storage volumes and restore object metadata. Rebooting the Storage Node before sn-recovery-postinstall.sh completes causes errors for services that attempt to start and causes StorageGRID appliance nodes to exit maintenance mode. See the step for post-install script.
+
+Reformats any storage volumes that the sn-remount-volumes script could not mount or that were found to be improperly formatted.
+
+If a storage volume is reformatted, any data on that volume is lost. You must perform an additional procedure to restore object data from other locations in the grid, assuming that ILM rules were configured to store more than one object copy.
+
+Rebuilds the Cassandra database on the node, if needed. ◦ Starts the services on the Storage Node. Steps
+
+1. Log in to the recovered Storage Node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.

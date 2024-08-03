@@ -1,0 +1,81 @@
+PUT container consistency request
+
+The PUT container consistency request allows you to specify the consistency to apply to operations performed on a container. By default, new containers are created using the "Read-after-new-write" consistency. Request
+
+Request HTTP Header
+
+Description
+
+X-Auth-Token
+
+The Swift authentication token for the account to use for the request.
+
+1011
+
+Request HTTP Header
+
+Description
+
+x-ntap-sg-consistency
+
+The consistency to apply to operations on the container. The following values are supported:
+
+All: All nodes receive the data immediately or the request will fail. Strong-global: Guarantees read-after-write consistency for all client requests across all sites.
+
+Strong-site: Guarantees read-after-write consistency for all client requests within a site.
+
+Read-after-new-write: (Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+Available: Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets. Host
+
+The hostname to which the request is directed.
+
+How consistency and ILM rules interact to affect data protection
+
+Both your choice of consistency value and your ILM rule affect how objects are protected. These settings can interact.
+
+For example, the consistency used when an object is stored affects the initial placement of object metadata, while the ingest behavior selected for the ILM rule affects the initial placement of object copies. Because StorageGRID requires access to both an object’s metadata and its data to fulfill client requests, selecting matching levels of protection for the consistency and ingest behavior can provide better initial data protection and more predictable system responses.
+
+Example of how consistency and ILM rules can interact
+
+Suppose you have a two-site grid with the following ILM rule and the following consistency:
+
+ILM rule: Create two object copies, one at the local site and one at a remote site. The Strict ingest behavior is selected. **: "Strong-global" (Object metadata is immediately distributed to all sites.) Available: Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets. Host
+
+The hostname to which the request is directed.
+
+How consistency and ILM rules interact to affect data protection
+
+Both your choice of consistency value and your ILM rule affect how objects are protected. These settings can interact.
+
+For example, the consistency used when an object is stored affects the initial placement of object metadata, while the ingest behavior selected for the ILM rule affects the initial placement of object copies. Because StorageGRID requires access to both an object’s metadata and its data to fulfill client requests, selecting matching levels of protection for the consistency and ingest behavior can provide better initial data protection and more predictable system responses.
+
+Example of how consistency and ILM rules can interact
+
+Suppose you have a two-site grid with the following ILM rule and the following consistency:
+
+ILM rule: Create two object copies, one at the local site and one at a remote site. The Strict ingest behavior is selected. **: "Strong-global" (Object metadata is immediately distributed to all sites.)
+
+When a client stores an object to the grid, StorageGRID makes both object copies and distributes metadata to both sites before returning success to the client.
+
+The object is fully protected against loss at the time of the ingest successful message. For example, if the local site is lost shortly after ingest, copies of both the object data and the object metadata still exist at the remote site. The object is fully retrievable.
+
+If you instead used the same ILM rule and the "Strong-site" consistency, the client might receive a success
+
+1012
+
+message after object data is replicated to the remote site but before object metadata is distributed there. In this case, the level of protection of object metadata does not match the level of protection for object data. If the local site is lost shortly after ingest, object metadata is lost. The object can’t be retrieved. The inter-relationship between consistency and ILM rules can be complex. Contact NetApp if you require assistance.
+
+Request example
+
+PUT /v1/28544923908243208806/_Swift container_ X-Auth-Token: SGRD_3a877009a2d24cb1801587bfa9050f29 x-ntap-sg-consistency: strong-site Host: test.com
+
+Response
+
+Response HTTP Header Description
+
+Date
+
+The date and time of the response.
+
+Connection

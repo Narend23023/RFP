@@ -1,0 +1,189 @@
+Grid Network keys
+
+174
+
+Best practice
+
+Designation
+
+Optional
+
+Designation
+
+Best practice
+
+GRID_NETWORK_CONFIG Value
+
+STATIC or DHCP Best practice: Specify a value even if this node will not initially have a Client Network IP address. Then you can add a Client Network IP address later, without having to reconfigure the node on the host. Examples:
+
+bond0.1003
+
+ens423
+
+CLIENT_NETWORK_TARGET_TYPE
+
+Value
+
+Interface (This is only supported value.)
+
+CLIENT_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+Value
+
+True or False
+
+Set the key to "true" to cause the StorageGRID container to use the MAC address of the host target interface on the Client Network.
+
+Best practice: In networks where promiscuous mode would be required, use the CLIENT_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC key instead. For more details on MAC cloning:
+
+Considerations and recommendations for MAC address cloning (Red Hat Enterprise Linux)
+
+Considerations and recommendations for MAC address cloning (Ubuntu or Debian)
+
+Grid Network keys
+
+174
+
+Best practice
+
+Designation
+
+Optional
+
+Designation
+
+Best practice
+
+GRID_NETWORK_CONFIG Value
+
+STATIC or DHCP
+
+Defaults to STATIC if not specified.
+
+GRID_NETWORK_GATEWAY
+
+Value
+
+IPv4 address of the local Grid Network gateway for this node, which must be on the subnet defined by GRID_NETWORK_IP and GRID_NETWORK_MASK. This value is ignored for DHCP-configured networks.
+
+If the Grid Network is a single subnet with no gateway, use either the standard gateway address for the subnet (X.Y.Z.1) or this node’s GRID_NETWORK_IP value; either value will simplify potential future Grid Network expansions. GRID_NETWORK_IP
+
+Value
+
+IPv4 address of this node on the Grid Network. This key is only required when GRID_NETWORK_CONFIG = STATIC; don’t specify it for other values.
+
+Examples:
+
+1.1.1.1
+
+10.224.4.81
+
+GRID_NETWORK_MAC
+
+Value
+
+The MAC address for the Grid Network interface in the container.
+
+Must be 6 pairs of hexadecimal digits separated by colons.
+
+Example: b2:9c:02:c2:27:30 Designation
+
+Best practice
+
+Designation
+
+Required
+
+Designation
+
+Required when GRID_NETWORK_CONFIG = STATIC
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+If omitted, a MAC address will be generated automatically.
+
+175
+
+GRID_NETWORK_MASK
+
+Value
+
+IPv4 netmask for this node on the Grid Network. Specify this key when GRID_NETWORK_CONFIG = STATIC; don’t specify it for other values. Examples:
+
+255.255.255.0
+
+255.255.248.0
+
+GRID_NETWORK_MTU
+
+Value
+
+The maximum transmission unit (MTU) for this node on the Grid Network. Don’t specify if GRID_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1500 is used.
+
+If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value.
+
+IMPORTANT: The MTU value of the network must match the value configured on the switch port the node is connected to. Otherwise, network performance issues or packet loss might occur.
+
+IMPORTANT: For the best network performance, all nodes should be configured with similar MTU values on their Grid Network interfaces. The Grid Network MTU mismatch alert is triggered if there is a significant difference in MTU settings for the Grid Network on individual nodes. The MTU values don’t have to be the same for all network types. Examples:
+
+1500
+
+8192
+
+GRID_NETWORK_TARGET
+
+Value
+
+176
+
+Designation
+
+Required when GRID_NETWORK_IP is specified and GRID_NETWORK_CONFIG = STATIC.
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation 255.255.248.0
+
+GRID_NETWORK_MTU
+
+Value
+
+The maximum transmission unit (MTU) for this node on the Grid Network. Don’t specify if GRID_NETWORK_CONFIG = DHCP. If specified, the value must be between 1280 and 9216. If omitted, 1500 is used.
+
+If you want to use jumbo frames, set the MTU to a value suitable for jumbo frames, such as 9000. Otherwise, keep the default value.
+
+IMPORTANT: The MTU value of the network must match the value configured on the switch port the node is connected to. Otherwise, network performance issues or packet loss might occur.
+
+IMPORTANT: For the best network performance, all nodes should be configured with similar MTU values on their Grid Network interfaces. The Grid Network MTU mismatch alert is triggered if there is a significant difference in MTU settings for the Grid Network on individual nodes. The MTU values don’t have to be the same for all network types. Examples:
+
+1500
+
+8192
+
+GRID_NETWORK_TARGET
+
+Value
+
+176
+
+Designation
+
+Required when GRID_NETWORK_IP is specified and GRID_NETWORK_CONFIG = STATIC.
+
+Optional otherwise.
+
+Designation
+
+Optional
+
+Designation
+
+Name of the host device that you will use for Grid Network access by the StorageGRID node. Only network interface names are supported. Typically, you use a different interface name than what was specified for ADMIN_NETWORK_TARGET or CLIENT_NETWORK_TARGET.

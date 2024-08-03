@@ -1,0 +1,149 @@
+See What is a Storage Node?
+
+Gateway Nodes (optional)
+
+Provide a load-balancing interface that client applications can use to connect to StorageGRID. A load balancer seamlessly directs clients to an optimal Storage Node, so that the failure of nodes or even an entire site is transparent. See What is a Gateway Node?
+
+Archive Nodes (deprecated)
+
+Provide an optional interface through which object data can be archived to tape.
+
+See What is an Archive Node?
+
+Hardware and software nodes
+
+StorageGRID nodes can be deployed as StorageGRID appliance nodes or as software-based nodes. StorageGRID appliance nodes
+
+StorageGRID hardware appliances are specially designed for use in a StorageGRID system. Some appliances can be used as Storage Nodes. Other appliances can be used as Admin Nodes or Gateway Nodes. You can combine appliance nodes with software-based nodes or deploy fully engineered, all-appliance grids that have no dependencies on external hypervisors, storage, or compute hardware.
+
+See the following to learn about the available appliances:
+
+StorageGRID Appliance Documentation
+
+NetApp Hardware Universe
+
+11
+
+Software-based nodes
+
+Software-based grid nodes can be deployed as VMware virtual machines or within container engines on a Linux host. See What is a Storage Node?
+
+Gateway Nodes (optional)
+
+Provide a load-balancing interface that client applications can use to connect to StorageGRID. A load balancer seamlessly directs clients to an optimal Storage Node, so that the failure of nodes or even an entire site is transparent. See What is a Gateway Node?
+
+Archive Nodes (deprecated)
+
+Provide an optional interface through which object data can be archived to tape.
+
+See What is an Archive Node?
+
+Hardware and software nodes
+
+StorageGRID nodes can be deployed as StorageGRID appliance nodes or as software-based nodes. StorageGRID appliance nodes
+
+StorageGRID hardware appliances are specially designed for use in a StorageGRID system. Some appliances can be used as Storage Nodes. Other appliances can be used as Admin Nodes or Gateway Nodes. You can combine appliance nodes with software-based nodes or deploy fully engineered, all-appliance grids that have no dependencies on external hypervisors, storage, or compute hardware.
+
+See the following to learn about the available appliances:
+
+StorageGRID Appliance Documentation
+
+NetApp Hardware Universe
+
+11
+
+Software-based nodes
+
+Software-based grid nodes can be deployed as VMware virtual machines or within container engines on a Linux host.
+
+Virtual machine (VM) in VMware vSphere: See Install StorageGRID on VMware.
+
+Within a container engine on Red Hat Enterprise Linux: See Install StorageGRID on Red Hat Enterprise Linux.
+
+Within a container engine on Ubuntu or Debian: See Install StorageGRID on Ubuntu or Debian. Use the NetApp Interoperability Matrix Tool (IMT) to determine the supported versions.
+
+During initial installation of a new software-based Storage Node you can specify that it only be used to store metadata.
+
+StorageGRID services
+
+The following is a complete list of StorageGRID services.
+
+Service
+
+Description Location
+
+Account Service Forwarder
+
+Provides an interface for the Load Balancer service to query the Account Service on remote hosts and provides notifications of Load Balancer Endpoint configuration changes to the Load Balancer service.
+
+Load Balancer service on Admin Nodes and Gateway Nodes
+
+ADC (Administrative Domain Controller)
+
+Maintains topology information, provides authentication services, and responds to queries from the LDR and CMN services.
+
+At least three Storage Nodes containing the ADC service at each site AMS (Audit Management System)
+
+Monitors and logs all audited system events and transactions to a text log file.
+
+Admin Nodes
+
+ARC (Archive)
+
+Provides the management interface with which you configure connections to external archival storage, such as the cloud through an S3 interface or tape through TSM middleware. Archive Nodes
+
+Cassandra Reaper
+
+Performs automatic repairs of object metadata.
+
+Storage Nodes
+
+Chunk service
+
+Manages erasure-coded data and parity fragments.
+
+Storage Nodes
+
+CMN (Configuration Management Node)
+
+Manages system-wide configurations and grid tasks. Each grid has one CMN service.
+
+Primary Admin Node DDS (Distributed Data Store)
+
+Interfaces with the Cassandra database to manage object metadata.
+
+Storage Nodes
+
+12
+
+Service
+
+DMV (Data Mover)
+
+Dynamic IP (dynip)
+
+Grafana
+
+High Availability
+
+Identity (idnt)
+
+Lambda Arbitrator
+
+Load Balancer (nginx-gw)
+
+LDR (Local Distribution Router)
+
+MISCd Information Service Control Daemon nginx
+
+nginx-gw
+
+NMS (Network Management System)
+
+Description
+
+Moves data to cloud endpoints.
+
+Monitors the grid for dynamic IP changes and updates local configurations.
+
+Used for metrics visualization in the Grid Manager.

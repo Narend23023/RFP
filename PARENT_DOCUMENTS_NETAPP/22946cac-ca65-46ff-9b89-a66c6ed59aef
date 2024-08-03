@@ -1,0 +1,55 @@
+If your grid contains erasure-coded data, use the start-ec-volume-repair command with the --nodes option to identify the node (where --nodes is the hostname of the node). Then add either the --volumes or --volume-range option, as shown in the following examples.
+
+Single volume: This command restores erasure-coded data to volume 0007 on a Storage Node named SG-DC-SN3: repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volumes 0007
+
+Range of volumes: This command restores erasure-coded data to all volumes in the range 0004 to 0006 on a Storage Node named SG-DC-SN3: Multiple volumes not in a sequence: This command restores replicated data to volumes 0001, 0005, and 0008 on a Storage Node named SG-DC-SN3: repair-data start-replicated-volume-repair --nodes SG-DC-SN3 --volumes 0001,0005,0008
+
+As object data is restored, the Objects Lost alert is triggered if the StorageGRID system can’t locate replicated object data. Alerts might be triggered on Storage Nodes throughout the system. Note the alert description and recommended actions to determine the cause of the loss and if recovery is possible. Erasure-coded (EC) data
+
+If your grid contains erasure-coded data, use the start-ec-volume-repair command with the --nodes option to identify the node (where --nodes is the hostname of the node). Then add either the --volumes or --volume-range option, as shown in the following examples.
+
+Single volume: This command restores erasure-coded data to volume 0007 on a Storage Node named SG-DC-SN3: repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volumes 0007
+
+Range of volumes: This command restores erasure-coded data to all volumes in the range 0004 to 0006 on a Storage Node named SG-DC-SN3:
+
+repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volume-range 0004,0006
+
+Multiple volumes not in a sequence: This command restores erasure-coded data to volumes 000A, 000C, and 000E on a Storage Node named SG-DC-SN3: repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volumes 000A,000C,000E
+
+The repair-data operation returns a unique repair ID that identifies this repair_data operation. Use this repair ID to track the progress and result of the repair_data operation. No other feedback is returned as the recovery process completes.
+
+1575
+
+Repairs of erasure-coded data can begin while some Storage Nodes are offline. Repair will complete after all nodes are available. Monitor repairs
+
+Monitor the status of the repair jobs, based on whether you use replicated data, erasure-coded (EC) data, or both.
+
+You can also monitor the status of volume restoration jobs in process and view a history of restoration jobs completed in Grid Manager.
+
+1576
+
+Replicated data
+
+To get an estimated percent completion for the replicated repair, add the show-replicated- repair-status option to the repair-data command. repair-data show-replicated-repair-status
+
+To determine if repairs are complete:
+
+1. Select NODES > Storage Node being repaired > ILM.
+
+2. Review the attributes in the Evaluation section. When repairs are complete, the Awaiting - All attribute indicates 0 objects.
+
+To monitor the repair in more detail:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select grid > Storage Node being repaired > LDR > Data Store.
+
+3. Use a combination of the following attributes to determine, as well as possible, if replicated repairs are complete.
+
+Cassandra inconsistencies might be present, and failed repairs aren’t tracked.
+
+▪ Repairs Attempted (XRPA): Use this attribute to track the progress of replicated repairs. This attribute increases each time a Storage Node tries to repair a high-risk object. When this attribute does not increase for a period longer than the current scan period (provided by the Scan Period — Estimated attribute), it means that ILM scanning found no high-risk objects that need to be repaired on any nodes.
+
+High-risk objects are objects that are at risk of being completely lost. This does not include objects that don’t satisfy their ILM configuration.
+
+▪ Scan Period — Estimated (XSCM): Use this attribute to estimate when a policy change will be applied to previously ingested objects. If the Repairs Attempted attribute does not increase for a period longer than the current scan period, it is probable that replicated repairs are done. Note that the scan period can change. The Scan Period — Estimated (XSCM) attribute applies to the entire grid and is the maximum of all node scan periods. You can query the Scan Period — Estimated attribute history for the grid to determine an appropriate time frame. Erasure-coded (EC) data Cassandra inconsistencies might be present, and failed repairs aren’t tracked.

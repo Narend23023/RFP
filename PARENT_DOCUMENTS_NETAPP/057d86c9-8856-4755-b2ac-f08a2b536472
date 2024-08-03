@@ -1,0 +1,97 @@
+After exporting the node from the source host, you import and validate the node on the target host. Validation
+
+1539
+
+confirms that the node has access to the same block storage and network interface devices as it had on the source host.
+
+Run the following commands on the target host. Steps
+
+1. Import the node on the target host.
+
+sudo storagegrid node import /dev/mapper/sgws-dc1-s3-var-local
+
+Example output:
+
+Finished importing node DC1-S3 from /dev/mapper/sgws-dc1-s3-var-local. You should run 'storagegrid node validate DC1-S3'
+
+2. Validate the node configuration on the new host. sudo storagegrid node validate DC1-S3
+
+Example output:
+
+Confirming existence of node DC1-S3... PASSED Checking configuration file /etc/storagegrid/nodes/DC1-S3.conf for node DC1-S3... PASSED Checking for duplication of unique values... PASSED
+
+3. If any validation errors occur, address them before starting the migrated node.
+
+For troubleshooting information, see the StorageGRID installation instructions for your Linux operating system. You will run this command on the target host in the next step. Import node on target host
+
+After exporting the node from the source host, you import and validate the node on the target host. Validation
+
+1539
+
+confirms that the node has access to the same block storage and network interface devices as it had on the source host.
+
+Run the following commands on the target host. Steps
+
+1. Import the node on the target host.
+
+sudo storagegrid node import /dev/mapper/sgws-dc1-s3-var-local
+
+Example output:
+
+Finished importing node DC1-S3 from /dev/mapper/sgws-dc1-s3-var-local. You should run 'storagegrid node validate DC1-S3'
+
+2. Validate the node configuration on the new host. sudo storagegrid node validate DC1-S3
+
+Example output:
+
+Confirming existence of node DC1-S3... PASSED Checking configuration file /etc/storagegrid/nodes/DC1-S3.conf for node DC1-S3... PASSED Checking for duplication of unique values... PASSED
+
+3. If any validation errors occur, address them before starting the migrated node.
+
+For troubleshooting information, see the StorageGRID installation instructions for your Linux operating system.
+
+Install StorageGRID on Red Hat Enterprise Linux ◦ Install StorageGRID on Ubuntu or Debian
+
+Start migrated node
+
+After you validate the migrated node, you start the node by running a command on the target host. Steps
+
+1. Start the node on the new host.
+
+sudo storagegrid node start DC1-S3
+
+2. Sign in to the Grid Manager and verify that the status of the node is green with no alert.
+
+Verifying that the status of the node is green ensures that the migrated node has fully restarted and rejoined the grid. If the status is not green, don’t migrate any additional nodes so that you will not have more than one node out of service.
+
+1540
+
+3. If you are unable to access the Grid Manager, wait for 10 minutes, then run the following command: sudo storagegrid node status _node-name
+
+Confirm that the migrated node has a Run-State of Running.
+
+Archive Node maintenance for TSM middleware
+
+Archive Nodes might be configured to target either tape through a TSM middleware server or the cloud through the S3 API. When the configuration is complete, an Archive Node’s target can’t be changed.
+
+If the server hosting the Archive Node fails, replace the server and follow the appropriate recovery procedure. Fault with archival storage devices
+
+If you determine that there is a fault with the archival storage device that the Archive Node is accessing through Tivoli Storage Manager (TSM), take the Archive Node offline to limit the number of alarms displayed in the StorageGRID system. You can then use the administrative tools of the TSM server or the storage device, or both, to further diagnose and resolve the problem.
+
+Take the Target component offline
+
+Before undertaking any maintenance of the TSM middleware server that might result in it becoming unavailable to the Archive Node, take the Target component offline to limit the number of alarms that are triggered if the TSM middleware server becomes unavailable.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target > Configuration > Main.
+
+3. Change the value of Tivoli Storage Manager State to Offline, and click Apply Changes.
+
+4. After maintenance is complete, change the value of Tivoli Storage Manager State to Online, and click Apply Changes. Tivoli Storage Manager administrative tools
+
+The dsmadmc tool is the administrative console for the TSM middleware server that is installed on the Archive Node. You can access the tool by typing dsmadmc at the command line of the server. Log in to the administrative console using the same administrative user name and password that is configured for the ARC service.

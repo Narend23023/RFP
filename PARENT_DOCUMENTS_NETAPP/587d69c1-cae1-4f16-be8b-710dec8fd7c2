@@ -1,0 +1,93 @@
+View the current HA group status of a node
+
+To see if a node is assigned to an HA group and determine its current status, select NODES > node.
+
+If the Overview tab includes an entry for HA groups, the node is assigned to the HA groups listed. The value after the group name is the current status of the node in the HA group: Active: The HA group is currently being hosted on this node.
+
+Backup: The HA group is not currently using this node; this is a backup interface.
+
+Stopped: The HA group can’t be hosted on this node because the High Availability (keepalived) service has been stopped manually.
+
+Fault: The HA group can’t be hosted on this node because of one or more of the following:
+
+The Load Balancer (nginx-gw) service is not running on the node. ◦ The node’s eth0 or VIP interface is down. ◦ The node is down.
+
+In this example, the primary Admin Node has been added to two HA groups. This node is currently the active interface for the Admin clients group and a backup interface for the FabricPool clients group.
+
+487 Similarly, during normal operation, any lower priority interfaces for the HA group act as "backup" interfaces. These backup interfaces aren’t used unless the Primary (currently active) interface becomes unavailable.
+
+View the current HA group status of a node
+
+To see if a node is assigned to an HA group and determine its current status, select NODES > node.
+
+If the Overview tab includes an entry for HA groups, the node is assigned to the HA groups listed. The value after the group name is the current status of the node in the HA group: Active: The HA group is currently being hosted on this node.
+
+Backup: The HA group is not currently using this node; this is a backup interface.
+
+Stopped: The HA group can’t be hosted on this node because the High Availability (keepalived) service has been stopped manually.
+
+Fault: The HA group can’t be hosted on this node because of one or more of the following:
+
+The Load Balancer (nginx-gw) service is not running on the node. ◦ The node’s eth0 or VIP interface is down. ◦ The node is down.
+
+In this example, the primary Admin Node has been added to two HA groups. This node is currently the active interface for the Admin clients group and a backup interface for the FabricPool clients group.
+
+487
+
+What happens when the active interface fails? The interface that currently hosts the VIP addresses is the active interface. If the HA group includes more than one interface and the active interface fails, the VIP addresses move to the first available backup interface in the priority order. If that interface fails, the VIP addresses move to the next available backup interface, and so on.
+
+Failover can be triggered for any of these reasons:
+
+The node on which the interface is configured goes down.
+
+The node on which the interface is configured loses connectivity to all other nodes for at least 2 minutes.
+
+The active interface goes down.
+
+The Load Balancer service stops.
+
+The High Availability service stops.
+
+Failover might not be triggered by network failures external to the node that hosts the active interface. Similarly, failover is not triggered by the services for the Grid Manager or the Tenant Manager. The failover process generally takes only a few seconds and is fast enough that client applications should experience little impact and can rely on normal retry behaviors to continue operation.
+
+When failure is resolved and a higher priority interface becomes available again, the VIP addresses are automatically moved to the highest priority interface that is available.
+
+488
+
+How are HA groups used?
+
+You can use high availability (HA) groups to provide highly available connections to StorageGRID for object data and for administrative use.
+
+An HA group can provide highly available administrative connections to the Grid Manager or the Tenant Manager.
+
+An HA group can provide highly available data connections for S3 and Swift clients.
+
+An HA group that contains only one interface allows you to provide many VIP addresses and to explicitly set IPv6 addresses. An HA group can provide high availability only if all nodes included in the group provide the same services. When you create an HA group, add interfaces from the types of nodes that provide the services you require.
+
+Admin Nodes: Include the Load Balancer service and enable access to the Grid Manager or the Tenant Manager.
+
+Gateway Nodes: Include the Load Balancer service. Purpose of HA group
+
+Add nodes of this type to the HA group
+
+Access to Grid Manager
+
+Primary Admin Node (Primary)
+
+Non-primary Admin Nodes
+
+Note: The primary Admin Node must be the Primary interface. Some maintenance procedures can only be performed from the primary Admin Node.
+
+Access to Tenant Manager only
+
+Primary or non-primary Admin Nodes S3 or Swift client access — Load Balancer service
+
+Admin Nodes
+
+Gateway Nodes
+
+S3 client access for S3 Select
+
+Services appliances
+
+VMware-based software nodes

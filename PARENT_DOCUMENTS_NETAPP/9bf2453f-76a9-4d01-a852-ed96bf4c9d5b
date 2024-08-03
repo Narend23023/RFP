@@ -1,0 +1,85 @@
+Access sandbox mode
+
+Steps
+
+1. Select CONFIGURATION > Access control > Single sign-on.
+
+The Single Sign-on page appears, with the Disabled option selected.
+
+332
+
+If the SSO Status options don’t appear, confirm you have configured the identity provider as the federated identity source. See Requirements and considerations for single sign-on.
+
+2. Select Sandbox Mode. The Identity Provider section appears.
+
+Enter identity provider details
+
+Steps
+
+1. Select the SSO type from the drop-down list.
+
+2. Complete the fields in the Identity Provider section based on the SSO type you selected.
+
+333
+
+Active Directory
+
+a. Enter the Federation service name for the identity provider, exactly as it appears in Active Directory Federation Service (AD FS).
+
+To locate the federation service name, go to Windows Server Manager. Select Tools > AD FS Management. From the Action menu, select Edit Federation Service Properties. The Federation Service Name is shown in the second field.
+
+b. Specify which TLS certificate will be used to secure the connection when the identity provider sends SSO configuration information in response to StorageGRID requests.
+
+Use operating system CA certificate: Use the default CA certificate installed on the operating system to secure the connection.
+
+Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+c. In the Relying Party section, specify the Relying party identifier for StorageGRID. This value
+
+controls the name you use for each relying party trust in AD FS.
+
+For example, if your grid has only one Admin Node and you don’t anticipate adding more Admin Nodes in the future, enter SG or StorageGRID. If your grid includes more than one Admin Node, include the string [HOSTNAME] in the identifier. For example, SG-[HOSTNAME]. This generates a table that shows the relying party identifier for each Admin Node in your system, based on the node’s hostname.
+
+You must create a relying party trust for each Admin Node in your StorageGRID system. Having a relying party trust for each Admin Node ensures that users can securely sign in to and out of any Admin Node. d. Select Save. Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+c. In the Relying Party section, specify the Relying party identifier for StorageGRID. This value
+
+controls the name you use for each relying party trust in AD FS.
+
+For example, if your grid has only one Admin Node and you don’t anticipate adding more Admin Nodes in the future, enter SG or StorageGRID. If your grid includes more than one Admin Node, include the string [HOSTNAME] in the identifier. For example, SG-[HOSTNAME]. This generates a table that shows the relying party identifier for each Admin Node in your system, based on the node’s hostname.
+
+You must create a relying party trust for each Admin Node in your StorageGRID system. Having a relying party trust for each Admin Node ensures that users can securely sign in to and out of any Admin Node. d. Select Save.
+
+A green check mark appears on the Save button for a few seconds.
+
+Azure
+
+a. Specify which TLS certificate will be used to secure the connection when the identity provider sends SSO configuration information in response to StorageGRID requests.
+
+Use operating system CA certificate: Use the default CA certificate installed on the operating system to secure the connection.
+
+Use custom CA certificate: Use a custom CA certificate to secure the connection.
+
+334
+
+If you select this setting, copy the text of the custom certificate and and paste it in the CA Certificate text box.
+
+Do not use TLS: Do not use a TLS certificate to secure the connection.
+
+If you change the CA certificate, immediately restart the mgmt-api service on the Admin Nodes and test for a successful SSO into the Grid Manager.
+
+b. In the Enterprise Application section, specify the Enterprise application name for StorageGRID. This
+
+value controls the name you use for each enterprise application in Azure AD.

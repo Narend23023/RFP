@@ -1,0 +1,89 @@
+3. Enter a unique name for the rule in the Rule name field.
+
+4. Optionally, enter a short description for the rule in the Description field.
+
+5. Leave the Tenant accounts field blank.
+
+The default rule must apply to all tenant accounts.
+
+6. Leave the Bucket name drop-down selection as applies to all buckets.
+
+The default rule must apply to all S3 buckets and Swift containers.
+
+7. Keep the default answer, No, for the question, "Apply this rule to older object versions only (in S3 buckets with versioning enabled)?"
+
+8. Don’t add advanced filters.
+
+The default rule can’t specify any filters.
+
+9. Select Next.
+
+Step 2 (Define placements) appears.
+
+10. For Reference time, select any option. If you kept the default answer, No, for the question, "Apply this rule to older object versions only?" Noncurrent time will not be included in the pull-down list. The default rule must apply all object versions.
+
+11. Specify the placement instructions for the default rule.
+
+The default rule should retain objects forever. A warning appears when you activate a new policy if the default rule does not retain objects forever. You must confirm this is the behavior you expect.
+
+The default rule should create replicated copies.
+
+Don’t use a rule that creates erasure-coded copies as the default rule for a policy. Erasure-coding rules should include the Object size (MB) greater than 200 KB advanced filter to prevent smaller objects from being erasure-coded.
+
+665
+
+◦ If you are using (or you plan to enable) the global S3 Object Lock setting, the default rule must be compliant:
+
+▪ It must create at least two replicated object copies or one erasure-coded copy. ▪ These copies must exist on Storage Nodes for the entire duration of each line in the placement
+
+instructions.
+
+▪ Object copies can’t be saved in a Cloud Storage Pool. ▪ Object copies can’t be saved on Archive Nodes. ▪ At least one line of the placement instructions must start at day 0, using Ingest time as the reference time.
+
+▪ At least one line of the placement instructions must be "forever."
+
+12. Look at the Retention diagram to confirm your placement instructions.
+
+13. Select Continue.
+
+Step 3 (Select ingest behavior) appears.
+
+14. Select the ingest option to use, and select Create.
+
+Manage ILM policies ILM policies: Overview
+
+An information lifecycle management (ILM) policy is an ordered set of ILM rules that determines how the StorageGRID system manages object data over time.
+
+An ILM policy that has been incorrectly configured can result in unrecoverable data loss. Before activating an ILM policy, carefully review the ILM policy and its ILM rules, and then simulate the ILM policy. Always confirm that the ILM policy will work as intended. Default ILM policy
+
+When you install StorageGRID and add sites, a default ILM policy is automatically created, as follows:
+
+If your grid contains one site, the default policy contains a default rule that replicates two copies of each object at that site.
+
+If your grid contains more than one site, the default rule replicates one copy of each object at each site.
+
+If the default policy does not meet your storage requirements, you can create your own rules and policy. See Create an ILM rule and Create an ILM policy. One or many active ILM policies?
+
+You can have one or more active ILM policies at a time.
+
+One policy
+
+If your grid will use a simple data protection scheme with few tenant-specific and bucket-specific rules, use a single active ILM policy. The ILM rules can contain filters to manage different buckets or tenants.
+
+666
+
+When you have only one policy and a tenant’s requirements change, you must create a new ILM policy or clone the existing policy to apply changes, simulate, and then activate the new ILM policy. Changes to the ILM policy could result in object moves that could take many days and cause system latency. Multiple policies When you install StorageGRID and add sites, a default ILM policy is automatically created, as follows:
+
+If your grid contains one site, the default policy contains a default rule that replicates two copies of each object at that site.
+
+If your grid contains more than one site, the default rule replicates one copy of each object at each site.
+
+If the default policy does not meet your storage requirements, you can create your own rules and policy. See Create an ILM rule and Create an ILM policy. One or many active ILM policies?
+
+You can have one or more active ILM policies at a time.
+
+One policy
+
+If your grid will use a simple data protection scheme with few tenant-specific and bucket-specific rules, use a single active ILM policy. The ILM rules can contain filters to manage different buckets or tenants.
+
+666

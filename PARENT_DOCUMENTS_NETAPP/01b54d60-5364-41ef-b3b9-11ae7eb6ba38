@@ -1,0 +1,57 @@
+If you plan to decommission a Storage Node, you should review your StorageGRID system’s ILM policy before starting the decommissioning process.
+
+During decommissioning, all object data is migrated from the decommissioned Storage Node to other Storage Nodes. In the first decommission procedure, you must ensure that four Storage Nodes with ADC services remain available: ((0.5 * 6) + 1). This means that you can only decommission two Storage Nodes initially.
+
+In the second decommission procedure, you can remove the third Storage Node because the ADC quorum now only requires three ADC services to remain available: ((0.5 * 4) + 1).
+
+If you need to decommission a Storage Node but are unable to because of the ADC quorum requirement, add a new Storage Node in an expansion and specify that it should have an ADC service. Then, decommission the existing Storage Node. Review ILM policy and storage configuration
+
+If you plan to decommission a Storage Node, you should review your StorageGRID system’s ILM policy before starting the decommissioning process.
+
+During decommissioning, all object data is migrated from the decommissioned Storage Node to other Storage Nodes.
+
+The ILM policy you have during the decommission will be the one used after the decommission. You must ensure this policy meets your data requirements both before you start the decommission and after the decommission is complete.
+
+You should review the rules in each active ILM policy to ensure that the StorageGRID system will continue to have enough capacity of the correct type and in the correct locations to accommodate the decommissioning of a Storage Node.
+
+Consider the following:
+
+Will it be possible for ILM evaluation services to copy object data such that ILM rules are satisfied? What happens if a site becomes temporarily unavailable while decommissioning is in progress? Can additional copies be made in an alternate location?
+
+How will the decommissioning process affect the final distribution of content? As described in Consolidate Storage Nodes, you should add new Storage Nodes before decommissioning old ones. If you add a larger replacement Storage Node after decommissioning a smaller Storage Node, the old Storage Nodes could be close to capacity and the new Storage Node could have almost no content. Most write operations for
+
+1441
+
+new object data would then be directed at the new Storage Node, reducing the overall efficiency of system operations.
+
+Will the system, at all times, include enough Storage Nodes to satisfy the active ILM policies?
+
+An ILM policy that can’t be satisfied will lead to backlogs and alerts, and might halt operation of the StorageGRID system. Verify that the proposed topology that will result from the decommissioning process satisfies the ILM policy by assessing the areas listed in the table.
+
+Area to assess
+
+What to consider
+
+Available capacity
+
+Will there be enough storage capacity to accommodate all of the object data stored in the StorageGRID system, including the permanent copies of object data currently stored on the Storage Node to be decommissioned?
+
+Will there be enough capacity to handle the anticipated growth in stored object data for a reasonable interval of time after decommissioning is complete? Location of storage
+
+If enough capacity remains in the StorageGRID system as a whole, is the capacity in the right locations to satisfy the StorageGRID system’s business rules?
+
+Storage type
+
+Will there be enough storage of the appropriate type after decommissioning is complete?
+
+For example, ILM rules might move content from one type of storage to another as content ages. In this case, you must ensure that enough storage of the appropriate type is available in the final configuration of the StorageGRID system. Consolidate Storage Nodes
+
+You can consolidate Storage Nodes to reduce the Storage Node count for a site or deployment while increasing storage capacity.
+
+When you consolidate Storage Nodes, you expand the StorageGRID system by adding new, larger capacity Storage Nodes and then decommission the old, smaller capacity Storage Nodes. During the decommission procedure, objects are migrated from the old Storage Nodes to the new Storage Nodes.
+
+If you are consolidating older and smaller appliances with new models or larger capacity appliances, consider cloning the appliance node (or use appliance node cloning and the decommission procedure if you aren’t doing a one-to-one replacement).
+
+For example, you might add two new, larger capacity Storage Nodes to replace three older Storage Nodes. You would first use the expansion procedure to add the two new, larger Storage Nodes, and then use the decommission procedure to remove the three old, smaller capacity Storage Nodes. By adding new capacity before removing existing Storage Nodes, you ensure a more balanced distribution of
+
+1442

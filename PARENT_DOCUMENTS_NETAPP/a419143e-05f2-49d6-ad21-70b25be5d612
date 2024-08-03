@@ -1,0 +1,55 @@
+Charting how quickly overall storage capacity is being consumed can help you understand how much storage to add in the expansion, and when the additional storage space will be required. You can use the Grid Manager to monitor and chart storage capacity.
+
+When planning the timing of an expansion, remember to consider how long it might take to procure and install additional storage. Add storage capacity for erasure-coded objects
+
+If your ILM policy includes a rule that makes erasure-coded copies, you must plan where to add new storage and when to add new storage. The amount of storage you add and the timing of the addition can affect the grid’s usable storage capacity.
+
+The first step in planning a storage expansion is to examine the rules in your ILM policy that create erasure- coded objects. Because StorageGRID creates k+m fragments for every erasure-coded object and stores each fragment on a different Storage Node, you must ensure that at least k+m Storage Nodes have space for new erasure-coded data after the expansion. If the erasure-coding profile provides site-loss protection, you must
+
+1388
+
+add storage to each site. See What are erasure-coding schemes for information about erasure-coding profiles.
+
+The number of nodes you need to add also depends on how full the existing nodes are when you perform the expansion. General recommendation for adding storage capacity for erasure-coded objects
+
+If you want to avoid detailed calculations, you can add two Storage Nodes per site when existing Storage Nodes reach 70% capacity. When planning the timing of an expansion, remember to consider how long it might take to procure and install additional storage. Add storage capacity for erasure-coded objects
+
+If your ILM policy includes a rule that makes erasure-coded copies, you must plan where to add new storage and when to add new storage. The amount of storage you add and the timing of the addition can affect the grid’s usable storage capacity.
+
+The first step in planning a storage expansion is to examine the rules in your ILM policy that create erasure- coded objects. Because StorageGRID creates k+m fragments for every erasure-coded object and stores each fragment on a different Storage Node, you must ensure that at least k+m Storage Nodes have space for new erasure-coded data after the expansion. If the erasure-coding profile provides site-loss protection, you must
+
+1388
+
+add storage to each site. See What are erasure-coding schemes for information about erasure-coding profiles.
+
+The number of nodes you need to add also depends on how full the existing nodes are when you perform the expansion. General recommendation for adding storage capacity for erasure-coded objects
+
+If you want to avoid detailed calculations, you can add two Storage Nodes per site when existing Storage Nodes reach 70% capacity.
+
+This general recommendation provides reasonable results across a wide range of erasure-coding schemes for both single-site grids and for grids where erasure coding provides site-loss protection.
+
+To better understand the factors that led to this recommendation or to develop a more precise plan for your site, see Considerations for rebalancing erasure-coded data. For a custom recommendation optimized for your situation, contact your NetApp Professional Services consultant.
+
+Considerations for rebalancing erasure-coded data
+
+If you are performing an expansion to add Storage Nodes and you use ILM rules to erasure code data, you might need to perform the EC rebalance procedure if you can’t add enough Storage Nodes for the erasure-coding scheme you are using. After reviewing these considerations, perform the expansion, and then go to Rebalance erasure-coded data after adding Storage Nodes to run the procedure.
+
+What is EC rebalancing?
+
+EC rebalancing is a StorageGRID procedure that might be required after a Storage Node expansion. The procedure is run as a command-line script from the primary Admin Node. When you run the EC rebalance procedure, StorageGRID redistributes erasure-coded fragments among the existing and the newly added Storage Nodes at a site. The EC rebalance procedure:
+
+Only moves erasure-coded object data. It does not move replicated object data.
+
+Redistributes the data within a site. It does not move data between sites.
+
+Redistributes data among all Storage Nodes at a site. It does not redistribute data within storage volumes.
+
+Does not consider the replicated data usage on each Storage Node when determining where to move erasure-coded data.
+
+Redistributes erasure-coded data evenly between Storage Nodes without considering the relative capacities of each node.
+
+Will not distribute erasure-coded data to Storage Nodes that are more than 80% full.
+
+Might decrease the performance of ILM operations and S3 and Swift client operations when it runs—additional resources are required to redistribute the erasure-coding fragments.
+
+When the EC rebalance procedure is complete:

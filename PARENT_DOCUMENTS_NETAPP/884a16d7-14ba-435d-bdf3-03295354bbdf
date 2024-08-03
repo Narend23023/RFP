@@ -1,0 +1,55 @@
+a. Run the following command for each node you want to import:sudo storagegrid node import node-var-local-volume-path
+
+The storagegrid node import command succeeds only if the target node was shut down cleanly on the host on which it last ran. If that is not the case, you will observe an error similar to the following:
+
+This node (node-name) appears to be owned by another host (UUID host-uuid).
+
+Use the --force flag if you are sure import is safe.
+
+b. If you see the error about the node being owned by another host, run the command again with the
+
+--force flag to complete the import:sudo storagegrid --force node import node-var- local-volume-path
+
+1641
+
+Any nodes imported with the --force flag will require additional recovery steps before they can rejoin the grid, as described in What’s next: Perform additional recovery steps, if required.
+
+3. For grid nodes that don’t have a /var/local volume, re-create the node’s configuration file to restore it to the host. For instructions, see: Create node configuration files for Red Hat Enterprise Linux ◦ Create node configuration files for Ubuntu or Debian
+
+When you re-create the configuration file for a node, you must use the same name for the replacement node that was used for the node you are recovering. For Linux deployments, ensure that the configuration file name contains the node name. You should use the same network interfaces, block device mappings, and IP addresses when possible. This practice minimizes the amount of data that needs to be copied to the node during recovery, which could make the recovery significantly faster (in some cases, minutes rather than weeks).
+
+If you use any new block devices (devices that the StorageGRID node did not use previously) as values for any of the configuration variables that start with BLOCK_DEVICE_ when you are re-creating the configuration file for a node, follow the guidelines in Fix missing block device errors. 4. Run the following command on the recovered host to list all StorageGRID nodes.
+
+sudo storagegrid node list
+
+5. Validate the node configuration file for each grid node whose name was shown in the storagegrid node list output:
+
+sudo storagegrid node validate node-name
+
+You must address any errors or warnings before starting the StorageGRID host service. The following sections give more detail on errors that might have special significance during recovery.
+
+Fix missing network interface errors
+
+If the host network is not configured correctly or a name is misspelled, an error occurs when StorageGRID checks the mapping specified in the /etc/storagegrid/nodes/node-name.conf file.
+
+You might see an error or warning matching this pattern: If you use any new block devices (devices that the StorageGRID node did not use previously) as values for any of the configuration variables that start with BLOCK_DEVICE_ when you are re-creating the configuration file for a node, follow the guidelines in Fix missing block device errors. 4. Run the following command on the recovered host to list all StorageGRID nodes.
+
+sudo storagegrid node list
+
+5. Validate the node configuration file for each grid node whose name was shown in the storagegrid node list output:
+
+sudo storagegrid node validate node-name
+
+You must address any errors or warnings before starting the StorageGRID host service. The following sections give more detail on errors that might have special significance during recovery.
+
+Fix missing network interface errors
+
+If the host network is not configured correctly or a name is misspelled, an error occurs when StorageGRID checks the mapping specified in the /etc/storagegrid/nodes/node-name.conf file.
+
+You might see an error or warning matching this pattern:
+
+Checking configuration file /etc/storagegrid/nodes/<node-name>.conf for node <node-name>... ERROR: <node-name>: GRID_NETWORK_TARGET = <host-interface-name> <node-name>: Interface <host-interface-name>' does not exist The error could be reported for the Grid Network, the Admin Network, or the Client Network. This error means that the /etc/storagegrid/nodes/node-name.conf file maps the indicated StorageGRID network to the host interface named host-interface-name, but there is no interface with that name on the current host.
+
+1642
+
+If you receive this error, verify that you completed the steps in Deploy new Linux hosts. Use the same names for all host interfaces as were used on the original host.

@@ -1,0 +1,57 @@
+The default rule in an active or inactive ILM policy must be compliant.
+
+Non-compliant rules only apply to objects in buckets that don’t have S3 Object Lock enabled or that don’t have the legacy Compliance feature enabled.
+
+Compliant rules can apply to objects in any bucket; S3 Object Lock or legacy Compliance does not need to be enabled for the bucket.
+
+A compliant ILM policy might include these three rules:
+
+1. A compliant rule that creates erasure-coded copies of the objects in a specific bucket with S3 Object Lock enabled. The EC copies are stored on Storage Nodes from day 0 to forever.
+
+2. A non-compliant rule that creates two replicated object copies on Storage Nodes for a year and then
+
+691 moves one object copy to Archive Nodes and stores that copy forever. This rule only applies to buckets that don’t have S3 Object Lock or legacy Compliance enabled because it stores only one object copy forever and it uses Archive Nodes.
+
+3. A default, compliant rule that creates two replicated object copies on Storage Nodes from day 0 to forever. This rule applies to any object in any bucket that was not filtered out by the first two rules.
+
+Requirements for buckets with S3 Object Lock enabled The default rule in an active or inactive ILM policy must be compliant.
+
+Non-compliant rules only apply to objects in buckets that don’t have S3 Object Lock enabled or that don’t have the legacy Compliance feature enabled.
+
+Compliant rules can apply to objects in any bucket; S3 Object Lock or legacy Compliance does not need to be enabled for the bucket.
+
+A compliant ILM policy might include these three rules:
+
+1. A compliant rule that creates erasure-coded copies of the objects in a specific bucket with S3 Object Lock enabled. The EC copies are stored on Storage Nodes from day 0 to forever.
+
+2. A non-compliant rule that creates two replicated object copies on Storage Nodes for a year and then
+
+691 moves one object copy to Archive Nodes and stores that copy forever. This rule only applies to buckets that don’t have S3 Object Lock or legacy Compliance enabled because it stores only one object copy forever and it uses Archive Nodes.
+
+3. A default, compliant rule that creates two replicated object copies on Storage Nodes from day 0 to forever. This rule applies to any object in any bucket that was not filtered out by the first two rules.
+
+Requirements for buckets with S3 Object Lock enabled
+
+If the global S3 Object Lock setting is enabled for the StorageGRID system, you can use the Tenant Manager, the Tenant Management API, or the S3 REST API to create buckets with S3 Object Lock enabled.
+
+If you plan to use S3 Object Lock, you must enable S3 Object Lock when you create the bucket. You can’t enable S3 Object Lock for an existing bucket. When S3 Object Lock is enabled for a bucket, StorageGRID automatically enables versioning for that bucket. You can’t disable S3 Object Lock or suspend versioning for the bucket.
+
+Optionally, you can specify a default retention mode and retention period for each bucket using the Tenant Manager, the Tenant Management API, or the S3 REST API. The bucket’s default retention settings apply only to new objects added to the bucket that don’t have their own retention settings. You can override these default settings by specifying a retention mode and retain-until-date for each object version when it is uploaded.
+
+Bucket lifecycle configuration is supported for buckets with S3 Object Lock enabled.
+
+CloudMirror replication is not supported for buckets with S3 Object Lock enabled.
+
+Requirements for objects in buckets with S3 Object Lock enabled To protect an object version, you can specify default retention settings for the bucket, or you can specify retention settings for each object version. Object-level retention settings can be specified using the S3 client application or the S3 REST API.
+
+Retention settings apply to individual object versions. An object version can have both a retain-until-date and a legal hold setting, one but not the other, or neither. Specifying a retain-until-date or a legal hold setting for an object protects only the version specified in the request. You can create new versions of the object, while the previous version of the object remains locked.
+
+Lifecycle of objects in buckets with S3 Object Lock enabled
+
+Each object that is saved in a bucket with S3 Object Lock enabled goes through these stages:
+
+1. Object ingest
+
+When an object version is added to bucket that has S3 Object Lock enabled, retention settings are applied as follows: If retention settings are specified for the object, the object-level settings are applied. Any default bucket settings are ignored.
+
+If no retention settings are specified for the object, the default bucket settings are applied, if they exist. ◦ If no retention settings are specified for the object or the bucket, the object is not protected by S3 Object Lock.

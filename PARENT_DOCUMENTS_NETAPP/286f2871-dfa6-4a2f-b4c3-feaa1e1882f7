@@ -1,0 +1,81 @@
+repair-data start-replicated-volume-repair
+
+You can track repairs of replicated data with this command:
+
+repair-data show-replicated-repair-status
+
+Erasure-coded (EC) data
+
+Two commands are available for restoring erasure-coded data, based on whether you need to repair the entire node or only certain volumes on the node: repair-data start-ec-node-repair
+
+repair-data start-ec-volume-repair
+
+You can track repairs of erasure-coded data with this command:
+
+repair-data show-ec-repair-status
+
+Repairs of erasure-coded data can begin while some Storage Nodes are offline. However, if all erasure-coded data can’t be accounted for, the repair can’t be completed. Repair will complete after all nodes are available.
+
+The EC repair job temporarily reserves a large amount of storage. Storage alerts might be triggered, but will resolve when the repair is complete. If there is not enough storage for the reservation, the EC repair job will fail. Storage reservations are released when the EC repair job completes, whether the job failed or succeeded. Find hostname for Storage Node
+
+1. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Use the /etc/hosts file to find the hostname of the Storage Node for the restored storage volumes. To
+
+1586
+
+see a list of all nodes in the grid, enter the following: cat /etc/hosts.
+
+Repair data if all volumes have failed
+
+If all storage volumes have failed, repair the entire node. Follow the instructions for replicated data, erasure- coded (EC) data, or both, based on whether you use replicated data, erasure-coded (EC) data, or both.
+
+If only some volumes have failed, go to Repair data if only some volumes have failed.
+
+You can’t run repair-data operations for more than one node at the same time. To recover multiple nodes, contact technical support. Replicated data
+
+If your grid includes replicated data, use the repair-data start-replicated-node-repair command with the --nodes option, where --nodes is the hostname (system name), to repair the entire Storage Node.
+
+This command repairs the replicated data on a Storage Node named SG-DC-SN3:
+
+repair-data start-replicated-node-repair --nodes SG-DC-SN3
+
+As object data is restored, the Objects Lost alert is triggered if the StorageGRID system can’t locate replicated object data. Alerts might be triggered on Storage Nodes throughout the system. You should determine the cause of the loss and if recovery is possible. See Investigate lost objects. Erasure-coded (EC) data
+
+If your grid contains erasure-coded data, use the repair-data start-ec-node-repair command with the --nodes option, where --nodes is the hostname (system name), to repair the entire Storage Node.
+
+This command repairs the erasure-coded data on a Storage Node named SG-DC-SN3: repair-data start-ec-node-repair --nodes SG-DC-SN3
+
+The operation returns a unique repair ID that identifies this repair_data operation. Use this repair ID to track the progress and result of the repair_data operation. No other feedback is returned as the recovery process completes.
+
+Repairs of erasure-coded data can begin while some Storage Nodes are offline. Repair will complete after all nodes are available.
+
+Repair data if only some volumes have failed
+
+If only some of the volumes have failed, repair the affected volumes. Follow the instructions for replicated data, erasure-coded (EC) data, or both, based on whether you use replicated data, erasure-coded (EC) data, or both.
+
+If all volumes have failed, go to Repair data if all volumes have failed.
+
+1587 If your grid contains erasure-coded data, use the repair-data start-ec-node-repair command with the --nodes option, where --nodes is the hostname (system name), to repair the entire Storage Node.
+
+This command repairs the erasure-coded data on a Storage Node named SG-DC-SN3: repair-data start-ec-node-repair --nodes SG-DC-SN3
+
+The operation returns a unique repair ID that identifies this repair_data operation. Use this repair ID to track the progress and result of the repair_data operation. No other feedback is returned as the recovery process completes.
+
+Repairs of erasure-coded data can begin while some Storage Nodes are offline. Repair will complete after all nodes are available.
+
+Repair data if only some volumes have failed
+
+If only some of the volumes have failed, repair the affected volumes. Follow the instructions for replicated data, erasure-coded (EC) data, or both, based on whether you use replicated data, erasure-coded (EC) data, or both.
+
+If all volumes have failed, go to Repair data if all volumes have failed.
+
+1587

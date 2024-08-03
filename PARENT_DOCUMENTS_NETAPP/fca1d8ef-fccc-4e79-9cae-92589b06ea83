@@ -1,0 +1,185 @@
+400 Bad Request
+
+400 Bad Request
+
+Description
+
+Bucket lifecycle configuration is not allowed in a legacy Compliant bucket
+
+Failed to parse received bucket policy JSON.
+
+Operation denied because of legacy Compliance settings.
+
+Reduced redundancy is not allowed in legacy Compliant bucket
+
+Your policy exceeds the maximum allowed bucket policy length. HTTP status
+
+400 Bad Request
+
+400 Bad Request
+
+403 Forbidden
+
+400 Bad Request
+
+400 Bad Request
+
+Name
+
+Description
+
+HTTP status
+
+XMissingInternalRequestHeader
+
+Missing a header of an internal request.
+
+400 Bad Request
+
+XNoSuchBucketCompliance
+
+The specified bucket does not have legacy Compliance enabled. 404 Not Found
+
+XNotAcceptable
+
+The request contains one or more accept headers that could not be satisfied.
+
+406 Not Acceptable
+
+XNotImplemented
+
+The request you provided implies functionality that is not implemented.
+
+501 Not Implemented
+
+StorageGRID custom operations
+
+StorageGRID custom operations: Overview
+
+The StorageGRID system supports custom operations that are added on to the S3 REST API.
+
+The following table lists the custom operations supported by StorageGRID. Operation
+
+Description
+
+GET Bucket consistency
+
+Returns the consistency being applied to a particular bucket.
+
+PUT Bucket consistency
+
+Sets the consistency applied to a particular bucket.
+
+GET Bucket last access time
+
+Returns whether last access time updates are enabled or disabled for a particular bucket. PUT Bucket last access time
+
+Allows you to enable or disable last access time updates for a particular bucket.
+
+DELETE Bucket metadata notification configuration
+
+Deletes the metadata notification configuration XML associated with a particular bucket.
+
+GET Bucket metadata notification configuration
+
+Returns the metadata notification configuration XML associated with a particular bucket.
+
+PUT Bucket metadata notification configuration
+
+Configures the metadata notification service for a bucket. GET Storage Usage
+
+Tells you the total amount of storage in use by an account and for each bucket associated with the account.
+
+947
+
+Operation
+
+Description
+
+Deprecated: CreateBucket with compliance settings
+
+Deprecated and not supported: You can no longer create new buckets with Compliance enabled.
+
+Deprecated: GET Bucket compliance
+
+Deprecated but supported: Returns the compliance settings currently in effect for an existing legacy Compliant bucket. Deprecated: PUT Bucket compliance
+
+Deprecated but supported: Allows you to modify the compliance settings for an existing legacy Compliant bucket.
+
+GET Bucket consistency
+
+The GET Bucket consistency request allows you to determine the consistency being applied to a particular bucket.
+
+The default consistency is set to guarantee read-after-write for newly created objects.
+
+You must have the s3:GetBucketConsistency permission, or be account root, to complete this operation. Request example
+
+GET /bucket?x-ntap-sg-consistency HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response
+
+In the response XML, <Consistency> will return one of the following values:
+
+Consistency
+
+Description
+
+all
+
+All nodes receive the data immediately, or the request will fail. strong-global Configures the metadata notification service for a bucket. GET Storage Usage
+
+Tells you the total amount of storage in use by an account and for each bucket associated with the account.
+
+947
+
+Operation
+
+Description
+
+Deprecated: CreateBucket with compliance settings
+
+Deprecated and not supported: You can no longer create new buckets with Compliance enabled.
+
+Deprecated: GET Bucket compliance
+
+Deprecated but supported: Returns the compliance settings currently in effect for an existing legacy Compliant bucket. Deprecated: PUT Bucket compliance
+
+Deprecated but supported: Allows you to modify the compliance settings for an existing legacy Compliant bucket.
+
+GET Bucket consistency
+
+The GET Bucket consistency request allows you to determine the consistency being applied to a particular bucket.
+
+The default consistency is set to guarantee read-after-write for newly created objects.
+
+You must have the s3:GetBucketConsistency permission, or be account root, to complete this operation. Request example
+
+GET /bucket?x-ntap-sg-consistency HTTP/1.1 Date: date Authorization: authorization string Host: host
+
+Response
+
+In the response XML, <Consistency> will return one of the following values:
+
+Consistency
+
+Description
+
+all
+
+All nodes receive the data immediately, or the request will fail. strong-global
+
+Guarantees read-after-write consistency for all client requests across all sites.
+
+strong-site
+
+Guarantees read-after-write consistency for all client requests within a site.
+
+read-after-new-write
+
+(Default) Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+948
+
+Consistency
+
+Description available

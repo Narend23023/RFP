@@ -1,0 +1,127 @@
+Properties added: active (boolean), activatedBy (array of tag UUIDs that the policy is assigned to).
+
+The optional type query parameter for GET ilm-policies now takes the values inactive and active. The previous values were proposed, active, and historical. New endpoints for drive management
+
+You can use the /grid/drive-details/{nodeId} API endpoints to perform operations on the drives in specific models of appliance Storage Nodes.
+
+251
+
+Changes to the Tenant Management API
+
+StorageGRID 11.8 uses version 4 of the Tenant Management API. Version 4 deprecates version 3; however, versions 1, 2, and 3 are still supported.
+
+You can continue to use deprecated versions of the Tenant Management API with StorageGRID 11.8; however, support for these versions of the API will be removed in a future release of StorageGRID. After upgrading to StorageGRID 11.8, the deprecated APIs can be deactivated using the PUT /grid/config/management API.
+
+To learn more, go to Understand the Tenant Management API. New endpoints for ILM policy tags
+
+You can use the /org/ilm-policy-tags and /org/containers/{bucketName}/ilm-policy-tags API endpoints to perform operations related to ILM policy tags.
+
+Plan and prepare for upgrade
+
+Estimate the time to complete an upgrade
+
+Consider when to upgrade, based on how long the upgrade might take. Be aware of which operations you can and can’t perform during each stage of the upgrade. About this task
+
+The time required to complete a StorageGRID upgrade depends on a variety of factors such as client load and hardware performance.
+
+The table summarizes the main upgrade tasks and lists the approximate time required for each task. The steps after the table provide instructions you can use to estimate the upgrade time for your system. Upgrade task
+
+Description
+
+Approximate time required
+
+During this task
+
+Run prechecks and upgrade primary Admin Node
+
+The upgrade prechecks are run, and the primary Admin Node is stopped, upgraded, and restarted.
+
+30 minutes to 1 hour, with services appliance nodes requiring the most time.
+
+Unresolved precheck errors will increase this time.
+
+You can’t access the primary Admin Node. Connection errors might be reported, which you can ignore.
+
+Running the upgrade prechecks before starting the upgrade lets you resolve any errors before the scheduled upgrade maintenance window. Start upgrade service
+
+The software file is distributed, and the upgrade service is started.
+
+3 minutes per grid node
+
+252
+
+Upgrade task
+
+Description
+
+Approximate time required
+
+During this task
+
+Upgrade other grid nodes
+
+The software on all other grid nodes is upgraded, in the order in which you approve the nodes. Every node in your system will be brought down one at a time.
+
+15 minutes to 1 hour per node, with appliance nodes requiring the most time
+
+Note: For appliance nodes, the StorageGRID Appliance Installer is automatically updated to the latest release.
+
+Don’t change the grid configuration.
+
+Don’t change the audit level configuration.
+
+Don’t update the ILM configuration.
+
+You are prevented from performing other maintenance procedures, such as hotfix, decommission, or expansion.
+
+Note: If you need to perform a recovery, contact technical support. Enable features
+
+The new features for the new version are enabled.
+
+Less than 5 minutes
+
+Don’t change the grid configuration.
+
+Don’t change the audit level configuration.
+
+Don’t update the ILM configuration.
+
+You can’t perform another maintenance procedure.
+
+Upgrade database
+
+The upgrade process checks each node to verify that the Cassandra database does not need to be updated. 10 seconds per node or a few minutes for the entire grid
+
+The upgrade from StorageGRID 11.7 to 11.8 does not require a Cassandra database upgrade; however, the Cassandra service will be stopped and restarted on each Storage Node. Upgrade other grid nodes
+
+The software on all other grid nodes is upgraded, in the order in which you approve the nodes. Every node in your system will be brought down one at a time.
+
+15 minutes to 1 hour per node, with appliance nodes requiring the most time
+
+Note: For appliance nodes, the StorageGRID Appliance Installer is automatically updated to the latest release.
+
+Don’t change the grid configuration.
+
+Don’t change the audit level configuration.
+
+Don’t update the ILM configuration.
+
+You are prevented from performing other maintenance procedures, such as hotfix, decommission, or expansion.
+
+Note: If you need to perform a recovery, contact technical support. Enable features
+
+The new features for the new version are enabled.
+
+Less than 5 minutes
+
+Don’t change the grid configuration.
+
+Don’t change the audit level configuration.
+
+Don’t update the ILM configuration.
+
+You can’t perform another maintenance procedure.
+
+Upgrade database
+
+The upgrade process checks each node to verify that the Cassandra database does not need to be updated. 10 seconds per node or a few minutes for the entire grid

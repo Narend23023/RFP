@@ -1,0 +1,143 @@
+Plan and prepare for installation on Red Hat
+
+Required information and materials
+
+Before you install StorageGRID, gather and prepare the required information and materials.
+
+Required information Network plan
+
+Which networks you intend to attach to each StorageGRID node. StorageGRID supports multiple networks for traffic separation, security, and administrative convenience.
+
+See the StorageGRID Networking guidelines.
+
+Network information
+
+Unless you are using DHCP, IP addresses to assign to each grid node and the IP addresses of the DNS and NTP servers. Servers for grid nodes
+
+Identify a set of servers (physical, virtual, or both) that, in aggregate, provide sufficient resources to support the number and type of StorageGRID nodes you plan to deploy.
+
+If your StorageGRID installation will not use StorageGRID appliance (hardware) Storage Nodes, you must use hardware RAID storage with battery-backed write cache (BBWC). StorageGRID does not support the use of virtual storage area networks (vSANs), software RAID, or no RAID protection.
+
+Node migration (if needed)
+
+Understand the requirements for node migration, if you want to perform scheduled maintenance on physical hosts without any service interruption.
+
+Related information NetApp Interoperability Matrix Tool
+
+Required materials
+
+NetApp StorageGRID license
+
+You must have a valid, digitally signed NetApp license.
+
+74
+
+A non-production license, which can be used for testing and proof of concept grids, is included in the StorageGRID installation archive.
+
+StorageGRID installation archive
+
+Download the StorageGRID installation archive and extract the files. Service laptop
+
+The StorageGRID system is installed through a service laptop.
+
+The service laptop must have:
+
+Network port
+
+SSH client (for example, PuTTY)
+
+Supported web browser
+
+StorageGRID documentation
+
+Release notes
+
+Instructions for administering StorageGRID
+
+Download and extract the StorageGRID installation files
+
+You must download the StorageGRID installation archive and extract the required files. Steps
+
+1. Go to the NetApp Downloads page for StorageGRID.
+
+2. Select the button for downloading the latest release, or select another version from the drop-down menu and select Go.
+
+3. Sign in with the username and password for your NetApp account.
+
+4. If a Caution/MustRead statement appears, read it and select the checkbox.
+
+You must apply any required hotfixes after you install the StorageGRID release. For more information, see the hotfix procedure in the recovery and maintenance instructions.
+
+5. Read the End User License Agreement, select the checkbox, and then select Accept & Continue.
+
+6. In the Install StorageGRID column, select the .tgz or .zip file for Red Hat Enterprise Linux.
+
+Select the .zip file if you are running Windows on the service laptop.
+
+7. Save and extract the archive file.
+
+8. Choose the files you need from the following list.
+
+The files you need depend on your planned grid topology and how you will deploy your StorageGRID system. The paths listed in the table are relative to the top-level directory installed by the extracted installation archive
+
+75
+
+Path and file name
+
+Description
+
+./rpms/README
+
+A text file that describes all of the files contained in the StorageGRID download file.
+
+./rpms/NLF000000.txt
+
+A free license that does not provide any support entitlement for the product. ./rpms/StorageGRID-Webscale-Images- version-SHA.rpm
+
+RPM package for installing the StorageGRID node images on your RHEL hosts.
+
+./rpms/StorageGRID-Webscale-Service- version-SHA.rpm
+
+RPM package for installing the StorageGRID host service on your RHEL hosts.
+
+Deployment scripting tool
+
+Description
+
+./rpms/configure-storagegrid.py
+
+A Python script used to automate the configuration of a StorageGRID system. ./rpms/configure-sga.py
+
+A Python script used to automate the configuration of StorageGRID appliances.
+
+./rpms/configure-storagegrid.sample.json An example configuration file for use with the 8. Choose the files you need from the following list.
+
+The files you need depend on your planned grid topology and how you will deploy your StorageGRID system. The paths listed in the table are relative to the top-level directory installed by the extracted installation archive
+
+75
+
+Path and file name
+
+Description
+
+./rpms/README
+
+A text file that describes all of the files contained in the StorageGRID download file.
+
+./rpms/NLF000000.txt
+
+A free license that does not provide any support entitlement for the product. ./rpms/StorageGRID-Webscale-Images- version-SHA.rpm
+
+RPM package for installing the StorageGRID node images on your RHEL hosts.
+
+./rpms/StorageGRID-Webscale-Service- version-SHA.rpm
+
+RPM package for installing the StorageGRID host service on your RHEL hosts.
+
+Deployment scripting tool
+
+Description
+
+./rpms/configure-storagegrid.py
+
+A Python script used to automate the configuration of a StorageGRID system. ./rpms/configure-sga.py

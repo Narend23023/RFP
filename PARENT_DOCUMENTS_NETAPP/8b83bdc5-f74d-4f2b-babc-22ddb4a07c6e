@@ -1,0 +1,61 @@
+You might need to apply a hotfix to your StorageGRID system if issues with the software are detected and resolved between feature releases.
+
+StorageGRID hotfixes contain software changes that are made available outside of a feature or patch release. The same changes are included in a future release. In addition, each hotfix release contains a roll-up of all previous hotfixes within the feature or patch release.
+
+268
+
+Considerations for applying a hotfix
+
+You can’t apply a StorageGRID hotfix when another maintenance procedure is running. For example, you can’t apply a hotfix while a decommission, expansion, or recovery procedure is running.
+
+If a node or site decommission procedure is paused, you can safely apply a hotfix. In addition, you might be able to apply a hotfix during the final stages of a StorageGRID upgrade procedure. See the instructions for upgrading StorageGRID software for details. After you upload the hotfix in the Grid Manager, the hotfix is applied automatically to the primary Admin Node. Then, you can approve the application of the hotfix to the rest of the nodes in your StorageGRID system.
+
+If a hotfix fails to be applied to one or more nodes, the reason for the failure appears in the Details column of the hotfix progress table. You must resolve whatever issues caused the failures and then retry the entire process. Nodes with a previously successful application of the hotfix will be skipped in subsequent applications. You can safely retry the hotfix process as many times as required until all nodes have been updated. The hotfix must be successfully installed on all grid nodes in order for the application to be complete.
+
+While grid nodes are updated with the new hotfix version, the actual changes in a hotfix might only affect specific services on specific types of nodes. For example, a hotfix might only affect the LDR service on Storage Nodes. How hotfixes are applied for recovery and expansion
+
+After a hotfix has been applied to your grid, the primary Admin Node automatically installs the same hotfix version to any nodes restored by recovery operations or added in an expansion.
+
+However, if you need to recover the primary Admin Node, you must manually install the correct StorageGRID release and then apply the hotfix. The final StorageGRID version of the primary Admin Node must match the version of the other nodes in the grid.
+
+The following example illustrates how to apply a hotfix when recovering the primary Admin Node:
+
+1. Assume the grid is running a StorageGRID 11.A.B version with the latest hotfix. The "grid version" is 11.A.B.y.
+
+2. The primary Admin Node fails.
+
+3. You redeploy the primary Admin Node using StorageGRID 11.A.B, and perform the recovery procedure.
+
+As required to match the grid version, you can use a minor release when deploying the node; you don’t need to deploy the major release first. 4. You then apply hotfix 11.A.B.y to the primary Admin Node.
+
+For more information, see Configure replacement primary Admin Node.
+
+How your system is affected when you apply a hotfix
+
+You must understand how your StorageGRID system will be affected when you apply a hotfix.
+
+269
+
+StorageGRID hotfixes are non-disruptive
+
+The StorageGRID system can ingest and retrieve data from client applications throughout the hotfix process. If you approve all nodes of the same type to hotfix (for example, Storage Nodes), the nodes are brought down one at a time, so there is no time when all grid nodes or all grid nodes of a certain type are unavailable.
+
+To allow for continued availability, ensure that your ILM policy contains rules that specify storing multiple copies of each object. You must also ensure that all external S3 or Swift clients are configured to send requests to one of the following:
+
+A high availability (HA) group virtual IP address 2. The primary Admin Node fails.
+
+3. You redeploy the primary Admin Node using StorageGRID 11.A.B, and perform the recovery procedure.
+
+As required to match the grid version, you can use a minor release when deploying the node; you don’t need to deploy the major release first. 4. You then apply hotfix 11.A.B.y to the primary Admin Node.
+
+For more information, see Configure replacement primary Admin Node.
+
+How your system is affected when you apply a hotfix
+
+You must understand how your StorageGRID system will be affected when you apply a hotfix.
+
+269
+
+StorageGRID hotfixes are non-disruptive
+
+The StorageGRID system can ingest and retrieve data from client applications throughout the hotfix process. If you approve all nodes of the same type to hotfix (for example, Storage Nodes), the nodes are brought down one at a time, so there is no time when all grid nodes or all grid nodes of a certain type are unavailable.

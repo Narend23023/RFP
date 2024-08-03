@@ -1,0 +1,71 @@
+23
+
+Erasure coding When StorageGRID matches objects to an ILM rule that is configured to create erasure-coded copies, it slices object data into data fragments, computes additional parity fragments, and stores each fragment on a different Storage Node. When an object is accessed, it is reassembled using the stored fragments. If a data or a parity fragment becomes corrupt or lost, the erasure coding algorithm can recreate that fragment using a subset of the remaining data and parity fragments. ILM rules and erasure-coding profiles determine the erasure-coding scheme used.
+
+The following example illustrates the use of erasure coding on an object’s data. In this example, the ILM rule uses a 4+2 erasure-coding scheme. Each object is sliced into four equal data fragments, and two parity fragments are computed from the object data. Each of the six fragments is stored on a different Storage Node across three data centers to provide data protection for node failures or site loss. 24
+
+Related information
+
+Manage objects with ILM
+
+Use information lifecycle management The life of an object
+
+An object’s life consists of various stages. Each stage represents the operations that occur with the object.
+
+The life of an object includes the operations of ingest, copy management, retrieve, and delete.
+
+Ingest: The process of an S3 or Swift client application saving an object over HTTP to the StorageGRID system. At this stage, the StorageGRID system begins to manage the object. The following example illustrates the use of erasure coding on an object’s data. In this example, the ILM rule uses a 4+2 erasure-coding scheme. Each object is sliced into four equal data fragments, and two parity fragments are computed from the object data. Each of the six fragments is stored on a different Storage Node across three data centers to provide data protection for node failures or site loss. 24
+
+Related information
+
+Manage objects with ILM
+
+Use information lifecycle management The life of an object
+
+An object’s life consists of various stages. Each stage represents the operations that occur with the object.
+
+The life of an object includes the operations of ingest, copy management, retrieve, and delete.
+
+Ingest: The process of an S3 or Swift client application saving an object over HTTP to the StorageGRID system. At this stage, the StorageGRID system begins to manage the object.
+
+Copy management: The process of managing replicated and erasure-coded copies in StorageGRID, as described by the ILM rules in the active ILM policies. During the copy management stage, StorageGRID protects object data from loss by creating and maintaining the specified number and type of object copies on Storage Nodes, in a Cloud Storage Pool, or on Archive Node.
+
+Retrieve: The process of a client application accessing an object stored by the StorageGRID system. The client reads the object, which is retrieved from a Storage Node, Cloud Storage Pool, or Archive Node. Delete: The process of removing all object copies from the grid. Objects can be deleted either as a result of the client application sending a delete request to the StorageGRID system, or as a result of an automatic process that StorageGRID performs when the object’s lifetime expires.
+
+25
+
+Related information
+
+Manage objects with ILM
+
+Use information lifecycle management Ingest data flow
+
+An ingest, or save, operation consists of a defined data flow between the client and the StorageGRID system.
+
+Data flow
+
+When a client ingests an object to the StorageGRID system, the LDR service on Storage Nodes processes the request and stores the metadata and data to disk.
+
+26
+
+1. The client application creates the object and sends it to the StorageGRID system through an HTTP PUT request.
+
+2. The object is evaluated against the system’s ILM policy.
+
+3. The LDR service saves the object data as a replicated copy or as an erasure-coded copy. (The diagram shows a simplified version of storing a replicated copy to disk.)
+
+4. The LDR service sends the object metadata to the metadata store.
+
+5. The metadata store saves the object metadata to disk.
+
+6. The metadata store propagates copies of object metadata to other Storage Nodes. These copies are also saved to disk.
+
+7. The LDR service returns an HTTP 200 OK response to the client to acknowledge that the object has been ingested. Copy management
+
+Object data is managed by the active ILM policies and associated ILM rules. ILM rules make replicated or erasure-coded copies to protect object data from loss.
+
+Different types or locations of object copies might be required at different times in the object’s life. ILM rules are periodically evaluated to ensure that objects are placed as required.
+
+Object data is managed by the LDR service. Content protection: replication
+
+If an ILM rule’s content placement instructions require replicated copies of object data, copies are made and stored to disk by the Storage Nodes that make up the configured storage pool.

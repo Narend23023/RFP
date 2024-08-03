@@ -1,0 +1,111 @@
+If any nodes are deployed on Linux hosts, you must download and install the RPM or DEB package on all hosts before you start the upgrade.
+
+Important: Ensure that your operating system is upgraded to Linux kernel 4.15 or higher.
+
+StorageGRID documentation
+
+Release notes for StorageGRID 11.8 (sign in required). Be sure to read these carefully before starting the upgrade.
+
+StorageGRID software upgrade resolution guide for the major version you are upgrading to (sign in required)
+
+Other StorageGRID 11.8 documentation, as required.
+
+Check the system’s condition
+
+Before upgrading a StorageGRID system, verify the system is ready to accommodate the upgrade. Ensure that the system is running normally and that all grid nodes are operational.
+
+258
+
+Steps
+
+1. Sign in to the Grid Manager using a supported web browser.
+
+2. Check for and resolve any active alerts.
+
+3. Confirm that no conflicting grid tasks are active or pending. a. Select SUPPORT > Tools > Grid topology.
+
+b. Select site > primary Admin Node > CMN > Grid Tasks > Configuration.
+
+Information lifecycle management evaluation (ILME) tasks are the only grid tasks that can run concurrently with the software upgrade.
+
+c. If any other grid tasks are active or pending, wait for them to finish or release their lock.
+
+Contact technical support if a task does not finish or release its lock.
+
+4. Refer to Internal grid node communications and External communications to ensure that all required ports for StorageGRID 11.8 are opened before you upgrade.
+
+No additional ports are required when upgrading to StorageGRID 11.8.
+
+The following required port was added in StorageGRID 11.7. Make sure it’s available before you upgrade to StorageGRID 11.8. Port
+
+Description
+
+18086
+
+TCP port used for S3 requests from the StorageGRID load balancer to LDR and the new LDR service.
+
+Before upgrading, confirm that this port is open from all grid nodes to all Storage Nodes.
+
+Blocking this port will cause S3 service interruptions after upgrade to StorageGRID 11.8.
+
+If you have opened any custom firewall ports, you are notified during the upgrade precheck. You must contact technical support before proceeding with the upgrade. Upgrade software
+
+Upgrade quick start
+
+Before starting the upgrade, review the general workflow. The StorageGRID Upgrade page guides you through each upgrade step.
+
+Prepare Linux hosts
+
+If any StorageGRID nodes are deployed on Linux hosts, install the RPM or DEB package on each host before you start the upgrade.
+
+259 Upload upgrade and hotfix files
+
+From the primary Admin Node, access the StorageGRID Upgrade page and upload the upgrade file and the hotfix file, if required.
+
+Download Recovery Package
+
+Download the current Recovery Package before you start the upgrade.
+
+Run upgrade prechecks
+
+Upgrade prechecks help you detect issues, so you can resolve them before you start the actual upgrade. Start upgrade
+
+When you start the upgrade, the prechecks are run again and the primary Admin Node is upgraded automatically. You can’t access the Grid Manager while the primary Admin Node is being upgraded. Audit logs will also be unavailable. This upgrade can take up to 30 minutes.
+
+Download Recovery Package
+
+After the primary Admin Node has been upgraded, download a new Recovery Package. Approve nodes Blocking this port will cause S3 service interruptions after upgrade to StorageGRID 11.8.
+
+If you have opened any custom firewall ports, you are notified during the upgrade precheck. You must contact technical support before proceeding with the upgrade. Upgrade software
+
+Upgrade quick start
+
+Before starting the upgrade, review the general workflow. The StorageGRID Upgrade page guides you through each upgrade step.
+
+Prepare Linux hosts
+
+If any StorageGRID nodes are deployed on Linux hosts, install the RPM or DEB package on each host before you start the upgrade.
+
+259 Upload upgrade and hotfix files
+
+From the primary Admin Node, access the StorageGRID Upgrade page and upload the upgrade file and the hotfix file, if required.
+
+Download Recovery Package
+
+Download the current Recovery Package before you start the upgrade.
+
+Run upgrade prechecks
+
+Upgrade prechecks help you detect issues, so you can resolve them before you start the actual upgrade. Start upgrade
+
+When you start the upgrade, the prechecks are run again and the primary Admin Node is upgraded automatically. You can’t access the Grid Manager while the primary Admin Node is being upgraded. Audit logs will also be unavailable. This upgrade can take up to 30 minutes.
+
+Download Recovery Package
+
+After the primary Admin Node has been upgraded, download a new Recovery Package. Approve nodes
+
+You can approve individual grid nodes, groups of grid nodes, or all grid nodes.
+
+Don’t approve the upgrade for a grid node unless you are sure that node is ready to be stopped and rebooted.
+
+Resume operations

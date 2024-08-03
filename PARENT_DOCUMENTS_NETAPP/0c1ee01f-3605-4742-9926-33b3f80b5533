@@ -1,0 +1,117 @@
+A bucket is a container used to store a tenant’s objects and object metadata. Although some tenants might have many buckets, the wizard helps you to create a tenant and a bucket in the quickest and easiest way. You can use the Tenant Manager later to add any additional buckets you need.
+
+You can create a new tenant for this S3 application to use. Optionally, you can also create a bucket for the new tenant. Finally, you can allow the wizard to create the S3 access keys for the tenant’s root user.
+
+For details about this task, see Create tenant account and Create S3 bucket. Steps
+
+1. Select Create tenant.
+
+2. For the Enter details steps, enter the following information.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, numeric account ID.
+
+Description (optional)
+
+A description to help identify the tenant. Client type
+
+The type of client protocol this tenant will use. For the S3 setup wizard, S3 is selected and the field is disabled.
+
+Storage quota (optional)
+
+If you want this tenant to have a storage quota, a numerical value for the quota and the units.
+
+3. Select Continue.
+
+4. Optionally, select any permissions you want this tenant to have.
+
+483 You can create a new tenant for this S3 application to use. Optionally, you can also create a bucket for the new tenant. Finally, you can allow the wizard to create the S3 access keys for the tenant’s root user.
+
+For details about this task, see Create tenant account and Create S3 bucket. Steps
+
+1. Select Create tenant.
+
+2. For the Enter details steps, enter the following information.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, numeric account ID.
+
+Description (optional)
+
+A description to help identify the tenant. Client type
+
+The type of client protocol this tenant will use. For the S3 setup wizard, S3 is selected and the field is disabled.
+
+Storage quota (optional)
+
+If you want this tenant to have a storage quota, a numerical value for the quota and the units.
+
+3. Select Continue.
+
+4. Optionally, select any permissions you want this tenant to have.
+
+483
+
+Some of these permissions have additional requirements. For details, select the help icon for each permission. Permission
+
+If selected…
+
+Allow platform services
+
+The tenant can use S3 platform services such as CloudMirror. See Manage platform services for S3 tenant accounts.
+
+Use own identity source
+
+The tenant can configure and manage its own identity source for federated groups and users. This option is disabled if you have configured SSO for your StorageGRID system. Allow S3 Select
+
+The tenant can issue S3 SelectObjectContent API requests to filter and retrieve object data. See Manage S3 Select for tenant accounts.
+
+Important: SelectObjectContent requests can decrease load-balancer performance for all S3 clients and all tenants. Enable this feature only when required and only for trusted tenants. Use grid federation connection
+
+The tenant can use a grid federation connection.
+
+Selecting this option:
+
+Causes this tenant and all tenant groups and users added to the account to be cloned from this grid (the source grid) to the other grid in the selected connection (the destination grid).
+
+Allows this tenant to configure cross-grid replication between corresponding buckets on each grid.
+
+See Manage the permitted tenants for grid federation.
+
+5. If you selected Use grid federation connection, select one of the available grid federation connections.
+
+6. Define root access for the tenant account, based on whether your StorageGRID system uses identity federation, single sign-on (SSO), or both. Option
+
+Do this
+
+If identity federation is not enabled Specify the password to use when signing into the tenant as the local root user.
+
+If identity federation is enabled
+
+1. Select an existing federated group to have Root access permission for the tenant.
+
+2. Optionally, specify the password to use when signing in to the tenant as the local root user.
+
+If both identity federation and single sign-on (SSO) are enabled
+
+Select an existing federated group to have Root access permission for the tenant. No local users can sign in.
+
+7. If you want the wizard to create the access key ID and secret access key for the root user, select Create
+
+484
+
+root user S3 access key automatically.
+
+Select this option if the only user for the tenant will be the root user. If other users will use this tenant, use Tenant Manager to configure keys and permissions.
+
+8. Select Continue.

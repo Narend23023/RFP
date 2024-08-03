@@ -1,0 +1,61 @@
+Verify object integrity 1248
+
+system metadata that is not guaranteed to persist from release to release.
+
+The following example shows the object metadata lookup results for an S3 test object that is stored as two replicated copies. Object store (storage volume) failures
+
+The underlying storage on a Storage Node is divided into object stores. Object stores are also known as storage volumes.
+
+You can view object store information for each Storage Node. Object stores are shown at the bottom of the NODES > Storage Node > Storage page.
+
+1249
+
+1250
+
+To see more details about each Storage Node, follow these steps:
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select site > Storage Node > LDR > Storage > Overview > Main. Depending on the nature of the failure, faults with a storage volume might be reflected in an alarm on the storage status or on the health of an object store. If a storage volume fails, you should repair the failed storage volume to restore the Storage Node to full functionality as soon as possible. If necessary, you can go to the Configuration tab and place the Storage Node in a read‐only state so that the StorageGRID system can use it for data retrieval while you prepare for a full recovery of the server.
+
+Verify object integrity
+
+The StorageGRID system verifies the integrity of object data on Storage Nodes, checking for both corrupt and missing objects. There are two verification processes: background verification and object existence check (formerly called foreground verification). They work together to ensure data integrity. Background verification runs automatically, and continuously checks the correctness of object data. Object existence check can be triggered by a user to more quickly verify the existence (although not the correctness) of objects.
+
+What is background verification?
+
+The background verification process automatically and continuously checks Storage Nodes for corrupt copies of object data, and automatically attempts to repair any issues that it finds.
+
+Background verification checks the integrity of replicated objects and erasure-coded objects, as follows:
+
+1251
+
+• Replicated objects: If the background verification process finds a replicated object that is corrupt, the corrupt copy is removed from its location and quarantined elsewhere on the Storage Node. Then, a new uncorrupted copy is generated and placed to satisfy the active ILM policies. The new copy might not be placed on the Storage Node that was used for the original copy.
+
+Corrupt object data is quarantined rather than deleted from the system, so that it can still be accessed. For more information about accessing quarantined object data, contact technical support.
+
+Erasure-coded objects: If the background verification process detects that a fragment of an erasure- coded object is corrupt, StorageGRID automatically attempts to rebuild the missing fragment in place on the same Storage Node, using the remaining data and parity fragments. If the corrupted fragment can’t be rebuilt, an attempt is made to retrieve another copy of the object. If retrieval is successful, an ILM evaluation is performed to create a replacement copy of the erasure-coded object. The background verification process checks objects on Storage Nodes only. It does not check objects on Archive Nodes or in a Cloud Storage Pool. Objects must be older than four days to qualify for background verification.
+
+Background verification runs at a continuous rate that is designed not to interfere with ordinary system activities. Background verification can’t be stopped. However you can increase the background verification rate to more quickly verify the contents of a Storage Node if you suspect a problem.
+
+Alerts and alarms (legacy) related to background verification
+
+If the system detects a corrupt object that it can’t correct automatically (because the corruption prevents the object from being identified), the Unidentified corrupt object detected alert is triggered.
+
+If background verification can’t replace a corrupted object because it can’t locate another copy, the Objects lost alert is triggered.
+
+Change the background verification rate You can change the rate at which background verification checks replicated object data on a Storage Node if you have concerns about data integrity.
+
+Before you begin
+
+You must be signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+You can change the Verification Rate for background verification on a Storage Node:
+
+Adaptive: Default setting. The task is designed to verify at a maximum of 4 MB/s or 10 objects/s (whichever is exceeded first).
+
+High: Storage verification proceeds quickly, at a rate that can slow ordinary system activities.

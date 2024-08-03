@@ -1,0 +1,43 @@
+
+                   <p style="text-align: center">
+                       <b>Title:</b> No title detected<br>
+                       <b>Bounding box:</b> x1=134, y1=100, x2=1566, y2=1952
+                   </p>
+                   <div align="center"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Consideration</td>
+      <td>Details</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Destination endpoint\nthrottling</td>
+      <td>StorageGRID software might throttle incoming S3 requests for a bucket if the rate\nat which the requests are being sent exceeds the rate at which the destination\nendpoint can receive the requests. Throttling only occurs when there is a backlog\nof requests waiting to be sent to the destination endpoint.\nThe only visible effect is that the incoming S3 requests will take longer to execute.\nIf you start to detect significantly slower performance, you should reduce the\ningest rate or use an endpoint with higher capacity. If the backlog of requests\ncontinues to grow, client S3 operations (such as PUT requests) will eventually fail.\nCloudMirror requests are more likely to be affected by the performance of the\ndestination endpoint because these requests typically involve more data transfer\nthan search integration or event notification requests.</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ordering guarantees</td>
+      <td>StorageGRID guarantees ordering of operations on an object within a site. As\nlong as all operations against an object are within the same site, the final object\nstate (for replication) will always equal the state in StorageGRID.\nStorageGRID makes a best effort attempt to order requests when operations are\nmade across StorageGRID sites. For example, if you write an object initially to\nsite A and then later overwrite the same object at site B, the final object replicated\nby CloudMirror to the destination bucket is not guaranteed to be the newer object.</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ILM-driven object\ndeletions</td>
+      <td>To match the deletion behavior of the AWS CRR and Amazon Simple Notification\nService, CloudMirror and event notification requests aren’t sent when an object in\nthe source bucket is deleted because of StorageGRID ILM rules. For example, no\nCloudMirror or event notifications requests are sent if an ILM rule deletes an\nobject after 14 days.\nIn contrast, search integration requests are sent when objects are deleted\nbecause of ILM.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Using Kafka endpoints</td>
+      <td>For Kafka endpoints, Mutual TLS is not supported. As a result, if you have\nset to in your Kafka broker configuration, it might ssl.client.auth required\ncause Kafka endpoint configuration issues.\nThe authentication of Kafka endpoints uses the following authentication types.\nThese types are different from those used for the authentication of other\nendpoints, such as Amazon SNS, and require username and password\ncredentials.\n• SASL/PLAIN\n• SASL/SCRAM-SHA-256\n• SASL/SCRAM-SHA-512\nNote: Configured storage proxy settings do not apply to Kafka platform services\nendpoints.</td>
+    </tr>
+  </tbody>
+</table></div>
+                   <hr>
+                

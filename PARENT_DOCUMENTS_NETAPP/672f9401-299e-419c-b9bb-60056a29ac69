@@ -1,0 +1,137 @@
+5. Enter the provisioning passphrase.
+
+The Start Decommission button becomes enabled.
+
+1470
+
+6. If you are ready to start the site decommission procedure, select Start Decommission.
+
+A warning lists the site and nodes that will be removed. You are reminded that it might take days, weeks, or even months to completely remove the site.
+
+1471 your StorageGRID system have a Connection State of Unknown (
+
+) or Administratively Down (
+
+2. If any nodes are disconnected, bring them back online.
+
+See the Node procedures. Contact technical support if you need assistance.
+
+).
+
+1469
+
+3. When all disconnected nodes have been brought back online, review the HA groups section of Step 5 (Resolve Node Conflicts).
+
+This table lists any nodes at the selected site that belong to a high availability (HA) group.
+
+4. If any nodes are listed, do either of the following:
+
+Edit each affected HA group to remove the node interface. ◦ Remove an HA group that only includes nodes from this site. See the instructions for administering StorageGRID.
+
+If all nodes are connected and no nodes in the selected site are used in an HA group, the Provisioning Passphrase field is enabled.
+
+5. Enter the provisioning passphrase.
+
+The Start Decommission button becomes enabled.
+
+1470
+
+6. If you are ready to start the site decommission procedure, select Start Decommission.
+
+A warning lists the site and nodes that will be removed. You are reminded that it might take days, weeks, or even months to completely remove the site.
+
+1471
+
+7. Review the warning. If you are ready to begin, select OK. A message appears as the new grid configuration is generated. This process might take some time, depending on the type and number of decommissioned grid nodes.
+
+When the new grid configuration has been generated, Step 6 (Monitor Decommission) appears.
+
+The Previous button remains disabled until the decommission is complete. Step 6: Monitor Decommission
+
+From Step 6 (Monitor Decommission) of the Decommission Site page wizard, you can monitor the progress as the site is removed.
+
+About this task
+
+When StorageGRID removes a connected site, it removes nodes in this order:
+
+1. Gateway Nodes
+
+1472
+
+2. Admin Nodes
+
+3. Storage Nodes
+
+When StorageGRID removes a disconnected site, it removes nodes in this order:
+
+1. Gateway Nodes
+
+2. Storage Nodes
+
+3. Admin Nodes
+
+Each Gateway Node or Admin Node might only require a few minutes or an hour to remove; however, Storage Nodes might take days or weeks. Steps
+
+1. As soon as a new Recovery Package has been generated, download the file.
+
+Download the Recovery Package as soon as possible to ensure you can recover your grid if something goes wrong during the decommission procedure.
+
+a. Select the link in the message, or select MAINTENANCE > System > Recovery package. b. Download the .zip file.
+
+See the instructions for downloading the Recovery Package.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system.
+
+2. Using the Data Movement chart, monitor the movement of object data from this site to other sites.
+
+Data movement started when you activated the new ILM policy in Step 3 (Revise ILM Policy). Data movement will occur throughout the decommission procedure.
+
+1473
+
+3. In the Node Progress section of the page, monitor the progress of the decommission procedure as nodes are removed.
+
+When a Storage Node is removed, each node goes through a series of stages. Although most of these stages occur quickly or even imperceptibly, you might need to wait days or even weeks for other stages to complete, based on how much data needs to moved. Additional time is required to manage erasure-coded data and re-evaluate ILM. 1474
+
+If you are monitoring the progress of a connected site decommission, refer to this table to understand the decommission stages for a Storage Node:
+
+Stage
+
+Estimated duration
+
+Pending
+
+Minute or less
+
+Wait for Locks
+
+Minutes
+
+Prepare Task
+
+Minute or less
+
+Marking LDR Decommissioned
+
+Minutes
+
+Decommissioning Replicated and Erasure-Coded Data
+
+Hours, days, or weeks based on the amount of data
+
+Note: If you need to perform other maintenance activities, you can pause the site decommission during this stage. LDR Set State
+
+Minutes
+
+Flush Audit Queues
+
+Minutes to hours, based on the number of messages and network latency.
+
+Complete
+
+Minutes 1473
+
+3. In the Node Progress section of the page, monitor the progress of the decommission procedure as nodes are removed.
+
+When a Storage Node is removed, each node goes through a series of stages. Although most of these stages occur quickly or even imperceptibly, you might need to wait days or even weeks for other stages to complete, based on how much data needs to moved. Additional time is required to manage erasure-coded data and re-evaluate ILM. 1474
+
+If you are monitoring the progress of a connected site decommission, refer to this table to understand the decommission stages for a Storage Node:

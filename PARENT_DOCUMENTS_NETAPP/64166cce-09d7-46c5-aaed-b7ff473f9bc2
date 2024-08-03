@@ -1,0 +1,77 @@
+3. Add an entry to the file to specify the name and, optionally, the description of each extra interface you want to add to the node. Use this format.
+
+INTERFACE_TARGET_nnnn=value
+
+For nnnn, specify a unique number for each INTERFACE_TARGET entry you are adding.
+
+For value, specify the name of the physical interface on the bare-metal host. Then, optionally, add a comma and provide a description of the interface, which is displayed on the VLAN interfaces page and the HA groups page. For example:
+
+INTERFACE_TARGET_0001=ens256, Trunk
+
+Don’t specify any other network parameters, or a validation error will result.
+
+4. Run the following command to validate your changes to the node configuration file:
+
+sudo storagegrid node validate node-name
+
+Address any errors or warnings before proceeding to the next step.
+
+5. Run the following command to update the node’s configuration: sudo storagegrid node reload node-name
+
+After you finish
+
+If you added one or more trunk interfaces, go to configure VLAN interfaces to configure one or more VLAN interfaces for each new parent interface.
+
+If you added one or more access interfaces, go to configure high availability groups to add the new interfaces directly to HA groups. VMware: Add trunk or access interfaces to a node
+
+You can add a trunk or access interface to a VM node after the node has been installed. The interfaces you add are displayed on the VLAN interfaces page and the HA groups page.
+
+Before you begin
+
+You have access to the instructions for installing StorageGRID on your VMware platform.
+
+You have Admin Node and Gateway Node VMware virtual machines.
+
+You have a network subnet that is not being used as Grid, Admin, or Client Network.
+
+1530
+
+• You have the Passwords.txt file.
+
+You have specific access permissions.
+
+Don’t attempt to add interfaces to a node while a software upgrade, recovery procedure, or expansion procedure is active. About this task
+
+Use these steps to add one or more extra interfaces to a VMware node after the node has been installed. For example, you might want to add a trunk interface to an Admin or Gateway Node, so you can use VLAN interfaces to segregate the traffic belonging to different applications or tenants. Or you might want to add an access interface to use in a high availability (HA) group.
+
+If you add a trunk interface, you must configure a VLAN interface in StorageGRID. If you add an access interface, you can add the interface directly to an HA group; you don’t need to configure a VLAN interface.
+
+The node might be unavailable for a brief time when you add interfaces. Steps
+
+1. In vCenter, add a new network adapter (type VMXNET3) to an Admin Node and Gateway Node VM. Select Connected and Connect At Power On checkboxes.
+
+2. Use SSH to log in to the Admin Node or Gateway Node.
+
+3. Use ip link show to confirm the new network interface ens256 is detected. 1530
+
+• You have the Passwords.txt file.
+
+You have specific access permissions.
+
+Don’t attempt to add interfaces to a node while a software upgrade, recovery procedure, or expansion procedure is active. About this task
+
+Use these steps to add one or more extra interfaces to a VMware node after the node has been installed. For example, you might want to add a trunk interface to an Admin or Gateway Node, so you can use VLAN interfaces to segregate the traffic belonging to different applications or tenants. Or you might want to add an access interface to use in a high availability (HA) group.
+
+If you add a trunk interface, you must configure a VLAN interface in StorageGRID. If you add an access interface, you can add the interface directly to an HA group; you don’t need to configure a VLAN interface.
+
+The node might be unavailable for a brief time when you add interfaces. Steps
+
+1. In vCenter, add a new network adapter (type VMXNET3) to an Admin Node and Gateway Node VM. Select Connected and Connect At Power On checkboxes.
+
+2. Use SSH to log in to the Admin Node or Gateway Node.
+
+3. Use ip link show to confirm the new network interface ens256 is detected.
+
+1531 ip link show 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1400 qdisc mq state UP mode DEFAULT group default qlen 1000 link/ether 00:50:56:a0:4e:5b brd ff:ff:ff:ff:ff:ff 3: eth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000 link/ether 00:50:56:a0:fa:ce brd ff:ff:ff:ff:ff:ff 4: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1400 qdisc mq state UP mode DEFAULT group default qlen 1000 link/ether 00:50:56:a0:d6:87 brd ff:ff:ff:ff:ff:ff 5: ens256: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master ens256vrf state UP mode DEFAULT group default qlen 1000 link/ether 00:50:56:a0:ea:88 brd ff:ff:ff:ff:ff:ff
+
+After you finish

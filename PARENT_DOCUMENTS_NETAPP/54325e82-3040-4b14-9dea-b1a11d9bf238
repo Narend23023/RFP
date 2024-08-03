@@ -1,0 +1,65 @@
+Check storage state after recovering storage volumes
+
+After recovering storage volumes, you must verify that the desired state of the Storage Node is set to online and ensure that the state will be online by default whenever the Storage Node server is restarted.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+The Storage Node has been recovered, and data recovery is complete. Steps
+
+1. Select SUPPORT > Tools > Grid topology. 2. Check the values of Recovered Storage Node > LDR > Storage > Storage State — Desired and Storage State — Current.
+
+The value of both attributes should be Online.
+
+3. If the Storage State — Desired is set to Read-only, complete the following steps:
+
+a. Click the Configuration tab. b. From the Storage State — Desired drop-down list, select Online.
+
+c. Click Apply Changes. d. Click the Overview tab and confirm that the values of Storage State — Desired and Storage
+
+State — Current are updated to Online. Recover from system drive failure
+
+Recover from system drive failure: Workflow
+
+If the system drive on a software-based Storage Node has failed, the Storage Node is not available to the StorageGRID system. You must complete a specific set of tasks to recover from a system drive failure.
+
+Use this procedure to recover from a system drive failure on a software-based Storage Node. This procedure includes the steps to follow if any storage volumes also failed or can’t be remounted.
+
+1592
+
+This procedure applies to software-based Storage Nodes only. You must follow a different procedure to recover an appliance Storage Node. Warnings for Storage Node system drive recovery
+
+Before recovering a failed system drive of a Storage Node, review the general warnings and considerations for grid node recovery and the following specific warnings.
+
+1593
+
+Storage Nodes have a Cassandra database that includes object metadata. The Cassandra database might be rebuilt in the following circumstances:
+
+A Storage Node is brought back online after having been offline for more than 15 days.
+
+A storage volume has failed and been recovered.
+
+The system drive and one or more storage volumes fails and is recovered.
+
+When Cassandra is rebuilt, the system uses information from other Storage Nodes. If too many Storage Nodes are offline, some Cassandra data might not be available. If Cassandra has been rebuilt recently, Cassandra data might not yet be consistent across the grid. Data loss can occur if Cassandra is rebuilt when too many Storage Nodes are offline or if two or more Storage Nodes are rebuilt within 15 days of each other. If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Rebuilding Cassandra on two or more Storage Nodes within 15 days can result in data loss.
+
+If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site. Before recovering a failed system drive of a Storage Node, review the general warnings and considerations for grid node recovery and the following specific warnings.
+
+1593
+
+Storage Nodes have a Cassandra database that includes object metadata. The Cassandra database might be rebuilt in the following circumstances:
+
+A Storage Node is brought back online after having been offline for more than 15 days.
+
+A storage volume has failed and been recovered.
+
+The system drive and one or more storage volumes fails and is recovered.
+
+When Cassandra is rebuilt, the system uses information from other Storage Nodes. If too many Storage Nodes are offline, some Cassandra data might not be available. If Cassandra has been rebuilt recently, Cassandra data might not yet be consistent across the grid. Data loss can occur if Cassandra is rebuilt when too many Storage Nodes are offline or if two or more Storage Nodes are rebuilt within 15 days of each other. If more than one Storage Node has failed (or is offline), contact technical support. Don’t perform the following recovery procedure. Data loss could occur.
+
+If this is the second Storage Node failure in less than 15 days after a Storage Node failure or recovery, contact technical support. Rebuilding Cassandra on two or more Storage Nodes within 15 days can result in data loss.
+
+If more than one Storage Node at a site has failed, a site recovery procedure might be required. See How technical support recovers a site.

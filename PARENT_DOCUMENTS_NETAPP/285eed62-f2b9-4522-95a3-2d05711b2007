@@ -1,0 +1,55 @@
+{ "AcceptRanges": "bytes", *"Expiration": "expiry-date=\"Thu, 01 Oct 2020 09:07:48 GMT\", rule- id=\"rule2\"", "LastModified": "2020-06-23T09:07:48+00:00", "ContentLength": 921, "ETag": "\"9762f8a803bc34f5340579d4446076f7\"" "ContentType": "binary/octet-stream", "Metadata": {} }
+
+For versioning-enabled buckets, the x-amz-expiration response header applies only to current versions of objects. Recommendations for implementing S3 REST API
+
+You should follow these recommendations when implementing the S3 REST API for use with StorageGRID.
+
+Recommendations for HEADs to non-existent objects
+
+If your application routinely checks to see if an object exists at a path where you don’t expect the object to actually exist, you should use the "Available" consistency. For example, you should use the "Available" consistency if your application HEADs a location before PUT-ing to it. The success response includes the object’s metadata and indicates that the object will expire in 100 days and that it matched Rule 2.
+
+{ "AcceptRanges": "bytes", *"Expiration": "expiry-date=\"Thu, 01 Oct 2020 09:07:48 GMT\", rule- id=\"rule2\"", "LastModified": "2020-06-23T09:07:48+00:00", "ContentLength": 921, "ETag": "\"9762f8a803bc34f5340579d4446076f7\"" "ContentType": "binary/octet-stream", "Metadata": {} }
+
+For versioning-enabled buckets, the x-amz-expiration response header applies only to current versions of objects. Recommendations for implementing S3 REST API
+
+You should follow these recommendations when implementing the S3 REST API for use with StorageGRID.
+
+Recommendations for HEADs to non-existent objects
+
+If your application routinely checks to see if an object exists at a path where you don’t expect the object to actually exist, you should use the "Available" consistency. For example, you should use the "Available" consistency if your application HEADs a location before PUT-ing to it.
+
+Otherwise, if the HEAD operation does not find the object, you might receive a high number of 500 Internal Server errors if two or more Storage Nodes at the same site are unavailable or a remote site is unreachable.
+
+You can set the "Available" consistency for each bucket using the PUT Bucket consistency request, or you can specify the consistency in the request header for an individual API operation. Recommendations for object keys
+
+Follow these recommendations for object key names, based on when the bucket was first created.
+
+Buckets created in StorageGRID 11.4 or earlier
+
+Don’t use random values as the first four characters of object keys. This is in contrast to the former AWS recommendation for key prefixes. Instead, use non-random, non-unique prefixes, such as image.
+
+If you do follow the former AWS recommendation to use random and unique characters in key prefixes, prefix the object keys with a directory name. That is, use this format:
+
+900
+
+mybucket/mydir/f8e3-image3132.jpg Instead of this format:
+
+mybucket/f8e3-image3132.jpg
+
+Buckets created in StorageGRID 11.4 or later
+
+Restricting object key names to meet performance best practices is not required. In most cases, you can use random values for the first four characters of object key names.
+
+An exception to this is an S3 workload that continuously removes all objects after a short period of time. To minimize the performance impact for this use case, vary a leading portion of the key name every several thousand objects with something like the date. For example, suppose an S3 client typically writes 2,000 objects/second and the ILM or bucket lifecycle policy removes all objects after three days. To minimize the performance impact, you might name keys using a pattern like this: /mybucket/mydir/yyyymmddhhmmss-random_UUID.jpg Recommendations for "range reads"
+
+If the global option to compress stored objects is enabled, S3 client applications should avoid performing GetObject operations that specify a range of bytes be returned. These "range read" operations are inefficient because StorageGRID must effectively uncompress the objects to access the requested bytes. GetObject operations that request a small range of bytes from a very large object are especially inefficient; for example, it is inefficient to read a 10 MB range from a 50 GB compressed object.
+
+If ranges are read from compressed objects, client requests can time out.
+
+If you need to compress objects and your client application must use range reads, increase the read timeout for the application. Support for Amazon S3 REST API
+
+S3 REST API implementation details
+
+The StorageGRID system implements the Simple Storage Service API (API Version 2006-03-01) with support for most operations, and with some limitations. You need to understand the implementation details when you are integrating S3 REST API client applications.
+
+The StorageGRID system supports both virtual hosted-style requests and path-style requests. Date handling

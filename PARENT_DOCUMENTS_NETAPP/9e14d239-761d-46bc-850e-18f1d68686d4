@@ -1,0 +1,109 @@
+Steps
+
+1. Select one or more parent interfaces to attach this VLAN to.
+
+For example, you might want to attach a VLAN to the Client Network (eth2) interface for a Gateway Node and an Admin Node.
+
+2. Select Continue.
+
+Confirm the settings Steps
+
+517
+
+1. Review the configuration and make any changes.
+
+If you need to change the VLAN ID or description, select Enter VLAN details at the top of the page. ◦ If you need to change a parent interface, select Choose parent interfaces at the top of the page or select Previous.
+
+If you need to remove a parent interface, select the trash can .
+
+2. Select Save.
+
+3. Wait up to 5 minutes for the new interface to appear as a selection on the High availability groups page and to be listed in the Network interfaces table for the node (NODES > parent interface node > Network). Edit a VLAN interface
+
+When you edit a VLAN interface, you can make the following types of changes:
+
+Change the VLAN ID or description.
+
+Add or remove parent interfaces.
+
+For example, you might want to remove a parent interface from a VLAN interface if you plan to decommission the associated node.
+
+Note the following: Steps
+
+1. Select one or more parent interfaces to attach this VLAN to.
+
+For example, you might want to attach a VLAN to the Client Network (eth2) interface for a Gateway Node and an Admin Node.
+
+2. Select Continue.
+
+Confirm the settings Steps
+
+517
+
+1. Review the configuration and make any changes.
+
+If you need to change the VLAN ID or description, select Enter VLAN details at the top of the page. ◦ If you need to change a parent interface, select Choose parent interfaces at the top of the page or select Previous.
+
+If you need to remove a parent interface, select the trash can .
+
+2. Select Save.
+
+3. Wait up to 5 minutes for the new interface to appear as a selection on the High availability groups page and to be listed in the Network interfaces table for the node (NODES > parent interface node > Network). Edit a VLAN interface
+
+When you edit a VLAN interface, you can make the following types of changes:
+
+Change the VLAN ID or description.
+
+Add or remove parent interfaces.
+
+For example, you might want to remove a parent interface from a VLAN interface if you plan to decommission the associated node.
+
+Note the following:
+
+You can’t change a VLAN ID if the VLAN interface is used in an HA group.
+
+You can’t remove a parent interface if that parent interface is used in an HA group.
+
+For example, suppose VLAN 200 is attached to parent interfaces on Nodes A and B. If an HA group uses the VLAN 200 interface for Node A and the eth2 interface for Node B, you can remove the unused parent interface for Node B, but you can’t remove the used parent interface for Node A. Steps
+
+1. Select CONFIGURATION > Network > VLAN interfaces.
+
+2. Select the checkbox for the VLAN interface you want to edit. Then, select Actions > Edit.
+
+3. Optionally, update the VLAN ID or the description. Then, select Continue.
+
+You can’t update a VLAN ID if the VLAN is used in an HA group.
+
+4. Optionally, select or clear the checkboxes to add parent interfaces or to remove unused interfaces. Then, select Continue.
+
+5. Review the configuration and make any changes.
+
+6. Select Save.
+
+Remove a VLAN interface
+
+You can remove one or more VLAN interfaces.
+
+You can’t remove a VLAN interface if it is currently used in an HA group. You must remove the VLAN interface from the HA group before you can remove it.
+
+To avoid any disruptions in client traffic, consider doing one of the following:
+
+518
+
+• Add a new VLAN interface to the HA group before removing this VLAN interface.
+
+Create a new HA group that does not use this VLAN interface. If the VLAN interface you want to remove is currently the active interface, edit the HA group. Move the VLAN interface you want to remove to the bottom of the priority list. Wait until communication is established on the new primary interface and then remove the old interface from the HA group. Finally, delete the VLAN interface on that node. Steps
+
+1. Select CONFIGURATION > Network > VLAN interfaces.
+
+2. Select the checkbox for each VLAN interface you want to remove. Then, select Actions > Delete.
+
+3. Select Yes to confirm your selection.
+
+All VLAN interfaces you selected are removed. A green success banner appears on the VLAN interfaces page. Manage traffic classification policies Manage traffic classification policies: Overview
+
+To enhance your quality-of-service (QoS) offerings, you can create traffic classification policies to identify and monitor different types of network traffic. These policies can assist with traffic limiting and monitoring.
+
+Traffic classification policies are applied to endpoints on the StorageGRID Load Balancer service for Gateway Nodes and Admin Nodes. To create traffic classification policies, you must have already created load balancer endpoints.
+
+Matching rules

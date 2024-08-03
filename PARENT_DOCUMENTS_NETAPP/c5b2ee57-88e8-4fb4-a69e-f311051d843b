@@ -1,0 +1,167 @@
+Before you configure networking, become familiar with StorageGRID architecture as described in Learn about StorageGRID.
+
+After you determine which StorageGRID networks you want to use and how those networks will be configured, you can install and configure the StorageGRID nodes by following the appropriate instructions. Install appliance nodes
+
+Install appliance hardware
+
+Install software-based nodes
+
+Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian
+
+Install StorageGRID on VMware
+
+Configure and administer StorageGRID software
+
+Administer StorageGRID
+
+Release notes
+
+StorageGRID network types
+
+The grid nodes in a StorageGRID system process grid traffic, admin traffic, and client traffic. You must configure the networking appropriately to manage these three types of traffic and to provide control and security. Traffic types
+
+43
+
+Traffic type
+
+Description
+
+Network type
+
+Grid traffic
+
+The internal StorageGRID traffic that travels between all nodes in the grid. All grid nodes must be able to communicate with all other grid nodes over this network.
+
+Grid Network (required)
+
+Admin traffic
+
+The traffic used for system administration and maintenance. Admin Network (optional), VLAN network (optional)
+
+Client traffic
+
+The traffic that travels between external client applications and the grid, including all object storage requests from S3 and Swift clients. Client Network (optional), VLAN network (optional)
+
+You can configure networking in the following ways:
+
+Grid Network only
+
+Grid and Admin Networks
+
+Grid and Client Networks
+
+Grid, Admin, and Client Networks
+
+The Grid Network is mandatory and can manage all grid traffic. The Admin and Client Networks can be included at the time of installation or added later to adapt to changes in requirements. Although the Admin Network and Client Network are optional, when you use these networks to handle administrative and client traffic, the Grid Network can be made isolated and secure.
+
+Internal ports are only accessible over the Grid Network. External ports are accessible from all network types. This flexibility provides multiple options for designing a StorageGRID deployment and setting up external IP and port filtering in switches and firewalls. See internal grid node communications and external communications. Network interfaces
+
+StorageGRID nodes are connected to each network using the following specific interfaces:
+
+Network
+
+Interface name
+
+Grid Network (required)
+
+eth0
+
+Admin Network (optional)
+
+eth1
+
+Client Network (optional)
+
+eth2
+
+For details about mapping virtual or physical ports to node network interfaces, see the installation instructions: Software-based nodes
+
+Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian
+
+Install StorageGRID on VMware
+
+44
+
+Appliance nodes
+
+SG6160 storage appliance
+
+SGF6112 storage appliance
+
+SG6000 storage appliance
+
+SG5800 storage appliance
+
+SG5700 storage appliance
+
+SG110 and SG1100 services appliances
+
+SG100 and SG1000 services appliances Network information for each node
+
+You must configure the following for each network you enable on a node:
+
+IP address
+
+Subnet mask
+
+Gateway IP address Internal ports are only accessible over the Grid Network. External ports are accessible from all network types. This flexibility provides multiple options for designing a StorageGRID deployment and setting up external IP and port filtering in switches and firewalls. See internal grid node communications and external communications. Network interfaces
+
+StorageGRID nodes are connected to each network using the following specific interfaces:
+
+Network
+
+Interface name
+
+Grid Network (required)
+
+eth0
+
+Admin Network (optional)
+
+eth1
+
+Client Network (optional)
+
+eth2
+
+For details about mapping virtual or physical ports to node network interfaces, see the installation instructions: Software-based nodes
+
+Install StorageGRID on Red Hat Enterprise Linux
+
+Install StorageGRID on Ubuntu or Debian
+
+Install StorageGRID on VMware
+
+44
+
+Appliance nodes
+
+SG6160 storage appliance
+
+SGF6112 storage appliance
+
+SG6000 storage appliance
+
+SG5800 storage appliance
+
+SG5700 storage appliance
+
+SG110 and SG1100 services appliances
+
+SG100 and SG1000 services appliances Network information for each node
+
+You must configure the following for each network you enable on a node:
+
+IP address
+
+Subnet mask
+
+Gateway IP address
+
+You can only configure one IP address/mask/gateway combination for each of the three networks on each grid node. If you don’t want to configure a gateway for a network, you should use the IP address as the gateway address. High availability groups
+
+High availability (HA) groups provide the ability to add virtual IP (VIP) addresses to the Grid or Client Network interface. For more information, see Manage high availability groups. Grid Network

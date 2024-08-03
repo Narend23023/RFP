@@ -1,0 +1,83 @@
+4. Select Reset event counts.
+
+5. Notify the tenant of the objects whose platform services messages have not been delivered.
+
+6. Instruct the tenant to trigger the failed replication or notification by updating the object’s metadata or tags. Troubleshoot metadata issues
+
+You can perform several tasks to help determine the source of metadata problems.
+
+Low metadata storage alert
+
+If the Low metadata storage alert is triggered, you must add new Storage Nodes.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. About this task Event messages are also listed in the /var/local/log/bycast-err.log log file. See the Log files reference.
+
+For additional information, see the Troubleshoot platform services. You might need to access the tenant from the Tenant Manager to debug a platform service error. Steps
+
+1282
+
+1. To view the alarm, select NODES > site > grid node > Events.
+
+2. View Last Event at the top of the table.
+
+Event messages are also listed in /var/local/log/bycast-err.log.
+
+3. Follow the guidance provided in the SMTT alarm contents to correct the issue.
+
+4. Select Reset event counts.
+
+5. Notify the tenant of the objects whose platform services messages have not been delivered.
+
+6. Instruct the tenant to trigger the failed replication or notification by updating the object’s metadata or tags. Troubleshoot metadata issues
+
+You can perform several tasks to help determine the source of metadata problems.
+
+Low metadata storage alert
+
+If the Low metadata storage alert is triggered, you must add new Storage Nodes.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. About this task
+
+StorageGRID reserves a certain amount of space on volume 0 of each Storage Node for object metadata. This space is known as the actual reserved space, and it is subdivided into the space allowed for object metadata (the allowed metadata space) and the space required for essential database operations, such as compaction and repair. The allowed metadata space governs overall object capacity.
+
+1283
+
+If object metadata consumes more than 100% of the space allowed for metadata, database operations can’t run efficiently and errors will occur.
+
+You can monitor object metadata capacity for each Storage Node to help you anticipate errors and correct them before they occur.
+
+StorageGRID uses the following Prometheus metric to measure how full the allowed metadata space is: storagegrid_storage_utilization_metadata_bytes/storagegrid_storage_utiliza tion_metadata_allowed_bytes
+
+When this Prometheus expression reaches certain thresholds, the Low metadata storage alert is triggered.
+
+Minor: Object metadata is using 70% or more of the allowed metadata space. You should add new Storage Nodes as soon as possible.
+
+Major: Object metadata is using 90% or more of the allowed metadata space. You must add new Storage Nodes immediately.
+
+When object metadata is using 90% or more of the allowed metadata space, a warning appears on the dashboard. If this warning appears, you must add new Storage Nodes immediately. You must never allow object metadata to use more than 100% of the allowed space.
+
+1284
+
+Critical: Object metadata is using 100% or more of the allowed metadata space and is starting to consume the space required for essential database operations. You must stop the ingest of new objects, and you must add new Storage Nodes immediately. In the following example, object metadata is using more than 100% of the allowed metadata space. This is a critical situation, which will result in inefficient database operation and errors.
+
+If the size of volume 0 is smaller than the Metadata Reserved Space storage option (for example, in a non-production environment), the calculation for the Low metadata storage alert might be inaccurate. Steps
+
+1. Select ALERTS > Current.
+
+2. From the table of alerts, expand the Low metadata storage alert group, if required, and select the specific alert you want to view.
+
+3. Review the details in the alert dialog box.
+
+4. If a major or critical Low metadata storage alert has been triggered, perform an expansion to add Storage Nodes immediately.
+
+Because StorageGRID keeps complete copies of all object metadata at each site, the metadata capacity of the entire grid is limited by the metadata capacity of the smallest site. If you need to add metadata capacity to one site, you should also expand any other sites by the same number of Storage Nodes.
+
+After you perform the expansion, StorageGRID redistributes the existing object metadata to the new nodes, which increases the overall metadata capacity of the grid. No user action is required. The Low metadata storage alert is cleared. Services: Status - Cassandra (SVST) alarm
+
+The Services: Status - Cassandra (SVST) alarm indicates that you might need to rebuild the Cassandra database for a Storage Node. Cassandra is used as the metadata store for StorageGRID.
+
+Before you begin

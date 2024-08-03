@@ -1,0 +1,71 @@
+2. If the ILM usage column indicates that Cloud Storage Pool is not being used, select the checkbox.
+
+3. Select Actions > Remove.
+
+643
+
+4. Select OK.
+
+Troubleshoot Cloud Storage Pools
+
+Use these troubleshooting steps to help resolve errors you might encounter when creating, editing, or deleting a Cloud Storage Pool.
+
+Determine if an error has occurred
+
+StorageGRID performs a simple health check on every Cloud Storage Pool once a minute to ensure that the Cloud Storage Pool can be accessed and that it is functioning correctly. If the health check detects an issue, a message is shown in the Last error column of the Cloud Storage Pools table on the Storage pools page.
+
+The table shows the most recent error detected for each Cloud Storage Pool and indicates how long ago the error occurred. In addition, a Cloud Storage Pool connectivity error alert is triggered if the health check detects that one or more new Cloud Storage Pool errors have occurred within the past 5 minutes. If you receive an email notification for this alert, go to the Storage pools page (select ILM > Storage pools), review the error messages in the Last error column, and refer to the troubleshooting guidelines below.
+
+Check if an error has been resolved 1. Select ILM > Storage pools > Cloud Storage Pools.
+
+2. If the ILM usage column indicates that Cloud Storage Pool is not being used, select the checkbox.
+
+3. Select Actions > Remove.
+
+643
+
+4. Select OK.
+
+Troubleshoot Cloud Storage Pools
+
+Use these troubleshooting steps to help resolve errors you might encounter when creating, editing, or deleting a Cloud Storage Pool.
+
+Determine if an error has occurred
+
+StorageGRID performs a simple health check on every Cloud Storage Pool once a minute to ensure that the Cloud Storage Pool can be accessed and that it is functioning correctly. If the health check detects an issue, a message is shown in the Last error column of the Cloud Storage Pools table on the Storage pools page.
+
+The table shows the most recent error detected for each Cloud Storage Pool and indicates how long ago the error occurred. In addition, a Cloud Storage Pool connectivity error alert is triggered if the health check detects that one or more new Cloud Storage Pool errors have occurred within the past 5 minutes. If you receive an email notification for this alert, go to the Storage pools page (select ILM > Storage pools), review the error messages in the Last error column, and refer to the troubleshooting guidelines below.
+
+Check if an error has been resolved
+
+After resolving any underlying issues, you can determine if the error has been resolved. From the Cloud Storage Pool page, select the endpoint, and select Clear error. A confirmation message indicates that StorageGRID has cleared the error for the Cloud Storage Pool.
+
+If the underlying problem has been resolved, the error message is no longer displayed. However, if the underlying problem has not been fixed (or if a different error is encountered), the error message will be shown in the Last error column within a few minutes. Error: This Cloud Storage Pool contains unexpected content
+
+You might encounter this error when you try to create, edit, or delete a Cloud Storage Pool. This error occurs if the bucket or container includes the x-ntap-sgws-cloud-pool-uuid marker file, but that file does not have the expected UUID.
+
+Typically, you will only see this error if you are creating a new Cloud Storage Pool and another instance of StorageGRID is already using the same Cloud Storage Pool.
+
+Try these steps to correct the issue:
+
+Check to make sure that no one in your organization is also using this Cloud Storage Pool.
+
+Delete the x-ntap-sgws-cloud-pool-uuid file and try configuring the Cloud Storage Pool again.
+
+Error: Could not create or update Cloud Storage Pool. Error from endpoint
+
+You might encounter this error when you try to create or edit a Cloud Storage Pool. This error indicates that some kind of connectivity or configuration issue is preventing StorageGRID from writing to the Cloud Storage Pool. To correct the issue, review the error message from the endpoint.
+
+If the error message contains Get url: EOF, check that the service endpoint used for the Cloud Storage
+
+644
+
+Pool does not use HTTP for a container or bucket that requires HTTPS.
+
+If the error message contains Get url: net/http: request canceled while waiting for connection, verify that the network configuration allows Storage Nodes to access the service endpoint used for the Cloud Storage Pool.
+
+For all other endpoint error messages, try one or more of the following:
+
+Create an external container or bucket with the same name you entered for the Cloud Storage Pool, and try to save the new Cloud Storage Pool again.
+
+Correct the container or bucket name you specified for the Cloud Storage Pool, and try to save the new Cloud Storage Pool again.

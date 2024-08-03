@@ -1,0 +1,101 @@
+Required tasks Create a tenant account for each client protocol (Swift or S3) that will be used to store objects on your StorageGRID system.
+
+Control system access by configuring groups and user accounts. Optionally, you can configure a federated identity source (such as Active Directory or OpenLDAP), so you can import administration groups and users. Or, you can create local groups and users.
+
+Integrate and test the S3 API or Swift API client applications you will use to upload objects to your StorageGRID system.
+
+Configure the information lifecycle management (ILM) rules and ILM policy you want to use to protect object data.
+
+If your installation includes appliance Storage Nodes, use SANtricity OS to complete the following tasks:
+
+Connect to each StorageGRID appliance. ◦ Verify receipt of AutoSupport data. See Set up hardware.
+
+Review and follow the StorageGRID system hardening guidelines to eliminate security risks.
+
+Configure email notifications for system alerts.
+
+If your StorageGRID system includes any Archive Nodes (deprecated), configure the Archive Node’s connection to the target external archival storage system. Optional tasks
+
+Update grid node IP addresses if they have changed since you planned your deployment and generated the Recovery Package.
+
+Configure storage encryption, if required.
+
+Configure storage compression to reduce the size of stored objects, if required.
+
+Troubleshoot installation issues
+
+If any problems occur while installing your StorageGRID system, you can access the installation log files. Technical support might also need to use the installation log files to resolve issues.
+
+The following installation log files are available from the container that is running each node:
+
+/var/local/log/install.log (found on all grid nodes)
+
+/var/local/log/gdu-server.log (found on the primary Admin Node)
+
+The following installation log files are available from the host:
+
+/var/log/storagegrid/daemon.log
+
+199
+
+• /var/log/storagegrid/nodes/<node-name>.log
+
+To learn how to access the log files, see Collect log files and system data.
+
+Related information Troubleshoot a StorageGRID system
+
+Example /etc/network/interfaces
+
+The /etc/network/interfaces file includes three sections, which define the physical interfaces, bond interface, and VLAN interfaces. You can combine the three example sections into a single file, which will aggregate four Linux physical interfaces into a single LACP bond and then establish three VLAN interfaces subtending the bond for use as StorageGRID Grid, Admin, and Client Network interfaces. Physical interfaces
+
+Note that the switches at the other ends of the links must also treat the four ports as a single LACP trunk or port channel, and must pass at least the three referenced VLANs with tags.
+
+# loopback interface auto lo iface lo inet loopback
+
+# ens160 interface auto ens160 iface ens160 inet manual bond-master bond0 bond-primary en160 # ens192 interface auto ens192 iface ens192 inet manual bond-master bond0 /var/local/log/gdu-server.log (found on the primary Admin Node)
+
+The following installation log files are available from the host:
+
+/var/log/storagegrid/daemon.log
+
+199
+
+• /var/log/storagegrid/nodes/<node-name>.log
+
+To learn how to access the log files, see Collect log files and system data.
+
+Related information Troubleshoot a StorageGRID system
+
+Example /etc/network/interfaces
+
+The /etc/network/interfaces file includes three sections, which define the physical interfaces, bond interface, and VLAN interfaces. You can combine the three example sections into a single file, which will aggregate four Linux physical interfaces into a single LACP bond and then establish three VLAN interfaces subtending the bond for use as StorageGRID Grid, Admin, and Client Network interfaces. Physical interfaces
+
+Note that the switches at the other ends of the links must also treat the four ports as a single LACP trunk or port channel, and must pass at least the three referenced VLANs with tags.
+
+# loopback interface auto lo iface lo inet loopback
+
+# ens160 interface auto ens160 iface ens160 inet manual bond-master bond0 bond-primary en160 # ens192 interface auto ens192 iface ens192 inet manual bond-master bond0
+
+# ens224 interface auto ens224 iface ens224 inet manual bond-master bond0
+
+# ens256 interface auto ens256 iface ens256 inet manual bond-master bond0
+
+200
+
+Bond interface
+
+# bond0 interface auto bond0 iface bond0 inet manual bond-mode 4 bond-miimon 100 bond-slaves ens160 ens192 end224 ens256 VLAN interfaces
+
+# 1001 vlan auto bond0.1001 iface bond0.1001 inet manual vlan-raw-device bond0
+
+# 1002 vlan auto bond0.1002 iface bond0.1002 inet manual vlan-raw-device bond0
+
+# 1003 vlan auto bond0.1003 iface bond0.1003 inet manual vlan-raw-device bond0
+
+Install StorageGRID on VMware
+
+Quick start for installing StorageGRID on VMware
+
+Follow these high-level steps to install a VMware StorageGRID node. Preparation
+
+Learn about StorageGRID architecture and network topology.

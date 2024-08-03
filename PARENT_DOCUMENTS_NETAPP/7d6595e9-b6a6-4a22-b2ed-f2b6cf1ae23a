@@ -1,0 +1,79 @@
+You can configure and manage the server certificates used for HTTP connections or the client certificates used to authenticate a client or user identity to the server.
+
+Configure key management servers
+
+Using a key management server lets you protect StorageGRID data even if an appliance is removed from the data center. After the appliance volumes are encrypted, you can’t access any data on the appliance unless the
+
+388
+
+node can communicate with the KMS.
+
+To use encryption key management, you must enable the Node Encryption setting for each appliance during installation, before the appliance is added to the grid. Manage proxy settings
+
+If you are using S3 platform services or Cloud Storage Pools, you can configure a storage proxy server between Storage Nodes and the external S3 endpoints. If you send AutoSupport packages using HTTPS or HTTP, you can configure an admin proxy server between Admin Nodes and technical support. Control firewalls
+
+To enhance the security of your system, you can control access to StorageGRID Admin Nodes by opening or closing specific ports at the external firewall. You can also control network access to each node by configuring its internal firewall. You can prevent access on all ports except those needed for your deployment. Review StorageGRID encryption methods
+
+StorageGRID provides several options for encrypting data. You should review the available methods to determine which methods meet your data-protection requirements.
+
+The table provides a high-level summary of the encryption methods available in StorageGRID.
+
+Encryption option
+
+How it works Applies to
+
+Key management server (KMS) in Grid Manager
+
+You configure a key management server for the StorageGRID site and enable node encryption for the appliance. Then, an appliance node connects to the KMS to request a key encryption key (KEK). This key encrypts and decrypts the data encryption key (DEK) on each volume.
+
+Appliance nodes that have Node Encryption enabled during installation. All data on the appliance is protected against physical loss or removal from the data center.
+
+Note: Managing encryption keys with a KMS is only supported for Storage Nodes and services appliances. Drive Encryption page in StorageGRID Appliance Installer
+
+If the appliance contains drives that support hardware encryption, you can set a drive passphrase during installation. When you set a drive passphrase, it’s impossible for anyone to recover valid data from drives that have been removed from the system, unless they know the passphrase. Before starting installation, go to Configure Hardware > Drive Encryption to set a drive passphrase that applies to all StorageGRID-managed, self- encrypting drives in a node.
+
+Appliances that contain self- encrypting drives. All data on the secured drives is protected against physical loss or removal from the data center.
+
+Drive encryption doesn’t apply to SANtricity-managed drives. If you have a storage appliance with self- encrypting drives and SANtricity controllers, you can enable drive security in SANtricity.
+
+389
+
+Encryption option Drive security in SANtricity System Manager
+
+Stored object encryption
+
+S3 bucket encryption
+
+S3 object server-side encryption (SSE)
+
+390
+
+How it works
+
+If the Drive Security feature is enabled for an SG5700 or SG6000 storage appliance, you can use SANtricity System Manager to create and manage the security key. The key is required to access the data on the secured drives.
+
+You enable the Stored object encryption option in the Grid Manager. When enabled, any new objects that aren’t encrypted at the bucket level or at the object level are encrypted during ingest. Appliances that contain self- encrypting drives. All data on the secured drives is protected against physical loss or removal from the data center.
+
+Drive encryption doesn’t apply to SANtricity-managed drives. If you have a storage appliance with self- encrypting drives and SANtricity controllers, you can enable drive security in SANtricity.
+
+389
+
+Encryption option Drive security in SANtricity System Manager
+
+Stored object encryption
+
+S3 bucket encryption
+
+S3 object server-side encryption (SSE)
+
+390
+
+How it works
+
+If the Drive Security feature is enabled for an SG5700 or SG6000 storage appliance, you can use SANtricity System Manager to create and manage the security key. The key is required to access the data on the secured drives.
+
+You enable the Stored object encryption option in the Grid Manager. When enabled, any new objects that aren’t encrypted at the bucket level or at the object level are encrypted during ingest.
+
+You issue a PutBucketEncryption request to enable encryption for the bucket. Any new objects that aren’t encrypted at the object level are encrypted during ingest.
+
+You issue an S3 request to store an object and include the x-amz- server-side-encryption request header.

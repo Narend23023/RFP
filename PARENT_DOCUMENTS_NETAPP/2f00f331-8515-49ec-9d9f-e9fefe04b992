@@ -1,0 +1,119 @@
+376
+
+Before you begin
+
+You are using a supported web browser.
+
+You have the Root access permission for both grids. Disable replication for tenant buckets
+
+As a first step, disable cross-grid replication for all tenant buckets.
+
+Steps
+
+1. Starting from either grid, sign in to the Grid Manager from the primary Admin Node.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select the connection name to display its details.
+
+4. On the Permitted tenants tab, determine if the tenant is using the connection.
+
+5. If the tenant is listed, instruct them to disable cross-grid replication for all of their buckets on both grids in the connection.
+
+You can’t remove the Use grid federation connection permission if any tenant buckets have cross-grid replication enabled. The tenant must disable cross-grid replication for their buckets on both grids. Remove permission for tenant
+
+After cross-grid replication is disabled for tenant buckets, you can remove the tenant’s permission to use the grid federation connection.
+
+Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node.
+
+2. Remove the permission from the Grid federation page or the Tenants page. Grid federation page
+
+a. Select CONFIGURATION > System > Grid federation.
+
+b. Select the connection name to display its details page.
+
+c. On the Permitted tenants tab, select radio button for the tenant.
+
+d. Select Remove permission.
+
+Tenants page
+
+a. Select TENANTS.
+
+b. Select the tenant’s name to display the details page. c. On the Grid federation tab, select radio button for the connection. d. Select Remove permission.
+
+3. Review the warnings in the confirmation dialog box, and select Remove.
+
+If the permission can be removed, you are returned to the details page and a success message is shown. This tenant can no longer use the grid federation connection.
+
+377
+
+◦ If one or more tenant buckets still have cross-grid replication enabled, an error is displayed.
+
+You can do either of the following:
+
+▪ (Recommended.) Sign in to the Tenant Manager and disable replication for each of the tenant’s buckets. See Manage cross-grid replication. Then, repeat the steps to remove the Use grid connection permission.
+
+▪ Remove the permission by force. See the next section. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node.
+
+2. Remove the permission from the Grid federation page or the Tenants page. Grid federation page
+
+a. Select CONFIGURATION > System > Grid federation.
+
+b. Select the connection name to display its details page.
+
+c. On the Permitted tenants tab, select radio button for the tenant.
+
+d. Select Remove permission.
+
+Tenants page
+
+a. Select TENANTS.
+
+b. Select the tenant’s name to display the details page. c. On the Grid federation tab, select radio button for the connection. d. Select Remove permission.
+
+3. Review the warnings in the confirmation dialog box, and select Remove.
+
+If the permission can be removed, you are returned to the details page and a success message is shown. This tenant can no longer use the grid federation connection.
+
+377
+
+◦ If one or more tenant buckets still have cross-grid replication enabled, an error is displayed.
+
+You can do either of the following:
+
+▪ (Recommended.) Sign in to the Tenant Manager and disable replication for each of the tenant’s buckets. See Manage cross-grid replication. Then, repeat the steps to remove the Use grid connection permission.
+
+▪ Remove the permission by force. See the next section.
+
+4. Go to the other grid and repeat these steps to remove the permission for the same tenant on the other grid.
+
+Remove the permission by force
+
+If necessary, you can force the removal of a tenant’s permission to use a grid federation connection even if tenant buckets have cross-grid replication enabled. Before removing a tenant’s permission by force, note the general considerations for removing the permission as well as these additional considerations:
+
+If you remove the Use grid federation connection permission by force, any objects that are pending replication to the other grid (ingested but not yet replicated) will continue to be replicated. To prevent these
+
+378
+
+in-process objects from reaching the destination bucket, you must remove the tenant’s permission on the other grid as well.
+
+Any objects ingested into the source bucket after you remove the Use grid federation connection permission will never be replicated to the destination bucket. Steps
+
+1. Sign in to the Grid Manager from the primary Admin Node.
+
+2. Select CONFIGURATION > System > Grid federation.
+
+3. Select the connection name to display its details page.
+
+4. On the Permitted tenants tab, select radio button for the tenant.
+
+5. Select Remove permission.
+
+6. Review the warnings in the confirmation dialog box, and select Force remove.
+
+A success message appears. This tenant can no longer use the grid federation connection.

@@ -1,0 +1,139 @@
+438
+
+8. Review the confirmation warning, and select OK if you are sure you want to force save the configuration.
+
+The KMS configuration is saved but the connection to the KMS is not tested. Manage a KMS
+
+Managing a key management server (KMS) involves viewing or editing details, managing certificates, viewing encrypted nodes, and removing a KMS when it is no longer needed.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permission. View KMS details
+
+You can view information about each key management server (KMS) in your StorageGRID system, including key details and the current status of the server and client certificates.
+
+Steps
+
+1. Select CONFIGURATION > Security > Key management server.
+
+The Key management server page appears and shows the following information:
+
+The Configuration details tab lists any key management servers that are configured. ◦ The Encrypted nodes tab lists any nodes that have node encryption enabled.
+
+2. To view the details for a specific KMS and perform operations on that KMS, select the name of the KMS. The details page for the KMS lists the following information: Field
+
+Description
+
+Manages keys for
+
+The StorageGRID site associated with the KMS.
+
+This field displays the name of a specific StorageGRID site or Sites not managed by another KMS (default KMS).
+
+Hostname
+
+The fully qualified domain name or IP address of the KMS.
+
+If there is a cluster of two key management servers, the fully qualified domain name or IP address of both servers are listed. If there are more than two key management servers in a cluster, the fully qualified domain name or IP address of the first KMS is listed along with the number of additional key management servers in the cluster.
+
+For example: 10.10.10.10 and 10.10.10.11 or 10.10.10.10 and 2 others.
+
+To view all hostnames in a cluster, select a KMS and select Edit or Actions > Edit.
+
+3. Select a tab on the KMS details page to view the following information:
+
+439
+
+Tab
+
+Field
+
+Description Key details
+
+Key name
+
+The key alias for the StorageGRID client in the KMS.
+
+Key UID
+
+The unique identifier of the latest version of the key.
+
+Last modified
+
+The date and time of the latest version of the key.
+
+Server certificate
+
+Metadata
+
+The metadata for the certificate, such as serial number, expiration date and time, and the certificate PEM. Certificate PEM
+
+The contents of the PEM (privacy enhanced mail) file for the certificate.
+
+Client certificate
+
+Metadata
+
+The metadata for the certificate, such as serial number, expiration date and time, and the certificate PEM. Certificate PEM
+
+The contents of the PEM (privacy enhanced mail) file for the certificate.
+
+4. As often as required by your organization’s security practices, select Rotate key, or use the KMS software, to create a new version of the key.
+
+When key rotation is successful, the Key UID and Last modified fields are updated.
+
+If you rotate the encryption key using the KMS software, rotate it from the last used version of the key to a new version of the same key. Don’t rotate to an entirely different key. 3. Select a tab on the KMS details page to view the following information:
+
+439
+
+Tab
+
+Field
+
+Description Key details
+
+Key name
+
+The key alias for the StorageGRID client in the KMS.
+
+Key UID
+
+The unique identifier of the latest version of the key.
+
+Last modified
+
+The date and time of the latest version of the key.
+
+Server certificate
+
+Metadata
+
+The metadata for the certificate, such as serial number, expiration date and time, and the certificate PEM. Certificate PEM
+
+The contents of the PEM (privacy enhanced mail) file for the certificate.
+
+Client certificate
+
+Metadata
+
+The metadata for the certificate, such as serial number, expiration date and time, and the certificate PEM. Certificate PEM
+
+The contents of the PEM (privacy enhanced mail) file for the certificate.
+
+4. As often as required by your organization’s security practices, select Rotate key, or use the KMS software, to create a new version of the key.
+
+When key rotation is successful, the Key UID and Last modified fields are updated.
+
+If you rotate the encryption key using the KMS software, rotate it from the last used version of the key to a new version of the same key. Don’t rotate to an entirely different key.
+
+Never attempt to rotate a key by changing the key name (alias) for the KMS. StorageGRID requires all previously used key versions (as well as any future ones) to be accessible from the KMS with the same key alias. If you change the key alias for a configured KMS, StorageGRID might not be able to decrypt your data. Manage certificates
+
+Promptly address any server or client certificate issues. If possible, replace certificates before they expire.
+
+You must address any certificate issues as soon as possible to maintain data access. Steps
+
+1. Select CONFIGURATION > Security > Key management server.
+
+2. In the table, look at the value for Certificate expiration for each KMS.

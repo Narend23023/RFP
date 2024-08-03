@@ -1,0 +1,107 @@
+For more information, see Use a tenant account. How do I create a tenant account?
+
+When you create a tenant account, you specify the following information:
+
+Basic information including the tenant name, client type (S3 or Swift) and optional storage quota.
+
+Permissions for the tenant account, such as whether the tenant account can use S3 platform services, configure its own identity source, use S3 Select, or use a grid federation connection.
+
+The initial root access for the tenant, based on whether the StorageGRID system uses local groups and users, identity federation, or single sign-on (SSO).
+
+In addition, you can enable the S3 Object Lock setting for the StorageGRID system if S3 tenant accounts need to comply with regulatory requirements. When S3 Object Lock is enabled, all S3 tenant accounts can create and manage compliant buckets.
+
+What is Tenant Manager used for?
+
+After you create the tenant account, tenant users can sign in to the Tenant Manager to perform tasks such as the following: Set up identity federation (unless the identity source is shared with the grid)
+
+Manage groups and users
+
+Use grid federation for account clone and cross-grid replication
+
+Manage S3 access keys
+
+Create and manage S3 buckets
+
+Use S3 platform services
+
+Use S3 Select
+
+Monitor storage usage
+
+454
+
+While S3 tenant users can create and manage S3 access key and buckets with the Tenant Manager, they must use an S3 client application to ingest and manage objects. See Use S3 REST API for details.
+
+Swift users must have the Root access permission to access the Tenant Manager. However, the Root access permission does not allow users to authenticate into the Swift REST API to create containers and ingest objects. Users must have the Swift Administrator permission to authenticate into the Swift REST API.
+
+Create a tenant account
+
+You must create at least one tenant account to control access to the storage in your StorageGRID system. The steps for creating a tenant account vary based on whether identity federation and single sign-on are configured and whether the Grid Manager account you use to create the tenant account belongs to an admin group with the Root access permission.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access or Tenant accounts permission.
+
+If the tenant account will use the identity source that was configured for the Grid Manager, and you want to grant Root access permission for the tenant account to a federated group, you have imported that federated group into the Grid Manager. You don’t need to assign any Grid Manager permissions to this admin group. See Manage admin groups.
+
+If you want to allow an S3 tenant to clone account data and replicate bucket objects to another grid using a grid federation connection: You have configured the grid federation connection. ◦ The status of the connection is Connected. ◦ You have Root access permission. ◦ You have reviewed the considerations for managing the permitted tenants for grid federation. ◦ If the tenant account will use the identity source that was configured for Grid Manager, you have imported the same federated group into Grid Manager on both grids.
+
+When you create the tenant, you will select this group to have the initial Root access permission for both the source and destination tenant accounts.
+
+If this admin group doesn’t exist on both grids before you create the tenant, the tenant isn’t replicated to the destination. Access the wizard
+
+Steps
+
+1. Select TENANTS.
+
+2. Select Create.
+
+455
+
+Enter details
+
+Steps
+
+1. Enter details for the tenant.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, 20-digit account ID.
+
+Description (optional)
+
+A description to help identify the tenant. If you want to allow an S3 tenant to clone account data and replicate bucket objects to another grid using a grid federation connection: You have configured the grid federation connection. ◦ The status of the connection is Connected. ◦ You have Root access permission. ◦ You have reviewed the considerations for managing the permitted tenants for grid federation. ◦ If the tenant account will use the identity source that was configured for Grid Manager, you have imported the same federated group into Grid Manager on both grids.
+
+When you create the tenant, you will select this group to have the initial Root access permission for both the source and destination tenant accounts.
+
+If this admin group doesn’t exist on both grids before you create the tenant, the tenant isn’t replicated to the destination. Access the wizard
+
+Steps
+
+1. Select TENANTS.
+
+2. Select Create.
+
+455
+
+Enter details
+
+Steps
+
+1. Enter details for the tenant.
+
+Field
+
+Description
+
+Name
+
+A name for the tenant account. Tenant names don’t need to be unique. When the tenant account is created, it receives a unique, 20-digit account ID.
+
+Description (optional)

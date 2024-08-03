@@ -1,0 +1,85 @@
+If you make policy changes that increase data redundancy or durability, those changes are implemented immediately. For example, if you activate a new policy that includes a three-copies rule instead of a two-copies rule, that policy will be implemented right away because it increases data redundancy. If you make policy changes that could decrease data redundancy or durability, those changes will not be implemented until all grid nodes are available. For example, if you activate a new policy that uses a two- copies rule instead of a three-copies rule, the new policy will appear in the Active policy tab but it will not take effect until all nodes are online and available. Steps
+
+Follow the steps for activating one policy or multiple policies:
+
+674
+
+Activate one policy
+
+Follow these steps if you will have only one active policy. If you already have one or more active policies and you are activating additional policies, follow the steps for activating multiple policies.
+
+1. When you are ready to activate a policy, select ILM > Policies.
+
+Alternatively, you can activate a single policy from the ILM > Policy tags page.
+
+2. On the Policies tab, select the checkbox for the policy you want to activate, then select Activate.
+
+3. Follow the appropriate step:
+
+If a warning message prompts you to confirm that you want to activate the policy, select OK. ◦ If a warning message containing details about the policy appears: a. Review the details to ensure the policy would manage data as expected.
+
+b. If the default rule stores objects for a limited number of days, review the retention diagram and then type in that number of days into the text box.
+
+c. If the default rule stores objects forever, but one or more other rules has limited retention, type
+
+yes in the text box.
+
+d. Select Activate policy. Activate multiple policies
+
+To activate multiple policies, you must create tags and assign a policy to each tag.
+
+When multiple tags are in use, if tenants frequently reassign policy tags to buckets, grid performance might be impacted. If you have untrusted tenants, consider using only the Default tag.
+
+1. Select ILM > Policy tags.
+
+2. Select Create.
+
+3. In the Create policy tag dialog box, type a tag name and, optionally, a description for the tag.
+
+Tag names and descriptions are visible to tenants. Choose values that will help tenants make an informed decision when selecting policy tags to assign to their buckets. For example, if the assigned policy will delete objects after a period of time, you could communicate that in the description. Do not include sensitive information in these fields.
+
+4. Select Create tag.
+
+5. In the ILM policy tags table, use the pull-down to select a policy to assign to the tag. 6. If warnings appear in the Policy limitations column, select View policy details to review the policy.
+
+7. Ensure each policy would manage data as expected.
+
+8. Select Activate assigned policies. Or, select Clear changes to remove the policy assignment.
+
+9. In the Activate policies with new tags dialog box, review the descriptions of how each tag, policy, and rule will manage objects. Make changes as needed to ensure the policies will manage objects as expected.
+
+10. When you are sure you want to activate the policies, type yes in the text box, then select Activate 1. Select ILM > Policy tags.
+
+2. Select Create.
+
+3. In the Create policy tag dialog box, type a tag name and, optionally, a description for the tag.
+
+Tag names and descriptions are visible to tenants. Choose values that will help tenants make an informed decision when selecting policy tags to assign to their buckets. For example, if the assigned policy will delete objects after a period of time, you could communicate that in the description. Do not include sensitive information in these fields.
+
+4. Select Create tag.
+
+5. In the ILM policy tags table, use the pull-down to select a policy to assign to the tag. 6. If warnings appear in the Policy limitations column, select View policy details to review the policy.
+
+7. Ensure each policy would manage data as expected.
+
+8. Select Activate assigned policies. Or, select Clear changes to remove the policy assignment.
+
+9. In the Activate policies with new tags dialog box, review the descriptions of how each tag, policy, and rule will manage objects. Make changes as needed to ensure the policies will manage objects as expected.
+
+10. When you are sure you want to activate the policies, type yes in the text box, then select Activate
+
+675
+
+policies.
+
+Related information Example 6: Changing an ILM policy
+
+Example ILM policy simulations
+
+The examples of ILM policy simulations provide guidelines for structuring and modifying simulations for your environment.
+
+Example 1: Verify rules when simulating an ILM policy
+
+This example describes how to verify rules when simulating a policy.
+
+In this example, the Example ILM policy is being simulated against the ingested objects in two buckets. The policy includes three rules, as follows:

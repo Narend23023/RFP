@@ -1,0 +1,83 @@
+3. Select I have reviewed these steps and understand what I need to do.
+
+4. Select the checkbox to indicate that you understand what to do next.
+
+5. Select Continue to go to Summary. Step 6 of 6: Review summary
+
+Steps
+
+1. Review the summary.
+
+2. Make note of the details in the next steps, which describe the additional configuration that might be needed before you connect to the S3 client. For example, selecting Sign in as root takes you to the Tenant Manager, where you can add tenant users, create additional buckets, and update bucket settings.
+
+3. Select Finish.
+
+4. Configure the application using the file you downloaded from StorageGRID or the values you obtained manually. Manage HA groups
+
+Manage high availability (HA) groups: Overview
+
+You can group the network interfaces of multiple Admin and Gateway Nodes into a high availability (HA) group. If the active interface in the HA group fails, a backup interface can manage the workload.
+
+What is an HA group?
+
+You can use high availability (HA) groups to provide highly available data connections for S3 and Swift clients or to provide highly available connections to the Grid Manager and the Tenant Manager.
+
+Each HA group provides access to the shared services on the selected nodes. 3. Select I have reviewed these steps and understand what I need to do.
+
+4. Select the checkbox to indicate that you understand what to do next.
+
+5. Select Continue to go to Summary. Step 6 of 6: Review summary
+
+Steps
+
+1. Review the summary.
+
+2. Make note of the details in the next steps, which describe the additional configuration that might be needed before you connect to the S3 client. For example, selecting Sign in as root takes you to the Tenant Manager, where you can add tenant users, create additional buckets, and update bucket settings.
+
+3. Select Finish.
+
+4. Configure the application using the file you downloaded from StorageGRID or the values you obtained manually. Manage HA groups
+
+Manage high availability (HA) groups: Overview
+
+You can group the network interfaces of multiple Admin and Gateway Nodes into a high availability (HA) group. If the active interface in the HA group fails, a backup interface can manage the workload.
+
+What is an HA group?
+
+You can use high availability (HA) groups to provide highly available data connections for S3 and Swift clients or to provide highly available connections to the Grid Manager and the Tenant Manager.
+
+Each HA group provides access to the shared services on the selected nodes.
+
+HA groups that include Gateway Nodes, Admin Nodes, or both provide highly available data connections for S3 and Swift clients.
+
+HA groups that include only Admin Nodes provide highly available connections to the Grid Manager and the Tenant Manager. An HA group that includes only services appliances and VMware-based software nodes can provide highly available connections for S3 tenants that use S3 Select. HA groups are recommended when using S3 Select, but not required.
+
+486
+
+How do you create an HA group?
+
+1. You select a network interface for one or more Admin Nodes or Gateway Nodes. You can use a Grid Network (eth0) interface, Client Network (eth2) interface, VLAN interface, or an access interface you have added to the node.
+
+You can’t add an interface to an HA group if it has a DHCP-assigned IP address.
+
+2. You specify one interface to be the Primary interface. The Primary interface is the active interface unless a failure occurs.
+
+3. You determine the priority order for any Backup interfaces.
+
+4. You assign one to 10 virtual IP (VIP) addresses to the group. Clients applications can use any of these VIP addresses to connect to StorageGRID.
+
+For instructions, see Configure high availability groups. What is the active interface?
+
+During normal operation, all of the VIP addresses for the HA group are added to the Primary interface, which is the first interface in the priority order. As long as the Primary interface remains available, it is used when clients connect to any VIP address for the group. That is, during normal operation, the Primary interface is the "active" interface for the group.
+
+Similarly, during normal operation, any lower priority interfaces for the HA group act as "backup" interfaces. These backup interfaces aren’t used unless the Primary (currently active) interface becomes unavailable.
+
+View the current HA group status of a node
+
+To see if a node is assigned to an HA group and determine its current status, select NODES > node.
+
+If the Overview tab includes an entry for HA groups, the node is assigned to the HA groups listed. The value after the group name is the current status of the node in the HA group: Active: The HA group is currently being hosted on this node.
+
+Backup: The HA group is not currently using this node; this is a backup interface.
+
+Stopped: The HA group can’t be hosted on this node because the High Availability (keepalived) service has been stopped manually.

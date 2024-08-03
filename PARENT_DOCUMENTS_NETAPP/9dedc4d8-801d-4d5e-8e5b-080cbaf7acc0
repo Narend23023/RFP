@@ -1,0 +1,97 @@
+i. Enter the following command: ssh admin@grid_node_IP
+
+ii. Enter the password listed in the Passwords.txt file.
+
+iii. Enter the following command to switch to root: su -
+
+iv. Enter the password listed in the Passwords.txt file.
+
+b. Repeat these steps to configure the audit shares for each additional Admin Node.
+
+c. Close the remote secure shell login to the remote Admin Node: exit
+
+9. Log out of the command shell: exit
+
+Change the IP address of an NFS audit client
+
+Complete these steps if you need to change the IP address of an NFS audit client. Steps
+
+1. Add a new IP address to an existing NFS audit share.
+
+2. Remove the original IP address.
+
+Related information
+
+Add an NFS audit client to an audit share
+
+Remove an NFS audit client from the audit share
+
+Manage Archive Nodes Archive to the cloud through the S3 API
+
+You can configure an Archive Node to connect directly to Amazon Web Services (AWS) or to any other system that can interface to the StorageGRID system through the S3 API.
+
+572
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+The Cloud Tiering - Simple Storage Service (S3) option is also deprecated. If you are currently using an Archive Node with this option, migrate your objects to a Cloud Storage Pool instead.
+
+Additionally, you should remove Archive Nodes from the active ILM policy in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies. Configure connection settings for the S3 API
+
+If you are connecting to an Archive Node using the S3 interface, you must configure the connection settings for the S3 API. Until these settings are configured, the ARC service remains in a Major alarm state as it is unable to communicate with the external archival storage system.
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+The Cloud Tiering - Simple Storage Service (S3) option is also deprecated. If you are currently using an Archive Node with this option, migrate your objects to a Cloud Storage Pool instead.
+
+Additionally, you should remove Archive Nodes from the active ILM policy in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies. Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have created a bucket on the target archival storage system:
+
+The bucket is dedicated to a single Archive Node. It can’t be used by other Archive Nodes or other applications.
+
+The bucket has the appropriate region selected for your location. ◦ The bucket should be configured with versioning suspended.
+
+Object Segmentation is enabled and the Maximum Segment Size is less than or equal to 4.5 GiB (4,831,838,208 bytes). S3 API requests that exceed this value will fail if S3 is used as the external archival storage system. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target.
+
+3. Select Configuration > Main.
+
+573
+
+4. Select Cloud Tiering - Simple Storage Service (S3) from the Target Type drop-down list.
+
+Configuration settings are unavailable until you select a Target Type. Additionally, you should remove Archive Nodes from the active ILM policy in StorageGRID 11.7 or earlier. Removing object data stored on Archive Nodes will simplify future upgrades. See Working with ILM rules and ILM policies. Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have created a bucket on the target archival storage system:
+
+The bucket is dedicated to a single Archive Node. It can’t be used by other Archive Nodes or other applications.
+
+The bucket has the appropriate region selected for your location. ◦ The bucket should be configured with versioning suspended.
+
+Object Segmentation is enabled and the Maximum Segment Size is less than or equal to 4.5 GiB (4,831,838,208 bytes). S3 API requests that exceed this value will fail if S3 is used as the external archival storage system. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target.
+
+3. Select Configuration > Main.
+
+573
+
+4. Select Cloud Tiering - Simple Storage Service (S3) from the Target Type drop-down list.
+
+Configuration settings are unavailable until you select a Target Type.
+
+5. Configure the cloud tiering (S3) account through which the Archive Node will connect to the target external S3 capable archival storage system.

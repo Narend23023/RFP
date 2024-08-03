@@ -1,0 +1,65 @@
+Placement in a Cloud Storage Pool at day 0.
+
+Placement in an Archive Node at day 0.
+
+601
+
+• Placements in a Cloud Storage Pool or an Archive Node when the rule has a User defined creation time as its Reference time.
+
+These restrictions exist because StorageGRID can’t synchronously make copies to a Cloud Storage Pool or an Archive Node, and a User defined creation time could resolve to the present.
+
+How ILM rules and consistency interact to affect data protection
+
+Both your ILM rule and your choice of consistency affect how objects are protected. These settings can interact.
+
+For example, the ingest behavior selected for an ILM rule affects the initial placement of object copies, while the consistency used when an object is stored affects the initial placement of object metadata. Because StorageGRID requires access to both an object’s data and metadata to fulfill client requests, selecting matching levels of protection for the consistency and ingest behavior can provide better initial data protection and more predictable system responses.
+
+Here is a brief summary of the consistency values that are available in StorageGRID: All: All nodes receive object metadata immediately or the request will fail.
+
+Strong-global: Object metadata is immediately distributed to all sites. Guarantees read-after-write consistency for all client requests across all sites.
+
+Strong-site: Object metadata is immediately distributed to other nodes at the site. Guarantees read-after- write consistency for all client requests within a site.
+
+Read-after-new-write: Provides read-after-write consistency for new objects and eventual consistency for object updates. Offers high availability and data protection guarantees. Recommended for most cases.
+
+Available: Provides eventual consistency for both new objects and object updates. For S3 buckets, use only as required (for example, for a bucket that contains log values that are rarely read, or for HEAD or GET operations on keys that don’t exist). Not supported for S3 FabricPool buckets. Before selecting a consistency value, read the full description of consistency. You should understand the benefits and limitations before changing the default value.
+
+Example of how consistency and ILM rules can interact
+
+Suppose you have a two-site grid with the following ILM rule and the following consistency:
+
+ILM rule: Create two object copies, one at the local site and one at a remote site. Use Strict ingest behavior.
+
+consistency: Strong-global (object metadata is immediately distributed to all sites).
+
+When a client stores an object to the grid, StorageGRID makes both object copies and distributes metadata to both sites before returning success to the client.
+
+The object is fully protected against loss at the time of the ingest successful message. For example, if the local site is lost shortly after ingest, copies of both the object data and the object metadata still exist at the remote site. The object is fully retrievable. If you instead used the same ILM rule and the strong-site consistency, the client might receive a success message after object data is replicated to the remote site but before object metadata is distributed there. In this case, the level of protection of object metadata does not match the level of protection for object data. If the local site is lost shortly after ingest, object metadata is lost. The object can’t be retrieved.
+
+602
+
+The inter-relationship between consistency and ILM rules can be complex. Contact NetApp if you need assistance.
+
+Related information
+
+Example 5: ILM rules and policy for Strict ingest behavior
+
+How objects are stored (replication or erasure coding)
+
+What is replication?
+
+Replication is one of two methods used by StorageGRID to store object data. When objects match an ILM rule that uses replication, the system creates exact copies of object data and stores the copies on Storage Nodes or Archive Nodes. When you configure an ILM rule to create replicated copies, you specify how many copies should be created, where those copies should be placed, and how long the copies should be stored at each location.
+
+In the following example, the ILM rule specifies that two replicated copies of each object be placed in a storage pool that contains three Storage Nodes. 602
+
+The inter-relationship between consistency and ILM rules can be complex. Contact NetApp if you need assistance.
+
+Related information
+
+Example 5: ILM rules and policy for Strict ingest behavior
+
+How objects are stored (replication or erasure coding)
+
+What is replication?
+
+Replication is one of two methods used by StorageGRID to store object data. When objects match an ILM rule that uses replication, the system creates exact copies of object data and stores the copies on Storage Nodes or Archive Nodes. When you configure an ILM rule to create replicated copies, you specify how many copies should be created, where those copies should be placed, and how long the copies should be stored at each location.

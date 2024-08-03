@@ -1,0 +1,333 @@
+The principal value can specify a group/user name that does not yet exist when a bucket policy is created.
+
+972
+
+Specify permissions in a policy
+
+In a policy, the Action element is used to allow/deny permissions to a resource. There are a set of permissions that you can specify in a policy, which are denoted by the element "Action," or alternatively, "NotAction" for exclusion. Each of these elements maps to specific S3 REST API operations.
+
+The tables lists the permissions that apply to buckets and the permissions that apply to objects. Amazon S3 now uses the s3:PutReplicationConfiguration permission for both the PutBucketReplication and DeleteBucketReplication actions. StorageGRID uses separate permissions for each action, which matches the original Amazon S3 specification.
+
+A delete is performed when a put is used to overwrite an existing value.
+
+Permissions that apply to buckets Permissions
+
+S3 REST API operations
+
+Custom for StorageGRID
+
+s3:CreateBucket
+
+CreateBucket
+
+Yes.
+
+Note: Use in group policy only.
+
+s3:DeleteBucket
+
+DeleteBucket
+
+s3:DeleteBucketMetadataNotification
+
+DELETE Bucket metadata notification configuration
+
+Yes
+
+s3:DeleteBucketPolicy
+
+DeleteBucketPolicy
+
+s3:DeleteReplicationConfiguration DeleteBucketReplication
+
+Yes, separate permissions for PUT and DELETE
+
+s3:GetBucketAcl
+
+GetBucketAcl
+
+s3:GetBucketCompliance
+
+GET Bucket compliance (deprecated)
+
+Yes
+
+s3:GetBucketConsistency
+
+GET Bucket consistency
+
+Yes
+
+s3:GetBucketCORS
+
+GetBucketCors
+
+s3:GetEncryptionConfiguration
+
+GetBucketEncryption s3:GetBucketLastAccessTime
+
+GET Bucket last access time
+
+Yes
+
+s3:GetBucketLocation
+
+GetBucketLocation
+
+973
+
+Permissions
+
+s3:GetBucketMetadataNotification
+
+s3:GetBucketNotification
+
+s3:GetBucketObjectLockConfiguration
+
+s3:GetBucketPolicy
+
+s3:GetBucketTagging
+
+s3:GetBucketVersioning
+
+s3:GetLifecycleConfiguration s3:GetReplicationConfiguration
+
+s3:ListAllMyBuckets
+
+s3:ListBucket
+
+s3:ListBucketMultipartUploads
+
+s3:ListBucketVersions
+
+s3:PutBucketCompliance
+
+s3:PutBucketConsistency
+
+s3:PutBucketCORS
+
+s3:PutEncryptionConfiguration
+
+974
+
+S3 REST API operations
+
+GET Bucket metadata notification configuration
+
+GetBucketNotificationConfiguration GetObjectLockConfiguration
+
+GetBucketPolicy
+
+GetBucketTagging
+
+GetBucketVersioning
+
+GetBucketLifecycleConfiguration
+
+GetBucketReplication
+
+ListBuckets
+
+GET Storage Usage
+
+ListObjects
+
+HeadBucket
+
+RestoreObject
+
+ListMultipartUploads
+
+RestoreObject
+
+GET Bucket versions
+
+PUT Bucket compliance (deprecated) PUT Bucket consistency
+
+DeleteBucketCors†
+
+PutBucketCors
+
+DeleteBucketEncryption
+
+PutBucketEncryption
+
+Custom for StorageGRID
+
+Yes
+
+Yes, for GET Storage Usage.
+
+Note: Use in group policy only.
+
+Yes
+
+Yes
+
+Permissions
+
+s3:PutBucketLastAccessTime
+
+s3:PutBucketMetadataNotification
+
+s3:PutBucketNotification s3:PutBucketObjectLockConfiguration
+
+s3:PutBucketPolicy
+
+s3:PutBucketTagging
+
+s3:PutBucketVersioning
+
+s3:PutLifecycleConfiguration
+
+s3:PutReplicationConfiguration
+
+Permissions that apply to objects
+
+Permissions
+
+s3:AbortMultipartUpload
+
+s3:BypassGovernanceRetention
+
+s3:DeleteObject
+
+S3 REST API operations PUT Bucket last access time
+
+PUT Bucket metadata notification configuration GetBucketVersioning
+
+GetBucketLifecycleConfiguration
+
+GetBucketReplication
+
+ListBuckets
+
+GET Storage Usage
+
+ListObjects
+
+HeadBucket
+
+RestoreObject
+
+ListMultipartUploads
+
+RestoreObject
+
+GET Bucket versions
+
+PUT Bucket compliance (deprecated) PUT Bucket consistency
+
+DeleteBucketCors†
+
+PutBucketCors
+
+DeleteBucketEncryption
+
+PutBucketEncryption
+
+Custom for StorageGRID
+
+Yes
+
+Yes, for GET Storage Usage.
+
+Note: Use in group policy only.
+
+Yes
+
+Yes
+
+Permissions
+
+s3:PutBucketLastAccessTime
+
+s3:PutBucketMetadataNotification
+
+s3:PutBucketNotification s3:PutBucketObjectLockConfiguration
+
+s3:PutBucketPolicy
+
+s3:PutBucketTagging
+
+s3:PutBucketVersioning
+
+s3:PutLifecycleConfiguration
+
+s3:PutReplicationConfiguration
+
+Permissions that apply to objects
+
+Permissions
+
+s3:AbortMultipartUpload
+
+s3:BypassGovernanceRetention
+
+s3:DeleteObject
+
+S3 REST API operations PUT Bucket last access time
+
+PUT Bucket metadata notification configuration
+
+PutBucketNotificationConfiguration
+
+CreateBucket with the x-amz- bucket-object-lock-enabled: true request header (also requires the s3:CreateBucket permission)
+
+CreateBucket with the x-amz- bucket-object-lock-enabled: true request header (also requires the s3:CreateBucket permission)
+
+PutObjectLockConfiguration PutBucketPolicy
+
+DeleteBucketTagging†
+
+PutBucketTagging
+
+PutBucketVersioning
+
+DeleteBucketLifecycle†
+
+PutBucketLifecycleConfiguration
+
+PutBucketReplication
+
+S3 REST API operations
+
+AbortMultipartUpload
+
+RestoreObject
+
+DeleteObject
+
+DeleteObjects
+
+PutObjectRetention
+
+DeleteObject
+
+DeleteObjects
+
+RestoreObject
+
+Custom for StorageGRID Yes
+
+Yes, separate permissions for PUT and DELETE
+
+Custom for StorageGRID
+
+975
+
+Permissions
+
+s3:DeleteObjectTagging
+
+s3:DeleteObjectVersionTagging
+
+s3:DeleteObjectVersion
+
+s3:GetObject
+
+s3:GetObjectAcl
+
+s3:GetObjectLegalHold
+
+s3:GetObjectRetention

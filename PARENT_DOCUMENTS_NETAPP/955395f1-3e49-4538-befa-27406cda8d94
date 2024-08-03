@@ -1,0 +1,93 @@
+5. If any tenants are listed, instruct all tenants to disable cross-grid replication for all of their buckets on both grids in the connection.
+
+You can’t remove the Use grid federation connection permission if any tenant buckets have cross-grid replication enabled. Each tenant account must disable cross-grid replication for their buckets on both grids. Remove permission for each tenant
+
+After cross-grid replication has been disabled for all tenant buckets, remove the Use grid federation permission from all tenants on both grids.
+
+Steps
+
+1. Select CONFIGURATION > System > Grid federation.
+
+2. Select the connection name to display its details.
+
+3. For each tenant on the Permitted tenants tab, remove the Use grid federation connection permission from each tenant. See Manage permitted tenants.
+
+4. Repeat these steps for the permitted tenants on the other grid. Remove connection
+
+Steps
+
+1. When no tenants on either grid are using the connection, select Remove.
+
+2. Review the confirmation message, and select Remove.
+
+If the connection can be removed, a success message is shown. The grid federation connection is now removed from both grids.
+
+If the connection can’t be removed (for example, it is still in use or there is a connection error), an error message is displayed. You can do either of the following:
+
+▪ Resolve the error (recommended). See Troubleshoot grid federation errors. ▪ Remove the connection by force. See the next section. You can’t remove the Use grid federation connection permission if any tenant buckets have cross-grid replication enabled. Each tenant account must disable cross-grid replication for their buckets on both grids. Remove permission for each tenant
+
+After cross-grid replication has been disabled for all tenant buckets, remove the Use grid federation permission from all tenants on both grids.
+
+Steps
+
+1. Select CONFIGURATION > System > Grid federation.
+
+2. Select the connection name to display its details.
+
+3. For each tenant on the Permitted tenants tab, remove the Use grid federation connection permission from each tenant. See Manage permitted tenants.
+
+4. Repeat these steps for the permitted tenants on the other grid. Remove connection
+
+Steps
+
+1. When no tenants on either grid are using the connection, select Remove.
+
+2. Review the confirmation message, and select Remove.
+
+If the connection can be removed, a success message is shown. The grid federation connection is now removed from both grids.
+
+If the connection can’t be removed (for example, it is still in use or there is a connection error), an error message is displayed. You can do either of the following:
+
+▪ Resolve the error (recommended). See Troubleshoot grid federation errors. ▪ Remove the connection by force. See the next section.
+
+Remove a grid federation connection by force
+
+If necessary, you can force the removal of a connection that does not have Connected status.
+
+Force removal only deletes the connection from the local grid. To completely remove the connection, perform the same steps on both grids. Steps
+
+1. From the confirmation dialog box, select Force remove.
+
+A success message appears. This grid federation connection can no longer be used. However, tenant buckets might still have cross-grid replication enabled and some object copies might have already been replicated between the grids in the connection.
+
+2. From the other grid in the connection, sign in to the Grid Manager from the primary Admin Node.
+
+3. Select CONFIGURATION > System > Grid federation.
+
+373
+
+4. Select the connection name to display its details.
+
+5. Select Remove and Yes.
+
+6. Select Force remove to remove the connection from this grid.
+
+Manage the permitted tenants for grid federation
+
+You can allow S3 tenant accounts to use a grid federation connection between two StorageGRID systems. When tenants are allowed to use a connection, special steps are required to edit tenant details or to permanently remove a tenant’s permission to use the connection.
+
+Before you begin You are signed in to the Grid Manager on either grid using a supported web browser.
+
+You have the Root access permission for the grid you are signed in to.
+
+You have created a grid federation connection between two grids.
+
+You have reviewed the workflows for account clone and cross-grid replication.
+
+As required, you have already configured single sign-on (SSO) or identify federation for both grids in the connection. See What is account clone.
+
+Create a permitted tenant
+
+If you want to allow a new or existing tenant account to use a grid federation connection for account clone and cross-grid replication, follow the general instructions to create a new S3 tenant or edit a tenant account and note the following:
+
+You can create the tenant from either grid in the connection. The grid where a tenant is created is the tenant’s source grid.

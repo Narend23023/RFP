@@ -1,0 +1,83 @@
+If you require separate VLANs and subnets for node networks on the same host, you can add VLAN interfaces on the bond and map them into the host (shown as bond0.1004 in the illustration).
+
+90 Steps
+
+1. Aggregate all physical network interfaces that will be used for StorageGRID network connectivity into a single LACP bond.
+
+Use the same name for the bond on every host. For example, bond0.
+
+2. Create VLAN interfaces that use this bond as their associated "physical device," using the standard VLAN interface naming convention physdev-name.VLAN ID.
+
+Note that steps 1 and 2 require appropriate configuration on the edge switches terminating the other ends of the network links. The edge switch ports must also be aggregated into a LACP port channel, configured as a trunk, and allowed to pass all required VLANs.
+
+Sample interface configuration files for this per-host networking configuration scheme are provided.
+
+Related information Example /etc/sysconfig/network-scripts
+
+Configure host storage
+
+You must allocate block storage volumes to each host.
+
+Before you begin
+
+You have reviewed the following topics, which provide information you need to accomplish this task:
+
+91
+
+Storage and performance requirements
+
+Node container migration requirements About this task
+
+When allocating block storage volumes (LUNs) to hosts, use the tables in "Storage requirements" to determine the following:
+
+Number of volumes required for each host (based on the number and types of nodes that will be deployed on that host)
+
+Storage category for each volume (that is, System Data or Object Data)
+
+Size of each volume
+
+You will use this information as well as the persistent name assigned by Linux to each physical volume when you deploy StorageGRID nodes on the host.
+
+You don’t need to partition, format, or mount any of these volumes; you just need to ensure they are visible to the hosts. Note that steps 1 and 2 require appropriate configuration on the edge switches terminating the other ends of the network links. The edge switch ports must also be aggregated into a LACP port channel, configured as a trunk, and allowed to pass all required VLANs.
+
+Sample interface configuration files for this per-host networking configuration scheme are provided.
+
+Related information Example /etc/sysconfig/network-scripts
+
+Configure host storage
+
+You must allocate block storage volumes to each host.
+
+Before you begin
+
+You have reviewed the following topics, which provide information you need to accomplish this task:
+
+91
+
+Storage and performance requirements
+
+Node container migration requirements About this task
+
+When allocating block storage volumes (LUNs) to hosts, use the tables in "Storage requirements" to determine the following:
+
+Number of volumes required for each host (based on the number and types of nodes that will be deployed on that host)
+
+Storage category for each volume (that is, System Data or Object Data)
+
+Size of each volume
+
+You will use this information as well as the persistent name assigned by Linux to each physical volume when you deploy StorageGRID nodes on the host.
+
+You don’t need to partition, format, or mount any of these volumes; you just need to ensure they are visible to the hosts.
+
+Only one object-data LUN is required for metadata-only Storage Nodes. Avoid using "raw" special device files (/dev/sdb, for example) as you compose your list of volume names. These files can change across reboots of the host, which will impact proper operation of the system. If you are using iSCSI LUNs and Device Mapper Multipathing, consider using multipath aliases in the /dev/mapper directory, especially if your SAN topology includes redundant network paths to the shared storage. Alternatively, you can use the system-created softlinks under /dev/disk/by-path/ for your persistent device names. For example:
+
+ls -l $ ls -l /dev/disk/by-path/ total 0 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:00:07.1-ata-2 -> ../../sr0 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0 -> ../../sda lrwxrwxrwx 1 root root 10 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0-part1 -> ../../sda1 lrwxrwxrwx 1 root root 10 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:0:0-part2 -> ../../sda2 lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:1:0 -> ../../sdb lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:2:0 -> ../../sdc lrwxrwxrwx 1 root root 9 Sep 19 18:53 pci-0000:03:00.0-scsi-0:0:3:0 -> ../../sdd
+
+Results will differ for each installation.
+
+92
+
+Assign friendly names to each of these block storage volumes to simplify the initial StorageGRID installation and future maintenance procedures. If you are using the device mapper multipath driver for redundant access to shared storage volumes, you can use the alias field in your /etc/multipath.conf file. For example: Results will differ for each installation.
+
+92

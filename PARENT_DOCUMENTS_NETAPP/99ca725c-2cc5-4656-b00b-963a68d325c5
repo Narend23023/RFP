@@ -1,0 +1,105 @@
+The use of platform services must be enabled for each tenant account by a StorageGRID administrator using the Grid Manager or the Grid Management API.
+
+How platform services are configured
+
+Platform services communicate with external endpoints that you configure using the Tenant Manager or the Tenant Management API. Each endpoint represents an external destination, such as a StorageGRID S3 bucket, an Amazon Web Services bucket, an Amazon SNS topic, or an Elasticsearch cluster hosted locally, on AWS, or elsewhere. After you create an external endpoint, you can enable a platform service for a bucket by adding XML configuration to the bucket. The XML configuration identifies the objects that the bucket should act on, the action that the bucket should take, and the endpoint that the bucket should use for the service.
+
+You must add separate XML configurations for each platform service that you want to configure. For example:
+
+If you want all objects whose keys start with /images to be replicated to an Amazon S3 bucket, you must add a replication configuration to the source bucket.
+
+827
+
+• If you also want to send notifications when these objects are stored to the bucket, you must add a notifications configuration.
+
+Finally, if you want to index the metadata for these objects, you must add the metadata notification configuration that is used to implement search integration.
+
+The format for the configuration XML is governed by the S3 REST APIs used to implement StorageGRID platform services: Platform service
+
+S3 REST API
+
+Refer to
+
+CloudMirror replication
+
+GetBucketReplication
+
+PutBucketReplication
+
+CloudMirror replication
+
+Operations on buckets
+
+Notifications
+
+GetBucketNotificationConfiguration
+
+Notifications
+
+PutBucketNotificationConfiguration
+
+Operations on buckets
+
+Search integration
+
+GET Bucket metadata notification configuration
+
+Search integration
+
+PUT Bucket metadata notification configuration
+
+StorageGRID custom operations
+
+Related information Considerations for platform services CloudMirror replication service
+
+You can enable CloudMirror replication for an S3 bucket if you want StorageGRID to replicate specified objects added to the bucket to one or more destination buckets.
+
+CloudMirror replication operates independently of the grid’s active ILM policies. The CloudMirror service replicates objects as they are stored to the source bucket and delivers them to the destination bucket as soon as possible. Delivery of replicated objects is triggered when object ingest succeeds.
+
+CloudMirror replication has important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication. Finally, if you want to index the metadata for these objects, you must add the metadata notification configuration that is used to implement search integration.
+
+The format for the configuration XML is governed by the S3 REST APIs used to implement StorageGRID platform services: Platform service
+
+S3 REST API
+
+Refer to
+
+CloudMirror replication
+
+GetBucketReplication
+
+PutBucketReplication
+
+CloudMirror replication
+
+Operations on buckets
+
+Notifications
+
+GetBucketNotificationConfiguration
+
+Notifications
+
+PutBucketNotificationConfiguration
+
+Operations on buckets
+
+Search integration
+
+GET Bucket metadata notification configuration
+
+Search integration
+
+PUT Bucket metadata notification configuration
+
+StorageGRID custom operations
+
+Related information Considerations for platform services CloudMirror replication service
+
+You can enable CloudMirror replication for an S3 bucket if you want StorageGRID to replicate specified objects added to the bucket to one or more destination buckets.
+
+CloudMirror replication operates independently of the grid’s active ILM policies. The CloudMirror service replicates objects as they are stored to the source bucket and delivers them to the destination bucket as soon as possible. Delivery of replicated objects is triggered when object ingest succeeds.
+
+CloudMirror replication has important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication.
+
+If you enable CloudMirror replication for an existing bucket, only the new objects added to that bucket are replicated. Any existing objects in the bucket aren’t replicated. To force the replication of existing objects, you can update the existing object’s metadata by performing an object copy. If you are using CloudMirror replication to copy objects to an Amazon S3 destination, be aware that Amazon S3 limits the size of user-defined metadata within each PUT request header to 2 KB. If an object has user-defined metadata greater than 2 KB, that object will not be replicated.

@@ -1,0 +1,85 @@
+Your custom management interface certificate expires.
+
+You revert from a custom management interface certificate to the default server certificate.
+
+The following example shows a certificate error when the custom management interface certificate expired:
+
+1289 4. Make a backup of the Cassandra.hprof file, and delete it from the /var/local/core/ directory.
+
+This file can be as large as 24 GB, so you should remove it to free up space.
+
+5. After the issue is resolved, select the Reset checkbox for the Cassandra Heap Out Of Memory Errors count. Then select Apply Changes.
+
+To reset event counts, you must have the Grid topology page configuration permission. Troubleshoot certificate errors
+
+If you see a security or certificate issue when you try to connect to StorageGRID using a web browser, an S3 or Swift client, or an external monitoring tool, you should check the certificate. About this task
+
+Certificate errors can cause problems when you try to connect to StorageGRID using the Grid Manager, Grid Management API, Tenant Manager, or the Tenant Management API. Certificate errors can also occur when you try to connect with an S3 or Swift client or external monitoring tool.
+
+If you are accessing the Grid Manager or Tenant Manager using a domain name instead of an IP address, the browser shows a certificate error without an option to bypass if either of the following occurs:
+
+Your custom management interface certificate expires.
+
+You revert from a custom management interface certificate to the default server certificate.
+
+The following example shows a certificate error when the custom management interface certificate expired:
+
+1289
+
+To ensure that operations aren’t disrupted by a failed server certificate, the Expiration of server certificate for Management Interface alert is triggered when the server certificate is about to expire. When you are using client certificates for external Prometheus integration, certificate errors can be caused by the StorageGRID management interface certificate or by client certificates. The Expiration of client certificates configured on the Certificates page alert is triggered when a client certificate is about to expire. Steps
+
+If you received an alert notification about an expired certificate, access the certificate details: . Select CONFIGURATION > Security > Certificates and then select the appropriate certificate tab.
+
+1. Check the validity period of the certificate.
+
+Some web browsers and S3 or Swift clients don’t accept certificates with a validity period greater than 398 days.
+
+2. If the certificate has expired or will expire soon, upload or generate a new certificate.
+
+For a server certificate, see the steps for configuring a custom server certificate for the Grid Manager and the Tenant Manager.
+
+For a client certificate, see the steps for configuring a client certificate.
+
+3. For server certificate errors, try either or both of the following options:
+
+Ensure that the Subject Alternative Name (SAN) of the certificate is populated, and that the SAN matches the IP address or host name of the node that you are connecting to.
+
+1290 ◦ If you are attempting to connect to StorageGRID using a domain name:
+
+i. Enter the IP address of the Admin Node instead of the domain name to bypass the connection
+
+error and access the Grid Manager.
+
+ii. From the Grid Manager, select CONFIGURATION > Security > Certificates and then select the
+
+appropriate certificate tab to install a new custom certificate or continue with the default certificate.
+
+iii. In the instructions for administering StorageGRID, see the steps for configuring a custom server certificate for the Grid Manager and the Tenant Manager.
+
+Troubleshoot Admin Node and user interface issues
+
+There are several tasks you can perform to help determine the source of issues related to Admin Nodes and the StorageGRID user interface.
+
+Sign-on errors
+
+If you experience an error when you are signing in to a StorageGRID Admin Node, your system might have an issue with the identity federation configuration, a networking or hardware problem, an issue with Admin Node services, or an issue with the Cassandra database on connected Storage Nodes.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+You have specific access permissions. About this task
+
+Use these troubleshooting guidelines if you see any of the following error messages when attempting to sign in to an Admin Node:
+
+Your credentials for this account were invalid. Please try again.
+
+Waiting for services to start…
+
+Internal server error. The server encountered an error and could not complete your request. Please try again. If the problem persists, contact Technical Support.
+
+Unable to communicate with server. Reloading page… Steps
+
+1. Wait 10 minutes, and try signing in again.
+
+If the error is not resolved automatically, go to the next step.

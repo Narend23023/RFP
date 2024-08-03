@@ -1,0 +1,75 @@
+Settings on the Privileged address list tab can’t override settings on the Untrusted Client Network tab. Steps
+
+1. On the Privileged address list tab, enter the address or IP subnet you want to grant access to closed ports.
+
+2. Optionally, select Add another IP address or subnet in CIDR notation to add additional privileged clients.
+
+451
+
+Add as few addresses as possible to the privileged list.
+
+3. Optionally, select Allow privileged IP addresses to access StorageGRID internal ports. See StorageGRID internal ports.
+
+This option removes some protections for internal services. Leave it disabled if possible.
+
+4. Select Save. Manage external access
+
+When a port is closed in the Manage external access tab, the port can’t be accessed by any non-grid IP address unless you add the IP address to the privileged address list. You can only close ports that are open by default, and you can only open ports that you have closed.
+
+Settings on the Manage external access tab can’t override settings on the Untrusted Client Network tab. For example, if a node is untrusted, port SSH/22 is blocked on the Client Network even if it is open on the Manage external access tab. Settings on the Untrusted Client Network tab override closed ports (such as 443, 8443, 9443) on the Client Network. Steps
+
+1. Select Manage external access.
+
+The tab displays a table with all of the external ports (ports that are accessible by non-grid nodes by default) for the nodes in your grid.
+
+2. Configure the ports you want open and closed using the following options: ◦ Use the toggle beside each port to open or close the selected port. ◦ Select Open all displayed ports to open all ports listed in the table. ◦ Select Close all displayed ports to close all ports listed in the table.
+
+If you close Grid Manager ports 443 or 8443, any users currently connected on a blocked port, including you, will lose access to Grid Manager unless their IP address has been added to the Privileged address list. Use the scroll bar on the right side of the table to be sure you have viewed all available ports. Use the search field to find the settings for any external port by entering a port number. You can enter a partial port number. For example, if you enter a 2, all ports that have the string "2" as part of their name are displayed.
+
+3. Select Save Untrusted Client Network
+
+If the Client Network for a node is untrusted, the node only accepts inbound traffic on ports configured as load balancer endpoints and, optionally, additional ports you select on this tab. You can also use this tab to specify the default setting for new nodes added in an expansion.
+
+Existing client connections might fail if load balancer endpoints have not been configured.
+
+The configuration changes you make on the Untrusted Client Network tab override the settings on the
+
+452
+
+Manage external access tab. Steps
+
+1. Select Untrusted Client Network.
+
+2. In the Set New Node Default section, specify what the default setting should be when new nodes are added to the grid in an expansion procedure.
+
+Trusted (default): When a node is added in an expansion, its Client Network is trusted. ◦ Untrusted: When a node is added in an expansion, its Client Network is untrusted.
+
+As required, you can return to this tab to change the setting for a specific new node.
+
+This setting does not affect the existing nodes in your StorageGRID system. 3. Select Save Untrusted Client Network
+
+If the Client Network for a node is untrusted, the node only accepts inbound traffic on ports configured as load balancer endpoints and, optionally, additional ports you select on this tab. You can also use this tab to specify the default setting for new nodes added in an expansion.
+
+Existing client connections might fail if load balancer endpoints have not been configured.
+
+The configuration changes you make on the Untrusted Client Network tab override the settings on the
+
+452
+
+Manage external access tab. Steps
+
+1. Select Untrusted Client Network.
+
+2. In the Set New Node Default section, specify what the default setting should be when new nodes are added to the grid in an expansion procedure.
+
+Trusted (default): When a node is added in an expansion, its Client Network is trusted. ◦ Untrusted: When a node is added in an expansion, its Client Network is untrusted.
+
+As required, you can return to this tab to change the setting for a specific new node.
+
+This setting does not affect the existing nodes in your StorageGRID system.
+
+3. Use the following options to select the nodes that should allow client connections only on explicitly configured load balancer endpoints or additional selected ports:
+
+Select Untrust on displayed nodes to add all nodes displayed in the table to the Untrusted Client Network list.
+
+Select Trust on displayed nodes to remove all nodes displayed in the table from the Untrusted Client Network list. Use the toggle beside each node to set the Client Network as Trusted or Untrusted for the selected node.

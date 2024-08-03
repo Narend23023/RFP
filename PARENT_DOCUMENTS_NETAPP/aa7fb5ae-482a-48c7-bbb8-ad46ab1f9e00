@@ -1,0 +1,99 @@
+From Day 0 store forever
+
+Store objects by replicating 2 copies at Denver.
+
+Ingest behavior Balanced
+
+3. Create an ILM policy and select the two rules. Because the replication rule does not use any filters, it can be the default (last) rule for the policy.
+
+4. Ingest test objects into the grid.
+
+5. Simulate the policy with the test objects to verify the behavior.
+
+6. Activate the policy.
+
+When this policy is activated, StorageGRID places object data as follows:
+
+The data tiered from FabricPool in fabricpool-bucket will be erasure-coded using the 2+1 erasure- coding scheme. Two data fragments and one parity fragment will be placed on three different Storage Nodes.
+
+All objects in all other buckets will be replicated. Two copies will be created and placed on two different Storage Nodes.
+
+The copies will be maintained in StorageGRID forever. StorageGRID ILM won’t delete these objects.
+
+Create a traffic classification policy for FabricPool
+
+You can optionally design a StorageGRID traffic classification policy to optimize quality of service for the FabricPool workload. For details about this task, see Manage traffic classification policies. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission. About this task
+
+The best practices for creating a traffic classification policy for FabricPool depend on the workload, as follows:
+
+If you plan to tier FabricPool primary workload data to StorageGRID, you should ensure that the FabricPool workload has most of the bandwidth. You can create a traffic classification policy to limit all other workloads.
+
+In general, FabricPool read operations are more important to prioritize than write operations.
+
+For example, if other S3 clients use this StorageGRID system, you should create a traffic classification policy. You can limit network traffic for the other buckets, tenants, IP subnets, or load balancer endpoints.
+
+Generally, you should not impose quality of service limits on any FabricPool workload; you should only limit the other workloads.
+
+746 The copies will be maintained in StorageGRID forever. StorageGRID ILM won’t delete these objects.
+
+Create a traffic classification policy for FabricPool
+
+You can optionally design a StorageGRID traffic classification policy to optimize quality of service for the FabricPool workload. For details about this task, see Manage traffic classification policies. To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission. About this task
+
+The best practices for creating a traffic classification policy for FabricPool depend on the workload, as follows:
+
+If you plan to tier FabricPool primary workload data to StorageGRID, you should ensure that the FabricPool workload has most of the bandwidth. You can create a traffic classification policy to limit all other workloads.
+
+In general, FabricPool read operations are more important to prioritize than write operations.
+
+For example, if other S3 clients use this StorageGRID system, you should create a traffic classification policy. You can limit network traffic for the other buckets, tenants, IP subnets, or load balancer endpoints.
+
+Generally, you should not impose quality of service limits on any FabricPool workload; you should only limit the other workloads.
+
+746
+
+• The limits placed on other workloads should account for the behavior of those workloads. The limits imposed will also vary based on the sizing and capabilities of your grid and what the expected amount of utilization is.
+
+Steps
+
+1. Select CONFIGURATION > Network > Traffic classification.
+
+2. Select Create.
+
+3. Enter a name and a description (optional) for the policy and select Continue.
+
+4. For the Add matching rules step, add at least one rule. a. Select Add rule
+
+b. For Type, select Load balancer endpoint, and select the load balancer endpoint you created for
+
+FabricPool.
+
+You can also select the FabricPool tenant account or bucket.
+
+c. If you want this traffic policy to limit traffic for the other endpoints, select Inverse match.
+
+5. Optionally, add one or more limits to control the network traffic matched by the rule.
+
+StorageGRID collects metrics even if you don’t add any limits, so you can understand traffic trends. a. Select Add a limit.
+
+b. Select the type of traffic you want to limit and the limit to apply.
+
+6. Select Continue.
+
+7. Read and review the Traffic classification policy. Use the Previous button to go back and make changes as required. When you are satisfied with the policy, select Save and continue. After your finish
+
+View network traffic metrics to verify that the polices are enforcing the traffic limits you expect.
+
+Configure ONTAP System Manager

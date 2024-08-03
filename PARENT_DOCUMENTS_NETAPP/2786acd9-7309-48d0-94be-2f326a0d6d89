@@ -1,0 +1,53 @@
+You can use this feature to provide better security isolation between tenants and their endpoints. For example, you might use this feature to ensure that the top-secret or highly classified materials owned by one tenant remain completely inaccessible to other tenants.
+
+For the purpose of access control, the tenant is determined from the access keys used in the client request, if no access keys are provided as part of the request (such as with anonymous access) the bucket owner is used to determine the tenant. Tenant access example
+
+To understand how this security feature works, consider the following example:
+
+1. You have created two load balancer endpoints, as follows:
+
+Public endpoint: Uses port 10443 and allows access to all tenants. ◦ Top secret endpoint: Uses port 10444 and allows access to the Top secret tenant only. All other tenants are blocked from accessing this endpoint.
+
+2. The top-secret.pdf is in a bucket owned by the Top secret tenant.
+
+To access the top-secret.pdf, a user in the Top secret tenant can issue a GET request to https://w.x.y.z:10444/top-secret.pdf. Because this tenant is allowed to use the 10444 endpoint, the user can access the object. However, if a user belonging to any other tenant issues the same request to the same URL, they receive an immediate Access Denied message. Access is denied even if the credentials and signature are valid. CPU availability
+
+The Load Balancer service on each Admin Node and Gateway Node operates independently when forwarding S3 or Swift traffic to the Storage Nodes. Through a weighting process, the Load Balancer service routes more requests to Storage Nodes with higher CPU availability. Node CPU load information is updated every few minutes, but weighting might be updated more frequently. All Storage Nodes are assigned a minimal base weight value, even if a node reports 100% utilization or fails to report its utilization. 1. You have created two load balancer endpoints, as follows:
+
+Public endpoint: Uses port 10443 and allows access to all tenants. ◦ Top secret endpoint: Uses port 10444 and allows access to the Top secret tenant only. All other tenants are blocked from accessing this endpoint.
+
+2. The top-secret.pdf is in a bucket owned by the Top secret tenant.
+
+To access the top-secret.pdf, a user in the Top secret tenant can issue a GET request to https://w.x.y.z:10444/top-secret.pdf. Because this tenant is allowed to use the 10444 endpoint, the user can access the object. However, if a user belonging to any other tenant issues the same request to the same URL, they receive an immediate Access Denied message. Access is denied even if the credentials and signature are valid. CPU availability
+
+The Load Balancer service on each Admin Node and Gateway Node operates independently when forwarding S3 or Swift traffic to the Storage Nodes. Through a weighting process, the Load Balancer service routes more requests to Storage Nodes with higher CPU availability. Node CPU load information is updated every few minutes, but weighting might be updated more frequently. All Storage Nodes are assigned a minimal base weight value, even if a node reports 100% utilization or fails to report its utilization.
+
+In some cases, information about CPU availability is limited to the site where the Load Balancer service is
+
+499
+
+located. Configure load balancer endpoints
+
+Load balancer endpoints determine the ports and network protocols S3 and Swift clients can use when connecting to the StorageGRID load balancer on Gateway and Admin Nodes. You can also use endpoints to access the Grid Manager, Tenant Manager, or both.
+
+Support for Swift client applications has been deprecated and will be removed in a future release.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission.
+
+You have reviewed the considerations for load balancing.
+
+If you previously remapped a port you intend to use for the load balancer endpoint, you have removed the port remap.
+
+You have created any high availability (HA) groups you plan to use. HA groups are recommended, but not required. See Manage high availability groups. If the load balancer endpoint will be used by S3 tenants for S3 Select, it must not use the IP addresses or FQDNs of any bare-metal nodes. Only services appliances and VMware-based software nodes are allowed for the load balancer endpoints used for S3 Select.
+
+You have configured any VLAN interfaces you plan to use. See Configure VLAN interfaces.
+
+If you are creating an HTTPS endpoint (recommended), you have the information for the server certificate.
+
+Changes to an endpoint certificate can take up to 15 minutes to be applied to all nodes.
+
+To upload a certificate, you need the server certificate, the certificate private key, and optionally, a CA bundle.

@@ -1,0 +1,63 @@
+1. You configure a load balancer endpoint and upload or generate a server certificate in StorageGRID.
+
+2. You configure an S3 or Swift client connection to the load balancer endpoint and upload the same certificate to the client.
+
+3. When the client wants to save or retrieve data, it connects to the load balancer endpoint using HTTPS.
+
+4. StorageGRID responds with the server certificate, which contains a public key, and with a signature based on the private key.
+
+5. The client verifies this certificate by comparing the server signature to the signature on its copy of the certificate. If the signatures match, the client starts a session using the same public key.
+
+402
+
+6. The client sends object data to StorageGRID. Example 2: External key management server (KMS)
+
+In this example, StorageGRID acts as the client.
+
+1. Using external Key Management Server software, you configure StorageGRID as a KMS client and obtain a CA-signed server certificate, a public client certificate, and the private key for the client certificate.
+
+2. Using the Grid Manager, you configure a KMS server and upload the server and client certificates and the client private key.
+
+3. When a StorageGRID node needs an encryption key, it makes a request to the KMS server that includes data from the certificate and a signature based on the private key.
+
+4. The KMS server validates the certificate signature and decides that it can trust StorageGRID.
+
+5. The KMS server responds using the validated connection. Configure server certificates
+
+Supported server certificate types
+
+The StorageGRID system supports custom certificates encrypted with RSA or ECDSA (Elliptic Curve Digital Signature Algorithm). 4. StorageGRID responds with the server certificate, which contains a public key, and with a signature based on the private key.
+
+5. The client verifies this certificate by comparing the server signature to the signature on its copy of the certificate. If the signatures match, the client starts a session using the same public key.
+
+402
+
+6. The client sends object data to StorageGRID. Example 2: External key management server (KMS)
+
+In this example, StorageGRID acts as the client.
+
+1. Using external Key Management Server software, you configure StorageGRID as a KMS client and obtain a CA-signed server certificate, a public client certificate, and the private key for the client certificate.
+
+2. Using the Grid Manager, you configure a KMS server and upload the server and client certificates and the client private key.
+
+3. When a StorageGRID node needs an encryption key, it makes a request to the KMS server that includes data from the certificate and a signature based on the private key.
+
+4. The KMS server validates the certificate signature and decides that it can trust StorageGRID.
+
+5. The KMS server responds using the validated connection. Configure server certificates
+
+Supported server certificate types
+
+The StorageGRID system supports custom certificates encrypted with RSA or ECDSA (Elliptic Curve Digital Signature Algorithm).
+
+The cipher type for the security policy must match the server certificate type. For example, RSA ciphers require RSA certificates, and ECDSA ciphers require ECDSA certificates. See Manage security certificates. If you configure a custom security policy that is not compatible with the server certificate, you can temporarily revert to the default security policy.
+
+For more information about how StorageGRID secures client connections, see Security for S3 and Swift clients. Configure management interface certificates
+
+You can replace the default management interface certificate with a single custom certificate that allows users to access the Grid Manager and the Tenant Manager without encountering security warnings. You can also revert to the default management interface certificate or generate a new one. About this task
+
+By default, every Admin Node is issued a certificate signed by the grid CA. These CA signed certificates can be replaced by a single common custom management interface certificate and corresponding private key.
+
+Because a single custom management interface certificate is used for all Admin Nodes, you must specify the certificate as a wildcard or multi-domain certificate if clients need to verify the hostname when connecting to the Grid Manager and Tenant Manager. Define the custom certificate such that it matches all Admin Nodes in the grid.
+
+You need to complete configuration on the server, and depending on the root certificate authority (CA) you are using, users might also need to install the Grid CA certificate in the web browser they will use to access the Grid Manager and the Tenant Manager.

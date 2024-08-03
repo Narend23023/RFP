@@ -1,0 +1,77 @@
+5. Wait until the changes are applied, then download a new Recovery Package. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the Provisioning Passphrase.
+
+Configure IP addresses Configure IP addresses: Overview
+
+You can perform network configuration by configuring IP addresses for grid nodes using the Change IP tool.
+
+You must use the Change IP tool to make most changes to the networking configuration that was initially set during grid deployment. Manual changes using standard Linux networking commands and files might not propagate to all StorageGRID services, and might not persist across upgrades, reboots, or node recovery procedures.
+
+The IP change procedure can be a disruptive procedure. Parts of the grid might be unavailable until the new configuration is applied.
+
+1512 4. Select Yes in the confirmation dialog box.
+
+5. Wait until the changes are applied, then download a new Recovery Package. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the Provisioning Passphrase.
+
+Delete a subnet
+
+Steps
+
+1. Select MAINTENANCE > Network > Grid Network.
+
+2. Select the delete icon
+
+next to the subnet.
+
+3. Enter the Provisioning passphrase, and select Save.
+
+4. Select Yes in the confirmation dialog box.
+
+5. Wait until the changes are applied, then download a new Recovery Package. a. Select MAINTENANCE > System > Recovery package.
+
+b. Enter the Provisioning Passphrase.
+
+Configure IP addresses Configure IP addresses: Overview
+
+You can perform network configuration by configuring IP addresses for grid nodes using the Change IP tool.
+
+You must use the Change IP tool to make most changes to the networking configuration that was initially set during grid deployment. Manual changes using standard Linux networking commands and files might not propagate to all StorageGRID services, and might not persist across upgrades, reboots, or node recovery procedures.
+
+The IP change procedure can be a disruptive procedure. Parts of the grid might be unavailable until the new configuration is applied.
+
+1512
+
+If you are making changes to the Grid Network Subnet List only, use the Grid Manager to add or change the network configuration. Otherwise, use the Change IP tool if the Grid Manager is inaccessible due to a network configuration issue, or you are performing both a Grid Network routing change and other network changes at the same time. If you want to change the Grid Network IP address for all nodes in the grid, use the special procedure for grid-wide changes.
+
+Ethernet interfaces
+
+The IP address assigned to eth0 is always the grid node’s Grid Network IP address. The IP address assigned to eth1 is always the grid node’s Admin Network IP address. The IP address assigned to eth2 is always the grid node’s Client Network IP address.
+
+Note that on some platforms, such as StorageGRID appliances, eth0, eth1, and eth2 might be aggregate interfaces composed of subordinate bridges or bonds of physical or VLAN interfaces. On these platforms, the SSM > Resources tab might show the Grid, Admin, and Client Network IP address assigned to other interfaces in addition to eth0, eth1, or eth2. DHCP
+
+You can only set up DHCP during the deployment phase. You can’t set up DHCP during configuration. You must use the IP address change procedures if you want to change IP addresses, subnet masks, and default gateways for a grid node. Using the Change IP tool will cause DHCP addresses to become static. High availability (HA) groups
+
+If a Client Network interface is contained in an HA group, you can’t change the Client Network IP address for that interface to an address that is outside of the subnet configured for the HA group.
+
+You can’t change the Client Network IP address to the value of an existing virtual IP address assigned to an HA group configured on the Client Network interface.
+
+If a Grid network interface is contained in an HA group, you can’t change the Grid network IP address for that interface to an address that is outside of the subnet configured for the HA group.
+
+You can’t change the Grid Network IP address to the value of an existing virtual IP address assigned to an HA group configured on the Grid Network interface. Change node network configuration
+
+You can change the network configuration of one or more nodes using the Change IP tool. You can change the configuration of the Grid Network, or add, change, or remove the Admin or Client Networks.
+
+Before you begin
+
+You have the Passwords.txt file. About this task
+
+Linux: If you are adding a grid node to the Admin Network or Client Network for the first time, and you did not previously configure ADMIN_NETWORK_TARGET or CLIENT_NETWORK_TARGET in the node configuration file, you must do so now.
+
+See the StorageGRID installation instructions for your Linux operating system:
+
+1513
+
+• Install StorageGRID on Red Hat Enterprise Linux

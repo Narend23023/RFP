@@ -1,0 +1,139 @@
+Content-Encoding, returned only if Content-Encoding metadata was set
+
+Content-Length
+
+Content-Type
+
+Date
+
+ETag
+
+Last-Modified
+
+X-Timestamp
+
+X-Trans-Id HEAD object
+
+This operation retrieves metadata and properties of an ingested object from a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+1005
+
+A successful execution returns the following headers with an "HTTP/1.1 200 OK" response:
+
+Accept-Ranges
+
+Content-Disposition, returned only if Content-Disposition metadata was set
+
+Content-Encoding, returned only if Content-Encoding metadata was set
+
+Content-Length
+
+Content-Type
+
+Date
+
+ETag
+
+Last-Modified
+
+X-Timestamp
+
+X-Trans-Id
+
+PUT object
+
+This operation creates a new object with data and metadata, or replaces an existing object with data and metadata in a StorageGRID system.
+
+StorageGRID supports objects up to 5 TiB (5,497,558,138,880 bytes) in size. Conflicting client requests, such as two clients writing to the same key, are resolved on a "latest- wins" basis. The timing for the "latest-wins" evaluation is based on when the StorageGRID system completes a given request, and not on when Swift clients begin an operation.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+The following request headers are optional:
+
+Content-Disposition
+
+Content-Encoding
+
+Don’t use chunked Content-Encoding if the ILM rule that applies to an object filters objects based on size and uses synchronous placement on ingest (the Balanced or Strict options for Ingest Behavior).
+
+Transfer-Encoding
+
+Don’t use compressed or chunked Transfer-Encoding if the ILM rule that applies to an object filters objects based on size and uses synchronous placement on ingest (the Balanced or Strict options for Ingest
+
+1006
+
+Behavior).
+
+Content-Length If an ILM rule filters objects by size and uses synchronous placement on ingest, you must specify Content-Length.
+
+If you don’t follow these guidelines for Content-Encoding, Transfer-Encoding, and Content-Length, StorageGRID must save the object before it can determine object size and apply the ILM rule. In other words, StorageGRID must default to creating interim copies of an object on ingest. That is, StorageGRID must use the Dual Commit option for Ingest Behavior.
+
+For more information about synchronous placement and ILM rules, see Data-protection options for ingest.
+
+Content-Type
+
+ETag
+
+X-Object-Meta-<name\> (object-related metadata) X-Auth-Token
+
+The following request headers are optional:
+
+Content-Disposition
+
+Content-Encoding
+
+Don’t use chunked Content-Encoding if the ILM rule that applies to an object filters objects based on size and uses synchronous placement on ingest (the Balanced or Strict options for Ingest Behavior).
+
+Transfer-Encoding
+
+Don’t use compressed or chunked Transfer-Encoding if the ILM rule that applies to an object filters objects based on size and uses synchronous placement on ingest (the Balanced or Strict options for Ingest
+
+1006
+
+Behavior).
+
+Content-Length If an ILM rule filters objects by size and uses synchronous placement on ingest, you must specify Content-Length.
+
+If you don’t follow these guidelines for Content-Encoding, Transfer-Encoding, and Content-Length, StorageGRID must save the object before it can determine object size and apply the ILM rule. In other words, StorageGRID must default to creating interim copies of an object on ingest. That is, StorageGRID must use the Dual Commit option for Ingest Behavior.
+
+For more information about synchronous placement and ILM rules, see Data-protection options for ingest.
+
+Content-Type
+
+ETag
+
+X-Object-Meta-<name\> (object-related metadata)
+
+If you want to use the User defined creation time option as the Reference time for an ILM rule, you must store the value in a user-defined header named X-Object-Meta-Creation-Time. For example: X-Object-Meta-Creation-Time: 1443399726
+
+This field is evaluated as seconds since January 1, 1970.
+
+X-Storage-Class: reduced_redundancy
+
+This header affects how many object copies StorageGRID creates if the ILM rule that matches an ingested object specifies an Ingest Behavior of Dual Commit or Balanced.
+
+Dual commit: If the ILM rule specifies the Dual commit option for Ingest Behavior, StorageGRID creates a single interim copy as the object is ingested (single commit).
+
+Balanced: If the ILM rule specifies the Balanced option, StorageGRID makes a single interim copy only if the system can’t immediately make all copies specified in the rule. If StorageGRID can perform synchronous placement, this header has no effect.

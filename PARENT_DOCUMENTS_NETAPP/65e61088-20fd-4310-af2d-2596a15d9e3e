@@ -1,0 +1,131 @@
+When Server Manager or the grid node is restarted, Server Manager restarts, but the service does not.
+
+3. Log out of the command shell: exit
+
+Remove DoNotStart file for service
+
+When you remove a DoNotStart file that is preventing a service from starting, you must start that service.
+
+Before you begin
+
+You have the Passwords.txt file. Steps
+
+1494
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Remove the DoNotStart file from the service directory: rm /etc/sv/service/DoNotStart
+
+where service is the name of the service. For example,
+
+rm /etc/sv/ldr/DoNotStart
+
+3. Start the service: service servicename start
+
+4. Log out of the command shell: exit Troubleshoot Server Manager
+
+If a problem arises when using Server Manager, check its log file.
+
+Error messages related to Server Manager are captured in the Server Manager log file, which is located at: /var/local/log/servermanager.log
+
+Check this file for error messages regarding failures. Escalate the issue to technical support if required. You might be asked to forward log files to technical support. Service with an error state
+
+If you detect that a service has entered an error state, attempt to restart the service.
+
+Before you begin
+
+You have the Passwords.txt file.
+
+About this task
+
+Server Manager monitors services and restarts any that have stopped unexpectedly. If a service fails, Server Manager attempts to restart it. If there are three failed attempts to start a service within five minutes, the service enters an error state. Server Manager does not attempt another restart. Steps
+
+1. Log in to the grid node:
+
+a. Enter the following command: ssh admin@grid_node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+1495
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Confirm the error state of the service: service servicename status For example:
+
+service ldr status
+
+If the service is in an error state, the following message is returned: servicename in error state. For example:
+
+ldr in error state
+
+If the service status is disabled, see the instructions for removing a DoNotStart file for a service.
+
+3. Attempt to remove the error state by restarting the service: service servicename restart
+
+If the service fails to restart, contact technical support.
+
+4. Log out of the command shell: exit Reboot, shutdown, and power procedures
+
+Perform a rolling reboot
+
+You can perform a rolling reboot to reboot multiple grid nodes without causing a service disruption.
+
+Before you begin
+
+You are signed in to the Grid Manager on the primary Admin Node, and you are using a supported web browser.
+
+You must be signed in to the primary Admin Node to perform this procedure.
+
+You have the Maintenance or Root access permission. About this task
+
+Use this procedure if you need to reboot multiple nodes at the same time. For example, you can use this procedure after changing the FIPS mode for the grid’s TLS and SSH security policy. When the FIPS mode changes, you must reboot all nodes to put the change into effect.
+
+If you only need to reboot one node, you can reboot the node from the Tasks tab.
+
+When StorageGRID reboots grid nodes, it issues the reboot command on each node, which causes the node to shut down and restart. All services are restarted automatically.
+
+Rebooting a VMware node reboots the virtual machine.
+
+1496
+
+• Rebooting a Linux node reboots the container.
+
+Rebooting a StorageGRID Appliance node reboots the compute controller.
+
+The rolling reboot procedure can reboot multiple nodes at the same time, with these exceptions:
+
+Two nodes of the same type will not be rebooted at the same time. Perform a rolling reboot
+
+You can perform a rolling reboot to reboot multiple grid nodes without causing a service disruption.
+
+Before you begin
+
+You are signed in to the Grid Manager on the primary Admin Node, and you are using a supported web browser.
+
+You must be signed in to the primary Admin Node to perform this procedure.
+
+You have the Maintenance or Root access permission. About this task
+
+Use this procedure if you need to reboot multiple nodes at the same time. For example, you can use this procedure after changing the FIPS mode for the grid’s TLS and SSH security policy. When the FIPS mode changes, you must reboot all nodes to put the change into effect.
+
+If you only need to reboot one node, you can reboot the node from the Tasks tab.
+
+When StorageGRID reboots grid nodes, it issues the reboot command on each node, which causes the node to shut down and restart. All services are restarted automatically.
+
+Rebooting a VMware node reboots the virtual machine.
+
+1496

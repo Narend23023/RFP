@@ -1,0 +1,99 @@
+Related information
+
+Use S3 REST API
+
+Example 4: ILM rules and policy for S3 versioned objects Create and assign storage grades
+
+Storage grades identify the type of storage used by a Storage Node. You can create storage grades if you want ILM rules to place certain objects on certain Storage Nodes.
+
+616
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+When you first install StorageGRID, the Default storage grade is automatically assigned to every Storage Node in your system. As required, you can optionally define custom storage grades and assign them to different Storage Nodes. Related information
+
+Use S3 REST API
+
+Example 4: ILM rules and policy for S3 versioned objects Create and assign storage grades
+
+Storage grades identify the type of storage used by a Storage Node. You can create storage grades if you want ILM rules to place certain objects on certain Storage Nodes.
+
+616
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions. About this task
+
+When you first install StorageGRID, the Default storage grade is automatically assigned to every Storage Node in your system. As required, you can optionally define custom storage grades and assign them to different Storage Nodes.
+
+Using custom storage grades allows you to create ILM storage pools that contain only a specific type of Storage Node. For example, you might want certain objects to be stored on your fastest Storage Nodes, such as StorageGRID all-flash storage appliances.
+
+Storage Nodes can be configured during installation to contain only object metadata and not object data. Metadata-only Storage Nodes can’t be assigned a storage grade. For more information, see Types of Storage Nodes. If storage grade is not a concern (for example, all Storage Nodes are identical), you can skip this procedure and use the includes all storage grades selection for the storage grade when you create storage pools. Using this selection ensures that the storage pool will include every Storage Node at the site, regardless of its storage grade.
+
+Don’t create more storage grades than necessary. For example, don’t create a storage grade for each Storage Node. Instead, assign each storage grade to two or more nodes. Storage grades assigned to only one node can cause ILM backlogs if that node becomes unavailable. Steps
+
+1. Select ILM > Storage grades.
+
+2. Define custom storage grades:
+
+a. For each custom storage grade you want to add, select Insert
+
+to add a row.
+
+b. Enter a descriptive label.
+
+617
+
+c. Select Apply Changes.
+
+d. Optionally, if you need to modify a saved label, select Edit
+
+You can’t delete storage grades.
+
+3. Assign new storage grades to Storage Nodes:
+
+a. Locate the Storage Node in the LDR list, and select its Edit icon
+
+b. Select the appropriate storage grade from the list.
+
+618
+
+and select Apply Changes.
+
+.
+
+Assign a storage grade to a given Storage Node only once. A Storage Node recovered from failure maintains the previously assigned storage grade. Don’t change this assignment after the ILM policy is activated. If the assignment is changed, data is stored based on the new storage grade. c. Select Apply Changes.
+
+Use storage pools
+
+What is a storage pool?
+
+A storage pool is a logical grouping of Storage Nodes or Archive Nodes.
+
+When you install StorageGRID, one storage pool per site is automatically created. You can configure additional storage pools as needed for your storage requirements.
+
+Storage Nodes can be configured during installation to contain object data and object metadata, or only object metadata. Metadata-only Storage Nodes can’t be used in storage pools. For more information, see Types of Storage Nodes.
+
+Support for Archive Nodes is deprecated and will be removed in a future release. Moving objects from an Archive Node to an external archival storage system through the S3 API has been replaced by ILM Cloud Storage Pools, which offer more functionality.
+
+Storage pools have two attributes:
+
+Storage grade: For Storage Nodes, the relative performance of backing storage.
+
+Site: The data center where objects will be stored. Storage pools are used in ILM rules to determine where object data is stored and the type of storage used. When you configure ILM rules for replication, you select one or more storage pools that include either Storage Nodes or Archive Nodes. When you create erasure-coding profiles, you select a storage pool that includes
+
+619
+
+Storage Nodes.
+
+Guidelines for creating storage pools
+
+Configure and use storage pools to protect against data loss by distributing data across multiple sites. Replicated copies and erasure-coded copies require different storage pool configurations.
+
+See Examples of enabling site-loss protection using replication and erasure coding. Guidelines for all storage pools

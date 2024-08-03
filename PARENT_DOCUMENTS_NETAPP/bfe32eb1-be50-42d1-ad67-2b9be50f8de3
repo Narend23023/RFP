@@ -1,0 +1,113 @@
+1. Select ALERTS > Rules.
+
+The Alert Rules page appears.
+
+2. Select Create custom rule. StorageGRID does not validate custom alerts. If you decide to create custom alert rules, follow these general guidelines:
+
+Look at the conditions for the default alert rules, and use them as examples for your custom alert rules.
+
+If you define more than one condition for an alert rule, use the same expression for all conditions. Then, change the threshold value for each condition.
+
+Carefully check each condition for typos and logic errors.
+
+Use only the metrics listed in the Grid Management API.
+
+1086
+
+When testing an expression using the Grid Management API, be aware that a "successful" response might be an empty response body (no alert triggered). To see if the alert is actually triggered, you can temporarily set a threshold to a value you expect to be true currently. For example, to test the expression node_memory_MemTotal_bytes < 24000000000, first execute node_memory_MemTotal_bytes >= 0 and ensure you get the expected results (all nodes return a value). Then, change the operator and the threshold back to the intended values and execute again. No results indicate there are no current alerts for this expression.
+
+Don’t assume a custom alert is working unless you have validated that the alert is triggered when expected. Steps
+
+1. Select ALERTS > Rules.
+
+The Alert Rules page appears.
+
+2. Select Create custom rule.
+
+The Create Custom Rule dialog box appears.
+
+1087
+
+3. Select or clear the Enabled checkbox to determine if this alert rule is currently enabled.
+
+If an alert rule is disabled, its expressions aren’t evaluated and no alerts are triggered.
+
+4. Enter the following information: Field
+
+Description
+
+Unique Name
+
+A unique name for this rule. The alert rule name is shown on the Alerts page and is also the subject for email notifications. Names for alert rules can be between 1 and 64 characters.
+
+Description
+
+A description of the problem that is occurring. The description is the alert message shown on the Alerts page and in email notifications. Descriptions for alert rules can be between 1 and 128 characters.
+
+1088
+
+Field
+
+Description Recommended Actions
+
+Optionally, the recommended actions to take when this alert is triggered. Enter recommended actions as plain text (no formatting codes). Recommended actions for alert rules can be between 0 and 1,024 characters.
+
+5. In the Conditions section, enter a Prometheus expression for one or more of the alert severity levels.
+
+A basic expression is usually of the form: [metric] [operator] [value]
+
+Expressions can be any length, but appear on a single line in the user interface. At least one expression is required.
+
+This expression causes an alert to be triggered if the amount of installed RAM for a node is less than 24,000,000,000 bytes (24 GB).
+
+node_memory_MemTotal_bytes < 24000000000
+
+To see available metrics and to test Prometheus expressions, select the help icon the Metrics section of the Grid Management API.
+
+and follow the link to
+
+6. In the Duration field, enter the amount of time a condition must continuously remain in effect before the alert is triggered, and select a unit of time.
+
+To trigger an alert immediately when a condition becomes true, enter 0. Increase this value to prevent temporary conditions from triggering alerts.
+
+The default is 5 minutes.
+
+7. Select Save.
+
+The dialog box closes, and the new custom alert rule appears in the Alert Rules table. Edit alert rules
+
+You can edit an alert rule to change the trigger conditions, For a custom alert rule, you can also update the rule name, description, and recommended actions.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission. About this task
+
+When you edit a default alert rule, you can change the conditions for minor, major, and critical alerts; and the duration. When you edit a custom alert rule, you can also edit the rule’s name, description, and recommended actions.
+
+Be careful when deciding to edit an alert rule. If you change trigger values, you might not detect an underlying problem until it prevents a critical operation from completing.
+
+1089
+
+Steps
+
+1. Select ALERTS > Rules. The Alert Rules page appears.
+
+2. Select the radio button for the alert rule you want to edit.
+
+3. Select Edit rule. To trigger an alert immediately when a condition becomes true, enter 0. Increase this value to prevent temporary conditions from triggering alerts.
+
+The default is 5 minutes.
+
+7. Select Save.
+
+The dialog box closes, and the new custom alert rule appears in the Alert Rules table. Edit alert rules
+
+You can edit an alert rule to change the trigger conditions, For a custom alert rule, you can also update the rule name, description, and recommended actions.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Manage alerts or Root access permission. About this task

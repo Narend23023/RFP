@@ -1,0 +1,111 @@
+To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually. The interfaces you add are displayed on the VLAN interfaces page and on the HA groups page in the Grid Manager.
+
+If you add a trunk interface, configure one or more VLAN interfaces for each new parent interface. See configure VLAN interfaces.
+
+If you add an access interface, you must add it directly to HA groups. See configure high availability groups. Storage volumes for virtual Storage Nodes
+
+You must collect the following information for virtual machine-based Storage Nodes:
+
+The number and size of storage volumes (storage LUNs) you plan to add. See Storage and performance
+
+225
+
+requirements."
+
+Grid configuration information
+
+You must collect information to configure your grid:
+
+Grid license
+
+Network Time Protocol (NTP) server IP addresses
+
+DNS server IP addresses How grid nodes discover the primary Admin Node
+
+Grid nodes communicate with the primary Admin Node for configuration and management. Each grid node must know the IP address of the primary Admin Node on the Grid Network.
+
+To ensure that a grid node can access the primary Admin Node, you can do either of the following when deploying the node:
+
+You can use the ADMIN_IP parameter to enter the primary Admin Node’s IP address manually.
+
+You can omit the ADMIN_IP parameter to have the grid node discover the value automatically. Automatic discovery is especially useful when the Grid Network uses DHCP to assign the IP address to the primary Admin Node. Automatic discovery of the primary Admin Node is accomplished using a multicast domain name system (mDNS). When the primary Admin Node first starts up, it publishes its IP address using mDNS. Other nodes on the same subnet can then query for the IP address and acquire it automatically. However, because multicast IP traffic is not normally routable across subnets, nodes on other subnets can’t acquire the primary Admin Node’s IP address directly.
+
+If you use automatic discovery:
+
+You must include the ADMIN_IP setting for at least one grid node on any subnets that the primary Admin Node is not directly attached to. This grid node will then publish the primary Admin Node’s IP address for other nodes on the subnet to discover with mDNS.
+
+Ensure that your network infrastructure supports passing multi-cast IP traffic within a subnet. Deploy a StorageGRID node as a virtual machine
+
+You use VMware vSphere Web Client to deploy each grid node as a virtual machine. During deployment, each grid node is created and connected to one or more StorageGRID networks.
+
+If you need to deploy any StorageGRID appliance Storage Nodes, see Deploy appliance Storage Node.
+
+Optionally, you can remap node ports or increase CPU or memory settings for the node before powering it on.
+
+Before you begin
+
+You have reviewed how to plan and prepare for installation, and you understand the requirements for software, CPU and RAM, and storage and performance.
+
+226
+
+• You are familiar with VMware vSphere Hypervisor and have experience deploying virtual machines in this environment.
+
+The open-vm-tools package, an open-source implementation similar to VMware Tools, is included with the StorageGRID virtual machine. You don’t need to install VMware Tools manually.
+
+You have downloaded and extracted the correct version of the StorageGRID installation archive for VMware.
+
+If you are deploying the new node as part of an expansion or recovery operation, you must use the version of StorageGRID that is currently running on the grid.
+
+You have the StorageGRID Virtual Machine Disk (.vmdk) file: NetApp-SG-version-SHA.vmdk
+
+You have the .ovf and .mf files for each type of grid node you are deploying:
+
+Filename
+
+Description
+
+vsphere-primary-admin.ovf
+
+The template file and manifest file for the primary Admin Node.
+
+vsphere-primary-admin.mf
+
+vsphere-non-primary-admin.ovf
+
+The template file and manifest file for a non-primary Admin Node. vsphere-non-primary-admin.mf
+
+vsphere-storage.ovf
+
+The template file and manifest file for a Storage Node.
+
+vsphere-storage.mf
+
+vsphere-gateway.ovf
+
+The template file and manifest file for a Gateway Node.
+
+vsphere-gateway.mf
+
+vsphere-archive.ovf
+
+The template file and manifest file for an Archive Node. vsphere-archive.mf You have downloaded and extracted the correct version of the StorageGRID installation archive for VMware.
+
+If you are deploying the new node as part of an expansion or recovery operation, you must use the version of StorageGRID that is currently running on the grid.
+
+You have the StorageGRID Virtual Machine Disk (.vmdk) file: NetApp-SG-version-SHA.vmdk
+
+You have the .ovf and .mf files for each type of grid node you are deploying:
+
+Filename
+
+Description
+
+vsphere-primary-admin.ovf
+
+The template file and manifest file for the primary Admin Node.
+
+vsphere-primary-admin.mf
+
+vsphere-non-primary-admin.ovf

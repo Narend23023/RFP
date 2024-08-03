@@ -1,0 +1,121 @@
+To ensure a new ILM policy does not affect the placement of existing replicated and erasure-coded objects, you can create an ILM rule with an ingest time filter. For example, Ingest time is on or after <date and time>, so that the new rule applies only to objects ingested on or after the date and time specified. The types of ILM policy changes that can temporarily affect StorageGRID performance include the following:
+
+Applying a different erasure-coding profile to existing erasure-coded objects.
+
+StorageGRID considers each erasure-coding profile to be unique and does not reuse erasure-coding fragments when a new profile is used.
+
+Changing the type of copies required for existing objects; for example, converting a large percentage of replicated objects to erasure-coded objects. When you activate a new ILM policy, StorageGRID uses it to manage all objects, including existing objects and
+
+705
+
+newly ingested objects. Before activating a new ILM policy, review any changes to the placement of existing replicated and erasure-coded objects. Changing an existing object’s location might result in temporary resource issues when the new placements are evaluated and implemented.
+
+To ensure a new ILM policy does not affect the placement of existing replicated and erasure-coded objects, you can create an ILM rule with an ingest time filter. For example, Ingest time is on or after <date and time>, so that the new rule applies only to objects ingested on or after the date and time specified. The types of ILM policy changes that can temporarily affect StorageGRID performance include the following:
+
+Applying a different erasure-coding profile to existing erasure-coded objects.
+
+StorageGRID considers each erasure-coding profile to be unique and does not reuse erasure-coding fragments when a new profile is used.
+
+Changing the type of copies required for existing objects; for example, converting a large percentage of replicated objects to erasure-coded objects.
+
+Moving copies of existing objects to a completely different location; for example, moving a large number of objects to or from a Cloud Storage Pool or to or from a remote site. Active ILM policy for example 6: Data protection at two sites
+
+In this example, the active ILM policy was initially designed for a two-site StorageGRID system and uses two ILM rules.
+
+In this ILM policy, objects belonging to Tenant A are protected by 2+1 erasure coding at a single site, while objects belonging to all other tenants are protected across two sites using 2-copy replication.
+
+Rule 1: One-site erasure coding for Tenant A Rule definition
+
+Example value
+
+Rule name
+
+One-Site Erasure Coding for Tenant A
+
+706
+
+Rule definition
+
+Example value
+
+Tenant Account
+
+Tenant A
+
+Storage Pool
+
+Site 1
+
+Placements
+
+2+1 erasure coding in Site 1 from day 0 to forever
+
+Rule 2: Two-site replication for other tenants
+
+Rule definition
+
+Example value Rule name
+
+Two-Site Replication for Other Tenants
+
+Tenant Account
+
+Ignore
+
+Storage Pools
+
+Site 1 and Site 2
+
+Placements
+
+Two replicated copies from day 0 to forever: one copy at Site 1 and one copy at Site 2. ILM policy for example 6: Data protection at three sites
+
+In this example, the ILM policy is being replaced with a new policy for a three-site StorageGRID system.
+
+After performing an expansion to add the new site, the grid administrator created two new storage pools: a storage pool for Site 3 and a storage pool containing all three sites (not the same as the All Storage Nodes default storage pool). Then, the administrator created two new ILM rules and a new ILM policy, which is designed to protect data at all three sites.
+
+When this new ILM policy is activated, objects belonging to Tenant A will be protected by 2+1 erasure coding at three sites, while objects belonging to other tenants (and smaller objects belonging to Tenant A) will be protected across three sites using 3-copy replication.
+
+Rule 1: Three-site erasure coding for Tenant A Rule definition
+
+Example value
+
+Rule name
+
+Three-Site Erasure Coding for Tenant A
+
+Tenant Account
+
+Tenant A
+
+Storage Pool
+
+All 3 Sites (includes Site 1, Site 2, and Site 3)
+
+Placements
+
+2+1 erasure coding in All 3 Sites from day 0 to forever
+
+707
+
+Rule 2: Three-site replication for other tenants
+
+Rule definition Example value
+
+Rule name
+
+Three-Site Replication for Other Tenants
+
+Tenant Account
+
+Ignore
+
+Storage Pools
+
+Site 1, Site 2, and Site 3 Placements
+
+Three replicated copies from day 0 to forever: one copy at Site 1, one copy at Site 2, and one copy at Site 3.
+
+Activating the ILM policy for example 6
+
+When you activate a new ILM policy, existing objects might be moved to new locations or new object copies might be created for existing objects, based on the placement instructions in any new or updated rules.

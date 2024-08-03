@@ -1,0 +1,49 @@
+Optionally, you can change the destination of audit logs and send audit information to an external syslog server. Local logs of audit records continue to be generated and stored when an external syslog server is configured. See Configure audit messages and log destinations. Before you begin
+
+You have specific access permissions.
+
+You must have the Passwords.txt file.
+
+You must know the IP address of an Admin Node. Steps
+
+1. Log in to an Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+2. Go to the directory containing the audit log files: cd /var/local/log
+
+1310
+
+3. View the current or a saved audit log file, as required.
+
+Audit log file rotation
+
+Audit logs files are saved to an Admin Node’s /var/local/log directory. The active audit log files are named audit.log.
+
+Optionally, you can change the destination of audit logs and send audit information to an external syslog server. Local logs of audit records continue to be generated and stored when an external syslog server is configured. See Configure audit messages and log destinations.
+
+Once a day, the active audit.log file is saved, and a new audit.log file is started. The name of the saved file indicates when it was saved, in the format yyyy-mm-dd.txt. If more than one audit log is created in a single day, the file names use the date the file was saved, appended by a number, in the format yyyy-mm- dd.txt.n. For example, 2018-04-15.txt and 2018-04-15.txt.1 are the first and second log files created and saved on 15 April 2018. After a day, the saved file is compressed and renamed, in the format yyyy-mm-dd.txt.gz, which preserves the original date. Over time, this results in the consumption of storage allocated for audit logs on the Admin Node. A script monitors the audit log space consumption and deletes log files as necessary to free space in the /var/local/log directory. Audit logs are deleted based on the date they were created, with the oldest being deleted first. You can monitor the script’s actions in the following file: /var/local/log/manage- audit.log.
+
+This example shows the active audit.log file, the previous day’s file (2018-04-15.txt), and the compressed file for the prior day (2018-04-14.txt.gz).
+
+audit.log 2018-04-15.txt 2018-04-14.txt.gz Audit log file format
+
+Audit log file format: Overview
+
+The audit log files are found on every Admin Node and contain a collection of individual audit messages.
+
+Each audit message contains the following:
+
+The Coordinated Universal Time (UTC) of the event that triggered the audit message (ATIM) in ISO 8601 format, followed by a space:
+
+YYYY-MM-DDTHH:MM:SS.UUUUUU, where UUUUUU are microseconds.
+
+The audit message itself, enclosed within square brackets and beginning with AUDT.

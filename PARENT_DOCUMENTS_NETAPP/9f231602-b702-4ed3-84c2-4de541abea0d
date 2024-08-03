@@ -1,0 +1,37 @@
+To permanently and securely remove data, you must wipe the Storage Node’s drives after the decommission procedure is complete. Considerations for disconnected Storage Nodes
+
+Review the considerations for decommissioning a disconnected Storage Node.
+
+Never decommission a disconnected node unless you are sure it can’t be brought online or recovered.
+
+Don’t perform this procedure if you believe it might be possible to recover object data from the node. Instead, contact technical support to determine if node recovery is possible.
+
+When you decommission a disconnected Storage Node, StorageGRID uses data from other Storage Nodes to reconstruct the object data and metadata that was on the disconnected node. Data loss might occur if you decommission more than one disconnected Storage Node. The system might not be able to reconstruct data if not enough object copies, erasure-coded fragments, or object metadata remain available. When decommissioning Storage Nodes in a grid with software-based metadata-only nodes, decommissioning all nodes configured to store both objects and metadata removes all object storage from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. If you have more than one disconnected Storage Node that you can’t recover, contact technical support to determine the best course of action.
+
+When you decommission a disconnected Storage Node, StorageGRID starts data repair jobs at the end of the decommissioning process. These jobs attempt to reconstruct the object data and metadata that was stored on the disconnected node. When you decommission a disconnected Storage Node, the decommission procedure completes relatively quickly. However, the data repair jobs can take days or weeks to run and aren’t monitored by the decommission procedure. You must manually monitor these jobs and restart them as needed. See Check data repair jobs.
+
+If you decommission a disconnected Storage Node that contains the only copy of an object, the object will be lost. The data repair jobs can only reconstruct and recover objects if at least one replicated copy or enough erasure-coded fragments exist on Storage Nodes that are currently connected.
+
+What is the ADC quorum?
+
+You might not be able to decommission certain Storage Nodes at a site if too few Administrative Domain Controller (ADC) services would remain after the decommissioning.
+
+The ADC service, which is found on some Storage Nodes, maintains grid topology information and provides
+
+1440 configuration services to the grid. The StorageGRID system requires a quorum of ADC services to be available at each site and at all times.
+
+You can’t decommission a Storage Node if removing the node would cause the ADC quorum to no longer be met. To satisfy the ADC quorum during a decommissioning, a minimum of three Storage Nodes at each site must have the ADC service. If a site has more than three Storage Nodes with the ADC service, a simple majority of those nodes must remain available after the decommissioning: ((0.5 * Storage Nodes with ADC) + 1)
+
+Use caution when you decommission Storage Nodes in a grid containing software-based metadata-only nodes. If you decommission all nodes configured to store both objects and metadata, the ability to store objects is removed from the grid. See Types of Storage Nodes for more information about metadata-only Storage Nodes. For example, suppose a site currently includes six Storage Nodes with ADC services and you want to decommission three Storage Nodes. Because of the ADC quorum requirement, you must complete two decommission procedures, as follows:
+
+In the first decommission procedure, you must ensure that four Storage Nodes with ADC services remain available: ((0.5 * 6) + 1). This means that you can only decommission two Storage Nodes initially.
+
+In the second decommission procedure, you can remove the third Storage Node because the ADC quorum now only requires three ADC services to remain available: ((0.5 * 4) + 1).
+
+If you need to decommission a Storage Node but are unable to because of the ADC quorum requirement, add a new Storage Node in an expansion and specify that it should have an ADC service. Then, decommission the existing Storage Node. Review ILM policy and storage configuration
+
+If you plan to decommission a Storage Node, you should review your StorageGRID system’s ILM policy before starting the decommissioning process.
+
+During decommissioning, all object data is migrated from the decommissioned Storage Node to other Storage Nodes. In the first decommission procedure, you must ensure that four Storage Nodes with ADC services remain available: ((0.5 * 6) + 1). This means that you can only decommission two Storage Nodes initially.
+
+In the second decommission procedure, you can remove the third Storage Node because the ADC quorum now only requires three ADC services to remain available: ((0.5 * 4) + 1).

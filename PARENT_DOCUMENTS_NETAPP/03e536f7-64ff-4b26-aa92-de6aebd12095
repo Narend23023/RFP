@@ -1,0 +1,133 @@
+If the value of SSM Status is Error, select SUPPORT > Tools > Grid topology, then select site > grid node > SSM > Overview > Main and SSM > Overview > Alarms to determine the cause of the alarm.
+
+If the problem persists, contact technical support.
+
+If the value of SSM State is Standby, continue monitoring, and if the problem persists, contact technical support.
+
+If the value of SSM State is Offline, restart the service. If the problem persists, contact technical support.
+
+1161
+
+Code SSTS
+
+1162
+
+Name
+
+Storage Status
+
+Service
+
+BLDR An alarm indicates that there is a problem storing the grid task bundles. If the value of Status is Checkpoint Error or Quorum Not Reached, confirm that a majority of ADC services are connected to the StorageGRID system (50 percent plus one) and then wait a few minutes.
+
+If the problem persists, contact technical support. An alarm is triggered if SANtricity OS indicates that there is a "Needs attention" issue with a component in a StorageGRID appliance.
+
+Select NODES. Then select appliance Storage Node > Hardware. Scroll down to view the status of each component. In SANtricity OS, check other appliance components to isolate the issue.
+
+If the value of SSM Status is Error, select SUPPORT > Tools > Grid topology, then select site > grid node > SSM > Overview > Main and SSM > Overview > Alarms to determine the cause of the alarm.
+
+If the problem persists, contact technical support.
+
+If the value of SSM State is Standby, continue monitoring, and if the problem persists, contact technical support.
+
+If the value of SSM State is Offline, restart the service. If the problem persists, contact technical support.
+
+1161
+
+Code SSTS
+
+1162
+
+Name
+
+Storage Status
+
+Service
+
+BLDR
+
+Recommended action
+
+If the value of Storage Status is Insufficient Usable Space, there is no more available storage on the Storage Node and data ingests are redirected to other available Storage Node. Retrieval requests can continue to be delivered from this grid node.
+
+Additional storage should be added. It is not impacting end user functionality, but the alarm persists until additional storage is added.
+
+If the value of Storage Status is Volume(s) Unavailable, a part of the storage is unavailable. Storage and retrieval from these volumes is not possible. Check the volume’s Health for more information: Select SUPPORT > Tools > Grid topology. Then select site > grid node > LDR > Storage > Overview > Main. The volume’s Health is listed under Object Stores.
+
+If the value of Storage Status is Error, contact technical support. Troubleshoot the Storage Status (SSTS) alarm
+
+Code
+
+SVST
+
+TMEM
+
+TPOP
+
+UMEM
+
+Name
+
+Service
+
+Status
+
+SSM
+
+Installed Memory SSM
+
+Pending Operations
+
+ADC
+
+Available Memory SSM
+
+Recommended action
+
+This alarm clears when other alarms related to a non- running service are resolved. Track the source service alarms to restore operation.
+
+Select SUPPORT > Tools > Grid topology. Then select site > grid node > SSM > Services > Overview > Main. When the status of a service is shown as Not Running, its state is Administratively Down. The service’s status can be listed as Not Running for the following reasons:
+
+The service has been manually stopped (/etc/init.d/<service\> stop).
+
+There is an issue with the MySQL database and Server Manager shuts down the MI service.
+
+A grid node has been added, but not started.
+
+During installation, a grid node has not yet connected to the Admin Node.
+
+If a service is listed as Not Running, restart the service (/etc/init.d/<service\> restart).
+
+This alarm might also indicate that the metadata store (Cassandra database) for a Storage Node requires rebuilding.
+
+If the problem persists, contact technical support. Troubleshoot the Services: Status - Cassandra (SVST) alarm
+
+Nodes running with less than 24 GiB of installed memory can lead to performance problems and system instability. The amount of memory installed on the system should be increased to at least 24 GiB.
+
+A queue of messages can indicate that the ADC service is overloaded. Too few ADC services can be connected to the StorageGRID system. In a large deployment, the ADC service can require adding computational resources, or the system can require additional ADC services.
+
+If the available RAM gets low, determine whether this is a hardware or software issue. If it is not a hardware issue, or if available memory falls below 50 MB (the default alarm threshold), contact technical support.
+
+1163
+
+Code
+
+Name
+
+Service
+
+Recommended action VMFI
+
+Entries Available SSM
+
+This is an indication that additional storage is required. Contact technical support.
+
+VMFR
+
+Space Available SSM A grid node has been added, but not started.
+
+During installation, a grid node has not yet connected to the Admin Node.
+
+If a service is listed as Not Running, restart the service (/etc/init.d/<service\> restart).
+
+This alarm might also indicate that the metadata store (Cassandra database) for a Storage Node requires rebuilding.

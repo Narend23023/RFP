@@ -1,0 +1,65 @@
+Supported hashing and encryption algorithms for TLS libraries
+
+The StorageGRID system supports a set of cipher suites that client applications can use when establishing a TLS session. To configure ciphers, go to CONFIGURATION > Security > Security settings and select TLS and SSH policies. Supported versions of TLS
+
+StorageGRID supports TLS 1.2 and TLS 1.3.
+
+SSLv3 and TLS 1.1 (or earlier versions) are no longer supported.
+
+Use S3 setup wizard Use S3 setup wizard: Considerations and requirements
+
+You can use the S3 setup wizard to configure StorageGRID as the object storage system for an S3 application.
+
+476
+
+When to use the S3 setup wizard
+
+The S3 setup wizard guides you through each step of configuring StorageGRID for use with an S3 application. As part of completing the wizard, you download files that you can use to enter values into the S3 application. Use the wizard to configure your system more quickly and to make sure your settings conform to StorageGRID best practices.
+
+If you have the Root access permission, you can complete the S3 setup wizard when you start using the StorageGRID Grid Manager, or you can access and complete the wizard at any later time. Depending on your requirements, you can also configure some or all of the required items manually and then use the wizard to assemble the values that an S3 application needs.
+
+Before using the wizard Before using the wizard, confirm you have completed these prerequisites.
+
+Obtain IP addresses and set up VLAN interfaces
+
+If you will configure a high availability (HA) group, you know which nodes the S3 application will connect to and which StorageGRID network will be used. You also know which values to enter for the subnet CIDR, gateway IP address, and virtual IP (VIP) addresses. Use S3 setup wizard Use S3 setup wizard: Considerations and requirements
+
+You can use the S3 setup wizard to configure StorageGRID as the object storage system for an S3 application.
+
+476
+
+When to use the S3 setup wizard
+
+The S3 setup wizard guides you through each step of configuring StorageGRID for use with an S3 application. As part of completing the wizard, you download files that you can use to enter values into the S3 application. Use the wizard to configure your system more quickly and to make sure your settings conform to StorageGRID best practices.
+
+If you have the Root access permission, you can complete the S3 setup wizard when you start using the StorageGRID Grid Manager, or you can access and complete the wizard at any later time. Depending on your requirements, you can also configure some or all of the required items manually and then use the wizard to assemble the values that an S3 application needs.
+
+Before using the wizard Before using the wizard, confirm you have completed these prerequisites.
+
+Obtain IP addresses and set up VLAN interfaces
+
+If you will configure a high availability (HA) group, you know which nodes the S3 application will connect to and which StorageGRID network will be used. You also know which values to enter for the subnet CIDR, gateway IP address, and virtual IP (VIP) addresses.
+
+If you plan to use a virtual LAN to segregate the traffic from the S3 application, you have already configured the VLAN interface. See Configure VLAN interfaces. Configure identity federation and SSO
+
+If you plan to use identity federation or single sign-on (SSO) for your StorageGRID system, you have enabled these features. You also know which federated group should have root access for the tenant account that the S3 application will use. See Use identity federation and Configure single sign-on. Obtain and configure domain names
+
+You know which fully qualified domain name (FQDN) to use for StorageGRID. Domain name server (DNS) entries will map this FQDN to the virtual IP (VIP) addresses of the HA group that you create using the wizard.
+
+If you plan to use S3 virtual hosted-style requests, you should have configured S3 endpoint domain names. Using virtual hosted-style requests is recommended. Review load balancer and security certificate requirements
+
+If you plan to use the StorageGRID load balancer, you have reviewed the general considerations for load balancing. You have the certificates you will upload or the values you need to generate a certificate.
+
+If you plan to use an external (third-party) load balancer endpoint, you have the fully qualified domain name (FQDN), port, and certificate for that load balancer. Configure any grid federation connections
+
+If you want to allow the S3 tenant to clone account data and replicate bucket objects to another grid using a grid federation connection, confirm the following before starting the wizard:
+
+You have configured the grid federation connection.
+
+The status of the connection is Connected.
+
+You have Root access permission.
+
+477
+
+Access and complete the S3 setup wizard

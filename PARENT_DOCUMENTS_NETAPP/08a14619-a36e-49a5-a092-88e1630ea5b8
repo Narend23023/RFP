@@ -1,0 +1,59 @@
+You have created a grid federation connection between two grids.
+
+You have reviewed the workflows for account clone and cross-grid replication.
+
+As required, you have already configured single sign-on (SSO) or identify federation for both grids in the connection. See What is account clone.
+
+Create a permitted tenant
+
+If you want to allow a new or existing tenant account to use a grid federation connection for account clone and cross-grid replication, follow the general instructions to create a new S3 tenant or edit a tenant account and note the following:
+
+You can create the tenant from either grid in the connection. The grid where a tenant is created is the tenant’s source grid.
+
+The status of the connection must be Connected. When the tenant is created or edited to enable the Use grid federation connection permission and then saved on the first grid, an identical tenant is automatically replicated to the other grid. The grid where the tenant is replicated is the tenant’s destination grid.
+
+The tenants on both grids will have the same 20-digit account ID, name, description, quota, and permissions. Optionally, you can use the Description field to help identify which is the source tenant and which is the destination tenant. For example, this description for a tenant created on Grid 1 will also appear for the tenant replicated to Grid 2: "This tenant was created on Grid 1."
+
+For security reasons, the password for a local root user is not copied to the destination grid.
+
+Before a local root user can sign in to the replicated tenant on the destination grid, a grid administrator for that grid must change the password for the local root user. After the new or edited tenant is available on both grids, tenant users can perform these operations:
+
+From the tenant’s source grid, create groups and local users, which are automatically cloned to the tenant’s destination grid. See Clone tenant groups and users. You can create the tenant from either grid in the connection. The grid where a tenant is created is the tenant’s source grid.
+
+The status of the connection must be Connected. When the tenant is created or edited to enable the Use grid federation connection permission and then saved on the first grid, an identical tenant is automatically replicated to the other grid. The grid where the tenant is replicated is the tenant’s destination grid.
+
+The tenants on both grids will have the same 20-digit account ID, name, description, quota, and permissions. Optionally, you can use the Description field to help identify which is the source tenant and which is the destination tenant. For example, this description for a tenant created on Grid 1 will also appear for the tenant replicated to Grid 2: "This tenant was created on Grid 1."
+
+For security reasons, the password for a local root user is not copied to the destination grid.
+
+Before a local root user can sign in to the replicated tenant on the destination grid, a grid administrator for that grid must change the password for the local root user. After the new or edited tenant is available on both grids, tenant users can perform these operations:
+
+From the tenant’s source grid, create groups and local users, which are automatically cloned to the tenant’s destination grid. See Clone tenant groups and users.
+
+Create new S3 access keys, which can be optionally cloned to the tenant’s destination grid. See Clone S3 access keys using the API.
+
+Create identical buckets on both grids in the connection and enable cross-grid replication in one direction or in both directions. See Manage cross-grid replication.
+
+374
+
+View a permitted tenant
+
+You can see details for a tenant that is permitted to use a grid federation connection. Steps
+
+1. Select TENANTS.
+
+2. From the Tenants page, select the tenant name to view the tenant details page.
+
+If this is the source grid for the tenant (that is, if the tenant was created on this grid), a banner appears to remind you that the tenant was cloned to another grid. If you edit or delete this tenant, your changes will not be synced to the other grid.
+
+3. Optionally select the Grid federation tab to monitor the grid federation connection.
+
+Edit a permitted tenant
+
+If you need to edit a tenant that has the Use grid federation connection permission, follow the general instructions for editing a tenant account and note the following:
+
+If a tenant has the Use grid federation connection permission, you can edit tenant details from either grid in the connection. However, any changes you make will not be copied to the other grid. If you want to keep the tenant details synchronized between grids, you must make the same edits on both grids. 375
+
+• You can’t clear the Use grid federation connection permission when you are editing a tenant.
+
+You can’t select a different grid federation connection when you are editing a tenant. Delete a permitted tenant

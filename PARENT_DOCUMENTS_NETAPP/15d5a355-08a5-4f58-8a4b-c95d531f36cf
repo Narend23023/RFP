@@ -1,0 +1,225 @@
+Field
+
+Description
+
+BKHD
+
+Bucket UUID
+
+The bucket ID.
+
+BROV
+
+Bucket read-only request value
+
+Whether the bucket is being made read-only or is leaving the read-only state (1 = read-only, 0 = not-read-only).
+
+BROS
+
+Bucket read-only reason
+
+The reason the bucket is being made read-only or leaving the read-only state. For example, emptyBucket. S3AI
+
+S3 tenant account ID
+
+The ID of the tenant account that sent the request. An empty value indicates anonymous access.
+
+S3BK
+
+S3 bucket
+
+The S3 bucket name.
+
+CBRB: Object Receive Begin
+
+During normal system operations, content blocks are continuously transferred between different nodes as data is accessed, replicated and retained. When transfer of a content block from one node to another is initiated, this message is issued by the destination entity. Code
+
+Field
+
+Description
+
+CNID
+
+Connection Identifier
+
+The unique identifier of the node-to-node session/connection.
+
+CBID
+
+Content Block Identifier
+
+The unique identifier of the content block being transferred.
+
+CTDR
+
+Transfer Direction
+
+Indicates if the CBID transfer was push-initiated or pull-initiated:
+
+PUSH: The transfer operation was requested by the sending entity.
+
+PULL: The transfer operation was requested by the receiving entity.
+
+1345
+
+Code
+
+Field
+
+Description CTSR
+
+Source Entity
+
+The node ID of the source (sender) of the CBID transfer.
+
+CTDS
+
+Destination Entity
+
+The node ID of the destination (receiver) of the CBID transfer.
+
+CTSS
+
+Start Sequence Count
+
+Indicates the first sequence count requested. If successful, the transfer begins from this sequence count. CTES
+
+Expected End Sequence Count
+
+Indicates the last sequence count requested. If successful, the transfer is considered complete when this sequence count has been received.
+
+RSLT
+
+Transfer Start Status
+
+Status at the time the transfer was started:
+
+SUCS: Transfer started successfully.
+
+This audit message means a node-to-node data transfer operation was initiated on a single piece of content, as identified by its Content Block Identifier. The operation requests data from "Start Sequence Count" to "Expected End Sequence Count". Sending and receiving nodes are identified by their node IDs. This information can be used to track system data flow, and when combined with storage audit messages, to verify replica counts. CBRE: Object Receive End
+
+When transfer of a content block from one node to another is completed, this message is issued by the destination entity.
+
+Code
+
+Field
+
+Description
+
+CNID
+
+Connection Identifier
+
+The unique identifier of the node-to-node session/connection.
+
+CBID
+
+Content Block Identifier
+
+The unique identifier of the content block being transferred. CTDR
+
+Transfer Direction
+
+Indicates if the CBID transfer was push-initiated or pull-initiated:
+
+PUSH: The transfer operation was requested by the sending entity.
+
+PULL: The transfer operation was requested by the receiving entity.
+
+CTSR
+
+Source Entity
+
+The node ID of the source (sender) of the CBID transfer. CTDS
+
+Destination Entity
+
+The node ID of the destination (receiver) of the CBID transfer.
+
+CTSS
+
+Start Sequence Count
+
+Indicates the sequence count on which the transfer started.
+
+1346
+
+Code
+
+Field
+
+Description
+
+CTAS
+
+Actual End Sequence Count
+
+Indicates the last sequence count successfully transferred. If the Actual End Sequence Count is the same as the Start Sequence Count, and the Transfer Result was not successful, no data was exchanged. RSLT
+
+Transfer Result
+
+The result of the transfer operation (from the perspective of the sending entity):
+
+SUCS: transfer successfully completed; all requested sequence counts were sent.
+
+CONL: connection lost during transfer
+
+CTMO: connection timed-out during establishment or transfer
+
+UNRE: destination node ID unreachable CBID
+
+Content Block Identifier
+
+The unique identifier of the content block being transferred. CTDR
+
+Transfer Direction
+
+Indicates if the CBID transfer was push-initiated or pull-initiated:
+
+PUSH: The transfer operation was requested by the sending entity.
+
+PULL: The transfer operation was requested by the receiving entity.
+
+CTSR
+
+Source Entity
+
+The node ID of the source (sender) of the CBID transfer. CTDS
+
+Destination Entity
+
+The node ID of the destination (receiver) of the CBID transfer.
+
+CTSS
+
+Start Sequence Count
+
+Indicates the sequence count on which the transfer started.
+
+1346
+
+Code
+
+Field
+
+Description
+
+CTAS
+
+Actual End Sequence Count
+
+Indicates the last sequence count successfully transferred. If the Actual End Sequence Count is the same as the Start Sequence Count, and the Transfer Result was not successful, no data was exchanged. RSLT
+
+Transfer Result
+
+The result of the transfer operation (from the perspective of the sending entity):
+
+SUCS: transfer successfully completed; all requested sequence counts were sent.
+
+CONL: connection lost during transfer
+
+CTMO: connection timed-out during establishment or transfer
+
+UNRE: destination node ID unreachable
+
+CRPT: transfer ended due to reception of corrupt or invalid data

@@ -1,0 +1,91 @@
+c. Select the Overview tab.
+
+d. In the Node Information section, note the IP addresses for the node.
+
+e. Select Show more to view IPv6 addresses and interface mappings.
+
+You can establish connections from client applications to any of the IP addresses in the list:
+
+▪ eth0: Grid Network ▪ eth1: Admin Network (optional) ▪ eth2: Client Network (optional)
+
+If you are viewing an Admin Node or a Gateway Node and it is the active node in a high availability group, the virtual IP address of the HA group is shown on eth2.
+
+3. To find the virtual IP address of a high availability group: a. Select CONFIGURATION > Network > High availability groups.
+
+b. In the table, note the virtual IP address of the HA group.
+
+4. To find the port number of a Load Balancer endpoint:
+
+a. Select CONFIGURATION > Network > Load balancer endpoints.
+
+b. Note the port number for the endpoint you want to use.
+
+If the port number is 80 or 443, the endpoint is configured only on Gateway Nodes, because those ports are reserved on Admin Nodes. All other ports are configured on both Gateway Nodes and Admin Nodes. c. Select the name of the endpoint from the table.
+
+d. Confirm that the Client type (S3 or Swift) matches the client application that will use the endpoint.
+
+512
+
+Manage networks and connections
+
+Configure network settings: Overview
+
+You can configure various network settings from the Grid Manager to fine tune the operation of your StorageGRID system. Configure VLAN interfaces ▪ eth0: Grid Network ▪ eth1: Admin Network (optional) ▪ eth2: Client Network (optional)
+
+If you are viewing an Admin Node or a Gateway Node and it is the active node in a high availability group, the virtual IP address of the HA group is shown on eth2.
+
+3. To find the virtual IP address of a high availability group: a. Select CONFIGURATION > Network > High availability groups.
+
+b. In the table, note the virtual IP address of the HA group.
+
+4. To find the port number of a Load Balancer endpoint:
+
+a. Select CONFIGURATION > Network > Load balancer endpoints.
+
+b. Note the port number for the endpoint you want to use.
+
+If the port number is 80 or 443, the endpoint is configured only on Gateway Nodes, because those ports are reserved on Admin Nodes. All other ports are configured on both Gateway Nodes and Admin Nodes. c. Select the name of the endpoint from the table.
+
+d. Confirm that the Client type (S3 or Swift) matches the client application that will use the endpoint.
+
+512
+
+Manage networks and connections
+
+Configure network settings: Overview
+
+You can configure various network settings from the Grid Manager to fine tune the operation of your StorageGRID system. Configure VLAN interfaces
+
+You can create virtual LAN (VLAN) interfaces to isolate and partition traffic for security, flexibility, and performance. Each VLAN interface is associated with one or more parent interfaces on Admin Nodes and Gateway Nodes. You can use VLAN interfaces in HA groups and in load balancer endpoints to segregate client or admin traffic by application or tenant. Traffic classification policies
+
+You can use traffic classification policies to identify and handle different types of network traffic, including traffic related to specific buckets, tenants, client subnets, or load balancer endpoints. These policies can assist with traffic limiting and monitoring.
+
+Guidelines for StorageGRID networks
+
+You can use the Grid Manager to configure and manage StorageGRID networks and connections.
+
+See Configure S3 and Swift client connections to learn how to connect S3 or Swift clients. Default StorageGRID networks
+
+By default, StorageGRID supports three network interfaces per grid node, allowing you to configure the networking for each individual grid node to match your security and access requirements.
+
+For more information about network topology, see Networking guidelines.
+
+Grid Network
+
+Required. The Grid Network is used for all internal StorageGRID traffic. It provides connectivity between all nodes in the grid, across all sites and subnets. Admin Network
+
+Optional. The Admin Network is typically used for system administration and maintenance. It can also be used for client protocol access. The Admin Network is typically a private network and does not need to be routable between sites.
+
+Client Network
+
+Optional. The Client Network is an open network typically used to provide access to S3 and Swift client applications, so the Grid Network can be isolated and secured. The Client Network can communicate with any subnet reachable through the local gateway.
+
+513
+
+Guidelines
+
+Each StorageGRID node requires a dedicated network interface, IP address, subnet mask, and gateway for each network it is assigned to.
+
+A grid node can’t have more than one interface on a network.
+
+A single gateway, per network, per grid node is supported, and it must be on the same subnet as the node. You can implement more complex routing in the gateway, if required.

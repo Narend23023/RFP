@@ -1,0 +1,45 @@
+More efficient grid operation: Each object is processed only once, as it is ingested. Because the StorageGRID system does not need to track or delete interim copies, there is less processing load and less
+
+600
+
+database space is consumed.
+
+(Balanced) Recommended: The Balanced option provides optimal ILM efficiency. Using the Balanced option is recommended unless Strict ingest behavior is required or the grid meets all of the criteria for using Dual commit. (Strict) Certainty about object locations: The Strict option guarantees that objects are immediately stored according to the placement instructions in the ILM rule.
+
+Disadvantages of the Balanced and Strict options
+
+When compared to Dual commit, the Balanced and Strict options have some disadvantages:
+
+Longer client ingests: Client ingest latencies might be longer. When you use the Balanced or Strict options, an "ingest successful" message is not returned to the client until all erasure-coded fragments or replicated copies are created and stored. However, object data will most likely reach its final placement much faster.
+
+(Strict) Higher rates of ingest failure: With the Strict option, ingest fails whenever StorageGRID can’t immediately make all copies specified in the ILM rule. You might see high rates of ingest failure if a required storage location is temporarily offline or if network issues cause delays in copying objects between sites. (Strict) S3 multipart upload placements might not be as expected in some circumstances: With Strict, you expect objects either to be placed as described by the ILM rule or for ingest to fail. However, with an S3 multipart upload, ILM is evaluated for each part of the object as it is ingested, and for the object as a whole when the multipart upload completes. In the following circumstances this might result in placements that are different than you expect:
+
+If ILM changes while an S3 multipart upload is in progress: Because each part is placed according to the rule that is active when the part is ingested, some parts of the object might not meet current ILM requirements when the multipart upload completes. In these cases, ingest of the object does not fail. Instead, any part that is not placed correctly is queued for ILM re-evaluation and is moved to the correct location later. When ILM rules filter on size: When evaluating ILM for a part, StorageGRID filters on the size of the part, not the size of the object. This means that parts of an object can be stored in locations that don’t meet ILM requirements for the object as a whole. For example, if a rule specifies that all objects 10 GB or larger are stored at DC1 while all smaller objects are stored at DC2, at ingest each 1 GB part of a 10-part multipart upload is stored at DC2. When ILM is evaluated for the object, all parts of the object are moved to DC1. (Strict) Ingest does not fail when object tags or metadata are updated and newly required placements cannot be made: With Strict, you expect objects either to be placed as described by the ILM rule or for ingest to fail. However, when you update metadata or tags for an object that is already stored in the grid, the object is not re-ingested. This means that any changes to object placement that are triggered by the update aren’t made immediately. Placement changes are made when ILM is re-evaluated by normal background ILM processes. If required placement changes can’t be made (for example, because a newly required location is unavailable), the updated object retains its current placement until the placement changes are possible. Limitations on object placements with the Balanced and Strict options
+
+The Balanced or Strict options can’t be used for ILM rules that have any of these placement instructions:
+
+Placement in a Cloud Storage Pool at day 0.
+
+Placement in an Archive Node at day 0.
+
+601
+
+• Placements in a Cloud Storage Pool or an Archive Node when the rule has a User defined creation time as its Reference time.
+
+These restrictions exist because StorageGRID can’t synchronously make copies to a Cloud Storage Pool or an Archive Node, and a User defined creation time could resolve to the present.
+
+How ILM rules and consistency interact to affect data protection The Balanced or Strict options can’t be used for ILM rules that have any of these placement instructions:
+
+Placement in a Cloud Storage Pool at day 0.
+
+Placement in an Archive Node at day 0.
+
+601
+
+• Placements in a Cloud Storage Pool or an Archive Node when the rule has a User defined creation time as its Reference time.
+
+These restrictions exist because StorageGRID can’t synchronously make copies to a Cloud Storage Pool or an Archive Node, and a User defined creation time could resolve to the present.
+
+How ILM rules and consistency interact to affect data protection
+
+Both your ILM rule and your choice of consistency affect how objects are protected. These settings can interact.

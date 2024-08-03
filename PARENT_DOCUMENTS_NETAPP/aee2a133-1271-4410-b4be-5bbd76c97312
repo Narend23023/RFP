@@ -1,0 +1,85 @@
+A full scan does not guarantee that ILM has been applied to all objects.
+
+Repairs attempted: The total number of object repair operations for replicated data that have been attempted. This count increments each time a Storage Node tries to repair a high-risk object. High-risk ILM repairs are prioritized if the grid becomes busy.
+
+The same object repair might increment again if replication failed after the repair.
+
+These attributes can be useful when you are monitoring the progress of Storage Node volume recovery. If the number of Repairs attempted has stopped increasing and a full scan has been completed, the repair has probably completed. Monitor networking and system resources
+
+The integrity and bandwidth of the network between nodes and sites, and the resource usage by individual grid nodes, are critical to efficient operations. Monitor network connections and performance
+
+Network connectivity and bandwidth are especially important if your information lifecycle management (ILM) policy copies replicated objects between sites or stores erasure-coded objects using a scheme that provides site-loss protection. If the network between sites is not available, network latency is too high, or network bandwidth is insufficient, some ILM rules might not be able to place objects where expected. This can lead to ingest failures (when the Strict ingest option is selected for ILM rules), or to poor ingest performance and ILM backlogs.
+
+Use the Grid Manager to monitor connectivity and network performance, so you can address any issues promptly.
+
+Additionally, consider creating network traffic classification policies so that you can monitor traffic related to specific tenants, buckets, subnets, or load balancer endpoints. You can set traffic limiting policies as needed. Steps
+
+1. Select NODES.
+
+The Nodes page appears. Each node in the grid is listed in table format.
+
+1064
+
+2. Select the grid name, a specific data center site, or a grid node, and then select the Network tab.
+
+The Network Traffic graph provides a summary of overall network traffic for the grid as a whole, the data center site, or for the node.
+
+a. If you selected a grid node, scroll down to review the Network Interfaces section of the page.
+
+b. For grid nodes, scroll down to review the Network Communication section of the page.
+
+The Receive and Transmit tables show how many bytes and packets have been received and sent across each network as well as other receive and transmission metrics.
+
+1065
+
+3. Use the metrics associated with your traffic classification policies to monitor network traffic. a. Select CONFIGURATION > Network > Traffic classification.
+
+The Traffic Classification Policies page appears, and the existing policies are listed in the table.
+
+b. To view graphs that show the networking metrics associated with a policy, select the radio button to the
+
+left of the policy, and then click Metrics.
+
+c. Review the graphs to understand the network traffic associated with the policy.
+
+If a traffic classification policy is designed to limit network traffic, analyze how often traffic is limited and decide if the policy continues to meet your needs. From time to time, adjust each traffic classification policy as needed. 1064
+
+2. Select the grid name, a specific data center site, or a grid node, and then select the Network tab.
+
+The Network Traffic graph provides a summary of overall network traffic for the grid as a whole, the data center site, or for the node.
+
+a. If you selected a grid node, scroll down to review the Network Interfaces section of the page.
+
+b. For grid nodes, scroll down to review the Network Communication section of the page.
+
+The Receive and Transmit tables show how many bytes and packets have been received and sent across each network as well as other receive and transmission metrics.
+
+1065
+
+3. Use the metrics associated with your traffic classification policies to monitor network traffic. a. Select CONFIGURATION > Network > Traffic classification.
+
+The Traffic Classification Policies page appears, and the existing policies are listed in the table.
+
+b. To view graphs that show the networking metrics associated with a policy, select the radio button to the
+
+left of the policy, and then click Metrics.
+
+c. Review the graphs to understand the network traffic associated with the policy.
+
+If a traffic classification policy is designed to limit network traffic, analyze how often traffic is limited and decide if the policy continues to meet your needs. From time to time, adjust each traffic classification policy as needed.
+
+Related information View the Network tab
+
+Monitor node connection states
+
+Monitor node-level resources
+
+Monitor individual grid nodes to check their resource usage levels. If nodes are consistently overloaded, more nodes might be required for efficient operations.
+
+Steps
+
+1. From the NODES page, select the node.
+
+1066
+
+2. Select the Hardware tab to display graphs of CPU Utilization and Memory Usage.

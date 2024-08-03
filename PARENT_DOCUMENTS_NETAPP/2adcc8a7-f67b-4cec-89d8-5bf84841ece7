@@ -1,0 +1,121 @@
+2. To deploy the new hosts, follow the instructions for preparing the hosts.
+
+3. To create node configuration files and to validate the StorageGRID configuration, follow the instructions for deploying grid nodes.
+
+4. If you are adding nodes to a new Linux host, start the StorageGRID host service.
+
+5. If you are adding nodes to an existing Linux host, start the new nodes using the storagegrid host service CLI:sudo storagegrid node start [<node name\>]
+
+After you finish
+
+After deploying all new grid nodes, you can perform the expansion. Appliances: Deploying Storage, Gateway, or non-primary Admin Nodes
+
+To install the StorageGRID software on an appliance node, you use the StorageGRID Appliance Installer, which is included on the appliance. In an expansion, each storage appliance functions as a single Storage Node, and each services appliance functions as a single Gateway Node or non-primary Admin Node. Any appliance can connect to the Grid Network, the Admin Network, and the Client Network.
+
+Before you begin
+
+The appliance has been installed in a rack or cabinet, connected to your networks, and powered on.
+
+You have completed the Set up hardware steps.
+
+Setting up appliance hardware includes the required steps for configuring StorageGRID connections (network links and IP addresses) as well the optional steps for enabling node encryption, changing the RAID mode, and remapping network ports. All Grid Network subnets listed on the IP Configuration page of the StorageGRID Appliance Installer have been defined in the Grid Network Subnet List on the primary Admin Node.
+
+1412
+
+• The StorageGRID Appliance Installer firmware on the replacement appliance is compatible with the
+
+StorageGRID software version currently running on your grid. If the versions aren’t compatible, you must upgrade the StorageGRID Appliance Installer firmware.
+
+You have a service laptop with a supported web browser.
+
+You know one of the IP addresses assigned to the appliance’s compute controller. You can use the IP address for any attached StorageGRID network. About this task
+
+The process of installing StorageGRID on an appliance node has the following phases:
+
+You specify or confirm the IP address of the primary Admin Node and the name of the appliance node.
+
+You start the installation and wait as volumes are configured and the software is installed.
+
+Partway through appliance installation tasks, the installation pauses. To resume the installation, you sign into the Grid Manager, approve all grid nodes, and complete the StorageGRID installation process.
+
+If you need to deploy multiple appliance nodes at one time, you can automate the installation process by using the configure-sga.py Appliance Installation Script. Steps
+
+1. Open a browser, and enter one of the IP addresses for the appliance’s compute controller.
+
+https://Controller_IP:8443
+
+The StorageGRID Appliance Installer Home page appears.
+
+2. In the Primary Admin Node connection section, determine whether you need to specify the IP address for the primary Admin Node.
+
+If you have previously installed other nodes in this data center, the StorageGRID Appliance Installer can discover this IP address automatically, assuming the primary Admin Node, or at least one other grid node with ADMIN_IP configured, is present on the same subnet.
+
+3. If this IP address is not shown or you need to change it, specify the address: Option
+
+Description
+
+Manual IP entry
+
+a. Clear the Enable Admin Node discovery checkbox.
+
+b. Enter the IP address manually.
+
+c. Click Save.
+
+d. Wait for the connection state for the new IP address to become
+
+ready.
+
+1413
+
+Option
+
+Description
+
+Automatic discovery of all connected primary Admin Nodes
+
+a. Select the Enable Admin Node discovery checkbox.
+
+b. Wait for the list of discovered IP addresses to be displayed. c. Select the primary Admin Node for the grid where this appliance
+
+Storage Node will be deployed.
+
+d. Click Save.
+
+e. Wait for the connection state for the new IP address to become ready.
+
+4. In the Node name field, enter the name you want to use for this appliance node, and select Save.
+
+The node name is assigned to this appliance node in the StorageGRID system. It is shown on the Nodes page (Overview tab) in the Grid Manager. If required, you can change the name when you approve the node. 3. If this IP address is not shown or you need to change it, specify the address: Option
+
+Description
+
+Manual IP entry
+
+a. Clear the Enable Admin Node discovery checkbox.
+
+b. Enter the IP address manually.
+
+c. Click Save.
+
+d. Wait for the connection state for the new IP address to become
+
+ready.
+
+1413
+
+Option
+
+Description
+
+Automatic discovery of all connected primary Admin Nodes
+
+a. Select the Enable Admin Node discovery checkbox.
+
+b. Wait for the list of discovered IP addresses to be displayed. c. Select the primary Admin Node for the grid where this appliance
+
+Storage Node will be deployed.
+
+d. Click Save.
+
+e. Wait for the connection state for the new IP address to become ready.

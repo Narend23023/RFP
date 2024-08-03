@@ -1,0 +1,149 @@
+Type: Directory (LDAP)
+
+LDAP Type: Active Directory
+
+Binary Attribute Name: Enter objectGUID on the LDAP Binary Attributes tab exactly as shown. Create password credential validator
+
+If you haven’t already, create a password credential validator.
+
+Type: LDAP Username Password Credential Validator
+
+Data store: Select the data store you created.
+
+Search base: Enter information from LDAP (for example, DC=saml,DC=sgws).
+
+Search filter: sAMAccountName=${username}
+
+Scope: Subtree Create IdP adapter instance 346
+
+Refer to the PingFederate Server documentation for detailed instructions for your release. Complete prerequisites in PingFederate
+
+Before you can create the SP connections you will use for StorageGRID, you must complete prerequisite tasks in PingFederate. You will use information from these prerequisites when you configure the SP connections.
+
+Create data store
+
+If you haven’t already, create a data store to connect PingFederate to the AD FS LDAP server. Use the values you used when configuring identity federation in StorageGRID.
+
+Type: Directory (LDAP)
+
+LDAP Type: Active Directory
+
+Binary Attribute Name: Enter objectGUID on the LDAP Binary Attributes tab exactly as shown. Create password credential validator
+
+If you haven’t already, create a password credential validator.
+
+Type: LDAP Username Password Credential Validator
+
+Data store: Select the data store you created.
+
+Search base: Enter information from LDAP (for example, DC=saml,DC=sgws).
+
+Search filter: sAMAccountName=${username}
+
+Scope: Subtree Create IdP adapter instance
+
+If you haven’t already, create an IdP adapter instance.
+
+Steps
+
+1. Go to Authentication > Integration > IdP Adapters.
+
+2. Select Create New Instance.
+
+3. On the Type tab, select HTML Form IdP Adapter.
+
+4. On the IdP Adapter tab, select Add a new row to 'Credential Validators'.
+
+5. Select the password credential validator you created.
+
+6. On the Adapter Attributes tab, select the username attribute for Pseudonym.
+
+7. Select Save. Create or import signing certificate
+
+If you haven’t already, create or import the signing certificate.
+
+Steps
+
+1. Go to Security > Signing & Decryption Keys & Certificates.
+
+2. Create or import the signing certificate.
+
+347
+
+Create an SP connection in PingFederate
+
+When you create an SP connection in PingFederate, you import the SAML metadata you downloaded from StorageGRID for the Admin Node. The metadata file contains many of the specific values you need.
+
+You must create an SP connection for each Admin Node in your StorageGRID system, so that users can securely sign in to and out of any node. Use these instructions to create the first SP connection. Then, go to Create additional SP connections to create any additional connections you need. Choose SP connection type
+
+Steps
+
+1. Go to Applications > Integration > SP Connections.
+
+2. Select Create Connection.
+
+3. Select Do not use a template for this connection.
+
+4. Select Browser SSO Profiles and SAML 2.0 as the protocol.
+
+Import SP metadata
+
+Steps
+
+1. On the Import Metadata tab, select File.
+
+2. Choose the SAML metadata file you downloaded from the StorageGRID Single sign-on page for the Admin Node.
+
+3. Review the Metadata Summary and the information provided on the General Info tab.
+
+The Partner’s Entity ID and the Connection Name are set to the StorageGRID SP connection ID. (for example, 10.96.105.200-DC1-ADM1-105-200). The Base URL is the IP of the StorageGRID Admin Node.
+
+4. Select Next. Configure IdP Browser SSO
+
+Steps
+
+1. From the Browser SSO tab, select Configure Browser SSO.
+
+2. On the SAML profiles tab, select the SP-initiated SSO, SP-initial SLO, IdP-initiated SSO, and IdP- initiated SLO options.
+
+3. Select Next.
+
+4. On the Assertion Lifetime tab, make no changes.
+
+5. On the Assertion Creation tab, select Configure Assertion Creation. a. On the Identity Mapping tab, select Standard.
+
+b. On the Attribute Contract tab, use the SAML_SUBJECT as the Attribute Contract and the unspecified
+
+name format that was imported.
+
+6. For Extend the Contract, select Delete to remove the urn:oid, which is not used.
+
+348
+
+Map adapter instance Steps
+
+1. On the Authentication Source Mapping tab, select Map New Adapter Instance.
+
+2. On the Adapter instance tab, select the adapter instance you created. 4. Select Next. Configure IdP Browser SSO
+
+Steps
+
+1. From the Browser SSO tab, select Configure Browser SSO.
+
+2. On the SAML profiles tab, select the SP-initiated SSO, SP-initial SLO, IdP-initiated SSO, and IdP- initiated SLO options.
+
+3. Select Next.
+
+4. On the Assertion Lifetime tab, make no changes.
+
+5. On the Assertion Creation tab, select Configure Assertion Creation. a. On the Identity Mapping tab, select Standard.
+
+b. On the Attribute Contract tab, use the SAML_SUBJECT as the Attribute Contract and the unspecified
+
+name format that was imported.
+
+6. For Extend the Contract, select Delete to remove the urn:oid, which is not used.
+
+348
+
+Map adapter instance Steps

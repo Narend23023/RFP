@@ -1,0 +1,49 @@
+Time required to delete objects Automatic object deletion has been triggered by one of the following events:
+
+The expiration date or number of days in the lifecycle configuration for an S3 bucket is reached.
+
+The last time period specified in an ILM rule elapses.
+
+Note: Objects in a bucket that has S3 Object Lock enabled can’t be deleted if they are under a legal hold or if a retain-until-date has been specified but not yet met.
+
+An S3 or Swift client requests deletion and one or more of these conditions is true:
+
+Copies can’t be deleted within 30 seconds because, for example, an object location is temporarily unavailable.
+
+Background deletion queues are idle. 614
+
+Method of performing deletion
+
+When used
+
+Objects are removed immediately (synchronous deletion)
+
+When an S3 or Swift client makes a delete request and all of the following conditions are met:
+
+All copies can be removed within 30 seconds.
+
+Background deletion queues contain objects to process.
+
+When S3 or Swift clients make delete requests, StorageGRID begins by adding objects to the delete queue. It then switches to performing synchronous deletion. Making sure that the background deletion queue has objects to process allows StorageGRID to process deletes more efficiently, especially for low concurrency clients, while helping to prevent client delete backlogs.
+
+Time required to delete objects
+
+The way that StorageGRID deletes objects can affect how the system appears to perform: When StorageGRID performs synchronous deletion, it can take StorageGRID up to 30 seconds to return a result to the client. This means that deletion can appear to be happening more slowly, even though copies are actually being removed more quickly than they are when StorageGRID queues objects for deletion.
+
+If you are closely monitoring delete performance during a bulk delete, you might notice that the deletion rate appears to be slow after a certain number of objects have been deleted. This change occurs when StorageGRID shifts from queuing objects for deletion to performing synchronous deletion. The apparent reduction in the deletion rate does not mean that object copies are being removed more slowly. On the contrary, it indicates that on average, space is now being freed more quickly. If you are deleting large numbers of objects and your priority is to free space quickly, consider using a client request to delete objects rather than deleting them using ILM or other methods. In general, space is freed more quickly when deletion is performed by clients because StorageGRID can use synchronous deletion.
+
+The amount of time required to free space after an object is deleted depends on several factors:
+
+Whether object copies are synchronously removed or are queued for removal later (for client delete requests).
+
+Other factors such as the number of objects in the grid or the availability of grid resources when object copies are queued for removal (for both client deletes and other methods).
+
+How S3 versioned objects are deleted
+
+When versioning is enabled for an S3 bucket, StorageGRID follows Amazon S3 behavior when responding to delete requests, whether those requests come from an S3 client, the expiration of an S3 bucket lifecycle, or the requirements of the ILM policy. When objects are versioned, object delete requests don’t delete the current version of the object and don’t free space. Instead, an object delete request creates a zero-byte delete marker as the current version of the object, which makes the previous version of the object "noncurrent." An object delete marker becomes an expired object delete marker when it is the current version and there are no noncurrent versions.
+
+Even though the object has not been removed, StorageGRID behaves as though the current version of the object is no longer available. Requests to that object return 404 NotFound. However, because noncurrent object data has not been removed, requests that specify a noncurrent version of the object can succeed.
+
+615
+
+To free space when deleting versioned objects, or to remove delete markers, use one of the following: S3 client request: Specify the object version ID in the S3 DELETE Object request (DELETE /object?versionId=ID). Keep in mind that this request only removes object copies for the specified version (the other versions are still taking up space). How S3 versioned objects are deleted

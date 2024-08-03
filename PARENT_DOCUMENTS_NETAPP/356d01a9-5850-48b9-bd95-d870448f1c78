@@ -1,0 +1,109 @@
+The source object version was not found.
+
+The source bucket was not found.
+
+The destination bucket was deleted.
+
+The destination bucket was re-created by a different account.
+
+The destination bucket has versioning suspended.
+
+The destination bucket was re-created by the same account but is now unversioned.
+
+Recommended actions
+
+If an error message appears in the Last error column, follow these steps:
+
+1. Review the message text.
+
+2. Perform any recommended actions. For example, if versioning was suspended on the destination bucket for cross-grid replication, reenable versioning for that bucket. 3. Select the connection or tenant account from the table.
+
+4. Select Clear error.
+
+5. Select Yes to clear the message and update the system’s status.
+
+382
+
+6. Wait 5-6 minutes and then ingest a new object into the bucket. Confirm that the error message does not
+
+reappear.
+
+To ensure the error message is cleared, wait at least 5 minutes after the timestamp in the message before ingesting a new object.
+
+After you clear the error, a new Last error might appear if objects are ingested in a different bucket that also has an error.
+
+7. To determine if any objects failed to be replicated because of the bucket error, see Identify and retry failed replication operations. Cross-grid replication permanent failure alert
+
+Issue
+
+The Cross-grid replication permanent failure alert was triggered.
+
+Details
+
+This alert indicates that tenant objects can’t be replicated between the buckets on two grids for a reason that requires user intervention to resolve. This alert is typically caused by a change to either the source or the destination bucket.
+
+Recommended actions
+
+1. Sign in to the grid where the alert was triggered.
+
+2. Go to CONFIGURATION > System > Grid federation, and locate the connection name listed in the alert.
+
+3. On the Permitted tenants tab, look at the Last error column to determine which tenant accounts have errors.
+
+4. To learn more about the failure, see the instructions in Monitor grid federation connections to review the cross-grid replication metrics.
+
+5. For each affected tenant account:
+
+a. See the instructions in Monitor tenant activity to confirm that the tenant has not exceeded its quota on the destination grid for cross-grid replication.
+
+b. As required, increase the tenant’s quota on the destination grid to allow new objects to be saved.
+
+6. For each affected tenant, sign in to Tenant Manager on both grids, so you can compare the list of buckets.
+
+7. For each bucket that has cross-grid replication enabled, confirm the following: Issue
+
+The Cross-grid replication permanent failure alert was triggered.
+
+Details
+
+This alert indicates that tenant objects can’t be replicated between the buckets on two grids for a reason that requires user intervention to resolve. This alert is typically caused by a change to either the source or the destination bucket.
+
+Recommended actions
+
+1. Sign in to the grid where the alert was triggered.
+
+2. Go to CONFIGURATION > System > Grid federation, and locate the connection name listed in the alert.
+
+3. On the Permitted tenants tab, look at the Last error column to determine which tenant accounts have errors.
+
+4. To learn more about the failure, see the instructions in Monitor grid federation connections to review the cross-grid replication metrics.
+
+5. For each affected tenant account:
+
+a. See the instructions in Monitor tenant activity to confirm that the tenant has not exceeded its quota on the destination grid for cross-grid replication.
+
+b. As required, increase the tenant’s quota on the destination grid to allow new objects to be saved.
+
+6. For each affected tenant, sign in to Tenant Manager on both grids, so you can compare the list of buckets.
+
+7. For each bucket that has cross-grid replication enabled, confirm the following:
+
+There is a corresponding bucket for the same tenant on the other grid (must use the exact name). ◦ Both buckets have object versioning enabled (versioning can’t be suspended on either grid). ◦ Both buckets have S3 Object Lock disabled. ◦ Neither bucket is in the Deleting objects: read-only state.
+
+8. To confirm that the issue was resolved, see the instructions in Monitor grid federation connections to review the cross-grid replication metrics, or perform these steps:
+
+a. Go back to the Grid federation page.
+
+b. Select the affected tenant, and select Clear Error in the Last error column. c. Select Yes to clear the message and update the system’s status.
+
+383
+
+d. Wait 5-6 minutes and then ingest a new object into the bucket. Confirm that the error message does
+
+not reappear.
+
+To ensure the error message is cleared, wait at least 5 minutes after the timestamp in the message before ingesting a new object.
+
+It might take up to a day for the alert to clear after it is resolved.
+
+e. Go to Identify and retry failed replication operations to identify any objects or delete markers that failed

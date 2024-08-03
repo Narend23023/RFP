@@ -1,0 +1,43 @@
+>Admin: # grep OLST audit.log 2020-02-12T19:18:54.780426 [AUDT:[CBID(UI64):0x38186FE53E3C49A5][UUID(CSTR):926026C4-00A4-449B- AC72-BCCA72DD1311] [PATH(CSTR):"source/cats"][NOID(UI32):12288733][VOLI(UI64):3222345986 ][RSLT(FC32):NONE][AVER(UI32):10] [ATIM(UI64):1581535134780426][ATYP(FC32):OLST][ANID(UI32):12448208][A MID(FC32):ILMX][ATID(UI64):7729403978647354233]] 5. Use the ObjectByUUID command to find the object by its identifier (UUID), and then determine if data is at risk.
+
+a. Telnet to localhost 1402 to access the LDR console.
+
+b. Enter: /proc/OBRP/ObjectByUUID UUID_value
+
+In this first example, the object with UUID 926026C4-00A4-449B-AC72-BCCA72DD1311 has two locations listed. 1262
+
+>Admin: # grep OLST audit.log 2020-02-12T19:18:54.780426 [AUDT:[CBID(UI64):0x38186FE53E3C49A5][UUID(CSTR):926026C4-00A4-449B- AC72-BCCA72DD1311] [PATH(CSTR):"source/cats"][NOID(UI32):12288733][VOLI(UI64):3222345986 ][RSLT(FC32):NONE][AVER(UI32):10] [ATIM(UI64):1581535134780426][ATYP(FC32):OLST][ANID(UI32):12448208][A MID(FC32):ILMX][ATID(UI64):7729403978647354233]] 5. Use the ObjectByUUID command to find the object by its identifier (UUID), and then determine if data is at risk.
+
+a. Telnet to localhost 1402 to access the LDR console.
+
+b. Enter: /proc/OBRP/ObjectByUUID UUID_value
+
+In this first example, the object with UUID 926026C4-00A4-449B-AC72-BCCA72DD1311 has two locations listed.
+
+ade 12448208: /proc/OBRP > ObjectByUUID 926026C4-00A4-449B-AC72- BCCA72DD1311 { "TYPE(Object Type)": "Data object", "CHND(Content handle)": "926026C4-00A4-449B-AC72-BCCA72DD1311", "NAME": "cats", "CBID": "0x38186FE53E3C49A5", "PHND(Parent handle, UUID)": "221CABD0-4D9D-11EA-89C3- ACBB00BB82DD", "PPTH(Parent path)": "source", "META": { "BASE(Protocol metadata)": { "PAWS(S3 protocol version)": "2", "ACCT(S3 account ID)": "44084621669730638018", "*ctp(HTTP content MIME type)": "binary/octet-stream" }, "BYCB(System metadata)": { "CSIZ(Plaintext object size)": "5242880", "SHSH(Supplementary Plaintext hash)": "MD5D 0xBAC2A2617C1DFF7E959A76731E6EAF5E", "BSIZ(Content block size)": "5252084", "CVER(Content block version)": "196612", "CTME(Object store begin timestamp)": "2020-02- 12T19:16:10.983000", "MTME(Object store modified timestamp)": "2020-02- 12T19:16:10.983000",
+
+1263
+
+1264 "ITME": "1581534970983000" }, "CMSM": { "LATM(Object last access time)": "2020-02- 12T19:16:10.983000" }, "AWS3": { "LOCC": "us-east-1" } }, "CLCO\(Locations\)": \[ \{ "Location Type": "CLDI\(Location online\)", "NOID\(Node ID\)": "12448208", "VOLI\(Volume ID\)": "3222345473", "Object File Path": "/var/local/rangedb/1/p/17/11/00rH0%DkRt78Ila\#3udu", "LTIM\(Location timestamp\)": "2020-02- 12T19:36:17.880569" \}, \{ "Location Type": "CLDI\(Location online\)", "NOID\(Node ID\)": "12288733", "VOLI\(Volume ID\)": "3222345984", "Object File Path": "/var/local/rangedb/0/p/19/11/00rH0%DkRt78Rrb\#3s;L", "LTIM\(Location timestamp\)": "2020-02- 12T19:36:17.934425" } ] } In the second example, the object with UUID 926026C4-00A4-449B-AC72-BCCA72DD1311 has no locations listed.
+
+ade 12448208: / > /proc/OBRP/ObjectByUUID 926026C4-00A4-449B-AC72- BCCA72DD1311 { "TYPE(Object Type)": "Data object", "CHND(Content handle)": "926026C4-00A4-449B-AC72-BCCA72DD1311", "NAME": "cats", "CBID": "0x38186FE53E3C49A5", "PHND(Parent handle, UUID)": "221CABD0-4D9D-11EA-89C3- ACBB00BB82DD", "PPTH(Parent path)": "source", "META": { "BASE(Protocol metadata)": { "PAWS(S3 protocol version)": "2", "ACCT(S3 account ID)": "44084621669730638018", "*ctp(HTTP content MIME type)": "binary/octet-stream" }, "BYCB(System metadata)": { "CSIZ(Plaintext object size)": "5242880", "SHSH(Supplementary Plaintext hash)": "MD5D 0xBAC2A2617C1DFF7E959A76731E6EAF5E", "BSIZ(Content block size)": "5252084", "CVER(Content block version)": "196612", "CTME(Object store begin timestamp)": "2020-02- 12T19:16:10.983000", "MTME(Object store modified timestamp)": "2020-02- 12T19:16:10.983000", "ITME": "1581534970983000" }, "CMSM": { "LATM(Object last access time)": "2020-02- 12T19:16:10.983000" }, "AWS3": { "LOCC": "us-east-1" } } } c. Review the output of /proc/OBRP/ObjectByUUID, and take the appropriate action:
+
+1265
+
+Metadata
+
+Conclusion
+
+No object found ("ERROR":"" )
+
+If the object is not found, the message "ERROR":"" is returned.
+
+If the object is not found, you can reset the count of Objects lost to clear the alert. The lack of an object indicates that the object was intentionally deleted. Locations > 0
+
+If there are locations listed in the output, the Objects lost alert might be a false positive.
+
+Confirm that the objects exist. Use the Node ID and filepath listed in the output to confirm that the object file is in the listed location.
+
+(The procedure for searching for potentially lost objects explains how to use the Node ID to find the correct Storage Node.)
+
+If the objects exist, you can reset the count of Objects lost to clear the alert. Locations = 0

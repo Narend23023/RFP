@@ -1,0 +1,101 @@
+Related information
+
+Manage objects with ILM
+
+RestoreObject
+
+You can use the S3 RestoreObject request to restore an object that is stored in a Cloud Storage Pool.
+
+Supported request type
+
+StorageGRID only supports RestoreObject requests to restore an object. It does not support the SELECT type of restoration. Select requests return XNotImplemented. Versioning
+
+Optionally, specify versionId to restore a specific version of an object in a versioned bucket. If you don’t specify versionId, the most recent version of the object is restored
+
+Behavior of RestoreObject on Cloud Storage Pool objects
+
+If an object has been stored in a Cloud Storage Pool, a RestoreObject request has the following behavior, based on the state of the object. See HeadObject for more details.
+
+If an object is stored in a Cloud Storage Pool and one or more copies of the object also exist on the grid, there is no need to restore the object by issuing a RestoreObject request. Instead, the local copy can be retrieved directly, using a GetObject request. State of object
+
+Behavior of RestoreObject
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object is not in a Cloud Storage Pool
+
+403 Forbidden, InvalidObjectState
+
+931
+
+State of object
+
+Behavior of RestoreObject
+
+Object in Cloud Storage Pool but not yet transitioned to a non- retrievable state
+
+200 OK No changes are made.
+
+Note: Before an object has been transitioned to a non-retrievable state, you can’t change its expiry-date.
+
+Object transitioned to a non- retrievable state
+
+202 Accepted Restores a retrievable copy of the object to the Cloud Storage Pool for the number of days specified in the request body. At the end of this period, the object is returned to a non-retrievable state. Behavior of RestoreObject on Cloud Storage Pool objects
+
+If an object has been stored in a Cloud Storage Pool, a RestoreObject request has the following behavior, based on the state of the object. See HeadObject for more details.
+
+If an object is stored in a Cloud Storage Pool and one or more copies of the object also exist on the grid, there is no need to restore the object by issuing a RestoreObject request. Instead, the local copy can be retrieved directly, using a GetObject request. State of object
+
+Behavior of RestoreObject
+
+Object ingested into StorageGRID but not yet evaluated by ILM, or object is not in a Cloud Storage Pool
+
+403 Forbidden, InvalidObjectState
+
+931
+
+State of object
+
+Behavior of RestoreObject
+
+Object in Cloud Storage Pool but not yet transitioned to a non- retrievable state
+
+200 OK No changes are made.
+
+Note: Before an object has been transitioned to a non-retrievable state, you can’t change its expiry-date.
+
+Object transitioned to a non- retrievable state
+
+202 Accepted Restores a retrievable copy of the object to the Cloud Storage Pool for the number of days specified in the request body. At the end of this period, the object is returned to a non-retrievable state.
+
+Optionally, use the Tier request element to determine how long the restore job will take to finish (Expedited, Standard, or Bulk). If you don’t specify Tier, the Standard tier is used. Important: If an object has been transitioned to S3 Glacier Deep Archive or the Cloud Storage Pool uses Azure Blob storage, you can’t restore it using the Expedited tier. The following error is returned 403 Forbidden, InvalidTier: Retrieval option is not supported by this storage class.
+
+Object in process of being restored from a non-retrievable state 409 Conflict, RestoreAlreadyInProgress
+
+Object fully restored to the Cloud Storage Pool
+
+200 OK
+
+Note: If an object has been restored to a retrievable state, you can change its expiry-date by reissuing the RestoreObject request with a new value for Days. The restoration date is updated relative to the time of the request. SelectObjectContent
+
+You can use the S3 SelectObjectContent request to filter the contents of an S3 object based on a simple SQL statement.
+
+For more information see Amazon Simple Storage Service API Reference: SelectObjectContent.
+
+Before you begin
+
+The tenant account has the S3 Select permission.
+
+You have s3:GetObject permission for the object you want to query.
+
+The object you want to query must be in one of the following formats:
+
+CSV. Can be used as is or compressed into GZIP or BZIP2 archives. ◦ Parquet. Additional requirements for Parquet objects:
+
+▪ S3 Select supports only columnar compression using GZIP or Snappy. S3 Select doesn’t support whole-object compression for Parquet objects.
+
+▪ S3 Select doesn’t support Parquet output. You must specify the output format as CSV or JSON.
+
+932
+
+▪ The maximum uncompressed row group size is 512 MB. ▪ You must use the data types specified in the object’s schema. ▪ You can’t use INTERVAL, JSON, LIST, TIME, or UUID logical types.
+
+Your SQL expression has a maximum length of 256 KB.

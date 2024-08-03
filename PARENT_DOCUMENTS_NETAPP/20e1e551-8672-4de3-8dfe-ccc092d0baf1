@@ -1,0 +1,45 @@
+Use the Balanced option to achieve the best combination of data protection, grid performance, and ingest success. Balanced is the default option in the Create ILM rule wizard. Strict You are using multi-site ILM rules and client ingest latency is your primary consideration. When using Dual
+
+599
+
+commit, you must ensure your grid can perform the additional work of creating and removing the dual- commit copies if they don’t satisfy ILM. Specifically:
+
+The load on the grid must be low enough to prevent an ILM backlog. ◦ The grid must have excess hardware resources (IOPS, CPU, memory, network bandwidth, and so on). You are using multi-site ILM rules and the WAN connection between the sites usually has high latency or limited bandwidth. In this scenario, using the Dual commit option can help prevent client timeouts. Before choosing the Dual commit option, you should test the client application with realistic workloads. Balanced (default)
+
+When you select the Balanced option, StorageGRID also uses synchronous placement on ingest and immediately makes all copies specified in the rule’s placement instructions. In contrast with the Strict option, if StorageGRID can’t immediately make all copies, it uses Dual commit instead. If the ILM policy uses placements on multiple sites and immediate site-loss protection can’t be achieved, the ILM placement unachievable alert is triggered.
+
+Use the Balanced option to achieve the best combination of data protection, grid performance, and ingest success. Balanced is the default option in the Create ILM rule wizard. Strict
+
+When you select the Strict option, StorageGRID uses synchronous placement on ingest and immediately makes all object copies specified in the rule’s placement instructions. Ingest fails if StorageGRID can’t create all copies, for example, because a required storage location is temporarily unavailable. The client must retry the operation.
+
+Use the Strict option if you have an operational or regulatory requirement to immediately store objects only in the locations outlined in the ILM rule. For example, to satisfy a regulatory requirement, you might need to use the Strict option and a Location Constraint advanced filter to guarantee that objects are never stored at certain data centers.
+
+See Example 5: ILM rules and policy for Strict ingest behavior. Advantages, disadvantages, and limitations of the ingest options
+
+Understanding the advantages and disadvantages of each of the three options for protecting data at ingest (Balanced, Strict, or Dual commit) can help you decide which one to select for an ILM rule.
+
+For an overview of ingest options, see Ingest options. Advantages of the Balanced and Strict options
+
+When compared to Dual commit, which creates interim copies during ingest, the two synchronous placement options can provide the following advantages:
+
+Better data security: Object data is immediately protected as specified in the ILM rule’s placement instructions, which can be configured to protect against a wide variety of failure conditions, including the failure of more than one storage location. Dual commit can only protect against the loss of a single local copy.
+
+More efficient grid operation: Each object is processed only once, as it is ingested. Because the StorageGRID system does not need to track or delete interim copies, there is less processing load and less
+
+600
+
+database space is consumed.
+
+(Balanced) Recommended: The Balanced option provides optimal ILM efficiency. Using the Balanced option is recommended unless Strict ingest behavior is required or the grid meets all of the criteria for using Dual commit. (Strict) Certainty about object locations: The Strict option guarantees that objects are immediately stored according to the placement instructions in the ILM rule.
+
+Disadvantages of the Balanced and Strict options
+
+When compared to Dual commit, the Balanced and Strict options have some disadvantages:
+
+Longer client ingests: Client ingest latencies might be longer. When you use the Balanced or Strict options, an "ingest successful" message is not returned to the client until all erasure-coded fragments or replicated copies are created and stored. However, object data will most likely reach its final placement much faster. Better data security: Object data is immediately protected as specified in the ILM rule’s placement instructions, which can be configured to protect against a wide variety of failure conditions, including the failure of more than one storage location. Dual commit can only protect against the loss of a single local copy.
+
+More efficient grid operation: Each object is processed only once, as it is ingested. Because the StorageGRID system does not need to track or delete interim copies, there is less processing load and less
+
+600
+
+database space is consumed.

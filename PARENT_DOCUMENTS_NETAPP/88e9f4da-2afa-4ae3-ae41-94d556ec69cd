@@ -1,0 +1,129 @@
+The network address must not have any host bits set. For example, 192.16.0.0/22.
+
+Gateway IP address (optional)
+
+Optional. If the ONTAP IP addresses used to access StorageGRID aren’t on the same subnet as the StorageGRID VIP addresses, enter the StorageGRID VIP local gateway IP address. The local gateway IP address must be within the VIP subnet. Virtual IP address
+
+Enter at least one and no more than ten VIP addresses for the active interface in the HA group. All VIP addresses must be within the VIP subnet.
+
+At least one address must be IPv4. Optionally, you can specify additional IPv4 and IPv6 addresses.
+
+7. Select Create HA group and then select Finish.
+
+Create a load balancer endpoint for FabricPool
+
+StorageGRID uses a load balancer to manage the workload from client applications, such as FabricPool. Load balancing maximizes speed and connection capacity across multiple Storage Nodes.
+
+When configuring StorageGRID for use with FabricPool, you must configure a load balancer endpoint and upload or generate a load balancer endpoint certificate, which is used to secure the connection between ONTAP and StorageGRID.
+
+To use the FabricPool setup wizard to complete this task, go to Access and complete the FabricPool setup wizard.
+
+Before you begin
+
+739
+
+• You are signed in to the Grid Manager using a supported web browser. You have the Root access permission.
+
+You have reviewed the general considerations for load balancing as well as the best practices for load balancing for FabricPool.
+
+Steps
+
+1. Select CONFIGURATION > Network > Load balancer endpoints.
+
+2. Select Create.
+
+3. For the Enter endpoint details step, complete the following fields. Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint.
+
+Port
+
+The StorageGRID port you want to use for load balancing. This field defaults to 10433 for the first endpoint you create, but you can enter any unused external port. If you enter 80 or 443, the endpoint is configured only on Gateway Nodes. These ports are reserved on Admin Nodes.
+
+Note: Ports used by other grid services aren’t permitted. See the Network port reference.
+
+You will provide this number to ONTAP when you attach StorageGRID as a FabricPool cloud tier. Client type
+
+Select S3.
+
+Network protocol
+
+Select HTTPS.
+
+Note: Communicating with StorageGRID without TLS encryption is supported but not recommended.
+
+4. For the Select binding mode step, specify the binding mode. The binding mode controls how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces. Mode 739
+
+• You are signed in to the Grid Manager using a supported web browser. You have the Root access permission.
+
+You have reviewed the general considerations for load balancing as well as the best practices for load balancing for FabricPool.
+
+Steps
+
+1. Select CONFIGURATION > Network > Load balancer endpoints.
+
+2. Select Create.
+
+3. For the Enter endpoint details step, complete the following fields. Field
+
+Description
+
+Name
+
+A descriptive name for the endpoint.
+
+Port
+
+The StorageGRID port you want to use for load balancing. This field defaults to 10433 for the first endpoint you create, but you can enter any unused external port. If you enter 80 or 443, the endpoint is configured only on Gateway Nodes. These ports are reserved on Admin Nodes.
+
+Note: Ports used by other grid services aren’t permitted. See the Network port reference.
+
+You will provide this number to ONTAP when you attach StorageGRID as a FabricPool cloud tier. Client type
+
+Select S3.
+
+Network protocol
+
+Select HTTPS.
+
+Note: Communicating with StorageGRID without TLS encryption is supported but not recommended.
+
+4. For the Select binding mode step, specify the binding mode. The binding mode controls how the endpoint is accessed using any IP address or using specific IP addresses and network interfaces. Mode
+
+Description
+
+Global (default)
+
+Clients can access the endpoint using the IP address of any Gateway Node or Admin Node, the virtual IP (VIP) address of any HA group on any network, or a corresponding FQDN.
+
+Use the Global setting (default) unless you need to restrict the accessibility of this endpoint.
+
+740
+
+Mode
+
+Description
+
+Virtual IPs of HA groups Clients must use a virtual IP address (or corresponding FQDN) of an HA group to access this endpoint.
+
+Endpoints with this binding mode can all use the same port number, as long as the HA groups you select for the endpoints don’t overlap.
+
+Node interfaces
+
+Clients must use the IP addresses (or corresponding FQDNs) of selected node interfaces to access this endpoint.
+
+Node type
+
+Based on the type of node you select, clients must use either the IP address (or corresponding FQDN) of any Admin Node or the IP address (or corresponding FQDN) of any Gateway Node to access this endpoint.
+
+5. For the Tenant access step, select one of the following: Field
+
+Description
+
+Allow all tenants (default)
+
+All tenant accounts can use this endpoint to access their buckets.

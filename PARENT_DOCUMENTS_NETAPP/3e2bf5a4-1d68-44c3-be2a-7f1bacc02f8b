@@ -1,0 +1,93 @@
+The procedure for recovering a failed Storage Node depends on the type of failure and the type of Storage Node that has failed.
+
+Use this table to select the recovery procedure for a failed Storage Node.
+
+1554
+
+Issue
+
+Action
+
+Notes
+
+More than one Storage Node has failed.
+
+More than one Storage Node has failed.
+
+A second Storage Node has failed less than 15 days after a Storage Node failure or recovery.
+
+Recovering more than one Storage Node (or more than one Storage Node within 15 days) might affect the integrity of the Cassandra database, which can cause data loss.
+
+This includes the case where a Storage Node fails while recovery of another Storage Node is still in progress.
+
+Technical support can determine when it is safe to begin recovery of a second Storage Node.
+
+Note: If more than one Storage Node that contains the ADC service fails at a site, you lose any pending platform service requests for that site. More than one Storage Node at a site has failed or an entire site has failed.
+
+Contact technical support. It might be necessary to perform a site recovery procedure.
+
+Technical support will assess your situation and develop a recovery plan. See How technical support recovers a site.
+
+A Storage Node has been offline for more than 15 days. Recover Storage Node down more than 15 days
+
+This procedure is required to ensure Cassandra database integrity.
+
+An appliance Storage Node has failed.
+
+Recover appliance Storage Node
+
+The recovery procedure for appliance Storage Nodes is the same for all failures.
+
+One or more storage volumes have failed, but the system drive is intact
+
+Recover from storage volume failure where system drive is intact
+
+This procedure is used for software-based Storage Nodes.
+
+The system drive has failed. Recover from system drive failure
+
+The node replacement procedure depends on the deployment platform and on whether any storage volumes have also failed. This includes the case where a Storage Node fails while recovery of another Storage Node is still in progress.
+
+Technical support can determine when it is safe to begin recovery of a second Storage Node.
+
+Note: If more than one Storage Node that contains the ADC service fails at a site, you lose any pending platform service requests for that site. More than one Storage Node at a site has failed or an entire site has failed.
+
+Contact technical support. It might be necessary to perform a site recovery procedure.
+
+Technical support will assess your situation and develop a recovery plan. See How technical support recovers a site.
+
+A Storage Node has been offline for more than 15 days. Recover Storage Node down more than 15 days
+
+This procedure is required to ensure Cassandra database integrity.
+
+An appliance Storage Node has failed.
+
+Recover appliance Storage Node
+
+The recovery procedure for appliance Storage Nodes is the same for all failures.
+
+One or more storage volumes have failed, but the system drive is intact
+
+Recover from storage volume failure where system drive is intact
+
+This procedure is used for software-based Storage Nodes.
+
+The system drive has failed. Recover from system drive failure
+
+The node replacement procedure depends on the deployment platform and on whether any storage volumes have also failed.
+
+Some StorageGRID recovery procedures use Reaper to handle Cassandra repairs. Repairs occur automatically as soon as the related or required services have started. You might notice script output that mentions "reaper" or "Cassandra repair." If you see an error message indicating the repair has failed, run the command indicated in the error message. Recover Storage Node down more than 15 days
+
+If a single Storage Node has been offline and not connected to other Storage Nodes for more than 15 days, you must rebuild Cassandra on the node.
+
+1555
+
+Before you begin
+
+You have checked that a Storage Node decommissioning is not in progress, or you have paused the node decommission procedure. (In the Grid Manager, select MAINTENANCE > Tasks > Decommission.)
+
+You have checked that an expansion is not in progress. (In the Grid Manager, select MAINTENANCE > Tasks > Expansion.) About this task
+
+Storage Nodes have a Cassandra database that includes object metadata. If a Storage Node has not been able to communicate with other Storage Nodes for more than 15 days, StorageGRID assumes that node’s Cassandra database is stale. The Storage Node can’t rejoin the grid until Cassandra has been rebuilt using information from other Storage Nodes.
+
+Use this procedure to rebuild Cassandra only if a single Storage Node is down. Contact technical support if additional Storage Nodes are offline or if Cassandra has been rebuilt on another Storage Node within the last 15 days; for example, Cassandra might have been rebuilt as part of the procedures to recover failed storage volumes or to recover a failed Storage Node.

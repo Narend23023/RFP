@@ -1,0 +1,91 @@
+Automating the deployment might be useful in any of the following cases:
+
+You already use a standard orchestration framework, such as Ansible, Puppet, or Chef, to deploy and configure physical or virtual hosts.
+
+You intend to deploy multiple StorageGRID instances.
+
+You are deploying a large, complex StorageGRID instance.
+
+The StorageGRID host service is installed by a package and driven by configuration files. You can create the configuration files using one of these methods:
+
+Create the configuration files interactively during a manual installation.
+
+Prepare the configuration files ahead of time (or programmatically) to enable automated installation using standard orchestration frameworks, as describe in this article. StorageGRID provides optional Python scripts for automating the configuration of StorageGRID appliances and the entire StorageGRID system (the "grid"). You can use these scripts directly, or you can inspect them to learn how to use the StorageGRID installation REST API in grid deployment and configuration tools you develop yourself.
+
+96
+
+Automate the installation and configuration of the StorageGRID host service
+
+You can automate the installation of the StorageGRID host service using standard orchestration frameworks such as Ansible, Puppet, Chef, Fabric, or SaltStack.
+
+The StorageGRID host service is packaged in an RPM and is driven by configuration files that you can prepare ahead of time (or programmatically) to enable automated installation. If you already use a standard orchestration framework to install and configure RHEL, adding StorageGRID to your playbooks or recipes should be straightforward. See the example Ansible role and playbook in the /extras folder supplied with the installation archive. The Ansible playbook shows how the storagegrid role prepares the host and installs StorageGRID onto the target servers. You can customize the role or playbook as necessary.
+
+The example playbook does not include the steps required to create network devices before starting the StorageGRID host service. Add these steps before finalizing and using the playbook.
+
+You can automate all of the steps for preparing the hosts and deploying virtual grid nodes. Example Ansible role and playbook
+
+Example Ansible role and playbook are supplied with the installation archive in the /extras folder. The Ansible playbook shows how the storagegrid role prepares the hosts and installs StorageGRID onto the target servers. You can customize the role or playbook as necessary.
+
+Automate the configuration of StorageGRID
+
+After deploying the grid nodes, you can automate the configuration of the StorageGRID system.
+
+Before you begin
+
+You know the location of the following files from the installation archive. Filename
+
+Description
+
+configure-storagegrid.py
+
+Python script used to automate the configuration
+
+configure-storagegrid.sample.json
+
+Example configuration file for use with the script
+
+configure-storagegrid.blank.json
+
+Blank configuration file for use with the script
+
+You have created a configure-storagegrid.json configuration file. To create this file, you can modify the example configuration file (configure-storagegrid.sample.json) or the blank configuration file (configure-storagegrid.blank.json). About this task
+
+You can use the configure-storagegrid.py Python script and the configure-storagegrid.json configuration file to automate the configuration of your StorageGRID system.
+
+You can also configure the system using the Grid Manager or the Installation API.
+
+97
+
+Steps
+
+1. Log in to the Linux machine you are using to run the Python script.
+
+2. Change to the directory where you extracted the installation archive. For example:
+
+cd StorageGRID-Webscale-version/platform
+
+where platform is debs, rpms, or vsphere.
+
+3. Run the Python script and use the configuration file you created.
+
+For example:
+
+./configure-storagegrid.py ./configure-storagegrid.json --start-install
+
+Result
+
+A Recovery Package .zip file is generated during the configuration process, and it is downloaded to the directory where you are running the installation and configuration process. You must back up the Recovery Package file so that you can recover the StorageGRID system if one or more grid nodes fails. For example, copy it to a secure, backed up network location and to a secure cloud storage location.
+
+The Recovery Package file must be secured because it contains encryption keys and passwords that can be used to obtain data from the StorageGRID system. You can use the configure-storagegrid.py Python script and the configure-storagegrid.json configuration file to automate the configuration of your StorageGRID system.
+
+You can also configure the system using the Grid Manager or the Installation API.
+
+97
+
+Steps
+
+1. Log in to the Linux machine you are using to run the Python script.
+
+2. Change to the directory where you extracted the installation archive. For example:
+
+cd StorageGRID-Webscale-version/platform

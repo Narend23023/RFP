@@ -1,0 +1,95 @@
+Retrieving local host information Validating remote node at address 10.224.4.210 Sending node IP hint for 10.224.4.210 to local node Local node found on remote node. Update complete.
+
+3. Verify the following for each node that was previously isolated: The node’s services have started. ◦ The status of the Dynamic IP service is "Running" after you run the storagegrid-status command. ◦ In the Grid Topology tree, the node no longer appears disconnected from the rest of the grid.
+
+If running the add_node_ip.py command does not solve the problem, there could be other networking issues that need to be resolved. Host and middleware procedures
+
+Linux: Migrate grid node to new host
+
+You can migrate one or more StorageGRID nodes from one Linux host (the source host) to another Linux host (the target host) to perform host maintenance without impacting the functionality or availability of your grid.
+
+For example, you might want to migrate a node to perform OS patching and reboot.
+
+Before you begin
+
+You planned your StorageGRID deployment to include migration support. ◦ Node container migration requirements for Red Hat Enterprise Linux ◦ Node container migration requirements for Ubuntu or Debian
+
+The target host is already prepared for StorageGRID use.
+
+Shared storage is used for all per-node storage volumes Retrieving local host information Validating remote node at address 10.224.4.210 Sending node IP hint for 10.224.4.210 to local node Local node found on remote node. Update complete.
+
+3. Verify the following for each node that was previously isolated: The node’s services have started. ◦ The status of the Dynamic IP service is "Running" after you run the storagegrid-status command. ◦ In the Grid Topology tree, the node no longer appears disconnected from the rest of the grid.
+
+If running the add_node_ip.py command does not solve the problem, there could be other networking issues that need to be resolved. Host and middleware procedures
+
+Linux: Migrate grid node to new host
+
+You can migrate one or more StorageGRID nodes from one Linux host (the source host) to another Linux host (the target host) to perform host maintenance without impacting the functionality or availability of your grid.
+
+For example, you might want to migrate a node to perform OS patching and reboot.
+
+Before you begin
+
+You planned your StorageGRID deployment to include migration support. ◦ Node container migration requirements for Red Hat Enterprise Linux ◦ Node container migration requirements for Ubuntu or Debian
+
+The target host is already prepared for StorageGRID use.
+
+Shared storage is used for all per-node storage volumes
+
+Network interfaces have consistent names across hosts.
+
+In a production deployment, don’t run more than one Storage Node on a single host. Using a dedicated host for each Storage Node provides an isolated failure domain. Other types of nodes, such as Admin Nodes or Gateway Nodes, can be deployed on the same host. However, if you have multiple nodes of the same type (two Gateway Nodes, for example), don’t install all instances on the same host.
+
+1538
+
+Export node from source host
+
+As a first step, shut down the grid node and export it from the source Linux host.
+
+Run the following commands on the source host. Steps
+
+1. Obtain the status of all nodes currently running on the source host.
+
+sudo storagegrid node status all
+
+Example output:
+
+Name Config-State Run-State DC1-ADM1 Configured Running DC1-ARC1 Configured Running DC1-GW1 Configured Running DC1-S1 Configured Running DC1-S2 Configured Running DC1-S3 Configured Running
+
+2. Identify the name of the node you want to migrate, and stop it if its Run-State is Running. sudo storagegrid node stop DC1-S3
+
+Example output:
+
+Stopping node DC1-S3 Waiting up to 630 seconds for node shutdown
+
+3. Export the node from the source host.
+
+sudo storagegrid node export DC1-S3
+
+Example output:
+
+Finished exporting node DC1-S3 to /dev/mapper/sgws-dc1-s3-var-local. Use 'storagegrid node import /dev/mapper/sgws-dc1-s3-var-local' if you want to import it again.
+
+4. Make note of the import command suggested in the output.
+
+You will run this command on the target host in the next step. Import node on target host
+
+After exporting the node from the source host, you import and validate the node on the target host. Validation
+
+1539
+
+confirms that the node has access to the same block storage and network interface devices as it had on the source host.
+
+Run the following commands on the target host. Steps
+
+1. Import the node on the target host.
+
+sudo storagegrid node import /dev/mapper/sgws-dc1-s3-var-local
+
+Example output:
+
+Finished importing node DC1-S3 from /dev/mapper/sgws-dc1-s3-var-local. You should run 'storagegrid node validate DC1-S3'
+
+2. Validate the node configuration on the new host. sudo storagegrid node validate DC1-S3
+
+Example output:

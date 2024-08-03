@@ -1,0 +1,83 @@
+The port the KMS server uses for Key Management Interoperability Protocol (KMIP) communications. Defaults to 5696, which is the KMIP standard port.
+
+Hostname
+
+The fully qualified domain name or IP address for the KMS.
+
+Note: The Subject Alternative Name (SAN) field of the server certificate must include the FQDN or IP address you enter here. Otherwise, StorageGRID will not be able to connect to the KMS or to all servers in a KMS cluster.
+
+4. If you are configuring a KMS cluster, select Add another hostname to add a hostname for each server in the cluster.
+
+5. Select Continue. Step 2: Upload server certificate
+
+In Step 2 (Upload server certificate) of the Add a Key Management Server wizard, you upload the server certificate (or certificate bundle) for the KMS. The server certificate allows the external KMS to authenticate itself to StorageGRID.
+
+437
+
+Steps
+
+1. From Step 2 (Upload server certificate), browse to the location of the saved server certificate or certificate bundle.
+
+2. Upload the certificate file.
+
+The server certificate metadata appears.
+
+If you uploaded a certificate bundle, the metadata for each certificate appears on its own tab.
+
+3. Select Continue. Step 3: Upload client certificates
+
+In Step 3 (Upload client certificates) of the Add a Key Management Server wizard, you upload the client certificate and the client certificate private key. The client certificate allows StorageGRID to authenticate itself to the KMS. Steps
+
+1. From Step 3 (Upload client certificates), browse to the location of the client certificate.
+
+2. Upload the client certificate file.
+
+The client certificate metadata appears.
+
+3. Browse to the location of the private key for the client certificate.
+
+4. Upload the private key file.
+
+5. Select Test and save.
+
+If a key doesn’t exist, you are prompted to have StorageGRID create one.
+
+The connections between the key management server and the appliance nodes are tested. If all connections are valid and the correct key is found on the KMS, the new key management server is added to the table on the Key Management Server page.
+
+Immediately after you add a KMS, the certificate status on the Key Management Server page appears as Unknown. It might take StorageGRID as long as 30 minutes to get the actual status of each certificate. You must refresh your web browser to see the current status. 6. If an error message appears when you select Test and save, review the message details and then select OK.
+
+For example, you might receive a 422: Unprocessable Entity error if a connection test failed.
+
+7. If you need to save the current configuration without testing the external connection, select Force save.
+
+Selecting Force save saves the KMS configuration, but it does not test the external connection from each appliance to that KMS. If there is an issue with the configuration, you might not be able to reboot appliance nodes that have node encryption enabled at the affected site. You might lose access to your data until the issues are resolved.
+
+438
+
+8. Review the confirmation warning, and select OK if you are sure you want to force save the configuration.
+
+The KMS configuration is saved but the connection to the KMS is not tested. Manage a KMS
+
+Managing a key management server (KMS) involves viewing or editing details, managing certificates, viewing encrypted nodes, and removing a KMS when it is no longer needed.
+
+Before you begin Immediately after you add a KMS, the certificate status on the Key Management Server page appears as Unknown. It might take StorageGRID as long as 30 minutes to get the actual status of each certificate. You must refresh your web browser to see the current status. 6. If an error message appears when you select Test and save, review the message details and then select OK.
+
+For example, you might receive a 422: Unprocessable Entity error if a connection test failed.
+
+7. If you need to save the current configuration without testing the external connection, select Force save.
+
+Selecting Force save saves the KMS configuration, but it does not test the external connection from each appliance to that KMS. If there is an issue with the configuration, you might not be able to reboot appliance nodes that have node encryption enabled at the affected site. You might lose access to your data until the issues are resolved.
+
+438
+
+8. Review the confirmation warning, and select OK if you are sure you want to force save the configuration.
+
+The KMS configuration is saved but the connection to the KMS is not tested. Manage a KMS
+
+Managing a key management server (KMS) involves viewing or editing details, managing certificates, viewing encrypted nodes, and removing a KMS when it is no longer needed.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the required access permission. View KMS details

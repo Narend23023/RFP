@@ -1,0 +1,81 @@
+For production deployments, you should not run multiple Storage Nodes on the same physical storage hardware or virtual host. Each Storage Node in a single StorageGRID deployment should be in its own isolated failure domain. You can maximize the durability and availability of object data if you ensure that a single hardware failure can only impact a single Storage Node. See also Storage and performance requirements.
+
+Storage and performance requirements
+
+You must understand the storage and performance requirements for StorageGRID nodes hosted by virtual machines, so you can provide enough space to support the initial configuration and future storage expansion.
+
+Performance requirements
+
+The performance of the OS volume and of the first storage volume significantly impacts the overall performance of the system. Ensure that these provide adequate disk performance in terms of latency, input/output operations per second (IOPS), and throughput.
+
+All StorageGRID nodes require that the OS drive and all storage volumes have write-back caching enabled. The cache must be on a protected or persistent media. If hyperthreading is enabled on the underlying physical hosts, you can provide 8 virtual cores (4 physical cores)
+
+207
+
+per node. If hyperthreading is not enabled on the underlying physical hosts, you must provide 8 physical cores per node. If you are using virtual machines as hosts and have control over the size and number of VMs, you should use a single VM for each StorageGRID node and size the VM accordingly.
+
+For production deployments, you should not run multiple Storage Nodes on the same physical storage hardware or virtual host. Each Storage Node in a single StorageGRID deployment should be in its own isolated failure domain. You can maximize the durability and availability of object data if you ensure that a single hardware failure can only impact a single Storage Node. See also Storage and performance requirements.
+
+Storage and performance requirements
+
+You must understand the storage and performance requirements for StorageGRID nodes hosted by virtual machines, so you can provide enough space to support the initial configuration and future storage expansion.
+
+Performance requirements
+
+The performance of the OS volume and of the first storage volume significantly impacts the overall performance of the system. Ensure that these provide adequate disk performance in terms of latency, input/output operations per second (IOPS), and throughput.
+
+All StorageGRID nodes require that the OS drive and all storage volumes have write-back caching enabled. The cache must be on a protected or persistent media.
+
+Requirements for virtual machines that use NetApp ONTAP storage If you are deploying a StorageGRID node as a virtual machine with storage assigned from a NetApp ONTAP system, you have confirmed that the volume does not have a FabricPool tiering policy enabled. For example, if a StorageGRID node is running as an virtual machine on a VMware host, ensure the volume backing the datastore for the node does not have a FabricPool tiering policy enabled. Disabling FabricPool tiering for volumes used with StorageGRID nodes simplifies troubleshooting and storage operations.
+
+Never use FabricPool to tier any data related to StorageGRID back to StorageGRID itself. Tiering StorageGRID data back to StorageGRID increases troubleshooting and operational complexity.
+
+Number of virtual machines required
+
+Each StorageGRID site requires a minimum of three Storage Nodes.
+
+In a production deployment, don’t run more than one Storage Node on a single virtual machine server. Using a dedicated virtual machine host for each Storage Node provides an isolated failure domain. Other types of nodes, such as Admin Nodes or Gateway Nodes, can be deployed on the same virtual machine host, or they can be deployed on their own dedicated virtual machine hosts as required. However, if you have multiple nodes of the same type (two Gateway Nodes, for example), don’t install all instances on the same virtual machine host.
+
+208
+
+Storage requirements by node type
+
+In a production environment, the virtual machines for StorageGRID nodes must meet different requirements, depending on the types of nodes.
+
+Disk snapshots can’t be used to restore grid nodes. Instead, refer to the grid node recovery procedures for each type of node. Node Type
+
+Storage
+
+Admin Node
+
+100 GB LUN for OS
+
+200 GB LUN for Admin Node tables
+
+200 GB LUN for Admin Node audit log
+
+Storage Node
+
+100 GB LUN for OS
+
+3 LUNs for each Storage Node on this host
+
+Note: A Storage Node can have 1 to 16 storage LUNs; at least 3 storage LUNs are recommended.
+
+Minimum size per LUN: 4 TB Maximum tested LUN size: 39 TB.
+
+Storage Node (metadata-only)
+
+100 GB LUN for OS
+
+1 LUN
+
+Minimum size per LUN: 4 TB
+
+Note: There is no maximum size for the single LUN. Excess capacity is saved for future use.
+
+Note: Only one rangedb is required for metadata-only Storage Nodes.
+
+Gateway Node
+
+100 GB LUN for OS Archive Node

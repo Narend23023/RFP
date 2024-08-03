@@ -1,0 +1,77 @@
+To facilitate distributed and islanded operations, each ADC service synchronizes certificates, configuration bundles, and information about services and topology with the other ADC services in the StorageGRID system. In general, all grid nodes maintain a connection to at least one ADC service. This ensures that grid nodes are always accessing the latest information. When grid nodes connect, they cache other grid nodes' certificates, enabling systems to continue functioning with known grid nodes even when an ADC service is unavailable. New grid nodes can only establish connections by using an ADC service.
+
+The connection of each grid node lets the ADC service gather topology information. This grid node information includes the CPU load, available disk space (if it has storage), supported services, and the grid node’s site ID. Other services ask the ADC service for topology information through topology queries. The ADC service responds to each query with the latest information received from the StorageGRID system.
+
+Stores and protects object metadata. Performs automatic repairs of object metadata.
+
+Manages erasure-coded data and parity fragments. To facilitate distributed and islanded operations, each ADC service synchronizes certificates, configuration bundles, and information about services and topology with the other ADC services in the StorageGRID system. In general, all grid nodes maintain a connection to at least one ADC service. This ensures that grid nodes are always accessing the latest information. When grid nodes connect, they cache other grid nodes' certificates, enabling systems to continue functioning with known grid nodes even when an ADC service is unavailable. New grid nodes can only establish connections by using an ADC service.
+
+The connection of each grid node lets the ADC service gather topology information. This grid node information includes the CPU load, available disk space (if it has storage), supported services, and the grid node’s site ID. Other services ask the ADC service for topology information through topology queries. The ADC service responds to each query with the latest information received from the StorageGRID system.
+
+Stores and protects object metadata. Performs automatic repairs of object metadata.
+
+Manages erasure-coded data and parity fragments.
+
+Moves data to Cloud Storage Pools.
+
+Service
+
+Distributed Data Store (DDS)
+
+Identity (idnt)
+
+Key function
+
+Monitors object metadata storage.
+
+Details
+
+Each Storage Node includes the Distributed Data Store (DDS) service. This service interfaces with the Cassandra database to perform background tasks on the object metadata stored in the StorageGRID system.
+
+The DDS service tracks the total number of objects ingested into the StorageGRID system as well as the total number of objects ingested through each of the system’s supported interfaces (S3 or Swift). Federates user identities from LDAP and Active Directory.
+
+19
+
+Service
+
+Local Distribution Router (LDR)
+
+20
+
+Key function
+
+Processes object storage protocol requests and manages object data on disk.
+
+Details
+
+Each Storage Node includes the Local Distribution Router (LDR) service. This service handles content transport functions, including data storage, routing, and request handling. The LDR service does most of the StorageGRID system’s hard work by handling data transfer loads and data traffic functions.
+
+The LDR service handles the following tasks:
+
+Queries
+
+Information lifecycle management (ILM) activity
+
+Object deletion
+
+Object data storage
+
+Object data transfers from another LDR service (Storage Node)
+
+Data storage management
+
+Protocol interfaces (S3 and Swift)
+
+The LDR service also maps each S3 and Swift object to its unique UUID. Object stores
+
+The underlying data storage of an LDR service is divided into a fixed number of object stores (also known as storage volumes). Each object store is a separate mount point.
+
+The object stores in a Storage Node are identified by a hexadecimal number from 0000 to 002F, which is known as the volume ID. Space is reserved in the first object store (volume 0) for object metadata in a Cassandra database; any remaining space on that volume is used for object data. All other object stores are used exclusively for object data, which includes replicated copies and erasure-coded fragments.
+
+To ensure even space usage for replicated copies, object data for a given object is stored to one object store based on available storage space. When an object store fills to capacity, the remaining object stores continue to store objects until there is no more room on the Storage Node. Metadata protection
+
+StorageGRID stores object metadata in a Cassandra database, which interfaces with the LDR service.
+
+To ensure redundancy and thus protection against loss, three copies of object metadata are maintained at each site. This replication is non- configurable and performed automatically. For details, see Manage object metadata storage.
+
+Service

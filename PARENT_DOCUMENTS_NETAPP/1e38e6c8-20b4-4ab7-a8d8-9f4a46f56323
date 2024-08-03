@@ -1,0 +1,85 @@
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #. e. Add the SSH private key to the SSH agent. Enter: ssh-add
+
+f. Enter the SSH Access Password listed in the Passwords.txt file.
+
+1533
+
+2.
+
+Log in to the node you want to update with a custom DNS configuration: ssh node_IP_address
+
+3. Run the DNS setup script: setup_resolv.rb.
+
+The script responds with the list of supported commands.
+
+Tool to modify external name servers
+
+available commands: add search <domain> add a specified domain to search list e.g.> add search netapp.com remove search <domain> remove a specified domain from list e.g.> remove search netapp.com add nameserver <ip> add a specified IP address to the name server list e.g.> add nameserver 192.0.2.65 remove nameserver <ip> remove a specified IP address from list e.g.> remove nameserver 192.0.2.65 remove nameserver all remove all nameservers from list save write configuration to disk and quit abort quit without saving changes help display this help message Current list of name servers: 192.0.2.64 Name servers inherited from global DNS configuration: 192.0.2.126 192.0.2.127 Current list of search entries: netapp.com
+
+Enter command [`add search <domain>|remove search <domain>|add nameserver <ip>`] [`remove nameserver <ip>|remove nameserver all|save|abort|help`]
+
+4. Add the IPv4 address of a server that provides domain name service for your network: add <nameserver IP_address>
+
+5. Repeat the add nameserver command to add name servers.
+
+6. Follow instructions as prompted for other commands.
+
+1534
+
+7. Save your changes and exit the application: save Enter command [`add search <domain>|remove search <domain>|add nameserver <ip>`] [`remove nameserver <ip>|remove nameserver all|save|abort|help`]
+
+4. Add the IPv4 address of a server that provides domain name service for your network: add <nameserver IP_address>
+
+5. Repeat the add nameserver command to add name servers.
+
+6. Follow instructions as prompted for other commands.
+
+1534
+
+7. Save your changes and exit the application: save
+
+8. Close the command shell on the server: exit
+
+9. For each grid node, repeat the steps from logging into the node through closing the command shell.
+
+10. When you no longer require passwordless access to other servers, remove the private key from the SSH agent. Enter: ssh-add -D Manage NTP servers
+
+You can add, update, or remove Network Time Protocol (NTP) servers to ensure that data is synchronized accurately between grid nodes in your StorageGRID system.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the provisioning passphrase.
+
+You have the IPv4 addresses of the NTP servers to configure. How StorageGRID uses NTP
+
+The StorageGRID system uses the Network Time Protocol (NTP) to synchronize time between all grid nodes in the grid.
+
+At each site, at least two nodes in the StorageGRID system are assigned the primary NTP role. They synchronize to a suggested minimum of four, and a maximum of six, external time sources and with each other. Every node in the StorageGRID system that is not a primary NTP node acts as an NTP client and synchronizes with these primary NTP nodes.
+
+The external NTP servers connect to the nodes to which you previously assigned primary NTP roles. For this reason, specifying at least two nodes with primary NTP roles is recommended. NTP server guidelines
+
+Follow these guidelines to protect against timing issues:
+
+The external NTP servers connect to the nodes to which you previously assigned primary NTP roles. For this reason, specifying at least two nodes with primary NTP roles is recommended.
+
+Make sure at least two nodes at each site can access at least four external NTP sources. If only one node at a site can reach the NTP sources, timing issues will occur if that node goes down. In addition, designating two nodes per site as primary NTP sources ensures accurate timing if a site is isolated from the rest of the grid.
+
+The specified external NTP servers must use the NTP protocol. You must specify NTP server references of Stratum 3 or better to prevent issues with time drift. When specifying the external NTP source for a production-level StorageGRID installation, don’t use the Windows Time (W32Time) service on a version of Windows earlier than Windows Server 2016. The time service on earlier versions of Windows is not sufficiently accurate and is not supported by Microsoft for use in high-accuracy environments, including StorageGRID. For details, see Support boundary to configure the Windows Time service for high-accuracy environments.
+
+1535
+
+Configure NTP servers
+
+Follow these steps to add, update, or remove NTP servers. Steps

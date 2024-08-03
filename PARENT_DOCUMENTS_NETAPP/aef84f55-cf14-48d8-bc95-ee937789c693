@@ -1,0 +1,89 @@
+If you want to retry the recovery after resetting the procedure, you must restore the node to a pre-installed state, as follows:
+
+VMware: Delete the deployed virtual grid node. Then, when you are ready to restart the recovery, redeploy the node.
+
+Linux: Restart the node by running this command on the Linux host: storagegrid node force- recovery node-name 1638
+
+Reset Archive Node connection to the cloud
+
+After you recover an Archive Node that targets the cloud through the S3 API, you need to modify configuration settings to reset connections. An Outbound Replication Status (ORSU) alarm is triggered if the Archive Node is unable to retrieve object data.
+
+If your Archive Node connects to external storage through TSM middleware, then the node resets itself automatically and you don’t need to reconfigure.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser. Steps
+
+1. Select SUPPORT > Tools > Grid topology.
+
+2. Select Archive Node > ARC > Target.
+
+3. Edit the Access Key field by entering an incorrect value and click Apply Changes.
+
+4. Edit the Access Key field by entering the correct value and click Apply Changes.
+
+Replace Linux node Replace Linux node
+
+If a failure requires that you deploy one or more new physical or virtual hosts or reinstall Linux on an existing host, deploy and configure the replacement host before you can recover the grid node. This procedure is one step of the grid node recovery process for all types of grid nodes.
+
+"Linux" refers to a Red Hat® Enterprise Linux®, Ubuntu®, or Debian® deployment. For a list of supported versions, see the NetApp Interoperability Matrix Tool (IMT).
+
+This procedure is only performed as one step in the process of recovering software-based Storage Nodes, primary or non-primary Admin Nodes, Gateway Nodes, or Archive Nodes. The steps are identical regardless of the type of grid node you are recovering. If more than one grid node is hosted on a physical or virtual Linux host, you can recover the grid nodes in any order. However, recovering a primary Admin Node first, if present, prevents the recovery of other grid nodes from stalling as they try to contact the primary Admin Node to register for recovery. Deploy new Linux hosts
+
+With a few exceptions, you prepare the new hosts as you did during the initial installation process.
+
+To deploy new or reinstalled physical or virtual Linux hosts, follow the procedure for preparing the hosts in the StorageGRID installation instructions for your Linux operating system:
+
+Install Linux (Red Hat Enterprise Linux)
+
+Install Linux (Ubuntu or Debian)
+
+1639
+
+This procedure includes steps to accomplish the following tasks:
+
+1. Install Linux.
+
+2. Configure the host network.
+
+3. Configure host storage.
+
+4. Install the container engine.
+
+5. Install the StorageGRID host service.
+
+Stop after you complete the "Install StorageGRID host service" task in the installation instructions. Don’t start the "Deploying grid nodes" task.
+
+As you perform these steps, note the following important guidelines: With a few exceptions, you prepare the new hosts as you did during the initial installation process.
+
+To deploy new or reinstalled physical or virtual Linux hosts, follow the procedure for preparing the hosts in the StorageGRID installation instructions for your Linux operating system:
+
+Install Linux (Red Hat Enterprise Linux)
+
+Install Linux (Ubuntu or Debian)
+
+1639
+
+This procedure includes steps to accomplish the following tasks:
+
+1. Install Linux.
+
+2. Configure the host network.
+
+3. Configure host storage.
+
+4. Install the container engine.
+
+5. Install the StorageGRID host service.
+
+Stop after you complete the "Install StorageGRID host service" task in the installation instructions. Don’t start the "Deploying grid nodes" task.
+
+As you perform these steps, note the following important guidelines:
+
+Be sure to use the same host interface names you used on the original host. If you use shared storage to support your StorageGRID nodes, or you have moved some or all of the drives or SSDs from the failed to the replacement nodes, you must reestablish the same storage mappings that were present on the original host. For example, if you used WWIDs and aliases in /etc/multipath.conf as recommended in the installation instructions, be sure to use the same alias/WWID pairs in /etc/multipath.conf on the replacement host.
+
+If the StorageGRID node uses storage assigned from a NetApp ONTAP system, confirm that the volume does not have a FabricPool tiering policy enabled. Disabling FabricPool tiering for volumes used with StorageGRID nodes simplifies troubleshooting and storage operations.
+
+Never use FabricPool to tier any data related to StorageGRID back to StorageGRID itself. Tiering StorageGRID data back to StorageGRID increases troubleshooting and operational complexity. Restore grid nodes to the host
+
+To restore a failed grid node to a new Linux host, you perform these steps to restore the node configuration file.

@@ -1,0 +1,107 @@
+1300
+
+Create separate virtual network interfaces for use by the Linux host OS. Using the same network interfaces for the Linux host OS and the StorageGRID container might cause the host OS to become unreachable if promiscuous mode has not been enabled on the hypervisor.
+
+For more information about enabling MAC cloning, see the instructions for Red Hat Enterprise Linux or Ubuntu or Debian. Promiscuous mode
+
+If you don’t want to use MAC address cloning and would rather allow all interfaces to receive and transmit data for MAC addresses other than the ones assigned by the hypervisor, ensure that the security properties at the virtual switch and port group levels are set to Accept for Promiscuous Mode, MAC Address Changes, and Forged Transmits. The values set on the virtual switch can be overridden by the values at the port group level, so ensure that settings are the same in both places.
+
+For more information about using Promiscuous Mode, see the instructions for Red Hat Enterprise Linux or Ubuntu or Debian.
+
+Linux: Node status is "orphaned"
+
+A Linux node in an orphaned state usually indicates that either the storagegrid service or the StorageGRID node daemon controlling the node’s container died unexpectedly. About this task
+
+If a Linux node reports that it is in an orphaned state, you should:
+
+Check logs for errors and messages.
+
+Attempt to start the node again.
+
+If necessary, use container engine commands to stop the existing node container.
+
+Restart the node.
+
+Steps
+
+1. Check logs for both the service daemon and the orphaned node for obvious errors or messages about exiting unexpectedly.
+
+2. Log in to the host as root or using an account with sudo permission.
+
+3. Attempt to start the node again by running the following command: $ sudo storagegrid node start node-name $ sudo storagegrid node start DC1-S1-172-16-1-172
+
+If the node is orphaned, the response is
+
+Not starting ORPHANED node DC1-S1-172-16-1-172
+
+4. From Linux, stop the container engine and any controlling storagegrid-node processes. For example:sudo docker stop --time secondscontainer-name
+
+1301
+
+For seconds, enter the number of seconds you want to wait for the container to stop (typically 15 minutes or less). For example: A Linux node in an orphaned state usually indicates that either the storagegrid service or the StorageGRID node daemon controlling the node’s container died unexpectedly. About this task
+
+If a Linux node reports that it is in an orphaned state, you should:
+
+Check logs for errors and messages.
+
+Attempt to start the node again.
+
+If necessary, use container engine commands to stop the existing node container.
+
+Restart the node.
+
+Steps
+
+1. Check logs for both the service daemon and the orphaned node for obvious errors or messages about exiting unexpectedly.
+
+2. Log in to the host as root or using an account with sudo permission.
+
+3. Attempt to start the node again by running the following command: $ sudo storagegrid node start node-name $ sudo storagegrid node start DC1-S1-172-16-1-172
+
+If the node is orphaned, the response is
+
+Not starting ORPHANED node DC1-S1-172-16-1-172
+
+4. From Linux, stop the container engine and any controlling storagegrid-node processes. For example:sudo docker stop --time secondscontainer-name
+
+1301
+
+For seconds, enter the number of seconds you want to wait for the container to stop (typically 15 minutes or less). For example:
+
+sudo docker stop --time 900 storagegrid-DC1-S1-172-16-1-172
+
+5. Restart the node: storagegrid node start node-name storagegrid node start DC1-S1-172-16-1-172
+
+Linux: Troubleshoot IPv6 support
+
+You might need to enable IPv6 support in the kernel if you have installed StorageGRID nodes on Linux hosts and you notice that IPv6 addresses have not been assigned to the node containers as expected.
+
+About this task
+
+You can see the IPv6 address that has been assigned to a grid node in the following locations in the Grid Manager:
+
+Select NODES, and select the node. Then, select Show more next to IP Addresses on the Overview tab.
+
+Select SUPPORT > Tools > Grid topology. Then, select node > SSM > Resources. If an IPv6 address has been assigned, it is listed below the IPv4 address in the Network Addresses section.
+
+1302
+
+If the IPv6 address is not shown and the node is installed on a Linux host, follow these steps to enable IPv6 support in the kernel. Steps
+
+1. Log in to the host as root or using an account with sudo permission.
+
+2. Run the following command: sysctl net.ipv6.conf.all.disable_ipv6
+
+root@SG:~ # sysctl net.ipv6.conf.all.disable_ipv6
+
+The result should be 0.
+
+net.ipv6.conf.all.disable_ipv6 = 0
+
+If the result is not 0, see the documentation for your operating system for changing sysctl settings. Then, change the value to 0 before continuing.
+
+3. Enter the StorageGRID node container: storagegrid node enter node-name
+
+4. Run the following command: sysctl net.ipv6.conf.all.disable_ipv6
+
+root@DC1-S1:~ # sysctl net.ipv6.conf.all.disable_ipv6

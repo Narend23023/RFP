@@ -1,0 +1,115 @@
+Job completion conditions. The EC rebalance procedure is considered complete when any of the following is true:
+
+It can’t move any more erasure-coded data. ◦ The data in all nodes is within a 5% deviation of the target data partition.
+
+1431
+
+◦ The procedure has been running for 30 days. Steps
+
+1. Review the current object storage details for the site you plan to rebalance.
+
+a. Select NODES.
+
+b. Select the first Storage Node at the site.
+
+c. Select the Storage tab.
+
+d. Position your cursor over the Storage Used - Object Data chart to see the current amount of replicated
+
+data and erasure-coded data on the Storage Node.
+
+e. Repeat these steps to view the other Storage Nodes at the site.
+
+2. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Start the procedure: `rebalance-data start --site "site-name"
+
+For "site-name", specify the first site where you added new Storage Node or nodes. Enclose site-name in quotes.
+
+The EC rebalance procedure starts, and a job ID is returned.
+
+4. Copy the job ID.
+
+5. Monitor the status of the EC rebalance procedure.
+
+To view the status of a single EC rebalance procedure: rebalance-data status --job-id job-id
+
+For job-id, specify the ID that was returned when you started the procedure.
+
+To view the status of the current EC rebalance procedure and any previously completed procedures:
+
+rebalance-data status
+
+To get help on the rebalance-data command: rebalance-data --help
+
+6. Perform additional steps, based on the status returned:
+
+If State is In progress, the EC rebalance operation is still running. You should periodically monitor the procedure until it completes.
+
+1432
+
+Use the Site Imbalance value to assess how unbalanced erasure-code data usage is across the Storage Nodes at the site. This value can range from 1.0 to 0, with 0 indicating that erasure-coding data usage is completely balanced across all Storage Nodes at the site.
+
+The EC rebalance job is considered complete and will stop when the data in all nodes is within a 5% deviation of the target data partition.
+
+If State is Success, optionally review object storage to see the updated details for the site.
+
+Erasure-coded data should now be more balanced among the Storage Nodes at the site.
+
+If State is Failure:
+
+a. Confirm that all Storage Nodes at the site are connected to the grid.
+
+b. Check for and resolve any alerts that might be affecting these Storage Nodes. c. Restart the EC rebalance procedure:
+
+rebalance-data start –-job-id job-id
+
+d. View the status of the new procedure. If State is still Failure, contact technical support. To get help on the rebalance-data command: rebalance-data --help
+
+6. Perform additional steps, based on the status returned:
+
+If State is In progress, the EC rebalance operation is still running. You should periodically monitor the procedure until it completes.
+
+1432
+
+Use the Site Imbalance value to assess how unbalanced erasure-code data usage is across the Storage Nodes at the site. This value can range from 1.0 to 0, with 0 indicating that erasure-coding data usage is completely balanced across all Storage Nodes at the site.
+
+The EC rebalance job is considered complete and will stop when the data in all nodes is within a 5% deviation of the target data partition.
+
+If State is Success, optionally review object storage to see the updated details for the site.
+
+Erasure-coded data should now be more balanced among the Storage Nodes at the site.
+
+If State is Failure:
+
+a. Confirm that all Storage Nodes at the site are connected to the grid.
+
+b. Check for and resolve any alerts that might be affecting these Storage Nodes. c. Restart the EC rebalance procedure:
+
+rebalance-data start –-job-id job-id
+
+d. View the status of the new procedure. If State is still Failure, contact technical support.
+
+7. If the EC rebalance procedure is generating too much load (for example, ingest operations are affected), pause the procedure. rebalance-data pause --job-id job-id
+
+8. If you need to terminate the EC rebalance procedure (for example, so you can perform a StorageGRID software upgrade), enter the following:
+
+rebalance-data terminate --job-id job-id
+
+When you terminate an EC rebalance procedure, any data fragments that have already been moved remain in their new locations. Data is not moved back to the original location.
+
+9. If you are using erasure coding at more than one site, run this procedure for all other affected sites. Troubleshoot expansion
+
+If you encounter errors during the grid expansion process that you are unable to resolve, or if a grid task fails, collect the log files and contact technical support.
+
+Before you contact technical support, collect the required log files to assist in troubleshooting.
+
+Steps

@@ -1,0 +1,53 @@
+You can configure multiple Cloud Storage Pool endpoints if you want to tier or back up object data to more than one cloud. The filters in your ILM rules let you specify which objects are stored in each Cloud Storage Pool. For example, you might want to store objects from some tenants or buckets in Amazon S3 Glacier and objects from other tenants or buckets in Azure Blob storage. Or, you might want to move data between Amazon S3 Glacier and Azure Blob storage.
+
+When using multiple Cloud Storage Pool endpoints, keep in mind that an object can be stored in only one Cloud Storage Pool at a time.
+
+To implement multiple cloud endpoints:
+
+1. Create up to 10 Cloud Storage Pools.
+
+2. Configure ILM rules to store the appropriate object data at the appropriate time in each Cloud Storage
+
+632 Pool. For example, store objects from bucket A in Cloud Storage Pool A, and store objects from bucket B in Cloud Storage Pool B. Or, store objects in Cloud Storage Pool A for some amount of time and then move them to Cloud Storage Pool B.
+
+3. Add the rules to your ILM policy. Then, simulate and activate the policy. Considerations for Cloud Storage Pools
+
+If you plan to use a Cloud Storage Pool to move objects out of the StorageGRID system, you must review the considerations for configuring and using Cloud Storage Pools. General considerations You can configure multiple Cloud Storage Pool endpoints if you want to tier or back up object data to more than one cloud. The filters in your ILM rules let you specify which objects are stored in each Cloud Storage Pool. For example, you might want to store objects from some tenants or buckets in Amazon S3 Glacier and objects from other tenants or buckets in Azure Blob storage. Or, you might want to move data between Amazon S3 Glacier and Azure Blob storage.
+
+When using multiple Cloud Storage Pool endpoints, keep in mind that an object can be stored in only one Cloud Storage Pool at a time.
+
+To implement multiple cloud endpoints:
+
+1. Create up to 10 Cloud Storage Pools.
+
+2. Configure ILM rules to store the appropriate object data at the appropriate time in each Cloud Storage
+
+632 Pool. For example, store objects from bucket A in Cloud Storage Pool A, and store objects from bucket B in Cloud Storage Pool B. Or, store objects in Cloud Storage Pool A for some amount of time and then move them to Cloud Storage Pool B.
+
+3. Add the rules to your ILM policy. Then, simulate and activate the policy. Considerations for Cloud Storage Pools
+
+If you plan to use a Cloud Storage Pool to move objects out of the StorageGRID system, you must review the considerations for configuring and using Cloud Storage Pools. General considerations
+
+In general, cloud archival storage, such as Amazon S3 Glacier or Azure Blob storage, is an inexpensive place to store object data. However, the costs to retrieve data from cloud archival storage are relatively high. To achieve the lowest overall cost, you must consider when and how often you will access the objects in the Cloud Storage Pool. Using a Cloud Storage Pool is recommended only for content that you expect to access infrequently.
+
+Don’t use Cloud Storage Pools for objects that have been ingested by Swift clients. Swift does not support RestoreObject requests, so StorageGRID will not be able to retrieve any Swift objects that have been transitioned to S3 Glacier storage or the Azure Blob storage Archive tier. Issuing a Swift GET object request to retrieve these objects will fail (403 Forbidden).
+
+Using Cloud Storage Pools with FabricPool is not supported because of the added latency to retrieve an object from the Cloud Storage Pool target. Objects with S3 Object Lock enabled can’t be placed in Cloud Storage Pools.
+
+If the destination S3 bucket for a Cloud Storage Pool has S3 Object Lock enabled, the attempt to configure bucket replication (PutBucketReplication) will fail with an AccessDenied error.
+
+Considerations for the ports used for Cloud Storage Pools
+
+To ensure that the ILM rules can move objects to and from the specified Cloud Storage Pool, you must configure the network or networks that contain your system’s Storage Nodes. You must ensure that the following ports can communicate with the Cloud Storage Pool.
+
+By default, Cloud Storage Pools use the following ports:
+
+80: For endpoint URIs that begin with http
+
+443: For endpoint URIs that begin with https
+
+You can specify a different port when you create or edit a Cloud Storage Pool.
+
+If you use a non-transparent proxy server, you must also configure a storage proxy to allow messages to be sent to external endpoints, such as an endpoint on the internet. Considerations for costs
+
+Access to storage in the cloud using a Cloud Storage Pool requires network connectivity to the cloud. You must consider the cost of the network infrastructure you will use to access the cloud and provision it appropriately, based on the amount of data you expect to move between StorageGRID and the cloud using the Cloud Storage Pool.

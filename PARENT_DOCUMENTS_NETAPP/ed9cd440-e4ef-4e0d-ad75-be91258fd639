@@ -1,0 +1,89 @@
+You might need to change the password for a tenant’s local root user if the root user is locked out of the account.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+About this task
+
+If single sign-on (SSO) is enabled for your StorageGRID system, the local root user can’t sign in to the tenant account. To perform root user tasks, users must belong to a federated group that has the Root access permission for the tenant. Steps
+
+1. Select TENANTS.
+
+461
+
+2. Select the tenant account. You can do either of the following:
+
+Select the checkbox for the tenant, and select Actions > Change root password. ◦ Select the tenant’s name to display the details page, and select Actions > Change root password.
+
+3. Enter the new password for the tenant account.
+
+4. Select Save. Delete tenant account
+
+You can delete a tenant account if you want to permanently remove the tenant’s access to the system.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have specific access permissions.
+
+You have removed all buckets (S3), containers (Swift), and objects associated with the tenant account.
+
+If the tenant is permitted to use a grid federation connection, you have reviewed the considerations for deleting a tenant with the Use grid federation connection permission. Steps
+
+1. Select TENANTS.
+
+2. Locate the tenant account or accounts you want to delete.
+
+Use the search box to search for a tenant by name or tenant ID.
+
+3. To delete multiple tenants, select the checkboxes and select Actions > Delete.
+
+4. To delete a single tenant, do either of the following:
+
+Select the checkbox, and select Actions > Delete. ◦ Select the tenant name to display the details page, and then select Actions > Delete.
+
+462
+
+5. Select Yes. Manage platform services
+
+Manage platform services for tenants: Overview
+
+If you enable platform services for S3 tenant accounts, you must configure your grid so that tenants can access the external resources necessary to use these services.
+
+What are platform services?
+
+Platform services include CloudMirror replication, event notifications, and the search integration service. CloudMirror replication
+
+The StorageGRID CloudMirror replication service is used to mirror specific objects from a StorageGRID bucket to a specified external destination.
+
+For example, you might use CloudMirror replication to mirror specific customer records into Amazon S3 and then leverage AWS services to perform analytics on your data.
+
+CloudMirror replication has some important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication.
+
+CloudMirror replication is not supported if the source bucket has S3 Object Lock enabled. Notifications
+
+Per-bucket event notifications are used to send notifications about specific actions performed on objects to a specified external Kafka cluster or Amazon Simple Notification Service.
+
+For example, you could configure alerts to be sent to administrators about each object added to a bucket, where the objects represent log files associated with a critical system event.
+
+Although event notification can be configured on a bucket with S3 Object Lock enabled, the S3 Object Lock metadata (including Retain Until Date and Legal Hold status) of the objects will not be included in the notification messages. Search integration service If you enable platform services for S3 tenant accounts, you must configure your grid so that tenants can access the external resources necessary to use these services.
+
+What are platform services?
+
+Platform services include CloudMirror replication, event notifications, and the search integration service. CloudMirror replication
+
+The StorageGRID CloudMirror replication service is used to mirror specific objects from a StorageGRID bucket to a specified external destination.
+
+For example, you might use CloudMirror replication to mirror specific customer records into Amazon S3 and then leverage AWS services to perform analytics on your data.
+
+CloudMirror replication has some important similarities and differences with the cross-grid replication feature. To learn more, see Compare cross-grid replication and CloudMirror replication.
+
+CloudMirror replication is not supported if the source bucket has S3 Object Lock enabled. Notifications
+
+Per-bucket event notifications are used to send notifications about specific actions performed on objects to a specified external Kafka cluster or Amazon Simple Notification Service.
+
+For example, you could configure alerts to be sent to administrators about each object added to a bucket, where the objects represent log files associated with a critical system event.

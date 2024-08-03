@@ -1,0 +1,111 @@
+For an object in StorageGRID, object metadata includes the following types of information:
+
+System metadata, including a unique ID for each object (UUID), the object name, the name of the S3 bucket or Swift container, the tenant account name or ID, the logical size of the object, the date and time the object was first created, and the date and time the object was last modified.
+
+Any custom user metadata key-value pairs associated with the object. For S3 objects, any object tag key-value pairs associated with the object.
+
+For replicated object copies, the current storage location of each copy. The last column shows the maximum optimized value of the Soft Read-Only Watermark for all storage volumes on each Storage Node. Manage object metadata storage
+
+The object metadata capacity of a StorageGRID system controls the maximum number of objects that can be stored on that system. To ensure that your StorageGRID system has adequate space to store new objects, you must understand where and how StorageGRID stores object metadata.
+
+What is object metadata?
+
+Object metadata is any information that describes an object. StorageGRID uses object metadata to track the locations of all objects across the grid and to manage each object’s lifecycle over time.
+
+For an object in StorageGRID, object metadata includes the following types of information:
+
+System metadata, including a unique ID for each object (UUID), the object name, the name of the S3 bucket or Swift container, the tenant account name or ID, the logical size of the object, the date and time the object was first created, and the date and time the object was last modified.
+
+Any custom user metadata key-value pairs associated with the object. For S3 objects, any object tag key-value pairs associated with the object.
+
+For replicated object copies, the current storage location of each copy.
+
+For erasure-coded object copies, the current storage location of each fragment.
+
+For object copies in a Cloud Storage Pool, the location of the object, including the name of the external bucket and the object’s unique identifier.
+
+For segmented objects and multipart objects, segment identifiers and data sizes.
+
+How is object metadata stored?
+
+StorageGRID maintains object metadata in a Cassandra database, which is stored independently of object data. To provide redundancy and to protect object metadata from loss, StorageGRID stores three copies of the metadata for all objects in the system at each site.
+
+550
+
+This figure represents the Storage Nodes at two sites. Each site has the same amount of object metadata, and each site’s metadata is subdivided among all Storage Nodes at that site.
+
+Where is object metadata stored? This figure represents the storage volumes for a single Storage Node.
+
+As shown in the figure, StorageGRID reserves space for object metadata on storage volume 0 of each Storage Node. It uses the reserved space to store object metadata and to perform essential database operations. Any remaining space on storage volume 0 and all other storage volumes in the Storage Node are used exclusively for object data (replicated copies and erasure-coded fragments).
+
+The amount of space that is reserved for object metadata on a particular Storage Node depends on several factors, which are described below.
+
+Metadata reserved space setting
+
+The Metadata reserved space is a system-wide setting that represents the amount of space that will be reserved for metadata on volume 0 of every Storage Node. As shown in the table, the default value of this
+
+551
+
+setting is based on:
+
+The software version you were using when you initially installed StorageGRID.
+
+The amount of RAM on each Storage Node. Version used for initial StorageGRID installation
+
+Amount of RAM on Storage Nodes
+
+Default Metadata reserved space setting
+
+11.5 to 11.8
+
+128 GB or more on each Storage Node in the grid
+
+8 TB (8,000 GB)
+
+Less than 128 GB on any Storage Node in the grid
+
+3 TB (3,000 GB)
+
+11.1 to 11.4
+
+128 GB or more on each Storage Node at any one site
+
+4 TB (4,000 GB) Less than 128 GB on any Storage Node at each site
+
+3 TB (3,000 GB)
+
+11.0 or earlier
+
+Any amount
+
+2 TB (2,000 GB)
+
+View Metadata reserved space setting
+
+Follow these steps to view the Metadata reserved space setting for your StorageGRID system.
+
+Steps
+
+1. Select CONFIGURATION > System > Storage settings.
+
+2. On the Storage settings page, expand the Metadata reserved space section.
+
+For StorageGRID 11.8 or higher, the Metadata reserved space value must be at least 100 GB and no more than 1 PB.
+
+The default setting for a new StorageGRID 11.6 or higher installation in which each Storage Node has 128 GB or more of RAM is 8,000 GB (8 TB).
+
+Actual reserved space for metadata Amount of RAM on Storage Nodes
+
+Default Metadata reserved space setting
+
+11.5 to 11.8
+
+128 GB or more on each Storage Node in the grid
+
+8 TB (8,000 GB)
+
+Less than 128 GB on any Storage Node in the grid
+
+3 TB (3,000 GB)
+
+11.1 to 11.4

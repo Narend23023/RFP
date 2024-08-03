@@ -1,0 +1,89 @@
+"Linux" refers to a Red Hat Enterprise Linux, Ubuntu, or Debian deployment. For a list of supported versions, see the NetApp Interoperability Matrix Tool (IMT).
+
+4. Perform the expansion.
+
+5. Configure the expanded system. Plan StorageGRID expansion
+
+Add storage capacity
+
+Guidelines for adding object capacity
+
+You can expand the object storage capacity of your StorageGRID system by adding storage volumes to existing Storage Nodes or by adding new Storage Nodes to existing sites. You must add storage capacity in a way that meets the requirements of your information lifecycle management (ILM) policy.
+
+1386
+
+Guidelines for adding storage volumes
+
+Before adding storage volumes to existing Storage Nodes, review the following guidelines and limitations:
+
+You must examine your current ILM rules to determine where and when to add storage volumes to increase the storage available for replicated objects or erasure-coded objects.
+
+You can’t increase the metadata capacity of your system by adding storage volumes because object metadata is stored only on volume 0. 4. Perform the expansion.
+
+5. Configure the expanded system. Add new site
+
+1. Follow the steps for Adding a new site.
+
+2. Update the subnets.
+
+3. Deploy grid nodes: ◦ Appliances ◦ VMware ◦ Linux
+
+"Linux" refers to a Red Hat Enterprise Linux, Ubuntu, or Debian deployment. For a list of supported versions, see the NetApp Interoperability Matrix Tool (IMT).
+
+4. Perform the expansion.
+
+5. Configure the expanded system. Plan StorageGRID expansion
+
+Add storage capacity
+
+Guidelines for adding object capacity
+
+You can expand the object storage capacity of your StorageGRID system by adding storage volumes to existing Storage Nodes or by adding new Storage Nodes to existing sites. You must add storage capacity in a way that meets the requirements of your information lifecycle management (ILM) policy.
+
+1386
+
+Guidelines for adding storage volumes
+
+Before adding storage volumes to existing Storage Nodes, review the following guidelines and limitations:
+
+You must examine your current ILM rules to determine where and when to add storage volumes to increase the storage available for replicated objects or erasure-coded objects.
+
+You can’t increase the metadata capacity of your system by adding storage volumes because object metadata is stored only on volume 0.
+
+Each software-based Storage Node can support a maximum of 16 storage volumes. If you need to add capacity beyond that, you must add new Storage Nodes. You can add one or two expansion shelves to each SG6060 appliance. Each expansion shelf adds 16 storage volumes. With both expansion shelves installed, the SG6060 can support a total of 48 storage volumes.
+
+You can add one or two expansion shelves to each SG6160 appliance. Each expansion shelf adds 60 storage volumes. With both expansion shelves installed, the SG6160 can support a total of 180 storage volumes.
+
+You can’t add storage volumes to any other storage appliance.
+
+You can’t increase the size of an existing storage volume.
+
+You can’t add storage volumes to a Storage Node at the same time you are performing a system upgrade, recovery operation, or another expansion.
+
+After you have decided to add storage volumes and have determined which Storage Nodes you must expand to satisfy your ILM policy, follow the instructions for your type of Storage Node:
+
+To add one or two expansion shelves to an SG6060 storage appliance, go to Add expansion shelf to deployed SG6060. To add one or two expansion shelves to an SG6160 storage appliance, go to Add expansion shelf to deployed SG6160
+
+For a software-based node, follow the instructions for adding storage volumes to Storage Nodes. Guidelines for adding Storage Nodes
+
+Before adding Storage Nodes to existing sites, review the following guidelines and limitations:
+
+You must examine your current ILM rules to determine where and when to add Storage Nodes to increase the storage available for replicated objects or erasure-coded objects.
+
+You should not add more than 10 Storage Nodes in a single expansion procedure.
+
+You can add Storage Nodes to more than one site in a single expansion procedure.
+
+You can add Storage Nodes and other types of nodes in a single expansion procedure.
+
+Before starting the expansion procedure, you must confirm that all data-repair operations performed as part of a recovery are complete. See Check data repair jobs.
+
+If you need to remove Storage Nodes before or after performing an expansion, you should not decommission more than 10 Storage Nodes in a single Decommission Node procedure. Guidelines for ADC service on Storage Nodes
+
+When configuring the expansion, you must choose whether to include the Administrative Domain Controller (ADC) service on each new Storage Node. The ADC service keeps track of the location and availability of grid
+
+1387
+
+services.
+
+The StorageGRID system requires a quorum of ADC services to be available at each site and at all times.

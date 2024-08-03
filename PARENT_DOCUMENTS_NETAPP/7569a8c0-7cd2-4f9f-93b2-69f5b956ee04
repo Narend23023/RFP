@@ -1,0 +1,265 @@
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+The following supported request query parameters are optional:
+
+Delimiter
+
+End_marker
+
+Format
+
+Limit
+
+Marker
+
+Path
+
+Prefix
+
+A successful execution returns the following headers with an "HTTP/1.1 200 Success" or a "HTTP/1.1 204 No Content" response:
+
+Accept-Ranges
+
+Content-Length
+
+Content-Type
+
+1002
+
+• Date
+
+X-Container-Bytes-Used
+
+X-Container-Object-Count
+
+X-Timestamp
+
+X-Trans-Id HEAD container
+
+This operation retrieves container statistics and metadata from a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following headers with an "HTTP/1.1 204 No Content" response:
+
+Accept-Ranges
+
+Content-Length
+
+Date
+
+X-Container-Bytes-Used
+
+X-Container-Object-Count
+
+X-Timestamp
+
+X-Trans-Id PUT container
+
+This operation creates a container for an account in a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following headers with an "HTTP/1.1 201 Created" or "HTTP/1.1 202 Accepted" (if the container already exists under this account) response:
+
+Content-Length
+
+1003
+
+• Date
+
+X-Timestamp
+
+X-Trans-Id
+
+A container name must be unique in the StorageGRID namespace. If the container exists under another account, the following header is returned: "HTTP/1.1 409 Conflict."
+
+Related information Monitor and audit operations
+
+Object operations
+
+The following Swift API operations are performed on objects. These operations can be tracked in the StorageGRID audit log. DELETE object
+
+This operation deletes an object’s content and metadata from the StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+A successful execution returns the following response headers with an HTTP/1.1 204 No Content response:
+
+Content-Length
+
+Content-Type
+
+Date
+
+X-Trans-Id
+
+When processing a DELETE Object request, StorageGRID attempts to immediately remove all copies of the object from all stored locations. If successful, StorageGRID returns a response to the client immediately. If all copies can’t be removed within 30 seconds (for example, because a location is temporarily unavailable), StorageGRID queues the copies for removal and then indicates success to the client.
+
+For more information, see How objects are deleted. GET object
+
+This operation retrieves the object content and gets the object metadata from a StorageGRID system.
+
+The following request parameters are required:
+
+1004
+
+• Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+The following request headers are optional:
+
+Accept-Encoding
+
+If-Match
+
+If-Modified-Since
+
+If-None-Match
+
+If-Unmodified-Since
+
+Range
+
+A successful execution returns the following headers with an HTTP/1.1 200 OK response:
+
+Accept-Ranges
+
+Content-Disposition, returned only if Content-Disposition metadata was set X-Auth-Token
+
+A successful execution returns the following response headers with an HTTP/1.1 204 No Content response:
+
+Content-Length
+
+Content-Type
+
+Date
+
+X-Trans-Id
+
+When processing a DELETE Object request, StorageGRID attempts to immediately remove all copies of the object from all stored locations. If successful, StorageGRID returns a response to the client immediately. If all copies can’t be removed within 30 seconds (for example, because a location is temporarily unavailable), StorageGRID queues the copies for removal and then indicates success to the client.
+
+For more information, see How objects are deleted. GET object
+
+This operation retrieves the object content and gets the object metadata from a StorageGRID system.
+
+The following request parameters are required:
+
+1004
+
+• Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+The following request headers are optional:
+
+Accept-Encoding
+
+If-Match
+
+If-Modified-Since
+
+If-None-Match
+
+If-Unmodified-Since
+
+Range
+
+A successful execution returns the following headers with an HTTP/1.1 200 OK response:
+
+Accept-Ranges
+
+Content-Disposition, returned only if Content-Disposition metadata was set
+
+Content-Encoding, returned only if Content-Encoding metadata was set
+
+Content-Length
+
+Content-Type
+
+Date
+
+ETag
+
+Last-Modified
+
+X-Timestamp
+
+X-Trans-Id HEAD object
+
+This operation retrieves metadata and properties of an ingested object from a StorageGRID system.
+
+The following request parameters are required:
+
+Account
+
+Container
+
+Object
+
+The following request header is required:
+
+X-Auth-Token
+
+1005
+
+A successful execution returns the following headers with an "HTTP/1.1 200 OK" response:
+
+Accept-Ranges
+
+Content-Disposition, returned only if Content-Disposition metadata was set
+
+Content-Encoding, returned only if Content-Encoding metadata was set
+
+Content-Length
+
+Content-Type
+
+Date
+
+ETag

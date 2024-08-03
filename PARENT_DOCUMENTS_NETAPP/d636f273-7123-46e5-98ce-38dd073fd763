@@ -1,0 +1,125 @@
+Use a script to generate a new self-signed management interface certificate
+
+If strict hostname validation is required, you can use a script to generate the management interface certificate.
+
+Before you begin
+
+You have specific access permissions.
+
+You have the Passwords.txt file. About this task
+
+The best practice for a production environment is to use a certificate signed by an external certificate authority.
+
+Steps
+
+1. Obtain the fully qualified domain name (FQDN) of each Admin Node.
+
+2. Log in to the primary Admin Node: a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #.
+
+3. Configure StorageGRID with a new self-signed certificate.
+
+$ sudo make-certificate --domains wildcard-admin-node-fqdn --type management
+
+For --domains, use wildcards to represent the fully qualified domain names of all Admin Nodes. For example, *.ui.storagegrid.example.com uses the * wildcard to represent admin1.ui.storagegrid.example.com and admin2.ui.storagegrid.example.com.
+
+Set --type to management to configure the management interface certificate, which is used by Grid Manager and Tenant Manager.
+
+By default, generated certificates are valid for one year (365 days) and must be recreated before they expire. You can use the --days argument to override the default validity period. A certificate’s validity period begins when make-certificate is run. You must ensure the management client is synchronized to the same time source as StorageGRID; otherwise, the client might reject the certificate.
+
+$ sudo make-certificate --domains *.ui.storagegrid.example.com --type management --days 720
+
+407
+
+The resulting output contains the public certificate needed by your management API client.
+
+4. Select and copy the certificate.
+
+Include the BEGIN and the END tags in your selection.
+
+5. Log out of the command shell. $ exit
+
+6. Confirm the certificate was configured: a. Access the Grid Manager.
+
+b. Select CONFIGURATION > Security > Certificates
+
+c. On the Global tab, select Management interface certificate.
+
+7. Configure your management client to use the public certificate you copied. Include the BEGIN and END tags.
+
+Download or copy the management interface certificate
+
+You can save or copy the management interface certificate contents for use elsewhere. Steps
+
+1. Select CONFIGURATION > Security > Certificates.
+
+2. On the Global tab, select Management interface certificate.
+
+3. Select the Server or CA bundle tab and then download or copy the certificate.
+
+408
+
+Download certificate file or CA bundle $ sudo make-certificate --domains *.ui.storagegrid.example.com --type management --days 720
+
+407
+
+The resulting output contains the public certificate needed by your management API client.
+
+4. Select and copy the certificate.
+
+Include the BEGIN and the END tags in your selection.
+
+5. Log out of the command shell. $ exit
+
+6. Confirm the certificate was configured: a. Access the Grid Manager.
+
+b. Select CONFIGURATION > Security > Certificates
+
+c. On the Global tab, select Management interface certificate.
+
+7. Configure your management client to use the public certificate you copied. Include the BEGIN and END tags.
+
+Download or copy the management interface certificate
+
+You can save or copy the management interface certificate contents for use elsewhere. Steps
+
+1. Select CONFIGURATION > Security > Certificates.
+
+2. On the Global tab, select Management interface certificate.
+
+3. Select the Server or CA bundle tab and then download or copy the certificate.
+
+408
+
+Download certificate file or CA bundle
+
+Download the certificate or CA bundle .pem file. If you are using an optional CA bundle, each certificate in the bundle displays on its own sub-tab. a. Select Download certificate or Download CA bundle.
+
+If you are downloading a CA bundle, all the certificates in the CA bundle secondary tabs download as a single file.
+
+b. Specify the certificate file name and download location. Save the file with the extension .pem.
+
+For example: storagegrid_certificate.pem
+
+Copy certificate or CA bundle PEM
+
+Copy the certificate text to paste elsewhere. If you are using an optional CA bundle, each certificate in the bundle displays on its own sub-tab. a. Select Copy certificate PEM or Copy CA bundle PEM.
+
+If you are copying a CA bundle, all the certificates in the CA bundle secondary tabs copy together.
+
+b. Paste the copied certificate into a text editor.
+
+c. Save the text file with the extension .pem.
+
+For example: storagegrid_certificate.pem
+
+Configure S3 and Swift API certificates
+
+You can replace or restore the server certificate that is used for S3 or Swift client connections to Storage Nodes or to load balancer endpoints. The replacement custom server certificate is specific to your organization. About this task

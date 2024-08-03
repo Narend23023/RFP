@@ -1,0 +1,93 @@
+If you use erasure coding for data protection
+
+Let P represent the percentage of S3 operations that are PUTs, where 0 ≤ P ≤ 1 (so for a 100% PUT workload, P = 1, and for a 100% GET workload, P = 0). Let K represent the average size of the sum of the S3 account names, S3 bucket, and S3 key. Suppose the S3 account name is always my-s3-account (13 bytes), buckets have fixed-length names like /my/application/bucket-12345 (28 bytes), and objects have fixed-length keys like 5733a5d7-f069-41ef-8fbd- 13247494c69c (36 bytes). Then K has a value of 90 (13+13+28+36).
+
+If you can determine values for P and K, you can estimate the volume of application logs your external syslog server will have to be able to handle using the following formulas.
+
+Application Log Rate = ((3.2 x P) + (1.3 x (1 - P))) x S3 Operations Rate Application Log Average Size = (P x (240 + (0.4 x K))) + ((1 - P) x (185 + (0.9 x K))) Bytes So, for example, if your grid is sized for 1,000 S3 operations per second, your workload is 50% PUTs, and your S3 account names, bucket names, and object names average 90 bytes, your external syslog server should be sized to support 2,250 application logs per second and should be able to receive (and typically store) application data at a rate of 0.6 MB per second. Configure audit messages and external syslog server
+
+You can configure a number of settings related to audit messages. You can adjust the number of audit messages recorded; define any HTTP request headers you want to include in client read and write audit messages; configure an external syslog server; and specify where audit logs, security event logs, and StorageGRID software logs are sent.
+
+Audit messages and logs record system activities and security events, and are essential tools for monitoring and troubleshooting. All StorageGRID nodes generate audit messages and logs to track system activity and events. Optionally, you can configure an external syslog server to save audit information remotely. Using an external server minimizes the performance impact of audit message logging without reducing the completeness of audit data. An external syslog server is especially useful if you have a large grid, use multiple types of S3 applications, or want to retain all audit data. See Considerations for external syslog server for details.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission. You can configure a number of settings related to audit messages. You can adjust the number of audit messages recorded; define any HTTP request headers you want to include in client read and write audit messages; configure an external syslog server; and specify where audit logs, security event logs, and StorageGRID software logs are sent.
+
+Audit messages and logs record system activities and security events, and are essential tools for monitoring and troubleshooting. All StorageGRID nodes generate audit messages and logs to track system activity and events. Optionally, you can configure an external syslog server to save audit information remotely. Using an external server minimizes the performance impact of audit message logging without reducing the completeness of audit data. An external syslog server is especially useful if you have a large grid, use multiple types of S3 applications, or want to retain all audit data. See Considerations for external syslog server for details.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+If you plan to configure an external syslog server, you have reviewed the considerations for using an external syslog server and ensured that the server has enough capacity to receive and store the log files.
+
+If you plan to configure an external syslog server using TLS or RELP/TLS protocol, you have the required server CA and client certificates and the client private key.
+
+1187 Change audit message levels
+
+You can set a different audit level for each of the following categories of messages in the audit log:
+
+Audit category
+
+Default setting
+
+More information
+
+System
+
+Normal
+
+System audit messages
+
+Storage
+
+Error
+
+Object storage audit messages
+
+Management
+
+Normal
+
+Management audit message Client reads
+
+Normal
+
+Client read audit messages
+
+Client writes
+
+Normal
+
+Client write audit messages
+
+ILM
+
+Normal
+
+ILM audit messages
+
+Cross-grid replication
+
+Error
+
+CGRR: Cross-Grid Replication Request
+
+These defaults apply if you initially installed StorageGRID using version 10.3 or later. If you initially used an earlier version of StorageGRID, the default for all categories is set to Normal.
+
+During upgrades, audit level configurations will not be effective immediately. Steps
+
+1. Select CONFIGURATION > Monitoring > Audit and syslog server.
+
+2. For each category of audit message, select an audit level from the drop-down list:
+
+Audit level
+
+Description
+
+Off

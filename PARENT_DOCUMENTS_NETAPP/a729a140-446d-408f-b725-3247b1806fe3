@@ -1,0 +1,129 @@
+Result
+
+StorageGRID deletes both copies of the object after day 365.
+
+Example 3: Client delete overrides bucket lifecycle and ILM
+
+ILM
+
+Store two copies on Storage Nodes "forever" 612
+
+Examples for object retention
+
+To better understand the interactions between S3 Object Lock, bucket lifecycle settings, client delete requests, and ILM, consider the following examples.
+
+Example 1: S3 bucket lifecycle keeps objects longer than ILM ILM
+
+Store two copies for 1 year (365 days)
+
+Bucket lifecycle
+
+Expire objects in 2 years (730 days)
+
+Result
+
+StorageGRID stores the object for 730 days. StorageGRID uses the bucket lifecycle settings to determine whether to delete or retain an object.
+
+If the bucket lifecycle specifies that objects should be kept longer than specified by ILM, StorageGRID continues to use the ILM placement instructions when determining the number and type of copies to store. In this example, two copies of the object will continue to be stored in StorageGRID from days 366 to 730.
+
+Example 2: S3 bucket lifecycle expires objects before ILM ILM
+
+Store two copies for 2 years (730 days)
+
+Bucket lifecycle
+
+Expire objects in 1 year (365 days)
+
+Result
+
+StorageGRID deletes both copies of the object after day 365.
+
+Example 3: Client delete overrides bucket lifecycle and ILM
+
+ILM
+
+Store two copies on Storage Nodes "forever"
+
+Bucket lifecycle
+
+Expire objects in 2 years (730 days) Client delete request
+
+Issued on day 400
+
+Result
+
+StorageGRID deletes both copies of the object on day 400 in response to the client delete request.
+
+Example 4: S3 Object Lock overrides client delete request
+
+S3 Object Lock
+
+Retain-until-date for an object version is 2026-03-31. A legal hold is not in effect.
+
+613
+
+Compliant ILM rule Store two copies on Storage Nodes "forever"
+
+Client delete request
+
+Issued on 2024-03-31 Result
+
+StorageGRID will not delete the object version because the retain-until-date is still 2 years away.
+
+How objects are deleted
+
+StorageGRID can delete objects either in direct response to a client request or automatically as a result of the expiration of an S3 bucket lifecycle or the requirements of the ILM policy. Understanding the different ways that objects can be deleted and how StorageGRID handles delete requests can help you manage objects more effectively.
+
+StorageGRID can use one of two methods to delete objects:
+
+Synchronous deletion: When StorageGRID receives a client delete request, all object copies are removed immediately. The client is informed that deletion was successful after the copies have been removed.
+
+Objects are queued for deletion: When StorageGRID receives a delete request, the object is queued for deletion and the client is informed immediately that deletion was successful. Object copies are removed later by background ILM processing. When deleting objects, StorageGRID uses the method that optimizes delete performance, minimizes potential delete backlogs, and frees space most quickly.
+
+The table summarizes when StorageGRID uses each method.
+
+Method of performing deletion
+
+When used
+
+Objects are queued for deletion
+
+When any of the following conditions are true:
+
+Automatic object deletion has been triggered by one of the following events:
+
+The expiration date or number of days in the lifecycle configuration for an S3 bucket is reached.
+
+The last time period specified in an ILM rule elapses.
+
+Note: Objects in a bucket that has S3 Object Lock enabled can’t be deleted if they are under a legal hold or if a retain-until-date has been specified but not yet met.
+
+An S3 or Swift client requests deletion and one or more of these conditions is true:
+
+Copies can’t be deleted within 30 seconds because, for example, an object location is temporarily unavailable.
+
+Background deletion queues are idle. 614
+
+Method of performing deletion
+
+When used
+
+Objects are removed immediately (synchronous deletion)
+
+When an S3 or Swift client makes a delete request and all of the following conditions are met:
+
+All copies can be removed within 30 seconds.
+
+Background deletion queues contain objects to process.
+
+When S3 or Swift clients make delete requests, StorageGRID begins by adding objects to the delete queue. It then switches to performing synchronous deletion. Making sure that the background deletion queue has objects to process allows StorageGRID to process deletes more efficiently, especially for low concurrency clients, while helping to prevent client delete backlogs.
+
+Time required to delete objects Automatic object deletion has been triggered by one of the following events:
+
+The expiration date or number of days in the lifecycle configuration for an S3 bucket is reached.
+
+The last time period specified in an ILM rule elapses.
+
+Note: Objects in a bucket that has S3 Object Lock enabled can’t be deleted if they are under a legal hold or if a retain-until-date has been specified but not yet met.
+
+An S3 or Swift client requests deletion and one or more of these conditions is true:

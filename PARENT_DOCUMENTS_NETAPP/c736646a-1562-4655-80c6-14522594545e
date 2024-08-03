@@ -1,0 +1,139 @@
+Object data — Performance-tier (10K SAS or SSD) storage and capacity-tier (NL-SAS/SATA) bulk storage for the persistent storage of object data and object metadata. You must use RAID-backed block devices for all storage categories. Non-redundant disks, SSDs, or JBODs aren’t supported. You can use shared or local RAID storage for any of the storage categories; however, if you want to use the node migration capability in StorageGRID, you must store both system data and object data on shared storage. For more information, see Node container migration requirements. Performance requirements
+
+The performance of the volumes used for the container pool, system data, and object metadata significantly impacts the overall performance of the system. You should use performance-tier (10K SAS or SSD) storage for these volumes to ensure adequate disk performance in terms of latency, input/output operations per second (IOPS), and throughput. You can use capacity-tier (NL-SAS/SATA) storage for the persistent storage of object data.
+
+The volumes used for the container pool, system data, and object data must have write-back caching enabled. The cache must be on a protected or persistent media.
+
+Requirements for hosts that use NetApp ONTAP storage
+
+If the StorageGRID node uses storage assigned from a NetApp ONTAP system, confirm that the volume does not have a FabricPool tiering policy enabled. Disabling FabricPool tiering for volumes used with StorageGRID nodes simplifies troubleshooting and storage operations. Never use FabricPool to tier any data related to StorageGRID back to StorageGRID itself. Tiering StorageGRID data back to StorageGRID increases troubleshooting and operational complexity.
+
+Number of hosts required
+
+Each StorageGRID site requires a minimum of three Storage Nodes.
+
+79
+
+In a production deployment, don’t run more than one Storage Node on a single physical or virtual host. Using a dedicated host for each Storage Node provides an isolated failure domain.
+
+Other types of nodes, such as Admin Nodes or Gateway Nodes, can be deployed on the same hosts, or they can be deployed on their own dedicated hosts as required. Number of storage volumes for each host
+
+The following table shows the number of storage volumes (LUNs) required for each host and the minimum size required for each LUN, based on which nodes will be deployed on that host.
+
+The maximum tested LUN size is 39 TB.
+
+These numbers are for each host, not for the entire grid. LUN purpose
+
+Storage category
+
+Number of LUNs
+
+Minimum size/LUN
+
+Container engine storage pool
+
+Container pool
+
+1
+
+Total number of nodes × 100 GB
+
+/var/local volume
+
+System data
+
+1 for each node on this host
+
+90 GB
+
+Storage Node
+
+Object data
+
+3 for each Storage Node on this host
+
+Note: A software-based Storage Node can have 1 to 16 storage volumes; at least 3 storage volumes are recommended.
+
+12 TB (4 TB/LUN) See Storage requirements for Storage Nodes for more information. Storage Node (metadata- only)
+
+Object metadata
+
+1
+
+4 TB See Storage requirements for Storage Nodes for more information.
+
+Note: Only one rangedb is required for metadata- only Storage Nodes.
+
+Admin Node audit logs
+
+System data
+
+1 for each Admin Node on this host
+
+200 GB
+
+Admin Node tables
+
+System data 1 for each Admin Node on this host The following table shows the number of storage volumes (LUNs) required for each host and the minimum size required for each LUN, based on which nodes will be deployed on that host.
+
+The maximum tested LUN size is 39 TB.
+
+These numbers are for each host, not for the entire grid. LUN purpose
+
+Storage category
+
+Number of LUNs
+
+Minimum size/LUN
+
+Container engine storage pool
+
+Container pool
+
+1
+
+Total number of nodes × 100 GB
+
+/var/local volume
+
+System data
+
+1 for each node on this host
+
+90 GB
+
+Storage Node
+
+Object data
+
+3 for each Storage Node on this host
+
+Note: A software-based Storage Node can have 1 to 16 storage volumes; at least 3 storage volumes are recommended.
+
+12 TB (4 TB/LUN) See Storage requirements for Storage Nodes for more information. Storage Node (metadata- only)
+
+Object metadata
+
+1
+
+4 TB See Storage requirements for Storage Nodes for more information.
+
+Note: Only one rangedb is required for metadata- only Storage Nodes.
+
+Admin Node audit logs
+
+System data
+
+1 for each Admin Node on this host
+
+200 GB
+
+Admin Node tables
+
+System data 1 for each Admin Node on this host
+
+200 GB
+
+80
+
+Depending on the audit level configured, the size of user inputs such as S3 object key name, and how much audit log data you need to preserve, you might need to increase the size of the audit log LUN on each Admin Node.Generally, a grid generates approximately 1 KB of audit data per S3 operation, which would mean that a 200 GB LUN would support 70 million operations per day or 800 operations per second for two to three days. Minimum storage space for a host

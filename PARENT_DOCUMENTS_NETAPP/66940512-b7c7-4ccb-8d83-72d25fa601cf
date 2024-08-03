@@ -1,0 +1,111 @@
+After you finish
+
+If you added one or more trunk interfaces, go to configure VLAN interfaces to configure one or more VLAN interfaces for each new parent interface. If you added one or more access interfaces, go to configure high availability groups to add the new interfaces directly to HA groups.
+
+Configure DNS servers
+
+You can add, update, and remove DNS servers, so that you can use fully qualified domain name (FQDN) hostnames rather than IP addresses.
+
+To use fully qualified domain names (FQDNs) instead of IP addresses when specifying hostnames for external destinations, specify the IP address of each DNS server you will use. These entries are used for AutoSupport, alert emails, SNMP notifications, platform services endpoints, Cloud Storage Pools, and more.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the IP addresses of the DNS servers to configure. About this task
+
+To ensure proper operation, specify two or three DNS servers. If you specify more than three, it is possible that only three will be used because of known OS limitations on some platforms. If you have routing restrictions in your environment, you can customize the DNS server list for individual nodes (typically all nodes at a site) to use a different set of up to three DNS servers.
+
+If possible, use DNS servers that each site can access locally to ensure that an islanded site can resolve the FQDNs for external destinations.
+
+1532
+
+Add a DNS server
+
+Follow these steps to add a DNS server. Steps
+
+1. Select MAINTENANCE > Network > DNS servers.
+
+2. Select Add another server to add a DNS server. To use fully qualified domain names (FQDNs) instead of IP addresses when specifying hostnames for external destinations, specify the IP address of each DNS server you will use. These entries are used for AutoSupport, alert emails, SNMP notifications, platform services endpoints, Cloud Storage Pools, and more.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Maintenance or Root access permission.
+
+You have the IP addresses of the DNS servers to configure. About this task
+
+To ensure proper operation, specify two or three DNS servers. If you specify more than three, it is possible that only three will be used because of known OS limitations on some platforms. If you have routing restrictions in your environment, you can customize the DNS server list for individual nodes (typically all nodes at a site) to use a different set of up to three DNS servers.
+
+If possible, use DNS servers that each site can access locally to ensure that an islanded site can resolve the FQDNs for external destinations.
+
+1532
+
+Add a DNS server
+
+Follow these steps to add a DNS server. Steps
+
+1. Select MAINTENANCE > Network > DNS servers.
+
+2. Select Add another server to add a DNS server.
+
+3. Select Save.
+
+Modify a DNS server
+
+Follow these steps to modify a DNS server.
+
+Steps
+
+1. Select MAINTENANCE > Network > DNS servers.
+
+2. Select the IP address of the server name you want to edit and make the necessary changes.
+
+3. Select Save. Delete a DNS server
+
+Follow these steps to delete an IP address of a DNS server.
+
+Steps
+
+1. Select MAINTENANCE > Network > DNS servers.
+
+2. Select the delete icon
+
+next to the IP address.
+
+3. Select Save.
+
+Modify DNS configuration for single grid node
+
+Rather than configure the DNS globally for the entire deployment, you can run a script to configure DNS differently for each grid node.
+
+In general, you should use the MAINTENANCE > Network > DNS servers option on the Grid Manager to configure DNS servers. Only use the following script if you need to use different DNS servers for different grid nodes. Steps
+
+1. Log in to the primary Admin Node:
+
+a. Enter the following command: ssh admin@primary_Admin_Node_IP
+
+b. Enter the password listed in the Passwords.txt file.
+
+c. Enter the following command to switch to root: su -
+
+d. Enter the password listed in the Passwords.txt file.
+
+When you are logged in as root, the prompt changes from $ to #. e. Add the SSH private key to the SSH agent. Enter: ssh-add
+
+f. Enter the SSH Access Password listed in the Passwords.txt file.
+
+1533
+
+2.
+
+Log in to the node you want to update with a custom DNS configuration: ssh node_IP_address
+
+3. Run the DNS setup script: setup_resolv.rb.
+
+The script responds with the list of supported commands.
+
+Tool to modify external name servers

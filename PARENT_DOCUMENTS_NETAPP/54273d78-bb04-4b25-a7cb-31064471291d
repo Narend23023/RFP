@@ -1,0 +1,57 @@
+When configuring the Grid Network, follow these guidelines: Ensure that the network is secured from untrusted clients, such as those on the open internet.
+
+When possible, use the Grid Network exclusively for internal traffic. Both the Admin Network and the Client Network have additional firewall restrictions that block external traffic to internal services. Using the Grid Network for external client traffic is supported, but this use offers fewer layers of protection.
+
+If the StorageGRID deployment spans multiple data centers, use a virtual private network (VPN) or equivalent on the Grid Network to provide additional protection for internal traffic.
+
+Some maintenance procedures require secure shell (SSH) access on port 22 between the primary Admin Node and all other grid nodes. Use an external firewall to restrict SSH access to trusted clients. Guidelines for Admin Network
+
+The Admin Network is typically used for administrative tasks (trusted employees using the Grid Manager or SSH) and for communicating with other trusted services such as LDAP, DNS, NTP, or KMS (or KMIP server). However, StorageGRID does not enforce this usage internally.
+
+If you are using the Admin Network, follow these guidelines:
+
+Block all internal traffic ports on the Admin Network. See the list of internal ports.
+
+If untrusted clients can access the Admin Network, block access to StorageGRID on the Admin Network with an external firewall. Guidelines for Client Network
+
+The Client Network is typically used for tenants and for communicating with external services, such as the CloudMirror replication service or another platform service. However, StorageGRID does not enforce this usage internally.
+
+If you are using the Client Network, follow these guidelines:
+
+Block all internal traffic ports on the Client Network. See the list of internal ports.
+
+Accept inbound client traffic only on explicitly configured endpoints. See the information about managing firewall controls. If the StorageGRID deployment spans multiple data centers, use a virtual private network (VPN) or equivalent on the Grid Network to provide additional protection for internal traffic.
+
+Some maintenance procedures require secure shell (SSH) access on port 22 between the primary Admin Node and all other grid nodes. Use an external firewall to restrict SSH access to trusted clients. Guidelines for Admin Network
+
+The Admin Network is typically used for administrative tasks (trusted employees using the Grid Manager or SSH) and for communicating with other trusted services such as LDAP, DNS, NTP, or KMS (or KMIP server). However, StorageGRID does not enforce this usage internally.
+
+If you are using the Admin Network, follow these guidelines:
+
+Block all internal traffic ports on the Admin Network. See the list of internal ports.
+
+If untrusted clients can access the Admin Network, block access to StorageGRID on the Admin Network with an external firewall. Guidelines for Client Network
+
+The Client Network is typically used for tenants and for communicating with external services, such as the CloudMirror replication service or another platform service. However, StorageGRID does not enforce this usage internally.
+
+If you are using the Client Network, follow these guidelines:
+
+Block all internal traffic ports on the Client Network. See the list of internal ports.
+
+Accept inbound client traffic only on explicitly configured endpoints. See the information about managing firewall controls.
+
+Hardening guidelines for StorageGRID nodes
+
+StorageGRID nodes can be deployed on VMware virtual machines, within a container engine on Linux hosts, or as dedicated hardware appliances. Each type of platform and each type of node has its own set of hardening best practices.
+
+Control remote IPMI access to BMC You can enable or disable remote IPMI access for all appliances containing a BMC. The remote IPMI interface allows low-level hardware access to your StorageGRID appliances by anyone with a BMC account and password. If you do not need remote IPMI access to the BMC, disable this option.
+
+716
+
+• To control remote IPMI access to the BMC in Grid Manager, go to CONFIGURATION > Security > Security settings > Appliances:
+
+Clear the Enable remote IPMI access checkbox to disable IPMI access to the BMC. ◦ Select the Enable remote IPMI access checkbox to enable IPMI access to the BMC. Firewall configuration
+
+As part of the system hardening process, you must review external firewall configurations and modify them so that traffic is accepted only from the IP addresses and on the ports from which it is strictly needed.
+
+StorageGRID includes an internal firewall on each node that enhances the security of your grid by enabling you to control network access to the node. You should manage internal firewall controls to prevent network access on all ports except those necessary for your specific grid deployment. The configuration changes you make on the Firewall control page are deployed to each node.

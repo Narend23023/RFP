@@ -1,0 +1,179 @@
+Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages. RSLT
+
+Result
+
+The result. This field has only one value:
+
+SUCS: The grid task was started successfully.
+
+GTSU: Grid Task Submitted
+
+This audit message indicates that a grid task has been submitted to the CMN service.
+
+1354
+
+Code
+
+Field
+
+Description
+
+TSID
+
+Task ID
+
+Uniquely identifies a generated grid task and allows the task to be managed over its lifecycle.
+
+Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages. TTYP
+
+Task Type
+
+The type of grid task.
+
+TVER
+
+Task Version
+
+A number indicating the version of the grid task.
+
+TDSC
+
+Task Description A human-readable description of the grid task.
+
+VATS
+
+Valid After Timestamp
+
+The earliest time (UINT64 microseconds from January 1, 1970 - UNIX time) at which the grid task is valid. VBTS
+
+Valid Before Timestamp
+
+The latest time (UINT64 microseconds from January 1, 1970 - UNIX time) at which the grid task is valid.
+
+TSRC
+
+Source
+
+The source of the task:
+
+TXTB: The grid task was submitted through the StorageGRID system as a signed text block.
+
+GRID: The grid task was submitted through the internal Grid Task Submission Service. ACTV
+
+Activation Type
+
+The type of activation:
+
+AUTO: The grid task was submitted for automatic activation. Note: The Task ID is assigned at the time that a grid task is generated, not the time that it is submitted. It is possible for a given grid task to be submitted multiple times, and in this case the Task ID field is not sufficient to uniquely link the Submitted, Started, and Ended audit messages. TTYP
+
+Task Type
+
+The type of grid task.
+
+TVER
+
+Task Version
+
+A number indicating the version of the grid task.
+
+TDSC
+
+Task Description A human-readable description of the grid task.
+
+VATS
+
+Valid After Timestamp
+
+The earliest time (UINT64 microseconds from January 1, 1970 - UNIX time) at which the grid task is valid. VBTS
+
+Valid Before Timestamp
+
+The latest time (UINT64 microseconds from January 1, 1970 - UNIX time) at which the grid task is valid.
+
+TSRC
+
+Source
+
+The source of the task:
+
+TXTB: The grid task was submitted through the StorageGRID system as a signed text block.
+
+GRID: The grid task was submitted through the internal Grid Task Submission Service. ACTV
+
+Activation Type
+
+The type of activation:
+
+AUTO: The grid task was submitted for automatic activation.
+
+PEND: The grid task was submitted into the pending table. This is the only possibility for the TXTB source.
+
+RSLT
+
+Result
+
+The result of the submission:
+
+SUCS: The grid task was submitted successfully.
+
+FAIL: The task has been moved directly to the historical table. IDEL: ILM Initiated Delete
+
+This message is generated when ILM starts the process of deleting an object.
+
+The IDEL message is generated in either of these situations:
+
+For objects in compliant S3 buckets: This message is generated when ILM starts the process of auto- deleting an object because its retention period has expired (assuming the auto-delete setting is enabled
+
+1355
+
+and legal hold is off).
+
+For objects in non-compliant S3 buckets or Swift containers. This message is generated when ILM starts the process of deleting an object because no placement instructions in the active ILM policies currently apply to the object. Code
+
+Field
+
+Description
+
+CBID
+
+Content Block Identifier
+
+The CBID of the object.
+
+CMPA
+
+Compliance: Auto delete
+
+For objects in compliant S3 buckets only. 0 (false) or 1 (true), indicating whether a compliant object should be deleted automatically when its retention period ends, unless the bucket is under a legal hold. CMPL
+
+Compliance: Legal hold
+
+For objects in compliant S3 buckets only. 0 (false) or 1 (true), indicating whether the bucket is currently under a legal hold.
+
+CMPR
+
+Compliance: Retention period
+
+For objects in compliant S3 buckets only. The length of the object’s retention period in minutes.
+
+CTME
+
+Compliance: Ingest time
+
+For objects in compliant S3 buckets only. The object’s ingest time. You can add the retention period in minutes to this value to determine when the object can be deleted from the bucket. DMRK
+
+Delete Marker Version ID
+
+The version ID of the delete marker created when deleting an object from a versioned bucket. Operations on buckets don’t include this field.
+
+CSIZ
+
+Content size
+
+The size of the object in bytes.
+
+LOCS
+
+Locations
+
+The storage location of object data within the StorageGRID system. The value for LOCS is "" if the object has no locations (for example, it has been deleted).

@@ -1,0 +1,65 @@
+export SAMLREQUESTID='00000000-0000-0000-ee02-0080000000de'
+
+f. Send your credentials to the form action from the previous response. curl -X POST "https://$AD_FS_ADDRESS /adfs/ls/?SAMLRequest=$SAMLREQUEST&RelayState=$TENANTACCOUNTID&client -request-id=$SAMLREQUESTID" \ --data "UserName=$SAMLUSER@$SAMLDOMAIN&Password= $SAMLPASSWORD&AuthMethod=FormsAuthentication" --include
+
+295
+
+296
+
+AD FS returns a 302 redirect, with additional information in the headers.
+
+If multi-factor authentication (MFA) is enabled for your SSO system, the form post will also contain the second password or other credentials. export SAMLREQUESTID='00000000-0000-0000-ee02-0080000000de'
+
+f. Send your credentials to the form action from the previous response. curl -X POST "https://$AD_FS_ADDRESS /adfs/ls/?SAMLRequest=$SAMLREQUEST&RelayState=$TENANTACCOUNTID&client -request-id=$SAMLREQUESTID" \ --data "UserName=$SAMLUSER@$SAMLDOMAIN&Password= $SAMLPASSWORD&AuthMethod=FormsAuthentication" --include
+
+295
+
+296
+
+AD FS returns a 302 redirect, with additional information in the headers.
+
+If multi-factor authentication (MFA) is enabled for your SSO system, the form post will also contain the second password or other credentials.
+
+HTTP/1.1 302 Found Content-Length: 0 Content-Type: text/html; charset=utf-8 Location: https://adfs.example.com/adfs/ls/?SAMLRequest=fZHRToMwFIZfhb...UJikvo 77sXPw%3D%3D&RelayState=12345&client-request-id=00000000-0000-0000- ee02-0080000000de Set-Cookie: MSISAuth=AAEAADAvsHpXk6ApV...pmP0aEiNtJvWY=; path=/adfs; HttpOnly; Secure Date: Tue, 06 Nov 2018 16:55:05 GMT g. Save the MSISAuth cookie from the response.
+
+export MSISAuth='AAEAADAvsHpXk6ApV...pmP0aEiNtJvWY='
+
+h. Send a GET request to the specified location with the cookies from the authentication POST.
+
+curl "https://$AD_FS_ADDRESS/adfs/ls/?SAMLRequest= $SAMLREQUEST&RelayState=$TENANTACCOUNTID&client-request- id=$SAMLREQUESTID" \ --cookie "MSISAuth=$MSISAuth" --include
+
+The response headers will contain AD FS session information for later logout usage, and the response body contains the SAMLResponse in a hidden form field. HTTP/1.1 200 OK Cache-Control: no-cache,no-store Pragma: no-cache Content-Length: 5665 Content-Type: text/html; charset=utf-8 Expires: -1 Server: Microsoft-HTTPAPI/2.0 P3P: ADFS doesn't have P3P policy, please contact your site's admin for more details Set-Cookie: SamlSession=a3dpbnRlcnMtUHJpbWFyeS1BZG1pbi0xNzgmRmFsc2Umcng4NnJDZmFKV XFxVWx3bkl1MnFuUSUzZCUzZCYmJiYmXzE3MjAyZTA5LThmMDgtNDRkZC04Yzg5LTQ3ND UxYzA3ZjkzYw==; path=/adfs; HttpOnly; Secure Set-Cookie: MSISAuthenticated=MTEvNy8yMDE4IDQ6MzI6NTkgUE0=; path=/adfs; HttpOnly; Secure Set-Cookie: MSISLoopDetectionCookie=MjAxOC0xMS0wNzoxNjozMjo1OVpcMQ==; path=/adfs; HttpOnly; Secure Date: Wed, 07 Nov 2018 16:32:59 GMT
+
+<form method="POST" name="hiddenform" action="https://storagegrid.example.com:443/api/saml-response"> <input type="hidden" name="SAMLResponse" value="PHNhbWxwOlJlc3BvbnN...1scDpSZXNwb25zZT4=" /><input type="hidden" name="RelayState" value="12345" />
+
+i. Save the SAMLResponse from the hidden field: export SAMLResponse='PHNhbWxwOlJlc3BvbnN...1scDpSZXNwb25zZT4='
+
+j. Using the saved SAMLResponse, make a StorageGRID/api/saml-response request to generate a <form method="POST" name="hiddenform" action="https://storagegrid.example.com:443/api/saml-response"> <input type="hidden" name="SAMLResponse" value="PHNhbWxwOlJlc3BvbnN...1scDpSZXNwb25zZT4=" /><input type="hidden" name="RelayState" value="12345" />
+
+i. Save the SAMLResponse from the hidden field: export SAMLResponse='PHNhbWxwOlJlc3BvbnN...1scDpSZXNwb25zZT4='
+
+j. Using the saved SAMLResponse, make a StorageGRID/api/saml-response request to generate a
+
+StorageGRID authentication token.
+
+For RelayState, use the tenant account ID or use 0 if you want to sign in to the Grid Management API.
+
+curl -X POST "https://$STORAGEGRID_ADDRESS:443/api/saml-response" \ -H "accept: application/json" \ --data-urlencode "SAMLResponse=$SAMLResponse" \ --data-urlencode "RelayState=$TENANTACCOUNTID" \ | python -m json.tool
+
+The response includes the authentication token.
+
+297
+
+{ "apiVersion": "3.0", "data": "56eb07bf-21f6-40b7-af0b-5c6cacfb25e7", "responseTime": "2018-11-07T21:32:53.486Z", "status": "success" }
+
+k. Save the authentication token in the response as MYTOKEN. export MYTOKEN="56eb07bf-21f6-40b7-af0b-5c6cacfb25e7"
+
+You can now use MYTOKEN for other requests, similar to how you would use the API if SSO was not being used.
+
+Sign out of the API if single sign-on is enabled
+
+If single sign-on (SSO) has been enabled, you must issue a series of API requests to sign out of the Grid Management API or the Tenant Management API. These instructions apply if you are using Active Directory as the SSO identity provider About this task
+
+If required, you can sign out of the StorageGRID API by logging out from your organization’s single logout page. Or, you can trigger single logout (SLO) from StorageGRID, which requires a valid StorageGRID bearer token.
+
+Steps

@@ -1,0 +1,161 @@
+Admin Nodes: Include the Load Balancer service and enable access to the Grid Manager or the Tenant Manager.
+
+Gateway Nodes: Include the Load Balancer service. Purpose of HA group
+
+Add nodes of this type to the HA group
+
+Access to Grid Manager
+
+Primary Admin Node (Primary)
+
+Non-primary Admin Nodes
+
+Note: The primary Admin Node must be the Primary interface. Some maintenance procedures can only be performed from the primary Admin Node.
+
+Access to Tenant Manager only
+
+Primary or non-primary Admin Nodes S3 or Swift client access — Load Balancer service
+
+Admin Nodes
+
+Gateway Nodes
+
+S3 client access for S3 Select
+
+Services appliances
+
+VMware-based software nodes
+
+Note: HA groups are recommended when using S3 Select, but not required. Limitations of using HA groups with Grid Manager or Tenant Manager
+
+If a Grid Manager or Tenant Manager service fails, HA group failover is not triggered.
+
+If you are signed in to the Grid Manager or the Tenant Manager when failover occurs, you are signed out and must sign in again to resume your task.
+
+Some maintenance procedures can’t be performed when the primary Admin Node is unavailable. During failover, you can use the Grid Manager to monitor your StorageGRID system.
+
+489
+
+Configuration options for HA groups Gateway Nodes: Include the Load Balancer service. Purpose of HA group
+
+Add nodes of this type to the HA group
+
+Access to Grid Manager
+
+Primary Admin Node (Primary)
+
+Non-primary Admin Nodes
+
+Note: The primary Admin Node must be the Primary interface. Some maintenance procedures can only be performed from the primary Admin Node.
+
+Access to Tenant Manager only
+
+Primary or non-primary Admin Nodes S3 or Swift client access — Load Balancer service
+
+Admin Nodes
+
+Gateway Nodes
+
+S3 client access for S3 Select
+
+Services appliances
+
+VMware-based software nodes
+
+Note: HA groups are recommended when using S3 Select, but not required. Limitations of using HA groups with Grid Manager or Tenant Manager
+
+If a Grid Manager or Tenant Manager service fails, HA group failover is not triggered.
+
+If you are signed in to the Grid Manager or the Tenant Manager when failover occurs, you are signed out and must sign in again to resume your task.
+
+Some maintenance procedures can’t be performed when the primary Admin Node is unavailable. During failover, you can use the Grid Manager to monitor your StorageGRID system.
+
+489
+
+Configuration options for HA groups
+
+The following diagrams provide examples of different ways you can configure HA groups. Each option has advantages and disadvantages.
+
+In the diagrams, blue indicates the primary interface in the HA group and yellow indicates the backup interface in the HA group.
+
+The table summarizes the benefits of each HA configuration shown in the diagram. Configuration
+
+Advantages
+
+Disadvantages
+
+Active-Backup HA
+
+Managed by StorageGRID with no
+
+Only one node in an HA group is
+
+external dependencies.
+
+Fast failover.
+
+active. At least one node per HA group will be idle.
+
+490
+
+Configuration
+
+Advantages
+
+Disadvantages
+
+DNS Round Robin
+
+Increased aggregate throughput.
+
+Slow failover, which could depend on
+
+No idle hosts. client behavior.
+
+Requires configuration of hardware outside of StorageGRID.
+
+Needs a customer-implemented health check.
+
+Active-Active HA
+
+Traffic is distributed across multiple HA
+
+More complex to configure.
+
+groups.
+
+Requires configuration of hardware
+
+High aggregate throughput that scales with the number of HA groups.
+
+High aggregate throughput that scales with the number of HA groups.
+
+Needs a customer-implemented health
+
+Fast failover. check.
+
+Configure high availability groups
+
+You can configure high availability (HA) groups to provide highly available access to the services on Admin Nodes or Gateway Nodes.
+
+Before you begin
+
+You are signed in to the Grid Manager using a supported web browser.
+
+You have the Root access permission.
+
+If you plan to use a VLAN interface in an HA group, you have created the VLAN interface. See Configure VLAN interfaces.
+
+If you plan to use an access interface for a node in an HA group, you have created the interface: ◦ Red Hat Enterprise Linux (before installing the node): Create node configuration files ◦ Ubuntu or Debian (before installing the node): Create node configuration files ◦ Linux (after installing the node): Linux: Add trunk or access interfaces to a node ◦ VMware (after installing the node): VMware: Add trunk or access interfaces to a node
+
+Create a high availability group When you create a high availability group, you select one or more interfaces and organize them in priority order. Then, you assign one or more VIP addresses to the group.
+
+An interface must be for a Gateway Node or an Admin Node to be included in an HA group. An HA group can only use one interface for any given node; however, other interfaces for the same node can be used in other HA groups. Access the wizard
+
+Steps
+
+1. Select CONFIGURATION > Network > High availability groups.
+
+2. Select Create.
+
+491
