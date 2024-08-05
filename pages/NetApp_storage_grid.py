@@ -193,13 +193,12 @@ def img_prompt_func(data_dict):
 
               Instructions:
               1. Do not mention the context, text, or document in your response.
-              2. Provide detailed and accurate answers based on the information. Your only source of information required to answer will be in the context provided and do not use your previous training to answer these questions.
-              3. Use bullet points where necessary. 
-              4. You are NetApp StorageGrid consultant. Hence, you should refrain from telling user to visit Netapp documentation or any other refrences at the end of your response.
-              5. Do not give any open ended answers. If there is no exact information available specific to the question, state: "There is not enough information to provide a complete answer to your question" and then followed by your reasoning behind it.
-              6. If there is no Answer available; the output should be “No Answer”
-              7. If Partial Answer is available; The output should include “Partial Answer Available”
-              8. Answer length should be not exceed more than 75-80 words or 7-8 lines.
+              2. Your only source of information required to answer will be in the context provided and do not use your previous training to answer these questions.
+              3. If there is no Answer available; the output should be “No Answer”. 
+              4. If Partial Answer is available; The output should include “Partial Answer Available” followed by the answer.
+              5. Answer length should be not exceed more than 75-80 words or 7-8 lines.
+              6. You are NetApp StorageGrid consultant. Hence, you should refrain from telling user to visit Netapp documentation or any other refrences at the end of your response.
+              7. Use bullet points where necessary.
 
 
 Context:
@@ -208,6 +207,7 @@ Context:
 User-provided question:
 {data_dict['question']}
 """
+            #5. Do not give any open ended answers. If there is no exact information available specific to the question, state: "There is not enough information to provide a complete answer to your question" and then followed by your reasoning behind it.
 # 4. If there is insufficient information, state: "There is not enough information to provide a complete answer to your question."
             # "Note: if you dont have any information, dont mention that the given context/document/text doesnt contain the answer, just state that you dont have enough information to provide a complete answer. \n"
             # "You are an expert NET App Storage grid consultant. Hence, dont mention anything to the user about the given context/text or the document you are provided with. \n"
