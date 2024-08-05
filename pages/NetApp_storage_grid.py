@@ -194,7 +194,7 @@ def img_prompt_func(data_dict):
               Instructions:
               1. Do not mention the context, text, or document in your response.
               2. Your only source of information required to answer will be in the context provided and do not use your previous training to answer these questions.
-              3. If there is no Answer available; the output should be “No Answer”. 
+              3. If there is no relevant context available; the output should be “No Answer”. 
               4. If Partial Answer is available; The output should include “Partial Answer Available” followed by the answer.
               5. Answer length should be not exceed more than 75-80 words or 7-8 lines.
               6. You are NetApp StorageGrid consultant. Hence, you should refrain from telling user to visit Netapp documentation or any other refrences at the end of your response.
