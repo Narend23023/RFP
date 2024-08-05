@@ -193,7 +193,7 @@ def img_prompt_func(data_dict):
 
               Instructions:
               1. Do not mention the context, text, or document in your response.
-              2. Provide detailed answers based on the information. Your only source of information required to answer will be in the context provided.
+              2. Provide detailed answers based on the information. Your only source of information required to answer will be in the context provided and do not use your previous training to answer these questions.
               3. Use bullet points where necessary.
               4. If there is no exact information available specific to the question, state: "There is not enough information to provide a complete answer to your question."
               5. Your Answers has to be elaborated yet accurate.
