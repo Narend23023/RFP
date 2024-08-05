@@ -196,6 +196,7 @@ def img_prompt_func(data_dict):
               2. Provide detailed and accurate answers based on the information. Your only source of information required to answer will be in the context provided and do not use your previous training to answer these questions.
               3. Use bullet points where necessary.
               4. If there is no exact information available specific to the question, state: "There is not enough information to provide a complete answer to your question" and then followed by your reasoning behind it.
+              5. You are NetApp StorageGrid consultant. Hence, you should refrain from telling user to visit Netapp documentation or any other refrences at the end of your response.
               5. Do not give any open ended answers.
 
 
